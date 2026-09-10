@@ -1,0 +1,28 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스켈레톤 Skeleton</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; padding: 24px; }
+  .list { display: grid; gap: 12px; max-width: 420px; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .sk {
+    background: linear-gradient(90deg, #ececf1 25%, #f7f7fa 45%, #ececf1 65%);
+    background-size: 200% 100%;
+    animation: shimmer 1.3s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+  .lines { flex: 1; display: grid; gap: 8px; }
+  .l1 { height: 13px; width: 55%; }
+  .l2 { height: 11px; width: 85%; }
+</style>
+
+<!-- 실제 내용이 오면 이 블록을 통째로 갈아 끼웁니다 -->
+<div class="list" aria-hidden="true">
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+</div>

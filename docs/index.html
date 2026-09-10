@@ -1,0 +1,1805 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI 메뉴판 — Giting Skills</title>
+<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. 말로 설명하던 UI에 이름을 붙여 주는 사전과 실물 HTML 레퍼런스 20종. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --paper: #ffffff; --ink: #17171b; --ink2: #55555f; --ink3: #9a9aa4;
+    --line: #e8e8ee; --wash: #f7f8fa; --accent: #f05032;
+    --sans: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+  a { color: inherit; }
+
+  .top { border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; gap: 14px; height: 56px; }
+  .logo { font-weight: 800; letter-spacing: -0.02em; text-decoration: none; }
+  .logo i { font-style: normal; color: var(--accent); }
+  .top nav { margin-left: auto; display: flex; gap: 16px; font-size: 13.5px; }
+  .top nav a { color: var(--ink2); text-decoration: none; }
+  .top nav a:hover { color: var(--ink); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
+  .hero .kicker { font-family: var(--mono); font-size: 12.5px; color: var(--accent); letter-spacing: .06em; }
+  .hero h1 { margin: 12px 0 0; font-size: clamp(30px, 5.4vw, 50px); letter-spacing: -0.035em; line-height: 1.2; text-wrap: balance; }
+  .hero h1 q { quotes: '\201C' '\201D'; color: var(--ink3); }
+  .hero p.sub { margin: 18px 0 0; color: var(--ink2); font-size: 16.5px; max-width: 56ch; }
+  .install { margin-top: 30px; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0;
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden; max-width: 100%; }
+  .install code { font-family: var(--mono); font-size: 13px; padding: 12px 16px; background: var(--wash);
+    overflow-x: auto; white-space: nowrap; display: block; }
+  .install button { border: 0; border-left: 1px solid var(--line); background: #fff; padding: 12px 16px;
+    font-size: 13px; cursor: pointer; font-family: var(--sans); flex-shrink: 0; }
+  .install button:hover { background: var(--wash); }
+  .hero .also { margin-top: 12px; font-size: 12.5px; color: var(--ink3); }
+  .hero .also code { font-family: var(--mono); }
+
+  .cat { padding: 44px 0 8px; }
+  .cat h2 { font-size: 21px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .cat h2 .count { font-family: var(--mono); font-size: 13px; color: var(--ink3); font-weight: 400; }
+
+  .item { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 26px;
+    padding: 30px 0; border-top: 1px solid var(--line); }
+  @media (max-width: 800px) { .item { grid-template-columns: 1fr; gap: 16px; } }
+  .item h3 { margin: 0; font-size: 19px; letter-spacing: -0.01em; }
+  .item h3 .en { font-family: var(--mono); font-size: 13px; color: var(--ink3); font-weight: 400; margin-left: 6px; }
+  .aliases { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .alias { font-size: 12.5px; color: var(--ink2); background: var(--wash); border-radius: 999px; padding: 4px 11px; }
+  .one { margin: 12px 0 0; font-size: 14.5px; color: var(--ink2); }
+  .ask { margin-top: 16px; border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 10px; padding: 12px 14px; }
+  .ask-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .05em; }
+  .ask p { margin: 6px 0 10px; font-size: 14px; }
+  .copy { border: 1px solid var(--line); background: #fff; border-radius: 8px;
+    padding: 5px 12px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); color: var(--ink2); }
+  .copy:hover { border-color: var(--ink3); color: var(--ink); }
+  .copy.ok { border-color: var(--accent); color: var(--accent); }
+
+  .demo iframe { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; display: block; }
+  .demo details { margin-top: 10px; }
+  .demo summary { cursor: pointer; font-size: 13px; color: var(--ink2); display: flex; align-items: center; gap: 10px; }
+  .demo summary::marker { color: var(--ink3); }
+  .demo pre { margin: 10px 0 0; background: var(--wash); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; overflow-x: auto; font-size: 12px; line-height: 1.55; }
+  .demo code { font-family: var(--mono); }
+
+  .foot { border-top: 1px solid var(--line); margin-top: 48px; padding: 26px 0 44px;
+    font-size: 13px; color: var(--ink3); display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .foot a { color: var(--ink2); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">UI 메뉴판 <i>·</i> Giting Skills</a>
+    <nav>
+      <a href="#skeleton">페이지 뼈대</a>
+      <a href="#interaction">인터랙션</a>
+      <a href="https://github.com/hanmariyang/giting-skills">GitHub</a>
+      <a href="https://giting.kr">Giting</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">GITING SKILLS · 01 UI-MENU</div>
+    <h1><q>접었다 폈다 되는 거</q>에는<br>이름이 있습니다</h1>
+    <p class="sub">말로 설명하던 UI에 이름을 붙여 주는 사전. 이름을 아는 순간 AI에게 시키는 시간이 줄어듭니다. 전 항목이 그림이 아니라 실제로 동작하는 HTML이고, AI가 직접 쓸 수 있게 Claude Code 스킬로 배포됩니다.</p>
+    <div class="install">
+      <code>/plugin marketplace add hanmariyang/giting-skills</code>
+      <button class="copy" data-copy="/plugin marketplace add hanmariyang/giting-skills">복사</button>
+    </div>
+    <p class="also">이어서 <code>/plugin install ui-menu@giting</code> · 에이전트용 사전: <a href="llms.txt">llms.txt</a> / <a href="llms-full.txt">llms-full.txt</a> (코드 포함)</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<section class="cat" id="skeleton">
+  <h2>페이지 뼈대 <span class="count">8</span></h2>
+  
+<article class="item" id="header">
+  <div class="info">
+    <h3>헤더 <span class="en">Header</span></h3>
+    <div class="aliases"><span class="alias">"맨 위에 있는 바"</span><span class="alias">"상단 바"</span><span class="alias">"위에 로고 있는 줄"</span><span class="alias">"탑바"</span></div>
+    <p class="one">페이지 맨 위, 로고와 메뉴가 사는 가로 줄.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.</p>
+      <button class="copy" data-copy="상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="헤더 라이브 데모" loading="lazy" style="height:260px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>헤더 Header</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 20px; height: 56px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  .header nav { margin-left: auto; display: flex; gap: 4px; }
+  .header nav a { padding: 8px 12px; border-radius: 8px; color: #55555f; text-decoration: none; font-size: 14px; }
+  .header nav a:hover { background: #f4f4f7; color: #17171b; }
+  .header .cta { background: #17171b; color: #fff; }
+  .header .cta:hover { background: #333; color: #fff; }
+  main { padding: 24px 20px; color: #9a9aa4; font-size: 14px; height: 60vh; }
+</style>
+
+<header class=&quot;header&quot;>
+  <span class=&quot;logo&quot;>로고</span>
+  <nav>
+    <a href=&quot;#&quot;>소개</a>
+    <a href=&quot;#&quot;>가격</a>
+    <a href=&quot;#&quot; class=&quot;cta&quot;>신청</a>
+  </nav>
+</header>
+<main>본문을 스크롤해도 헤더는 위에 고정됩니다 (position: sticky).</main>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;헤더 Header&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 20px; height: 56px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  .header nav { margin-left: auto; display: flex; gap: 4px; }
+  .header nav a { padding: 8px 12px; border-radius: 8px; color: #55555f; text-decoration: none; font-size: 14px; }
+  .header nav a:hover { background: #f4f4f7; color: #17171b; }
+  .header .cta { background: #17171b; color: #fff; }
+  .header .cta:hover { background: #333; color: #fff; }
+  main { padding: 24px 20px; color: #9a9aa4; font-size: 14px; height: 60vh; }
+&lt;/style&gt;
+
+&lt;header class="header"&gt;
+  &lt;span class="logo"&gt;로고&lt;/span&gt;
+  &lt;nav&gt;
+    &lt;a href="#"&gt;소개&lt;/a&gt;
+    &lt;a href="#"&gt;가격&lt;/a&gt;
+    &lt;a href="#" class="cta"&gt;신청&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;본문을 스크롤해도 헤더는 위에 고정됩니다 (position: sticky).&lt;/main&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="navbar">
+  <div class="info">
+    <h3>네비게이션 바 <span class="en">Navbar / GNB</span></h3>
+    <div class="aliases"><span class="alias">"메뉴 줄"</span><span class="alias">"메뉴 모음"</span><span class="alias">"카테고리 바"</span><span class="alias">"GNB"</span></div>
+    <p class="one">사이트의 큰 메뉴들을 모아 둔 이동 줄. 보통 헤더 안에 산다.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>헤더 안에 소개·가격·문의 세 개짜리 네비게이션 바를 넣어줘. 현재 페이지는 진하게 표시되게.</p>
+      <button class="copy" data-copy="헤더 안에 소개·가격·문의 세 개짜리 네비게이션 바를 넣어줘. 현재 페이지는 진하게 표시되게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="네비게이션 바 라이브 데모" loading="lazy" style="height:180px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>네비게이션 바 Navbar</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .navbar {
+    display: flex; align-items: center; gap: 2px;
+    padding: 0 12px; height: 52px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .navbar a {
+    padding: 8px 14px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .navbar a:hover { background: #f4f4f7; }
+  .navbar a[aria-current=&quot;page&quot;] { color: #17171b; font-weight: 700; }
+  p { padding: 16px; color: #9a9aa4; font-size: 13px; }
+</style>
+
+<nav class=&quot;navbar&quot; aria-label=&quot;주 메뉴&quot;>
+  <a href=&quot;#&quot; aria-current=&quot;page&quot;>홈</a>
+  <a href=&quot;#&quot;>소개</a>
+  <a href=&quot;#&quot;>가격</a>
+  <a href=&quot;#&quot;>문의</a>
+</nav>
+<p>현재 페이지는 aria-current=&quot;page&quot;로 표시하고 진하게 스타일합니다.</p>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;네비게이션 바 Navbar&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .navbar {
+    display: flex; align-items: center; gap: 2px;
+    padding: 0 12px; height: 52px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .navbar a {
+    padding: 8px 14px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .navbar a:hover { background: #f4f4f7; }
+  .navbar a[aria-current="page"] { color: #17171b; font-weight: 700; }
+  p { padding: 16px; color: #9a9aa4; font-size: 13px; }
+&lt;/style&gt;
+
+&lt;nav class="navbar" aria-label="주 메뉴"&gt;
+  &lt;a href="#" aria-current="page"&gt;홈&lt;/a&gt;
+  &lt;a href="#"&gt;소개&lt;/a&gt;
+  &lt;a href="#"&gt;가격&lt;/a&gt;
+  &lt;a href="#"&gt;문의&lt;/a&gt;
+&lt;/nav&gt;
+&lt;p&gt;현재 페이지는 aria-current="page"로 표시하고 진하게 스타일합니다.&lt;/p&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="hero">
+  <div class="info">
+    <h3>히어로 <span class="en">Hero</span></h3>
+    <div class="aliases"><span class="alias">"첫 화면에 크게 나오는 거"</span><span class="alias">"메인 배너"</span><span class="alias">"대문"</span><span class="alias">"제일 위에 큰 문구"</span></div>
+    <p class="one">들어오자마자 보이는 큰 제목과 버튼 구역. 페이지의 첫인상.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.</p>
+      <button class="copy" data-copy="히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="히어로 라이브 데모" loading="lazy" style="height:380px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>히어로 Hero</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #fff; }
+  .hero {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 14px;
+    min-height: 60vh; padding: 48px 24px;
+  }
+  .hero h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); letter-spacing: -0.03em; line-height: 1.25; }
+  .hero p { margin: 0; color: #6b6b76; font-size: 16px; }
+  .hero .cta {
+    margin-top: 10px; padding: 12px 28px; border: 0; border-radius: 10px;
+    background: #17171b; color: #fff; font-size: 15px; cursor: pointer;
+  }
+  .hero .cta:hover { background: #333; }
+</style>
+
+<section class=&quot;hero&quot;>
+  <h1>AI로 사이트,<br>10분이면 됩니다</h1>
+  <p>누구나 할 수 있어요</p>
+  <button class=&quot;cta&quot;>시작하기</button>
+</section>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;히어로 Hero&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #fff; }
+  .hero {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 14px;
+    min-height: 60vh; padding: 48px 24px;
+  }
+  .hero h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); letter-spacing: -0.03em; line-height: 1.25; }
+  .hero p { margin: 0; color: #6b6b76; font-size: 16px; }
+  .hero .cta {
+    margin-top: 10px; padding: 12px 28px; border: 0; border-radius: 10px;
+    background: #17171b; color: #fff; font-size: 15px; cursor: pointer;
+  }
+  .hero .cta:hover { background: #333; }
+&lt;/style&gt;
+
+&lt;section class="hero"&gt;
+  &lt;h1&gt;AI로 사이트,&lt;br&gt;10분이면 됩니다&lt;/h1&gt;
+  &lt;p&gt;누구나 할 수 있어요&lt;/p&gt;
+  &lt;button class="cta"&gt;시작하기&lt;/button&gt;
+&lt;/section&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="sidebar">
+  <div class="info">
+    <h3>사이드바 <span class="en">Sidebar</span></h3>
+    <div class="aliases"><span class="alias">"옆에 세로로 붙은 메뉴"</span><span class="alias">"왼쪽 메뉴"</span><span class="alias">"옆 패널"</span></div>
+    <p class="one">화면 옆에 세로로 붙는 메뉴·목차 영역.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.</p>
+      <button class="copy" data-copy="왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="사이드바 라이브 데모" loading="lazy" style="height:300px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>사이드바 Sidebar</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .layout { display: flex; min-height: 70vh; }
+  .sidebar {
+    width: 200px; flex-shrink: 0;
+    padding: 16px 10px;
+    background: #f8f8fa; border-right: 1px solid #e8e8ee;
+  }
+  .sidebar a {
+    display: block; padding: 9px 12px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .sidebar a:hover { background: #ededf1; }
+  .sidebar a[aria-current=&quot;page&quot;] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  main { flex: 1; min-width: 0; padding: 20px; color: #9a9aa4; font-size: 14px; }
+</style>
+
+<div class=&quot;layout&quot;>
+  <nav class=&quot;sidebar&quot; aria-label=&quot;사이드 메뉴&quot;>
+    <a href=&quot;#&quot; aria-current=&quot;page&quot;>대시보드</a>
+    <a href=&quot;#&quot;>리포트</a>
+    <a href=&quot;#&quot;>설정</a>
+  </nav>
+  <main>왼쪽이 사이드바, 이쪽이 본문인 2단 레이아웃입니다. 본문에는 min-width: 0을 줘야 안이 넘칠 때 레이아웃이 안 깨집니다.</main>
+</div>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;사이드바 Sidebar&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .layout { display: flex; min-height: 70vh; }
+  .sidebar {
+    width: 200px; flex-shrink: 0;
+    padding: 16px 10px;
+    background: #f8f8fa; border-right: 1px solid #e8e8ee;
+  }
+  .sidebar a {
+    display: block; padding: 9px 12px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .sidebar a:hover { background: #ededf1; }
+  .sidebar a[aria-current="page"] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  main { flex: 1; min-width: 0; padding: 20px; color: #9a9aa4; font-size: 14px; }
+&lt;/style&gt;
+
+&lt;div class="layout"&gt;
+  &lt;nav class="sidebar" aria-label="사이드 메뉴"&gt;
+    &lt;a href="#" aria-current="page"&gt;대시보드&lt;/a&gt;
+    &lt;a href="#"&gt;리포트&lt;/a&gt;
+    &lt;a href="#"&gt;설정&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;main&gt;왼쪽이 사이드바, 이쪽이 본문인 2단 레이아웃입니다. 본문에는 min-width: 0을 줘야 안이 넘칠 때 레이아웃이 안 깨집니다.&lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="footer">
+  <div class="info">
+    <h3>푸터 <span class="en">Footer</span></h3>
+    <div class="aliases"><span class="alias">"맨 아래 정보 나오는 데"</span><span class="alias">"하단"</span><span class="alias">"바닥글"</span></div>
+    <p class="one">페이지 맨 아래, 저작권·링크·연락처가 모이는 줄.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘.</p>
+      <button class="copy" data-copy="푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="푸터 라이브 데모" loading="lazy" style="height:280px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>푸터 Footer</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; display: flex; flex-direction: column; min-height: 60vh; }
+  main { flex: 1; padding: 20px; color: #9a9aa4; font-size: 14px; }
+  .footer {
+    padding: 24px 20px;
+    background: #17171b; color: #b6b6c0; font-size: 13px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+  }
+  .footer a { color: #b6b6c0; text-decoration: none; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-left: auto; color: #7d7d88; }
+</style>
+
+<main>본문이 짧아도 푸터가 바닥에 붙도록 body를 flex 컬럼으로 잡습니다.</main>
+<footer class=&quot;footer&quot;>
+  <a href=&quot;#&quot;>이용약관</a>
+  <a href=&quot;#&quot;>개인정보처리방침</a>
+  <a href=&quot;#&quot;>문의</a>
+  <span class=&quot;copy&quot;>&amp;copy; 2026 서비스명</span>
+</footer>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;푸터 Footer&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; display: flex; flex-direction: column; min-height: 60vh; }
+  main { flex: 1; padding: 20px; color: #9a9aa4; font-size: 14px; }
+  .footer {
+    padding: 24px 20px;
+    background: #17171b; color: #b6b6c0; font-size: 13px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+  }
+  .footer a { color: #b6b6c0; text-decoration: none; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-left: auto; color: #7d7d88; }
+&lt;/style&gt;
+
+&lt;main&gt;본문이 짧아도 푸터가 바닥에 붙도록 body를 flex 컬럼으로 잡습니다.&lt;/main&gt;
+&lt;footer class="footer"&gt;
+  &lt;a href="#"&gt;이용약관&lt;/a&gt;
+  &lt;a href="#"&gt;개인정보처리방침&lt;/a&gt;
+  &lt;a href="#"&gt;문의&lt;/a&gt;
+  &lt;span class="copy"&gt;&amp;copy; 2026 서비스명&lt;/span&gt;
+&lt;/footer&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="container">
+  <div class="info">
+    <h3>컨테이너 <span class="en">Container</span></h3>
+    <div class="aliases"><span class="alias">"가운데로 모아주는 거"</span><span class="alias">"본문 폭 제한"</span><span class="alias">"가운데 정렬 박스"</span></div>
+    <p class="one">내용이 너무 넓게 퍼지지 않게 최대 폭을 잡고 가운데 모으는, 눈에 안 보이는 상자.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘.</p>
+      <button class="copy" data-copy="본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="컨테이너 라이브 데모" loading="lazy" style="height:300px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>컨테이너 Container</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #f4f4f7; }
+  .container {
+    max-width: 720px;            /* 실전에서는 1200px 등 서비스 기준 폭 */
+    margin: 0 auto;              /* 가운데 정렬의 전부 */
+    padding: 24px 20px;          /* 좁은 화면에서 벽에 붙지 않게 */
+    background: #fff; min-height: 50vh;
+    outline: 2px dashed #c9c9d4; outline-offset: -2px;
+  }
+  .container p { color: #6b6b76; font-size: 14px; line-height: 1.7; }
+  .hint { text-align: center; color: #9a9aa4; font-size: 12px; padding: 10px; }
+</style>
+
+<div class=&quot;container&quot;>
+  <p>이 점선 상자가 컨테이너입니다. 화면이 아무리 넓어져도 내용은 max-width 안에 머물고, margin: 0 auto로 가운데에 옵니다.</p>
+  <p>창 너비를 넓혔다 좁혔다 해 보세요.</p>
+</div>
+<p class=&quot;hint&quot;>바깥 회색이 화면, 안쪽 흰색이 컨테이너</p>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;컨테이너 Container&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #f4f4f7; }
+  .container {
+    max-width: 720px;            /* 실전에서는 1200px 등 서비스 기준 폭 */
+    margin: 0 auto;              /* 가운데 정렬의 전부 */
+    padding: 24px 20px;          /* 좁은 화면에서 벽에 붙지 않게 */
+    background: #fff; min-height: 50vh;
+    outline: 2px dashed #c9c9d4; outline-offset: -2px;
+  }
+  .container p { color: #6b6b76; font-size: 14px; line-height: 1.7; }
+  .hint { text-align: center; color: #9a9aa4; font-size: 12px; padding: 10px; }
+&lt;/style&gt;
+
+&lt;div class="container"&gt;
+  &lt;p&gt;이 점선 상자가 컨테이너입니다. 화면이 아무리 넓어져도 내용은 max-width 안에 머물고, margin: 0 auto로 가운데에 옵니다.&lt;/p&gt;
+  &lt;p&gt;창 너비를 넓혔다 좁혔다 해 보세요.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p class="hint"&gt;바깥 회색이 화면, 안쪽 흰색이 컨테이너&lt;/p&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="grid">
+  <div class="info">
+    <h3>그리드 <span class="en">Grid</span></h3>
+    <div class="aliases"><span class="alias">"바둑판처럼 배치"</span><span class="alias">"여러 칸으로 나누기"</span><span class="alias">"3개씩 나란히"</span></div>
+    <p class="one">칸을 바둑판처럼 나눠 나란히 배치하는 방식.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로.</p>
+      <button class="copy" data-copy="이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="그리드 라이브 데모" loading="lazy" style="height:260px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>그리드 Grid</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 20px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3열 */
+    gap: 12px;                               /* 간격은 margin이 아니라 gap으로 */
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }    /* 모바일 1열 */
+  }
+  .grid > div {
+    background: #f4f4f7; border-radius: 10px;
+    padding: 28px 0; text-align: center;
+    color: #6b6b76; font-size: 14px;
+  }
+  p { color: #9a9aa4; font-size: 13px; }
+</style>
+
+<div class=&quot;grid&quot;>
+  <div>1</div><div>2</div><div>3</div>
+  <div>4</div><div>5</div><div>6</div>
+</div>
+<p>창을 600px 아래로 좁히면 1열로 바뀝니다.</p>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;그리드 Grid&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 20px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3열 */
+    gap: 12px;                               /* 간격은 margin이 아니라 gap으로 */
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }    /* 모바일 1열 */
+  }
+  .grid &gt; div {
+    background: #f4f4f7; border-radius: 10px;
+    padding: 28px 0; text-align: center;
+    color: #6b6b76; font-size: 14px;
+  }
+  p { color: #9a9aa4; font-size: 13px; }
+&lt;/style&gt;
+
+&lt;div class="grid"&gt;
+  &lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;
+  &lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;&lt;div&gt;6&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;창을 600px 아래로 좁히면 1열로 바뀝니다.&lt;/p&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="card">
+  <div class="info">
+    <h3>카드 <span class="en">Card</span></h3>
+    <div class="aliases"><span class="alias">"네모 박스 하나하나"</span><span class="alias">"박스형"</span><span class="alias">"테두리 있는 덩어리"</span></div>
+    <p class="one">이미지·제목·설명을 한 덩어리로 묶은 네모 상자.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.</p>
+      <button class="copy" data-copy="각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="카드 라이브 데모" loading="lazy" style="height:340px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>카드 Card</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; background: #f8f8fa; }
+  .card {
+    max-width: 300px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 14px;
+    overflow: hidden;                 /* 썸네일 모서리를 카드 라운드에 맞춤 */
+    transition: box-shadow .15s;
+  }
+  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+  .card .thumb {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #dfe6ee, #c3ccd8);
+  }
+  .card .body { padding: 14px 16px 16px; display: grid; gap: 6px; }
+  .card h3 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: #6b6b76; font-size: 13.5px; line-height: 1.55; }
+  .card .meta { color: #9a9aa4; font-size: 12px; }
+</style>
+
+<article class=&quot;card&quot;>
+  <div class=&quot;thumb&quot; role=&quot;img&quot; aria-label=&quot;썸네일&quot;></div>
+  <div class=&quot;body&quot;>
+    <h3>카드 제목</h3>
+    <p>이미지, 제목, 설명을 한 덩어리로 묶으면 카드입니다.</p>
+    <span class=&quot;meta&quot;>2026-09-10</span>
+  </div>
+</article>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;카드 Card&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; background: #f8f8fa; }
+  .card {
+    max-width: 300px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 14px;
+    overflow: hidden;                 /* 썸네일 모서리를 카드 라운드에 맞춤 */
+    transition: box-shadow .15s;
+  }
+  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+  .card .thumb {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #dfe6ee, #c3ccd8);
+  }
+  .card .body { padding: 14px 16px 16px; display: grid; gap: 6px; }
+  .card h3 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: #6b6b76; font-size: 13.5px; line-height: 1.55; }
+  .card .meta { color: #9a9aa4; font-size: 12px; }
+&lt;/style&gt;
+
+&lt;article class="card"&gt;
+  &lt;div class="thumb" role="img" aria-label="썸네일"&gt;&lt;/div&gt;
+  &lt;div class="body"&gt;
+    &lt;h3&gt;카드 제목&lt;/h3&gt;
+    &lt;p&gt;이미지, 제목, 설명을 한 덩어리로 묶으면 카드입니다.&lt;/p&gt;
+    &lt;span class="meta"&gt;2026-09-10&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+</section>
+
+<section class="cat" id="interaction">
+  <h2>인터랙션 <span class="count">12</span></h2>
+  
+<article class="item" id="accordion">
+  <div class="info">
+    <h3>아코디언 <span class="en">Accordion</span></h3>
+    <div class="aliases"><span class="alias">"접었다 폈다 되는 거"</span><span class="alias">"클릭하면 펼쳐지는 목록"</span><span class="alias">"펼침 목록"</span><span class="alias">"FAQ 접기"</span></div>
+    <p class="one">제목을 누르면 내용이 접히고 펼쳐지는 목록.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>FAQ를 아코디언으로 만들어줘. 한 번에 하나만 열리게.</p>
+      <button class="copy" data-copy="FAQ를 아코디언으로 만들어줘. 한 번에 하나만 열리게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="아코디언 라이브 데모" loading="lazy" style="height:280px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>아코디언 Accordion</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .accordion { max-width: 480px; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; }
+  .accordion details + details { border-top: 1px solid #e8e8ee; }
+  .accordion summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; font-size: 14.5px; font-weight: 600;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary::after { content: &quot;+&quot;; color: #9a9aa4; font-weight: 400; }
+  .accordion details[open] summary::after { content: &quot;\2212&quot;; }
+  .accordion summary:hover { background: #f8f8fa; }
+  .accordion .panel { padding: 0 16px 14px; color: #6b6b76; font-size: 13.5px; line-height: 1.6; }
+</style>
+
+<!-- name 속성이 같은 details끼리는 한 번에 하나만 열립니다 (브라우저 내장) -->
+<div class=&quot;accordion&quot;>
+  <details name=&quot;faq&quot; open>
+    <summary>환불은 어떻게 하나요?</summary>
+    <div class=&quot;panel&quot;>결제 후 7일 이내에는 전액 환불됩니다.</div>
+  </details>
+  <details name=&quot;faq&quot;>
+    <summary>계정을 여러 명이 써도 되나요?</summary>
+    <div class=&quot;panel&quot;>플랜별 좌석 수만큼 초대할 수 있습니다.</div>
+  </details>
+  <details name=&quot;faq&quot;>
+    <summary>데이터는 어디에 저장되나요?</summary>
+    <div class=&quot;panel&quot;>전부 사용자의 기기에만 저장됩니다.</div>
+  </details>
+</div>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;아코디언 Accordion&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .accordion { max-width: 480px; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; }
+  .accordion details + details { border-top: 1px solid #e8e8ee; }
+  .accordion summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; font-size: 14.5px; font-weight: 600;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary::after { content: "+"; color: #9a9aa4; font-weight: 400; }
+  .accordion details[open] summary::after { content: "\2212"; }
+  .accordion summary:hover { background: #f8f8fa; }
+  .accordion .panel { padding: 0 16px 14px; color: #6b6b76; font-size: 13.5px; line-height: 1.6; }
+&lt;/style&gt;
+
+&lt;!-- name 속성이 같은 details끼리는 한 번에 하나만 열립니다 (브라우저 내장) --&gt;
+&lt;div class="accordion"&gt;
+  &lt;details name="faq" open&gt;
+    &lt;summary&gt;환불은 어떻게 하나요?&lt;/summary&gt;
+    &lt;div class="panel"&gt;결제 후 7일 이내에는 전액 환불됩니다.&lt;/div&gt;
+  &lt;/details&gt;
+  &lt;details name="faq"&gt;
+    &lt;summary&gt;계정을 여러 명이 써도 되나요?&lt;/summary&gt;
+    &lt;div class="panel"&gt;플랜별 좌석 수만큼 초대할 수 있습니다.&lt;/div&gt;
+  &lt;/details&gt;
+  &lt;details name="faq"&gt;
+    &lt;summary&gt;데이터는 어디에 저장되나요?&lt;/summary&gt;
+    &lt;div class="panel"&gt;전부 사용자의 기기에만 저장됩니다.&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="tabs">
+  <div class="info">
+    <h3>탭 <span class="en">Tabs</span></h3>
+    <div class="aliases"><span class="alias">"위에 눌러서 화면 바뀌는 거"</span><span class="alias">"칸 전환 버튼"</span><span class="alias">"메뉴 눌러서 내용 바뀌는 거"</span></div>
+    <p class="one">버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>월간·연간 두 개 탭으로 요금표가 전환되게 해줘.</p>
+      <button class="copy" data-copy="월간·연간 두 개 탭으로 요금표가 전환되게 해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="탭 라이브 데모" loading="lazy" style="height:220px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>탭 Tabs</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .tabs { max-width: 420px; }
+  .tablist { display: flex; gap: 4px; border-bottom: 1px solid #e8e8ee; }
+  .tablist button {
+    padding: 10px 16px; border: 0; background: none; cursor: pointer;
+    font-size: 14px; color: #6b6b76;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tablist button[aria-selected=&quot;true&quot;] { color: #17171b; font-weight: 700; border-bottom-color: #17171b; }
+  .panel { padding: 16px 4px; font-size: 14px; color: #55555f; line-height: 1.6; }
+  .panel[hidden] { display: none; }
+</style>
+
+<div class=&quot;tabs&quot;>
+  <div class=&quot;tablist&quot; role=&quot;tablist&quot; aria-label=&quot;요금제&quot;>
+    <button role=&quot;tab&quot; id=&quot;t-mo&quot; aria-selected=&quot;true&quot; aria-controls=&quot;p-mo&quot;>월간</button>
+    <button role=&quot;tab&quot; id=&quot;t-yr&quot; aria-selected=&quot;false&quot; aria-controls=&quot;p-yr&quot;>연간</button>
+  </div>
+  <div class=&quot;panel&quot; role=&quot;tabpanel&quot; id=&quot;p-mo&quot; aria-labelledby=&quot;t-mo&quot;>월 9,900원. 언제든 해지할 수 있어요.</div>
+  <div class=&quot;panel&quot; role=&quot;tabpanel&quot; id=&quot;p-yr&quot; aria-labelledby=&quot;t-yr&quot; hidden>연 99,000원. 두 달치가 무료예요.</div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('[role=&quot;tab&quot;]');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      t.setAttribute('aria-selected', String(t === tab));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = (t !== tab);
+    });
+  }));
+</script>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;탭 Tabs&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .tabs { max-width: 420px; }
+  .tablist { display: flex; gap: 4px; border-bottom: 1px solid #e8e8ee; }
+  .tablist button {
+    padding: 10px 16px; border: 0; background: none; cursor: pointer;
+    font-size: 14px; color: #6b6b76;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tablist button[aria-selected="true"] { color: #17171b; font-weight: 700; border-bottom-color: #17171b; }
+  .panel { padding: 16px 4px; font-size: 14px; color: #55555f; line-height: 1.6; }
+  .panel[hidden] { display: none; }
+&lt;/style&gt;
+
+&lt;div class="tabs"&gt;
+  &lt;div class="tablist" role="tablist" aria-label="요금제"&gt;
+    &lt;button role="tab" id="t-mo" aria-selected="true" aria-controls="p-mo"&gt;월간&lt;/button&gt;
+    &lt;button role="tab" id="t-yr" aria-selected="false" aria-controls="p-yr"&gt;연간&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="panel" role="tabpanel" id="p-mo" aria-labelledby="t-mo"&gt;월 9,900원. 언제든 해지할 수 있어요.&lt;/div&gt;
+  &lt;div class="panel" role="tabpanel" id="p-yr" aria-labelledby="t-yr" hidden&gt;연 99,000원. 두 달치가 무료예요.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(tab =&gt; tab.addEventListener('click', () =&gt; {
+    tabs.forEach(t =&gt; {
+      t.setAttribute('aria-selected', String(t === tab));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = (t !== tab);
+    });
+  }));
+&lt;/script&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="modal">
+  <div class="info">
+    <h3>모달 <span class="en">Modal</span></h3>
+    <div class="aliases"><span class="alias">"화면 가운데 뜨는 창"</span><span class="alias">"팝업"</span><span class="alias">"뒤가 어두워지면서 뜨는 거"</span></div>
+    <p class="one">화면 위에 겹쳐 뜨는 창. 뒤 배경은 어두워지고, 닫기 전엔 다른 걸 못 누른다.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>삭제 버튼을 누르면 '정말 삭제할까요?' 확인 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.</p>
+      <button class="copy" data-copy="삭제 버튼을 누르면 '정말 삭제할까요?' 확인 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="모달 라이브 데모" loading="lazy" style="height:320px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>모달 Modal</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .open-btn, .danger, .ghost {
+    padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff;
+  }
+  dialog.modal {
+    border: 0; border-radius: 14px; padding: 22px;
+    width: min(90vw, 340px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  dialog.modal::backdrop { background: rgba(0,0,0,.45); }   /* 뒤가 어두워지는 그것 */
+  .modal h2 { margin: 0 0 8px; font-size: 17px; }
+  .modal p { margin: 0 0 18px; color: #6b6b76; font-size: 14px; }
+  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .danger { background: #d64224; border-color: #d64224; color: #fff; }
+</style>
+
+<button class=&quot;open-btn&quot; onclick=&quot;document.getElementById('confirm').showModal()&quot;>삭제</button>
+
+<!-- <dialog>가 포커스 가둠·ESC 닫기·배경 차단을 전부 내장하고 있습니다 -->
+<dialog class=&quot;modal&quot; id=&quot;confirm&quot; aria-labelledby=&quot;confirm-title&quot;
+        onclick=&quot;if (event.target === this) this.close()&quot;>   <!-- 배경 클릭 닫기 -->
+  <h2 id=&quot;confirm-title&quot;>정말 삭제할까요?</h2>
+  <p>이 작업은 되돌릴 수 없어요.</p>
+  <div class=&quot;actions&quot;>
+    <button class=&quot;ghost&quot; onclick=&quot;this.closest('dialog').close()&quot;>취소</button>
+    <button class=&quot;danger&quot; onclick=&quot;this.closest('dialog').close()&quot;>삭제</button>
+  </div>
+</dialog>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;모달 Modal&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .open-btn, .danger, .ghost {
+    padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff;
+  }
+  dialog.modal {
+    border: 0; border-radius: 14px; padding: 22px;
+    width: min(90vw, 340px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  dialog.modal::backdrop { background: rgba(0,0,0,.45); }   /* 뒤가 어두워지는 그것 */
+  .modal h2 { margin: 0 0 8px; font-size: 17px; }
+  .modal p { margin: 0 0 18px; color: #6b6b76; font-size: 14px; }
+  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .danger { background: #d64224; border-color: #d64224; color: #fff; }
+&lt;/style&gt;
+
+&lt;button class="open-btn" onclick="document.getElementById('confirm').showModal()"&gt;삭제&lt;/button&gt;
+
+&lt;!-- &lt;dialog&gt;가 포커스 가둠·ESC 닫기·배경 차단을 전부 내장하고 있습니다 --&gt;
+&lt;dialog class="modal" id="confirm" aria-labelledby="confirm-title"
+        onclick="if (event.target === this) this.close()"&gt;   &lt;!-- 배경 클릭 닫기 --&gt;
+  &lt;h2 id="confirm-title"&gt;정말 삭제할까요?&lt;/h2&gt;
+  &lt;p&gt;이 작업은 되돌릴 수 없어요.&lt;/p&gt;
+  &lt;div class="actions"&gt;
+    &lt;button class="ghost" onclick="this.closest('dialog').close()"&gt;취소&lt;/button&gt;
+    &lt;button class="danger" onclick="this.closest('dialog').close()"&gt;삭제&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="toast">
+  <div class="info">
+    <h3>토스트 <span class="en">Toast</span></h3>
+    <div class="aliases"><span class="alias">"잠깐 떴다 사라지는 알림"</span><span class="alias">"저장됐다고 뜨는 거"</span><span class="alias">"구석에 뜨는 알림"</span></div>
+    <p class="one">구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.</p>
+      <button class="copy" data-copy="저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="토스트 라이브 데모" loading="lazy" style="height:220px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>토스트 Toast</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  button { padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
+  #toasts {
+    position: fixed; right: 16px; bottom: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: #17171b; color: #fff;
+    padding: 11px 16px; border-radius: 10px; font-size: 13.5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    animation: slide-in .18s ease-out;
+  }
+  .toast.bye { animation: fade-out .25s forwards; }
+  @keyframes slide-in { from { transform: translateY(8px); opacity: 0; } }
+  @keyframes fade-out { to { transform: translateY(4px); opacity: 0; } }
+</style>
+
+<button onclick=&quot;toast('저장됐어요')&quot;>저장</button>
+
+<!-- role=&quot;status&quot;: 스크린리더가 끼어들지 않고 조용히 읽어 줌 -->
+<div id=&quot;toasts&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;></div>
+
+<script>
+  function toast(msg, ms = 3000) {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.textContent = msg;
+    document.getElementById('toasts').append(el);
+    setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, ms);
+  }
+</script>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;토스트 Toast&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  button { padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
+  #toasts {
+    position: fixed; right: 16px; bottom: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: #17171b; color: #fff;
+    padding: 11px 16px; border-radius: 10px; font-size: 13.5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    animation: slide-in .18s ease-out;
+  }
+  .toast.bye { animation: fade-out .25s forwards; }
+  @keyframes slide-in { from { transform: translateY(8px); opacity: 0; } }
+  @keyframes fade-out { to { transform: translateY(4px); opacity: 0; } }
+&lt;/style&gt;
+
+&lt;button onclick="toast('저장됐어요')"&gt;저장&lt;/button&gt;
+
+&lt;!-- role="status": 스크린리더가 끼어들지 않고 조용히 읽어 줌 --&gt;
+&lt;div id="toasts" role="status" aria-live="polite"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  function toast(msg, ms = 3000) {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.textContent = msg;
+    document.getElementById('toasts').append(el);
+    setTimeout(() =&gt; { el.classList.add('bye'); el.addEventListener('animationend', () =&gt; el.remove()); }, ms);
+  }
+&lt;/script&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="dropdown">
+  <div class="info">
+    <h3>드롭다운 <span class="en">Dropdown</span></h3>
+    <div class="aliases"><span class="alias">"누르면 아래로 목록 나오는 거"</span><span class="alias">"선택 상자"</span><span class="alias">"펼침 메뉴"</span></div>
+    <p class="one">누르면 아래로 선택지 목록이 펼쳐지는 메뉴.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>프로필 아이콘을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.</p>
+      <button class="copy" data-copy="프로필 아이콘을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="드롭다운 라이브 데모" loading="lazy" style="height:260px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>드롭다운 Dropdown</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .dropdown { position: relative; display: inline-block; }
+  .dropdown > button {
+    padding: 10px 16px; border: 1px solid #e0e0e8; border-radius: 9px;
+    background: #fff; font-size: 14px; cursor: pointer;
+  }
+  .menu {
+    position: absolute; top: calc(100% + 6px); left: 0;
+    min-width: 160px; padding: 6px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  }
+  .menu[hidden] { display: none; }
+  .menu button {
+    display: block; width: 100%; text-align: left;
+    padding: 9px 12px; border: 0; border-radius: 8px;
+    background: none; font-size: 14px; cursor: pointer; color: #17171b;
+  }
+  .menu button:hover { background: #f4f4f7; }
+  .menu .out { color: #d64224; }
+</style>
+
+<div class=&quot;dropdown&quot;>
+  <button aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot;
+          onclick=&quot;const m = this.nextElementSibling; m.hidden = !m.hidden; this.setAttribute('aria-expanded', String(!m.hidden))&quot;>
+    내 계정 &amp;#9662;
+  </button>
+  <div class=&quot;menu&quot; role=&quot;menu&quot; hidden>
+    <button role=&quot;menuitem&quot;>설정</button>
+    <button role=&quot;menuitem&quot; class=&quot;out&quot;>로그아웃</button>
+  </div>
+</div>
+
+<script>
+  // 바깥을 누르면 닫기
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.dropdown').forEach(d => {
+      if (!d.contains(e.target)) {
+        d.querySelector('.menu').hidden = true;
+        d.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;드롭다운 Dropdown&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .dropdown { position: relative; display: inline-block; }
+  .dropdown &gt; button {
+    padding: 10px 16px; border: 1px solid #e0e0e8; border-radius: 9px;
+    background: #fff; font-size: 14px; cursor: pointer;
+  }
+  .menu {
+    position: absolute; top: calc(100% + 6px); left: 0;
+    min-width: 160px; padding: 6px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  }
+  .menu[hidden] { display: none; }
+  .menu button {
+    display: block; width: 100%; text-align: left;
+    padding: 9px 12px; border: 0; border-radius: 8px;
+    background: none; font-size: 14px; cursor: pointer; color: #17171b;
+  }
+  .menu button:hover { background: #f4f4f7; }
+  .menu .out { color: #d64224; }
+&lt;/style&gt;
+
+&lt;div class="dropdown"&gt;
+  &lt;button aria-haspopup="menu" aria-expanded="false"
+          onclick="const m = this.nextElementSibling; m.hidden = !m.hidden; this.setAttribute('aria-expanded', String(!m.hidden))"&gt;
+    내 계정 &amp;#9662;
+  &lt;/button&gt;
+  &lt;div class="menu" role="menu" hidden&gt;
+    &lt;button role="menuitem"&gt;설정&lt;/button&gt;
+    &lt;button role="menuitem" class="out"&gt;로그아웃&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  // 바깥을 누르면 닫기
+  document.addEventListener('click', (e) =&gt; {
+    document.querySelectorAll('.dropdown').forEach(d =&gt; {
+      if (!d.contains(e.target)) {
+        d.querySelector('.menu').hidden = true;
+        d.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+&lt;/script&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="tooltip">
+  <div class="info">
+    <h3>툴팁 <span class="en">Tooltip</span></h3>
+    <div class="aliases"><span class="alias">"마우스 올리면 나오는 설명"</span><span class="alias">"말풍선 도움말"</span><span class="alias">"물음표 설명"</span></div>
+    <p class="one">마우스를 올리면 잠깐 나오는 작은 설명 말풍선.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.</p>
+      <button class="copy" data-copy="이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="툴팁 라이브 데모" loading="lazy" style="height:180px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>툴팁 Tooltip</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 48px 24px; font-size: 14px; }
+  .tip { position: relative; display: inline-flex; }
+  .tip > button {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1px solid #c9c9d4; background: #fff; color: #6b6b76;
+    font-size: 12px; cursor: default;
+  }
+  .tip .bubble {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; padding: 7px 11px; border-radius: 8px;
+    background: #17171b; color: #fff; font-size: 12.5px;
+    opacity: 0; pointer-events: none; transition: opacity .12s;
+  }
+  .bubble::after {   /* 말풍선 꼬리 */
+    content: &quot;&quot;; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+    border: 5px solid transparent; border-top-color: #17171b;
+  }
+  /* 마우스 올렸을 때 + 키보드 포커스일 때 모두 보여야 합니다 */
+  .tip:hover .bubble, .tip > button:focus-visible + .bubble { opacity: 1; }
+</style>
+
+수치 기준
+<span class=&quot;tip&quot;>
+  <button aria-describedby=&quot;tip1&quot;>?</button>
+  <span class=&quot;bubble&quot; role=&quot;tooltip&quot; id=&quot;tip1&quot;>클론 실측 기준 수치입니다</span>
+</span>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;툴팁 Tooltip&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 48px 24px; font-size: 14px; }
+  .tip { position: relative; display: inline-flex; }
+  .tip &gt; button {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1px solid #c9c9d4; background: #fff; color: #6b6b76;
+    font-size: 12px; cursor: default;
+  }
+  .tip .bubble {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; padding: 7px 11px; border-radius: 8px;
+    background: #17171b; color: #fff; font-size: 12.5px;
+    opacity: 0; pointer-events: none; transition: opacity .12s;
+  }
+  .bubble::after {   /* 말풍선 꼬리 */
+    content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+    border: 5px solid transparent; border-top-color: #17171b;
+  }
+  /* 마우스 올렸을 때 + 키보드 포커스일 때 모두 보여야 합니다 */
+  .tip:hover .bubble, .tip &gt; button:focus-visible + .bubble { opacity: 1; }
+&lt;/style&gt;
+
+수치 기준
+&lt;span class="tip"&gt;
+  &lt;button aria-describedby="tip1"&gt;?&lt;/button&gt;
+  &lt;span class="bubble" role="tooltip" id="tip1"&gt;클론 실측 기준 수치입니다&lt;/span&gt;
+&lt;/span&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="carousel">
+  <div class="info">
+    <h3>캐러셀 <span class="en">Carousel</span></h3>
+    <div class="aliases"><span class="alias">"옆으로 넘기는 배너"</span><span class="alias">"슬라이드"</span><span class="alias">"좌우로 돌아가는 이미지"</span></div>
+    <p class="one">여러 장을 옆으로 넘겨 보는 회전 목록.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.</p>
+      <button class="copy" data-copy="후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="캐러셀 라이브 데모" loading="lazy" style="height:300px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>캐러셀 Carousel</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .carousel { max-width: 420px; }
+  .track {
+    display: flex; overflow-x: auto;
+    scroll-snap-type: x mandatory;           /* 한 장씩 착 붙는 핵심 */
+    scrollbar-width: none; border-radius: 14px;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; scroll-snap-align: start;
+    padding: 44px 24px; text-align: center; font-size: 14.5px; line-height: 1.6;
+    background: #f4f4f7; color: #43434d;
+  }
+  .nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+  .nav button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 7px; height: 7px; border-radius: 50%; background: #d4d4dd; }
+  .dots i.on { background: #17171b; }
+</style>
+
+<div class=&quot;carousel&quot;>
+  <div class=&quot;track&quot; id=&quot;track&quot;>
+    <div class=&quot;slide&quot;>&quot;도입 전에 실측 수치부터 보게 됐어요.&quot;</div>
+    <div class=&quot;slide&quot;>&quot;별점 대신 근거를 읽는 습관이 생겼습니다.&quot;</div>
+    <div class=&quot;slide&quot;>&quot;리포트 하나로 팀 설득이 끝났어요.&quot;</div>
+  </div>
+  <div class=&quot;nav&quot;>
+    <button aria-label=&quot;이전&quot; onclick=&quot;go(-1)&quot;>&amp;#8249;</button>
+    <div class=&quot;dots&quot; id=&quot;dots&quot;><i class=&quot;on&quot;></i><i></i><i></i></div>
+    <button aria-label=&quot;다음&quot; onclick=&quot;go(1)&quot;>&amp;#8250;</button>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('#dots i');
+  const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+  function go(d) {
+    const n = Math.min(2, Math.max(0, idx() + d));
+    track.scrollTo({ left: n * track.clientWidth, behavior: 'smooth' });
+  }
+  track.addEventListener('scroll', () => dots.forEach((el, i) => el.classList.toggle('on', i === idx())));
+</script>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;캐러셀 Carousel&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .carousel { max-width: 420px; }
+  .track {
+    display: flex; overflow-x: auto;
+    scroll-snap-type: x mandatory;           /* 한 장씩 착 붙는 핵심 */
+    scrollbar-width: none; border-radius: 14px;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; scroll-snap-align: start;
+    padding: 44px 24px; text-align: center; font-size: 14.5px; line-height: 1.6;
+    background: #f4f4f7; color: #43434d;
+  }
+  .nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+  .nav button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 7px; height: 7px; border-radius: 50%; background: #d4d4dd; }
+  .dots i.on { background: #17171b; }
+&lt;/style&gt;
+
+&lt;div class="carousel"&gt;
+  &lt;div class="track" id="track"&gt;
+    &lt;div class="slide"&gt;"도입 전에 실측 수치부터 보게 됐어요."&lt;/div&gt;
+    &lt;div class="slide"&gt;"별점 대신 근거를 읽는 습관이 생겼습니다."&lt;/div&gt;
+    &lt;div class="slide"&gt;"리포트 하나로 팀 설득이 끝났어요."&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nav"&gt;
+    &lt;button aria-label="이전" onclick="go(-1)"&gt;&amp;#8249;&lt;/button&gt;
+    &lt;div class="dots" id="dots"&gt;&lt;i class="on"&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;button aria-label="다음" onclick="go(1)"&gt;&amp;#8250;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('#dots i');
+  const idx = () =&gt; Math.round(track.scrollLeft / track.clientWidth);
+  function go(d) {
+    const n = Math.min(2, Math.max(0, idx() + d));
+    track.scrollTo({ left: n * track.clientWidth, behavior: 'smooth' });
+  }
+  track.addEventListener('scroll', () =&gt; dots.forEach((el, i) =&gt; el.classList.toggle('on', i === idx())));
+&lt;/script&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="skeleton-ui">
+  <div class="info">
+    <h3>스켈레톤 <span class="en">Skeleton</span></h3>
+    <div class="aliases"><span class="alias">"로딩 때 회색 뼈대"</span><span class="alias">"로딩 자리 표시"</span><span class="alias">"번쩍거리는 회색 박스"</span></div>
+    <p class="one">내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.</p>
+      <button class="copy" data-copy="목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="스켈레톤 라이브 데모" loading="lazy" style="height:240px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>스켈레톤 Skeleton</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; padding: 24px; }
+  .list { display: grid; gap: 12px; max-width: 420px; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .sk {
+    background: linear-gradient(90deg, #ececf1 25%, #f7f7fa 45%, #ececf1 65%);
+    background-size: 200% 100%;
+    animation: shimmer 1.3s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+  .lines { flex: 1; display: grid; gap: 8px; }
+  .l1 { height: 13px; width: 55%; }
+  .l2 { height: 11px; width: 85%; }
+</style>
+
+<!-- 실제 내용이 오면 이 블록을 통째로 갈아 끼웁니다 -->
+<div class=&quot;list&quot; aria-hidden=&quot;true&quot;>
+  <div class=&quot;row&quot;><div class=&quot;sk avatar&quot;></div><div class=&quot;lines&quot;><div class=&quot;sk l1&quot;></div><div class=&quot;sk l2&quot;></div></div></div>
+  <div class=&quot;row&quot;><div class=&quot;sk avatar&quot;></div><div class=&quot;lines&quot;><div class=&quot;sk l1&quot;></div><div class=&quot;sk l2&quot;></div></div></div>
+  <div class=&quot;row&quot;><div class=&quot;sk avatar&quot;></div><div class=&quot;lines&quot;><div class=&quot;sk l1&quot;></div><div class=&quot;sk l2&quot;></div></div></div>
+</div>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;스켈레톤 Skeleton&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; padding: 24px; }
+  .list { display: grid; gap: 12px; max-width: 420px; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .sk {
+    background: linear-gradient(90deg, #ececf1 25%, #f7f7fa 45%, #ececf1 65%);
+    background-size: 200% 100%;
+    animation: shimmer 1.3s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+  .lines { flex: 1; display: grid; gap: 8px; }
+  .l1 { height: 13px; width: 55%; }
+  .l2 { height: 11px; width: 85%; }
+&lt;/style&gt;
+
+&lt;!-- 실제 내용이 오면 이 블록을 통째로 갈아 끼웁니다 --&gt;
+&lt;div class="list" aria-hidden="true"&gt;
+  &lt;div class="row"&gt;&lt;div class="sk avatar"&gt;&lt;/div&gt;&lt;div class="lines"&gt;&lt;div class="sk l1"&gt;&lt;/div&gt;&lt;div class="sk l2"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="row"&gt;&lt;div class="sk avatar"&gt;&lt;/div&gt;&lt;div class="lines"&gt;&lt;div class="sk l1"&gt;&lt;/div&gt;&lt;div class="sk l2"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="row"&gt;&lt;div class="sk avatar"&gt;&lt;/div&gt;&lt;div class="lines"&gt;&lt;div class="sk l1"&gt;&lt;/div&gt;&lt;div class="sk l2"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="switch">
+  <div class="info">
+    <h3>토글 스위치 <span class="en">Toggle Switch</span></h3>
+    <div class="aliases"><span class="alias">"껐다 켰다 하는 동그라미"</span><span class="alias">"on/off 버튼"</span><span class="alias">"밀어서 켜는 거"</span></div>
+    <p class="one">밀어서 켜고 끄는 on/off 스위치.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.</p>
+      <button class="copy" data-copy="알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="토글 스위치 라이브 데모" loading="lazy" style="height:140px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>토글 스위치 Toggle Switch</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .switch { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .knob {
+    width: 42px; height: 25px; border-radius: 999px;
+    background: #d4d4dd; position: relative; transition: background .15s;
+  }
+  .knob::after {
+    content: &quot;&quot;; position: absolute; top: 3px; left: 3px;
+    width: 19px; height: 19px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s;
+  }
+  .switch input:checked + .knob { background: #17b26a; }
+  .switch input:checked + .knob::after { transform: translateX(17px); }
+  .switch input:focus-visible + .knob { outline: 2px solid #17171b; outline-offset: 2px; }
+</style>
+
+<!-- 실체는 checkbox라서 폼 전송·상태 관리가 공짜입니다 -->
+<label class=&quot;switch&quot;>
+  <input type=&quot;checkbox&quot; role=&quot;switch&quot; checked>
+  <span class=&quot;knob&quot; aria-hidden=&quot;true&quot;></span>
+  알림 받기
+</label>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;토글 스위치 Toggle Switch&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .switch { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .knob {
+    width: 42px; height: 25px; border-radius: 999px;
+    background: #d4d4dd; position: relative; transition: background .15s;
+  }
+  .knob::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 19px; height: 19px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s;
+  }
+  .switch input:checked + .knob { background: #17b26a; }
+  .switch input:checked + .knob::after { transform: translateX(17px); }
+  .switch input:focus-visible + .knob { outline: 2px solid #17171b; outline-offset: 2px; }
+&lt;/style&gt;
+
+&lt;!-- 실체는 checkbox라서 폼 전송·상태 관리가 공짜입니다 --&gt;
+&lt;label class="switch"&gt;
+  &lt;input type="checkbox" role="switch" checked&gt;
+  &lt;span class="knob" aria-hidden="true"&gt;&lt;/span&gt;
+  알림 받기
+&lt;/label&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="drawer">
+  <div class="info">
+    <h3>드로어 <span class="en">Drawer</span></h3>
+    <div class="aliases"><span class="alias">"옆에서 미끄러져 나오는 메뉴"</span><span class="alias">"햄버거 누르면 나오는 거"</span><span class="alias">"슬라이드 패널"</span></div>
+    <p class="one">화면 옆에서 서랍처럼 밀려 나오는 패널. 모바일 메뉴의 단골.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>모바일에서는 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘.</p>
+      <button class="copy" data-copy="모바일에서는 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="드로어 라이브 데모" loading="lazy" style="height:320px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>드로어 Drawer</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .burger { padding: 9px 14px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 15px; cursor: pointer; }
+  dialog.drawer {
+    border: 0; padding: 0;
+    position: fixed; inset: 0 0 0 auto;      /* 오른쪽 벽에 붙임 */
+    height: 100vh; max-height: 100vh;
+    width: min(78vw, 280px); margin: 0;
+    box-shadow: -12px 0 40px rgba(0,0,0,.15);
+    animation: slide .2s ease-out;
+  }
+  @keyframes slide { from { transform: translateX(100%); } }
+  dialog.drawer::backdrop { background: rgba(0,0,0,.35); }
+  .drawer nav { display: grid; gap: 4px; padding: 18px 12px; }
+  .drawer a { padding: 11px 14px; border-radius: 9px; color: #17171b; text-decoration: none; font-size: 15px; }
+  .drawer a:hover { background: #f4f4f7; }
+  .drawer .close { margin: 14px 12px 0; text-align: right; }
+  .drawer .close button { border: 0; background: none; font-size: 20px; cursor: pointer; color: #9a9aa4; }
+</style>
+
+<button class=&quot;burger&quot; onclick=&quot;document.getElementById('menu').showModal()&quot; aria-label=&quot;메뉴 열기&quot;>&amp;#9776;</button>
+
+<dialog class=&quot;drawer&quot; id=&quot;menu&quot; aria-label=&quot;메뉴&quot;
+        onclick=&quot;if (event.target === this) this.close()&quot;>
+  <div class=&quot;close&quot;><button onclick=&quot;this.closest('dialog').close()&quot; aria-label=&quot;닫기&quot;>&amp;times;</button></div>
+  <nav>
+    <a href=&quot;#&quot;>홈</a>
+    <a href=&quot;#&quot;>리포트</a>
+    <a href=&quot;#&quot;>매거진</a>
+    <a href=&quot;#&quot;>설정</a>
+  </nav>
+</dialog>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;드로어 Drawer&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .burger { padding: 9px 14px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 15px; cursor: pointer; }
+  dialog.drawer {
+    border: 0; padding: 0;
+    position: fixed; inset: 0 0 0 auto;      /* 오른쪽 벽에 붙임 */
+    height: 100vh; max-height: 100vh;
+    width: min(78vw, 280px); margin: 0;
+    box-shadow: -12px 0 40px rgba(0,0,0,.15);
+    animation: slide .2s ease-out;
+  }
+  @keyframes slide { from { transform: translateX(100%); } }
+  dialog.drawer::backdrop { background: rgba(0,0,0,.35); }
+  .drawer nav { display: grid; gap: 4px; padding: 18px 12px; }
+  .drawer a { padding: 11px 14px; border-radius: 9px; color: #17171b; text-decoration: none; font-size: 15px; }
+  .drawer a:hover { background: #f4f4f7; }
+  .drawer .close { margin: 14px 12px 0; text-align: right; }
+  .drawer .close button { border: 0; background: none; font-size: 20px; cursor: pointer; color: #9a9aa4; }
+&lt;/style&gt;
+
+&lt;button class="burger" onclick="document.getElementById('menu').showModal()" aria-label="메뉴 열기"&gt;&amp;#9776;&lt;/button&gt;
+
+&lt;dialog class="drawer" id="menu" aria-label="메뉴"
+        onclick="if (event.target === this) this.close()"&gt;
+  &lt;div class="close"&gt;&lt;button onclick="this.closest('dialog').close()" aria-label="닫기"&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;
+  &lt;nav&gt;
+    &lt;a href="#"&gt;홈&lt;/a&gt;
+    &lt;a href="#"&gt;리포트&lt;/a&gt;
+    &lt;a href="#"&gt;매거진&lt;/a&gt;
+    &lt;a href="#"&gt;설정&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/dialog&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="chip">
+  <div class="info">
+    <h3>칩 <span class="en">Chip / Tag</span></h3>
+    <div class="aliases"><span class="alias">"알약같이 생긴 작은 라벨"</span><span class="alias">"태그"</span><span class="alias">"동글동글한 필터 버튼"</span></div>
+    <p class="one">알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.</p>
+      <button class="copy" data-copy="태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="칩 라이브 데모" loading="lazy" style="height:160px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>칩 Chip</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 420px; }
+  .chip {
+    padding: 7px 14px; border-radius: 999px;    /* 알약 모양의 정체 */
+    border: 1px solid #e0e0e8; background: #fff;
+    font-size: 13.5px; cursor: pointer; color: #43434d;
+    transition: all .12s;
+  }
+  .chip:hover { border-color: #b9b9c6; }
+  .chip[aria-pressed=&quot;true&quot;] { background: #17171b; border-color: #17171b; color: #fff; }
+</style>
+
+<div class=&quot;chips&quot; role=&quot;group&quot; aria-label=&quot;태그 필터&quot;>
+  <button class=&quot;chip&quot; aria-pressed=&quot;true&quot;>전체</button>
+  <button class=&quot;chip&quot; aria-pressed=&quot;false&quot;>CLI</button>
+  <button class=&quot;chip&quot; aria-pressed=&quot;false&quot;>에이전트</button>
+  <button class=&quot;chip&quot; aria-pressed=&quot;false&quot;>셀프호스트</button>
+  <button class=&quot;chip&quot; aria-pressed=&quot;false&quot;>디자인</button>
+</div>
+
+<script>
+  document.querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () =>
+      c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
+</script>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;칩 Chip&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 420px; }
+  .chip {
+    padding: 7px 14px; border-radius: 999px;    /* 알약 모양의 정체 */
+    border: 1px solid #e0e0e8; background: #fff;
+    font-size: 13.5px; cursor: pointer; color: #43434d;
+    transition: all .12s;
+  }
+  .chip:hover { border-color: #b9b9c6; }
+  .chip[aria-pressed="true"] { background: #17171b; border-color: #17171b; color: #fff; }
+&lt;/style&gt;
+
+&lt;div class="chips" role="group" aria-label="태그 필터"&gt;
+  &lt;button class="chip" aria-pressed="true"&gt;전체&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false"&gt;CLI&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false"&gt;에이전트&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false"&gt;셀프호스트&lt;/button&gt;
+  &lt;button class="chip" aria-pressed="false"&gt;디자인&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  document.querySelectorAll('.chip').forEach(c =&gt;
+    c.addEventListener('click', () =&gt;
+      c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
+&lt;/script&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+
+<article class="item" id="pagination">
+  <div class="info">
+    <h3>페이지네이션 <span class="en">Pagination</span></h3>
+    <div class="aliases"><span class="alias">"아래에 1 2 3 페이지 숫자"</span><span class="alias">"페이지 넘기기"</span><span class="alias">"다음 페이지 버튼"</span></div>
+    <p class="one">긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.</p>
+    <div class="ask">
+      <span class="ask-label">AI에게 이렇게 말하세요</span>
+      <p>목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.</p>
+      <button class="copy" data-copy="목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.">문장 복사</button>
+    </div>
+  </div>
+  <div class="demo">
+    <iframe title="페이지네이션 라이브 데모" loading="lazy" style="height:140px" srcdoc="<!doctype html>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>페이지네이션 Pagination</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .pagination { display: flex; gap: 4px; align-items: center; }
+  .pagination a, .pagination span {
+    min-width: 34px; height: 34px; padding: 0 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 13.5px;
+    color: #43434d; text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .pagination a:hover { background: #f4f4f7; }
+  .pagination [aria-current=&quot;page&quot;] { background: #17171b; color: #fff; font-weight: 700; }
+  .pagination .gap { color: #9a9aa4; }
+  .pagination [aria-disabled=&quot;true&quot;] { color: #c9c9d4; pointer-events: none; }
+</style>
+
+<nav class=&quot;pagination&quot; aria-label=&quot;페이지&quot;>
+  <a href=&quot;#&quot; aria-disabled=&quot;true&quot; aria-label=&quot;이전 페이지&quot;>&amp;#8249;</a>
+  <a href=&quot;#&quot; aria-current=&quot;page&quot;>1</a>
+  <a href=&quot;#&quot;>2</a>
+  <a href=&quot;#&quot;>3</a>
+  <span class=&quot;gap&quot;>&amp;#8230;</span>
+  <a href=&quot;#&quot;>12</a>
+  <a href=&quot;#&quot; aria-label=&quot;다음 페이지&quot;>&amp;#8250;</a>
+</nav>
+"></iframe>
+    <details>
+      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
+      <pre><code>&lt;!doctype html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;페이지네이션 Pagination&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .pagination { display: flex; gap: 4px; align-items: center; }
+  .pagination a, .pagination span {
+    min-width: 34px; height: 34px; padding: 0 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 13.5px;
+    color: #43434d; text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .pagination a:hover { background: #f4f4f7; }
+  .pagination [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
+  .pagination .gap { color: #9a9aa4; }
+  .pagination [aria-disabled="true"] { color: #c9c9d4; pointer-events: none; }
+&lt;/style&gt;
+
+&lt;nav class="pagination" aria-label="페이지"&gt;
+  &lt;a href="#" aria-disabled="true" aria-label="이전 페이지"&gt;&amp;#8249;&lt;/a&gt;
+  &lt;a href="#" aria-current="page"&gt;1&lt;/a&gt;
+  &lt;a href="#"&gt;2&lt;/a&gt;
+  &lt;a href="#"&gt;3&lt;/a&gt;
+  &lt;span class="gap"&gt;&amp;#8230;&lt;/span&gt;
+  &lt;a href="#"&gt;12&lt;/a&gt;
+  &lt;a href="#" aria-label="다음 페이지"&gt;&amp;#8250;&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+    </details>
+  </div>
+</article>
+</section>
+</div>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex;flex-wrap:wrap;gap:8px 20px">
+    <span>MIT License</span>
+    <a href="https://github.com/hanmariyang/giting-skills">hanmariyang/giting-skills</a>
+    <a href="https://giting.kr">giting.kr — 오픈소스를 별점이 아니라 실측으로</a>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.copy');
+    if (!btn) return;
+    e.preventDefault();
+    const text = btn.dataset.copy || btn.closest('.demo')?.querySelector('pre code')?.textContent;
+    if (!text) return;
+    try { await navigator.clipboard.writeText(text); } catch {}
+    const old = btn.textContent;
+    btn.textContent = '복사됨'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('ok'); }, 1200);
+  });
+</script>
+</body>
+</html>

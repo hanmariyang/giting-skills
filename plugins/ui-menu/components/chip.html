@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>칩 Chip</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 420px; }
+  .chip {
+    padding: 7px 14px; border-radius: 999px;    /* 알약 모양의 정체 */
+    border: 1px solid #e0e0e8; background: #fff;
+    font-size: 13.5px; cursor: pointer; color: #43434d;
+    transition: all .12s;
+  }
+  .chip:hover { border-color: #b9b9c6; }
+  .chip[aria-pressed="true"] { background: #17171b; border-color: #17171b; color: #fff; }
+</style>
+
+<div class="chips" role="group" aria-label="태그 필터">
+  <button class="chip" aria-pressed="true">전체</button>
+  <button class="chip" aria-pressed="false">CLI</button>
+  <button class="chip" aria-pressed="false">에이전트</button>
+  <button class="chip" aria-pressed="false">셀프호스트</button>
+  <button class="chip" aria-pressed="false">디자인</button>
+</div>
+
+<script>
+  document.querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () =>
+      c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
+</script>

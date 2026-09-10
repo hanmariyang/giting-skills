@@ -1,0 +1,171 @@
+{
+  "name": "UI 메뉴판",
+  "version": "0.1.0",
+  "description": "말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 검증된 실물 HTML.",
+  "categories": [
+    { "id": "skeleton", "ko": "페이지 뼈대" },
+    { "id": "interaction", "ko": "인터랙션" }
+  ],
+  "items": [
+    {
+      "id": "header",
+      "category": "skeleton",
+      "name": { "ko": "헤더", "en": "Header" },
+      "aliases": ["맨 위에 있는 바", "상단 바", "위에 로고 있는 줄", "탑바"],
+      "oneliner": "페이지 맨 위, 로고와 메뉴가 사는 가로 줄.",
+      "ask": "상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게."
+    },
+    {
+      "id": "navbar",
+      "category": "skeleton",
+      "name": { "ko": "네비게이션 바", "en": "Navbar / GNB" },
+      "aliases": ["메뉴 줄", "메뉴 모음", "카테고리 바", "GNB"],
+      "oneliner": "사이트의 큰 메뉴들을 모아 둔 이동 줄. 보통 헤더 안에 산다.",
+      "ask": "헤더 안에 소개·가격·문의 세 개짜리 네비게이션 바를 넣어줘. 현재 페이지는 진하게 표시되게."
+    },
+    {
+      "id": "hero",
+      "category": "skeleton",
+      "name": { "ko": "히어로", "en": "Hero" },
+      "aliases": ["첫 화면에 크게 나오는 거", "메인 배너", "대문", "제일 위에 큰 문구"],
+      "oneliner": "들어오자마자 보이는 큰 제목과 버튼 구역. 페이지의 첫인상.",
+      "ask": "히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로."
+    },
+    {
+      "id": "sidebar",
+      "category": "skeleton",
+      "name": { "ko": "사이드바", "en": "Sidebar" },
+      "aliases": ["옆에 세로로 붙은 메뉴", "왼쪽 메뉴", "옆 패널"],
+      "oneliner": "화면 옆에 세로로 붙는 메뉴·목차 영역.",
+      "ask": "왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘."
+    },
+    {
+      "id": "footer",
+      "category": "skeleton",
+      "name": { "ko": "푸터", "en": "Footer" },
+      "aliases": ["맨 아래 정보 나오는 데", "하단", "바닥글"],
+      "oneliner": "페이지 맨 아래, 저작권·링크·연락처가 모이는 줄.",
+      "ask": "푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘."
+    },
+    {
+      "id": "container",
+      "category": "skeleton",
+      "name": { "ko": "컨테이너", "en": "Container" },
+      "aliases": ["가운데로 모아주는 거", "본문 폭 제한", "가운데 정렬 박스"],
+      "oneliner": "내용이 너무 넓게 퍼지지 않게 최대 폭을 잡고 가운데 모으는, 눈에 안 보이는 상자.",
+      "ask": "본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘."
+    },
+    {
+      "id": "grid",
+      "category": "skeleton",
+      "name": { "ko": "그리드", "en": "Grid" },
+      "aliases": ["바둑판처럼 배치", "여러 칸으로 나누기", "3개씩 나란히"],
+      "oneliner": "칸을 바둑판처럼 나눠 나란히 배치하는 방식.",
+      "ask": "이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로."
+    },
+    {
+      "id": "card",
+      "category": "skeleton",
+      "name": { "ko": "카드", "en": "Card" },
+      "aliases": ["네모 박스 하나하나", "박스형", "테두리 있는 덩어리"],
+      "oneliner": "이미지·제목·설명을 한 덩어리로 묶은 네모 상자.",
+      "ask": "각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘."
+    },
+    {
+      "id": "accordion",
+      "category": "interaction",
+      "name": { "ko": "아코디언", "en": "Accordion" },
+      "aliases": ["접었다 폈다 되는 거", "클릭하면 펼쳐지는 목록", "펼침 목록", "FAQ 접기"],
+      "oneliner": "제목을 누르면 내용이 접히고 펼쳐지는 목록.",
+      "ask": "FAQ를 아코디언으로 만들어줘. 한 번에 하나만 열리게."
+    },
+    {
+      "id": "tabs",
+      "category": "interaction",
+      "name": { "ko": "탭", "en": "Tabs" },
+      "aliases": ["위에 눌러서 화면 바뀌는 거", "칸 전환 버튼", "메뉴 눌러서 내용 바뀌는 거"],
+      "oneliner": "버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.",
+      "ask": "월간·연간 두 개 탭으로 요금표가 전환되게 해줘."
+    },
+    {
+      "id": "modal",
+      "category": "interaction",
+      "name": { "ko": "모달", "en": "Modal" },
+      "aliases": ["화면 가운데 뜨는 창", "팝업", "뒤가 어두워지면서 뜨는 거"],
+      "oneliner": "화면 위에 겹쳐 뜨는 창. 뒤 배경은 어두워지고, 닫기 전엔 다른 걸 못 누른다.",
+      "ask": "삭제 버튼을 누르면 '정말 삭제할까요?' 확인 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게."
+    },
+    {
+      "id": "toast",
+      "category": "interaction",
+      "name": { "ko": "토스트", "en": "Toast" },
+      "aliases": ["잠깐 떴다 사라지는 알림", "저장됐다고 뜨는 거", "구석에 뜨는 알림"],
+      "oneliner": "구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.",
+      "ask": "저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘."
+    },
+    {
+      "id": "dropdown",
+      "category": "interaction",
+      "name": { "ko": "드롭다운", "en": "Dropdown" },
+      "aliases": ["누르면 아래로 목록 나오는 거", "선택 상자", "펼침 메뉴"],
+      "oneliner": "누르면 아래로 선택지 목록이 펼쳐지는 메뉴.",
+      "ask": "프로필 아이콘을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게."
+    },
+    {
+      "id": "tooltip",
+      "category": "interaction",
+      "name": { "ko": "툴팁", "en": "Tooltip" },
+      "aliases": ["마우스 올리면 나오는 설명", "말풍선 도움말", "물음표 설명"],
+      "oneliner": "마우스를 올리면 잠깐 나오는 작은 설명 말풍선.",
+      "ask": "이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘."
+    },
+    {
+      "id": "carousel",
+      "category": "interaction",
+      "name": { "ko": "캐러셀", "en": "Carousel" },
+      "aliases": ["옆으로 넘기는 배너", "슬라이드", "좌우로 돌아가는 이미지"],
+      "oneliner": "여러 장을 옆으로 넘겨 보는 회전 목록.",
+      "ask": "후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘."
+    },
+    {
+      "id": "skeleton-ui",
+      "category": "interaction",
+      "name": { "ko": "스켈레톤", "en": "Skeleton" },
+      "aliases": ["로딩 때 회색 뼈대", "로딩 자리 표시", "번쩍거리는 회색 박스"],
+      "oneliner": "내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.",
+      "ask": "목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘."
+    },
+    {
+      "id": "switch",
+      "category": "interaction",
+      "name": { "ko": "토글 스위치", "en": "Toggle Switch" },
+      "aliases": ["껐다 켰다 하는 동그라미", "on/off 버튼", "밀어서 켜는 거"],
+      "oneliner": "밀어서 켜고 끄는 on/off 스위치.",
+      "ask": "알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게."
+    },
+    {
+      "id": "drawer",
+      "category": "interaction",
+      "name": { "ko": "드로어", "en": "Drawer" },
+      "aliases": ["옆에서 미끄러져 나오는 메뉴", "햄버거 누르면 나오는 거", "슬라이드 패널"],
+      "oneliner": "화면 옆에서 서랍처럼 밀려 나오는 패널. 모바일 메뉴의 단골.",
+      "ask": "모바일에서는 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘."
+    },
+    {
+      "id": "chip",
+      "category": "interaction",
+      "name": { "ko": "칩", "en": "Chip / Tag" },
+      "aliases": ["알약같이 생긴 작은 라벨", "태그", "동글동글한 필터 버튼"],
+      "oneliner": "알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.",
+      "ask": "태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘."
+    },
+    {
+      "id": "pagination",
+      "category": "interaction",
+      "name": { "ko": "페이지네이션", "en": "Pagination" },
+      "aliases": ["아래에 1 2 3 페이지 숫자", "페이지 넘기기", "다음 페이지 버튼"],
+      "oneliner": "긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.",
+      "ask": "목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게."
+    }
+  ]
+}

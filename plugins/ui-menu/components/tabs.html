@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>탭 Tabs</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .tabs { max-width: 420px; }
+  .tablist { display: flex; gap: 4px; border-bottom: 1px solid #e8e8ee; }
+  .tablist button {
+    padding: 10px 16px; border: 0; background: none; cursor: pointer;
+    font-size: 14px; color: #6b6b76;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tablist button[aria-selected="true"] { color: #17171b; font-weight: 700; border-bottom-color: #17171b; }
+  .panel { padding: 16px 4px; font-size: 14px; color: #55555f; line-height: 1.6; }
+  .panel[hidden] { display: none; }
+</style>
+
+<div class="tabs">
+  <div class="tablist" role="tablist" aria-label="요금제">
+    <button role="tab" id="t-mo" aria-selected="true" aria-controls="p-mo">월간</button>
+    <button role="tab" id="t-yr" aria-selected="false" aria-controls="p-yr">연간</button>
+  </div>
+  <div class="panel" role="tabpanel" id="p-mo" aria-labelledby="t-mo">월 9,900원. 언제든 해지할 수 있어요.</div>
+  <div class="panel" role="tabpanel" id="p-yr" aria-labelledby="t-yr" hidden>연 99,000원. 두 달치가 무료예요.</div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      t.setAttribute('aria-selected', String(t === tab));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = (t !== tab);
+    });
+  }));
+</script>

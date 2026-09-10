@@ -1,0 +1,28 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>토글 스위치 Toggle Switch</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .switch { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .knob {
+    width: 42px; height: 25px; border-radius: 999px;
+    background: #d4d4dd; position: relative; transition: background .15s;
+  }
+  .knob::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 19px; height: 19px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s;
+  }
+  .switch input:checked + .knob { background: #17b26a; }
+  .switch input:checked + .knob::after { transform: translateX(17px); }
+  .switch input:focus-visible + .knob { outline: 2px solid #17171b; outline-offset: 2px; }
+</style>
+
+<!-- 실체는 checkbox라서 폼 전송·상태 관리가 공짜입니다 -->
+<label class="switch">
+  <input type="checkbox" role="switch" checked>
+  <span class="knob" aria-hidden="true"></span>
+  알림 받기
+</label>

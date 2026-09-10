@@ -1,0 +1,129 @@
+# UI 메뉴판 (ui-menu) — Giting Skills
+
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML 레퍼런스.
+> 갤러리: https://hanmariyang.github.io/giting-skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
+
+## 페이지 뼈대
+
+### 헤더 (Header)
+- 별칭: "맨 위에 있는 바" · "상단 바" · "위에 로고 있는 줄" · "탑바"
+- 정의: 페이지 맨 위, 로고와 메뉴가 사는 가로 줄.
+- 요청 문장: 상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/header.html
+
+### 네비게이션 바 (Navbar / GNB)
+- 별칭: "메뉴 줄" · "메뉴 모음" · "카테고리 바" · "GNB"
+- 정의: 사이트의 큰 메뉴들을 모아 둔 이동 줄. 보통 헤더 안에 산다.
+- 요청 문장: 헤더 안에 소개·가격·문의 세 개짜리 네비게이션 바를 넣어줘. 현재 페이지는 진하게 표시되게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/navbar.html
+
+### 히어로 (Hero)
+- 별칭: "첫 화면에 크게 나오는 거" · "메인 배너" · "대문" · "제일 위에 큰 문구"
+- 정의: 들어오자마자 보이는 큰 제목과 버튼 구역. 페이지의 첫인상.
+- 요청 문장: 히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hero.html
+
+### 사이드바 (Sidebar)
+- 별칭: "옆에 세로로 붙은 메뉴" · "왼쪽 메뉴" · "옆 패널"
+- 정의: 화면 옆에 세로로 붙는 메뉴·목차 영역.
+- 요청 문장: 왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/sidebar.html
+
+### 푸터 (Footer)
+- 별칭: "맨 아래 정보 나오는 데" · "하단" · "바닥글"
+- 정의: 페이지 맨 아래, 저작권·링크·연락처가 모이는 줄.
+- 요청 문장: 푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/footer.html
+
+### 컨테이너 (Container)
+- 별칭: "가운데로 모아주는 거" · "본문 폭 제한" · "가운데 정렬 박스"
+- 정의: 내용이 너무 넓게 퍼지지 않게 최대 폭을 잡고 가운데 모으는, 눈에 안 보이는 상자.
+- 요청 문장: 본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/container.html
+
+### 그리드 (Grid)
+- 별칭: "바둑판처럼 배치" · "여러 칸으로 나누기" · "3개씩 나란히"
+- 정의: 칸을 바둑판처럼 나눠 나란히 배치하는 방식.
+- 요청 문장: 이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/grid.html
+
+### 카드 (Card)
+- 별칭: "네모 박스 하나하나" · "박스형" · "테두리 있는 덩어리"
+- 정의: 이미지·제목·설명을 한 덩어리로 묶은 네모 상자.
+- 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
+
+## 인터랙션
+
+### 아코디언 (Accordion)
+- 별칭: "접었다 폈다 되는 거" · "클릭하면 펼쳐지는 목록" · "펼침 목록" · "FAQ 접기"
+- 정의: 제목을 누르면 내용이 접히고 펼쳐지는 목록.
+- 요청 문장: FAQ를 아코디언으로 만들어줘. 한 번에 하나만 열리게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/accordion.html
+
+### 탭 (Tabs)
+- 별칭: "위에 눌러서 화면 바뀌는 거" · "칸 전환 버튼" · "메뉴 눌러서 내용 바뀌는 거"
+- 정의: 버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.
+- 요청 문장: 월간·연간 두 개 탭으로 요금표가 전환되게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tabs.html
+
+### 모달 (Modal)
+- 별칭: "화면 가운데 뜨는 창" · "팝업" · "뒤가 어두워지면서 뜨는 거"
+- 정의: 화면 위에 겹쳐 뜨는 창. 뒤 배경은 어두워지고, 닫기 전엔 다른 걸 못 누른다.
+- 요청 문장: 삭제 버튼을 누르면 '정말 삭제할까요?' 확인 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/modal.html
+
+### 토스트 (Toast)
+- 별칭: "잠깐 떴다 사라지는 알림" · "저장됐다고 뜨는 거" · "구석에 뜨는 알림"
+- 정의: 구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.
+- 요청 문장: 저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toast.html
+
+### 드롭다운 (Dropdown)
+- 별칭: "누르면 아래로 목록 나오는 거" · "선택 상자" · "펼침 메뉴"
+- 정의: 누르면 아래로 선택지 목록이 펼쳐지는 메뉴.
+- 요청 문장: 프로필 아이콘을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/dropdown.html
+
+### 툴팁 (Tooltip)
+- 별칭: "마우스 올리면 나오는 설명" · "말풍선 도움말" · "물음표 설명"
+- 정의: 마우스를 올리면 잠깐 나오는 작은 설명 말풍선.
+- 요청 문장: 이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tooltip.html
+
+### 캐러셀 (Carousel)
+- 별칭: "옆으로 넘기는 배너" · "슬라이드" · "좌우로 돌아가는 이미지"
+- 정의: 여러 장을 옆으로 넘겨 보는 회전 목록.
+- 요청 문장: 후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/carousel.html
+
+### 스켈레톤 (Skeleton)
+- 별칭: "로딩 때 회색 뼈대" · "로딩 자리 표시" · "번쩍거리는 회색 박스"
+- 정의: 내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.
+- 요청 문장: 목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/skeleton-ui.html
+
+### 토글 스위치 (Toggle Switch)
+- 별칭: "껐다 켰다 하는 동그라미" · "on/off 버튼" · "밀어서 켜는 거"
+- 정의: 밀어서 켜고 끄는 on/off 스위치.
+- 요청 문장: 알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/switch.html
+
+### 드로어 (Drawer)
+- 별칭: "옆에서 미끄러져 나오는 메뉴" · "햄버거 누르면 나오는 거" · "슬라이드 패널"
+- 정의: 화면 옆에서 서랍처럼 밀려 나오는 패널. 모바일 메뉴의 단골.
+- 요청 문장: 모바일에서는 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drawer.html
+
+### 칩 (Chip / Tag)
+- 별칭: "알약같이 생긴 작은 라벨" · "태그" · "동글동글한 필터 버튼"
+- 정의: 알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.
+- 요청 문장: 태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/chip.html
+
+### 페이지네이션 (Pagination)
+- 별칭: "아래에 1 2 3 페이지 숫자" · "페이지 넘기기" · "다음 페이지 버튼"
+- 정의: 긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.
+- 요청 문장: 목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pagination.html

@@ -1,0 +1,823 @@
+# UI 메뉴판 (ui-menu) — Giting Skills
+
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML 레퍼런스.
+> 갤러리: https://hanmariyang.github.io/giting-skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
+
+## 페이지 뼈대
+
+### 헤더 (Header)
+- 별칭: "맨 위에 있는 바" · "상단 바" · "위에 로고 있는 줄" · "탑바"
+- 정의: 페이지 맨 위, 로고와 메뉴가 사는 가로 줄.
+- 요청 문장: 상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/header.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헤더 Header</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 20px; height: 56px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  .header nav { margin-left: auto; display: flex; gap: 4px; }
+  .header nav a { padding: 8px 12px; border-radius: 8px; color: #55555f; text-decoration: none; font-size: 14px; }
+  .header nav a:hover { background: #f4f4f7; color: #17171b; }
+  .header .cta { background: #17171b; color: #fff; }
+  .header .cta:hover { background: #333; color: #fff; }
+  main { padding: 24px 20px; color: #9a9aa4; font-size: 14px; height: 60vh; }
+</style>
+
+<header class="header">
+  <span class="logo">로고</span>
+  <nav>
+    <a href="#">소개</a>
+    <a href="#">가격</a>
+    <a href="#" class="cta">신청</a>
+  </nav>
+</header>
+<main>본문을 스크롤해도 헤더는 위에 고정됩니다 (position: sticky).</main>
+```
+
+### 네비게이션 바 (Navbar / GNB)
+- 별칭: "메뉴 줄" · "메뉴 모음" · "카테고리 바" · "GNB"
+- 정의: 사이트의 큰 메뉴들을 모아 둔 이동 줄. 보통 헤더 안에 산다.
+- 요청 문장: 헤더 안에 소개·가격·문의 세 개짜리 네비게이션 바를 넣어줘. 현재 페이지는 진하게 표시되게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/navbar.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>네비게이션 바 Navbar</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .navbar {
+    display: flex; align-items: center; gap: 2px;
+    padding: 0 12px; height: 52px;
+    background: #fff; border-bottom: 1px solid #e8e8ee;
+  }
+  .navbar a {
+    padding: 8px 14px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .navbar a:hover { background: #f4f4f7; }
+  .navbar a[aria-current="page"] { color: #17171b; font-weight: 700; }
+  p { padding: 16px; color: #9a9aa4; font-size: 13px; }
+</style>
+
+<nav class="navbar" aria-label="주 메뉴">
+  <a href="#" aria-current="page">홈</a>
+  <a href="#">소개</a>
+  <a href="#">가격</a>
+  <a href="#">문의</a>
+</nav>
+<p>현재 페이지는 aria-current="page"로 표시하고 진하게 스타일합니다.</p>
+```
+
+### 히어로 (Hero)
+- 별칭: "첫 화면에 크게 나오는 거" · "메인 배너" · "대문" · "제일 위에 큰 문구"
+- 정의: 들어오자마자 보이는 큰 제목과 버튼 구역. 페이지의 첫인상.
+- 요청 문장: 히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hero.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>히어로 Hero</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #fff; }
+  .hero {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 14px;
+    min-height: 60vh; padding: 48px 24px;
+  }
+  .hero h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); letter-spacing: -0.03em; line-height: 1.25; }
+  .hero p { margin: 0; color: #6b6b76; font-size: 16px; }
+  .hero .cta {
+    margin-top: 10px; padding: 12px 28px; border: 0; border-radius: 10px;
+    background: #17171b; color: #fff; font-size: 15px; cursor: pointer;
+  }
+  .hero .cta:hover { background: #333; }
+</style>
+
+<section class="hero">
+  <h1>AI로 사이트,<br>10분이면 됩니다</h1>
+  <p>누구나 할 수 있어요</p>
+  <button class="cta">시작하기</button>
+</section>
+```
+
+### 사이드바 (Sidebar)
+- 별칭: "옆에 세로로 붙은 메뉴" · "왼쪽 메뉴" · "옆 패널"
+- 정의: 화면 옆에 세로로 붙는 메뉴·목차 영역.
+- 요청 문장: 왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/sidebar.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사이드바 Sidebar</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
+  .layout { display: flex; min-height: 70vh; }
+  .sidebar {
+    width: 200px; flex-shrink: 0;
+    padding: 16px 10px;
+    background: #f8f8fa; border-right: 1px solid #e8e8ee;
+  }
+  .sidebar a {
+    display: block; padding: 9px 12px; border-radius: 8px;
+    color: #55555f; text-decoration: none; font-size: 14px;
+  }
+  .sidebar a:hover { background: #ededf1; }
+  .sidebar a[aria-current="page"] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  main { flex: 1; min-width: 0; padding: 20px; color: #9a9aa4; font-size: 14px; }
+</style>
+
+<div class="layout">
+  <nav class="sidebar" aria-label="사이드 메뉴">
+    <a href="#" aria-current="page">대시보드</a>
+    <a href="#">리포트</a>
+    <a href="#">설정</a>
+  </nav>
+  <main>왼쪽이 사이드바, 이쪽이 본문인 2단 레이아웃입니다. 본문에는 min-width: 0을 줘야 안이 넘칠 때 레이아웃이 안 깨집니다.</main>
+</div>
+```
+
+### 푸터 (Footer)
+- 별칭: "맨 아래 정보 나오는 데" · "하단" · "바닥글"
+- 정의: 페이지 맨 아래, 저작권·링크·연락처가 모이는 줄.
+- 요청 문장: 푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/footer.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>푸터 Footer</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; display: flex; flex-direction: column; min-height: 60vh; }
+  main { flex: 1; padding: 20px; color: #9a9aa4; font-size: 14px; }
+  .footer {
+    padding: 24px 20px;
+    background: #17171b; color: #b6b6c0; font-size: 13px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+  }
+  .footer a { color: #b6b6c0; text-decoration: none; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-left: auto; color: #7d7d88; }
+</style>
+
+<main>본문이 짧아도 푸터가 바닥에 붙도록 body를 flex 컬럼으로 잡습니다.</main>
+<footer class="footer">
+  <a href="#">이용약관</a>
+  <a href="#">개인정보처리방침</a>
+  <a href="#">문의</a>
+  <span class="copy">&copy; 2026 서비스명</span>
+</footer>
+```
+
+### 컨테이너 (Container)
+- 별칭: "가운데로 모아주는 거" · "본문 폭 제한" · "가운데 정렬 박스"
+- 정의: 내용이 너무 넓게 퍼지지 않게 최대 폭을 잡고 가운데 모으는, 눈에 안 보이는 상자.
+- 요청 문장: 본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/container.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>컨테이너 Container</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #f4f4f7; }
+  .container {
+    max-width: 720px;            /* 실전에서는 1200px 등 서비스 기준 폭 */
+    margin: 0 auto;              /* 가운데 정렬의 전부 */
+    padding: 24px 20px;          /* 좁은 화면에서 벽에 붙지 않게 */
+    background: #fff; min-height: 50vh;
+    outline: 2px dashed #c9c9d4; outline-offset: -2px;
+  }
+  .container p { color: #6b6b76; font-size: 14px; line-height: 1.7; }
+  .hint { text-align: center; color: #9a9aa4; font-size: 12px; padding: 10px; }
+</style>
+
+<div class="container">
+  <p>이 점선 상자가 컨테이너입니다. 화면이 아무리 넓어져도 내용은 max-width 안에 머물고, margin: 0 auto로 가운데에 옵니다.</p>
+  <p>창 너비를 넓혔다 좁혔다 해 보세요.</p>
+</div>
+<p class="hint">바깥 회색이 화면, 안쪽 흰색이 컨테이너</p>
+```
+
+### 그리드 (Grid)
+- 별칭: "바둑판처럼 배치" · "여러 칸으로 나누기" · "3개씩 나란히"
+- 정의: 칸을 바둑판처럼 나눠 나란히 배치하는 방식.
+- 요청 문장: 이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/grid.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그리드 Grid</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 20px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3열 */
+    gap: 12px;                               /* 간격은 margin이 아니라 gap으로 */
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }    /* 모바일 1열 */
+  }
+  .grid > div {
+    background: #f4f4f7; border-radius: 10px;
+    padding: 28px 0; text-align: center;
+    color: #6b6b76; font-size: 14px;
+  }
+  p { color: #9a9aa4; font-size: 13px; }
+</style>
+
+<div class="grid">
+  <div>1</div><div>2</div><div>3</div>
+  <div>4</div><div>5</div><div>6</div>
+</div>
+<p>창을 600px 아래로 좁히면 1열로 바뀝니다.</p>
+```
+
+### 카드 (Card)
+- 별칭: "네모 박스 하나하나" · "박스형" · "테두리 있는 덩어리"
+- 정의: 이미지·제목·설명을 한 덩어리로 묶은 네모 상자.
+- 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>카드 Card</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; background: #f8f8fa; }
+  .card {
+    max-width: 300px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 14px;
+    overflow: hidden;                 /* 썸네일 모서리를 카드 라운드에 맞춤 */
+    transition: box-shadow .15s;
+  }
+  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+  .card .thumb {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #dfe6ee, #c3ccd8);
+  }
+  .card .body { padding: 14px 16px 16px; display: grid; gap: 6px; }
+  .card h3 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: #6b6b76; font-size: 13.5px; line-height: 1.55; }
+  .card .meta { color: #9a9aa4; font-size: 12px; }
+</style>
+
+<article class="card">
+  <div class="thumb" role="img" aria-label="썸네일"></div>
+  <div class="body">
+    <h3>카드 제목</h3>
+    <p>이미지, 제목, 설명을 한 덩어리로 묶으면 카드입니다.</p>
+    <span class="meta">2026-09-10</span>
+  </div>
+</article>
+```
+
+## 인터랙션
+
+### 아코디언 (Accordion)
+- 별칭: "접었다 폈다 되는 거" · "클릭하면 펼쳐지는 목록" · "펼침 목록" · "FAQ 접기"
+- 정의: 제목을 누르면 내용이 접히고 펼쳐지는 목록.
+- 요청 문장: FAQ를 아코디언으로 만들어줘. 한 번에 하나만 열리게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/accordion.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아코디언 Accordion</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .accordion { max-width: 480px; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; }
+  .accordion details + details { border-top: 1px solid #e8e8ee; }
+  .accordion summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; font-size: 14.5px; font-weight: 600;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary::after { content: "+"; color: #9a9aa4; font-weight: 400; }
+  .accordion details[open] summary::after { content: "\2212"; }
+  .accordion summary:hover { background: #f8f8fa; }
+  .accordion .panel { padding: 0 16px 14px; color: #6b6b76; font-size: 13.5px; line-height: 1.6; }
+</style>
+
+<!-- name 속성이 같은 details끼리는 한 번에 하나만 열립니다 (브라우저 내장) -->
+<div class="accordion">
+  <details name="faq" open>
+    <summary>환불은 어떻게 하나요?</summary>
+    <div class="panel">결제 후 7일 이내에는 전액 환불됩니다.</div>
+  </details>
+  <details name="faq">
+    <summary>계정을 여러 명이 써도 되나요?</summary>
+    <div class="panel">플랜별 좌석 수만큼 초대할 수 있습니다.</div>
+  </details>
+  <details name="faq">
+    <summary>데이터는 어디에 저장되나요?</summary>
+    <div class="panel">전부 사용자의 기기에만 저장됩니다.</div>
+  </details>
+</div>
+```
+
+### 탭 (Tabs)
+- 별칭: "위에 눌러서 화면 바뀌는 거" · "칸 전환 버튼" · "메뉴 눌러서 내용 바뀌는 거"
+- 정의: 버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.
+- 요청 문장: 월간·연간 두 개 탭으로 요금표가 전환되게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tabs.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>탭 Tabs</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .tabs { max-width: 420px; }
+  .tablist { display: flex; gap: 4px; border-bottom: 1px solid #e8e8ee; }
+  .tablist button {
+    padding: 10px 16px; border: 0; background: none; cursor: pointer;
+    font-size: 14px; color: #6b6b76;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tablist button[aria-selected="true"] { color: #17171b; font-weight: 700; border-bottom-color: #17171b; }
+  .panel { padding: 16px 4px; font-size: 14px; color: #55555f; line-height: 1.6; }
+  .panel[hidden] { display: none; }
+</style>
+
+<div class="tabs">
+  <div class="tablist" role="tablist" aria-label="요금제">
+    <button role="tab" id="t-mo" aria-selected="true" aria-controls="p-mo">월간</button>
+    <button role="tab" id="t-yr" aria-selected="false" aria-controls="p-yr">연간</button>
+  </div>
+  <div class="panel" role="tabpanel" id="p-mo" aria-labelledby="t-mo">월 9,900원. 언제든 해지할 수 있어요.</div>
+  <div class="panel" role="tabpanel" id="p-yr" aria-labelledby="t-yr" hidden>연 99,000원. 두 달치가 무료예요.</div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      t.setAttribute('aria-selected', String(t === tab));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = (t !== tab);
+    });
+  }));
+</script>
+```
+
+### 모달 (Modal)
+- 별칭: "화면 가운데 뜨는 창" · "팝업" · "뒤가 어두워지면서 뜨는 거"
+- 정의: 화면 위에 겹쳐 뜨는 창. 뒤 배경은 어두워지고, 닫기 전엔 다른 걸 못 누른다.
+- 요청 문장: 삭제 버튼을 누르면 '정말 삭제할까요?' 확인 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/modal.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모달 Modal</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .open-btn, .danger, .ghost {
+    padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff;
+  }
+  dialog.modal {
+    border: 0; border-radius: 14px; padding: 22px;
+    width: min(90vw, 340px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  dialog.modal::backdrop { background: rgba(0,0,0,.45); }   /* 뒤가 어두워지는 그것 */
+  .modal h2 { margin: 0 0 8px; font-size: 17px; }
+  .modal p { margin: 0 0 18px; color: #6b6b76; font-size: 14px; }
+  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .danger { background: #d64224; border-color: #d64224; color: #fff; }
+</style>
+
+<button class="open-btn" onclick="document.getElementById('confirm').showModal()">삭제</button>
+
+<!-- <dialog>가 포커스 가둠·ESC 닫기·배경 차단을 전부 내장하고 있습니다 -->
+<dialog class="modal" id="confirm" aria-labelledby="confirm-title"
+        onclick="if (event.target === this) this.close()">   <!-- 배경 클릭 닫기 -->
+  <h2 id="confirm-title">정말 삭제할까요?</h2>
+  <p>이 작업은 되돌릴 수 없어요.</p>
+  <div class="actions">
+    <button class="ghost" onclick="this.closest('dialog').close()">취소</button>
+    <button class="danger" onclick="this.closest('dialog').close()">삭제</button>
+  </div>
+</dialog>
+```
+
+### 토스트 (Toast)
+- 별칭: "잠깐 떴다 사라지는 알림" · "저장됐다고 뜨는 거" · "구석에 뜨는 알림"
+- 정의: 구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.
+- 요청 문장: 저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toast.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>토스트 Toast</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  button { padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
+  #toasts {
+    position: fixed; right: 16px; bottom: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: #17171b; color: #fff;
+    padding: 11px 16px; border-radius: 10px; font-size: 13.5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    animation: slide-in .18s ease-out;
+  }
+  .toast.bye { animation: fade-out .25s forwards; }
+  @keyframes slide-in { from { transform: translateY(8px); opacity: 0; } }
+  @keyframes fade-out { to { transform: translateY(4px); opacity: 0; } }
+</style>
+
+<button onclick="toast('저장됐어요')">저장</button>
+
+<!-- role="status": 스크린리더가 끼어들지 않고 조용히 읽어 줌 -->
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+  function toast(msg, ms = 3000) {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.textContent = msg;
+    document.getElementById('toasts').append(el);
+    setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, ms);
+  }
+</script>
+```
+
+### 드롭다운 (Dropdown)
+- 별칭: "누르면 아래로 목록 나오는 거" · "선택 상자" · "펼침 메뉴"
+- 정의: 누르면 아래로 선택지 목록이 펼쳐지는 메뉴.
+- 요청 문장: 프로필 아이콘을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/dropdown.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>드롭다운 Dropdown</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .dropdown { position: relative; display: inline-block; }
+  .dropdown > button {
+    padding: 10px 16px; border: 1px solid #e0e0e8; border-radius: 9px;
+    background: #fff; font-size: 14px; cursor: pointer;
+  }
+  .menu {
+    position: absolute; top: calc(100% + 6px); left: 0;
+    min-width: 160px; padding: 6px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  }
+  .menu[hidden] { display: none; }
+  .menu button {
+    display: block; width: 100%; text-align: left;
+    padding: 9px 12px; border: 0; border-radius: 8px;
+    background: none; font-size: 14px; cursor: pointer; color: #17171b;
+  }
+  .menu button:hover { background: #f4f4f7; }
+  .menu .out { color: #d64224; }
+</style>
+
+<div class="dropdown">
+  <button aria-haspopup="menu" aria-expanded="false"
+          onclick="const m = this.nextElementSibling; m.hidden = !m.hidden; this.setAttribute('aria-expanded', String(!m.hidden))">
+    내 계정 &#9662;
+  </button>
+  <div class="menu" role="menu" hidden>
+    <button role="menuitem">설정</button>
+    <button role="menuitem" class="out">로그아웃</button>
+  </div>
+</div>
+
+<script>
+  // 바깥을 누르면 닫기
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.dropdown').forEach(d => {
+      if (!d.contains(e.target)) {
+        d.querySelector('.menu').hidden = true;
+        d.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+```
+
+### 툴팁 (Tooltip)
+- 별칭: "마우스 올리면 나오는 설명" · "말풍선 도움말" · "물음표 설명"
+- 정의: 마우스를 올리면 잠깐 나오는 작은 설명 말풍선.
+- 요청 문장: 이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tooltip.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>툴팁 Tooltip</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 48px 24px; font-size: 14px; }
+  .tip { position: relative; display: inline-flex; }
+  .tip > button {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1px solid #c9c9d4; background: #fff; color: #6b6b76;
+    font-size: 12px; cursor: default;
+  }
+  .tip .bubble {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; padding: 7px 11px; border-radius: 8px;
+    background: #17171b; color: #fff; font-size: 12.5px;
+    opacity: 0; pointer-events: none; transition: opacity .12s;
+  }
+  .bubble::after {   /* 말풍선 꼬리 */
+    content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+    border: 5px solid transparent; border-top-color: #17171b;
+  }
+  /* 마우스 올렸을 때 + 키보드 포커스일 때 모두 보여야 합니다 */
+  .tip:hover .bubble, .tip > button:focus-visible + .bubble { opacity: 1; }
+</style>
+
+수치 기준
+<span class="tip">
+  <button aria-describedby="tip1">?</button>
+  <span class="bubble" role="tooltip" id="tip1">클론 실측 기준 수치입니다</span>
+</span>
+```
+
+### 캐러셀 (Carousel)
+- 별칭: "옆으로 넘기는 배너" · "슬라이드" · "좌우로 돌아가는 이미지"
+- 정의: 여러 장을 옆으로 넘겨 보는 회전 목록.
+- 요청 문장: 후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/carousel.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>캐러셀 Carousel</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .carousel { max-width: 420px; }
+  .track {
+    display: flex; overflow-x: auto;
+    scroll-snap-type: x mandatory;           /* 한 장씩 착 붙는 핵심 */
+    scrollbar-width: none; border-radius: 14px;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; scroll-snap-align: start;
+    padding: 44px 24px; text-align: center; font-size: 14.5px; line-height: 1.6;
+    background: #f4f4f7; color: #43434d;
+  }
+  .nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+  .nav button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 7px; height: 7px; border-radius: 50%; background: #d4d4dd; }
+  .dots i.on { background: #17171b; }
+</style>
+
+<div class="carousel">
+  <div class="track" id="track">
+    <div class="slide">"도입 전에 실측 수치부터 보게 됐어요."</div>
+    <div class="slide">"별점 대신 근거를 읽는 습관이 생겼습니다."</div>
+    <div class="slide">"리포트 하나로 팀 설득이 끝났어요."</div>
+  </div>
+  <div class="nav">
+    <button aria-label="이전" onclick="go(-1)">&#8249;</button>
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+    <button aria-label="다음" onclick="go(1)">&#8250;</button>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('#dots i');
+  const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+  function go(d) {
+    const n = Math.min(2, Math.max(0, idx() + d));
+    track.scrollTo({ left: n * track.clientWidth, behavior: 'smooth' });
+  }
+  track.addEventListener('scroll', () => dots.forEach((el, i) => el.classList.toggle('on', i === idx())));
+</script>
+```
+
+### 스켈레톤 (Skeleton)
+- 별칭: "로딩 때 회색 뼈대" · "로딩 자리 표시" · "번쩍거리는 회색 박스"
+- 정의: 내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.
+- 요청 문장: 목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/skeleton-ui.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스켈레톤 Skeleton</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; padding: 24px; }
+  .list { display: grid; gap: 12px; max-width: 420px; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .sk {
+    background: linear-gradient(90deg, #ececf1 25%, #f7f7fa 45%, #ececf1 65%);
+    background-size: 200% 100%;
+    animation: shimmer 1.3s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+  .lines { flex: 1; display: grid; gap: 8px; }
+  .l1 { height: 13px; width: 55%; }
+  .l2 { height: 11px; width: 85%; }
+</style>
+
+<!-- 실제 내용이 오면 이 블록을 통째로 갈아 끼웁니다 -->
+<div class="list" aria-hidden="true">
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+  <div class="row"><div class="sk avatar"></div><div class="lines"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+</div>
+```
+
+### 토글 스위치 (Toggle Switch)
+- 별칭: "껐다 켰다 하는 동그라미" · "on/off 버튼" · "밀어서 켜는 거"
+- 정의: 밀어서 켜고 끄는 on/off 스위치.
+- 요청 문장: 알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/switch.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>토글 스위치 Toggle Switch</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .switch { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .knob {
+    width: 42px; height: 25px; border-radius: 999px;
+    background: #d4d4dd; position: relative; transition: background .15s;
+  }
+  .knob::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 19px; height: 19px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s;
+  }
+  .switch input:checked + .knob { background: #17b26a; }
+  .switch input:checked + .knob::after { transform: translateX(17px); }
+  .switch input:focus-visible + .knob { outline: 2px solid #17171b; outline-offset: 2px; }
+</style>
+
+<!-- 실체는 checkbox라서 폼 전송·상태 관리가 공짜입니다 -->
+<label class="switch">
+  <input type="checkbox" role="switch" checked>
+  <span class="knob" aria-hidden="true"></span>
+  알림 받기
+</label>
+```
+
+### 드로어 (Drawer)
+- 별칭: "옆에서 미끄러져 나오는 메뉴" · "햄버거 누르면 나오는 거" · "슬라이드 패널"
+- 정의: 화면 옆에서 서랍처럼 밀려 나오는 패널. 모바일 메뉴의 단골.
+- 요청 문장: 모바일에서는 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drawer.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>드로어 Drawer</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .burger { padding: 9px 14px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 15px; cursor: pointer; }
+  dialog.drawer {
+    border: 0; padding: 0;
+    position: fixed; inset: 0 0 0 auto;      /* 오른쪽 벽에 붙임 */
+    height: 100vh; max-height: 100vh;
+    width: min(78vw, 280px); margin: 0;
+    box-shadow: -12px 0 40px rgba(0,0,0,.15);
+    animation: slide .2s ease-out;
+  }
+  @keyframes slide { from { transform: translateX(100%); } }
+  dialog.drawer::backdrop { background: rgba(0,0,0,.35); }
+  .drawer nav { display: grid; gap: 4px; padding: 18px 12px; }
+  .drawer a { padding: 11px 14px; border-radius: 9px; color: #17171b; text-decoration: none; font-size: 15px; }
+  .drawer a:hover { background: #f4f4f7; }
+  .drawer .close { margin: 14px 12px 0; text-align: right; }
+  .drawer .close button { border: 0; background: none; font-size: 20px; cursor: pointer; color: #9a9aa4; }
+</style>
+
+<button class="burger" onclick="document.getElementById('menu').showModal()" aria-label="메뉴 열기">&#9776;</button>
+
+<dialog class="drawer" id="menu" aria-label="메뉴"
+        onclick="if (event.target === this) this.close()">
+  <div class="close"><button onclick="this.closest('dialog').close()" aria-label="닫기">&times;</button></div>
+  <nav>
+    <a href="#">홈</a>
+    <a href="#">리포트</a>
+    <a href="#">매거진</a>
+    <a href="#">설정</a>
+  </nav>
+</dialog>
+```
+
+### 칩 (Chip / Tag)
+- 별칭: "알약같이 생긴 작은 라벨" · "태그" · "동글동글한 필터 버튼"
+- 정의: 알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.
+- 요청 문장: 태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/chip.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>칩 Chip</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 420px; }
+  .chip {
+    padding: 7px 14px; border-radius: 999px;    /* 알약 모양의 정체 */
+    border: 1px solid #e0e0e8; background: #fff;
+    font-size: 13.5px; cursor: pointer; color: #43434d;
+    transition: all .12s;
+  }
+  .chip:hover { border-color: #b9b9c6; }
+  .chip[aria-pressed="true"] { background: #17171b; border-color: #17171b; color: #fff; }
+</style>
+
+<div class="chips" role="group" aria-label="태그 필터">
+  <button class="chip" aria-pressed="true">전체</button>
+  <button class="chip" aria-pressed="false">CLI</button>
+  <button class="chip" aria-pressed="false">에이전트</button>
+  <button class="chip" aria-pressed="false">셀프호스트</button>
+  <button class="chip" aria-pressed="false">디자인</button>
+</div>
+
+<script>
+  document.querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () =>
+      c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
+</script>
+```
+
+### 페이지네이션 (Pagination)
+- 별칭: "아래에 1 2 3 페이지 숫자" · "페이지 넘기기" · "다음 페이지 버튼"
+- 정의: 긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.
+- 요청 문장: 목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pagination.html
+
+```html
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>페이지네이션 Pagination</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .pagination { display: flex; gap: 4px; align-items: center; }
+  .pagination a, .pagination span {
+    min-width: 34px; height: 34px; padding: 0 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 13.5px;
+    color: #43434d; text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .pagination a:hover { background: #f4f4f7; }
+  .pagination [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
+  .pagination .gap { color: #9a9aa4; }
+  .pagination [aria-disabled="true"] { color: #c9c9d4; pointer-events: none; }
+</style>
+
+<nav class="pagination" aria-label="페이지">
+  <a href="#" aria-disabled="true" aria-label="이전 페이지">&#8249;</a>
+  <a href="#" aria-current="page">1</a>
+  <a href="#">2</a>
+  <a href="#">3</a>
+  <span class="gap">&#8230;</span>
+  <a href="#">12</a>
+  <a href="#" aria-label="다음 페이지">&#8250;</a>
+</nav>
+```

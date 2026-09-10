@@ -1,0 +1,49 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>드롭다운 Dropdown</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .dropdown { position: relative; display: inline-block; }
+  .dropdown > button {
+    padding: 10px 16px; border: 1px solid #e0e0e8; border-radius: 9px;
+    background: #fff; font-size: 14px; cursor: pointer;
+  }
+  .menu {
+    position: absolute; top: calc(100% + 6px); left: 0;
+    min-width: 160px; padding: 6px;
+    background: #fff; border: 1px solid #e8e8ee; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  }
+  .menu[hidden] { display: none; }
+  .menu button {
+    display: block; width: 100%; text-align: left;
+    padding: 9px 12px; border: 0; border-radius: 8px;
+    background: none; font-size: 14px; cursor: pointer; color: #17171b;
+  }
+  .menu button:hover { background: #f4f4f7; }
+  .menu .out { color: #d64224; }
+</style>
+
+<div class="dropdown">
+  <button aria-haspopup="menu" aria-expanded="false"
+          onclick="const m = this.nextElementSibling; m.hidden = !m.hidden; this.setAttribute('aria-expanded', String(!m.hidden))">
+    내 계정 &#9662;
+  </button>
+  <div class="menu" role="menu" hidden>
+    <button role="menuitem">설정</button>
+    <button role="menuitem" class="out">로그아웃</button>
+  </div>
+</div>
+
+<script>
+  // 바깥을 누르면 닫기
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.dropdown').forEach(d => {
+      if (!d.contains(e.target)) {
+        d.querySelector('.menu').hidden = true;
+        d.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>

@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>푸터 Footer</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; display: flex; flex-direction: column; min-height: 60vh; }
+  main { flex: 1; padding: 20px; color: #9a9aa4; font-size: 14px; }
+  .footer {
+    padding: 24px 20px;
+    background: #17171b; color: #b6b6c0; font-size: 13px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+  }
+  .footer a { color: #b6b6c0; text-decoration: none; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-left: auto; color: #7d7d88; }
+</style>
+
+<main>본문이 짧아도 푸터가 바닥에 붙도록 body를 flex 컬럼으로 잡습니다.</main>
+<footer class="footer">
+  <a href="#">이용약관</a>
+  <a href="#">개인정보처리방침</a>
+  <a href="#">문의</a>
+  <span class="copy">&copy; 2026 서비스명</span>
+</footer>

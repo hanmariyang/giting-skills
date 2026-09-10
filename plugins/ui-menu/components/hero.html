@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>히어로 Hero</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #fff; }
+  .hero {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 14px;
+    min-height: 60vh; padding: 48px 24px;
+  }
+  .hero h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); letter-spacing: -0.03em; line-height: 1.25; }
+  .hero p { margin: 0; color: #6b6b76; font-size: 16px; }
+  .hero .cta {
+    margin-top: 10px; padding: 12px 28px; border: 0; border-radius: 10px;
+    background: #17171b; color: #fff; font-size: 15px; cursor: pointer;
+  }
+  .hero .cta:hover { background: #333; }
+</style>
+
+<section class="hero">
+  <h1>AI로 사이트,<br>10분이면 됩니다</h1>
+  <p>누구나 할 수 있어요</p>
+  <button class="cta">시작하기</button>
+</section>

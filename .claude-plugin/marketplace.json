@@ -1,0 +1,15 @@
+{
+  "name": "giting",
+  "owner": { "name": "Giting", "url": "https://giting.kr" },
+  "metadata": {
+    "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ui-menu",
+      "source": "./plugins/ui-menu",
+      "description": "UI 메뉴판 — 말로 설명하던 UI에 이름을 붙여 주는 사전 + 실물 HTML 레퍼런스 20종"
+    }
+  ]
+}

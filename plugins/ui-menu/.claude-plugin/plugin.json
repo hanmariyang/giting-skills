@@ -1,0 +1,9 @@
+{
+  "name": "ui-menu",
+  "version": "0.1.0",
+  "description": "UI 메뉴판 — '접었다 폈다 되는 거'를 아코디언이라 부르게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML 레퍼런스 20종.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["ui", "components", "korean", "vibe-coding", "dictionary"]
+}

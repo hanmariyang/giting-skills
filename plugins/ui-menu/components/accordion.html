@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아코디언 Accordion</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
+  .accordion { max-width: 480px; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; }
+  .accordion details + details { border-top: 1px solid #e8e8ee; }
+  .accordion summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; font-size: 14.5px; font-weight: 600;
+  }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary::after { content: "+"; color: #9a9aa4; font-weight: 400; }
+  .accordion details[open] summary::after { content: "\2212"; }
+  .accordion summary:hover { background: #f8f8fa; }
+  .accordion .panel { padding: 0 16px 14px; color: #6b6b76; font-size: 13.5px; line-height: 1.6; }
+</style>
+
+<!-- name 속성이 같은 details끼리는 한 번에 하나만 열립니다 (브라우저 내장) -->
+<div class="accordion">
+  <details name="faq" open>
+    <summary>환불은 어떻게 하나요?</summary>
+    <div class="panel">결제 후 7일 이내에는 전액 환불됩니다.</div>
+  </details>
+  <details name="faq">
+    <summary>계정을 여러 명이 써도 되나요?</summary>
+    <div class="panel">플랜별 좌석 수만큼 초대할 수 있습니다.</div>
+  </details>
+  <details name="faq">
+    <summary>데이터는 어디에 저장되나요?</summary>
+    <div class="panel">전부 사용자의 기기에만 저장됩니다.</div>
+  </details>
+</div>

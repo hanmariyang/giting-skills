@@ -1,0 +1,27 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그리드 Grid</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 20px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);   /* 3열 */
+    gap: 12px;                               /* 간격은 margin이 아니라 gap으로 */
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }    /* 모바일 1열 */
+  }
+  .grid > div {
+    background: #f4f4f7; border-radius: 10px;
+    padding: 28px 0; text-align: center;
+    color: #6b6b76; font-size: 14px;
+  }
+  p { color: #9a9aa4; font-size: 13px; }
+</style>
+
+<div class="grid">
+  <div>1</div><div>2</div><div>3</div>
+  <div>4</div><div>5</div><div>6</div>
+</div>
+<p>창을 600px 아래로 좁히면 1열로 바뀝니다.</p>
