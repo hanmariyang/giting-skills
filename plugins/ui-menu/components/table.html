@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>테이블 Table — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  table { border-collapse: collapse; font-size: 12.5px; min-width: 250px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid #e8e8ee; }
+  th { color: #9a9aa4; font-weight: 600; font-size: 11px; }
+  .ok { color: #17b26a; font-weight: 700; }
+  .wt { color: #9a9aa4; }
+</style>
+<div class="center"><table><thead><tr><th>이름</th><th>날짜</th><th>상태</th></tr></thead><tbody>
+<tr><td>이지우</td><td>09.09</td><td class="ok">완료</td></tr>
+<tr><td>김하나</td><td>09.08</td><td class="wt">대기</td></tr>
+<tr><td>박서준</td><td>09.07</td><td class="ok">완료</td></tr>
+</tbody></table></div>
+</body>
+</html>

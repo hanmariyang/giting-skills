@@ -1,0 +1,340 @@
+<!-- @header h=150 full -->
+<style>
+  .hd { display: flex; align-items: center; gap: 16px; padding: 0 16px; height: 48px; border-bottom: 1px solid #e8e8ee; position: sticky; top: 0; background: #fff; }
+  .hd b { letter-spacing: -.02em; }
+  .hd nav { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .hd a { padding: 6px 10px; border-radius: 7px; color: #55555f; text-decoration: none; font-size: 12.5px; }
+  .hd a:hover { background: #f4f4f7; }
+  .hd .cta { background: #17171b; color: #fff; }
+  .pad { padding: 12px 16px; }
+</style>
+<header class="hd"><b>로고</b><nav><a href="#">소개</a><a href="#">가격</a><a class="cta" href="#">신청</a></nav></header>
+<p class="pad mut">스크롤해도 위에 고정 (position: sticky)</p>
+
+<!-- @navbar h=150 full -->
+<style>
+  .nb { display: flex; gap: 2px; padding: 0 10px; height: 46px; align-items: center; border-bottom: 1px solid #e8e8ee; }
+  .nb a { padding: 7px 12px; border-radius: 7px; color: #55555f; text-decoration: none; font-size: 12.5px; }
+  .nb a:hover { background: #f4f4f7; }
+  .nb a[aria-current="page"] { color: #17171b; font-weight: 700; }
+</style>
+<nav class="nb" aria-label="주 메뉴"><a href="#" aria-current="page">홈</a><a href="#">소개</a><a href="#">가격</a><a href="#">문의</a></nav>
+<p class="cap">현재 페이지는 aria-current="page" + 진하게</p>
+
+<!-- @hero h=220 full -->
+<style>
+  .hr { display: grid; place-items: center; text-align: center; gap: 8px; padding: 34px 20px; }
+  .hr h1 { margin: 0; font-size: 24px; letter-spacing: -.03em; line-height: 1.3; }
+  .hr p { margin: 0; color: #6b6b76; font-size: 13px; }
+  .hr button { margin-top: 6px; padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+</style>
+<section class="hr"><h1>AI로 사이트,<br>10분이면 됩니다</h1><p>누구나 할 수 있어요</p><button>시작하기</button></section>
+
+<!-- @sidebar h=200 full -->
+<style>
+  .ly { display: flex; height: 100vh; }
+  .sb { width: 132px; flex-shrink: 0; padding: 10px 8px; background: #f8f8fa; border-right: 1px solid #e8e8ee; }
+  .sb a { display: block; padding: 7px 10px; border-radius: 7px; color: #55555f; text-decoration: none; font-size: 12.5px; }
+  .sb a[aria-current="page"] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  .ly main { flex: 1; min-width: 0; padding: 14px; color: #9a9aa4; font-size: 12px; }
+</style>
+<div class="ly"><nav class="sb"><a href="#" aria-current="page">대시보드</a><a href="#">리포트</a><a href="#">설정</a></nav><main>옆에 세로로 붙는 메뉴. 본문에는 min-width: 0.</main></div>
+
+<!-- @footer h=170 full -->
+<style>
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+  .sp { flex: 1; padding: 12px 16px; }
+  .ft { padding: 14px 16px; background: #17171b; color: #b6b6c0; font-size: 11.5px; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .ft a { color: #b6b6c0; text-decoration: none; }
+  .ft i { margin-left: auto; font-style: normal; color: #7d7d88; }
+</style>
+<div class="sp mut">본문</div>
+<footer class="ft"><a href="#">이용약관</a><a href="#">개인정보처리방침</a><i>&copy; 2026 서비스명</i></footer>
+
+<!-- @section h=190 full -->
+<style>
+  .sec { padding: 14px 16px; }
+  .sec + .sec { border-top: 1px solid #e8e8ee; }
+  .sec h2 { margin: 0 0 6px; font-size: 13.5px; }
+  .sec.alt { background: #f8f8fa; }
+</style>
+<section class="sec"><h2>섹션 1</h2><div class="bar" style="width:70%"></div></section>
+<section class="sec alt"><h2>섹션 2</h2><div class="bar" style="width:55%"></div></section>
+<section class="sec"><h2>섹션 3</h2><div class="bar" style="width:62%"></div></section>
+
+<!-- @container h=190 full -->
+<style>
+  body { background: #f4f4f7; }
+  .ct { max-width: 300px; margin: 14px auto; background: #fff; outline: 2px dashed #c9c9d4; outline-offset: -2px; padding: 16px; min-height: 110px; }
+</style>
+<div class="ct"><p class="mut" style="margin:0">점선 상자가 컨테이너. max-width + margin: 0 auto 로 가운데 정렬. 바깥 회색이 화면.</p></div>
+
+<!-- @grid h=180 -->
+<style>
+  .gr { display: grid; grid-template-columns: repeat(3, 74px); gap: 8px; }
+  .gr div { background: #f0f0f4; border-radius: 8px; height: 52px; display: grid; place-items: center; color: #9a9aa4; font-size: 12px; }
+</style>
+<div class="center"><div><div class="gr"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div><p class="cap">3열 그리드 · 간격은 gap으로</p></div></div>
+
+<!-- @card h=230 -->
+<style>
+  .cd { width: 190px; background: #fff; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; }
+  .cd:hover { box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+  .cd .th { aspect-ratio: 16/9; background: linear-gradient(135deg, #dfe6ee, #c3ccd8); }
+  .cd .bd { padding: 10px 12px; display: grid; gap: 3px; }
+  .cd h3 { margin: 0; font-size: 13px; }
+  .cd p { margin: 0; color: #6b6b76; font-size: 11.5px; }
+</style>
+<div class="center"><article class="cd"><div class="th"></div><div class="bd"><h3>카드 제목</h3><p>이미지 · 제목 · 설명 한 덩어리</p></div></article></div>
+
+<!-- @card-grid h=210 -->
+<style>
+  .cg { display: grid; grid-template-columns: repeat(3, 118px); gap: 10px; }
+  .cg article { background: #fff; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; }
+  .cg .th { aspect-ratio: 16/10; background: #ececf1; }
+  .cg .bd { padding: 8px 9px; }
+  .cg h3 { margin: 0 0 4px; font-size: 11.5px; }
+</style>
+<div class="center"><div><div class="cg">
+  <article><div class="th"></div><div class="bd"><h3>카드 1</h3><div class="bar" style="width:70%"></div></div></article>
+  <article><div class="th"></div><div class="bd"><h3>카드 2</h3><div class="bar" style="width:55%"></div></div></article>
+  <article><div class="th"></div><div class="bd"><h3>카드 3</h3><div class="bar" style="width:63%"></div></div></article>
+</div><p class="cap">카드를 격자로 반복</p></div></div>
+
+<!-- @table h=200 -->
+<style>
+  table { border-collapse: collapse; font-size: 12.5px; min-width: 250px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid #e8e8ee; }
+  th { color: #9a9aa4; font-weight: 600; font-size: 11px; }
+  .ok { color: #17b26a; font-weight: 700; }
+  .wt { color: #9a9aa4; }
+</style>
+<div class="center"><table><thead><tr><th>이름</th><th>날짜</th><th>상태</th></tr></thead><tbody>
+<tr><td>이지우</td><td>09.09</td><td class="ok">완료</td></tr>
+<tr><td>김하나</td><td>09.08</td><td class="wt">대기</td></tr>
+<tr><td>박서준</td><td>09.07</td><td class="ok">완료</td></tr>
+</tbody></table></div>
+
+<!-- @layout h=210 full -->
+<style>
+  .lo { display: grid; grid-template: 34px 1fr 26px / 96px 1fr; height: 100vh; gap: 6px; padding: 8px; box-sizing: border-box; }
+  .lo div { background: #f0f0f4; border-radius: 7px; display: grid; place-items: center; color: #9a9aa4; font-size: 11px; }
+  .lo .h { grid-column: 1 / -1; }
+  .lo .f { grid-column: 1 / -1; }
+</style>
+<div class="lo"><div class="h">헤더</div><div>사이드바</div><div>본문</div><div class="f">푸터</div></div>
+
+<!-- @tabs h=170 -->
+<style>
+  .tl { display: flex; gap: 2px; border-bottom: 1px solid #e8e8ee; width: 240px; }
+  .tl button { padding: 8px 12px; border: 0; background: none; cursor: pointer; font-size: 12.5px; color: #6b6b76; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tl button[aria-selected="true"] { color: #17171b; font-weight: 700; border-bottom-color: #17171b; }
+  .tp { padding: 12px 2px; font-size: 12.5px; color: #55555f; width: 240px; }
+  .tp[hidden] { display: none; }
+</style>
+<div class="center"><div>
+  <div class="tl" role="tablist"><button role="tab" aria-selected="true" aria-controls="p1">월간</button><button role="tab" aria-selected="false" aria-controls="p2">연간</button></div>
+  <div class="tp" role="tabpanel" id="p1">월 9,900원. 언제든 해지.</div>
+  <div class="tp" role="tabpanel" id="p2" hidden>연 99,000원. 두 달 무료.</div>
+</div></div>
+<script>
+  document.querySelectorAll('[role="tab"]').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('[role="tab"]').forEach(x => {
+      x.setAttribute('aria-selected', String(x === t));
+      document.getElementById(x.getAttribute('aria-controls')).hidden = (x !== t);
+    });
+  }));
+</script>
+
+<!-- @accordion h=210 -->
+<style>
+  .ac { width: 250px; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; background: #fff; }
+  .ac details + details { border-top: 1px solid #e8e8ee; }
+  .ac summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; padding: 10px 12px; font-size: 12.5px; font-weight: 600; }
+  .ac summary::-webkit-details-marker { display: none; }
+  .ac summary::after { content: "+"; color: #9a9aa4; }
+  .ac details[open] summary::after { content: "\2212"; }
+  .ac .pn { padding: 0 12px 10px; color: #6b6b76; font-size: 12px; }
+</style>
+<div class="center"><div class="ac">
+  <details name="f" open><summary>무료인가요?</summary><div class="pn">네, 기본 기능은 무료예요.</div></details>
+  <details name="f"><summary>환불 되나요?</summary><div class="pn">7일 이내 전액 환불됩니다.</div></details>
+  <details name="f"><summary>계정 필요해요?</summary><div class="pn">아니요, 바로 쓸 수 있어요.</div></details>
+</div></div>
+
+<!-- @breadcrumb h=140 -->
+<style>
+  .bc { display: flex; gap: 6px; font-size: 12.5px; color: #9a9aa4; }
+  .bc a { color: #9a9aa4; text-decoration: none; }
+  .bc a:hover { color: #17171b; text-decoration: underline; }
+  .bc b { color: #17171b; }
+  h1 { font-size: 17px; margin: 6px 0 0; }
+</style>
+<div class="center"><div><nav class="bc" aria-label="현재 위치"><a href="#">홈</a><span>/</span><a href="#">제품</a><span>/</span><b aria-current="page">노트북</b></nav><h1>노트북</h1></div></div>
+
+<!-- @stepper h=150 -->
+<style>
+  .st { display: flex; align-items: center; width: 280px; }
+  .st .dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; flex-shrink: 0; }
+  .st .done { background: #17171b; color: #fff; }
+  .st .now { background: #17171b; color: #fff; outline: 3px solid #ececf1; }
+  .st .todo { background: #f0f0f4; color: #9a9aa4; }
+  .st .ln { flex: 1; height: 2px; background: #17171b; }
+  .st .ln.off { background: #e8e8ee; }
+  .lb { display: flex; justify-content: space-between; width: 280px; margin-top: 8px; font-size: 11px; color: #9a9aa4; }
+  .lb b { color: #17171b; }
+</style>
+<div class="center"><div>
+  <div class="st"><div class="dot done">&#10003;</div><div class="ln"></div><div class="dot now">2</div><div class="ln off"></div><div class="dot todo">3</div></div>
+  <div class="lb"><span>정보 입력</span><b>확인</b><span>완료</span></div>
+</div></div>
+
+<!-- @pagination h=140 -->
+<style>
+  .pg { display: flex; gap: 4px; }
+  .pg a { min-width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 7px; font-size: 12px; color: #43434d; text-decoration: none; font-variant-numeric: tabular-nums; }
+  .pg a:hover { background: #f4f4f7; }
+  .pg [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
+</style>
+<div class="center"><nav class="pg" aria-label="페이지"><a href="#" aria-current="page">1</a><a href="#">2</a><a href="#">3</a><a href="#">&#8230;</a><a href="#">12</a><a href="#">&#8250;</a></nav></div>
+
+<!-- @infinite-scroll h=200 full -->
+<style>
+  .isc { height: 100vh; overflow-y: auto; padding: 12px 16px; box-sizing: border-box; }
+  .isc .bar { margin-bottom: 10px; }
+  .ld { display: flex; gap: 8px; align-items: center; color: #9a9aa4; font-size: 11.5px; padding: 6px 0 14px; }
+  .sp { width: 14px; height: 14px; border: 2px solid #e8e8ee; border-top-color: #17171b; border-radius: 50%; animation: r 0.9s linear infinite; }
+  @keyframes r { to { transform: rotate(360deg); } }
+</style>
+<div class="isc" id="sc">
+  <div class="bar" style="width:88%"></div><div class="bar" style="width:72%"></div><div class="bar" style="width:81%"></div>
+  <div class="bar" style="width:64%"></div><div class="bar" style="width:85%"></div><div class="bar" style="width:70%"></div>
+  <div class="ld"><span class="sp"></span>내리면 계속 불러와요</div>
+</div>
+<script>
+  // 바닥 근처에 오면 아이템 추가 (IntersectionObserver 실전 패턴의 축약)
+  const sc = document.getElementById('sc');
+  sc.addEventListener('scroll', () => {
+    if (sc.scrollTop + sc.clientHeight > sc.scrollHeight - 30) {
+      const b = document.createElement('div');
+      b.className = 'bar'; b.style.width = (60 + Math.random() * 30) + '%';
+      sc.insertBefore(b, sc.querySelector('.ld'));
+    }
+  });
+</script>
+
+<!-- @load-more h=190 -->
+<style>
+  .lm { width: 240px; }
+  .lm .bar { margin-bottom: 10px; }
+  .lm button { display: block; margin: 4px auto 0; padding: 8px 18px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 12.5px; cursor: pointer; }
+  .lm button:hover { background: #f4f4f7; }
+</style>
+<div class="center"><div class="lm" id="lm">
+  <div class="bar" style="width:90%"></div><div class="bar" style="width:74%"></div><div class="bar" style="width:82%"></div>
+  <button onclick="for(let i=0;i<2;i++){const b=document.createElement('div');b.className='bar';b.style.width=(60+Math.random()*30)+'%';this.parentNode.insertBefore(b,this)}">더보기</button>
+</div></div>
+
+<!-- @carousel h=230 -->
+<style>
+  .cr { width: 260px; }
+  .tr { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 10px; }
+  .tr::-webkit-scrollbar { display: none; }
+  .sl { flex: 0 0 100%; scroll-snap-align: start; padding: 28px 18px; text-align: center; font-size: 12.5px; background: #f4f4f7; color: #43434d; }
+  .nv { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+  .nv button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px; }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: #d4d4dd; }
+  .dots i.on { background: #17171b; }
+</style>
+<div class="center"><div class="cr">
+  <div class="tr" id="tr"><div class="sl">"실측 수치부터 보게 됐어요."</div><div class="sl">"별점 대신 근거를 읽어요."</div><div class="sl">"리포트로 설득이 끝났어요."</div></div>
+  <div class="nv"><button aria-label="이전" onclick="go(-1)">&#8249;</button><div class="dots" id="dt"><i class="on"></i><i></i><i></i></div><button aria-label="다음" onclick="go(1)">&#8250;</button></div>
+</div></div>
+<script>
+  const tr = document.getElementById('tr'), dt = document.querySelectorAll('#dt i');
+  const idx = () => Math.round(tr.scrollLeft / tr.clientWidth);
+  function go(d) { tr.scrollTo({ left: Math.min(2, Math.max(0, idx() + d)) * tr.clientWidth, behavior: 'smooth' }); }
+  tr.addEventListener('scroll', () => dt.forEach((el, i) => el.classList.toggle('on', i === idx())));
+</script>
+
+<!-- @dropdown h=200 -->
+<style>
+  .dd { position: relative; display: inline-block; }
+  .dd > button { padding: 8px 14px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 12.5px; cursor: pointer; }
+  .mn { position: absolute; top: calc(100% + 5px); left: 0; min-width: 130px; padding: 5px; background: #fff; border: 1px solid #e8e8ee; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+  .mn[hidden] { display: none; }
+  .mn button { display: block; width: 100%; text-align: left; padding: 7px 10px; border: 0; border-radius: 7px; background: none; font-size: 12.5px; cursor: pointer; }
+  .mn button:hover { background: #f4f4f7; }
+  .mn .out { color: #d64224; }
+</style>
+<div class="center" style="align-items:start;padding-top:24px"><div class="dd">
+  <button aria-haspopup="menu" aria-expanded="false" onclick="const m = this.nextElementSibling; m.hidden = !m.hidden; this.setAttribute('aria-expanded', String(!m.hidden))">내 계정 &#9662;</button>
+  <div class="mn" role="menu" hidden><button role="menuitem">설정</button><button role="menuitem" class="out">로그아웃</button></div>
+</div></div>
+<script>
+  document.addEventListener('click', e => { if (!e.target.closest('.dd')) { document.querySelector('.mn').hidden = true; document.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false'); } });
+</script>
+
+<!-- @hamburger h=150 full -->
+<style>
+  .hb { display: flex; align-items: center; justify-content: space-between; padding: 0 14px; height: 46px; border-bottom: 1px solid #e8e8ee; }
+  .hb button { border: 0; background: none; font-size: 18px; cursor: pointer; padding: 4px 8px; }
+</style>
+<div class="hb"><button aria-label="메뉴 열기">&#9776;</button><b style="font-size:13px">로고</b><span style="width:34px"></span></div>
+<p class="cap" style="margin-top:14px">&#9776; 아이콘 — 모바일에서 메뉴를 접는 버튼. 누르면 보통 드로어가 열린다</p>
+
+<!-- @drawer h=210 full -->
+<style>
+  .op { margin: 12px 14px; padding: 8px 14px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.dr { border: 0; padding: 0; position: fixed; inset: 0 0 0 auto; height: 100vh; max-height: 100vh; width: 150px; margin: 0; box-shadow: -10px 0 30px rgba(0,0,0,.14); animation: sl .18s ease-out; }
+  @keyframes sl { from { transform: translateX(100%); } }
+  dialog.dr::backdrop { background: rgba(0,0,0,.32); }
+  .dr nav { display: grid; gap: 2px; padding: 14px 10px; }
+  .dr a { padding: 8px 10px; border-radius: 7px; color: #17171b; text-decoration: none; font-size: 13px; }
+  .dr a:hover { background: #f4f4f7; }
+</style>
+<button class="op" onclick="document.getElementById('d').showModal()">&#9776; 메뉴</button>
+<p class="cap">오른쪽에서 서랍처럼 밀려 나옵니다</p>
+<dialog class="dr" id="d" onclick="if (event.target === this) this.close()"><nav><a href="#">홈</a><a href="#">리포트</a><a href="#">매거진</a><a href="#">설정</a></nav></dialog>
+
+<!-- @toc h=190 full -->
+<style>
+  .tc { display: flex; gap: 14px; padding: 14px; }
+  .bd2 { flex: 1; min-width: 0; }
+  .bd2 .bar { margin-bottom: 9px; }
+  .toc { width: 92px; flex-shrink: 0; border-left: 1px solid #e8e8ee; padding-left: 10px; font-size: 11px; display: grid; gap: 6px; align-content: start; }
+  .toc a { color: #9a9aa4; text-decoration: none; }
+  .toc a.on { color: #17171b; font-weight: 700; }
+</style>
+<div class="tc">
+  <div class="bd2"><div class="bar" style="width:92%"></div><div class="bar" style="width:78%"></div><div class="bar" style="width:85%"></div><div class="bar" style="width:60%"></div></div>
+  <nav class="toc" aria-label="목차"><a href="#">목차</a><a href="#" class="on">시작하기</a><a href="#">기술 스택</a><a href="#">배포하기</a></nav>
+</div>
+
+<!-- @bottom-nav h=190 full -->
+<style>
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+  .bd3 { flex: 1; padding: 12px 14px; }
+  .bn { display: flex; border-top: 1px solid #e8e8ee; }
+  .bn a { flex: 1; display: grid; place-items: center; gap: 2px; padding: 8px 0 10px; font-size: 10px; color: #9a9aa4; text-decoration: none; }
+  .bn i { width: 18px; height: 18px; border-radius: 5px; background: #d4d4dd; font-style: normal; }
+  .bn a.on { color: #17171b; font-weight: 700; }
+  .bn a.on i { background: #17171b; }
+</style>
+<div class="bd3"><div class="bar" style="width:85%"></div></div>
+<nav class="bn"><a href="#" class="on"><i></i>홈</a><a href="#"><i></i>검색</a><a href="#"><i></i>알림</a><a href="#"><i></i>내 정보</a></nav>
+
+<!-- @anchor-link h=190 -->
+<style>
+  .an { text-align: center; }
+  .an a { color: #17171b; font-size: 13px; font-weight: 600; }
+  .an .arrow { color: #9a9aa4; margin: 10px 0; font-size: 14px; }
+  .an .target { display: inline-block; border: 1px solid #17171b; border-radius: 8px; padding: 7px 14px; font-size: 12.5px; }
+</style>
+<div class="center"><div class="an">
+  <a href="#price">가격 보러가기 &darr;</a>
+  <div class="arrow">&#8595;</div>
+  <span class="target" id="price">가격 섹션</span>
+  <p class="cap">같은 페이지 안 특정 위치로 이동 (href="#id")</p>
+</div></div>

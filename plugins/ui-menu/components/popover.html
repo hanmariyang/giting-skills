@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>팝오버 Popover — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pv { position: relative; display: inline-block; }
+  .pv > button { display: flex; gap: 7px; align-items: center; border: 1px solid #e0e0e8; border-radius: 999px; background: #fff; padding: 5px 12px 5px 6px; font-size: 12px; cursor: pointer; }
+  .pv .av2 { width: 22px; height: 22px; border-radius: 50%; background: #17171b; color: #fff; display: grid; place-items: center; font-size: 10px; }
+  .pop { position: absolute; top: calc(100% + 6px); left: 0; width: 130px; background: #fff; border: 1px solid #e8e8ee; border-radius: 11px; box-shadow: 0 10px 28px rgba(0,0,0,.12); padding: 10px 12px; font-size: 12px; }
+  .pop[hidden] { display: none; }
+  .pop b { display: block; margin-bottom: 5px; }
+  .pop a { display: block; color: #55555f; text-decoration: none; padding: 3px 0; }
+</style>
+<div class="center" style="align-items:start;padding-top:20px"><div class="pv">
+  <button onclick="const p = this.nextElementSibling; p.hidden = !p.hidden"><span class="av2">지</span>이지우</button>
+  <div class="pop" hidden><b>이지우</b><a href="#">설정</a><a href="#">로그아웃</a></div>
+</div><p class="cap" style="margin-left:12px;align-self:center">눌러서 여는 작은 판</p></div>
+</body>
+</html>

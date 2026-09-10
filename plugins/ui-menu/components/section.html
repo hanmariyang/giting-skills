@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>섹션 Section — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sec { padding: 14px 16px; }
+  .sec + .sec { border-top: 1px solid #e8e8ee; }
+  .sec h2 { margin: 0 0 6px; font-size: 13.5px; }
+  .sec.alt { background: #f8f8fa; }
+</style>
+<section class="sec"><h2>섹션 1</h2><div class="bar" style="width:70%"></div></section>
+<section class="sec alt"><h2>섹션 2</h2><div class="bar" style="width:55%"></div></section>
+<section class="sec"><h2>섹션 3</h2><div class="bar" style="width:62%"></div></section>
+</body>
+</html>

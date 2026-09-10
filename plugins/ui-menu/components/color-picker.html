@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>컬러피커 Color Picker — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cp { text-align: center; }
+  .cp .sw2 { display: flex; gap: 7px; justify-content: center; }
+  .cp button { width: 28px; height: 28px; border-radius: 8px; border: 0; cursor: pointer; }
+  .cp .on { outline: 2px solid #17171b; outline-offset: 2px; }
+  .cp output { display: inline-block; margin-top: 9px; border: 1px solid #e8e8ee; border-radius: 7px; padding: 4px 12px; font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; }
+</style>
+<div class="center"><div class="cp">
+  <div class="sw2">
+    <button style="background:#17171b" onclick="pick(this,'#17171B')"></button>
+    <button style="background:#e1785c" class="on" onclick="pick(this,'#E1785C')"></button>
+    <button style="background:#2e6b4f" onclick="pick(this,'#2E6B4F')"></button>
+    <button style="background:#8a7a1e" onclick="pick(this,'#8A7A1E')"></button>
+    <button style="background:#4a6b8a" onclick="pick(this,'#4A6B8A')"></button>
+  </div>
+  <output id="hex">#E1785C</output>
+</div></div>
+<script>
+  function pick(btn, hex) { document.querySelectorAll('.cp button').forEach(b => b.classList.remove('on')); btn.classList.add('on'); document.getElementById('hex').textContent = hex; }
+</script>
+</body>
+</html>

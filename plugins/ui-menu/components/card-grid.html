@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>카드 그리드 Card Grid — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cg { display: grid; grid-template-columns: repeat(3, 118px); gap: 10px; }
+  .cg article { background: #fff; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; }
+  .cg .th { aspect-ratio: 16/10; background: #ececf1; }
+  .cg .bd { padding: 8px 9px; }
+  .cg h3 { margin: 0 0 4px; font-size: 11.5px; }
+</style>
+<div class="center"><div><div class="cg">
+  <article><div class="th"></div><div class="bd"><h3>카드 1</h3><div class="bar" style="width:70%"></div></div></article>
+  <article><div class="th"></div><div class="bd"><h3>카드 2</h3><div class="bar" style="width:55%"></div></div></article>
+  <article><div class="th"></div><div class="bd"><h3>카드 3</h3><div class="bar" style="width:63%"></div></div></article>
+</div><p class="cap">카드를 격자로 반복</p></div></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>얼럿 Alert / Callout — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .al { display: grid; gap: 7px; width: 240px; }
+  .al div { border-left: 3px solid; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
+  .ok2 { background: #eefaf3; border-color: #17b26a; color: #116b43; }
+  .wr { background: #fdf8ec; border-color: #d9a514; color: #7d6008; }
+  .er { background: #fdf1ee; border-color: #d64224; color: #93290f; }
+</style>
+<div class="center"><div class="al">
+  <div class="ok2">저장됐어요</div>
+  <div class="wr">곧 마감돼요</div>
+  <div class="er">이메일 형식이 아니에요</div>
+</div></div>
+</body>
+</html>

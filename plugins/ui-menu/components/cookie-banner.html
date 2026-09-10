@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>쿠키 배너 Cookie Banner — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cbn { position: fixed; left: 10px; right: 10px; bottom: 10px; background: #fff; border: 1px solid #e8e8ee; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.12); padding: 12px 14px; font-size: 12px; }
+  .cbn .ac3 { display: flex; gap: 7px; margin-top: 9px; }
+  .cbn button { flex: 1; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+  .cbn .no { border: 1px solid #e0e0e8; background: #fff; }
+  .cbn .yes { border: 0; background: #17171b; color: #fff; }
+</style>
+<div style="padding:12px 16px"><div class="bar" style="width:80%"></div></div>
+<div class="cbn"><span>더 나은 경험을 위해 쿠키를 사용해요.</span><div class="ac3"><button class="no" onclick="this.closest('.cbn').remove()">거부</button><button class="yes" onclick="this.closest('.cbn').remove()">동의</button></div></div>
+</body>
+</html>

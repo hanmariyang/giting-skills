@@ -1,28 +1,32 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>토글 스위치 Toggle Switch</title>
+<title>토글 스위치 Toggle / Switch — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
-  .switch { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
-  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
-  .knob {
-    width: 42px; height: 25px; border-radius: 999px;
-    background: #d4d4dd; position: relative; transition: background .15s;
-  }
-  .knob::after {
-    content: ""; position: absolute; top: 3px; left: 3px;
-    width: 19px; height: 19px; border-radius: 50%; background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s;
-  }
-  .switch input:checked + .knob { background: #17b26a; }
-  .switch input:checked + .knob::after { transform: translateX(17px); }
-  .switch input:focus-visible + .knob { outline: 2px solid #17171b; outline-offset: 2px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<!-- 실체는 checkbox라서 폼 전송·상태 관리가 공짜입니다 -->
-<label class="switch">
-  <input type="checkbox" role="switch" checked>
-  <span class="knob" aria-hidden="true"></span>
-  알림 받기
-</label>
+</head>
+<body>
+<style>
+  .sw { display: grid; gap: 10px; }
+  .sw label { display: flex; gap: 34px; align-items: center; font-size: 12.5px; cursor: pointer; justify-content: space-between; width: 150px; }
+  .sw input { position: absolute; opacity: 0; }
+  .kb { width: 36px; height: 21px; border-radius: 999px; background: #d4d4dd; position: relative; transition: background .15s; flex-shrink: 0; }
+  .kb::after { content: ""; position: absolute; top: 2.5px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s; }
+  .sw input:checked + .kb { background: #17171b; }
+  .sw input:checked + .kb::after { transform: translateX(14px); }
+  .sw input:focus-visible + .kb { outline: 2px solid #17171b; outline-offset: 2px; }
+</style>
+<div class="center"><div class="sw">
+  <label>알림 받기<input type="checkbox" role="switch" checked><span class="kb" aria-hidden="true"></span></label>
+  <label>다크 모드<input type="checkbox" role="switch"><span class="kb" aria-hidden="true"></span></label>
+</div></div>
+</body>
+</html>

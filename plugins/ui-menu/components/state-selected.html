@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>선택됨 Selected — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .s6 { display: grid; gap: 6px; width: 190px; }
+  .s6 button { text-align: left; padding: 9px 12px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 12.5px; cursor: pointer; }
+  .s6 .on3 { border: 2px solid #17171b; font-weight: 700; }
+</style>
+<div class="center"><div class="s6" role="listbox">
+  <button role="option" aria-selected="true" class="on3">프로 플랜 &#10003;</button>
+  <button role="option" aria-selected="false">무료 플랜</button>
+</div></div>
+<script>
+  document.querySelectorAll('.s6 button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.s6 button').forEach(x => {
+      const on = x === b; x.classList.toggle('on3', on); x.setAttribute('aria-selected', String(on));
+      x.textContent = x.textContent.replace(' ✓', '') + (on ? ' ✓' : '');
+    });
+  }));
+</script>
+</body>
+</html>

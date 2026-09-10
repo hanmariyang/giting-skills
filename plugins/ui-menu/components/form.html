@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>폼 Form — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fm { width: 230px; display: grid; gap: 9px; }
+  .fm label { font-size: 11px; font-weight: 600; }
+  .fm label i { color: #d64224; font-style: normal; }
+  .fm input { width: 100%; padding: 8px 10px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .fm input:focus { outline: 2px solid #17171b; border-color: transparent; }
+  .fm button { padding: 9px; border: 0; border-radius: 8px; background: #17171b; color: #fff; font-size: 12.5px; cursor: pointer; }
+</style>
+<div class="center"><form class="fm" onsubmit="event.preventDefault(); this.querySelector('button').textContent='보냈어요 ✓'">
+  <div><label>이름 <i>*</i></label><input required placeholder="이지우"></div>
+  <div><label>이메일 <i>*</i></label><input type="email" required placeholder="example@gmail.com"></div>
+  <button>보내기</button>
+</form></div>
+</body>
+</html>

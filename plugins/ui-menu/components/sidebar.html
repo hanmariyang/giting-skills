@@ -1,29 +1,26 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>사이드바 Sidebar</title>
+<title>사이드바 Sidebar — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; }
-  .layout { display: flex; min-height: 70vh; }
-  .sidebar {
-    width: 200px; flex-shrink: 0;
-    padding: 16px 10px;
-    background: #f8f8fa; border-right: 1px solid #e8e8ee;
-  }
-  .sidebar a {
-    display: block; padding: 9px 12px; border-radius: 8px;
-    color: #55555f; text-decoration: none; font-size: 14px;
-  }
-  .sidebar a:hover { background: #ededf1; }
-  .sidebar a[aria-current="page"] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
-  main { flex: 1; min-width: 0; padding: 20px; color: #9a9aa4; font-size: 14px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<div class="layout">
-  <nav class="sidebar" aria-label="사이드 메뉴">
-    <a href="#" aria-current="page">대시보드</a>
-    <a href="#">리포트</a>
-    <a href="#">설정</a>
-  </nav>
-  <main>왼쪽이 사이드바, 이쪽이 본문인 2단 레이아웃입니다. 본문에는 min-width: 0을 줘야 안이 넘칠 때 레이아웃이 안 깨집니다.</main>
-</div>
+</head>
+<body>
+<style>
+  .ly { display: flex; height: 100vh; }
+  .sb { width: 132px; flex-shrink: 0; padding: 10px 8px; background: #f8f8fa; border-right: 1px solid #e8e8ee; }
+  .sb a { display: block; padding: 7px 10px; border-radius: 7px; color: #55555f; text-decoration: none; font-size: 12.5px; }
+  .sb a[aria-current="page"] { background: #fff; color: #17171b; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  .ly main { flex: 1; min-width: 0; padding: 14px; color: #9a9aa4; font-size: 12px; }
+</style>
+<div class="ly"><nav class="sb"><a href="#" aria-current="page">대시보드</a><a href="#">리포트</a><a href="#">설정</a></nav><main>옆에 세로로 붙는 메뉴. 본문에는 min-width: 0.</main></div>
+</body>
+</html>

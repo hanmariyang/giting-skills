@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>앵커 링크 Anchor Link — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .an { text-align: center; }
+  .an a { color: #17171b; font-size: 13px; font-weight: 600; }
+  .an .arrow { color: #9a9aa4; margin: 10px 0; font-size: 14px; }
+  .an .target { display: inline-block; border: 1px solid #17171b; border-radius: 8px; padding: 7px 14px; font-size: 12.5px; }
+</style>
+<div class="center"><div class="an">
+  <a href="#price">가격 보러가기 &darr;</a>
+  <div class="arrow">&#8595;</div>
+  <span class="target" id="price">가격 섹션</span>
+  <p class="cap">같은 페이지 안 특정 위치로 이동 (href="#id")</p>
+</div></div>
+</body>
+</html>

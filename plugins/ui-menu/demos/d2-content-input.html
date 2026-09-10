@@ -1,0 +1,511 @@
+<!-- @list h=190 -->
+<style>
+  .ls { width: 250px; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; background: #fff; }
+  .ls a { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; text-decoration: none; color: #17171b; font-size: 12.5px; }
+  .ls a + a { border-top: 1px solid #f0f0f4; }
+  .ls a:hover { background: #f8f8fa; }
+  .ls small { display: block; color: #9a9aa4; font-size: 11px; margin-top: 2px; }
+  .ls .go { color: #c9c9d4; }
+</style>
+<div class="center"><div class="ls">
+  <a href="#"><span><b>신청서 자동화</b><small>09.09 · 완료</small></span><span class="go">&#8250;</span></a>
+  <a href="#"><span><b>랜딩 페이지</b><small>09.08 · 진행 중</small></span><span class="go">&#8250;</span></a>
+  <a href="#"><span><b>포트폴리오</b><small>09.07 · 대기</small></span><span class="go">&#8250;</span></a>
+</div></div>
+
+<!-- @pricing-table h=230 -->
+<style>
+  .pt { display: flex; gap: 8px; }
+  .pl { width: 92px; border: 1px solid #e8e8ee; border-radius: 10px; padding: 12px 10px; text-align: center; position: relative; background: #fff; }
+  .pl.hot { border: 2px solid #17171b; }
+  .pl .tag { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: #17171b; color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 999px; }
+  .pl h4 { margin: 0; font-size: 11px; color: #9a9aa4; font-weight: 600; }
+  .pl .pr { font-size: 15px; font-weight: 800; margin: 4px 0; letter-spacing: -.02em; }
+  .pl p { margin: 0; font-size: 10.5px; color: #6b6b76; }
+</style>
+<div class="center"><div class="pt">
+  <div class="pl"><h4>무료</h4><div class="pr">0원</div><p>기본 기능<br>월 3회</p></div>
+  <div class="pl hot"><span class="tag">인기</span><h4>프로</h4><div class="pr">9,900원</div><p>전체 기능<br>무제한</p></div>
+  <div class="pl"><h4>팀</h4><div class="pr">문의</div><p>전담 지원<br>보안</p></div>
+</div></div>
+
+<!-- @testimonial h=200 -->
+<style>
+  .tm { width: 240px; border: 1px solid #e8e8ee; border-radius: 12px; padding: 14px 16px; background: #fff; }
+  .tm .q { font-size: 12.5px; line-height: 1.6; }
+  .tm .who { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .tm .av { width: 26px; height: 26px; border-radius: 50%; background: #17171b; color: #fff; display: grid; place-items: center; font-size: 11px; }
+  .tm .who b { font-size: 11.5px; display: block; }
+  .tm .who small { color: #9a9aa4; font-size: 10.5px; }
+</style>
+<div class="center"><figure class="tm" style="margin:0">
+  <blockquote class="q" style="margin:0">"코딩 하나도 모르는데 이틀 만에 신청 페이지를 만들었어요."</blockquote>
+  <figcaption class="who"><span class="av">김</span><span><b>김하나</b><small>대학생</small></span></figcaption>
+</figure></div>
+
+<!-- @stats h=150 -->
+<style>
+  .stt { display: flex; gap: 22px; text-align: center; }
+  .stt b { font-size: 20px; letter-spacing: -.02em; display: block; font-variant-numeric: tabular-nums; }
+  .stt small { color: #9a9aa4; font-size: 11px; }
+</style>
+<div class="center"><div class="stt">
+  <span><b>2,060</b><small>누적 신청</small></span>
+  <span><b>98%</b><small>만족도</small></span>
+  <span><b>10분</b><small>평균 제작</small></span>
+</div></div>
+
+<!-- @stat-card h=170 -->
+<style>
+  .sc2 { display: flex; gap: 10px; }
+  .sc2 .k { width: 100px; border: 1px solid #e8e8ee; border-radius: 10px; padding: 10px 12px; background: #fff; }
+  .sc2 small { color: #9a9aa4; font-size: 10.5px; }
+  .sc2 b { font-size: 19px; display: block; margin: 2px 0; font-variant-numeric: tabular-nums; }
+  .up { color: #17b26a; font-size: 10.5px; }
+  .dn { color: #d64224; font-size: 10.5px; }
+</style>
+<div class="center"><div class="sc2">
+  <div class="k"><small>이번 주 신청</small><b>48</b><span class="up">&#9650; 12%</span></div>
+  <div class="k"><small>전환율</small><b>6.2%</b><span class="dn">&#9660; 3%</span></div>
+</div></div>
+
+<!-- @logo-cloud h=150 -->
+<style>
+  .lc { text-align: center; }
+  .lc p { color: #9a9aa4; font-size: 11px; margin: 0 0 10px; }
+  .lc .row { display: flex; gap: 10px; justify-content: center; }
+  .lc i { width: 52px; height: 18px; border-radius: 4px; background: #e4e4ea; }
+</style>
+<div class="center"><div class="lc"><p>이런 곳에서 쓰고 있어요</p><div class="row"><i></i><i></i><i></i><i></i></div></div></div>
+
+<!-- @timeline h=210 -->
+<style>
+  .tml { display: grid; gap: 0; }
+  .ev { display: flex; gap: 10px; }
+  .ev .rail { display: flex; flex-direction: column; align-items: center; }
+  .ev .dot { width: 9px; height: 9px; border-radius: 50%; background: #17171b; margin-top: 3px; flex-shrink: 0; }
+  .ev.todo .dot { background: #fff; border: 2px solid #c9c9d4; }
+  .ev .ln { width: 2px; flex: 1; background: #e8e8ee; min-height: 18px; }
+  .ev:last-child .ln { display: none; }
+  .ev b { font-size: 12.5px; display: block; }
+  .ev small { color: #9a9aa4; font-size: 10.5px; display: block; padding-bottom: 12px; }
+  .ev.todo b { color: #9a9aa4; }
+</style>
+<div class="center"><div class="tml">
+  <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>아이디어 정리</b><small>09.01</small></span></div>
+  <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>첫 화면 완성</b><small>09.05</small></span></div>
+  <div class="ev todo"><span class="rail"><span class="dot"></span></span><span><b>배포</b><small>예정</small></span></div>
+</div></div>
+
+<!-- @gallery h=190 -->
+<style>
+  .gl { display: grid; grid-template-columns: repeat(3, 74px); gap: 6px; }
+  .gl i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, #e2e7ee, #cdd5df); }
+  .gl i:nth-child(2n) { background: linear-gradient(135deg, #e9e4de, #d8cfc4); }
+</style>
+<div class="center"><div><div class="gl"><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="cap">사진 격자 · 누르면 라이트박스로 크게</p></div></div>
+
+<!-- @lightbox h=210 -->
+<style>
+  .th2 { width: 84px; aspect-ratio: 4/3; border-radius: 8px; background: linear-gradient(135deg, #e2e7ee, #cdd5df); border: 0; cursor: zoom-in; }
+  dialog.lb { border: 0; background: none; padding: 0; }
+  dialog.lb::backdrop { background: rgba(0,0,0,.72); }
+  .lb .big { width: min(80vw, 240px); aspect-ratio: 4/3; border-radius: 10px; background: linear-gradient(135deg, #e2e7ee, #cdd5df); cursor: zoom-out; }
+  .lb p { color: #fff; text-align: center; font-size: 11px; margin: 8px 0 0; }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="th2" aria-label="사진 크게 보기" onclick="document.getElementById('lb').showModal()"></button>
+  <p class="cap">사진 눌러서 크게 보기</p>
+</div></div>
+<dialog class="lb" id="lb" onclick="this.close()"><div class="big"></div><p>다시 누르면 닫혀요</p></dialog>
+
+<!-- @blockquote h=160 -->
+<style>
+  .bq { border-left: 3px solid #17171b; margin: 0; padding: 4px 0 4px 14px; max-width: 240px; }
+  .bq p { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.6; }
+</style>
+<div class="center"><blockquote class="bq"><p>이름을 아는 순간<br>수정 요청이 한 번에 통해요.</p></blockquote></div>
+
+<!-- @code-block h=190 -->
+<style>
+  .cb { width: 260px; background: #17171b; border-radius: 10px; overflow: hidden; }
+  .cb .bar2 { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #24242b; }
+  .cb .bar2 span { color: #8d8d98; font-size: 10.5px; font-family: ui-monospace, Menlo, monospace; }
+  .cb .bar2 button { border: 0; background: none; color: #b6b6c0; font-size: 10.5px; cursor: pointer; }
+  .cb pre { margin: 0; padding: 12px 14px; color: #e8e8ee; font-size: 11px; line-height: 1.6; font-family: ui-monospace, Menlo, monospace; overflow-x: auto; }
+  .cb .c { color: #7d7d88; }
+</style>
+<div class="center"><div class="cb">
+  <div class="bar2"><span>prompt.txt</span><button onclick="this.textContent='복사됨'">복사</button></div>
+  <pre><span class="c">// AI한테 그대로 붙여넣기</span>
+신청 페이지 만들어줘
+인풋 3개, 셀렉트 1개
+유효성 검사 넣고</pre>
+</div></div>
+
+<!-- @profile-card h=160 -->
+<style>
+  .pc { display: flex; gap: 10px; align-items: center; border: 1px solid #e8e8ee; border-radius: 999px; padding: 8px 10px; background: #fff; }
+  .pc .av { width: 34px; height: 34px; border-radius: 50%; background: #17171b; color: #fff; display: grid; place-items: center; font-size: 13px; }
+  .pc b { font-size: 12.5px; display: block; }
+  .pc small { color: #9a9aa4; font-size: 10.5px; }
+  .pc button { margin-left: 8px; border: 0; border-radius: 999px; background: #17171b; color: #fff; padding: 6px 14px; font-size: 11.5px; cursor: pointer; }
+</style>
+<div class="center"><div class="pc"><span class="av">쥬</span><span><b>이지우</b><small>AI 활용 콘텐츠</small></span><button>팔로우</button></div></div>
+
+<!-- @notification-list h=200 -->
+<style>
+  .nl { width: 250px; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; background: #fff; font-size: 12px; }
+  .nl div { padding: 9px 12px; display: flex; gap: 8px; align-items: baseline; }
+  .nl div + div { border-top: 1px solid #f0f0f4; }
+  .nl .new { background: #fdf3f0; }
+  .nl .dot { width: 6px; height: 6px; border-radius: 50%; background: #f05032; flex-shrink: 0; }
+  .nl small { margin-left: auto; color: #9a9aa4; font-size: 10.5px; flex-shrink: 0; }
+</style>
+<div class="center"><div class="nl">
+  <div class="new"><span class="dot"></span><b>새 신청이 들어왔어요</b><small>방금</small></div>
+  <div><span style="width:6px"></span>배포가 완료됐어요<small>2시간 전</small></div>
+  <div><span style="width:6px"></span>도메인이 연결됐어요<small>어제</small></div>
+</div></div>
+
+<!-- @banner h=150 full -->
+<style>
+  .bn2 { display: flex; align-items: center; gap: 10px; background: #17171b; color: #fff; padding: 9px 14px; font-size: 12px; }
+  .bn2 button { margin-left: auto; border: 0; background: none; color: #8d8d98; font-size: 14px; cursor: pointer; }
+</style>
+<div class="bn2"><span>9월 한정 무료로 열려 있어요</span><button aria-label="닫기" onclick="this.parentNode.remove()">&times;</button></div>
+<p class="cap" style="margin-top:16px">가로로 긴 알림 띠 · 페이지 맨 위에 걸린다</p>
+
+<!-- @form h=250 -->
+<style>
+  .fm { width: 230px; display: grid; gap: 9px; }
+  .fm label { font-size: 11px; font-weight: 600; }
+  .fm label i { color: #d64224; font-style: normal; }
+  .fm input { width: 100%; padding: 8px 10px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .fm input:focus { outline: 2px solid #17171b; border-color: transparent; }
+  .fm button { padding: 9px; border: 0; border-radius: 8px; background: #17171b; color: #fff; font-size: 12.5px; cursor: pointer; }
+</style>
+<div class="center"><form class="fm" onsubmit="event.preventDefault(); this.querySelector('button').textContent='보냈어요 ✓'">
+  <div><label>이름 <i>*</i></label><input required placeholder="이지우"></div>
+  <div><label>이메일 <i>*</i></label><input type="email" required placeholder="example@gmail.com"></div>
+  <button>보내기</button>
+</form></div>
+
+<!-- @input h=160 -->
+<style>
+  .in1 { width: 220px; }
+  .in1 label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .in1 input { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 13px; box-sizing: border-box; font-family: inherit; }
+  .in1 input:focus { outline: 2px solid #17171b; border-color: transparent; }
+</style>
+<div class="center"><div class="in1"><label>이름</label><input placeholder="한 줄 입력칸"></div></div>
+
+<!-- @textarea h=180 -->
+<style>
+  .ta { width: 230px; }
+  .ta label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .ta textarea { width: 100%; min-height: 72px; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; resize: vertical; }
+  .ta textarea:focus { outline: 2px solid #17171b; border-color: transparent; }
+</style>
+<div class="center"><div class="ta"><label>문의 내용</label><textarea placeholder="어떤 걸 만들고 싶으신지 편하게 적어주세요"></textarea></div></div>
+
+<!-- @select h=160 -->
+<style>
+  .se { width: 200px; }
+  .se label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .se select { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; background: #fff; font-family: inherit; }
+</style>
+<div class="center"><div class="se"><label>학년</label><select><option>1학년</option><option>2학년</option><option selected>3학년</option></select></div></div>
+
+<!-- @checkbox h=170 -->
+<style>
+  .ck { display: grid; gap: 8px; font-size: 12.5px; }
+  .ck p { margin: 0 0 2px; color: #9a9aa4; font-size: 11px; }
+  .ck label { display: flex; gap: 7px; align-items: center; cursor: pointer; }
+  .ck input { width: 15px; height: 15px; accent-color: #17171b; }
+</style>
+<div class="center"><div class="ck"><p>여러 개 고를 수 있어요</p>
+  <label><input type="checkbox" checked>마케팅</label>
+  <label><input type="checkbox" checked>개발</label>
+  <label><input type="checkbox">디자인</label>
+</div></div>
+
+<!-- @radio h=170 -->
+<style>
+  .rd { display: grid; gap: 8px; font-size: 12.5px; }
+  .rd p { margin: 0 0 2px; color: #9a9aa4; font-size: 11px; }
+  .rd label { display: flex; gap: 7px; align-items: center; cursor: pointer; }
+  .rd input { width: 15px; height: 15px; accent-color: #17171b; }
+</style>
+<div class="center"><div class="rd"><p>하나만 골라져요</p>
+  <label><input type="radio" name="r" checked>처음이에요</label>
+  <label><input type="radio" name="r">해본 적 있어요</label>
+  <label><input type="radio" name="r">잘해요</label>
+</div></div>
+
+<!-- @switch h=160 -->
+<style>
+  .sw { display: grid; gap: 10px; }
+  .sw label { display: flex; gap: 34px; align-items: center; font-size: 12.5px; cursor: pointer; justify-content: space-between; width: 150px; }
+  .sw input { position: absolute; opacity: 0; }
+  .kb { width: 36px; height: 21px; border-radius: 999px; background: #d4d4dd; position: relative; transition: background .15s; flex-shrink: 0; }
+  .kb::after { content: ""; position: absolute; top: 2.5px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s; }
+  .sw input:checked + .kb { background: #17171b; }
+  .sw input:checked + .kb::after { transform: translateX(14px); }
+  .sw input:focus-visible + .kb { outline: 2px solid #17171b; outline-offset: 2px; }
+</style>
+<div class="center"><div class="sw">
+  <label>알림 받기<input type="checkbox" role="switch" checked><span class="kb" aria-hidden="true"></span></label>
+  <label>다크 모드<input type="checkbox" role="switch"><span class="kb" aria-hidden="true"></span></label>
+</div></div>
+
+<!-- @slider h=160 -->
+<style>
+  .sd { width: 220px; }
+  .sd .top { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 6px; }
+  .sd .top b { font-variant-numeric: tabular-nums; }
+  .sd input { width: 100%; accent-color: #17171b; }
+  .sd .btm { display: flex; justify-content: space-between; color: #9a9aa4; font-size: 10px; }
+</style>
+<div class="center"><div class="sd">
+  <div class="top"><span>예산</span><b id="v">45만원</b></div>
+  <input type="range" min="0" max="100" value="45" oninput="document.getElementById('v').textContent = this.value + '만원'">
+  <div class="btm"><span>0</span><span>100만원</span></div>
+</div></div>
+
+<!-- @search-bar h=190 -->
+<style>
+  .sb2 { width: 230px; position: relative; }
+  .sb2 input { width: 100%; padding: 9px 11px 9px 30px; border: 1px solid #e0e0e8; border-radius: 9px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .sb2 input:focus { outline: 2px solid #17171b; border-color: transparent; }
+  .sb2 .ic { position: absolute; left: 10px; top: 9px; color: #9a9aa4; font-size: 13px; }
+  .sb2 .rs { margin-top: 6px; border: 1px solid #e8e8ee; border-radius: 9px; overflow: hidden; font-size: 12px; }
+  .sb2 .rs div { padding: 8px 11px; }
+  .sb2 .rs div + div { border-top: 1px solid #f0f0f4; }
+  .sb2 .rs div:hover { background: #f8f8fa; }
+</style>
+<div class="center"><div class="sb2">
+  <span class="ic">&#8981;</span><input value="바이브코딩" aria-label="검색">
+  <div class="rs"><div>바이브코딩 시작하기</div><div>바이브코딩 도구 비교</div></div>
+</div></div>
+
+<!-- @autocomplete h=190 -->
+<style>
+  .au { width: 220px; }
+  .au input { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 9px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .au .cd2 { margin-top: 5px; border: 1px solid #e8e8ee; border-radius: 9px; overflow: hidden; font-size: 12px; }
+  .au .cd2 div { padding: 8px 11px; cursor: pointer; }
+  .au .cd2 div:hover, .au .cd2 .on { background: #f4f4f7; }
+  .au b { color: #17171b; }
+  .au .cd2 span { color: #9a9aa4; }
+</style>
+<div class="center"><div class="au">
+  <input value="바이브" aria-label="자동완성 입력">
+  <div class="cd2"><div class="on"><b>바이브</b><span>코딩</span></div><div><b>바이브</b><span>코딩 도구</span></div></div>
+  <p class="cap">타이핑하면 후보가 뜸</p>
+</div></div>
+
+<!-- @file-upload h=180 -->
+<style>
+  .fu { width: 230px; border: 2px dashed #c9c9d4; border-radius: 10px; padding: 22px 14px; text-align: center; cursor: pointer; }
+  .fu:hover { border-color: #17171b; }
+  .fu b { font-size: 12.5px; display: block; }
+  .fu small { color: #9a9aa4; font-size: 10.5px; }
+</style>
+<div class="center"><label class="fu"><input type="file" hidden><span style="font-size:16px">&#8679;</span><b>여기로 끌어다 놓으세요</b><small>이미지 · 최대 5MB</small></label></div>
+
+<!-- @drag-drop h=180 -->
+<style>
+  .dz { display: flex; gap: 12px; align-items: center; }
+  .dz .item { width: 44px; height: 44px; border-radius: 9px; background: #fff; border: 1px solid #e8e8ee; box-shadow: 0 3px 8px rgba(0,0,0,.08); cursor: grab; }
+  .dz .arrow { color: #9a9aa4; }
+  .dz .slot { width: 66px; height: 44px; border: 2px dashed #c9c9d4; border-radius: 9px; display: grid; place-items: center; color: #9a9aa4; font-size: 10px; }
+  .dz .slot.over { border-color: #17171b; color: #17171b; }
+</style>
+<div class="center"><div>
+  <div class="dz"><div class="item" draggable="true" id="it"></div><span class="arrow">&#8594;</span><div class="slot" id="sl">여기에 놓기</div></div>
+  <p class="cap">끌어다 놓기</p>
+</div></div>
+<script>
+  const it = document.getElementById('it'), sl = document.getElementById('sl');
+  it.addEventListener('dragstart', e => e.dataTransfer.setData('text', 'x'));
+  sl.addEventListener('dragover', e => { e.preventDefault(); sl.classList.add('over'); });
+  sl.addEventListener('dragleave', () => sl.classList.remove('over'));
+  sl.addEventListener('drop', e => { e.preventDefault(); sl.textContent = '놓았어요 ✓'; sl.classList.remove('over'); it.remove(); });
+</script>
+
+<!-- @date-picker h=230 -->
+<style>
+  .dp { width: 230px; }
+  .dp input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .cal { margin-top: 6px; border: 1px solid #e8e8ee; border-radius: 10px; padding: 8px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 10.5px; text-align: center; }
+  .cal .wd { color: #9a9aa4; padding: 3px 0; }
+  .cal button { border: 0; background: none; border-radius: 6px; padding: 4px 0; cursor: pointer; font-variant-numeric: tabular-nums; font-size: 10.5px; }
+  .cal button:hover { background: #f4f4f7; }
+  .cal .on { background: #17171b; color: #fff; }
+</style>
+<div class="center"><div class="dp">
+  <input value="2026. 09. 15" readonly aria-label="날짜">
+  <div class="cal">
+    <span class="wd">일</span><span class="wd">월</span><span class="wd">화</span><span class="wd">수</span><span class="wd">목</span><span class="wd">금</span><span class="wd">토</span>
+    <button>13</button><button>14</button><button class="on">15</button><button>16</button><button>17</button><button>18</button><button>19</button>
+    <button>20</button><button>21</button><button>22</button><button>23</button><button>24</button><button>25</button><button>26</button>
+  </div>
+</div></div>
+
+<!-- @time-picker h=170 -->
+<style>
+  .tp2 { width: 200px; text-align: center; }
+  .tp2 input { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 13px; box-sizing: border-box; text-align: center; font-variant-numeric: tabular-nums; font-family: inherit; }
+  .tp2 .hrs { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
+  .tp2 .hrs button { border: 1px solid #e0e0e8; background: #fff; border-radius: 7px; padding: 5px 10px; font-size: 11.5px; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .tp2 .hrs .on { border-color: #17171b; font-weight: 700; }
+</style>
+<div class="center"><div class="tp2"><input value="14 : 30" readonly aria-label="시간"><div class="hrs"><button>13</button><button class="on">14</button><button>15</button></div></div></div>
+
+<!-- @number-stepper h=150 -->
+<style>
+  .ns { display: inline-flex; align-items: center; border: 1px solid #e0e0e8; border-radius: 9px; overflow: hidden; }
+  .ns button { border: 0; background: #fff; width: 32px; height: 32px; font-size: 15px; cursor: pointer; color: #55555f; }
+  .ns button:hover { background: #f4f4f7; }
+  .ns output { width: 36px; text-align: center; font-size: 13.5px; font-variant-numeric: tabular-nums; font-weight: 600; }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="ns"><button onclick="const o = this.nextElementSibling; o.value = Math.max(0, +o.value - 1)">&minus;</button><output>2</output><button onclick="const o = this.previousElementSibling; o.value = +o.value + 1">+</button></div>
+  <p class="cap">카운터라고도 해요</p>
+</div></div>
+
+<!-- @otp-input h=160 -->
+<style>
+  .otp { display: flex; gap: 7px; }
+  .otp input { width: 34px; height: 40px; text-align: center; font-size: 16px; border: 1px solid #e0e0e8; border-radius: 8px; font-variant-numeric: tabular-nums; font-family: inherit; }
+  .otp input:focus { outline: 2px solid #17171b; border-color: transparent; }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="otp"><input maxlength="1" inputmode="numeric" value="4"><input maxlength="1" inputmode="numeric" value="7"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"></div>
+  <p class="cap">한 칸씩 자동으로 넘어가게</p>
+</div></div>
+<script>
+  document.querySelectorAll('.otp input').forEach((el, i, all) =>
+    el.addEventListener('input', () => { if (el.value && all[i + 1]) all[i + 1].focus(); }));
+</script>
+
+<!-- @tag-input h=160 -->
+<style>
+  .tg { width: 240px; }
+  .tg label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .tg .box { display: flex; flex-wrap: wrap; gap: 5px; border: 1px solid #e0e0e8; border-radius: 9px; padding: 6px 8px; }
+  .tg .chip { background: #f0f0f4; border-radius: 999px; padding: 3px 9px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center; }
+  .tg .chip button { border: 0; background: none; cursor: pointer; color: #9a9aa4; font-size: 12px; padding: 0; }
+  .tg input { border: 0; outline: none; flex: 1; min-width: 70px; font-size: 12px; font-family: inherit; }
+</style>
+<div class="center"><div class="tg"><label>관심 분야</label>
+  <div class="box" id="tgb">
+    <span class="chip">디자인<button aria-label="삭제" onclick="this.parentNode.remove()">&times;</button></span>
+    <span class="chip">AI<button aria-label="삭제" onclick="this.parentNode.remove()">&times;</button></span>
+    <input placeholder="입력하고 엔터" onkeydown="if (event.key === 'Enter' && !event.isComposing && this.value.trim()) { const s = document.createElement('span'); s.className = 'chip'; s.innerHTML = this.value + '<button aria-label=삭제 onclick=this.parentNode.remove()>&times;</button>'; this.before(s); this.value = ''; }">
+  </div>
+</div></div>
+
+<!-- @rating h=150 -->
+<style>
+  .rt { text-align: center; }
+  .rt .stars { font-size: 22px; letter-spacing: 3px; cursor: pointer; }
+  .rt .on { color: #17171b; }
+  .rt .off { color: #d4d4dd; }
+  .rt b { font-size: 13px; font-variant-numeric: tabular-nums; }
+</style>
+<div class="center"><div class="rt">
+  <div class="stars" id="st" aria-label="별점 4점">
+    <span class="on">&#9733;</span><span class="on">&#9733;</span><span class="on">&#9733;</span><span class="on">&#9733;</span><span class="off">&#9733;</span>
+  </div><b>4.0</b>
+</div></div>
+<script>
+  document.querySelectorAll('#st span').forEach((s, i, all) =>
+    s.addEventListener('click', () => { all.forEach((x, j) => x.className = j <= i ? 'on' : 'off'); s.closest('.rt').querySelector('b').textContent = (i + 1) + '.0'; }));
+</script>
+
+<!-- @color-picker h=170 -->
+<style>
+  .cp { text-align: center; }
+  .cp .sw2 { display: flex; gap: 7px; justify-content: center; }
+  .cp button { width: 28px; height: 28px; border-radius: 8px; border: 0; cursor: pointer; }
+  .cp .on { outline: 2px solid #17171b; outline-offset: 2px; }
+  .cp output { display: inline-block; margin-top: 9px; border: 1px solid #e8e8ee; border-radius: 7px; padding: 4px 12px; font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; }
+</style>
+<div class="center"><div class="cp">
+  <div class="sw2">
+    <button style="background:#17171b" onclick="pick(this,'#17171B')"></button>
+    <button style="background:#e1785c" class="on" onclick="pick(this,'#E1785C')"></button>
+    <button style="background:#2e6b4f" onclick="pick(this,'#2E6B4F')"></button>
+    <button style="background:#8a7a1e" onclick="pick(this,'#8A7A1E')"></button>
+    <button style="background:#4a6b8a" onclick="pick(this,'#4A6B8A')"></button>
+  </div>
+  <output id="hex">#E1785C</output>
+</div></div>
+<script>
+  function pick(btn, hex) { document.querySelectorAll('.cp button').forEach(b => b.classList.remove('on')); btn.classList.add('on'); document.getElementById('hex').textContent = hex; }
+</script>
+
+<!-- @label h=150 -->
+<style>
+  .lb2 { width: 210px; }
+  .lb2 label { font-size: 11.5px; font-weight: 700; display: block; margin-bottom: 4px; }
+  .lb2 label i { color: #d64224; font-style: normal; }
+  .lb2 input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+</style>
+<div class="center"><div class="lb2"><label for="em">이메일 <i>*</i></label><input id="em" placeholder="example@gmail.com"><p class="cap" style="text-align:left">&#8593; 입력칸 위 이름표가 라벨이에요</p></div></div>
+
+<!-- @placeholder h=150 -->
+<style>
+  .ph { width: 210px; }
+  .ph label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .ph input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+</style>
+<div class="center"><div class="ph"><label>이메일</label><input placeholder="example@gmail.com"><p class="cap" style="text-align:left">&#8593; 흐리게 미리 써 있는 예시 글자</p></div></div>
+
+<!-- @helper-text h=160 -->
+<style>
+  .ht { width: 210px; }
+  .ht label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .ht input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .ht small { color: #9a9aa4; font-size: 10.5px; display: block; margin-top: 4px; }
+</style>
+<div class="center"><div class="ht"><label>비밀번호</label><input type="password" value="········"><small>영문·숫자 포함 8자 이상</small><p class="cap" style="text-align:left">&#8593; 칸 아래 회색 안내 문구</p></div></div>
+
+<!-- @required h=150 -->
+<style>
+  .rq { width: 210px; font-size: 12px; }
+  .rq label { font-size: 11.5px; font-weight: 700; display: block; margin-bottom: 4px; }
+  .rq i { color: #d64224; font-style: normal; }
+  .rq input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+</style>
+<div class="center"><div class="rq"><label>이름 <i>*</i></label><input required><p class="cap" style="text-align:left">별표(*)가 필수 표시 · input에는 required</p></div></div>
+
+<!-- @validation h=170 -->
+<style>
+  .vd { width: 220px; }
+  .vd label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .vd input { width: 100%; padding: 8px 11px; border: 1.5px solid #d64224; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
+  .vd .err { color: #d64224; font-size: 11px; margin-top: 4px; }
+</style>
+<div class="center"><div class="vd"><label>이메일 <i style="color:#d64224;font-style:normal">*</i></label><input value="jiwoo@@gmail" aria-invalid="true"><div class="err">이메일 형식이 아니에요</div><p class="cap" style="text-align:left">형식이 맞는지 확인하는 것</p></div></div>
+
+<!-- @field-error h=160 -->
+<style>
+  .fe { width: 220px; }
+  .fe input { width: 100%; padding: 8px 11px; border: 1.5px solid #d64224; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; background: #fdf5f3; }
+  .fe .err { color: #d64224; font-size: 11px; margin-top: 4px; }
+</style>
+<div class="center"><div class="fe"><input value="010-12" aria-invalid="true" aria-describedby="fe1"><div class="err" id="fe1">전화번호를 끝까지 입력해주세요</div><p class="cap" style="text-align:left">그 칸 아래 빨간 글씨 · 얼럿보다 이게 나아요</p></div></div>
+
+<!-- @submit h=160 -->
+<style>
+  .sm { text-align: center; }
+  .sm button { padding: 9px 26px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+  .sm .done { color: #17b26a; font-size: 12px; margin-top: 10px; display: none; }
+</style>
+<div class="center"><div class="sm">
+  <button onclick="this.nextElementSibling.style.display='block'">보내기</button>
+  <div class="done">&#10003; 신청 완료됐어요</div>
+</div></div>

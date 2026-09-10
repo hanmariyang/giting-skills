@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>확인 창 Confirmation Dialog — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .oc { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.cf { border: 0; border-radius: 12px; padding: 18px; width: min(86vw, 220px); box-shadow: 0 16px 48px rgba(0,0,0,.2); text-align: center; }
+  dialog.cf::backdrop { background: rgba(0,0,0,.4); }
+  .cf h2 { margin: 0 0 4px; font-size: 14px; }
+  .cf p { margin: 0 0 14px; color: #6b6b76; font-size: 12px; }
+  .cf .ac4 { display: flex; gap: 6px; }
+  .cf button { flex: 1; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+  .cf .stay { border: 1px solid #e0e0e8; background: #fff; }
+  .cf .go2 { border: 0; background: #17171b; color: #fff; }
+</style>
+<div class="center"><button class="oc" onclick="document.getElementById('c').showModal()">나가기</button></div>
+<dialog class="cf" id="c">
+  <h2>정말 나가시겠어요?</h2><p>작성한 내용이 사라져요</p>
+  <div class="ac4"><button class="stay" onclick="this.closest('dialog').close()">계속 쓰기</button><button class="go2" onclick="this.closest('dialog').close()">나가기</button></div>
+</dialog>
+</body>
+</html>

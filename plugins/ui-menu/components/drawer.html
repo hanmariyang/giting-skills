@@ -1,36 +1,30 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드로어 Drawer</title>
+<title>드로어 Drawer / Side Panel — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
-  .burger { padding: 9px 14px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 15px; cursor: pointer; }
-  dialog.drawer {
-    border: 0; padding: 0;
-    position: fixed; inset: 0 0 0 auto;      /* 오른쪽 벽에 붙임 */
-    height: 100vh; max-height: 100vh;
-    width: min(78vw, 280px); margin: 0;
-    box-shadow: -12px 0 40px rgba(0,0,0,.15);
-    animation: slide .2s ease-out;
-  }
-  @keyframes slide { from { transform: translateX(100%); } }
-  dialog.drawer::backdrop { background: rgba(0,0,0,.35); }
-  .drawer nav { display: grid; gap: 4px; padding: 18px 12px; }
-  .drawer a { padding: 11px 14px; border-radius: 9px; color: #17171b; text-decoration: none; font-size: 15px; }
-  .drawer a:hover { background: #f4f4f7; }
-  .drawer .close { margin: 14px 12px 0; text-align: right; }
-  .drawer .close button { border: 0; background: none; font-size: 20px; cursor: pointer; color: #9a9aa4; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<button class="burger" onclick="document.getElementById('menu').showModal()" aria-label="메뉴 열기">&#9776;</button>
-
-<dialog class="drawer" id="menu" aria-label="메뉴"
-        onclick="if (event.target === this) this.close()">
-  <div class="close"><button onclick="this.closest('dialog').close()" aria-label="닫기">&times;</button></div>
-  <nav>
-    <a href="#">홈</a>
-    <a href="#">리포트</a>
-    <a href="#">매거진</a>
-    <a href="#">설정</a>
-  </nav>
-</dialog>
+</head>
+<body>
+<style>
+  .op { margin: 12px 14px; padding: 8px 14px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.dr { border: 0; padding: 0; position: fixed; inset: 0 0 0 auto; height: 100vh; max-height: 100vh; width: 150px; margin: 0; box-shadow: -10px 0 30px rgba(0,0,0,.14); animation: sl .18s ease-out; }
+  @keyframes sl { from { transform: translateX(100%); } }
+  dialog.dr::backdrop { background: rgba(0,0,0,.32); }
+  .dr nav { display: grid; gap: 2px; padding: 14px 10px; }
+  .dr a { padding: 8px 10px; border-radius: 7px; color: #17171b; text-decoration: none; font-size: 13px; }
+  .dr a:hover { background: #f4f4f7; }
+</style>
+<button class="op" onclick="document.getElementById('d').showModal()">&#9776; 메뉴</button>
+<p class="cap">오른쪽에서 서랍처럼 밀려 나옵니다</p>
+<dialog class="dr" id="d" onclick="if (event.target === this) this.close()"><nav><a href="#">홈</a><a href="#">리포트</a><a href="#">매거진</a><a href="#">설정</a></nav></dialog>
+</body>
+</html>

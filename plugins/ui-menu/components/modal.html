@@ -1,33 +1,33 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>모달 Modal</title>
+<title>모달 Modal / Dialog — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
-  .open-btn, .danger, .ghost {
-    padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff;
-  }
-  dialog.modal {
-    border: 0; border-radius: 14px; padding: 22px;
-    width: min(90vw, 340px);
-    box-shadow: 0 20px 60px rgba(0,0,0,.2);
-  }
-  dialog.modal::backdrop { background: rgba(0,0,0,.45); }   /* 뒤가 어두워지는 그것 */
-  .modal h2 { margin: 0 0 8px; font-size: 17px; }
-  .modal p { margin: 0 0 18px; color: #6b6b76; font-size: 14px; }
-  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; }
-  .danger { background: #d64224; border-color: #d64224; color: #fff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<button class="open-btn" onclick="document.getElementById('confirm').showModal()">삭제</button>
-
-<!-- <dialog>가 포커스 가둠·ESC 닫기·배경 차단을 전부 내장하고 있습니다 -->
-<dialog class="modal" id="confirm" aria-labelledby="confirm-title"
-        onclick="if (event.target === this) this.close()">   <!-- 배경 클릭 닫기 -->
-  <h2 id="confirm-title">정말 삭제할까요?</h2>
-  <p>이 작업은 되돌릴 수 없어요.</p>
-  <div class="actions">
-    <button class="ghost" onclick="this.closest('dialog').close()">취소</button>
-    <button class="danger" onclick="this.closest('dialog').close()">삭제</button>
-  </div>
+</head>
+<body>
+<style>
+  .om { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.md { border: 0; border-radius: 12px; padding: 18px; width: min(86vw, 230px); box-shadow: 0 16px 48px rgba(0,0,0,.2); }
+  dialog.md::backdrop { background: rgba(0,0,0,.45); }
+  .md h2 { margin: 0 0 6px; font-size: 14px; }
+  .md p { margin: 0 0 14px; color: #6b6b76; font-size: 12px; }
+  .md .ac2 { display: flex; justify-content: flex-end; gap: 6px; }
+  .md button { padding: 7px 13px; border-radius: 8px; font-size: 12px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
+  .md .dg { background: #d64224; border-color: #d64224; color: #fff; }
+</style>
+<div class="center"><button class="om" onclick="document.getElementById('m').showModal()">삭제</button></div>
+<dialog class="md" id="m" onclick="if (event.target === this) this.close()">
+  <h2>정말 삭제할까요?</h2><p>이 작업은 되돌릴 수 없어요.</p>
+  <div class="ac2"><button onclick="this.closest('dialog').close()">취소</button><button class="dg" onclick="this.closest('dialog').close()">삭제</button></div>
 </dialog>
+</body>
+</html>

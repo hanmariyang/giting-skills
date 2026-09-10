@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제출 Submit — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sm { text-align: center; }
+  .sm button { padding: 9px 26px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+  .sm .done { color: #17b26a; font-size: 12px; margin-top: 10px; display: none; }
+</style>
+<div class="center"><div class="sm">
+  <button onclick="this.nextElementSibling.style.display='block'">보내기</button>
+  <div class="done">&#10003; 신청 완료됐어요</div>
+</div></div>
+</body>
+</html>
