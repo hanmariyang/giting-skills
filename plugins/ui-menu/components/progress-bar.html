@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로그레스 바 Progress Bar — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pr2 { width: 230px; }
+  .pr2 .top2 { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px; }
+  .pr2 .tr2 { height: 8px; border-radius: 999px; background: #ececf1; overflow: hidden; }
+  .pr2 .fl { height: 100%; width: 68%; background: #17171b; border-radius: 999px; transition: width .4s; }
+  .pr2 small { color: #9a9aa4; font-size: 10.5px; }
+</style>
+<div class="center"><div class="pr2">
+  <div class="top2"><span>업로드 중</span><b id="pv2">68%</b></div>
+  <div class="tr2" role="progressbar" aria-valuenow="68"><div class="fl" id="fl"></div></div>
+  <small>약 12초 남았어요</small>
+</div></div>
+<script>
+  let v = 68; setInterval(() => { v = v >= 100 ? 20 : v + 4; document.getElementById('fl').style.width = v + '%'; document.getElementById('pv2').textContent = v + '%'; }, 700);
+</script>
+</body>
+</html>

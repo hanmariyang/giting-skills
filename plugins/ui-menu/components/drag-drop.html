@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>드래그 앤 드롭 Drag and Drop — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .dz { display: flex; gap: 12px; align-items: center; }
+  .dz .item { width: 44px; height: 44px; border-radius: 9px; background: #fff; border: 1px solid #e8e8ee; box-shadow: 0 3px 8px rgba(0,0,0,.08); cursor: grab; }
+  .dz .arrow { color: #9a9aa4; }
+  .dz .slot { width: 66px; height: 44px; border: 2px dashed #c9c9d4; border-radius: 9px; display: grid; place-items: center; color: #9a9aa4; font-size: 10px; }
+  .dz .slot.over { border-color: #17171b; color: #17171b; }
+</style>
+<div class="center"><div>
+  <div class="dz"><div class="item" draggable="true" id="it"></div><span class="arrow">&#8594;</span><div class="slot" id="sl">여기에 놓기</div></div>
+  <p class="cap">끌어다 놓기</p>
+</div></div>
+<script>
+  const it = document.getElementById('it'), sl = document.getElementById('sl');
+  it.addEventListener('dragstart', e => e.dataTransfer.setData('text', 'x'));
+  sl.addEventListener('dragover', e => { e.preventDefault(); sl.classList.add('over'); });
+  sl.addEventListener('dragleave', () => sl.classList.remove('over'));
+  sl.addEventListener('drop', e => { e.preventDefault(); sl.textContent = '놓았어요 ✓'; sl.classList.remove('over'); it.remove(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>알림 목록 Notification List — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .nl { width: 250px; border: 1px solid #e8e8ee; border-radius: 10px; overflow: hidden; background: #fff; font-size: 12px; }
+  .nl div { padding: 9px 12px; display: flex; gap: 8px; align-items: baseline; }
+  .nl div + div { border-top: 1px solid #f0f0f4; }
+  .nl .new { background: #fdf3f0; }
+  .nl .dot { width: 6px; height: 6px; border-radius: 50%; background: #f05032; flex-shrink: 0; }
+  .nl small { margin-left: auto; color: #9a9aa4; font-size: 10.5px; flex-shrink: 0; }
+</style>
+<div class="center"><div class="nl">
+  <div class="new"><span class="dot"></span><b>새 신청이 들어왔어요</b><small>방금</small></div>
+  <div><span style="width:6px"></span>배포가 완료됐어요<small>2시간 전</small></div>
+  <div><span style="width:6px"></span>도메인이 연결됐어요<small>어제</small></div>
+</div></div>
+</body>
+</html>

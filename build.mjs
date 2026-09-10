@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Giting Skills — ui-menu 갤러리 + llms.txt 생성기 (의존성 0)
-// 사용: node build.mjs   → docs/index.html · docs/llms.txt · docs/llms-full.txt
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+// Giting Skills — ui-menu 빌더 (의존성 0)
+// demos/*.html 프래그먼트(<!-- @id h=NNN [full] --> 구분) + menu.json →
+//   components/<id>.html (스킬용 자가완결 파일) + docs/ (갤러리·llms.txt)
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,49 +14,96 @@ const RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/pl
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
-// 데모 iframe 높이 (기본 240)
-const H = { header: 260, hero: 380, sidebar: 300, footer: 280, container: 300, grid: 260,
-  card: 340, accordion: 280, modal: 320, drawer: 320, carousel: 300, tabs: 220,
-  'skeleton-ui': 240, toast: 220, dropdown: 260, tooltip: 180, switch: 140, chip: 160,
-  pagination: 140, navbar: 180 };
+// ── 1. 프래그먼트 파싱 ─────────────────────────────────────────
+const frags = {}; // id → { h, full, body }
+for (const f of readdirSync(join(PLUGIN, 'demos')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(PLUGIN, 'demos', f), 'utf8');
+  const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    const id = parts[i], opts = parts[i + 1], body = parts[i + 2].trim();
+    frags[id] = {
+      h: Number((opts.match(/h=(\d+)/) || [])[1] || 180),
+      full: /\bfull\b/.test(opts),
+      body,
+    };
+  }
+}
+const missing = menu.items.filter(it => !frags[it.id]).map(it => it.id);
+if (missing.length) { console.error('데모 없는 항목:', missing.join(', ')); process.exit(1); }
 
+// ── 2. 컴포넌트 단독 파일 생성 ──────────────────────────────────
+const BASE = `  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }`;
+
+const standalone = it => `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${it.name.ko} ${it.name.en} — UI 메뉴판</title>
+<style>
+${BASE}
+</style>
+</head>
+<body>
+${frags[it.id].body}
+</body>
+</html>
+`;
+
+rmSync(join(PLUGIN, 'components'), { recursive: true, force: true });
+mkdirSync(join(PLUGIN, 'components'), { recursive: true });
 const code = {};
-for (const it of menu.items) code[it.id] = readFileSync(join(PLUGIN, 'components', `${it.id}.html`), 'utf8');
+for (const it of menu.items) {
+  code[it.id] = standalone(it);
+  writeFileSync(join(PLUGIN, 'components', `${it.id}.html`), code[it.id]);
+}
 
-const itemHtml = it => `
+// ── 3. 갤러리 ──────────────────────────────────────────────────
+const bycat = id => menu.items.filter(i => i.category === id);
+
+const cardHtml = it => `
 <article class="item" id="${it.id}">
-  <div class="info">
-    <h3>${it.name.ko} <span class="en">${it.name.en}</span></h3>
-    <div class="aliases">${it.aliases.map(a => `<span class="alias">"${esc(a)}"</span>`).join('')}</div>
-    <p class="one">${esc(it.oneliner)}</p>
-    <div class="ask">
-      <span class="ask-label">AI에게 이렇게 말하세요</span>
-      <p>${esc(it.ask)}</p>
-      <button class="copy" data-copy="${attr(it.ask)}">문장 복사</button>
-    </div>
-  </div>
-  <div class="demo">
-    <iframe title="${it.name.ko} 라이브 데모" loading="lazy" style="height:${H[it.id] || 240}px" srcdoc="${attr(code[it.id])}"></iframe>
-    <details>
-      <summary>코드 보기 <button class="copy code-copy">코드 복사</button></summary>
-      <pre><code>${esc(code[it.id])}</code></pre>
-    </details>
-  </div>
+  <header><h3>${it.name.ko}</h3><span class="en">${it.name.en}</span>
+    <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button>
+    <button class="tiny codebtn" title="코드 보기">코드</button>
+  </header>
+  <iframe title="${it.name.ko} 데모" loading="lazy" style="height:${frags[it.id].h}px" srcdoc="${attr(code[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span></footer>
+  <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
 
-const section = cat => `
-<section class="cat" id="${cat.id}">
-  <h2>${cat.ko} <span class="count">${menu.items.filter(i => i.category === cat.id).length}</span></h2>
-  ${menu.items.filter(i => i.category === cat.id).map(itemHtml).join('\n')}
+const tableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>한글</th><th>영문</th><th>이렇게 말해도 통해요</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${bycat(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">${it.name.ko}</a></td>
+  <td class="mono">${it.name.en}</td>
+  <td class="als">${it.aliases.map(a => `"${esc(a)}"`).join(' · ')}</td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const sectionHtml = cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${bycat(cat.id).length}</span></h2>
+  <div class="grid">${bycat(cat.id).map(cardHtml).join('\n')}</div>
+  ${tableHtml(cat)}
 </section>`;
 
+const f = menu.formula;
 const html = `<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI 메뉴판 — Giting Skills</title>
-<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. 말로 설명하던 UI에 이름을 붙여 주는 사전과 실물 HTML 레퍼런스 ${menu.items.length}종. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
+<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. 8개 코스 ${menu.items.length}개 항목 — 전부 그림이 아니라 실제로 동작하는 HTML. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
   :root {
@@ -65,64 +113,89 @@ const html = `<!doctype html>
     --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
-  a { color: inherit; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.55; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-  .top { border-bottom: 1px solid var(--line); }
-  .top .wrap { display: flex; align-items: center; gap: 14px; height: 56px; }
-  .logo { font-weight: 800; letter-spacing: -0.02em; text-decoration: none; }
+  .top { border-bottom: 1px solid var(--line); background: var(--paper); }
+  .top .wrap { display: flex; align-items: center; gap: 12px; height: 52px; }
+  .logo { font-weight: 800; letter-spacing: -.02em; text-decoration: none; color: var(--ink); font-size: 15px; }
   .logo i { font-style: normal; color: var(--accent); }
-  .top nav { margin-left: auto; display: flex; gap: 16px; font-size: 13.5px; }
+  .top nav { margin-left: auto; display: flex; gap: 14px; font-size: 13px; }
   .top nav a { color: var(--ink2); text-decoration: none; }
   .top nav a:hover { color: var(--ink); }
 
-  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
-  .hero .kicker { font-family: var(--mono); font-size: 12.5px; color: var(--accent); letter-spacing: .06em; }
-  .hero h1 { margin: 12px 0 0; font-size: clamp(30px, 5.4vw, 50px); letter-spacing: -0.035em; line-height: 1.2; text-wrap: balance; }
+  .hero { padding: 40px 0 30px; }
+  .hero .kicker { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .06em; }
+  .hero h1 { margin: 10px 0 0; font-size: clamp(26px, 4.6vw, 40px); letter-spacing: -.035em; line-height: 1.22; text-wrap: balance; }
   .hero h1 q { quotes: '\\201C' '\\201D'; color: var(--ink3); }
-  .hero p.sub { margin: 18px 0 0; color: var(--ink2); font-size: 16.5px; max-width: 56ch; }
-  .install { margin-top: 30px; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0;
-    border: 1px solid var(--line); border-radius: 12px; overflow: hidden; max-width: 100%; }
-  .install code { font-family: var(--mono); font-size: 13px; padding: 12px 16px; background: var(--wash);
-    overflow-x: auto; white-space: nowrap; display: block; }
-  .install button { border: 0; border-left: 1px solid var(--line); background: #fff; padding: 12px 16px;
-    font-size: 13px; cursor: pointer; font-family: var(--sans); flex-shrink: 0; }
+  .hero .sub { margin: 12px 0 0; color: var(--ink2); font-size: 15px; max-width: 62ch; }
+  .hero .sub b { color: var(--ink); }
+
+  .formula { margin-top: 22px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .formula .fh { padding: 11px 16px; background: var(--wash); font-family: var(--mono); font-size: 12px; color: var(--ink2); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .formula .fh b { color: var(--ink); font-size: 13px; }
+  .fx { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .fx { grid-template-columns: 1fr; } }
+  .fx > div { padding: 12px 16px; font-size: 13.5px; }
+  .fx .bad { color: var(--ink3); border-right: 1px solid var(--line); }
+  @media (max-width: 720px) { .fx .bad { border-right: 0; border-bottom: 1px solid var(--line); } }
+  .fx .mark { font-size: 11px; font-family: var(--mono); display: block; margin-bottom: 3px; }
+  .fx .bad .mark { color: #c0392b; }
+  .fx .good .mark { color: #17b26a; }
+  .fnote { padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink2); }
+
+  .install { margin-top: 18px; display: inline-flex; flex-wrap: wrap; align-items: stretch; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; max-width: 100%; }
+  .install code { font-family: var(--mono); font-size: 12.5px; padding: 10px 14px; background: var(--wash); overflow-x: auto; white-space: nowrap; display: block; }
+  .install button { border: 0; border-left: 1px solid var(--line); background: #fff; padding: 0 14px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); }
   .install button:hover { background: var(--wash); }
-  .hero .also { margin-top: 12px; font-size: 12.5px; color: var(--ink3); }
-  .hero .also code { font-family: var(--mono); }
+  .also { margin-top: 10px; font-size: 12.5px; color: var(--ink3); }
+  .also code { font-family: var(--mono); }
+  .also a { color: var(--ink2); }
 
-  .cat { padding: 44px 0 8px; }
-  .cat h2 { font-size: 21px; letter-spacing: -0.02em; margin: 0 0 6px; }
-  .cat h2 .count { font-family: var(--mono); font-size: 13px; color: var(--ink3); font-weight: 400; }
+  .chipnav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .chipnav .wrap { display: flex; gap: 6px; padding-top: 9px; padding-bottom: 9px; overflow-x: auto; scrollbar-width: none; }
+  .chipnav a { flex-shrink: 0; font-size: 12.5px; color: var(--ink2); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--paper); }
+  .chipnav a:hover { border-color: var(--ink3); color: var(--ink); }
+  .chipnav a b { font-family: var(--mono); font-weight: 400; margin-right: 3px; }
 
-  .item { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 26px;
-    padding: 30px 0; border-top: 1px solid var(--line); }
-  @media (max-width: 800px) { .item { grid-template-columns: 1fr; gap: 16px; } }
-  .item h3 { margin: 0; font-size: 19px; letter-spacing: -0.01em; }
-  .item h3 .en { font-family: var(--mono); font-size: 13px; color: var(--ink3); font-weight: 400; margin-left: 6px; }
-  .aliases { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .alias { font-size: 12.5px; color: var(--ink2); background: var(--wash); border-radius: 999px; padding: 4px 11px; }
-  .one { margin: 12px 0 0; font-size: 14.5px; color: var(--ink2); }
-  .ask { margin-top: 16px; border: 1px solid var(--line); border-left: 3px solid var(--accent);
-    border-radius: 10px; padding: 12px 14px; }
-  .ask-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .05em; }
-  .ask p { margin: 6px 0 10px; font-size: 14px; }
-  .copy { border: 1px solid var(--line); background: #fff; border-radius: 8px;
-    padding: 5px 12px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); color: var(--ink2); }
-  .copy:hover { border-color: var(--ink3); color: var(--ink); }
-  .copy.ok { border-color: var(--accent); color: var(--accent); }
+  .cat { padding: 34px 0 6px; }
+  .cat h2 { font-size: 20px; letter-spacing: -.02em; margin: 0 0 14px; display: flex; align-items: baseline; gap: 8px; }
+  .cat h2 .no { color: var(--accent); }
+  .cat h2 .count { font-family: var(--mono); font-size: 12.5px; color: var(--ink3); font-weight: 400; }
 
-  .demo iframe { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; display: block; }
-  .demo details { margin-top: 10px; }
-  .demo summary { cursor: pointer; font-size: 13px; color: var(--ink2); display: flex; align-items: center; gap: 10px; }
-  .demo summary::marker { color: var(--ink3); }
-  .demo pre { margin: 10px 0 0; background: var(--wash); border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px 16px; overflow-x: auto; font-size: 12px; line-height: 1.55; }
-  .demo code { font-family: var(--mono); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .item { border: 1px solid var(--line); border-radius: 13px; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; }
+  .item header { display: flex; align-items: center; gap: 7px; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  .item h3 { margin: 0; font-size: 14.5px; letter-spacing: -.01em; }
+  .item .en { font-family: var(--mono); font-size: 11px; color: var(--ink3); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tiny { flex-shrink: 0; border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 3px 9px; font-size: 11px; cursor: pointer; color: var(--ink2); font-family: var(--sans); }
+  .tiny:hover { border-color: var(--ink3); color: var(--ink); }
+  .tiny.ok { border-color: var(--accent); color: var(--accent); }
+  .item iframe { width: 100%; border: 0; display: block; background: #fff; }
+  .item footer { padding: 8px 12px 10px; border-top: 1px solid var(--wash); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin-top: auto; }
+  .item .al { font-size: 12px; color: var(--accent); }
+  .item .one { font-size: 12px; color: var(--ink2); }
+  .codebox { border-top: 1px solid var(--line); background: var(--wash); padding: 10px 12px; }
+  .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
+  .codebox code { font-family: var(--mono); }
 
-  .foot { border-top: 1px solid var(--line); margin-top: 48px; padding: 26px 0 44px;
-    font-size: 13px; color: var(--ink3); display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .tblwrap { overflow-x: auto; margin-top: 16px; border: 1px solid var(--line); border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 680px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 0; }
+  th { background: var(--wash); color: var(--ink2); font-size: 11px; font-weight: 600; }
+  td a { color: var(--ink); font-weight: 600; text-decoration: none; }
+  td a:hover { color: var(--accent); }
+  td.mono { font-family: var(--mono); font-size: 11.5px; color: var(--ink2); white-space: nowrap; }
+  td.als { color: var(--ink3); font-size: 12px; }
+  td.askcell { min-width: 220px; }
+  td.askcell span { color: var(--ink2); }
+  td.askcell button { margin-left: 6px; }
+
+  .foot { border-top: 1px solid var(--line); margin-top: 44px; padding: 22px 0 40px; font-size: 12.5px; color: var(--ink3); }
+  .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px 18px; }
   .foot a { color: var(--ink2); }
 </style>
 </head>
@@ -131,8 +204,6 @@ const html = `<!doctype html>
   <div class="wrap">
     <a class="logo" href="#">UI 메뉴판 <i>·</i> Giting Skills</a>
     <nav>
-      <a href="#skeleton">페이지 뼈대</a>
-      <a href="#interaction">인터랙션</a>
       <a href="https://github.com/hanmariyang/giting-skills">GitHub</a>
       <a href="https://giting.kr">Giting</a>
     </nav>
@@ -141,9 +212,19 @@ const html = `<!doctype html>
 
 <section class="hero">
   <div class="wrap">
-    <div class="kicker">GITING SKILLS · 01 UI-MENU</div>
-    <h1><q>접었다 폈다 되는 거</q>에는<br>이름이 있습니다</h1>
-    <p class="sub">말로 설명하던 UI에 이름을 붙여 주는 사전. 이름을 아는 순간 AI에게 시키는 시간이 줄어듭니다. 전 항목이 그림이 아니라 실제로 동작하는 HTML이고, AI가 직접 쓸 수 있게 Claude Code 스킬로 배포됩니다.</p>
+    <div class="kicker">GITING SKILLS · 01 UI-MENU · ${menu.items.length}개 항목</div>
+    <h1><q>접었다 폈다 되는 거</q>에는 이름이 있습니다</h1>
+    <p class="sub">말로 설명하던 UI에 이름을 붙여 주는 사전. 8개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있습니다. AI가 직접 읽도록 Claude Code 스킬로도 배포됩니다.</p>
+
+    <div class="formula">
+      <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(f.pattern)}</span></div>
+      <div class="fx">
+        <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(f.bad)}」</div>
+        <div class="good"><span class="mark">○ 이렇게</span>「${esc(f.good)}」</div>
+      </div>
+      <div class="fnote">${esc(f.note)} 아래 사전에서 이름을 찾고, 문장을 복사해 쓰세요.</div>
+    </div>
+
     <div class="install">
       <code>/plugin marketplace add hanmariyang/giting-skills</code>
       <button class="copy" data-copy="/plugin marketplace add hanmariyang/giting-skills">복사</button>
@@ -152,12 +233,18 @@ const html = `<!doctype html>
   </div>
 </section>
 
+<nav class="chipnav" aria-label="코스">
+  <div class="wrap">
+    ${menu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko}</a>`).join('\n    ')}
+  </div>
+</nav>
+
 <div class="wrap">
-${menu.categories.map(section).join('\n')}
+${menu.categories.map(sectionHtml).join('\n')}
 </div>
 
 <footer class="foot">
-  <div class="wrap" style="display:flex;flex-wrap:wrap;gap:8px 20px">
+  <div class="wrap">
     <span>MIT License</span>
     <a href="https://github.com/hanmariyang/giting-skills">hanmariyang/giting-skills</a>
     <a href="https://giting.kr">giting.kr — 오픈소스를 별점이 아니라 실측으로</a>
@@ -166,29 +253,33 @@ ${menu.categories.map(section).join('\n')}
 
 <script>
   document.addEventListener('click', async (e) => {
+    const cb = e.target.closest('.codebtn');
+    if (cb) { const box = cb.closest('.item').querySelector('.codebox'); box.hidden = !box.hidden; return; }
     const btn = e.target.closest('.copy');
     if (!btn) return;
-    e.preventDefault();
-    const text = btn.dataset.copy || btn.closest('.demo')?.querySelector('pre code')?.textContent;
+    const text = btn.dataset.copy || btn.closest('.codebox')?.querySelector('code')?.textContent;
     if (!text) return;
     try { await navigator.clipboard.writeText(text); } catch {}
     const old = btn.textContent;
     btn.textContent = '복사됨'; btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = old; btn.classList.remove('ok'); }, 1200);
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('ok'); }, 1100);
   });
 </script>
 </body>
 </html>`;
 
+// ── 4. llms.txt ────────────────────────────────────────────────
 const dict = full => `# UI 메뉴판 (ui-menu) — Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML 레퍼런스.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 8개 코스 ${menu.items.length}개 항목.
+> AI한테 시키는 공식: ${f.pattern}
+>   ✕ "${f.bad}" → ○ "${f.good}"
 > 갤러리: https://hanmariyang.github.io/giting-skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
 
-${menu.categories.map(cat => `## ${cat.ko}
+${menu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
-${menu.items.filter(i => i.category === cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
 - 정의: ${it.oneliner}
 - 요청 문장: ${it.ask}
@@ -203,4 +294,4 @@ mkdirSync(join(ROOT, 'docs'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'index.html'), html);
 writeFileSync(join(ROOT, 'docs', 'llms.txt'), dict(false));
 writeFileSync(join(ROOT, 'docs', 'llms-full.txt'), dict(true));
-console.log(`built: docs/index.html (${(html.length / 1024).toFixed(0)}KB) · llms.txt · llms-full.txt · items ${menu.items.length}`);
+console.log(`built: components ${menu.items.length} · docs/index.html ${(html.length / 1024).toFixed(0)}KB · llms.txt · llms-full.txt`);

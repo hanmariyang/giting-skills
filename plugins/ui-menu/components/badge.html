@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배지 Badge — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .bd4 { display: flex; gap: 26px; }
+  .ic2 { position: relative; width: 30px; height: 30px; border-radius: 8px; background: #f0f0f4; }
+  .n { position: absolute; top: -6px; right: -6px; min-width: 16px; height: 16px; border-radius: 999px; background: #d64224; color: #fff; font-size: 9.5px; display: grid; place-items: center; padding: 0 4px; }
+  .d2 { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: #d64224; }
+</style>
+<div class="center"><div style="text-align:center"><div class="bd4"><div class="ic2"><span class="n">3</span></div><div class="ic2"><span class="d2"></span></div></div><p class="cap">숫자 또는 점</p></div></div>
+</body>
+</html>

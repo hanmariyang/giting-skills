@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>태그 입력 Tag Input / Chips Input — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .tg { width: 240px; }
+  .tg label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; }
+  .tg .box { display: flex; flex-wrap: wrap; gap: 5px; border: 1px solid #e0e0e8; border-radius: 9px; padding: 6px 8px; }
+  .tg .chip { background: #f0f0f4; border-radius: 999px; padding: 3px 9px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center; }
+  .tg .chip button { border: 0; background: none; cursor: pointer; color: #9a9aa4; font-size: 12px; padding: 0; }
+  .tg input { border: 0; outline: none; flex: 1; min-width: 70px; font-size: 12px; font-family: inherit; }
+</style>
+<div class="center"><div class="tg"><label>관심 분야</label>
+  <div class="box" id="tgb">
+    <span class="chip">디자인<button aria-label="삭제" onclick="this.parentNode.remove()">&times;</button></span>
+    <span class="chip">AI<button aria-label="삭제" onclick="this.parentNode.remove()">&times;</button></span>
+    <input placeholder="입력하고 엔터" onkeydown="if (event.key === 'Enter' && !event.isComposing && this.value.trim()) { const s = document.createElement('span'); s.className = 'chip'; s.innerHTML = this.value + '<button aria-label=삭제 onclick=this.parentNode.remove()>&times;</button>'; this.before(s); this.value = ''; }">
+  </div>
+</div></div>
+</body>
+</html>

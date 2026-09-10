@@ -1,0 +1,409 @@
+<!-- @button h=150 -->
+<style>
+  .bt { padding: 9px 22px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 13px; cursor: pointer; }
+  .bt:hover { background: #f4f4f7; }
+</style>
+<div class="center"><div style="text-align:center"><button class="bt">신청하기</button><p class="cap">누르는 것 전부를 버튼이라고 해요</p></div></div>
+
+<!-- @primary-button h=150 -->
+<style>
+  .pb { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+  .pb:hover { background: #333; }
+</style>
+<div class="center"><div style="text-align:center"><button class="pb">신청하기</button><p class="cap">꽉 찬 색 · 한 화면에 하나만</p></div></div>
+
+<!-- @secondary-button h=150 -->
+<style>
+  .sb3 { padding: 9px 22px; border: 1.5px solid #17171b; border-radius: 9px; background: #fff; font-size: 13px; cursor: pointer; font-weight: 600; }
+  .sb3:hover { background: #f4f4f7; }
+</style>
+<div class="center"><div style="text-align:center"><button class="sb3">더 알아보기</button><p class="cap">테두리만 · 두 번째로 중요한 것</p></div></div>
+
+<!-- @ghost-button h=150 -->
+<style>
+  .gb { padding: 9px 18px; border: 0; border-radius: 9px; background: none; font-size: 13px; cursor: pointer; color: #55555f; }
+  .gb:hover { background: #f4f4f7; }
+</style>
+<div class="center"><div style="text-align:center"><button class="gb">취소</button><p class="cap">배경 없이 글자만</p></div></div>
+
+<!-- @icon-button h=150 -->
+<style>
+  .ib { display: flex; gap: 8px; }
+  .ib button { width: 34px; height: 34px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; cursor: pointer; font-size: 14px; display: grid; place-items: center; }
+  .ib button:hover { background: #f4f4f7; }
+</style>
+<div class="center"><div style="text-align:center"><div class="ib"><button aria-label="닫기">&times;</button><button aria-label="좋아요">&#9825;</button><button aria-label="공유">&#8599;</button></div><p class="cap">아이콘만 · aria-label 필수</p></div></div>
+
+<!-- @destructive-button h=150 -->
+<style>
+  .db { padding: 9px 22px; border: 0; border-radius: 9px; background: #d64224; color: #fff; font-size: 13px; cursor: pointer; }
+  .db:hover { background: #b93518; }
+</style>
+<div class="center"><div style="text-align:center"><button class="db">삭제</button><p class="cap">되돌릴 수 없는 것만 빨강</p></div></div>
+
+<!-- @cta h=170 -->
+<style>
+  .ct2 { text-align: center; }
+  .ct2 h3 { margin: 0 0 10px; font-size: 15px; letter-spacing: -.02em; }
+  .ct2 button { padding: 10px 26px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+</style>
+<div class="center"><div class="ct2"><h3>지금 시작해보세요</h3><button>무료로 시작하기</button><p class="cap">제일 중요한 행동 하나</p></div></div>
+
+<!-- @fab h=180 full -->
+<style>
+  .fab { position: fixed; right: 16px; bottom: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #17171b; color: #fff; font-size: 20px; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.24); }
+  .pad2 { padding: 12px 16px; }
+</style>
+<div class="pad2"><div class="bar" style="width:80%"></div><div class="bar" style="width:60%;margin-top:8px"></div></div>
+<button class="fab" aria-label="새로 만들기">+</button>
+<p class="cap">오른쪽 아래 떠 있는 동그란 버튼</p>
+
+<!-- @link h=140 -->
+<style>
+  .lk { font-size: 13px; }
+  .lk a { color: #17171b; font-weight: 600; }
+</style>
+<div class="center"><div style="text-align:center"><p class="lk" style="margin:0">자세한 내용은 <a href="#">이 문서</a>를 봐주세요.</p><p class="cap">버튼이 아니라 글자 링크</p></div></div>
+
+<!-- @button-group h=150 -->
+<style>
+  .bg { display: inline-flex; border: 1px solid #e0e0e8; border-radius: 9px; overflow: hidden; }
+  .bg button { border: 0; background: #fff; padding: 8px 14px; font-size: 12.5px; cursor: pointer; }
+  .bg button + button { border-left: 1px solid #e0e0e8; }
+  .bg .on { background: #17171b; color: #fff; }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="bg" role="group"><button class="on">일간</button><button>주간</button><button>월간</button></div>
+  <p class="cap">버튼 여러 개를 붙여놓은 것</p>
+</div></div>
+<script>
+  document.querySelectorAll('.bg button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.bg button').forEach(x => x.classList.toggle('on', x === b));
+  }));
+</script>
+
+<!-- @modal h=210 -->
+<style>
+  .om { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.md { border: 0; border-radius: 12px; padding: 18px; width: min(86vw, 230px); box-shadow: 0 16px 48px rgba(0,0,0,.2); }
+  dialog.md::backdrop { background: rgba(0,0,0,.45); }
+  .md h2 { margin: 0 0 6px; font-size: 14px; }
+  .md p { margin: 0 0 14px; color: #6b6b76; font-size: 12px; }
+  .md .ac2 { display: flex; justify-content: flex-end; gap: 6px; }
+  .md button { padding: 7px 13px; border-radius: 8px; font-size: 12px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
+  .md .dg { background: #d64224; border-color: #d64224; color: #fff; }
+</style>
+<div class="center"><button class="om" onclick="document.getElementById('m').showModal()">삭제</button></div>
+<dialog class="md" id="m" onclick="if (event.target === this) this.close()">
+  <h2>정말 삭제할까요?</h2><p>이 작업은 되돌릴 수 없어요.</p>
+  <div class="ac2"><button onclick="this.closest('dialog').close()">취소</button><button class="dg" onclick="this.closest('dialog').close()">삭제</button></div>
+</dialog>
+
+<!-- @overlay h=190 full -->
+<style>
+  .base { padding: 12px 16px; }
+  .ov { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; }
+  .ov span { color: #fff; font-size: 12px; }
+</style>
+<div class="base"><div class="bar" style="width:85%"></div><div class="bar" style="width:65%;margin-top:8px"></div><div class="bar" style="width:74%;margin-top:8px"></div></div>
+<div class="ov"><span>뒤를 어둡게 덮는 층 (딤이라고도 해요)</span></div>
+
+<!-- @bottom-sheet h=210 full -->
+<style>
+  .base2 { padding: 12px 16px; }
+  .bs { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 14px 14px 0 0; box-shadow: 0 -8px 30px rgba(0,0,0,.16); padding: 8px 16px 14px; }
+  .bs .grab { width: 34px; height: 4px; border-radius: 999px; background: #d4d4dd; margin: 0 auto 10px; }
+  .bs h3 { margin: 0 0 8px; font-size: 13px; }
+  .bs .row { display: flex; gap: 8px; }
+  .bs .row div { flex: 1; height: 34px; border-radius: 8px; background: #f0f0f4; }
+</style>
+<div class="base2"><div class="bar" style="width:80%"></div></div>
+<div class="bs" role="dialog" aria-label="공유하기"><div class="grab"></div><h3>공유하기</h3><div class="row"><div></div><div></div><div></div></div></div>
+
+<!-- @toast h=170 -->
+<style>
+  .tb { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  #ts { position: fixed; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .t1 { background: #17171b; color: #fff; padding: 9px 14px; border-radius: 9px; font-size: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.18); animation: si .18s ease-out; }
+  .t1.bye { animation: fo .25s forwards; }
+  @keyframes si { from { transform: translateY(8px); opacity: 0; } }
+  @keyframes fo { to { opacity: 0; } }
+</style>
+<div class="center"><button class="tb" onclick="toast('&#10003; 저장됐어요')">저장</button></div>
+<div id="ts" role="status" aria-live="polite"></div>
+<script>
+  function toast(msg) {
+    const el = document.createElement('div'); el.className = 't1'; el.innerHTML = msg;
+    document.getElementById('ts').append(el);
+    setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, 2600);
+  }
+</script>
+
+<!-- @alert h=180 -->
+<style>
+  .al { display: grid; gap: 7px; width: 240px; }
+  .al div { border-left: 3px solid; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
+  .ok2 { background: #eefaf3; border-color: #17b26a; color: #116b43; }
+  .wr { background: #fdf8ec; border-color: #d9a514; color: #7d6008; }
+  .er { background: #fdf1ee; border-color: #d64224; color: #93290f; }
+</style>
+<div class="center"><div class="al">
+  <div class="ok2">저장됐어요</div>
+  <div class="wr">곧 마감돼요</div>
+  <div class="er">이메일 형식이 아니에요</div>
+</div></div>
+
+<!-- @tooltip h=160 -->
+<style>
+  .tip { position: relative; display: inline-flex; }
+  .tip > button { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #c9c9d4; background: #fff; color: #6b6b76; font-size: 11px; cursor: default; }
+  .bub { position: absolute; bottom: calc(100% + 7px); left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 6px 10px; border-radius: 7px; background: #17171b; color: #fff; font-size: 11px; opacity: 0; pointer-events: none; transition: opacity .12s; }
+  .bub::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -4px; border: 4px solid transparent; border-top-color: #17171b; }
+  .tip:hover .bub, .tip > button:focus-visible + .bub { opacity: 1; }
+</style>
+<div class="center"><div style="font-size:13px">AEO란? <span class="tip"><button aria-describedby="tt">?</button><span class="bub" role="tooltip" id="tt">AI 검색 최적화예요</span></span><p class="cap">마우스를 올려 보세요</p></div></div>
+
+<!-- @popover h=190 -->
+<style>
+  .pv { position: relative; display: inline-block; }
+  .pv > button { display: flex; gap: 7px; align-items: center; border: 1px solid #e0e0e8; border-radius: 999px; background: #fff; padding: 5px 12px 5px 6px; font-size: 12px; cursor: pointer; }
+  .pv .av2 { width: 22px; height: 22px; border-radius: 50%; background: #17171b; color: #fff; display: grid; place-items: center; font-size: 10px; }
+  .pop { position: absolute; top: calc(100% + 6px); left: 0; width: 130px; background: #fff; border: 1px solid #e8e8ee; border-radius: 11px; box-shadow: 0 10px 28px rgba(0,0,0,.12); padding: 10px 12px; font-size: 12px; }
+  .pop[hidden] { display: none; }
+  .pop b { display: block; margin-bottom: 5px; }
+  .pop a { display: block; color: #55555f; text-decoration: none; padding: 3px 0; }
+</style>
+<div class="center" style="align-items:start;padding-top:20px"><div class="pv">
+  <button onclick="const p = this.nextElementSibling; p.hidden = !p.hidden"><span class="av2">지</span>이지우</button>
+  <div class="pop" hidden><b>이지우</b><a href="#">설정</a><a href="#">로그아웃</a></div>
+</div><p class="cap" style="margin-left:12px;align-self:center">눌러서 여는 작은 판</p></div>
+
+<!-- @progress-bar h=160 -->
+<style>
+  .pr2 { width: 230px; }
+  .pr2 .top2 { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px; }
+  .pr2 .tr2 { height: 8px; border-radius: 999px; background: #ececf1; overflow: hidden; }
+  .pr2 .fl { height: 100%; width: 68%; background: #17171b; border-radius: 999px; transition: width .4s; }
+  .pr2 small { color: #9a9aa4; font-size: 10.5px; }
+</style>
+<div class="center"><div class="pr2">
+  <div class="top2"><span>업로드 중</span><b id="pv2">68%</b></div>
+  <div class="tr2" role="progressbar" aria-valuenow="68"><div class="fl" id="fl"></div></div>
+  <small>약 12초 남았어요</small>
+</div></div>
+<script>
+  let v = 68; setInterval(() => { v = v >= 100 ? 20 : v + 4; document.getElementById('fl').style.width = v + '%'; document.getElementById('pv2').textContent = v + '%'; }, 700);
+</script>
+
+<!-- @spinner h=150 -->
+<style>
+  .sp2 { width: 26px; height: 26px; border: 3px solid #ececf1; border-top-color: #17171b; border-radius: 50%; animation: r2 0.8s linear infinite; margin: 0 auto; }
+  @keyframes r2 { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .sp2 { animation: none; } }
+</style>
+<div class="center"><div style="text-align:center"><div class="sp2" role="status" aria-label="불러오는 중"></div><p class="cap">불러오는 중&#8230;</p></div></div>
+
+<!-- @skeleton-ui h=180 -->
+<style>
+  .skl { display: grid; gap: 10px; width: 230px; }
+  .row2 { display: flex; gap: 9px; align-items: center; }
+  .sk { background: linear-gradient(90deg, #ececf1 25%, #f7f7fa 45%, #ececf1 65%); background-size: 200% 100%; animation: sh 1.3s infinite; border-radius: 6px; }
+  @keyframes sh { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+  .avk { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; }
+  .lns { flex: 1; display: grid; gap: 6px; }
+  .l1 { height: 10px; width: 55%; }
+  .l2 { height: 8px; width: 85%; }
+</style>
+<div class="center"><div class="skl" aria-hidden="true">
+  <div class="row2"><div class="sk avk"></div><div class="lns"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+  <div class="row2"><div class="sk avk"></div><div class="lns"><div class="sk l1"></div><div class="sk l2"></div></div></div>
+</div></div>
+
+<!-- @empty-state h=190 -->
+<style>
+  .es { text-align: center; }
+  .es .box2 { width: 34px; height: 34px; border: 2px dashed #c9c9d4; border-radius: 9px; margin: 0 auto 8px; }
+  .es b { font-size: 13px; display: block; }
+  .es small { color: #9a9aa4; font-size: 11px; }
+  .es button { margin-top: 10px; padding: 7px 14px; border: 0; border-radius: 8px; background: #17171b; color: #fff; font-size: 11.5px; cursor: pointer; }
+</style>
+<div class="center"><div class="es"><div class="box2"></div><b>아직 신청이 없어요</b><small>링크를 공유해보세요</small><br><button>링크 복사</button></div></div>
+
+<!-- @cookie-banner h=190 full -->
+<style>
+  .cbn { position: fixed; left: 10px; right: 10px; bottom: 10px; background: #fff; border: 1px solid #e8e8ee; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.12); padding: 12px 14px; font-size: 12px; }
+  .cbn .ac3 { display: flex; gap: 7px; margin-top: 9px; }
+  .cbn button { flex: 1; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+  .cbn .no { border: 1px solid #e0e0e8; background: #fff; }
+  .cbn .yes { border: 0; background: #17171b; color: #fff; }
+</style>
+<div style="padding:12px 16px"><div class="bar" style="width:80%"></div></div>
+<div class="cbn"><span>더 나은 경험을 위해 쿠키를 사용해요.</span><div class="ac3"><button class="no" onclick="this.closest('.cbn').remove()">거부</button><button class="yes" onclick="this.closest('.cbn').remove()">동의</button></div></div>
+
+<!-- @confirmation h=200 -->
+<style>
+  .oc { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  dialog.cf { border: 0; border-radius: 12px; padding: 18px; width: min(86vw, 220px); box-shadow: 0 16px 48px rgba(0,0,0,.2); text-align: center; }
+  dialog.cf::backdrop { background: rgba(0,0,0,.4); }
+  .cf h2 { margin: 0 0 4px; font-size: 14px; }
+  .cf p { margin: 0 0 14px; color: #6b6b76; font-size: 12px; }
+  .cf .ac4 { display: flex; gap: 6px; }
+  .cf button { flex: 1; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+  .cf .stay { border: 1px solid #e0e0e8; background: #fff; }
+  .cf .go2 { border: 0; background: #17171b; color: #fff; }
+</style>
+<div class="center"><button class="oc" onclick="document.getElementById('c').showModal()">나가기</button></div>
+<dialog class="cf" id="c">
+  <h2>정말 나가시겠어요?</h2><p>작성한 내용이 사라져요</p>
+  <div class="ac4"><button class="stay" onclick="this.closest('dialog').close()">계속 쓰기</button><button class="go2" onclick="this.closest('dialog').close()">나가기</button></div>
+</dialog>
+
+<!-- @badge h=150 -->
+<style>
+  .bd4 { display: flex; gap: 26px; }
+  .ic2 { position: relative; width: 30px; height: 30px; border-radius: 8px; background: #f0f0f4; }
+  .n { position: absolute; top: -6px; right: -6px; min-width: 16px; height: 16px; border-radius: 999px; background: #d64224; color: #fff; font-size: 9.5px; display: grid; place-items: center; padding: 0 4px; }
+  .d2 { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: #d64224; }
+</style>
+<div class="center"><div style="text-align:center"><div class="bd4"><div class="ic2"><span class="n">3</span></div><div class="ic2"><span class="d2"></span></div></div><p class="cap">숫자 또는 점</p></div></div>
+
+<!-- @chip h=160 -->
+<style>
+  .ch { display: flex; flex-wrap: wrap; gap: 6px; max-width: 250px; justify-content: center; }
+  .ch button { padding: 5px 12px; border-radius: 999px; border: 1px solid #e0e0e8; background: #fff; font-size: 11.5px; cursor: pointer; color: #43434d; }
+  .ch button[aria-pressed="true"] { background: #17171b; border-color: #17171b; color: #fff; }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="ch" role="group" aria-label="필터">
+    <button aria-pressed="true">전체</button><button aria-pressed="false">디자인</button><button aria-pressed="false">개발</button><button aria-pressed="false">마케팅</button><button aria-pressed="false">AI</button>
+  </div><p class="cap">눌러서 거르는 필터로 많이 써요</p>
+</div></div>
+<script>
+  document.querySelectorAll('.ch button').forEach(c => c.addEventListener('click', () =>
+    c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
+</script>
+
+<!-- @avatar h=150 -->
+<style>
+  .av3 { display: flex; gap: 12px; align-items: center; }
+  .av3 span { border-radius: 50%; display: grid; place-items: center; color: #fff; }
+  .a1 { width: 38px; height: 38px; background: #17171b; font-size: 14px; }
+  .a2 { width: 30px; height: 30px; background: linear-gradient(135deg, #c3ccd8, #97a4b4); }
+</style>
+<div class="center"><div style="text-align:center"><div class="av3"><span class="a1">쥬</span><span class="a2"></span></div><p class="cap">사진 없으면 첫 글자로</p></div></div>
+
+<!-- @avatar-group h=150 -->
+<style>
+  .ag { display: flex; }
+  .ag span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 11px; border: 2px solid #fff; margin-left: -8px; }
+  .ag span:first-child { margin-left: 0; }
+  .g1 { background: #17171b; }
+  .g2 { background: #6b7a8d; }
+  .g3 { background: #ececf1; color: #6b6b76 !important; }
+</style>
+<div class="center"><div style="text-align:center"><div class="ag"><span class="g1">쥬</span><span class="g2">하</span><span class="g3">+9</span></div><p class="cap">겹쳐 놓은 아바타들</p></div></div>
+
+<!-- @divider h=160 -->
+<style>
+  .dv { width: 230px; }
+  .dv hr { border: 0; border-top: 1px solid #e8e8ee; margin: 12px 0; }
+  .dv .bar { margin-bottom: 7px; }
+</style>
+<div class="center"><div class="dv"><div class="bar" style="width:88%"></div><div class="bar" style="width:60%"></div><hr><div class="bar" style="width:75%"></div><div class="bar" style="width:52%"></div></div></div>
+
+<!-- @icon h=150 -->
+<style>
+  .ico { display: flex; gap: 18px; font-size: 17px; color: #43434d; }
+</style>
+<div class="center"><div style="text-align:center"><div class="ico"><span>&#8962;</span><span>&#8981;</span><span>&#128276;</span><span>&#9906;</span></div><p class="cap">"아이콘은 Lucide로"라고 말하면 통일돼요</p></div></div>
+
+<!-- @status-dot h=160 -->
+<style>
+  .sd2 { display: grid; gap: 7px; font-size: 12px; }
+  .sd2 span { display: flex; gap: 7px; align-items: center; }
+  .sd2 i { width: 8px; height: 8px; border-radius: 50%; }
+  .on2 { background: #17b26a; }
+  .aw { background: #d9a514; }
+  .off2 { background: #c9c9d4; }
+</style>
+<div class="center"><div class="sd2">
+  <span><i class="on2"></i>온라인</span>
+  <span><i class="aw"></i>자리 비움</span>
+  <span><i class="off2"></i>오프라인</span>
+</div></div>
+
+<!-- @kbd h=150 -->
+<style>
+  .kd { font-size: 13px; }
+  kbd { display: inline-grid; place-items: center; min-width: 20px; height: 22px; padding: 0 5px; border: 1px solid #d4d4dd; border-bottom-width: 2px; border-radius: 5px; background: #fff; font-size: 11px; font-family: inherit; }
+</style>
+<div class="center"><div style="text-align:center"><p class="kd" style="margin:0">검색은 <kbd>&#8984;</kbd> <kbd>K</kbd></p><p class="cap">단축키를 키 모양으로 보여주는 것</p></div></div>
+
+<!-- @state-default h=150 -->
+<style>
+  .s0 { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+</style>
+<div class="center"><div style="text-align:center"><button class="s0">보내기</button><p class="cap">아무것도 안 한 상태</p></div></div>
+
+<!-- @state-hover h=150 -->
+<style>
+  .s1 { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; transition: all .12s; }
+  .s1:hover { background: #333; box-shadow: 0 4px 14px rgba(0,0,0,.22); transform: translateY(-1px); }
+</style>
+<div class="center"><div style="text-align:center"><button class="s1">보내기</button><p class="cap">마우스를 올려 보세요 (:hover)</p></div></div>
+
+<!-- @state-active h=150 -->
+<style>
+  .s2 { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+  .s2:active { transform: scale(.96); background: #44444c; }
+</style>
+<div class="center"><div style="text-align:center"><button class="s2">보내기</button><p class="cap">누르고 있는 순간 (:active)</p></div></div>
+
+<!-- @state-focus h=150 -->
+<style>
+  .s3 { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
+  .s3:focus-visible { outline: 2px solid #17171b; outline-offset: 3px; }
+</style>
+<div class="center"><div style="text-align:center"><button class="s3">보내기</button><p class="cap">Tab 키로 선택했을 때 (:focus-visible)</p></div></div>
+
+<!-- @state-disabled h=150 -->
+<style>
+  .s4 { padding: 9px 22px; border: 0; border-radius: 9px; background: #ececf1; color: #b0b0ba; font-size: 13px; cursor: not-allowed; }
+</style>
+<div class="center"><div style="text-align:center"><button class="s4" disabled>보내기</button><p class="cap">못 누르게 회색 (disabled)</p></div></div>
+
+<!-- @state-loading h=150 -->
+<style>
+  .s5 { display: inline-flex; gap: 7px; align-items: center; padding: 9px 18px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: wait; }
+  .s5 i { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: r3 .8s linear infinite; }
+  @keyframes r3 { to { transform: rotate(360deg); } }
+</style>
+<div class="center"><div style="text-align:center"><button class="s5" disabled aria-busy="true"><i></i>보내는 중</button><p class="cap">처리 중 · 두 번 못 누르게</p></div></div>
+
+<!-- @state-selected h=160 -->
+<style>
+  .s6 { display: grid; gap: 6px; width: 190px; }
+  .s6 button { text-align: left; padding: 9px 12px; border: 1px solid #e0e0e8; border-radius: 9px; background: #fff; font-size: 12.5px; cursor: pointer; }
+  .s6 .on3 { border: 2px solid #17171b; font-weight: 700; }
+</style>
+<div class="center"><div class="s6" role="listbox">
+  <button role="option" aria-selected="true" class="on3">프로 플랜 &#10003;</button>
+  <button role="option" aria-selected="false">무료 플랜</button>
+</div></div>
+<script>
+  document.querySelectorAll('.s6 button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.s6 button').forEach(x => {
+      const on = x === b; x.classList.toggle('on3', on); x.setAttribute('aria-selected', String(on));
+      x.textContent = x.textContent.replace(' ✓', '') + (on ? ' ✓' : '');
+    });
+  }));
+</script>
+
+<!-- @state-error h=160 -->
+<style>
+  .s7 { width: 210px; }
+  .s7 input { width: 100%; padding: 8px 11px; border: 1.5px solid #d64224; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; background: #fdf5f3; font-family: inherit; }
+  .s7 .err { color: #d64224; font-size: 11px; margin-top: 4px; }
+</style>
+<div class="center"><div class="s7"><input value="jiwoo@@gmail" aria-invalid="true"><div class="err">이메일 형식이 아니에요</div><p class="cap" style="text-align:left">틀린 상태 · 빨간 테두리 + 안내</p></div></div>

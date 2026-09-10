@@ -1,36 +1,35 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>토스트 Toast</title>
+<title>토스트 Toast / Snackbar — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
-  button { padding: 10px 18px; border-radius: 9px; font-size: 14px; cursor: pointer; border: 1px solid #e0e0e8; background: #fff; }
-  #toasts {
-    position: fixed; right: 16px; bottom: 16px;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .toast {
-    background: #17171b; color: #fff;
-    padding: 11px 16px; border-radius: 10px; font-size: 13.5px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.18);
-    animation: slide-in .18s ease-out;
-  }
-  .toast.bye { animation: fade-out .25s forwards; }
-  @keyframes slide-in { from { transform: translateY(8px); opacity: 0; } }
-  @keyframes fade-out { to { transform: translateY(4px); opacity: 0; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<button onclick="toast('저장됐어요')">저장</button>
-
-<!-- role="status": 스크린리더가 끼어들지 않고 조용히 읽어 줌 -->
-<div id="toasts" role="status" aria-live="polite"></div>
-
+</head>
+<body>
+<style>
+  .tb { padding: 8px 16px; border: 1px solid #e0e0e8; border-radius: 8px; background: #fff; font-size: 13px; cursor: pointer; }
+  #ts { position: fixed; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .t1 { background: #17171b; color: #fff; padding: 9px 14px; border-radius: 9px; font-size: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.18); animation: si .18s ease-out; }
+  .t1.bye { animation: fo .25s forwards; }
+  @keyframes si { from { transform: translateY(8px); opacity: 0; } }
+  @keyframes fo { to { opacity: 0; } }
+</style>
+<div class="center"><button class="tb" onclick="toast('&#10003; 저장됐어요')">저장</button></div>
+<div id="ts" role="status" aria-live="polite"></div>
 <script>
-  function toast(msg, ms = 3000) {
-    const el = document.createElement('div');
-    el.className = 'toast';
-    el.textContent = msg;
-    document.getElementById('toasts').append(el);
-    setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, ms);
+  function toast(msg) {
+    const el = document.createElement('div'); el.className = 't1'; el.innerHTML = msg;
+    document.getElementById('ts').append(el);
+    setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, 2600);
   }
 </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가격표 Pricing Table — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pt { display: flex; gap: 8px; }
+  .pl { width: 92px; border: 1px solid #e8e8ee; border-radius: 10px; padding: 12px 10px; text-align: center; position: relative; background: #fff; }
+  .pl.hot { border: 2px solid #17171b; }
+  .pl .tag { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: #17171b; color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 999px; }
+  .pl h4 { margin: 0; font-size: 11px; color: #9a9aa4; font-weight: 600; }
+  .pl .pr { font-size: 15px; font-weight: 800; margin: 4px 0; letter-spacing: -.02em; }
+  .pl p { margin: 0; font-size: 10.5px; color: #6b6b76; }
+</style>
+<div class="center"><div class="pt">
+  <div class="pl"><h4>무료</h4><div class="pr">0원</div><p>기본 기능<br>월 3회</p></div>
+  <div class="pl hot"><span class="tag">인기</span><h4>프로</h4><div class="pr">9,900원</div><p>전체 기능<br>무제한</p></div>
+  <div class="pl"><h4>팀</h4><div class="pr">문의</div><p>전담 지원<br>보안</p></div>
+</div></div>
+</body>
+</html>

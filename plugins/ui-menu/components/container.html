@@ -1,22 +1,23 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>컨테이너 Container</title>
+<title>컨테이너 Container — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; background: #f4f4f7; }
-  .container {
-    max-width: 720px;            /* 실전에서는 1200px 등 서비스 기준 폭 */
-    margin: 0 auto;              /* 가운데 정렬의 전부 */
-    padding: 24px 20px;          /* 좁은 화면에서 벽에 붙지 않게 */
-    background: #fff; min-height: 50vh;
-    outline: 2px dashed #c9c9d4; outline-offset: -2px;
-  }
-  .container p { color: #6b6b76; font-size: 14px; line-height: 1.7; }
-  .hint { text-align: center; color: #9a9aa4; font-size: 12px; padding: 10px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<div class="container">
-  <p>이 점선 상자가 컨테이너입니다. 화면이 아무리 넓어져도 내용은 max-width 안에 머물고, margin: 0 auto로 가운데에 옵니다.</p>
-  <p>창 너비를 넓혔다 좁혔다 해 보세요.</p>
-</div>
-<p class="hint">바깥 회색이 화면, 안쪽 흰색이 컨테이너</p>
+</head>
+<body>
+<style>
+  body { background: #f4f4f7; }
+  .ct { max-width: 300px; margin: 14px auto; background: #fff; outline: 2px dashed #c9c9d4; outline-offset: -2px; padding: 16px; min-height: 110px; }
+</style>
+<div class="ct"><p class="mut" style="margin:0">점선 상자가 컨테이너. max-width + margin: 0 auto 로 가운데 정렬. 바깥 회색이 화면.</p></div>
+</body>
+</html>

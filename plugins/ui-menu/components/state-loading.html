@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로딩 Loading — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .s5 { display: inline-flex; gap: 7px; align-items: center; padding: 9px 18px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: wait; }
+  .s5 i { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: r3 .8s linear infinite; }
+  @keyframes r3 { to { transform: rotate(360deg); } }
+</style>
+<div class="center"><div style="text-align:center"><button class="s5" disabled aria-busy="true"><i></i>보내는 중</button><p class="cap">처리 중 · 두 번 못 누르게</p></div></div>
+</body>
+</html>

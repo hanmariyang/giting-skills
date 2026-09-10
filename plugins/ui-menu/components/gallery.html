@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>갤러리 Gallery — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .gl { display: grid; grid-template-columns: repeat(3, 74px); gap: 6px; }
+  .gl i { aspect-ratio: 1; border-radius: 8px; background: linear-gradient(135deg, #e2e7ee, #cdd5df); }
+  .gl i:nth-child(2n) { background: linear-gradient(135deg, #e9e4de, #d8cfc4); }
+</style>
+<div class="center"><div><div class="gl"><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="cap">사진 격자 · 누르면 라이트박스로 크게</p></div></div>
+</body>
+</html>

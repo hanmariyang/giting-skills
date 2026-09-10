@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인라인 에러 Field Error / Inline Error — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fe { width: 220px; }
+  .fe input { width: 100%; padding: 8px 11px; border: 1.5px solid #d64224; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; background: #fdf5f3; }
+  .fe .err { color: #d64224; font-size: 11px; margin-top: 4px; }
+</style>
+<div class="center"><div class="fe"><input value="010-12" aria-invalid="true" aria-describedby="fe1"><div class="err" id="fe1">전화번호를 끝까지 입력해주세요</div><p class="cap" style="text-align:left">그 칸 아래 빨간 글씨 · 얼럿보다 이게 나아요</p></div></div>
+</body>
+</html>

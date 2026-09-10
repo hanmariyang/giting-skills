@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>타임라인 Timeline — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .tml { display: grid; gap: 0; }
+  .ev { display: flex; gap: 10px; }
+  .ev .rail { display: flex; flex-direction: column; align-items: center; }
+  .ev .dot { width: 9px; height: 9px; border-radius: 50%; background: #17171b; margin-top: 3px; flex-shrink: 0; }
+  .ev.todo .dot { background: #fff; border: 2px solid #c9c9d4; }
+  .ev .ln { width: 2px; flex: 1; background: #e8e8ee; min-height: 18px; }
+  .ev:last-child .ln { display: none; }
+  .ev b { font-size: 12.5px; display: block; }
+  .ev small { color: #9a9aa4; font-size: 10.5px; display: block; padding-bottom: 12px; }
+  .ev.todo b { color: #9a9aa4; }
+</style>
+<div class="center"><div class="tml">
+  <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>아이디어 정리</b><small>09.01</small></span></div>
+  <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>첫 화면 완성</b><small>09.05</small></span></div>
+  <div class="ev todo"><span class="rail"><span class="dot"></span></span><span><b>배포</b><small>예정</small></span></div>
+</div></div>
+</body>
+</html>

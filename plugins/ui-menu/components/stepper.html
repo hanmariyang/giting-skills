@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스텝퍼 Stepper / Progress Steps — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .st { display: flex; align-items: center; width: 280px; }
+  .st .dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; flex-shrink: 0; }
+  .st .done { background: #17171b; color: #fff; }
+  .st .now { background: #17171b; color: #fff; outline: 3px solid #ececf1; }
+  .st .todo { background: #f0f0f4; color: #9a9aa4; }
+  .st .ln { flex: 1; height: 2px; background: #17171b; }
+  .st .ln.off { background: #e8e8ee; }
+  .lb { display: flex; justify-content: space-between; width: 280px; margin-top: 8px; font-size: 11px; color: #9a9aa4; }
+  .lb b { color: #17171b; }
+</style>
+<div class="center"><div>
+  <div class="st"><div class="dot done">&#10003;</div><div class="ln"></div><div class="dot now">2</div><div class="ln off"></div><div class="dot todo">3</div></div>
+  <div class="lb"><span>정보 입력</span><b>확인</b><span>완료</span></div>
+</div></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통계 카드 Stat Card / Metric Card — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc2 { display: flex; gap: 10px; }
+  .sc2 .k { width: 100px; border: 1px solid #e8e8ee; border-radius: 10px; padding: 10px 12px; background: #fff; }
+  .sc2 small { color: #9a9aa4; font-size: 10.5px; }
+  .sc2 b { font-size: 19px; display: block; margin: 2px 0; font-variant-numeric: tabular-nums; }
+  .up { color: #17b26a; font-size: 10.5px; }
+  .dn { color: #d64224; font-size: 10.5px; }
+</style>
+<div class="center"><div class="sc2">
+  <div class="k"><small>이번 주 신청</small><b>48</b><span class="up">&#9650; 12%</span></div>
+  <div class="k"><small>전환율</small><b>6.2%</b><span class="dn">&#9660; 3%</span></div>
+</div></div>
+</body>
+</html>

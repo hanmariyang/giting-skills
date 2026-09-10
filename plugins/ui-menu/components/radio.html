@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>라디오 버튼 Radio Button — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .rd { display: grid; gap: 8px; font-size: 12.5px; }
+  .rd p { margin: 0 0 2px; color: #9a9aa4; font-size: 11px; }
+  .rd label { display: flex; gap: 7px; align-items: center; cursor: pointer; }
+  .rd input { width: 15px; height: 15px; accent-color: #17171b; }
+</style>
+<div class="center"><div class="rd"><p>하나만 골라져요</p>
+  <label><input type="radio" name="r" checked>처음이에요</label>
+  <label><input type="radio" name="r">해본 적 있어요</label>
+  <label><input type="radio" name="r">잘해요</label>
+</div></div>
+</body>
+</html>

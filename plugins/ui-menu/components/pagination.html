@@ -1,29 +1,25 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>페이지네이션 Pagination</title>
+<title>페이지네이션 Pagination — UI 메뉴판</title>
 <style>
-  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #17171b; padding: 24px; }
-  .pagination { display: flex; gap: 4px; align-items: center; }
-  .pagination a, .pagination span {
-    min-width: 34px; height: 34px; padding: 0 6px;
-    display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 8px; font-size: 13.5px;
-    color: #43434d; text-decoration: none;
-    font-variant-numeric: tabular-nums;
-  }
-  .pagination a:hover { background: #f4f4f7; }
-  .pagination [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
-  .pagination .gap { color: #9a9aa4; }
-  .pagination [aria-disabled="true"] { color: #c9c9d4; pointer-events: none; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
 </style>
-
-<nav class="pagination" aria-label="페이지">
-  <a href="#" aria-disabled="true" aria-label="이전 페이지">&#8249;</a>
-  <a href="#" aria-current="page">1</a>
-  <a href="#">2</a>
-  <a href="#">3</a>
-  <span class="gap">&#8230;</span>
-  <a href="#">12</a>
-  <a href="#" aria-label="다음 페이지">&#8250;</a>
-</nav>
+</head>
+<body>
+<style>
+  .pg { display: flex; gap: 4px; }
+  .pg a { min-width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 7px; font-size: 12px; color: #43434d; text-decoration: none; font-variant-numeric: tabular-nums; }
+  .pg a:hover { background: #f4f4f7; }
+  .pg [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
+</style>
+<div class="center"><nav class="pg" aria-label="페이지"><a href="#" aria-current="page">1</a><a href="#">2</a><a href="#">3</a><a href="#">&#8230;</a><a href="#">12</a><a href="#">&#8250;</a></nav></div>
+</body>
+</html>
