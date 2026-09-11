@@ -21,9 +21,9 @@ Curated Claude Code skills from [Giting](https://giting.kr), the open-source fie
 - **별칭 사전**: 사람이 실제로 하는 말("화면 가운데 뜨는 창", "옆에서 미끄러져 나오는 메뉴") → 정식 명칭 매핑
 - **AI한테 시키는 공식**: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건] — 항목마다 그대로 복사해 쓰는 요청 문장
 - **실물 HTML**: 전 항목이 그림이 아니라 실제로 동작하는 자가완결 HTML (의존성 0, 접근성 기본 포함)
-- **에이전트 채널**: [llms.txt](https://hanmariyang.github.io/giting-skills/llms.txt) · [llms-full.txt](https://hanmariyang.github.io/giting-skills/llms-full.txt) (코드 포함)
+- **에이전트 채널**: [llms.txt](https://giting.kr/skills/llms.txt) · [llms-full.txt](https://giting.kr/skills/llms-full.txt) (코드 포함)
 
-라이브 갤러리: **https://hanmariyang.github.io/giting-skills/**
+라이브 갤러리: **https://giting.kr/skills/**
 
 설치하면 Claude가 네 가지를 합니다.
 
