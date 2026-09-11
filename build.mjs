@@ -313,6 +313,99 @@ const redirect = `<!doctype html>
 </head><body style="font-family:sans-serif;padding:40px">갤러리가 <a href="https://giting.kr/skills/">giting.kr/skills</a> 로 이사했습니다.</body></html>
 `;
 
+// ── 갤러리 코어 (giting.kr 스킬 상세의 "실물 본문"으로 이식되는 조각) ──
+// giting 사이트 페이지 안에 그대로 삽입되므로: ① 셸(헤더·히어로·푸터) 없음 ② CSS 전부 .uigal 스코프
+//   (⚠️ giting theme.css 의 .grid·.chips 등과 맨몸 클래스 충돌 — 전례 있음, 반드시 스코프 유지)
+// ③ 색·폰트는 giting theme 변수(--ink-2/--ink-3/--accent-deep 등)를 사용한다.
+const CORE_CSS = `
+.uigal { --gwash: var(--wash); }
+.uigal .formula { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.uigal .fh { padding: 11px 16px; background: var(--gwash); font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); display: flex; gap: 10px; flex-wrap: wrap; }
+.uigal .fh b { color: var(--ink); font-family: var(--sans); }
+.uigal .fx { display: grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 720px) { .uigal .fx { grid-template-columns: 1fr; } }
+.uigal .fx > div { padding: 12px 16px; font-size: 14px; }
+.uigal .fx .bad { color: var(--ink-3); border-right: 1px solid var(--line); }
+@media (max-width: 720px) { .uigal .fx .bad { border-right: 0; border-bottom: 1px solid var(--line); } }
+.uigal .mark { font-size: 11px; font-family: var(--mono); display: block; margin-bottom: 3px; }
+.uigal .bad .mark { color: #C0392B; } .uigal .good .mark { color: #17B26A; }
+.uigal .gnav { display: flex; gap: 8px; overflow-x: auto; padding: 16px 0 4px; scrollbar-width: none; }
+.uigal .gnav a { flex: none; font-size: 13px; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; text-decoration: none; background: var(--paper); }
+.uigal .gnav a:hover { border-color: var(--ink-3); color: var(--ink); }
+.uigal .gnav a b { font-family: var(--mono); font-weight: 400; margin-right: 3px; }
+.uigal .cat { padding-top: 26px; scroll-margin-top: 90px; }
+.uigal .cat h2 { font-size: 19px; font-weight: 800; letter-spacing: -.01em; margin: 0 0 12px; display: flex; align-items: baseline; gap: 8px; }
+.uigal .cat h2 .no { color: var(--accent-deep); }
+.uigal .cat h2 .count { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); font-weight: 400; }
+.uigal .ggrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 860px) { .uigal .ggrid { grid-template-columns: 1fr; } }
+.uigal .item { border: 1px solid var(--line); border-radius: 13px; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; }
+.uigal .item header { display: flex; align-items: center; gap: 7px; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+.uigal .item h3 { margin: 0; font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; }
+.uigal .item .en { font-family: var(--mono); font-size: 11px; color: var(--ink-3); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uigal .tiny { flex: none; border: 1px solid var(--line); background: var(--paper); border-radius: 7px; padding: 3px 9px; font-size: 11px; cursor: pointer; color: var(--ink-2); font-family: var(--sans); }
+.uigal .tiny:hover { border-color: var(--ink-3); color: var(--ink); }
+.uigal .tiny.ok { border-color: var(--accent); color: var(--accent-deep); }
+.uigal .item iframe { width: 100%; border: 0; display: block; background: #FFF; }
+.uigal .item footer { padding: 8px 12px 10px; border-top: 1px solid var(--gwash); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin-top: auto; }
+.uigal .item .al { font-size: 12px; color: var(--accent-deep); }
+.uigal .item .one { font-size: 12px; color: var(--ink-2); }
+.uigal .codebox { border-top: 1px solid var(--line); background: var(--gwash); padding: 10px 12px; }
+.uigal .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
+.uigal .codebox code { font-family: var(--mono); }
+.uigal .tblwrap { overflow-x: auto; margin-top: 16px; border: 1px solid var(--line); border-radius: 12px; }
+.uigal table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 680px; }
+.uigal th, .uigal td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.uigal tbody tr:last-child td { border-bottom: 0; }
+.uigal th { background: var(--gwash); color: var(--ink-2); font-size: 11px; font-weight: 600; }
+.uigal td a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.uigal td a:hover { color: var(--accent-deep); }
+.uigal td.mono { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); white-space: nowrap; }
+.uigal td.als { color: var(--ink-3); font-size: 12px; }
+.uigal td.askcell { min-width: 220px; }
+.uigal td.askcell span { color: var(--ink-2); }
+.uigal td.askcell button { margin-left: 6px; }`;
+
+const CORE_JS = `
+(function () {
+  var root = document.querySelector('.uigal');
+  if (!root) return;
+  root.addEventListener('click', function (e) {
+    var cb = e.target.closest('.codebtn');
+    if (cb) { var box = cb.closest('.item').querySelector('.codebox'); box.hidden = !box.hidden; return; }
+    var btn = e.target.closest('.copy');
+    if (!btn) return;
+    var text = btn.dataset.copy || (btn.closest('.codebox') && btn.closest('.codebox').querySelector('code').textContent);
+    if (!text) return;
+    try { navigator.clipboard.writeText(text); } catch (err) {}
+    var old = btn.textContent;
+    btn.textContent = '복사됨'; btn.classList.add('ok');
+    setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1100);
+  });
+})();`;
+
+const core = `<div class="uigal">
+<style>${CORE_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(f.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(f.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(f.good)}」</div>
+  </div>
+</div>
+<nav class="gnav" aria-label="코스">
+  ${menu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${bycat(c.id).length}</a>`).join('\n  ')}
+</nav>
+${menu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${bycat(cat.id).length}</span></h2>
+  <div class="ggrid">${bycat(cat.id).map(cardHtml).join('\n')}</div>
+  ${tableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS}</script>
+</div>
+`;
+
 mkdirSync(join(ROOT, 'docs'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'index.html'), redirect);
 writeFileSync(join(ROOT, 'docs', 'llms.txt'), dict(false));
@@ -320,7 +413,8 @@ writeFileSync(join(ROOT, 'docs', 'llms-full.txt'), dict(true));
 let siteMsg = '';
 if (SITE_DIR) {
   mkdirSync(SITE_DIR, { recursive: true });
-  writeFileSync(join(SITE_DIR, 'index.html'), html);
+  writeFileSync(join(SITE_DIR, 'gallery-core.html'), core); // giting 빌드가 스킬 상세에 삽입
+  rmSync(join(SITE_DIR, 'index.html'), { force: true });    // 단독 갤러리는 상세 페이지로 흡수 (2026-09-12)
   writeFileSync(join(SITE_DIR, 'llms.txt'), dict(false));
   writeFileSync(join(SITE_DIR, 'llms-full.txt'), dict(true));
   for (const f of ['promo.jpg', 'promo-card.jpg']) {
