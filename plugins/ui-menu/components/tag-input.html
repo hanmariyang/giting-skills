@@ -29,5 +29,12 @@
     <input placeholder="입력하고 엔터" onkeydown="if (event.key === 'Enter' && !event.isComposing && this.value.trim()) { const s = document.createElement('span'); s.className = 'chip'; s.innerHTML = this.value + '<button aria-label=삭제 onclick=this.parentNode.remove()>&times;</button>'; this.before(s); this.value = ''; }">
   </div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

@@ -20,5 +20,12 @@
 </style>
 <div class="hb"><button aria-label="메뉴 열기">&#9776;</button><b style="font-size:13px">로고</b><span style="width:34px"></span></div>
 <p class="cap" style="margin-top:14px">&#9776; 아이콘 — 모바일에서 메뉴를 접는 버튼. 누르면 보통 드로어가 열린다</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

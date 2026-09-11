@@ -22,5 +22,12 @@
   .pc button { margin-left: 8px; border: 0; border-radius: 999px; background: #17171b; color: #fff; padding: 6px 14px; font-size: 11.5px; cursor: pointer; }
 </style>
 <div class="center"><div class="pc"><span class="av">쥬</span><span><b>이지우</b><small>AI 활용 콘텐츠</small></span><button>팔로우</button></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

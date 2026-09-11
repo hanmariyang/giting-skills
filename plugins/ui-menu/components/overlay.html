@@ -21,5 +21,12 @@
 </style>
 <div class="base"><div class="bar" style="width:85%"></div><div class="bar" style="width:65%;margin-top:8px"></div><div class="bar" style="width:74%;margin-top:8px"></div></div>
 <div class="ov"><span>뒤를 어둡게 덮는 층 (딤이라고도 해요)</span></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

@@ -43,6 +43,13 @@
 </style>
 <header class="hd"><b>로고</b><nav><a href="#">소개</a><a href="#">가격</a><a class="cta" href="#">신청</a></nav></header>
 <p class="pad mut">스크롤해도 위에 고정 (position: sticky)</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -79,6 +86,13 @@
 </style>
 <nav class="nb" aria-label="주 메뉴"><a href="#" aria-current="page">홈</a><a href="#">소개</a><a href="#">가격</a><a href="#">문의</a></nav>
 <p class="cap">현재 페이지는 aria-current="page" + 진하게</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -114,6 +128,13 @@
   .hr button { margin-top: 6px; padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
 </style>
 <section class="hr"><h1>AI로 사이트,<br>10분이면 됩니다</h1><p>누구나 할 수 있어요</p><button>시작하기</button></section>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -150,6 +171,13 @@
   .ly main { flex: 1; min-width: 0; padding: 14px; color: #9a9aa4; font-size: 12px; }
 </style>
 <div class="ly"><nav class="sb"><a href="#" aria-current="page">대시보드</a><a href="#">리포트</a><a href="#">설정</a></nav><main>옆에 세로로 붙는 메뉴. 본문에는 min-width: 0.</main></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -186,6 +214,13 @@
 </style>
 <div class="sp mut">본문</div>
 <footer class="ft"><a href="#">이용약관</a><a href="#">개인정보처리방침</a><i>&copy; 2026 서비스명</i></footer>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -222,6 +257,13 @@
 <section class="sec"><h2>섹션 1</h2><div class="bar" style="width:70%"></div></section>
 <section class="sec alt"><h2>섹션 2</h2><div class="bar" style="width:55%"></div></section>
 <section class="sec"><h2>섹션 3</h2><div class="bar" style="width:62%"></div></section>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -254,6 +296,13 @@
   .ct { max-width: 300px; margin: 14px auto; background: #fff; outline: 2px dashed #c9c9d4; outline-offset: -2px; padding: 16px; min-height: 110px; }
 </style>
 <div class="ct"><p class="mut" style="margin:0">점선 상자가 컨테이너. max-width + margin: 0 auto 로 가운데 정렬. 바깥 회색이 화면.</p></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -286,6 +335,13 @@
   .gr div { background: #f0f0f4; border-radius: 8px; height: 52px; display: grid; place-items: center; color: #9a9aa4; font-size: 12px; }
 </style>
 <div class="center"><div><div class="gr"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div><p class="cap">3열 그리드 · 간격은 gap으로</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -322,6 +378,13 @@
   .cd p { margin: 0; color: #6b6b76; font-size: 11.5px; }
 </style>
 <div class="center"><article class="cd"><div class="th"></div><div class="bd"><h3>카드 제목</h3><p>이미지 · 제목 · 설명 한 덩어리</p></div></article></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -361,6 +424,13 @@
   <article><div class="th"></div><div class="bd"><h3>카드 2</h3><div class="bar" style="width:55%"></div></div></article>
   <article><div class="th"></div><div class="bd"><h3>카드 3</h3><div class="bar" style="width:63%"></div></div></article>
 </div><p class="cap">카드를 격자로 반복</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -400,6 +470,13 @@
 <tr><td>김하나</td><td>09.08</td><td class="wt">대기</td></tr>
 <tr><td>박서준</td><td>09.07</td><td class="ok">완료</td></tr>
 </tbody></table></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -434,6 +511,13 @@
   .lo .f { grid-column: 1 / -1; }
 </style>
 <div class="lo"><div class="h">헤더</div><div>사이드바</div><div>본문</div><div class="f">푸터</div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -484,6 +568,13 @@
     });
   }));
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -526,6 +617,13 @@
   <details name="f"><summary>환불 되나요?</summary><div class="pn">7일 이내 전액 환불됩니다.</div></details>
   <details name="f"><summary>계정 필요해요?</summary><div class="pn">아니요, 바로 쓸 수 있어요.</div></details>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -561,6 +659,13 @@
   h1 { font-size: 17px; margin: 6px 0 0; }
 </style>
 <div class="center"><div><nav class="bc" aria-label="현재 위치"><a href="#">홈</a><span>/</span><a href="#">제품</a><span>/</span><b aria-current="page">노트북</b></nav><h1>노트북</h1></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -604,6 +709,13 @@
   <div class="st"><div class="dot done">&#10003;</div><div class="ln"></div><div class="dot now">2</div><div class="ln off"></div><div class="dot todo">3</div></div>
   <div class="lb"><span>정보 입력</span><b>확인</b><span>완료</span></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -639,6 +751,13 @@
   .pg [aria-current="page"] { background: #17171b; color: #fff; font-weight: 700; }
 </style>
 <div class="center"><nav class="pg" aria-label="페이지"><a href="#" aria-current="page">1</a><a href="#">2</a><a href="#">3</a><a href="#">&#8230;</a><a href="#">12</a><a href="#">&#8250;</a></nav></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -690,6 +809,13 @@
     }
   });
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -728,6 +854,13 @@
   <div class="bar" style="width:90%"></div><div class="bar" style="width:74%"></div><div class="bar" style="width:82%"></div>
   <button onclick="for(let i=0;i<2;i++){const b=document.createElement('div');b.className='bar';b.style.width=(60+Math.random()*30)+'%';this.parentNode.insertBefore(b,this)}">더보기</button>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -776,6 +909,13 @@
   function go(d) { tr.scrollTo({ left: Math.min(2, Math.max(0, idx() + d)) * tr.clientWidth, behavior: 'smooth' }); }
   tr.addEventListener('scroll', () => dt.forEach((el, i) => el.classList.toggle('on', i === idx())));
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -820,6 +960,13 @@
 <script>
   document.addEventListener('click', e => { if (!e.target.closest('.dd')) { document.querySelector('.mn').hidden = true; document.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false'); } });
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -854,6 +1001,13 @@
 </style>
 <div class="hb"><button aria-label="메뉴 열기">&#9776;</button><b style="font-size:13px">로고</b><span style="width:34px"></span></div>
 <p class="cap" style="margin-top:14px">&#9776; 아이콘 — 모바일에서 메뉴를 접는 버튼. 누르면 보통 드로어가 열린다</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -894,6 +1048,13 @@
 <button class="op" onclick="document.getElementById('d').showModal()">&#9776; 메뉴</button>
 <p class="cap">오른쪽에서 서랍처럼 밀려 나옵니다</p>
 <dialog class="dr" id="d" onclick="if (event.target === this) this.close()"><nav><a href="#">홈</a><a href="#">리포트</a><a href="#">매거진</a><a href="#">설정</a></nav></dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -933,6 +1094,13 @@
   <div class="bd2"><div class="bar" style="width:92%"></div><div class="bar" style="width:78%"></div><div class="bar" style="width:85%"></div><div class="bar" style="width:60%"></div></div>
   <nav class="toc" aria-label="목차"><a href="#">목차</a><a href="#" class="on">시작하기</a><a href="#">기술 스택</a><a href="#">배포하기</a></nav>
 </div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -971,6 +1139,13 @@
 </style>
 <div class="bd3"><div class="bar" style="width:85%"></div></div>
 <nav class="bn"><a href="#" class="on"><i></i>홈</a><a href="#"><i></i>검색</a><a href="#"><i></i>알림</a><a href="#"><i></i>내 정보</a></nav>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1010,6 +1185,13 @@
   <span class="target" id="price">가격 섹션</span>
   <p class="cap">같은 페이지 안 특정 위치로 이동 (href="#id")</p>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1052,6 +1234,13 @@
   <a href="#"><span><b>랜딩 페이지</b><small>09.08 · 진행 중</small></span><span class="go">&#8250;</span></a>
   <a href="#"><span><b>포트폴리오</b><small>09.07 · 대기</small></span><span class="go">&#8250;</span></a>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1093,6 +1282,13 @@
   <div class="pl hot"><span class="tag">인기</span><h4>프로</h4><div class="pr">9,900원</div><p>전체 기능<br>무제한</p></div>
   <div class="pl"><h4>팀</h4><div class="pr">문의</div><p>전담 지원<br>보안</p></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1132,6 +1328,13 @@
   <blockquote class="q" style="margin:0">"코딩 하나도 모르는데 이틀 만에 신청 페이지를 만들었어요."</blockquote>
   <figcaption class="who"><span class="av">김</span><span><b>김하나</b><small>대학생</small></span></figcaption>
 </figure></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1169,6 +1372,13 @@
   <span><b>98%</b><small>만족도</small></span>
   <span><b>10분</b><small>평균 제작</small></span>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1208,6 +1418,13 @@
   <div class="k"><small>이번 주 신청</small><b>48</b><span class="up">&#9650; 12%</span></div>
   <div class="k"><small>전환율</small><b>6.2%</b><span class="dn">&#9660; 3%</span></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1242,6 +1459,13 @@
   .lc i { width: 52px; height: 18px; border-radius: 4px; background: #e4e4ea; }
 </style>
 <div class="center"><div class="lc"><p>이런 곳에서 쓰고 있어요</p><div class="row"><i></i><i></i><i></i><i></i></div></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1286,6 +1510,13 @@
   <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>첫 화면 완성</b><small>09.05</small></span></div>
   <div class="ev todo"><span class="rail"><span class="dot"></span></span><span><b>배포</b><small>예정</small></span></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1319,6 +1550,13 @@
   .gl i:nth-child(2n) { background: linear-gradient(135deg, #e9e4de, #d8cfc4); }
 </style>
 <div class="center"><div><div class="gl"><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="cap">사진 격자 · 누르면 라이트박스로 크게</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1358,6 +1596,13 @@
   <p class="cap">사진 눌러서 크게 보기</p>
 </div></div>
 <dialog class="lb" id="lb" onclick="this.close()"><div class="big"></div><p>다시 누르면 닫혀요</p></dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1390,6 +1635,13 @@
   .bq p { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.6; }
 </style>
 <div class="center"><blockquote class="bq"><p>이름을 아는 순간<br>수정 요청이 한 번에 통해요.</p></blockquote></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1432,6 +1684,13 @@
 인풋 3개, 셀렉트 1개
 유효성 검사 넣고</pre>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1467,6 +1726,13 @@
   .pc button { margin-left: 8px; border: 0; border-radius: 999px; background: #17171b; color: #fff; padding: 6px 14px; font-size: 11.5px; cursor: pointer; }
 </style>
 <div class="center"><div class="pc"><span class="av">쥬</span><span><b>이지우</b><small>AI 활용 콘텐츠</small></span><button>팔로우</button></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1507,6 +1773,13 @@
   <div><span style="width:6px"></span>배포가 완료됐어요<small>2시간 전</small></div>
   <div><span style="width:6px"></span>도메인이 연결됐어요<small>어제</small></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1541,6 +1814,13 @@
 </style>
 <div class="bn2"><span>9월 한정 무료로 열려 있어요</span><button aria-label="닫기" onclick="this.parentNode.remove()">&times;</button></div>
 <p class="cap" style="margin-top:16px">가로로 긴 알림 띠 · 페이지 맨 위에 걸린다</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1583,6 +1863,13 @@
   <div><label>이메일 <i>*</i></label><input type="email" required placeholder="example@gmail.com"></div>
   <button>보내기</button>
 </form></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1617,6 +1904,13 @@
   .in1 input:focus { outline: 2px solid #17171b; border-color: transparent; }
 </style>
 <div class="center"><div class="in1"><label>이름</label><input placeholder="한 줄 입력칸"></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1651,6 +1945,13 @@
   .ta textarea:focus { outline: 2px solid #17171b; border-color: transparent; }
 </style>
 <div class="center"><div class="ta"><label>문의 내용</label><textarea placeholder="어떤 걸 만들고 싶으신지 편하게 적어주세요"></textarea></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1685,6 +1986,13 @@
   .se select { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; background: #fff; font-family: inherit; }
 </style>
 <div class="center"><div class="se"><label>학년</label><select><option>1학년</option><option>2학년</option><option selected>3학년</option></select></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1723,6 +2031,13 @@
   <label><input type="checkbox" checked>개발</label>
   <label><input type="checkbox">디자인</label>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1761,6 +2076,13 @@
   <label><input type="radio" name="r">해본 적 있어요</label>
   <label><input type="radio" name="r">잘해요</label>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1802,6 +2124,13 @@
   <label>알림 받기<input type="checkbox" role="switch" checked><span class="kb" aria-hidden="true"></span></label>
   <label>다크 모드<input type="checkbox" role="switch"><span class="kb" aria-hidden="true"></span></label>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1841,6 +2170,13 @@
   <input type="range" min="0" max="100" value="45" oninput="document.getElementById('v').textContent = this.value + '만원'">
   <div class="btm"><span>0</span><span>100만원</span></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1882,6 +2218,13 @@
   <span class="ic">&#8981;</span><input value="바이브코딩" aria-label="검색">
   <div class="rs"><div>바이브코딩 시작하기</div><div>바이브코딩 도구 비교</div></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1923,6 +2266,13 @@
   <div class="cd2"><div class="on"><b>바이브</b><span>코딩</span></div><div><b>바이브</b><span>코딩 도구</span></div></div>
   <p class="cap">타이핑하면 후보가 뜸</p>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -1957,6 +2307,13 @@
   .fu small { color: #9a9aa4; font-size: 10.5px; }
 </style>
 <div class="center"><label class="fu"><input type="file" hidden><span style="font-size:16px">&#8679;</span><b>여기로 끌어다 놓으세요</b><small>이미지 · 최대 5MB</small></label></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2002,6 +2359,13 @@
   sl.addEventListener('dragleave', () => sl.classList.remove('over'));
   sl.addEventListener('drop', e => { e.preventDefault(); sl.textContent = '놓았어요 ✓'; sl.classList.remove('over'); it.remove(); });
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2046,6 +2410,13 @@
     <button>20</button><button>21</button><button>22</button><button>23</button><button>24</button><button>25</button><button>26</button>
   </div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2081,6 +2452,13 @@
   .tp2 .hrs .on { border-color: #17171b; font-weight: 700; }
 </style>
 <div class="center"><div class="tp2"><input value="14 : 30" readonly aria-label="시간"><div class="hrs"><button>13</button><button class="on">14</button><button>15</button></div></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2119,6 +2497,13 @@
   <div class="ns"><button onclick="const o = this.nextElementSibling; o.value = Math.max(0, +o.value - 1)">&minus;</button><output>2</output><button onclick="const o = this.previousElementSibling; o.value = +o.value + 1">+</button></div>
   <p class="cap">카운터라고도 해요</p>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2158,6 +2543,13 @@
 <script>
   document.querySelectorAll('.otp input').forEach((el, i, all) =>
     el.addEventListener('input', () => { if (el.value && all[i + 1]) all[i + 1].focus(); }));
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
 </script>
 </body>
 </html>
@@ -2201,6 +2593,13 @@
     <input placeholder="입력하고 엔터" onkeydown="if (event.key === 'Enter' && !event.isComposing && this.value.trim()) { const s = document.createElement('span'); s.className = 'chip'; s.innerHTML = this.value + '<button aria-label=삭제 onclick=this.parentNode.remove()>&times;</button>'; this.before(s); this.value = ''; }">
   </div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2243,6 +2642,13 @@
 <script>
   document.querySelectorAll('#st span').forEach((s, i, all) =>
     s.addEventListener('click', () => { all.forEach((x, j) => x.className = j <= i ? 'on' : 'off'); s.closest('.rt').querySelector('b').textContent = (i + 1) + '.0'; }));
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
 </script>
 </body>
 </html>
@@ -2291,6 +2697,13 @@
 <script>
   function pick(btn, hex) { document.querySelectorAll('.cp button').forEach(b => b.classList.remove('on')); btn.classList.add('on'); document.getElementById('hex').textContent = hex; }
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2325,6 +2738,13 @@
   .lb2 input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
 </style>
 <div class="center"><div class="lb2"><label for="em">이메일 <i>*</i></label><input id="em" placeholder="example@gmail.com"><p class="cap" style="text-align:left">&#8593; 입력칸 위 이름표가 라벨이에요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2358,6 +2778,13 @@
   .ph input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
 </style>
 <div class="center"><div class="ph"><label>이메일</label><input placeholder="example@gmail.com"><p class="cap" style="text-align:left">&#8593; 흐리게 미리 써 있는 예시 글자</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2392,6 +2819,13 @@
   .ht small { color: #9a9aa4; font-size: 10.5px; display: block; margin-top: 4px; }
 </style>
 <div class="center"><div class="ht"><label>비밀번호</label><input type="password" value="········"><small>영문·숫자 포함 8자 이상</small><p class="cap" style="text-align:left">&#8593; 칸 아래 회색 안내 문구</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2426,6 +2860,13 @@
   .rq input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
 </style>
 <div class="center"><div class="rq"><label>이름 <i>*</i></label><input required><p class="cap" style="text-align:left">별표(*)가 필수 표시 · input에는 required</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2460,6 +2901,13 @@
   .vd .err { color: #d64224; font-size: 11px; margin-top: 4px; }
 </style>
 <div class="center"><div class="vd"><label>이메일 <i style="color:#d64224;font-style:normal">*</i></label><input value="jiwoo@@gmail" aria-invalid="true"><div class="err">이메일 형식이 아니에요</div><p class="cap" style="text-align:left">형식이 맞는지 확인하는 것</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2493,6 +2941,13 @@
   .fe .err { color: #d64224; font-size: 11px; margin-top: 4px; }
 </style>
 <div class="center"><div class="fe"><input value="010-12" aria-invalid="true" aria-describedby="fe1"><div class="err" id="fe1">전화번호를 끝까지 입력해주세요</div><p class="cap" style="text-align:left">그 칸 아래 빨간 글씨 · 얼럿보다 이게 나아요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2529,6 +2984,13 @@
   <button onclick="this.nextElementSibling.style.display='block'">보내기</button>
   <div class="done">&#10003; 신청 완료됐어요</div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2563,6 +3025,13 @@
   .bt:hover { background: #f4f4f7; }
 </style>
 <div class="center"><div style="text-align:center"><button class="bt">신청하기</button><p class="cap">누르는 것 전부를 버튼이라고 해요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2595,6 +3064,13 @@
   .pb:hover { background: #333; }
 </style>
 <div class="center"><div style="text-align:center"><button class="pb">신청하기</button><p class="cap">꽉 찬 색 · 한 화면에 하나만</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2627,6 +3103,13 @@
   .sb3:hover { background: #f4f4f7; }
 </style>
 <div class="center"><div style="text-align:center"><button class="sb3">더 알아보기</button><p class="cap">테두리만 · 두 번째로 중요한 것</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2659,6 +3142,13 @@
   .gb:hover { background: #f4f4f7; }
 </style>
 <div class="center"><div style="text-align:center"><button class="gb">취소</button><p class="cap">배경 없이 글자만</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2692,6 +3182,13 @@
   .ib button:hover { background: #f4f4f7; }
 </style>
 <div class="center"><div style="text-align:center"><div class="ib"><button aria-label="닫기">&times;</button><button aria-label="좋아요">&#9825;</button><button aria-label="공유">&#8599;</button></div><p class="cap">아이콘만 · aria-label 필수</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2724,6 +3221,13 @@
   .db:hover { background: #b93518; }
 </style>
 <div class="center"><div style="text-align:center"><button class="db">삭제</button><p class="cap">되돌릴 수 없는 것만 빨강</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2757,6 +3261,13 @@
   .ct2 button { padding: 10px 26px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
 </style>
 <div class="center"><div class="ct2"><h3>지금 시작해보세요</h3><button>무료로 시작하기</button><p class="cap">제일 중요한 행동 하나</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2791,6 +3302,13 @@
 <div class="pad2"><div class="bar" style="width:80%"></div><div class="bar" style="width:60%;margin-top:8px"></div></div>
 <button class="fab" aria-label="새로 만들기">+</button>
 <p class="cap">오른쪽 아래 떠 있는 동그란 버튼</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2823,6 +3341,13 @@
   .lk a { color: #17171b; font-weight: 600; }
 </style>
 <div class="center"><div style="text-align:center"><p class="lk" style="margin:0">자세한 내용은 <a href="#">이 문서</a>를 봐주세요.</p><p class="cap">버튼이 아니라 글자 링크</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2864,6 +3389,13 @@
   document.querySelectorAll('.bg button').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('.bg button').forEach(x => x.classList.toggle('on', x === b));
   }));
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
 </script>
 </body>
 </html>
@@ -2910,6 +3442,13 @@
   <h2>정말 삭제할까요?</h2><p>이 작업은 되돌릴 수 없어요.</p>
   <div class="ac2"><button onclick="this.closest('dialog').close()">취소</button><button class="dg" onclick="this.closest('dialog').close()">삭제</button></div>
 </dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2945,6 +3484,13 @@
 </style>
 <div class="base"><div class="bar" style="width:85%"></div><div class="bar" style="width:65%;margin-top:8px"></div><div class="bar" style="width:74%;margin-top:8px"></div></div>
 <div class="ov"><span>뒤를 어둡게 덮는 층 (딤이라고도 해요)</span></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -2983,6 +3529,13 @@
 </style>
 <div class="base2"><div class="bar" style="width:80%"></div></div>
 <div class="bs" role="dialog" aria-label="공유하기"><div class="grab"></div><h3>공유하기</h3><div class="row"><div></div><div></div><div></div></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3028,6 +3581,13 @@
     setTimeout(() => { el.classList.add('bye'); el.addEventListener('animationend', () => el.remove()); }, 2600);
   }
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3068,6 +3628,13 @@
   <div class="wr">곧 마감돼요</div>
   <div class="er">이메일 형식이 아니에요</div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3104,6 +3671,13 @@
   .tip:hover .bub, .tip > button:focus-visible + .bub { opacity: 1; }
 </style>
 <div class="center"><div style="font-size:13px">AEO란? <span class="tip"><button aria-describedby="tt">?</button><span class="bub" role="tooltip" id="tt">AI 검색 최적화예요</span></span><p class="cap">마우스를 올려 보세요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3145,6 +3719,13 @@
   <button onclick="const p = this.nextElementSibling; p.hidden = !p.hidden"><span class="av2">지</span>이지우</button>
   <div class="pop" hidden><b>이지우</b><a href="#">설정</a><a href="#">로그아웃</a></div>
 </div><p class="cap" style="margin-left:12px;align-self:center">눌러서 여는 작은 판</p></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3188,6 +3769,13 @@
 <script>
   let v = 68; setInterval(() => { v = v >= 100 ? 20 : v + 4; document.getElementById('fl').style.width = v + '%'; document.getElementById('pv2').textContent = v + '%'; }, 700);
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3222,6 +3810,13 @@
   @media (prefers-reduced-motion: reduce) { .sp2 { animation: none; } }
 </style>
 <div class="center"><div style="text-align:center"><div class="sp2" role="status" aria-label="불러오는 중"></div><p class="cap">불러오는 중&#8230;</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3265,6 +3860,13 @@
   <div class="row2"><div class="sk avk"></div><div class="lns"><div class="sk l1"></div><div class="sk l2"></div></div></div>
   <div class="row2"><div class="sk avk"></div><div class="lns"><div class="sk l1"></div><div class="sk l2"></div></div></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3300,6 +3902,13 @@
   .es button { margin-top: 10px; padding: 7px 14px; border: 0; border-radius: 8px; background: #17171b; color: #fff; font-size: 11.5px; cursor: pointer; }
 </style>
 <div class="center"><div class="es"><div class="box2"></div><b>아직 신청이 없어요</b><small>링크를 공유해보세요</small><br><button>링크 복사</button></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3336,6 +3945,13 @@
 </style>
 <div style="padding:12px 16px"><div class="bar" style="width:80%"></div></div>
 <div class="cbn"><span>더 나은 경험을 위해 쿠키를 사용해요.</span><div class="ac3"><button class="no" onclick="this.closest('.cbn').remove()">거부</button><button class="yes" onclick="this.closest('.cbn').remove()">동의</button></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3380,6 +3996,13 @@
   <h2>정말 나가시겠어요?</h2><p>작성한 내용이 사라져요</p>
   <div class="ac4"><button class="stay" onclick="this.closest('dialog').close()">계속 쓰기</button><button class="go2" onclick="this.closest('dialog').close()">나가기</button></div>
 </dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3417,6 +4040,13 @@
   .d2 { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: #d64224; }
 </style>
 <div class="center"><div style="text-align:center"><div class="bd4"><div class="ic2"><span class="n">3</span></div><div class="ic2"><span class="d2"></span></div></div><p class="cap">숫자 또는 점</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3459,6 +4089,13 @@
   document.querySelectorAll('.ch button').forEach(c => c.addEventListener('click', () =>
     c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3493,6 +4130,13 @@
   .a2 { width: 30px; height: 30px; background: linear-gradient(135deg, #c3ccd8, #97a4b4); }
 </style>
 <div class="center"><div style="text-align:center"><div class="av3"><span class="a1">쥬</span><span class="a2"></span></div><p class="cap">사진 없으면 첫 글자로</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3529,6 +4173,13 @@
   .g3 { background: #ececf1; color: #6b6b76 !important; }
 </style>
 <div class="center"><div style="text-align:center"><div class="ag"><span class="g1">쥬</span><span class="g2">하</span><span class="g3">+9</span></div><p class="cap">겹쳐 놓은 아바타들</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3562,6 +4213,13 @@
   .dv .bar { margin-bottom: 7px; }
 </style>
 <div class="center"><div class="dv"><div class="bar" style="width:88%"></div><div class="bar" style="width:60%"></div><hr><div class="bar" style="width:75%"></div><div class="bar" style="width:52%"></div></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3593,6 +4251,13 @@
   .ico { display: flex; gap: 18px; font-size: 17px; color: #43434d; }
 </style>
 <div class="center"><div style="text-align:center"><div class="ico"><span>&#8962;</span><span>&#8981;</span><span>&#128276;</span><span>&#9906;</span></div><p class="cap">"아이콘은 Lucide로"라고 말하면 통일돼요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3633,6 +4298,13 @@
   <span><i class="aw"></i>자리 비움</span>
   <span><i class="off2"></i>오프라인</span>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3665,6 +4337,13 @@
   kbd { display: inline-grid; place-items: center; min-width: 20px; height: 22px; padding: 0 5px; border: 1px solid #d4d4dd; border-bottom-width: 2px; border-radius: 5px; background: #fff; font-size: 11px; font-family: inherit; }
 </style>
 <div class="center"><div style="text-align:center"><p class="kd" style="margin:0">검색은 <kbd>&#8984;</kbd> <kbd>K</kbd></p><p class="cap">단축키를 키 모양으로 보여주는 것</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3698,6 +4377,13 @@
   .s0 { padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
 </style>
 <div class="center"><div style="text-align:center"><button class="s0">보내기</button><p class="cap">아무것도 안 한 상태</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3730,6 +4416,13 @@
   .s1:hover { background: #333; box-shadow: 0 4px 14px rgba(0,0,0,.22); transform: translateY(-1px); }
 </style>
 <div class="center"><div style="text-align:center"><button class="s1">보내기</button><p class="cap">마우스를 올려 보세요 (:hover)</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3762,6 +4455,13 @@
   .s2:active { transform: scale(.96); background: #44444c; }
 </style>
 <div class="center"><div style="text-align:center"><button class="s2">보내기</button><p class="cap">누르고 있는 순간 (:active)</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3794,6 +4494,13 @@
   .s3:focus-visible { outline: 2px solid #17171b; outline-offset: 3px; }
 </style>
 <div class="center"><div style="text-align:center"><button class="s3">보내기</button><p class="cap">Tab 키로 선택했을 때 (:focus-visible)</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3825,6 +4532,13 @@
   .s4 { padding: 9px 22px; border: 0; border-radius: 9px; background: #ececf1; color: #b0b0ba; font-size: 13px; cursor: not-allowed; }
 </style>
 <div class="center"><div style="text-align:center"><button class="s4" disabled>보내기</button><p class="cap">못 누르게 회색 (disabled)</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3858,6 +4572,13 @@
   @keyframes r3 { to { transform: rotate(360deg); } }
 </style>
 <div class="center"><div style="text-align:center"><button class="s5" disabled aria-busy="true"><i></i>보내는 중</button><p class="cap">처리 중 · 두 번 못 누르게</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3902,6 +4623,13 @@
     });
   }));
 </script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```
@@ -3935,6 +4663,13 @@
   .s7 .err { color: #d64224; font-size: 11px; margin-top: 4px; }
 </style>
 <div class="center"><div class="s7"><input value="jiwoo@@gmail" aria-invalid="true"><div class="err">이메일 형식이 아니에요</div><p class="cap" style="text-align:left">틀린 상태 · 빨간 테두리 + 안내</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
 ```

@@ -28,5 +28,12 @@
   <span class="ic">&#8981;</span><input value="바이브코딩" aria-label="검색">
   <div class="rs"><div>바이브코딩 시작하기</div><div>바이브코딩 도구 비교</div></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

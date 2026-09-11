@@ -21,5 +21,12 @@
   .d2 { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: #d64224; }
 </style>
 <div class="center"><div style="text-align:center"><div class="bd4"><div class="ic2"><span class="n">3</span></div><div class="ic2"><span class="d2"></span></div></div><p class="cap">숫자 또는 점</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

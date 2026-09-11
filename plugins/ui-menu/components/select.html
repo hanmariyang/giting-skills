@@ -20,5 +20,12 @@
   .se select { width: 100%; padding: 9px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; background: #fff; font-family: inherit; }
 </style>
 <div class="center"><div class="se"><label>학년</label><select><option>1학년</option><option>2학년</option><option selected>3학년</option></select></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

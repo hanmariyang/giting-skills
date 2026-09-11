@@ -22,5 +22,12 @@
 </style>
 <nav class="nb" aria-label="주 메뉴"><a href="#" aria-current="page">홈</a><a href="#">소개</a><a href="#">가격</a><a href="#">문의</a></nav>
 <p class="cap">현재 페이지는 aria-current="page" + 진하게</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
