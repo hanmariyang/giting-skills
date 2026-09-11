@@ -252,6 +252,12 @@ ${menu.categories.map(sectionHtml).join('\n')}
 </footer>
 
 <script>
+  // 방문 비콘 — first-party 분석(aiplab-analytics), 쿠키 없음. 실패는 조용히 무시.
+  try {
+    var _u = 'https://aiplab.kr/hit?s=giting-skills&p=' + encodeURIComponent(location.pathname)
+           + '&r=' + encodeURIComponent(document.referrer || '');
+    if (!(navigator.sendBeacon && navigator.sendBeacon(_u))) { new Image().src = _u; }
+  } catch (e) {}
   document.addEventListener('click', async (e) => {
     const cb = e.target.closest('.codebtn');
     if (cb) { const box = cb.closest('.item').querySelector('.codebox'); box.hidden = !box.hidden; return; }
