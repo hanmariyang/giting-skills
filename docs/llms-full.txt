@@ -3,7 +3,7 @@
 > 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 8개 코스 105개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
-> 갤러리: https://hanmariyang.github.io/giting-skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
 
 ## ① 페이지 뼈대

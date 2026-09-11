@@ -149,6 +149,8 @@ const html = `<!doctype html>
   .install code { font-family: var(--mono); font-size: 12.5px; padding: 10px 14px; background: var(--wash); overflow-x: auto; white-space: nowrap; display: block; }
   .install button { border: 0; border-left: 1px solid var(--line); background: #fff; padding: 0 14px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); }
   .install button:hover { background: var(--wash); }
+  .ghbtn { display: inline-flex; align-items: center; margin: 18px 0 0 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 11px; font-size: 13px; color: var(--ink); text-decoration: none; vertical-align: top; }
+  .ghbtn:hover { border-color: var(--ink3); background: var(--wash); }
   .also { margin-top: 10px; font-size: 12.5px; color: var(--ink3); }
   .also code { font-family: var(--mono); }
   .also a { color: var(--ink2); }
@@ -229,6 +231,7 @@ const html = `<!doctype html>
       <code>/plugin marketplace add hanmariyang/giting-skills</code>
       <button class="copy" data-copy="/plugin marketplace add hanmariyang/giting-skills">복사</button>
     </div>
+    <a class="ghbtn" href="https://github.com/hanmariyang/giting-skills" target="_blank" rel="noopener">GitHub에서 오픈소스 보기 &#8599;</a>
     <p class="also">이어서 <code>/plugin install ui-menu@giting</code> · 에이전트용 사전: <a href="llms.txt">llms.txt</a> / <a href="llms-full.txt">llms-full.txt</a> (코드 포함)</p>
   </div>
 </section>
@@ -280,7 +283,7 @@ const dict = full => `# UI 메뉴판 (ui-menu) — Giting Skills
 > 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 8개 코스 ${menu.items.length}개 항목.
 > AI한테 시키는 공식: ${f.pattern}
 >   ✕ "${f.bad}" → ○ "${f.good}"
-> 갤러리: https://hanmariyang.github.io/giting-skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
 
 ${menu.categories.map(cat => `## ${cat.no} ${cat.ko}
@@ -296,8 +299,35 @@ ${code[it.id].trim()}
 \`\`\`` : ''}
 `).join('\n')}`).join('\n')}`;
 
+// ── 5. 출력 ────────────────────────────────────────────────────
+// 정본 갤러리 = giting.kr/skills (2026-09-12 owner 확정 — 우리 도메인에서 서빙, GitHub 은 소스 버튼).
+// GITING_SITE_DIR 이 있으면(워크스페이스: ../giting/site/static/skills) 그쪽에 갤러리·llms 를 쓰고,
+// docs/(github.io) 는 리다이렉트 + llms 미러(구 링크 소비자용)만 유지한다. promo 이미지는 양쪽 다.
+const SITE_DIR = process.env.GITING_SITE_DIR;
+const redirect = `<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta http-equiv="refresh" content="0; url=https://giting.kr/skills/">
+<link rel="canonical" href="https://giting.kr/skills/">
+<title>UI 메뉴판 — giting.kr/skills 로 이동</title>
+<script>location.replace('https://giting.kr/skills/' + location.hash);</script>
+</head><body style="font-family:sans-serif;padding:40px">갤러리가 <a href="https://giting.kr/skills/">giting.kr/skills</a> 로 이사했습니다.</body></html>
+`;
+
 mkdirSync(join(ROOT, 'docs'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'index.html'), html);
+writeFileSync(join(ROOT, 'docs', 'index.html'), redirect);
 writeFileSync(join(ROOT, 'docs', 'llms.txt'), dict(false));
 writeFileSync(join(ROOT, 'docs', 'llms-full.txt'), dict(true));
-console.log(`built: components ${menu.items.length} · docs/index.html ${(html.length / 1024).toFixed(0)}KB · llms.txt · llms-full.txt`);
+let siteMsg = '';
+if (SITE_DIR) {
+  mkdirSync(SITE_DIR, { recursive: true });
+  writeFileSync(join(SITE_DIR, 'index.html'), html);
+  writeFileSync(join(SITE_DIR, 'llms.txt'), dict(false));
+  writeFileSync(join(SITE_DIR, 'llms-full.txt'), dict(true));
+  for (const f of ['promo.jpg', 'promo-card.jpg']) {
+    try { writeFileSync(join(SITE_DIR, f), readFileSync(join(ROOT, 'docs', f))); } catch { /* 없으면 생략 */ }
+  }
+  siteMsg = ` · site→${SITE_DIR}`;
+} else {
+  siteMsg = ' · (GITING_SITE_DIR 미설정 — giting.kr 갤러리 미갱신)';
+}
+console.log(`built: components ${menu.items.length} · gallery ${(html.length / 1024).toFixed(0)}KB · docs=redirect+llms${siteMsg}`);

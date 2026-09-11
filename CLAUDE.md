@@ -12,9 +12,17 @@ plugins/ui-menu/
 ├── demos/*.html                     # 데모 프래그먼트 SSOT (<!-- @id h=NNN [full] --> 마커 구분)
 ├── components/*.html                # 생성물 — 스킬용 자가완결 105종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
 └── skills/ui-menu/SKILL.md          # 스킬 본체
-build.mjs                            # demos+menu.json → components/ + docs/ 생성 (의존성 0)
-docs/                                # GitHub Pages (생성물 — 직접 수정 금지)
+build.mjs                            # demos+menu.json → components/ + 갤러리 생성 (의존성 0)
+docs/                                # GitHub Pages — 리다이렉트 + llms 미러 + promo (생성물)
 ```
+
+**갤러리 정본 = https://giting.kr/skills/** (2026-09-12 owner 확정 — 우리 도메인 서빙, GitHub 은 소스 버튼).
+빌드는 `GITING_SITE_DIR` 환경변수가 가리키는 곳(워크스페이스: `../giting/site/static/skills`)에 갤러리·llms·promo 를 쓰고, giting 사이트 빌드가 static 패스스루로 dist 에 싣는다. **스킬 수정 시 두 repo 를 같이 출하**:
+```bash
+GITING_SITE_DIR=../giting/site/static/skills node build.mjs   # 이 repo + giting 양쪽 산출
+# → giting repo 커밋·main 머지(사이트 배포) + 이 repo 커밋·main 머지(github.io 미러)
+```
+github.io 는 구 링크 소비자용 리다이렉트(canonical giting.kr/skills)와 llms 미러만 유지.
 
 ## 규약
 
