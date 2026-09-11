@@ -11,24 +11,28 @@
 ### 헤더 (Header)
 - 별칭: "맨 위에 있는 바" · "상단 바" · "위에 로고 있는 줄"
 - 정의: 페이지 맨 위, 로고와 메뉴가 사는 가로 줄.
+- 구분: 맨 위 전체 띠가 헤더, 그 안의 메뉴 묶음이 네비게이션 바
 - 요청 문장: 상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/header.html
 
 ### 네비게이션 바 (Navbar / GNB)
 - 별칭: "메뉴 줄" · "카테고리 바" · "GNB"
 - 정의: 사이트의 큰 메뉴를 모아 둔 이동 줄. 보통 헤더 안에 산다.
+- 구분: 사이트 전체 메뉴 줄이면 네비게이션 바, 그 줄을 담는 전체 띠가 헤더
 - 요청 문장: 헤더 안에 홈·소개·가격·문의 네비게이션 바를 넣어줘. 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/navbar.html
 
 ### 히어로 (Hero)
 - 별칭: "첫 화면에 크게 나오는 거" · "메인 배너" · "대문"
 - 정의: 들어오자마자 보이는 큰 제목과 버튼 구역. 페이지의 첫인상.
+- 구분: 첫 화면의 큰 구역이면 히어로, 가로로 긴 알림 띠면 배너
 - 요청 문장: 히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hero.html
 
 ### 사이드바 (Sidebar)
 - 별칭: "옆에 세로로 붙은 메뉴" · "왼쪽 메뉴" · "옆 패널"
 - 정의: 화면 옆에 세로로 붙는 메뉴·목차 영역.
+- 구분: 항상 붙어 있으면 사이드바, 눌렀을 때만 나오면 드로어
 - 요청 문장: 왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/sidebar.html
 
@@ -85,12 +89,14 @@
 ### 탭 (Tabs)
 - 별칭: "위에 눌러서 화면 바뀌는 거" · "칸 전환 버튼" · "메뉴 눌러서 내용 바뀌는 거"
 - 정의: 버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.
+- 구분: 같은 자리 내용을 갈아 끼우면 탭, 다른 페이지로 이동하면 네비게이션
 - 요청 문장: 월간·연간 두 개 탭으로 요금표가 전환되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tabs.html
 
 ### 아코디언 (Accordion)
 - 별칭: "접었다 폈다 되는 거" · "클릭하면 펼쳐지는 목록" · "FAQ 접기"
 - 정의: 제목을 누르면 내용이 접히고 펼쳐지는 목록.
+- 구분: 여러 개를 동시에 펼 수 있으면 아코디언, 한 번에 하나만 보이면 탭
 - 요청 문장: FAQ를 아코디언 5개로 만들어줘. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/accordion.html
 
@@ -103,24 +109,28 @@
 ### 스텝퍼 (Stepper / Progress Steps)
 - 별칭: "1-2-3 단계 나오는 거" · "진행 단계 표시" · "몇 단계 중 몇 번째"
 - 정의: 1 - 2 - 3 순서로 지금 몇 단계인지 보여주는 진행 표시.
+- 구분: 진행 단계 표시면 스텝퍼, 숫자를 조절하는 칸이면 수량 조절(카운터)
 - 요청 문장: 신청 과정을 정보 입력·확인·완료 3단계 스텝퍼로 보여줘. 지난 단계는 체크로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/stepper.html
 
 ### 페이지네이션 (Pagination)
 - 별칭: "아래에 1 2 3 페이지 숫자" · "페이지 넘기기" · "다음 페이지 버튼"
 - 정의: 긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.
+- 구분: 숫자로 나눠 넘기면 페이지네이션, 바닥에서 자동으로 이어지면 무한 스크롤, 버튼으로 이어붙이면 더보기
 - 요청 문장: 목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pagination.html
 
 ### 무한 스크롤 (Infinite Scroll)
 - 별칭: "내리면 계속 나오는 거" · "끝없이 로딩" · "SNS 피드처럼"
 - 정의: 바닥에 닿으면 다음 내용을 계속 불러오는 방식.
+- 구분: 자동으로 이어지면 무한 스크롤, 버튼을 눌러야 이어지면 더보기
 - 요청 문장: 피드를 무한 스크롤로 만들어줘. 바닥 근처에서 다음 20개를 불러오게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/infinite-scroll.html
 
 ### 더보기 버튼 (Load More)
 - 별칭: "눌러야 더 나오는 거" · "더보기 눌러서 펼치기" · "10개씩 더 보기"
 - 정의: 누르면 다음 묶음을 이어서 보여주는 버튼. 무한 스크롤의 수동 버전.
+- 구분: 버튼을 눌러야 이어지면 더보기, 자동이면 무한 스크롤
 - 요청 문장: 목록은 6개만 보여주고, 더보기 버튼을 누르면 6개씩 추가되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/load-more.html
 
@@ -133,18 +143,21 @@
 ### 드롭다운 메뉴 (Dropdown)
 - 별칭: "누르면 아래로 목록 나오는 거" · "펼침 메뉴" · "호버하면 나오는 메뉴"
 - 정의: 누르면 아래로 선택지 목록이 펼쳐지는 메뉴.
+- 구분: 메뉴가 아래로 펼쳐지면 드롭다운, 폼에서 값을 고르는 입력칸이면 셀렉트
 - 요청 문장: 프로필을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/dropdown.html
 
 ### 햄버거 메뉴 (Hamburger Menu)
 - 별칭: "줄 세 개 아이콘" · "삼선 버튼" · "모바일에서 메뉴 여는 거"
 - 정의: ≡ 모양 아이콘. 모바일에서 메뉴를 접어 두는 버튼.
+- 구분: ≡ 버튼 자체가 햄버거, 눌러서 나오는 판이 드로어
 - 요청 문장: 모바일에서는 메뉴를 햄버거 버튼으로 접고, 누르면 드로어가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hamburger.html
 
 ### 드로어 (Drawer / Side Panel)
 - 별칭: "옆에서 미끄러져 나오는 메뉴" · "햄버거 누르면 나오는 거" · "슬라이드 패널"
 - 정의: 화면 옆에서 서랍처럼 밀려 나오는 판.
+- 구분: 옆에서 밀려 나오면 드로어, 아래에서 올라오면 바텀 시트, 항상 붙어 있으면 사이드바
 - 요청 문장: 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘. 배경 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drawer.html
 
@@ -249,6 +262,7 @@
 ### 배너 (Banner)
 - 별칭: "맨 위 가로로 긴 알림 띠" · "공지 띠" · "이벤트 줄"
 - 정의: 페이지 맨 위에 걸리는 가로로 긴 알림 띠.
+- 구분: 맨 위에 계속 걸려 있으면 배너, 잠깐 떴다 사라지면 토스트
 - 요청 문장: 헤더 위에 공지 배너를 넣어줘. 닫기 버튼 누르면 사라지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/banner.html
 
@@ -275,6 +289,7 @@
 ### 셀렉트 (Select)
 - 별칭: "목록에서 하나 고르는 거" · "선택 상자" · "펼쳐서 고르기"
 - 정의: 펼쳐지는 목록에서 하나를 고르는 선택 상자.
+- 구분: 폼에서 값을 고르면 셀렉트, 이동·동작 메뉴면 드롭다운
 - 요청 문장: 학년 셀렉트를 넣어줘. 1~4학년 옵션, 기본값은 비워 두고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/select.html
 
@@ -341,6 +356,7 @@
 ### 수량 조절 (Number Stepper / Counter)
 - 별칭: "마이너스 숫자 플러스" · "수량 플마 버튼" · "카운터"
 - 정의: - 와 + 로 숫자를 조절하는 칸. 카운터라고도 한다.
+- 구분: 숫자를 조절하는 칸이면 수량 조절, 진행 단계 표시면 스텝퍼
 - 요청 문장: 수량 조절 스텝퍼를 넣어줘. 최소 1, 최대 10.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/number-stepper.html
 
@@ -477,60 +493,70 @@
 ### 모달 (Modal / Dialog)
 - 별칭: "화면 가운데 뜨는 창" · "팝업" · "뒤가 어두워지면서 뜨는 거"
 - 정의: 화면 위에 겹쳐 뜨는 창. 뒤는 어두워지고, 닫기 전엔 다른 걸 못 누른다.
+- 구분: 가운데 뜨고 뒤를 막으면 모달, 구석에 잠깐 떴다 사라지면 토스트, 눌러서 여는 작은 판이면 팝오버
 - 요청 문장: 삭제를 누르면 '정말 삭제할까요?' 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/modal.html
 
 ### 오버레이 / 딤 (Overlay / Backdrop)
 - 별칭: "뒤가 어두워지는 것" · "화면 덮는 반투명 막" · "딤 처리"
 - 정의: 모달이나 드로어 뒤를 어둡게 덮는 반투명 층.
+- 구분: 뒤를 덮는 어두운 막 자체가 오버레이, 그 위에 뜬 창이 모달
 - 요청 문장: 모달이 뜰 때 뒤에 오버레이를 깔아줘. 오버레이를 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/overlay.html
 
 ### 바텀 시트 (Bottom Sheet)
 - 별칭: "아래에서 올라오는 판" · "밑에서 스윽 나오는 거" · "모바일 공유창 같은 거"
 - 정의: 화면 아래에서 올라오는 판. 모바일에서 모달 대신 많이 쓴다.
+- 구분: 아래에서 올라오면 바텀 시트, 옆에서 밀려 나오면 드로어
 - 요청 문장: 모바일에서 공유를 누르면 바텀 시트가 올라오게 해줘. 위에 잡는 손잡이 표시도.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/bottom-sheet.html
 
 ### 토스트 (Toast / Snackbar)
 - 별칭: "잠깐 떴다 사라지는 알림" · "저장됐다고 뜨는 거" · "구석에 뜨는 알림"
 - 정의: 구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.
+- 구분: 저절로 사라지면 토스트, 자리에 남아 있으면 얼럿
 - 요청 문장: 저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toast.html
 
 ### 얼럿 (Alert / Callout)
 - 별칭: "색 있는 알림 상자" · "노란 경고 박스" · "안내 박스"
 - 정의: 성공·경고·오류를 색으로 구분해 담는 알림 상자. 사라지지 않고 자리에 남는다.
+- 구분: 자리에 남아 있으면 얼럿, 잠깐 떴다 사라지면 토스트
 - 요청 문장: 폼 위에 얼럿 영역을 만들어줘. 성공은 초록, 경고는 노랑, 오류는 빨강.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/alert.html
 
 ### 툴팁 (Tooltip)
 - 별칭: "마우스 올리면 뜨는 작은 설명" · "말풍선 도움말" · "물음표 설명"
 - 정의: 마우스를 올리면 잠깐 나오는 작은 설명 말풍선.
+- 구분: 마우스만 올려도 뜨면 툴팁, 눌러야 열리면 팝오버
 - 요청 문장: 이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tooltip.html
 
 ### 팝오버 (Popover)
 - 별칭: "눌러서 여는 작은 판" · "클릭하면 뜨는 말풍선" · "미니 팝업"
 - 정의: 눌러서 여는 작은 판. 툴팁보다 크고, 안에 버튼·링크도 들어간다.
+- 구분: 눌러야 열리면 팝오버, 마우스만 올려도 뜨면 툴팁
 - 요청 문장: 프로필을 누르면 이름과 메뉴가 있는 팝오버가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/popover.html
 
 ### 프로그레스 바 (Progress Bar)
 - 별칭: "차오르는 막대" · "진행률 바" · "몇 퍼센트 게이지"
 - 정의: 얼마나 진행됐는지 차오르는 막대로 보여주는 것.
+- 구분: 진행률을 알면 프로그레스 바, 모르면 스피너
 - 요청 문장: 업로드 진행률을 프로그레스 바로 보여줘. 퍼센트 숫자도 같이.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/progress-bar.html
 
 ### 스피너 (Spinner / Loader)
 - 별칭: "빙글빙글 도는 거" · "로딩 동그라미" · "돌아가는 로딩"
 - 정의: 빙글빙글 돌며 로딩 중임을 알리는 표시. 끝이 언제인지 모를 때 쓴다.
+- 구분: 끝을 모르면 스피너, 진행률이 있으면 프로그레스 바, 내용 자리를 미리 그리면 스켈레톤
 - 요청 문장: 데이터 불러오는 동안 가운데에 스피너를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/spinner.html
 
 ### 스켈레톤 (Skeleton)
 - 별칭: "로딩 때 회색 뼈대" · "번쩍거리는 회색 박스" · "로딩 자리 표시"
 - 정의: 내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.
+- 구분: 내용 자리를 미리 그리면 스켈레톤, 그냥 돌기만 하면 스피너
 - 요청 문장: 목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/skeleton-ui.html
 
@@ -549,6 +575,7 @@
 ### 확인 창 (Confirmation Dialog)
 - 별칭: "정말 하시겠어요 창" · "한 번 더 물어보는 거" · "확인 팝업"
 - 정의: 위험한 행동 전에 '정말 하시겠어요?'라고 한 번 더 묻는 창.
+- 구분: 위험한 행동 전에 한 번 더 묻는 용도의 모달이 확인 창
 - 요청 문장: 작성 중에 나가려 하면 '정말 나가시겠어요?' 확인 창을 띄워줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/confirmation.html
 
@@ -557,12 +584,14 @@
 ### 배지 (Badge)
 - 별칭: "아이콘에 빨간 숫자" · "알림 숫자 점" · "빨간 동그라미"
 - 정의: 아이콘 모서리에 붙는 작은 숫자나 점. 새 알림 표시의 단골.
+- 구분: 아이콘 모서리에 붙는 숫자·점이면 배지, 독립된 알약 라벨이면 칩
 - 요청 문장: 알림 아이콘에 안 읽은 개수 배지를 붙여줘. 0이면 숨기고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/badge.html
 
 ### 칩 / 태그 (Chip / Tag / Pill)
 - 별칭: "알약 모양 라벨" · "동글동글한 필터 버튼" · "태그"
 - 정의: 알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.
+- 구분: 독립된 알약 라벨이면 칩, 아이콘 모서리 숫자면 배지
 - 요청 문장: 태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/chip.html
 

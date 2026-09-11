@@ -73,7 +73,7 @@ const cardHtml = it => `
     <button class="tiny codebtn" title="코드 보기">코드</button>
   </header>
   <iframe title="${it.name.ko} 데모" loading="lazy" style="height:${frags[it.id].h}px" srcdoc="${attr(code[it.id])}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span></footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}</footer>
   <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
 
@@ -290,7 +290,8 @@ ${menu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
 ${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
-- 정의: ${it.oneliner}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}
 - 요청 문장: ${it.ask}
 - 레퍼런스: ${RAW}/${it.id}.html${full ? `
 
@@ -350,6 +351,7 @@ const CORE_CSS = `
 .uigal .item footer { padding: 8px 12px 10px; border-top: 1px solid var(--gwash); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin-top: auto; }
 .uigal .item .al { font-size: 12px; color: var(--accent-deep); }
 .uigal .item .one { font-size: 12px; color: var(--ink-2); }
+.uigal .item .vs { flex-basis: 100%; font-size: 11.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 5px; margin-top: 2px; }
 .uigal .codebox { border-top: 1px solid var(--line); background: var(--gwash); padding: 10px 12px; }
 .uigal .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
 .uigal .codebox code { font-family: var(--mono); }
