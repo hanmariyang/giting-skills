@@ -145,11 +145,11 @@ const html = `<!doctype html>
   .fx .good .mark { color: #17b26a; }
   .fnote { padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink2); }
 
-  .install { margin-top: 18px; display: inline-flex; flex-wrap: wrap; align-items: stretch; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; max-width: 100%; }
-  .install code { font-family: var(--mono); font-size: 12.5px; padding: 10px 14px; background: var(--wash); overflow-x: auto; white-space: nowrap; display: block; }
-  .install button { border: 0; border-left: 1px solid var(--line); background: #fff; padding: 0 14px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); }
+  .install { margin-top: 18px; display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; max-width: 560px; }
+  .install code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 12.5px; padding: 10px 14px; background: var(--wash); overflow-x: auto; white-space: nowrap; display: block; -webkit-overflow-scrolling: touch; }
+  .install button { flex: none; border: 0; border-left: 1px solid var(--line); background: #fff; padding: 0 14px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); }
   .install button:hover { background: var(--wash); }
-  .ghbtn { display: inline-flex; align-items: center; margin: 18px 0 0 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 11px; font-size: 13px; color: var(--ink); text-decoration: none; vertical-align: top; }
+  .ghbtn { display: inline-flex; align-items: center; margin: 12px 8px 0 0; padding: 10px 16px; border: 1px solid var(--line); border-radius: 11px; font-size: 13px; color: var(--ink); text-decoration: none; vertical-align: top; }
   .ghbtn:hover { border-color: var(--ink3); background: var(--wash); }
   .also { margin-top: 10px; font-size: 12.5px; color: var(--ink3); }
   .also code { font-family: var(--mono); }
