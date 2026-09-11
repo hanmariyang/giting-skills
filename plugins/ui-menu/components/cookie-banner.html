@@ -23,5 +23,12 @@
 </style>
 <div style="padding:12px 16px"><div class="bar" style="width:80%"></div></div>
 <div class="cbn"><span>더 나은 경험을 위해 쿠키를 사용해요.</span><div class="ac3"><button class="no" onclick="this.closest('.cbn').remove()">거부</button><button class="yes" onclick="this.closest('.cbn').remove()">동의</button></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

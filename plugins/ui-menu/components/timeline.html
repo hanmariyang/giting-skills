@@ -31,5 +31,12 @@
   <div class="ev"><span class="rail"><span class="dot"></span><span class="ln"></span></span><span><b>첫 화면 완성</b><small>09.05</small></span></div>
   <div class="ev todo"><span class="rail"><span class="dot"></span></span><span><b>배포</b><small>예정</small></span></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

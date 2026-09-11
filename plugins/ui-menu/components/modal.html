@@ -29,5 +29,12 @@
   <h2>정말 삭제할까요?</h2><p>이 작업은 되돌릴 수 없어요.</p>
   <div class="ac2"><button onclick="this.closest('dialog').close()">취소</button><button class="dg" onclick="this.closest('dialog').close()">삭제</button></div>
 </dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

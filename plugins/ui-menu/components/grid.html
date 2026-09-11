@@ -19,5 +19,12 @@
   .gr div { background: #f0f0f4; border-radius: 8px; height: 52px; display: grid; place-items: center; color: #9a9aa4; font-size: 12px; }
 </style>
 <div class="center"><div><div class="gr"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div><p class="cap">3열 그리드 · 간격은 gap으로</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

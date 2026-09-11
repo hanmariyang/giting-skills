@@ -21,5 +21,12 @@
   .lb2 input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e8; border-radius: 8px; font-size: 12.5px; box-sizing: border-box; font-family: inherit; }
 </style>
 <div class="center"><div class="lb2"><label for="em">이메일 <i>*</i></label><input id="em" placeholder="example@gmail.com"><p class="cap" style="text-align:left">&#8593; 입력칸 위 이름표가 라벨이에요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

@@ -20,5 +20,12 @@
   .gl i:nth-child(2n) { background: linear-gradient(135deg, #e9e4de, #d8cfc4); }
 </style>
 <div class="center"><div><div class="gl"><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="cap">사진 격자 · 누르면 라이트박스로 크게</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

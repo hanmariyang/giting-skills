@@ -20,5 +20,12 @@
   .ct2 button { padding: 10px 26px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
 </style>
 <div class="center"><div class="ct2"><h3>지금 시작해보세요</h3><button>무료로 시작하기</button><p class="cap">제일 중요한 행동 하나</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

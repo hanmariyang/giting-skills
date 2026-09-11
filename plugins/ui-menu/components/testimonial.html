@@ -26,5 +26,12 @@
   <blockquote class="q" style="margin:0">"코딩 하나도 모르는데 이틀 만에 신청 페이지를 만들었어요."</blockquote>
   <figcaption class="who"><span class="av">김</span><span><b>김하나</b><small>대학생</small></span></figcaption>
 </figure></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

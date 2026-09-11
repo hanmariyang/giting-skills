@@ -26,5 +26,12 @@
 <tr><td>김하나</td><td>09.08</td><td class="wt">대기</td></tr>
 <tr><td>박서준</td><td>09.07</td><td class="ok">완료</td></tr>
 </tbody></table></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

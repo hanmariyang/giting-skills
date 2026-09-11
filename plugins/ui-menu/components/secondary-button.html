@@ -19,5 +19,12 @@
   .sb3:hover { background: #f4f4f7; }
 </style>
 <div class="center"><div style="text-align:center"><button class="sb3">더 알아보기</button><p class="cap">테두리만 · 두 번째로 중요한 것</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

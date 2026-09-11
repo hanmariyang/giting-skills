@@ -21,5 +21,12 @@
 <div class="pad2"><div class="bar" style="width:80%"></div><div class="bar" style="width:60%;margin-top:8px"></div></div>
 <button class="fab" aria-label="새로 만들기">+</button>
 <p class="cap">오른쪽 아래 떠 있는 동그란 버튼</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

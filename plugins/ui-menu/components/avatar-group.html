@@ -23,5 +23,12 @@
   .g3 { background: #ececf1; color: #6b6b76 !important; }
 </style>
 <div class="center"><div style="text-align:center"><div class="ag"><span class="g1">쥬</span><span class="g2">하</span><span class="g3">+9</span></div><p class="cap">겹쳐 놓은 아바타들</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

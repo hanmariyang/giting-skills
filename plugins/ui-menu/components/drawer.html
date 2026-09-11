@@ -26,5 +26,12 @@
 <button class="op" onclick="document.getElementById('d').showModal()">&#9776; 메뉴</button>
 <p class="cap">오른쪽에서 서랍처럼 밀려 나옵니다</p>
 <dialog class="dr" id="d" onclick="if (event.target === this) this.close()"><nav><a href="#">홈</a><a href="#">리포트</a><a href="#">매거진</a><a href="#">설정</a></nav></dialog>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

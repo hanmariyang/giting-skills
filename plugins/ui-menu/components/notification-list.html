@@ -27,5 +27,12 @@
   <div><span style="width:6px"></span>배포가 완료됐어요<small>2시간 전</small></div>
   <div><span style="width:6px"></span>도메인이 연결됐어요<small>어제</small></div>
 </div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

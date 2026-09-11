@@ -21,5 +21,12 @@
   .hr button { margin-top: 6px; padding: 9px 22px; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; }
 </style>
 <section class="hr"><h1>AI로 사이트,<br>10분이면 됩니다</h1><p>누구나 할 수 있어요</p><button>시작하기</button></section>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>

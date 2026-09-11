@@ -26,5 +26,12 @@
   <article><div class="th"></div><div class="bd"><h3>카드 2</h3><div class="bar" style="width:55%"></div></div></article>
   <article><div class="th"></div><div class="bd"><h3>카드 3</h3><div class="bar" style="width:63%"></div></div></article>
 </div><p class="cap">카드를 격자로 반복</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
 </body>
 </html>
