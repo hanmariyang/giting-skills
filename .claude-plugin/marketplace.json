@@ -18,6 +18,11 @@
       "name": "css-menu",
       "source": "./plugins/css-menu",
       "description": "CSS 증상 사전 — 깨진 화면을 증상으로 찾는 사전. 8코스 42항목, 깨진/고친 실물 나란히 + 즉방형/분기형 처방"
+    },
+    {
+      "name": "codelazy",
+      "source": "./plugins/codelazy",
+      "description": "안 만들어도 되는 것 사전 — 과잉설계를 증상으로 짚고 표준 한 줄로. 15항목, 실측 before/after, 즉방/분기"
     }
   ]
 }

@@ -48,6 +48,20 @@ Curated Claude Code skills from [Giting](https://giting.kr), the open-source fie
 /plugin install css-menu@giting
 ```
 
+### 03 · codelazy — 안 만들어도 되는 것 사전
+
+AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준 한 줄로 되돌리는 사전. ponytail(MIT) 정신을 우리 증상 사전 포맷으로 재구현.
+
+- **5개 코스 15개 항목**: 표준이 이미 함 · 한 줄이면 됨 · 라이브러리 안 깔아도 됨 · 안 시킨 추상화 · 안 시킨 확장점
+- **실측 before/after**: 캐싱 27→17줄, 중복제거 12→1줄 등 재현 실측한 코드 비교
+- **즉방형 / 분기형**: 표준에 정답 있는 건 바로, 추상화가 때로 정당한 건 진단 먼저(무조건 "만들지마" 금지)
+
+라이브: **https://giting.kr/skills/codelazy**
+
+```
+/plugin install codelazy@giting
+```
+
 ## 등재 기준
 
 - 실제로 써 보고 검수한 것만 올립니다 (자동 수집 없음)
