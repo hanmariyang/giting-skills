@@ -459,12 +459,16 @@ if (cmissing.length) { console.error('css-menu 데모 없는 프래그먼트:', 
 const C_BASE = `  * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
   .duo { display: grid; grid-template-columns: 1fr 1fr; }
-  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane { min-width: 0; }
   .pane + .pane { border-left: 1px solid #e8e8ee; }
-  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .tag { font-size: 11px; font-weight: 800; padding: 7px 12px; }
   .bad .tag { background: #fbf1ef; color: #c4372b; }
   .good .tag { background: #eff6f1; color: #1f7a4d; }
-  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .stage { background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  @media (max-width: 430px) {
+    .duo { grid-template-columns: 1fr; }
+    .pane + .pane { border-left: 0; border-top: 1px solid #e8e8ee; }
+  }
   .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
   .bar { background: #ececf1; border-radius: 4px; height: 10px; }
   .mut { color: #9a9aa4; font-size: 12px; }
@@ -583,7 +587,30 @@ ${cmenu.categories.map(cat => `
   <div class="ggrid">${cby(cat.id).map(cCardHtml).join('\n')}</div>
   ${cTableHtml(cat)}
 </section>`).join('\n')}
-<script>${CORE_JS.replace(/\.uigal/g, '.cssgal')}</script>
+<script>${CORE_JS.replace(/\.uigal/g, '.cssgal')}
+(function () {
+  var root = document.querySelector('.cssgal');
+  if (!root) return;
+  function fit(f) {
+    try {
+      var d = f.contentDocument;
+      if (!d || !d.body) return;
+      var h = d.documentElement.scrollHeight;
+      if (h > 40) f.style.height = h + 'px';
+    } catch (e) {}
+  }
+  var frames = root.querySelectorAll('iframe');
+  frames.forEach(function (f) {
+    f.addEventListener('load', function () { fit(f); setTimeout(function () { fit(f); }, 300); });
+    fit(f);
+  });
+  var tm;
+  window.addEventListener('resize', function () {
+    clearTimeout(tm);
+    tm = setTimeout(function () { frames.forEach(fit); }, 200);
+  });
+})();
+</script>
 </div>
 `;
 
