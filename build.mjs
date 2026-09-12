@@ -814,3 +814,129 @@ mkdirSync(join(ROOT, 'docs', 'codelazy'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'codelazy', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/codelazy'));
 writeFileSync(join(ROOT, 'docs', 'codelazy', 'llms.txt'), ldict());
 console.log(`built codelazy: items ${lmenu.items.length} · core ${(lzCore.length / 1024).toFixed(0)}KB`);
+
+// ═══════════════════════════════════════════════════════════════
+// ── 타입스크립트 에러 사전 (type-menu) — 04 ──────────────────
+// codelazy 와 같은 코드 매체 + 에러 원문(err) 배지. before=에러코드, after=고친코드.
+const TP = join(ROOT, 'plugins', 'type-menu');
+const tmenu = JSON.parse(readFileSync(join(TP, 'menu.json'), 'utf8'));
+const tby = id => tmenu.items.filter(i => i.category === id);
+const tKind = it => it.kind === 'branch' ? '분기형' : '즉방형';
+
+const tCardHtml = it => `
+<article class="item ${it.kind}" id="${it.id}">
+  <header><span class="kind ${it.kind}">${tKind(it)}</span><h3>"${esc(it.name)}"</h3>
+    <span class="tcode">${esc(it.code)}</span>
+    <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+  <div class="terr">$ tsc &nbsp;<span>${esc(it.err)}</span></div>
+  <div class="diff">
+    <div class="side bad"><div class="dt">✗ 에러 나는 코드</div><pre><code>${esc(it.before)}</code></pre></div>
+    <div class="side good"><div class="dt">✓ 제대로 고침 (any·! 로 덮지 않음)</div><pre><code>${esc(it.after)}</code></pre></div>
+  </div>
+  <footer>
+    ${it.kind === 'branch'
+      ? `<span class="one"><b>갈림길:</b> ${it.branches.map(b => esc(b.q)).join(' / ')}</span>`
+      : `<span class="one"><b>처방:</b> ${esc(it.rx)}</span>`}
+    <span class="ck">${esc(it.check)}</span>
+  </footer>
+</article>`;
+
+const tTableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>증상</th><th>코드</th><th>유형</th><th>이렇게 말해도</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${tby(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">"${esc(it.name)}"</a></td>
+  <td class="mono">${esc(it.code)}</td>
+  <td class="mono">${tKind(it)}</td>
+  <td class="als">${it.aliases.map(a => `"${esc(a)}"`).join(' · ')}</td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const tf = tmenu.formula;
+const TGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.tpgal') + `
+.tpgal .ggrid { grid-template-columns: 1fr; }
+.tpgal .item h3 { font-size: 15px; }
+.tpgal .kind { flex: none; font-size: 10.5px; font-weight: 800; border-radius: 6px; padding: 2px 7px; }
+.tpgal .kind.direct { background: #eff6f1; color: #1f7a4d; }
+.tpgal .kind.branch { background: #f3effa; color: #5b4aa8; }
+.tpgal .tcode { flex: none; font-family: var(--mono); font-size: 11px; color: var(--accent-deep); background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 6px; padding: 2px 8px; }
+.tpgal .terr { font-family: var(--mono); font-size: 11.5px; color: #c4372b; background: #2a1a18; padding: 9px 13px; overflow-x: auto; white-space: nowrap; }
+.tpgal .terr span { color: #f0a090; }
+.tpgal .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+@media (max-width: 640px) { .tpgal .diff { grid-template-columns: 1fr; } }
+.tpgal .side { background: var(--paper); min-width: 0; }
+.tpgal .dt { font-size: 11px; font-weight: 800; padding: 7px 12px; }
+.tpgal .bad .dt { background: #fbf1ef; color: #c4372b; }
+.tpgal .good .dt { background: #eff6f1; color: #1f7a4d; }
+.tpgal .side pre { margin: 0; padding: 11px 13px; overflow-x: auto; }
+.tpgal .side code { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--ink); white-space: pre; }
+.tpgal .item footer { display: grid; gap: 3px; }
+.tpgal .item .one { font-size: 12.5px; color: var(--ink-2); }
+.tpgal .item .one b { color: var(--ink); font-weight: 700; }
+.tpgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
+
+const tpCore = `<div class="tpgal">
+<style>${TGAL_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(tf.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(tf.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(tf.good)}」</div>
+  </div>
+</div>
+<nav class="gnav" aria-label="코스">
+  ${tmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${tby(c.id).length}</a>`).join('\n  ')}
+</nav>
+${tmenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${tby(cat.id).length}</span></h2>
+  <div class="ggrid">${tby(cat.id).map(tCardHtml).join('\n')}</div>
+  ${tTableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.tpgal')}</script>
+</div>
+`;
+
+const tdict = () => `# 타입스크립트 에러 사전 (type-menu) — Giting Skills
+
+> 영어에 코드번호로 뜨는 TS 에러를 사람 말로 옮기고 제대로 고치는 사전. 증상 → 코드번호 → 원인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → 실제 tsc 원문 + before/after. 6개 코스 ${tmenu.items.length}개 항목.
+> 대원칙: any·! 로 덮지 않는다. 좁히기(가드·옵셔널·기본값·타입 정정)로 제대로 고친다.
+> 유형: [즉방형] 방향 정해짐 · [분기형] 상황 의존, 진단 먼저.
+> 공식: ${tf.pattern}
+> 갤러리: https://giting.kr/skills/type-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install type-menu@giting
+
+${tmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${tby(cat.id).map(it => `### "${it.name}" (${it.code}) [${tKind(it)}]
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 에러 원문: ${it.err}
+- 원인: ${it.culprit}
+${it.kind === 'branch'
+  ? `- 갈림길: ${it.branches.map(b => `[${b.q}] → ${b.a}`).join(' · ')}`
+  : `- 처방: ${it.rx}`}
+- 요청 문장: ${it.ask}
+- 확인: ${it.check}
+- 에러 코드:
+\`\`\`ts
+${it.before}
+\`\`\`
+- 고친 코드:
+\`\`\`ts
+${it.after}
+\`\`\`
+`).join('\n')}`).join('\n')}`;
+
+if (SITE_DIR) {
+  const TS = join(SITE_DIR, 'type-menu');
+  mkdirSync(TS, { recursive: true });
+  writeFileSync(join(TS, 'gallery-core.html'), tpCore);
+  writeFileSync(join(TS, 'llms.txt'), tdict());
+  writeFileSync(join(TS, 'llms-full.txt'), tdict());
+}
+mkdirSync(join(ROOT, 'docs', 'type-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'type-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/type-menu'));
+writeFileSync(join(ROOT, 'docs', 'type-menu', 'llms.txt'), tdict());
+console.log(`built type-menu: items ${tmenu.items.length} · core ${(tpCore.length / 1024).toFixed(0)}KB`);

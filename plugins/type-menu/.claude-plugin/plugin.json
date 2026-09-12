@@ -1,0 +1,9 @@
+{
+  "name": "type-menu",
+  "version": "0.1.0",
+  "description": "타입스크립트 에러 사전 — 영어에 코드번호로 뜨는 TS 에러(TS18048·TS7006·TS2322…)를 사람 말로 옮기고, any로 덮지 않고 제대로 고치는 요청 문장 + 실측 before/after. 전부 실제 tsc 원문 기준.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["typescript", "type-error", "korean", "vibe-coding", "debugging", "non-developer"]
+}

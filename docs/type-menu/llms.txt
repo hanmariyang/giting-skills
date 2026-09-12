@@ -1,0 +1,302 @@
+# 타입스크립트 에러 사전 (type-menu) — Giting Skills
+
+> 영어에 코드번호로 뜨는 TS 에러를 사람 말로 옮기고 제대로 고치는 사전. 증상 → 코드번호 → 원인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → 실제 tsc 원문 + before/after. 6개 코스 15개 항목.
+> 대원칙: any·! 로 덮지 않는다. 좁히기(가드·옵셔널·기본값·타입 정정)로 제대로 고친다.
+> 유형: [즉방형] 방향 정해짐 · [분기형] 상황 의존, 진단 먼저.
+> 공식: 빨간 줄 원문 그대로 → 사전에서 코드번호/증상 찾기 → 고치는 문장 복사
+> 갤러리: https://giting.kr/skills/type-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install type-menu@giting
+
+## 01 undefined·null일 수 있음
+
+### "'possibly undefined' 라고 빨간 줄이 떠요" (TS18048) [즉방형]
+- 별칭: "옵셔널 속성 썼더니 에러" · "u.email 에서 빨간 줄" · "있을 수도 없을 수도 있는 값"
+- 에러 원문: error TS18048: 'u.email' is possibly 'undefined'.
+- 원인: 옵셔널(?) 속성이나 값을 undefined 체크 없이 바로 썼다
+- 처방: 옵셔널 체이닝(?.) + 기본값(??), 또는 앞에서 가드로 좁힌다. any 로 덮지 않는다.
+- 요청 문장: 이 값이 undefined일 수 있어서 나는 TS18048 에러야. any로 막지 말고, 옵셔널 체이닝이나 기본값으로 안전하게 좁혀서 고쳐줘.
+- 확인: 빨간 줄이 사라지고 undefined일 때 앱이 안 터지면 성공.
+- 에러 코드:
+```ts
+function f(u: User) {
+  return u.email.toLowerCase();
+  //     ~~~~~~~ possibly undefined
+}
+```
+- 고친 코드:
+```ts
+function f(u: User) {
+  return u.email?.toLowerCase() ?? "";
+}
+```
+
+### "find/pop 결과에서 undefined 에러가 나요" (TS18048) [즉방형]
+- 별칭: "배열에서 찾은 값이 undefined" · "find 결과 못 씀" · "있을지 없을지 모르는 항목"
+- 에러 원문: error TS18048: 'x' is possibly 'undefined'.
+- 원인: find·pop·shift 는 못 찾으면 undefined 라, 결과를 바로 쓰면 막힌다
+- 처방: 찾은 결과를 if 로 좁히거나, 없을 때 처리를 명시한다.
+- 요청 문장: find 결과가 undefined일 수 있어서 TS18048이 나. 찾은 값을 if로 좁히거나 없을 때를 처리해서 고쳐줘.
+- 확인: 못 찾은 경우가 처리돼 있고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+const x = arr.find(n => n > 0);
+return x + 1;  // x 가 undefined 일 수 있음
+```
+- 고친 코드:
+```ts
+const x = arr.find(n => n > 0);
+if (x === undefined) return 0;
+return x + 1;
+```
+
+### "느낌표(!)를 붙이라고 해서 붙였는데 찜찜해요" (TS2531) [분기형]
+- 별칭: "non-null assertion" · "! 붙이면 되긴 하는데" · "value! 로 막기"
+- 에러 원문: error TS2531: Object is possibly 'null'.
+- 원인: null 가능 값에 ! 를 붙이면 에러는 사라지지만 실제 null이면 런타임에 터진다
+- 갈림길: [정말 절대 null이 아님이 보장됨(직전에 체크 등)] → ! 도 정당. 단 왜 보장되는지 주석 한 줄 · [그냥 빨간 줄 없애려고 붙였다] → ! 는 거짓말이다. if 가드나 기본값으로 진짜 좁혀라
+- 요청 문장: 여기 ! 를 붙여서 에러를 막았는데, 정말 null이 아님이 보장되는지 아니면 그냥 덮은 건지 판단해서, 후자면 제대로 좁혀줘.
+- 확인: ! 가 남았다면 왜 안전한지 설명이 있고, 아니면 가드로 바뀌었으면 성공.
+- 에러 코드:
+```ts
+const el = document.querySelector('.x')!;
+el.textContent = 'hi';  // 없으면 런타임 터짐
+```
+- 고친 코드:
+```ts
+const el = document.querySelector('.x');
+if (el) el.textContent = 'hi';
+```
+
+## 02 타입을 몰라서 any
+
+### "'implicitly has any type' 라고 떠요" (TS7006) [즉방형]
+- 별칭: "매개변수에 빨간 줄" · "타입 안 적었더니 에러" · "함수 인자 any"
+- 에러 원문: error TS7006: Parameter 'items' implicitly has an 'any' type.
+- 원인: 함수 매개변수에 타입을 안 적어서 TS가 any 로 추론하길 거부한다(strict)
+- 처방: 매개변수에 타입을 적어준다. 모르면 최소한 구조를 적는다.
+- 요청 문장: 이 함수 매개변수에 타입이 없어서 TS7006이 나. any로 두지 말고 실제 들어오는 값에 맞는 타입을 적어줘.
+- 확인: 매개변수에 타입이 붙고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+function f(items) {
+  return items.map(i => i.id);
+}
+```
+- 고친 코드:
+```ts
+function f(items: { id: string }[]) {
+  return items.map(i => i.id);
+}
+```
+
+### "'this implicitly has type any' 라고 떠요" (TS2683) [즉방형]
+- 별칭: "this 에서 에러" · "콜백 안에서 this" · "함수 안 this any"
+- 에러 원문: error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+- 원인: 일반 function 안의 this 는 타입이 없어 any 로 막힌다
+- 처방: 화살표 함수(this 를 바깥에서 물려받음)로 바꾸거나 this 타입을 명시한다.
+- 요청 문장: 이 함수 안 this 가 TS2683으로 막혀. 화살표 함수로 바꿔서 바깥 this 를 쓰게 고쳐줘.
+- 확인: this 가 의도한 객체를 가리키고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+class C {
+  v = 1;
+  m() { return function() { return this.v; }; }
+}
+```
+- 고친 코드:
+```ts
+class C {
+  v = 1;
+  m() { return () => this.v; }
+}
+```
+
+## 03 타입이 안 맞음
+
+### "'Type X is not assignable to type Y' 라고 떠요" (TS2322) [즉방형]
+- 별칭: "타입이 안 맞는대요" · "문자열을 숫자에 넣음" · "assignable 에러"
+- 에러 원문: error TS2322: Type 'string' is not assignable to type 'number'.
+- 원인: 선언한 타입과 넣는 값의 타입이 다르다(예: number 자리에 string)
+- 처방: 값을 올바른 타입으로 바꾸거나, 타입 선언을 실제 값에 맞춘다. 둘 중 뭐가 맞는지 먼저 본다.
+- 요청 문장: TS2322 타입 불일치가 나. 값이 잘못된 건지 타입 선언이 잘못된 건지 판단해서 맞는 쪽으로 고쳐줘.
+- 확인: 타입과 값이 일치하고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+const n: number = "3";  // 문자열을 숫자 자리에
+```
+- 고친 코드:
+```ts
+const n: number = 3;
+// 문자열이 맞다면: const n = "3";
+```
+
+### "'Expected N arguments, but got M' 이 떠요" (TS2554) [즉방형]
+- 별칭: "인자 개수가 안 맞음" · "함수 부를 때 빨간 줄" · "매개변수 빠뜨림"
+- 에러 원문: error TS2554: Expected 2 arguments, but got 1.
+- 원인: 함수를 부를 때 인자 개수가 정의와 다르다
+- 처방: 빠진 인자를 채우거나, 그 인자를 옵셔널(?)로 만들지 결정한다.
+- 요청 문장: TS2554 인자 개수 에러가 나. 빠진 인자를 채울지, 그 매개변수를 옵셔널로 만들지 판단해서 고쳐줘.
+- 확인: 함수 호출의 인자 수가 맞고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+function add(a: number, b: number) { return a + b; }
+add(1);  // b 빠짐
+```
+- 고친 코드:
+```ts
+add(1, 2);
+// b 가 선택이라면: function add(a: number, b = 0)
+```
+
+### "콜백 넘겼는데 타입이 안 맞는대요" (TS2322) [즉방형]
+- 별칭: "함수 타입 불일치" · "핸들러 타입 에러" · "콜백 매개변수 에러"
+- 에러 원문: error TS2322: Type '(x: string) => void' is not assignable to type '(x: number) => void'.
+- 원인: 콜백의 매개변수 타입이 기대하는 함수 타입과 다르다
+- 처방: 콜백 매개변수 타입을 기대 타입에 맞춘다(대개 그냥 지우면 추론된다).
+- 요청 문장: 콜백 타입이 TS2322로 안 맞아. 매개변수 타입을 기대하는 함수 타입에 맞추거나, 추론되게 타입을 지워서 고쳐줘.
+- 확인: 콜백이 올바른 타입으로 호출되고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+const fn: (x: number) => void = (x: string) => {};
+```
+- 고친 코드:
+```ts
+const fn: (x: number) => void = (x) => {};
+```
+
+## 04 속성·모양이 안 맞음
+
+### "'Property X does not exist' 라고 떠요" (TS2339) [즉방형]
+- 별칭: "없는 속성 접근" · "o.b 에서 빨간 줄" · "오타난 속성명"
+- 에러 원문: error TS2339: Property 'b' does not exist on type '{ a: number; }'.
+- 원인: 타입에 없는 속성에 접근했다(오타이거나, 타입에 빠졌거나)
+- 처방: 오타면 고치고, 실제 있는 속성이면 타입 정의에 추가한다.
+- 요청 문장: TS2339 없는 속성 에러가 나. 오타인지 타입 정의에서 빠진 건지 판단해서 고쳐줘.
+- 확인: 접근한 속성이 타입에 있고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+const o = { a: 1 };
+console.log(o.b);  // b 없음
+```
+- 고친 코드:
+```ts
+const o = { a: 1, b: 2 };
+console.log(o.b);
+```
+
+### "'Object literal may only specify known properties' 가 떠요" (TS2353) [즉방형]
+- 별칭: "객체에 속성 더 넣었더니 에러" · "초과 속성" · "props 오타"
+- 에러 원문: error TS2353: Object literal may only specify known properties, and 'b' does not exist in type 'Opt'.
+- 원인: 객체 리터럴에 타입에 없는 속성을 넣었다(초과 속성 검사)
+- 처방: 오타면 고치고, 필요한 속성이면 타입에 추가한다.
+- 요청 문장: TS2353 초과 속성 에러야. 그 속성이 오타인지 타입에 추가해야 하는 건지 보고 고쳐줘.
+- 확인: 객체의 속성이 타입과 일치하면 성공.
+- 에러 코드:
+```ts
+interface Opt { a: number }
+const opt: Opt = { a: 1, b: 2 };
+```
+- 고친 코드:
+```ts
+interface Opt { a: number; b: number }
+const opt: Opt = { a: 1, b: 2 };
+```
+
+### "readonly 배열을 못 바꾸겠어요" (TS2339) [즉방형]
+- 별칭: "push 가 안 됨" · "읽기 전용 배열" · "readonly 수정 에러"
+- 에러 원문: error TS2339: Property 'push' does not exist on type 'readonly number[]'.
+- 원인: readonly 배열에 push·수정을 시도했다
+- 처방: 새 배열을 만들어 반환한다(불변). 정말 바꿔야 하면 readonly 를 뗀다.
+- 요청 문장: readonly 배열을 바꾸려다 에러가 나. 원본 수정 대신 새 배열을 만들어 반환하는 식으로 고쳐줘.
+- 확인: 원본을 안 건드리고 새 배열이 나오면 성공.
+- 에러 코드:
+```ts
+const arr: readonly number[] = [1, 2];
+arr.push(3);
+```
+- 고친 코드:
+```ts
+const arr: readonly number[] = [1, 2];
+const next = [...arr, 3];
+```
+
+## 05 좁히기·유니온
+
+### "유니온 타입에서 메서드를 못 써요" (TS2339) [즉방형]
+- 별칭: "string | number 에서 에러" · "toUpperCase 안 됨" · "둘 중 하나인데 메서드 못 씀"
+- 에러 원문: error TS2339: Property 'toUpperCase' does not exist on type 'string | number'.
+- 원인: 유니온(A | B)에서는 양쪽 공통 멤버만 쓸 수 있어, 한쪽 전용 메서드가 막힌다
+- 처방: typeof 로 좁힌 뒤 쓴다.
+- 요청 문장: string | number 유니온에서 toUpperCase가 TS2339로 막혀. typeof로 문자열인지 좁힌 뒤 쓰게 고쳐줘.
+- 확인: 각 타입별로 분기돼 있고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+function f(x: string | number) {
+  return x.toUpperCase();
+}
+```
+- 고친 코드:
+```ts
+function f(x: string | number) {
+  return typeof x === "string" ? x.toUpperCase() : String(x);
+}
+```
+
+### "'up'을 넣었는데 string이라 안 받아줘요" (TS2345) [분기형]
+- 별칭: "리터럴 타입 안 맞음" · "as const 필요" · "좁은 타입 요구"
+- 에러 원문: error TS2345: Argument of type 'string' is not assignable to parameter of type '"up" | "down"'.
+- 원인: const 로 담은 문자열이 넓은 string 으로 추론돼, 리터럴 유니온 인자에 안 맞는다
+- 갈림길: [그 값이 고정 상수(안 바뀜)] → as const 를 붙이거나 선언 위치에서 타입을 좁힌다 · [값이 런타임에 바뀔 수 있음] → 함수 시그니처를 넓히거나, 들어올 값을 검증(가드)한다
+- 요청 문장: 리터럴 타입 에러(TS2345)가 나. 이 값이 고정 상수인지 바뀔 수 있는지 보고, 전자면 as const, 후자면 검증으로 고쳐줘.
+- 확인: 값이 요구 타입으로 좁혀지고 빨간 줄이 없으면 성공.
+- 에러 코드:
+```ts
+function move(dir: "up" | "down") {}
+const d = "up";
+move(d);  // d 는 string 으로 추론
+```
+- 고친 코드:
+```ts
+const d = "up" as const;
+move(d);
+```
+
+## 06 async·Promise
+
+### "async 함수 결과가 Promise라고 떠요" (TS2322) [즉방형]
+- 별칭: "await 빠뜨림" · "Promise 가 숫자에 안 들어감" · "비동기 결과 타입 에러"
+- 에러 원문: error TS2322: Type 'Promise<number>' is not assignable to type 'number'.
+- 원인: async 함수를 await 없이 불러서, 값이 아니라 Promise 가 나온다
+- 처방: await 를 붙인다(그 함수도 async 여야 함).
+- 요청 문장: async 함수 결과가 Promise라 TS2322가 나. await를 붙이고 감싸는 함수도 async로 만들어서 고쳐줘.
+- 확인: await가 붙고 실제 값이 나오면 성공.
+- 에러 코드:
+```ts
+async function g(): Promise<number> { return 1; }
+function use() {
+  const n: number = g();  // await 빠짐
+}
+```
+- 고친 코드:
+```ts
+async function g(): Promise<number> { return 1; }
+async function use() {
+  const n: number = await g();
+}
+```
+
+### "await 안 붙였다고 경고가 떠요" (floating-promise) [분기형]
+- 별칭: "promise 를 안 기다림" · "async 호출 경고" · "no-floating-promises"
+- 에러 원문: Promises must be awaited, end with a call to .catch, or be marked void.
+- 원인: Promise 를 반환하는 함수를 부르고 await/then 도 안 하면, 에러를 놓치거나 순서가 꼬인다
+- 갈림길: [결과·완료를 기다려야 함] → await 를 붙인다(감싸는 함수 async) · [정말 기다릴 필요 없는 fire-and-forget] → void 로 의도를 명시하고 .catch 로 에러는 삼키지 말 것
+- 요청 문장: 이 async 호출에 await가 없어서 경고가 나. 결과를 기다려야 하는지 아니면 의도적으로 안 기다리는지 판단해서, 전자면 await, 후자면 void + 에러 처리로 고쳐줘.
+- 확인: 기다려야 할 건 await되고, 아닌 건 의도가 명시되면 성공.
+- 에러 코드:
+```ts
+function save() { api.post(data); }  // 실패해도 모름
+```
+- 고친 코드:
+```ts
+async function save() { await api.post(data); }
+```

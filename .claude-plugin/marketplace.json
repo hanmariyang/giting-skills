@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "plugins": [
     {
@@ -23,6 +23,11 @@
       "name": "codelazy",
       "source": "./plugins/codelazy",
       "description": "안 만들어도 되는 것 사전 — 과잉설계를 증상으로 짚고 표준 한 줄로. 15항목, 실측 before/after, 즉방/분기"
+    },
+    {
+      "name": "type-menu",
+      "source": "./plugins/type-menu",
+      "description": "타입스크립트 에러 사전 — TS 에러를 사람 말로 옮기고 any 없이 제대로 고침. 6코스 15항목, 실제 tsc 원문 + before/after"
     }
   ]
 }
