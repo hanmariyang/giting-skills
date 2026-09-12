@@ -80,17 +80,18 @@ const cardHtml = it => `
     <button class="tiny codebtn" title="코드 보기">코드</button>
   </header>
   <iframe title="${it.name.ko} 데모" loading="lazy" style="height:${frags[it.id].h}px" srcdoc="${attr(code[it.id])}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}</footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}</footer>
   <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
 
 const tableHtml = cat => `
 <div class="tblwrap"><table>
-<thead><tr><th>한글</th><th>영문</th><th>이렇게 말해도 통해요</th><th>AI에게 이렇게</th></tr></thead>
+<thead><tr><th>한글</th><th>영문</th><th>shadcn에선</th><th>이렇게 말해도 통해요</th><th>AI에게 이렇게</th></tr></thead>
 <tbody>
 ${bycat(cat.id).map(it => `<tr>
   <td><a href="#${it.id}">${it.name.ko}</a></td>
   <td class="mono">${it.name.en}</td>
+  <td class="mono sc">${it.sc ? esc(it.sc) : '·'}</td>
   <td class="als">${it.aliases.map(a => `"${esc(a)}"`).join(' · ')}</td>
   <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
 </tr>`).join('\n')}
@@ -198,6 +199,7 @@ const html = `<!doctype html>
   td a { color: var(--ink); font-weight: 600; text-decoration: none; }
   td a:hover { color: var(--accent); }
   td.mono { font-family: var(--mono); font-size: 11.5px; color: var(--ink2); white-space: nowrap; }
+  td.mono.sc { white-space: normal; min-width: 150px; color: #0F766E; }
   td.als { color: var(--ink3); font-size: 12px; }
   td.askcell { min-width: 220px; }
   td.askcell span { color: var(--ink2); }
@@ -298,7 +300,8 @@ ${menu.categories.map(cat => `## ${cat.no} ${cat.ko}
 ${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
 - 정의: ${it.oneliner}${it.vs ? `
-- 구분: ${it.vs}` : ''}
+- 구분: ${it.vs}` : ''}${it.sc ? `
+- shadcn: ${it.sc}` : ''}
 - 요청 문장: ${it.ask}
 - 레퍼런스: ${RAW}/${it.id}.html${full ? `
 
@@ -359,6 +362,7 @@ const CORE_CSS = `
 .uigal .item .al { font-size: 12px; color: var(--accent-deep); }
 .uigal .item .one { font-size: 12px; color: var(--ink-2); }
 .uigal .item .vs { flex-basis: 100%; font-size: 11.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 5px; margin-top: 2px; }
+.uigal .item .vs.sc { color: #0F766E; border-top: 0; padding-top: 0; font-family: var(--mono); font-size: 11px; }
 .uigal .codebox { border-top: 1px solid var(--line); background: var(--gwash); padding: 10px 12px; }
 .uigal .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
 .uigal .codebox code { font-family: var(--mono); }
@@ -370,6 +374,7 @@ const CORE_CSS = `
 .uigal td a { color: var(--ink); font-weight: 600; text-decoration: none; }
 .uigal td a:hover { color: var(--accent-deep); }
 .uigal td.mono { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); white-space: nowrap; }
+.uigal td.mono.sc { white-space: normal; min-width: 150px; color: #0F766E; }
 .uigal td.als { color: var(--ink-3); font-size: 12px; }
 .uigal td.askcell { min-width: 220px; }
 .uigal td.askcell span { color: var(--ink-2); }

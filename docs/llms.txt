@@ -19,6 +19,7 @@
 - 별칭: "메뉴 줄" · "카테고리 바" · "GNB"
 - 정의: 사이트의 큰 메뉴를 모아 둔 이동 줄. 보통 헤더 안에 산다.
 - 구분: 사이트 전체 메뉴 줄이면 네비게이션 바, 그 줄을 담는 전체 띠가 헤더
+- shadcn: NavigationMenu
 - 요청 문장: 헤더 안에 홈·소개·가격·문의 네비게이션 바를 넣어줘. 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/navbar.html
 
@@ -33,6 +34,7 @@
 - 별칭: "옆에 세로로 붙은 메뉴" · "왼쪽 메뉴" · "옆 패널"
 - 정의: 화면 옆에 세로로 붙는 메뉴·목차 영역.
 - 구분: 항상 붙어 있으면 사이드바, 눌렀을 때만 나오면 드로어
+- shadcn: Sidebar
 - 요청 문장: 왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/sidebar.html
 
@@ -63,6 +65,7 @@
 ### 카드 (Card)
 - 별칭: "네모 박스 하나하나" · "박스형" · "테두리 있는 덩어리"
 - 정의: 이미지·제목·설명을 한 덩어리로 묶은 네모 상자.
+- shadcn: Card (Header·Content·Footer 완전 조립)
 - 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
 
@@ -75,6 +78,7 @@
 ### 테이블 (Table)
 - 별칭: "표" · "엑셀처럼 줄 맞춘 거" · "행렬로 정리"
 - 정의: 행과 열로 데이터를 맞춰 보여주는 표.
+- shadcn: Table
 - 요청 문장: 이름·날짜·상태 3열 테이블로 정리해줘. 상태는 색으로 구분되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/table.html
 
@@ -90,6 +94,7 @@
 - 별칭: "위에 눌러서 화면 바뀌는 거" · "칸 전환 버튼" · "메뉴 눌러서 내용 바뀌는 거"
 - 정의: 버튼을 눌러 같은 자리의 내용을 갈아 끼우는 전환 장치.
 - 구분: 같은 자리 내용을 갈아 끼우면 탭, 다른 페이지로 이동하면 네비게이션
+- shadcn: Tabs
 - 요청 문장: 월간·연간 두 개 탭으로 요금표가 전환되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tabs.html
 
@@ -97,12 +102,14 @@
 - 별칭: "접었다 폈다 되는 거" · "클릭하면 펼쳐지는 목록" · "FAQ 접기"
 - 정의: 제목을 누르면 내용이 접히고 펼쳐지는 목록.
 - 구분: 여러 개를 동시에 펼 수 있으면 아코디언, 한 번에 하나만 보이면 탭
+- shadcn: Accordion
 - 요청 문장: FAQ를 아코디언 5개로 만들어줘. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/accordion.html
 
 ### 브레드크럼 (Breadcrumb)
 - 별칭: "홈 > 제품 > 이런 거" · "지금 위치 나오는 줄" · "경로 표시"
 - 정의: 홈 / 제품 / 노트북처럼 지금 어디에 있는지 보여주는 경로 줄.
+- shadcn: Breadcrumb
 - 요청 문장: 상세 페이지 제목 위에 브레드크럼을 넣어줘. 마지막 항목만 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/breadcrumb.html
 
@@ -117,6 +124,7 @@
 - 별칭: "아래에 1 2 3 페이지 숫자" · "페이지 넘기기" · "다음 페이지 버튼"
 - 정의: 긴 목록을 1·2·3 페이지로 나눠 넘기는 번호 줄.
 - 구분: 숫자로 나눠 넘기면 페이지네이션, 바닥에서 자동으로 이어지면 무한 스크롤, 버튼으로 이어붙이면 더보기
+- shadcn: Pagination
 - 요청 문장: 목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pagination.html
 
@@ -137,6 +145,7 @@
 ### 캐러셀 (Carousel / Slider)
 - 별칭: "옆으로 넘기는 배너" · "슬라이드" · "좌우로 돌아가는 이미지"
 - 정의: 여러 장을 옆으로 넘겨 보는 회전 목록.
+- shadcn: Carousel
 - 요청 문장: 후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/carousel.html
 
@@ -144,6 +153,7 @@
 - 별칭: "누르면 아래로 목록 나오는 거" · "펼침 메뉴" · "호버하면 나오는 메뉴"
 - 정의: 누르면 아래로 선택지 목록이 펼쳐지는 메뉴.
 - 구분: 메뉴가 아래로 펼쳐지면 드롭다운, 폼에서 값을 고르는 입력칸이면 셀렉트
+- shadcn: DropdownMenu
 - 요청 문장: 프로필을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/dropdown.html
 
@@ -151,6 +161,7 @@
 - 별칭: "줄 세 개 아이콘" · "삼선 버튼" · "모바일에서 메뉴 여는 거"
 - 정의: ≡ 모양 아이콘. 모바일에서 메뉴를 접어 두는 버튼.
 - 구분: ≡ 버튼 자체가 햄버거, 눌러서 나오는 판이 드로어
+- shadcn: 조합: Button(size=icon) + Sheet
 - 요청 문장: 모바일에서는 메뉴를 햄버거 버튼으로 접고, 누르면 드로어가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hamburger.html
 
@@ -158,6 +169,7 @@
 - 별칭: "옆에서 미끄러져 나오는 메뉴" · "햄버거 누르면 나오는 거" · "슬라이드 패널"
 - 정의: 화면 옆에서 서랍처럼 밀려 나오는 판.
 - 구분: 옆에서 밀려 나오면 드로어, 아래에서 올라오면 바텀 시트, 항상 붙어 있으면 사이드바
+- shadcn: Sheet (하단이면 Drawer)
 - 요청 문장: 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘. 배경 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drawer.html
 
@@ -184,6 +196,7 @@
 ### 리스트 (List)
 - 별칭: "세로 줄줄이" · "목록" · "행마다 하나씩"
 - 정의: 항목을 세로로 줄줄이 쌓은 목록. 행마다 눌러 들어갈 수 있으면 리스트 아이템.
+- shadcn: Item
 - 요청 문장: 신청 내역을 리스트로 보여줘. 행마다 제목·날짜·상태, 누르면 상세로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/list.html
 
@@ -208,6 +221,7 @@
 ### 통계 카드 (Stat Card / Metric Card)
 - 별칭: "숫자 하나에 증감 붙은 거" · "대시보드 숫자 칸" · "지표 카드"
 - 정의: 숫자 하나와 증감 표시를 담은 카드. 대시보드의 기본 단위.
+- shadcn: 조합: Card + 숫자 타이포
 - 요청 문장: 이번 주 신청 수와 전환율을 통계 카드 2개로 보여줘. 증감은 색과 화살표로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/stat-card.html
 
@@ -250,6 +264,7 @@
 ### 프로필 카드 (Profile Card)
 - 별칭: "아바타에 이름에 버튼" · "사람 소개 카드" · "유저 카드"
 - 정의: 아바타 + 이름 + 버튼으로 사람을 소개하는 카드.
+- shadcn: 조합: Card + Avatar
 - 요청 문장: 팀원을 프로필 카드로 보여줘. 사진·이름·역할·팔로우 버튼 구성.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/profile-card.html
 
@@ -263,6 +278,7 @@
 - 별칭: "맨 위 가로로 긴 알림 띠" · "공지 띠" · "이벤트 줄"
 - 정의: 페이지 맨 위에 걸리는 가로로 긴 알림 띠.
 - 구분: 맨 위에 계속 걸려 있으면 배너, 잠깐 떴다 사라지면 토스트
+- shadcn: Alert 응용
 - 요청 문장: 헤더 위에 공지 배너를 넣어줘. 닫기 버튼 누르면 사라지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/banner.html
 
@@ -271,18 +287,21 @@
 ### 폼 (Form)
 - 별칭: "신청서 전체" · "입력칸 묶음" · "제출하는 양식"
 - 정의: 입력칸들과 제출 버튼을 묶은 양식 전체.
+- shadcn: 조합: Form + FieldGroup + Field
 - 요청 문장: 신청 폼을 만들어줘. 인풋 3개(이름·이메일·연락처), 유효성 검사 넣고, 제출하면 토스트로 완료 알림.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/form.html
 
 ### 인풋 (Input / Text Field)
 - 별칭: "한 줄 입력칸" · "글자 쓰는 칸" · "텍스트필드"
 - 정의: 한 줄짜리 글자 입력칸.
+- shadcn: Input
 - 요청 문장: 이름 인풋을 추가해줘. 라벨 위, 플레이스홀더는 예시 이름으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/input.html
 
 ### 텍스트에어리어 (Textarea)
 - 별칭: "여러 줄 입력칸" · "긴 글 쓰는 칸" · "문의 내용 칸"
 - 정의: 여러 줄을 쓸 수 있는 큰 입력칸.
+- shadcn: Textarea
 - 요청 문장: 문의 내용 텍스트에어리어를 넣어줘. 4줄 높이에 세로로만 늘어나게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/textarea.html
 
@@ -290,42 +309,49 @@
 - 별칭: "목록에서 하나 고르는 거" · "선택 상자" · "펼쳐서 고르기"
 - 정의: 펼쳐지는 목록에서 하나를 고르는 선택 상자.
 - 구분: 폼에서 값을 고르면 셀렉트, 이동·동작 메뉴면 드롭다운
+- shadcn: Select
 - 요청 문장: 학년 셀렉트를 넣어줘. 1~4학년 옵션, 기본값은 비워 두고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/select.html
 
 ### 체크박스 (Checkbox)
 - 별칭: "네모에 체크하는 거" · "여러 개 고르는 거" · "동의 체크"
 - 정의: 여러 개를 동시에 고를 수 있는 네모 체크칸.
+- shadcn: Checkbox
 - 요청 문장: 관심 분야를 체크박스로 만들어줘. 여러 개 선택 가능하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/checkbox.html
 
 ### 라디오 버튼 (Radio Button)
 - 별칭: "동그라미 중에 하나만 고르는 거" · "단일 선택" · "하나만 체크되는 거"
 - 정의: 여러 개 중 하나만 고를 수 있는 동그란 선택 버튼.
+- shadcn: RadioGroup
 - 요청 문장: 경험 수준을 라디오 버튼 3개로 만들어줘. 하나만 선택되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/radio.html
 
 ### 토글 스위치 (Toggle / Switch)
 - 별칭: "껐다 켰다 하는 동그라미" · "on/off 버튼" · "밀어서 켜는 거"
 - 정의: 밀어서 켜고 끄는 on/off 스위치.
+- shadcn: Switch
 - 요청 문장: 알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/switch.html
 
 ### 슬라이더 (Slider / Range)
 - 별칭: "드래그로 숫자 정하는 거" · "좌우로 끄는 바" · "범위 조절"
 - 정의: 손잡이를 끌어 숫자나 범위를 정하는 바.
+- shadcn: Slider
 - 요청 문장: 예산 슬라이더를 넣어줘. 0~100만원, 현재 값이 위에 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/slider.html
 
 ### 검색바 (Search Bar)
 - 별칭: "돋보기 검색창" · "검색하는 칸" · "찾기 입력칸"
 - 정의: 돋보기 아이콘이 붙은 검색 입력칸.
+- shadcn: InputGroup + InputGroupAddon(아이콘)
 - 요청 문장: 헤더에 검색바를 넣어줘. 입력하면 아래에 결과가 미리 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/search-bar.html
 
 ### 자동완성 (Autocomplete)
 - 별칭: "타이핑하면 후보 뜨는 거" · "추천 검색어" · "미리 완성해주는 거"
 - 정의: 타이핑하는 동안 후보 목록이 따라붙는 입력칸.
+- shadcn: Combobox (Command + Popover)
 - 요청 문장: 도시 입력칸에 자동완성을 붙여줘. 입력한 글자는 후보에서 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/autocomplete.html
 
@@ -344,6 +370,7 @@
 ### 데이트피커 (Date Picker)
 - 별칭: "달력에서 날짜 고르는 거" · "날짜 선택" · "달력 뜨는 입력칸"
 - 정의: 달력을 펼쳐 날짜를 고르는 입력칸.
+- shadcn: 조합: Calendar + Popover
 - 요청 문장: 예약 날짜를 데이트피커로 받게 해줘. 지난 날짜는 못 고르게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/date-picker.html
 
@@ -357,12 +384,14 @@
 - 별칭: "마이너스 숫자 플러스" · "수량 플마 버튼" · "카운터"
 - 정의: - 와 + 로 숫자를 조절하는 칸. 카운터라고도 한다.
 - 구분: 숫자를 조절하는 칸이면 수량 조절, 진행 단계 표시면 스텝퍼
+- shadcn: InputGroup 응용 (+/- 애드온)
 - 요청 문장: 수량 조절 스텝퍼를 넣어줘. 최소 1, 최대 10.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/number-stepper.html
 
 ### 인증번호 입력 (OTP Input)
 - 별칭: "칸 여러 개에 숫자 하나씩" · "인증 코드 칸" · "6자리 입력"
 - 정의: 칸 여러 개에 숫자를 하나씩 넣는 인증번호 입력. 한 칸씩 자동으로 넘어가게.
+- shadcn: InputOTP
 - 요청 문장: 6자리 인증번호 입력을 만들어줘. 입력하면 다음 칸으로 자동 이동.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/otp-input.html
 
@@ -387,6 +416,7 @@
 ### 라벨 (Label)
 - 별칭: "입력칸 위 이름표" · "칸 제목" · "무슨 칸인지 써 있는 거"
 - 정의: 입력칸 위에 붙는 이름표. 어떤 칸인지 알려준다.
+- shadcn: Label
 - 요청 문장: 모든 입력칸 위에 라벨을 붙여줘. 필수는 라벨 옆에 * 표시.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/label.html
 
@@ -399,6 +429,7 @@
 ### 헬퍼 텍스트 (Helper Text)
 - 별칭: "칸 아래 회색 안내 문구" · "입력 조건 설명" · "도움말 한 줄"
 - 정의: 입력칸 아래 붙는 작은 안내 문구. 조건이나 팁을 알려준다.
+- shadcn: FieldDescription
 - 요청 문장: 비밀번호 칸 아래에 '영문·숫자 포함 8자 이상' 헬퍼 텍스트를 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/helper-text.html
 
@@ -411,18 +442,21 @@
 ### 유효성 검사 (Validation)
 - 별칭: "형식 맞는지 확인하는 거" · "이메일 형식 검사" · "잘못 쓰면 알려주는 거"
 - 정의: 입력이 형식에 맞는지 확인하는 것. 틀리면 그 자리에서 알려준다.
+- shadcn: Field (data-invalid) + aria-invalid
 - 요청 문장: 이메일과 전화번호에 유효성 검사를 넣어줘. 틀리면 제출 막고 칸 아래에 이유 표시.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/validation.html
 
 ### 인라인 에러 (Field Error / Inline Error)
 - 별칭: "그 칸 아래 빨간 글씨" · "입력칸 에러 문구" · "칸마다 나오는 오류"
 - 정의: 틀린 칸 바로 아래 뜨는 빨간 안내. 팝업 경고보다 이게 낫다.
+- shadcn: FieldError
 - 요청 문장: 에러는 alert 창 말고 각 칸 아래 인라인 에러로 보여줘. 테두리도 빨갛게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/field-error.html
 
 ### 제출 (Submit)
 - 별칭: "보내기 버튼" · "완료 버튼" · "폼 마지막 버튼"
 - 정의: 폼을 보내는 마지막 버튼. 처리 중엔 잠그고, 끝나면 완료를 알린다.
+- shadcn: Button (type=submit) + Spinner(저장 중)
 - 요청 문장: 제출 버튼은 보내는 동안 '보내는 중'으로 잠기고, 성공하면 완료 표시가 뜨게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/submit.html
 
@@ -431,36 +465,42 @@
 ### 버튼 (Button)
 - 별칭: "누르는 거 전부" · "클릭하는 네모" · "버튼"
 - 정의: 누르면 무언가 일어나는 것 전부. 눌러 보이는 게 중요하다.
+- shadcn: Button
 - 요청 문장: 이 텍스트를 버튼으로 바꿔줘. 호버하면 살짝 변하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/button.html
 
 ### 프라이머리 버튼 (Primary Button)
 - 별칭: "꽉 찬 색 버튼" · "제일 중요한 버튼" · "메인 버튼"
 - 정의: 색이 꽉 찬 제일 중요한 버튼. 한 화면에 하나만.
+- shadcn: Button (variant=default)
 - 요청 문장: '신청하기'만 프라이머리 버튼으로 하고 나머지는 낮춰줘. 화면에 프라이머리는 하나만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/primary-button.html
 
 ### 세컨더리 버튼 (Secondary Button / Outline)
 - 별칭: "테두리만 있는 버튼" · "두 번째 버튼" · "아웃라인 버튼"
 - 정의: 테두리만 있는 버튼. 두 번째로 중요한 행동에 쓴다.
+- shadcn: Button (variant=outline·secondary)
 - 요청 문장: '더 알아보기'는 세컨더리 버튼으로 프라이머리 옆에 놔줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/secondary-button.html
 
 ### 고스트 버튼 (Ghost / Text Button)
 - 별칭: "배경 없이 글자만 있는 버튼" · "투명 버튼" · "텍스트 버튼"
 - 정의: 배경도 테두리도 없이 글자만 있는 버튼. 취소 같은 낮은 우선순위용.
+- shadcn: Button (variant=ghost)
 - 요청 문장: '취소'는 고스트 버튼으로 해줘. 호버할 때만 연한 배경이 생기게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/ghost-button.html
 
 ### 아이콘 버튼 (Icon Button)
 - 별칭: "아이콘만 있는 버튼" · "글자 없는 동그란 버튼" · "X 버튼 같은 거"
 - 정의: 글자 없이 아이콘만 있는 버튼. 뜻을 읽어 줄 aria-label이 필수.
+- shadcn: Button (size=icon)
 - 요청 문장: 닫기·공유를 아이콘 버튼으로 바꿔줘. aria-label 넣는 것 잊지 말고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/icon-button.html
 
 ### 삭제 버튼 (Destructive Button / Danger)
 - 별칭: "빨간 버튼" · "위험한 거 하는 버튼" · "지우기 버튼"
 - 정의: 되돌릴 수 없는 일을 하는 빨간 버튼. 확인 창과 세트가 기본.
+- shadcn: Button (variant=destructive)
 - 요청 문장: 삭제는 빨간 삭제 버튼으로 하고, 누르면 확인 모달을 먼저 띄워줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/destructive-button.html
 
@@ -479,12 +519,14 @@
 ### 링크 (Link)
 - 별칭: "글자 링크" · "밑줄 있는 파란 거" · "눌러서 이동하는 글자"
 - 정의: 버튼이 아니라 글자로 된 이동 수단. 이동은 링크, 동작은 버튼.
+- shadcn: Button (variant=link)
 - 요청 문장: '자세히 보기'는 버튼 말고 텍스트 링크로 바꿔줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/link.html
 
 ### 버튼 그룹 (Button Group)
 - 별칭: "버튼 여러 개 붙여 놓은 거" · "일간 주간 월간 같은 거" · "붙은 선택 버튼"
 - 정의: 버튼 여러 개를 한 줄로 붙여 놓고 하나를 고르는 묶음.
+- shadcn: ButtonGroup · 선택형은 ToggleGroup
 - 요청 문장: 일간·주간·월간 버튼 그룹을 만들어줘. 선택된 것만 채워지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/button-group.html
 
@@ -494,6 +536,7 @@
 - 별칭: "화면 가운데 뜨는 창" · "팝업" · "뒤가 어두워지면서 뜨는 거"
 - 정의: 화면 위에 겹쳐 뜨는 창. 뒤는 어두워지고, 닫기 전엔 다른 걸 못 누른다.
 - 구분: 가운데 뜨고 뒤를 막으면 모달, 구석에 잠깐 떴다 사라지면 토스트, 눌러서 여는 작은 판이면 팝오버
+- shadcn: Dialog (DialogTitle 필수)
 - 요청 문장: 삭제를 누르면 '정말 삭제할까요?' 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/modal.html
 
@@ -508,6 +551,7 @@
 - 별칭: "아래에서 올라오는 판" · "밑에서 스윽 나오는 거" · "모바일 공유창 같은 거"
 - 정의: 화면 아래에서 올라오는 판. 모바일에서 모달 대신 많이 쓴다.
 - 구분: 아래에서 올라오면 바텀 시트, 옆에서 밀려 나오면 드로어
+- shadcn: Drawer
 - 요청 문장: 모바일에서 공유를 누르면 바텀 시트가 올라오게 해줘. 위에 잡는 손잡이 표시도.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/bottom-sheet.html
 
@@ -515,6 +559,7 @@
 - 별칭: "잠깐 떴다 사라지는 알림" · "저장됐다고 뜨는 거" · "구석에 뜨는 알림"
 - 정의: 구석에 잠깐 나타났다 저절로 사라지는 짧은 알림.
 - 구분: 저절로 사라지면 토스트, 자리에 남아 있으면 얼럿
+- shadcn: Sonner
 - 요청 문장: 저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toast.html
 
@@ -522,6 +567,7 @@
 - 별칭: "색 있는 알림 상자" · "노란 경고 박스" · "안내 박스"
 - 정의: 성공·경고·오류를 색으로 구분해 담는 알림 상자. 사라지지 않고 자리에 남는다.
 - 구분: 자리에 남아 있으면 얼럿, 잠깐 떴다 사라지면 토스트
+- shadcn: Alert
 - 요청 문장: 폼 위에 얼럿 영역을 만들어줘. 성공은 초록, 경고는 노랑, 오류는 빨강.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/alert.html
 
@@ -529,6 +575,7 @@
 - 별칭: "마우스 올리면 뜨는 작은 설명" · "말풍선 도움말" · "물음표 설명"
 - 정의: 마우스를 올리면 잠깐 나오는 작은 설명 말풍선.
 - 구분: 마우스만 올려도 뜨면 툴팁, 눌러야 열리면 팝오버
+- shadcn: Tooltip
 - 요청 문장: 이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tooltip.html
 
@@ -536,6 +583,7 @@
 - 별칭: "눌러서 여는 작은 판" · "클릭하면 뜨는 말풍선" · "미니 팝업"
 - 정의: 눌러서 여는 작은 판. 툴팁보다 크고, 안에 버튼·링크도 들어간다.
 - 구분: 눌러야 열리면 팝오버, 마우스만 올려도 뜨면 툴팁
+- shadcn: Popover
 - 요청 문장: 프로필을 누르면 이름과 메뉴가 있는 팝오버가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/popover.html
 
@@ -543,6 +591,7 @@
 - 별칭: "차오르는 막대" · "진행률 바" · "몇 퍼센트 게이지"
 - 정의: 얼마나 진행됐는지 차오르는 막대로 보여주는 것.
 - 구분: 진행률을 알면 프로그레스 바, 모르면 스피너
+- shadcn: Progress
 - 요청 문장: 업로드 진행률을 프로그레스 바로 보여줘. 퍼센트 숫자도 같이.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/progress-bar.html
 
@@ -550,6 +599,7 @@
 - 별칭: "빙글빙글 도는 거" · "로딩 동그라미" · "돌아가는 로딩"
 - 정의: 빙글빙글 돌며 로딩 중임을 알리는 표시. 끝이 언제인지 모를 때 쓴다.
 - 구분: 끝을 모르면 스피너, 진행률이 있으면 프로그레스 바, 내용 자리를 미리 그리면 스켈레톤
+- shadcn: Spinner
 - 요청 문장: 데이터 불러오는 동안 가운데에 스피너를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/spinner.html
 
@@ -557,12 +607,14 @@
 - 별칭: "로딩 때 회색 뼈대" · "번쩍거리는 회색 박스" · "로딩 자리 표시"
 - 정의: 내용이 오기 전, 자리 모양대로 깜빡이는 회색 뼈대.
 - 구분: 내용 자리를 미리 그리면 스켈레톤, 그냥 돌기만 하면 스피너
+- shadcn: Skeleton
 - 요청 문장: 목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/skeleton-ui.html
 
 ### 엠프티 스테이트 (Empty State)
 - 별칭: "내용 없을 때 화면" · "텅 비었을 때 나오는 거" · "아직 없어요 화면"
 - 정의: 보여줄 게 없을 때의 화면. 다음 행동 버튼까지 넣어야 완성.
+- shadcn: Empty
 - 요청 문장: 목록이 비면 엠프티 스테이트를 보여줘. 안내 문구와 '추가하기' 버튼 포함.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/empty-state.html
 
@@ -576,6 +628,7 @@
 - 별칭: "정말 하시겠어요 창" · "한 번 더 물어보는 거" · "확인 팝업"
 - 정의: 위험한 행동 전에 '정말 하시겠어요?'라고 한 번 더 묻는 창.
 - 구분: 위험한 행동 전에 한 번 더 묻는 용도의 모달이 확인 창
+- shadcn: AlertDialog
 - 요청 문장: 작성 중에 나가려 하면 '정말 나가시겠어요?' 확인 창을 띄워줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/confirmation.html
 
@@ -585,6 +638,7 @@
 - 별칭: "아이콘에 빨간 숫자" · "알림 숫자 점" · "빨간 동그라미"
 - 정의: 아이콘 모서리에 붙는 작은 숫자나 점. 새 알림 표시의 단골.
 - 구분: 아이콘 모서리에 붙는 숫자·점이면 배지, 독립된 알약 라벨이면 칩
+- shadcn: Badge
 - 요청 문장: 알림 아이콘에 안 읽은 개수 배지를 붙여줘. 0이면 숨기고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/badge.html
 
@@ -592,12 +646,14 @@
 - 별칭: "알약 모양 라벨" · "동글동글한 필터 버튼" · "태그"
 - 정의: 알약 모양의 작은 라벨. 태그 표시나 필터 선택에 쓴다.
 - 구분: 독립된 알약 라벨이면 칩, 아이콘 모서리 숫자면 배지
+- shadcn: Badge 응용
 - 요청 문장: 태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/chip.html
 
 ### 아바타 (Avatar)
 - 별칭: "동그란 프로필 사진" · "프사 동그라미" · "얼굴 아이콘"
 - 정의: 동그란 프로필 사진. 사진이 없으면 이름 첫 글자로.
+- shadcn: Avatar (AvatarFallback 필수)
 - 요청 문장: 댓글마다 아바타를 붙여줘. 사진 없으면 이름 첫 글자가 나오게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/avatar.html
 
@@ -610,12 +666,14 @@
 ### 디바이더 (Divider / Separator)
 - 별칭: "구분선" · "얇은 가로줄" · "사이에 긋는 선"
 - 정의: 내용 사이를 나누는 얇은 구분선.
+- shadcn: Separator
 - 요청 문장: 섹션 사이마다 연한 디바이더를 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/divider.html
 
 ### 아이콘 (Icon)
 - 별칭: "작은 그림" · "집 모양 돋보기 모양 그런 거" · "픽토그램"
 - 정의: 뜻을 담은 작은 그림. 세트를 하나로 통일하는 게 핵심.
+- shadcn: lucide-react
 - 요청 문장: 아이콘은 Lucide로 통일해줘. 크기는 20px, 선 굵기도 맞추고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/icon.html
 
@@ -628,6 +686,7 @@
 ### 키보드 키 (Kbd)
 - 별칭: "단축키를 키 모양으로" · "⌘K 같은 표시" · "자판 모양 글자"
 - 정의: 단축키를 실제 키 모양으로 보여주는 표시.
+- shadcn: Kbd
 - 요청 문장: 검색 안내에 ⌘K를 키보드 키 모양으로 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/kbd.html
 
