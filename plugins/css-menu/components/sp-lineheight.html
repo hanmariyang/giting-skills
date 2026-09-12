@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"줄 간격이 답답하거나 휑해요" — CSS 증상 사전</title>
+<!--
+  증상: "줄 간격이 답답하거나 휑해요" (line-height) · 유형: 분기형
+  범인: 줄 간격은 한 가지 정답이 없음 — 본문·제목·한 줄 라벨이 각각 다른 값을 원함
+  갈림길: [본문 문단] → 1.5~1.7이 편안한 범위 · [큰 제목] → 1.1~1.3 — 본문 수치를 주면 휑해짐 · [버튼·라벨 같은 한 줄짜리] → 줄 간격보다 상자의 안쪽 여백(padding)으로 잡는 게 안정적
+  AI에게: 줄 간격이 이상해. 본문인지 제목인지 한 줄 라벨인지 구분해서 각각 맞는 줄 간격으로 조정해줘. 어디를 어떻게 바꿨는지 알려줘.
+  확인: 제목은 조밀하고 본문은 숨 쉬면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:2.1">제목이 두 줄이 되면 휑하게 벌어짐</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.1">본문은 반대로 줄 간격이 좁아서 빽빽하게 읽힌다. 제목과 본문이 서로의 수치를 바꿔 낀 상태다.</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:1.25">제목이 두 줄이어도 조밀하게 붙음</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.65">본문은 1.5~1.7로 숨을 쉰다. 제목은 조밀하게, 본문은 여유 있게 — 역할마다 다른 값이 정답이다.</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 제목은 조밀하고 본문은 숨 쉬면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

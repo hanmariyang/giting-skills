@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"첫 번째랑 마지막만 간격이 달라요" — CSS 증상 사전</title>
+<!--
+  증상: "첫 번째랑 마지막만 간격이 달라요" (edge-margin) · 유형: 즉방형
+  범인: 모든 항목에 margin-bottom을 줘서 마지막 항목 뒤에도 여백이 남음
+  처방: margin 대신 gap — 사이에만 간격이 생기고 끝엔 안 남는다.
+  AI에게: 항목 '사이'에만 간격이 생기게, 항목별 margin을 부모 gap으로 바꿔줘.
+  확인: 목록 맨 끝의 남는 여백이 사라지면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">마지막 항목 아래에도 여백이 남음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">gap은 사이에만 — 끝이 깔끔</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 목록 맨 끝의 남는 여백이 사라지면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

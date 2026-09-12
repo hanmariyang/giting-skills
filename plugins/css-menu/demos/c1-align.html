@@ -1,0 +1,62 @@
+<!-- @al-vcenter-bad h=150 -->
+<div class="card" style="width:130px;text-align:center">로그인</div>
+<p class="mut" style="margin:8px 2px 0">부모 높이가 없어서 위에 붙음</p>
+
+<!-- @al-vcenter-good h=150 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div class="card" style="width:130px;text-align:center">로그인</div>
+</div>
+
+<!-- @al-hcenter-bad h=120 -->
+<div class="card" style="width:150px">공지사항</div>
+<p class="mut" style="margin:8px 2px 0">너비 제한은 있는데 가운데로 오라는 지시가 없음</p>
+
+<!-- @al-hcenter-good h=120 -->
+<div class="card" style="width:150px;margin:0 auto;text-align:center">공지사항</div>
+<p class="mut" style="margin:8px 2px 0;text-align:center">상자: margin auto · 글자: text-align</p>
+
+<!-- @al-icon-bad h=110 -->
+<div class="card">
+  <span style="display:inline-block;width:20px;height:20px;background:#1f7a4d;border-radius:50%;vertical-align:top;color:#fff;font-size:12px;text-align:center;line-height:20px">✓</span>
+  결제가 완료되었습니다
+</div>
+<p class="mut" style="margin:8px 2px 0">아이콘이 글줄 위로 떠 있음</p>
+
+<!-- @al-icon-good h=110 -->
+<div class="card" style="display:flex;align-items:center;gap:8px">
+  <span style="flex:none;width:20px;height:20px;background:#1f7a4d;border-radius:50%;color:#fff;font-size:12px;text-align:center;line-height:20px">✓</span>
+  결제가 완료되었습니다
+</div>
+<p class="mut" style="margin:8px 2px 0">flex 세로 가운데 + gap</p>
+
+<!-- @al-between-bad h=110 -->
+<div class="card">
+  <b>주문 내역</b>
+  <button class="btn" style="padding:6px 12px;font-size:12px">전체 보기</button>
+</div>
+<p class="mut" style="margin:8px 2px 0">양끝으로 벌리라는 지시가 없어 나란히 붙음</p>
+
+<!-- @al-between-good h=110 -->
+<div class="card" style="display:flex;justify-content:space-between;align-items:center">
+  <b>주문 내역</b>
+  <button class="btn" style="padding:6px 12px;font-size:12px">전체 보기</button>
+</div>
+<p class="mut" style="margin:8px 2px 0">flex 양끝 정렬 (space-between)</p>
+
+<!-- @al-lastcard-bad h=170 -->
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+</div>
+<p class="mut" style="margin:8px 2px 0">마지막 줄만 혼자 가운데로 감</p>
+
+<!-- @al-lastcard-good h=170 -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+</div>
+<p class="mut" style="margin:8px 2px 0">그리드로 왼쪽 정렬 통일 — 빈칸은 정상</p>

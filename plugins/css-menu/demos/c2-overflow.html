@@ -1,0 +1,70 @@
+<!-- @of-image-bad h=150 -->
+<div class="card" style="width:170px">
+  <div style="width:260px;height:70px;border-radius:8px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)"></div>
+  <p class="mut" style="margin:6px 0 0">사진이 상자를 뚫고 나감</p>
+</div>
+
+<!-- @of-image-good h=150 -->
+<div class="card" style="width:170px">
+  <div style="max-width:100%;height:70px;border-radius:8px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)"></div>
+  <p class="mut" style="margin:6px 0 0">max-width 100% — 상자 안으로</p>
+</div>
+
+<!-- @of-url-bad h=140 -->
+<div class="card" style="width:180px">
+  안내 문서:
+  <span style="white-space:nowrap;font-size:11.5px;color:#f05032">https://docs.example.com/payments/webhooks-guide</span>
+</div>
+<p class="mut" style="margin:8px 2px 0">긴 링크가 상자를 뚫음</p>
+
+<!-- @of-url-good h=140 -->
+<div class="card" style="width:180px">
+  안내 문서:
+  <span style="overflow-wrap:anywhere;font-size:11.5px;color:#f05032">https://docs.example.com/payments/webhooks-guide</span>
+</div>
+<p class="mut" style="margin:8px 2px 0">overflow-wrap — 상자 안에서 줄바꿈</p>
+
+<!-- @of-dropdown-bad h=190 -->
+<div class="card" style="overflow:hidden;height:80px;position:relative">
+  <div style="display:flex;justify-content:space-between;align-items:center"><b>필터</b><span class="mut">▾</span></div>
+  <div style="position:absolute;top:40px;left:13px;width:130px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px">
+    <div style="padding:8px 12px">최신순</div>
+    <div style="padding:8px 12px">인기순</div>
+    <div style="padding:8px 12px">가격순</div>
+  </div>
+</div>
+<p class="mut" style="margin:8px 2px 0">카드의 overflow hidden이 메뉴를 자름</p>
+
+<!-- @of-dropdown-good h=190 -->
+<div class="card" style="height:80px;position:relative">
+  <div style="display:flex;justify-content:space-between;align-items:center"><b>필터</b><span class="mut">▾</span></div>
+  <div style="position:absolute;top:40px;left:13px;width:130px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px;z-index:2">
+    <div style="padding:8px 12px">최신순</div>
+    <div style="padding:8px 12px">인기순</div>
+    <div style="padding:8px 12px">가격순</div>
+  </div>
+</div>
+
+<!-- @of-ellipsis-bad h=110 -->
+<div class="card" style="width:180px;white-space:nowrap;overflow:hidden">주문하신 상품이 오늘 출발했습니다</div>
+<p class="mut" style="margin:8px 2px 0">표시 없이 뚝 잘림</p>
+
+<!-- @of-ellipsis-good h=110 -->
+<div class="card" style="width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">주문하신 상품이 오늘 출발했습니다</div>
+<p class="mut" style="margin:8px 2px 0">…으로 줄었다는 표시가 남음</p>
+
+<!-- @of-sticky-bad h=180 -->
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+  <div style="padding:9px 12px;border-bottom:1px solid #e4e4ea;background:#fff"><b>섹션 제목</b> <span class="mut">(스크롤하면 사라짐)</span></div>
+  <div style="padding:10px 12px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="bar"></div>
+  </div>
+</div>
+
+<!-- @of-sticky-good h=180 -->
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+  <div style="position:sticky;top:0;padding:9px 12px;border-bottom:1px solid #e4e4ea;background:#fff;z-index:2"><b>섹션 제목</b> <span class="mut">(따라옴)</span></div>
+  <div style="padding:10px 12px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="bar"></div>
+  </div>
+</div>

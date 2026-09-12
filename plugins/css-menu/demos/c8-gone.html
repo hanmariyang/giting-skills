@@ -1,0 +1,82 @@
+<!-- @iv-dark-bad h=140 -->
+<div style="height:100%;background:#1a1a1e;border-radius:10px;padding:12px">
+  <b style="color:#f2f2f4;font-size:13px">다크 모드 화면</b>
+  <p style="margin:6px 0 0;font-size:12px;color:#2c2c31">이 안내문은 글자색을 라이트 모드 값 그대로 두어서 배경에 잠겨 보이지 않는다.</p>
+</div>
+
+<!-- @iv-dark-good h=140 -->
+<div style="height:100%;background:#1a1a1e;border-radius:10px;padding:12px">
+  <b style="color:#f2f2f4;font-size:13px">다크 모드 화면</b>
+  <p style="margin:6px 0 0;font-size:12px;color:#b9bac2">배경과 글자를 세트로 뒤집으면 어느 모드에서도 읽힌다.</p>
+</div>
+
+<!-- @iv-height-bad h=160 -->
+<div style="background:#fff;border:2px dashed #c4372b;border-radius:10px;padding:0 10px">
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 1</span></div>
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 2</span></div>
+</div>
+<div style="clear:both"></div>
+<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘 — 자식이 전부 떠 있어서</p>
+
+<!-- @iv-height-good h=160 -->
+<div style="background:#fff;border:2px dashed #1f7a4d;border-radius:10px;padding:8px 10px;display:flex;gap:8px">
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 1</span></div>
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 2</span></div>
+</div>
+<p class="mut" style="margin:10px 2px 0">flex 흐름으로 — 부모(초록 점선)가 자식을 감쌈</p>
+
+<!-- @iv-where-bad h=160 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+  <div style="font-size:30px">🤷</div>
+  <p class="mut" style="margin:0;text-align:center">"버튼 추가했다는데요…"<br>어디서부터 봐야 할지 모르는 상태</p>
+</div>
+
+<!-- @iv-where-good h=160 -->
+<div style="display:grid;gap:6px;font-size:12px">
+  <div class="card" style="padding:7px 11px">① 요소가 <b>존재</b>하는가 (조건에 걸려 안 그려졌나)</div>
+  <div class="card" style="padding:7px 11px">② <b>크기·투명도</b>가 0은 아닌가</div>
+  <div class="card" style="padding:7px 11px">③ 다른 것 <b>뒤</b>에 깔렸나</div>
+  <div class="card" style="padding:7px 11px">④ <b>화면 밖</b>으로 나갔나</div>
+</div>
+
+<!-- @iv-button-bad h=140 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div>
+    <button class="btn">장바구니 <button class="btn" style="background:#f05032">+1</button></button>
+    <p class="mut" style="margin:8px 0 0;text-align:center">버튼 안에 버튼 — 브라우저가 구조를 재배치해 스타일이 붕 뜸</p>
+  </div>
+</div>
+
+<!-- @iv-button-good h=140 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div>
+    <button class="btn">장바구니 <span style="background:#f05032;border-radius:6px;padding:2px 7px;margin-left:4px">+1</span></button>
+    <p class="mut" style="margin:8px 0 0;text-align:center">안쪽은 span으로 — 구조가 맞으면 스타일이 붙는다</p>
+  </div>
+</div>
+
+<!-- @iv-flash-bad h=170 -->
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:12px;font-family:'Times New Roman',serif">
+  <div style="font-size:10px;color:#c4372b;font-family:-apple-system,sans-serif;margin-bottom:6px">로드 직후 0.3초 — 스타일 도착 전</div>
+  <h4 style="margin:0;font-weight:400">Shopping Mall</h4>
+  <p style="margin:4px 0"><a href="#" style="color:#0000ee">Home</a> <a href="#" style="color:#0000ee">Products</a> <a href="#" style="color:#0000ee">Cart</a></p>
+</div>
+
+<!-- @iv-flash-good h=170 -->
+<div class="card">
+  <div style="font-size:10px;color:#1f7a4d;margin-bottom:6px">같은 순간 — CSS 선로드 + font-display</div>
+  <b style="font-size:14px">Shopping Mall</b>
+  <div style="display:flex;gap:10px;margin-top:6px;font-size:12px"><span style="color:#f05032;font-weight:600">홈</span><span class="mut">상품</span><span class="mut">장바구니</span></div>
+</div>
+
+<!-- @iv-image-bad h=150 -->
+<div class="card" style="width:180px">
+  <img src="Logo.PNG" alt="로고 이미지" style="max-width:100%;min-height:44px;border:1px dashed #c4372b;border-radius:6px">
+  <p class="mut" style="margin:6px 0 0">src="Logo.PNG" — 실제 파일은 logo.png. 대소문자도 경로다</p>
+</div>
+
+<!-- @iv-image-good h=150 -->
+<div class="card" style="width:180px">
+  <img alt="로고 이미지" style="display:block;width:100%;height:44px;border-radius:6px;background:linear-gradient(120deg,#f05032,#e8506e)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <p class="mut" style="margin:6px 0 0">경로·파일명이 정확하면 뜬다. 스타일 문제가 아니었다</p>
+</div>

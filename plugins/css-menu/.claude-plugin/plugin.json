@@ -1,0 +1,9 @@
+{
+  "name": "css-menu",
+  "version": "0.1.0",
+  "description": "CSS 증상 사전 — 깨진 화면을 CSS 용어가 아니라 증상으로 찾는 사전. 증상 → 범인 후보 → 처방(즉방형) 또는 갈림길 진단(분기형) → AI에게 시키는 문장 → 깨진/고친 실물 나란히.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["css", "debugging", "korean", "vibe-coding", "dictionary", "non-developer"]
+}

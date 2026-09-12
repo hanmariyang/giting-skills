@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"어떤 기기에선 글꼴이 달라 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "어떤 기기에선 글꼴이 달라 보여요" (font-fallback) · 유형: 분기형
+  범인: 글꼴이 다르게 보이는 원인은 여러 층 — 로딩 실패인지, 기기 기본값 차이인지, 굵기 미지원인지
+  갈림길: [웹폰트가 늦거나 실패] → 대체 글꼴(폴백) 지정이 있는지 확인 · [기기 기본 글꼴 차이] → 시스템 글꼴 스택을 명시적으로 정리 · [특정 굵기만 이상함] → 그 굵기를 글꼴이 지원하는지 확인 (없으면 브라우저가 흉내내서 뭉개짐)
+  AI에게: 기기마다 글꼴이 다르게 보여. 웹폰트가 제대로 로드되는지, 대체 글꼴이 뭔지, 쓰는 굵기를 글꼴이 지원하는지 순서로 확인해서 알려주고 정리해줘.
+  확인: 주요 기기에서 같은 인상으로 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="font-size:12px;display:grid;gap:6px">
+  <div><b>내 폰:</b> <span style="font-family:'Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span></div>
+  <div><b>다른 기기:</b> <span style="font-family:'Times New Roman',serif">가벼운 아침 루틴</span> <span class="mut">← 웹폰트 실패, 대체 지정 없음</span></div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="font-size:12px;display:grid;gap:6px">
+  <div><b>내 폰:</b> <span style="font-family:'Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span></div>
+  <div><b>다른 기기:</b> <span style="font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span> <span class="mut">← 폴백 사슬을 지정해 비슷한 인상 유지</span></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 주요 기기에서 같은 인상으로 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!-- @zx-click-bad h=150 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div style="position:relative;display:inline-block">
+    <button class="btn" onclick="this.querySelector('b').textContent=+this.querySelector('b').textContent+1">담기 <b style="color:#ffb3a0">0</b></button>
+    <div style="position:absolute;inset:-26px;background:linear-gradient(transparent,rgba(240,80,50,.06))"></div>
+  </div>
+</div>
+
+<!-- @zx-click-good h=150 -->
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div style="position:relative;display:inline-block">
+    <button class="btn" onclick="this.querySelector('b').textContent=+this.querySelector('b').textContent+1">담기 <b style="color:#8fe3b6">0</b></button>
+    <div style="position:absolute;inset:-26px;background:linear-gradient(transparent,rgba(240,80,50,.06));pointer-events:none"></div>
+  </div>
+</div>
+
+<!-- @zx-modal-bad h=170 -->
+<div style="height:100%;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;z-index:10;background:#17171b;color:#fff;font-size:12px;padding:8px 12px;border-radius:8px 8px 0 0">고정 헤더 (z-index 10)</div>
+  <div style="position:absolute;inset:0;transform:translateZ(0)">
+    <div style="position:absolute;left:50%;top:38%;transform:translateX(-50%);z-index:9999;width:160px" class="card">
+      <b>팝업 (z-index 9999)</b>
+      <p class="mut" style="margin:4px 0 0">그래도 헤더 뒤에 깔림 — 조상 transform이 만든 층 안</p>
+    </div>
+  </div>
+</div>
+
+<!-- @zx-modal-good h=170 -->
+<div style="height:100%;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;z-index:10;background:#17171b;color:#fff;font-size:12px;padding:8px 12px;border-radius:8px 8px 0 0">고정 헤더 (z-index 10)</div>
+  <div style="position:absolute;left:50%;top:8px;transform:translateX(-50%);z-index:1000;width:160px" class="card">
+    <b>팝업 (문서 최상위로 이동)</b>
+    <p class="mut" style="margin:4px 0 0">층 밖으로 꺼내면 숫자가 다시 통함</p>
+  </div>
+</div>
+
+<!-- @zx-text-bad h=130 -->
+<div style="height:100%;position:relative">
+  <p style="margin:0;font-size:12px;line-height:1.8;color:#55555f">주문 내역을 확인하시려면 마이페이지로 이동해 주세요. 배송은 결제 후 2일 이내에 시작됩니다. 교환·환불 규정은 고객센터에서 안내합니다.</p>
+  <div style="position:absolute;left:20px;top:26px;padding:6px 12px;font-size:12px;font-weight:700">떠 있는 라벨 (배경 없음)</div>
+</div>
+
+<!-- @zx-text-good h=130 -->
+<div style="height:100%;position:relative">
+  <p style="margin:0;font-size:12px;line-height:1.8;color:#55555f">주문 내역을 확인하시려면 마이페이지로 이동해 주세요. 배송은 결제 후 2일 이내에 시작됩니다. 교환·환불 규정은 고객센터에서 안내합니다.</p>
+  <div style="position:absolute;left:20px;top:26px;padding:6px 12px;font-size:12px;font-weight:700;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 3px 10px rgba(23,23,27,.1)">떠 있는 라벨 (배경 세트)</div>
+</div>
+
+<!-- @zx-shadow-bad h=140 -->
+<div style="overflow:hidden;height:90px;padding:0">
+  <div class="card" style="margin:0;box-shadow:0 10px 24px rgba(23,23,27,.28)"><b>카드</b><p class="mut" style="margin:3px 0 0">부모의 overflow hidden이 그림자를 반듯하게 자름</p></div>
+</div>
+
+<!-- @zx-shadow-good h=140 -->
+<div style="height:90px;padding:6px">
+  <div class="card" style="margin:0;box-shadow:0 10px 24px rgba(23,23,27,.28)"><b>카드</b><p class="mut" style="margin:3px 0 0">자르는 부모를 풀고 여백 확보 — 그림자가 온전함</p></div>
+</div>
+
+<!-- @zx-anchor-bad h=170 -->
+<div style="height:100%;position:relative;background:#fff;border:1px solid #e4e4ea;border-radius:10px;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;background:rgba(255,255,255,.92);border-bottom:1px solid #e4e4ea;padding:8px 12px;font-size:12px;z-index:2"><b>고정 헤더</b></div>
+  <div style="padding:22px 12px 12px">
+    <b style="font-size:14px;color:#c4372b">2. 결제 방법</b> <span class="mut">← 이동 직후, 헤더에 반쯤 가림</span>
+    <div style="display:grid;gap:8px;margin-top:10px"><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div></div>
+  </div>
+</div>
+
+<!-- @zx-anchor-good h=170 -->
+<div style="height:100%;position:relative;background:#fff;border:1px solid #e4e4ea;border-radius:10px;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;background:rgba(255,255,255,.92);border-bottom:1px solid #e4e4ea;padding:8px 12px;font-size:12px;z-index:2"><b>고정 헤더</b></div>
+  <div style="padding:48px 12px 12px">
+    <b style="font-size:14px;color:#1f7a4d">2. 결제 방법</b> <span class="mut">← scroll-margin으로 헤더 아래 착지</span>
+    <div style="display:grid;gap:8px;margin-top:10px"><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div></div>
+  </div>
+</div>
