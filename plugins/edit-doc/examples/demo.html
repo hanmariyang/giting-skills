@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>edit-doc 예시 문서</title>
+<style id="doc-style">
+:root{--fg:#1c1c22;--mut:#55555f;--bg:#fff;--rule:#e6e6ec;--accent:#5b5bd6}
+@media(prefers-color-scheme:dark){:root{--fg:#e8e8ee;--mut:#a0a0aa;--bg:#16161a;--rule:#2a2a32;--accent:#9b9bf0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg)}
+#doc-content{max-width:48rem;margin:3.2rem auto 5rem;padding:0 1.4rem;font:17px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Pretendard",system-ui,sans-serif;word-break:keep-all}
+#doc-content h1{font-size:2rem;line-height:1.25;margin:0 0 .3em;font-weight:800;letter-spacing:-.01em}
+#doc-content h2{font-size:1.4rem;margin:2em 0 .4em;font-weight:700}
+#doc-content h3{font-size:1.15rem;margin:1.6em 0 .3em;font-weight:700}
+#doc-content p{margin:0 0 1em}
+#doc-content a{color:var(--accent)}
+#doc-content blockquote{border-left:3px solid var(--accent);margin:1.2em 0;padding:.3em 1.1em;color:var(--mut)}
+#doc-content ul,#doc-content ol{margin:0 0 1em;padding-left:1.4em}
+#doc-content li{margin:.2em 0}
+#doc-content hr{border:0;border-top:1px solid var(--rule);margin:2em 0}
+#doc-content table{border-collapse:collapse;width:100%;margin:1.2em 0}
+#doc-content th,#doc-content td{border:1px solid var(--rule);padding:.5em .7em;text-align:left}
+#doc-content .lead{font-size:1.15rem;color:var(--mut)}
+</style>
+<style id="ed-editor-style">
+/* doc-editor.css — chrome for the in-page HTML editor. Namespaced ed-* / --ed-*
+   so it never fights the document's own styles. Light/dark aware. Giting edit-doc. MIT. */
+:root{
+  --ed-accent:#5b5bd6; --ed-accent-ink:#fff;
+  --ed-bar-bg:rgba(255,255,255,.92); --ed-bar-ink:#1c1c22; --ed-bar-mut:#6b6b76;
+  --ed-bar-bd:rgba(0,0,0,.1); --ed-btn-hover:rgba(0,0,0,.06); --ed-shadow:0 6px 24px rgba(0,0,0,.16);
+  --ed-toast-bg:#1c1c22; --ed-toast-ink:#fff;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ed-bar-bg:rgba(30,30,36,.94); --ed-bar-ink:#f0f0f4; --ed-bar-mut:#a0a0aa;
+    --ed-bar-bd:rgba(255,255,255,.14); --ed-btn-hover:rgba(255,255,255,.1);
+    --ed-toast-bg:#f0f0f4; --ed-toast-ink:#1c1c22;
+  }
+}
+#doc-content[contenteditable="true"]{ outline:2px dashed var(--ed-accent); outline-offset:8px; border-radius:4px; }
+#doc-content[contenteditable="true"]:focus{ outline-style:solid; }
+
+.ed-controls{ position:fixed; right:16px; bottom:16px; z-index:2147483000; display:flex; gap:8px;
+  font:500 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.ed-controls button{ appearance:none; border:1px solid var(--ed-bar-bd); background:var(--ed-bar-bg);
+  color:var(--ed-bar-ink); padding:10px 14px; border-radius:999px; cursor:pointer; box-shadow:var(--ed-shadow);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.ed-controls button:hover{ background:var(--ed-btn-hover); }
+.ed-controls .ed-primary{ background:var(--ed-accent); color:var(--ed-accent-ink); border-color:transparent; }
+.ed-controls .ed-primary:hover{ filter:brightness(1.06); }
+
+.ed-bar{ position:fixed; left:50%; top:14px; transform:translateX(-50%); z-index:2147483000;
+  display:flex; align-items:center; gap:2px; flex-wrap:nowrap; max-width:calc(100vw - 24px); overflow-x:auto;
+  padding:6px; border:1px solid var(--ed-bar-bd); background:var(--ed-bar-bg); border-radius:12px;
+  box-shadow:var(--ed-shadow); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  font:500 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ed-bar-ink); scrollbar-width:thin; }
+.ed-bar[hidden]{ display:none; }
+.ed-bar button, .ed-bar select{ appearance:none; border:0; background:transparent; color:var(--ed-bar-ink);
+  min-width:32px; height:32px; padding:0 8px; border-radius:8px; cursor:pointer; white-space:nowrap; }
+.ed-bar button:hover, .ed-bar select:hover{ background:var(--ed-btn-hover); }
+.ed-bar button.on{ background:var(--ed-accent); color:var(--ed-accent-ink); }
+.ed-bar .sep{ width:1px; height:22px; background:var(--ed-bar-bd); margin:0 4px; flex:none; }
+.ed-bar select{ min-width:auto; }
+.ed-bar input[type="color"]{ width:28px; height:28px; padding:0; border:0; background:transparent; cursor:pointer; }
+.ed-bar .lab{ color:var(--ed-bar-mut); padding:0 4px; font-size:12px; }
+
+.ed-toast{ position:fixed; left:50%; bottom:70px; transform:translateX(-50%) translateY(12px); z-index:2147483001;
+  background:var(--ed-toast-bg); color:var(--ed-toast-ink); padding:10px 16px; border-radius:10px;
+  font:500 14px/1.4 system-ui,sans-serif; box-shadow:var(--ed-shadow); opacity:0; pointer-events:none;
+  transition:opacity .2s, transform .2s; max-width:min(90vw,420px); }
+.ed-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.ed-restore{ position:fixed; left:16px; bottom:16px; z-index:2147483000; max-width:min(92vw,380px);
+  background:var(--ed-bar-bg); color:var(--ed-bar-ink); border:1px solid var(--ed-bar-bd); border-radius:12px;
+  padding:14px 16px; box-shadow:var(--ed-shadow); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  font:400 14px/1.5 system-ui,sans-serif; }
+.ed-restore[hidden]{ display:none; }
+.ed-restore b{ display:block; margin-bottom:4px; font-weight:600; }
+.ed-restore .ed-when{ color:var(--ed-bar-mut); font-size:12px; }
+.ed-restore .ed-row{ display:flex; gap:8px; margin-top:10px; }
+.ed-restore button{ appearance:none; border:1px solid var(--ed-bar-bd); background:transparent; color:var(--ed-bar-ink);
+  padding:7px 12px; border-radius:8px; cursor:pointer; font:inherit; }
+.ed-restore button.ed-primary{ background:var(--ed-accent); color:var(--ed-accent-ink); border-color:transparent; }
+.ed-restore button:hover{ background:var(--ed-btn-hover); }
+
+@media (max-width:640px){
+  .ed-controls{ right:10px; bottom:10px; }
+  .ed-controls button{ padding:9px 12px; }
+  .ed-bar{ top:8px; left:8px; right:8px; transform:none; max-width:none; justify-content:flex-start; }
+}
+@media print{ .ed-controls,.ed-bar,.ed-toast,.ed-restore{ display:none !important; } #doc-content{ outline:0 !important; } }
+
+</style>
+</head>
+<body>
+<main id="doc-content" contenteditable="false">
+<h1>브라우저에서 고치는 문서</h1>
+<p class="lead">이 파일은 편집기를 품고 다닙니다. 서버도, 확장 프로그램도, 로그인도 필요 없습니다. 열어서 <b>편집 → 저장</b>이면 끝입니다.</p>
+<h2>무엇이 되나요</h2>
+<ul><li>글자 서식 (굵게·기울임·색·형광펜·크기)</li><li>제목·인용·목록·표·링크</li><li>파일로 저장 (지원 브라우저는 같은 파일로 다시 저장)</li><li>자동저장 백업과 복원</li><li>편집기 없는 배포용 사본 내보내기</li></ul>
+<h2>저장은 세 가지</h2>
+<p><b>저장</b>은 파일에 씁니다. <b>다른 이름</b>은 새 파일을 고릅니다. <b>배포용</b>은 편집기를 뺀 깨끗한 사본을 내려받습니다.</p>
+<blockquote>보고서·안내문·레터처럼 "한 파일로 주고받되 받는 쪽이 살짝 고칠 수 있으면 좋겠는" 문서에 맞습니다.</blockquote>
+</main>
+
+  <div id="ed-bar" class="ed-bar" hidden aria-label="서식 도구">
+    <select id="ed-block" title="문단 형식"><option value="" selected>형식</option><option value="p">본문</option><option value="h1">제목 1</option><option value="h2">제목 2</option><option value="h3">제목 3</option><option value="blockquote">인용</option></select>
+    <span class="sep"></span>
+    <button type="button" data-cmd="bold" title="굵게 (Cmd/Ctrl+B)"><b>B</b></button>
+    <button type="button" data-cmd="italic" title="기울임"><i>I</i></button>
+    <button type="button" data-cmd="underline" title="밑줄"><u>U</u></button>
+    <button type="button" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+    <span class="sep"></span>
+    <button type="button" data-cmd="insertUnorderedList" title="글머리 목록">• 목록</button>
+    <button type="button" data-cmd="insertOrderedList" title="번호 목록">1. 목록</button>
+    <span class="sep"></span>
+    <button type="button" data-cmd="justifyLeft" title="왼쪽 정렬">⬅</button>
+    <button type="button" data-cmd="justifyCenter" title="가운데 정렬">↔</button>
+    <button type="button" data-cmd="justifyRight" title="오른쪽 정렬">➡</button>
+    <span class="sep"></span>
+    <select id="ed-fontsize" title="글자 크기"><option value="3" selected>크기</option><option value="1">아주 작게</option><option value="2">작게</option><option value="3">보통</option><option value="5">크게</option><option value="6">아주 크게</option><option value="7">최대</option></select>
+    <span class="lab">색</span><input type="color" id="ed-forecolor" value="#1c1c22" title="글자색">
+    <span class="lab">배경</span><input type="color" id="ed-backcolor" value="#ffff88" title="형광펜">
+    <span class="sep"></span>
+    <button type="button" id="ed-link" title="링크">🔗</button>
+    <button type="button" id="ed-table" title="표 넣기">▦</button>
+  </div>
+  <div class="ed-controls">
+    <button type="button" id="ed-toggle" title="편집/보기 (Cmd/Ctrl+E)">편집</button>
+    <button type="button" id="ed-save" class="ed-primary" title="저장 (Cmd/Ctrl+S)">저장</button>
+    <button type="button" id="ed-saveas" title="다른 이름으로 저장">다른 이름</button>
+    <button type="button" id="ed-export" title="편집기 없는 배포용 사본">배포용</button>
+  </div>
+  <div id="ed-toast" class="ed-toast"></div>
+  <div id="ed-restore" class="ed-restore" hidden>
+    <b>저장하지 않은 자동저장 백업이 있습니다</b>
+    <span class="ed-when" id="ed-restore-when"></span>
+    <div class="ed-row"><button type="button" class="ed-primary" id="ed-restore-yes">백업 불러오기</button><button type="button" id="ed-restore-no">무시</button></div>
+  </div>
+<script type="application/json" id="doc-meta">{"id":"demo-edit-doc"}</script>
+<script id="ed-editor-script">
+/*!
+ * save-engine.js — browser file saving for editable standalone documents.
+ * File System Access API (remember the file across sessions via IndexedDB) with
+ * a Blob-download fallback, plus a localStorage autosave. Standard web APIs only:
+ * no server, no dependencies. Shared by edit-doc's HTML editor and Markdown editor.
+ * Giting edit-doc. MIT.
+ */
+(function (global) {
+  'use strict';
+
+  var DB_NAME = 'giting-edit-doc';
+  var STORE = 'handles';
+  var supported = typeof global.showSaveFilePicker === 'function';
+
+  function openDb() {
+    return new Promise(function (resolve, reject) {
+      var req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = function () { req.result.createObjectStore(STORE); };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function () { reject(req.error); };
+    });
+  }
+  function idbGet(key) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve) {
+        var r = db.transaction(STORE, 'readonly').objectStore(STORE).get(key);
+        r.onsuccess = function () { resolve(r.result || null); db.close(); };
+        r.onerror = function () { resolve(null); db.close(); };
+      });
+    }).catch(function () { return null; });
+  }
+  function idbSet(key, val) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve) {
+        var r = db.transaction(STORE, 'readwrite').objectStore(STORE).put(val, key);
+        r.onsuccess = function () { resolve(true); db.close(); };
+        r.onerror = function () { resolve(false); db.close(); };
+      });
+    }).catch(function () { return false; });
+  }
+
+  function download(text, name, mime) {
+    var blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name || 'document';
+    a.setAttribute('data-ed-transient', '');
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+
+  function verifyPermission(handle) {
+    if (!handle.queryPermission) return Promise.resolve(true);
+    var q = { mode: 'readwrite' };
+    return handle.queryPermission(q).then(function (p) {
+      if (p === 'granted') return true;
+      return handle.requestPermission(q).then(function (p2) { return p2 === 'granted'; });
+    });
+  }
+
+  // opts: { key, accept:{mime:[ext]}, acceptDesc, mime }
+  function Engine(opts) {
+    opts = opts || {};
+    this.key = opts.key || ('url:' + location.origin + location.pathname);
+    this.accept = opts.accept || { 'text/html': ['.html', '.htm'] };
+    this.acceptDesc = opts.acceptDesc || 'HTML 문서';
+    this.mime = opts.mime || 'text/html;charset=utf-8';
+    this.handle = null;
+  }
+  Engine.prototype.savedName = function () { return this.handle && this.handle.name ? this.handle.name : null; };
+  Engine.prototype.restore = function () {
+    var self = this;
+    if (!supported) return Promise.resolve(null);
+    return idbGet(this.key).then(function (h) {
+      if (h && typeof h.createWritable === 'function') { self.handle = h; return h; }
+      return null;
+    });
+  };
+  // returns { method: 'file'|'download'|'cancel', name?, reason? }
+  Engine.prototype.save = function (text, suggestedName, forceNew) {
+    var self = this;
+    if (!supported) { download(text, suggestedName, this.mime); return Promise.resolve({ method: 'download' }); }
+    return Promise.resolve().then(function () {
+      if (forceNew || !self.handle) {
+        return global.showSaveFilePicker({
+          suggestedName: suggestedName,
+          types: [{ description: self.acceptDesc, accept: self.accept }]
+        }).then(function (h) { self.handle = h; });
+      }
+      return verifyPermission(self.handle).then(function (ok) {
+        if (!ok) { var e = new Error('perm'); e.code = 'perm'; throw e; }
+      });
+    }).then(function () {
+      return self.handle.createWritable().then(function (w) {
+        return w.write(text).then(function () { return w.close(); });
+      });
+    }).then(function () {
+      return idbSet(self.key, self.handle).then(function () { return { method: 'file', name: self.handle.name }; });
+    }).catch(function (err) {
+      if (err && err.name === 'AbortError') return { method: 'cancel' };
+      download(text, suggestedName, self.mime);
+      if (forceNew) self.handle = null;
+      return { method: 'download', reason: err && (err.code || err.name) };
+    });
+  };
+
+  function Autosave(key) { this.key = 'giting-edit-doc:autosave:' + key; this.last = null; this.timer = null; }
+  Autosave.prototype.schedule = function (getText) {
+    var self = this;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.flush(getText); }, 700);
+  };
+  Autosave.prototype.pending = function () { return this.timer !== null; };
+  Autosave.prototype.flush = function (getText) {
+    clearTimeout(this.timer); this.timer = null;
+    try {
+      var t = getText();
+      if (t === this.last) return true;
+      localStorage.setItem(this.key, JSON.stringify({ ts: new Date().toISOString(), text: t }));
+      this.last = t; return true;
+    } catch (e) { return false; }
+  };
+  Autosave.prototype.read = function () {
+    try { var raw = localStorage.getItem(this.key); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  };
+  Autosave.prototype.clear = function () { try { localStorage.removeItem(this.key); } catch (e) {} };
+  Autosave.prototype.markSaved = function (t) { this.last = t; };
+
+  global.GitingSave = { supported: supported, Engine: Engine, Autosave: Autosave, download: download };
+})(window);
+
+/*!
+ * doc-editor.js — the in-page WYSIWYG editor that travels inside an edit-doc HTML file.
+ * Toggles contentEditable on #doc-content, drives a formatting toolbar via
+ * document.execCommand, autosaves to localStorage, restores on reload, saves the
+ * whole file (editor included) to disk via GitingSave, and exports a clean read-only
+ * copy. Namespaced ed-* IDs. Standard web APIs only. Giting edit-doc. MIT.
+ */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var content = $('doc-content');
+  if (!content) return;
+
+  // stable per-document id (so autosave/file handle track THIS document)
+  var meta = {};
+  try { meta = JSON.parse(($('doc-meta') || {}).textContent || '{}'); } catch (e) {}
+  if (!meta.id) { meta.id = 'doc-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7); }
+
+  var engine = new window.GitingSave.Engine({ key: meta.id });
+  var autosave = new window.GitingSave.Autosave(meta.id);
+  var editing = false;
+  var savedRange = null;
+
+  function toast(t) {
+    var el = $('ed-toast'); if (!el) return;
+    el.textContent = t; el.classList.add('show');
+    clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove('show'); }, 2800);
+  }
+
+  // ---- edit mode ----
+  function setEdit(on) {
+    editing = on;
+    content.setAttribute('contenteditable', on ? 'true' : 'false');
+    var bar = $('ed-bar'); if (bar) bar.hidden = !on;
+    var toggle = $('ed-toggle'); if (toggle) toggle.textContent = on ? '보기' : '편집';
+    try { document.execCommand('styleWithCSS', false, true); } catch (e) {}
+    if (on) content.focus({ preventScroll: true });
+  }
+
+  function focusContent() {
+    content.focus({ preventScroll: true });
+    if (savedRange) { var s = window.getSelection(); s.removeAllRanges(); s.addRange(savedRange); }
+  }
+  document.addEventListener('selectionchange', function () {
+    var s = window.getSelection();
+    if (s.rangeCount && content.contains(s.anchorNode)) savedRange = s.getRangeAt(0).cloneRange();
+  });
+
+  function exec(cmd, val) {
+    if (!editing) return;
+    focusContent();
+    try { document.execCommand('styleWithCSS', false, true); } catch (e) {}
+    document.execCommand(cmd, false, val);
+    autosave.schedule(fullDoc);
+    syncToolbar();
+  }
+  function block(tag) { exec('formatBlock', tag); }
+
+  function insertTable() {
+    if (!editing) return; focusContent();
+    var r = 2, c = 2, cells = '';
+    for (var i = 0; i < r; i++) { var row = ''; for (var j = 0; j < c; j++) row += '<td>&nbsp;</td>'; cells += '<tr>' + row + '</tr>'; }
+    var html = '<table class="ed-tbl" style="border-collapse:collapse;width:100%"><tbody>' + cells + '</tbody></table><p><br></p>';
+    document.execCommand('insertHTML', false, html);
+    autosave.schedule(fullDoc);
+  }
+
+  function makeLink() {
+    if (!editing) return; focusContent();
+    var url = window.prompt('링크 주소 (https://...)', 'https://');
+    if (url) exec('createLink', url);
+  }
+
+  // toolbar active-state sync
+  function q(c) { try { return document.queryCommandState(c); } catch (e) { return false; } }
+  function syncToolbar() {
+    var bar = $('ed-bar'); if (!bar) return;
+    ['bold', 'italic', 'underline', 'strikeThrough', 'insertUnorderedList', 'insertOrderedList',
+     'justifyLeft', 'justifyCenter', 'justifyRight'].forEach(function (cmd) {
+      var b = bar.querySelector('[data-cmd="' + cmd + '"]');
+      if (b) b.classList.toggle('on', q(cmd));
+    });
+  }
+
+  // ---- serialize ----
+  function suggestName() {
+    var h = content.querySelector('h1,h2,h3');
+    var t = (h && h.textContent.trim()) || (document.title || '').trim() || '문서';
+    return t.replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 60) + '.html';
+  }
+  // full document WITH the editor, opening in view mode
+  function fullDoc() {
+    var was = editing;
+    if (was) setEdit(false);
+    var restore = $('ed-restore'); var rWasOpen = restore && !restore.hidden;
+    if (restore) restore.hidden = true;
+    var meta$ = $('doc-meta'); if (meta$) meta$.textContent = JSON.stringify({ id: meta.id });
+    var html = '<!doctype html>\n' + document.documentElement.outerHTML;
+    if (rWasOpen && restore) restore.hidden = false;
+    if (was) setEdit(true);
+    return html;
+  }
+  // clean read-only copy: editor UI, engine, style, meta all removed
+  function readOnlyDoc() {
+    var clone = document.documentElement.cloneNode(true);
+    ['ed-bar', 'ed-toast', 'ed-restore', 'ed-editor-style', 'ed-editor-script', 'doc-meta'].forEach(function (id) {
+      var el = clone.querySelector('#' + id); if (el) el.remove();
+    });
+    clone.querySelectorAll('.ed-controls,[data-ed-transient]').forEach(function (el) { el.remove(); });
+    var body = clone.querySelector('#doc-content'); if (body) body.setAttribute('contenteditable', 'false');
+    return '<!doctype html>\n' + clone.outerHTML;
+  }
+  // exposed for verification (SKILL.md references these)
+  window.EditDoc = { getHTML: fullDoc, getReadOnlyHTML: readOnlyDoc, setEdit: setEdit, id: meta.id };
+
+  // ---- save / export ----
+  function reportSave(res) {
+    if (!res || res.method === 'cancel') return;
+    autosave.markSaved(fullDoc());
+    if (res.method === 'file') toast('저장했습니다 · ' + res.name);
+    else toast('내려받았습니다 (이 브라우저는 직접 저장을 지원하지 않아 다운로드했습니다)');
+  }
+  function save(forceNew) {
+    autosave.flush(fullDoc);
+    engine.save(fullDoc(), suggestName(), forceNew).then(reportSave).catch(function () { toast('저장에 실패했습니다'); });
+  }
+  function exportReadOnly() {
+    var name = suggestName().replace(/\.html$/i, '-배포용.html');
+    window.GitingSave.download(readOnlyDoc(), name, 'text/html;charset=utf-8');
+    toast('배포용 사본을 내려받았습니다 (편집기 없음)');
+  }
+
+  // ---- autosave + restore ----
+  content.addEventListener('input', function () { if (editing) autosave.schedule(fullDoc); });
+  window.addEventListener('pagehide', function () { if (autosave.pending()) autosave.flush(fullDoc); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden' && autosave.pending()) autosave.flush(fullDoc);
+  });
+
+  function checkRestore() {
+    var a = autosave.read(); if (!a || !a.text) return;
+    // only offer if the backup differs from what is on the page now
+    if (a.text === fullDoc()) return;
+    var banner = $('ed-restore'); if (!banner) return;
+    var when = $('ed-restore-when');
+    if (when) { try { when.textContent = new Date(a.ts).toLocaleString('ko-KR'); } catch (e) { when.textContent = a.ts; } }
+    banner.hidden = false;
+    var yes = $('ed-restore-yes'), no = $('ed-restore-no');
+    if (yes) yes.onclick = function () {
+      var d = document.implementation.createHTMLDocument(''); d.documentElement.innerHTML = a.text.replace(/^<!doctype[^>]*>/i, '');
+      var src = d.querySelector('#doc-content');
+      if (src) { content.innerHTML = src.innerHTML; toast('자동저장 백업을 불러왔습니다'); }
+      banner.hidden = true;
+    };
+    if (no) no.onclick = function () { banner.hidden = true; };
+  }
+
+  // ---- wire toolbar ----
+  var bar = $('ed-bar');
+  if (bar) {
+    bar.querySelectorAll('[data-cmd]').forEach(function (b) { b.addEventListener('click', function () { exec(b.getAttribute('data-cmd')); }); });
+    bar.querySelectorAll('[data-block]').forEach(function (b) { b.addEventListener('click', function () { block(b.getAttribute('data-block')); }); });
+    bar.addEventListener('mousedown', function (e) { if (e.target.closest('button')) e.preventDefault(); });
+    var bsel = $('ed-block'); if (bsel) bsel.addEventListener('change', function () { block(bsel.value); bsel.selectedIndex = 0; });
+    var fsel = $('ed-fontsize'); if (fsel) fsel.addEventListener('change', function () { exec('fontSize', fsel.value); });
+    var fc = $('ed-forecolor'); if (fc) fc.addEventListener('input', function () { exec('foreColor', fc.value); });
+    var bc = $('ed-backcolor'); if (bc) bc.addEventListener('input', function () { if (!document.execCommand('hiliteColor', false, bc.value)) exec('backColor', bc.value); autosave.schedule(fullDoc); });
+    var lk = $('ed-link'); if (lk) lk.addEventListener('click', makeLink);
+    var tb = $('ed-table'); if (tb) tb.addEventListener('click', insertTable);
+  }
+  document.addEventListener('selectionchange', function () { if (editing) syncToolbar(); });
+
+  // controls
+  var toggle = $('ed-toggle'); if (toggle) toggle.addEventListener('click', function () { setEdit(!editing); });
+  var saveBtn = $('ed-save'); if (saveBtn) saveBtn.addEventListener('click', function () { save(false); });
+  var saveAsBtn = $('ed-saveas'); if (saveAsBtn) saveAsBtn.addEventListener('click', function () { save(true); });
+  var exportBtn = $('ed-export'); if (exportBtn) exportBtn.addEventListener('click', exportReadOnly);
+
+  // keyboard: Cmd/Ctrl+E toggle edit, Cmd/Ctrl+S save
+  document.addEventListener('keydown', function (e) {
+    var mod = e.metaKey || e.ctrlKey; if (!mod) return;
+    var k = e.key.toLowerCase();
+    if (k === 'e') { e.preventDefault(); setEdit(!editing); }
+    else if (k === 's') { e.preventDefault(); if (!editing) setEdit(true); save(false); }
+  });
+
+  // boot: remember a prior file handle, offer restore
+  engine.restore().then(function (h) { if (h) { /* handle remembered; save() will reuse it */ } });
+  autosave.markSaved(fullDoc());
+  checkRestore();
+})();
+
+</script>
+</body>
+</html>

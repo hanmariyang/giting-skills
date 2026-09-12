@@ -1,0 +1,9 @@
+{
+  "name": "edit-doc",
+  "version": "0.1.0",
+  "description": "브라우저에서 바로 고치고 저장하는 문서를 만든다. HTML은 편집기를 문서 안에 품고(보고서·안내문·레터), Markdown은 소스+프리뷰 단독 편집기로 .md를 열고 저장한다. File System Access + 자동저장 + 배포용 내보내기. 서버·확장·로그인·의존성 0.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["html", "markdown", "editable-document", "contenteditable", "file-system-access", "standalone", "korean", "no-dependency"]
+}

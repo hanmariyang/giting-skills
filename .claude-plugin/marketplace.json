@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.7.0"
+    "version": "0.8.0"
   },
   "plugins": [
     {
@@ -28,6 +28,16 @@
       "name": "type-menu",
       "source": "./plugins/type-menu",
       "description": "타입스크립트 에러 사전 — TS 에러를 사람 말로 옮기고 any 없이 제대로 고침. 6코스 15항목, 실제 tsc 원문 + before/after"
+    },
+    {
+      "name": "edit-doc",
+      "source": "./plugins/edit-doc",
+      "description": "브라우저에서 바로 고치고 저장하는 문서 — HTML은 편집기를 품고, Markdown은 소스+프리뷰 단독 편집기. File System Access + 자동저장 + 배포용 내보내기, 의존성 0"
+    },
+    {
+      "name": "pixel-run",
+      "source": "./plugins/pixel-run",
+      "description": "캐릭터 참조 한 장으로 픽셀아트 달리기 사이클 — 4x4·16프레임 프롬프트 템플릿 + 결정적 후처리기(자르기·제자리 정렬·투명 GIF·QA). 제자리서 달리고 안 미끄러짐"
     }
   ]
 }

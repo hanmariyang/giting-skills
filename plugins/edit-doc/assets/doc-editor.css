@@ -1,0 +1,67 @@
+/* doc-editor.css — chrome for the in-page HTML editor. Namespaced ed-* / --ed-*
+   so it never fights the document's own styles. Light/dark aware. Giting edit-doc. MIT. */
+:root{
+  --ed-accent:#5b5bd6; --ed-accent-ink:#fff;
+  --ed-bar-bg:rgba(255,255,255,.92); --ed-bar-ink:#1c1c22; --ed-bar-mut:#6b6b76;
+  --ed-bar-bd:rgba(0,0,0,.1); --ed-btn-hover:rgba(0,0,0,.06); --ed-shadow:0 6px 24px rgba(0,0,0,.16);
+  --ed-toast-bg:#1c1c22; --ed-toast-ink:#fff;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ed-bar-bg:rgba(30,30,36,.94); --ed-bar-ink:#f0f0f4; --ed-bar-mut:#a0a0aa;
+    --ed-bar-bd:rgba(255,255,255,.14); --ed-btn-hover:rgba(255,255,255,.1);
+    --ed-toast-bg:#f0f0f4; --ed-toast-ink:#1c1c22;
+  }
+}
+#doc-content[contenteditable="true"]{ outline:2px dashed var(--ed-accent); outline-offset:8px; border-radius:4px; }
+#doc-content[contenteditable="true"]:focus{ outline-style:solid; }
+
+.ed-controls{ position:fixed; right:16px; bottom:16px; z-index:2147483000; display:flex; gap:8px;
+  font:500 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.ed-controls button{ appearance:none; border:1px solid var(--ed-bar-bd); background:var(--ed-bar-bg);
+  color:var(--ed-bar-ink); padding:10px 14px; border-radius:999px; cursor:pointer; box-shadow:var(--ed-shadow);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.ed-controls button:hover{ background:var(--ed-btn-hover); }
+.ed-controls .ed-primary{ background:var(--ed-accent); color:var(--ed-accent-ink); border-color:transparent; }
+.ed-controls .ed-primary:hover{ filter:brightness(1.06); }
+
+.ed-bar{ position:fixed; left:50%; top:14px; transform:translateX(-50%); z-index:2147483000;
+  display:flex; align-items:center; gap:2px; flex-wrap:nowrap; max-width:calc(100vw - 24px); overflow-x:auto;
+  padding:6px; border:1px solid var(--ed-bar-bd); background:var(--ed-bar-bg); border-radius:12px;
+  box-shadow:var(--ed-shadow); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  font:500 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ed-bar-ink); scrollbar-width:thin; }
+.ed-bar[hidden]{ display:none; }
+.ed-bar button, .ed-bar select{ appearance:none; border:0; background:transparent; color:var(--ed-bar-ink);
+  min-width:32px; height:32px; padding:0 8px; border-radius:8px; cursor:pointer; white-space:nowrap; }
+.ed-bar button:hover, .ed-bar select:hover{ background:var(--ed-btn-hover); }
+.ed-bar button.on{ background:var(--ed-accent); color:var(--ed-accent-ink); }
+.ed-bar .sep{ width:1px; height:22px; background:var(--ed-bar-bd); margin:0 4px; flex:none; }
+.ed-bar select{ min-width:auto; }
+.ed-bar input[type="color"]{ width:28px; height:28px; padding:0; border:0; background:transparent; cursor:pointer; }
+.ed-bar .lab{ color:var(--ed-bar-mut); padding:0 4px; font-size:12px; }
+
+.ed-toast{ position:fixed; left:50%; bottom:70px; transform:translateX(-50%) translateY(12px); z-index:2147483001;
+  background:var(--ed-toast-bg); color:var(--ed-toast-ink); padding:10px 16px; border-radius:10px;
+  font:500 14px/1.4 system-ui,sans-serif; box-shadow:var(--ed-shadow); opacity:0; pointer-events:none;
+  transition:opacity .2s, transform .2s; max-width:min(90vw,420px); }
+.ed-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.ed-restore{ position:fixed; left:16px; bottom:16px; z-index:2147483000; max-width:min(92vw,380px);
+  background:var(--ed-bar-bg); color:var(--ed-bar-ink); border:1px solid var(--ed-bar-bd); border-radius:12px;
+  padding:14px 16px; box-shadow:var(--ed-shadow); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  font:400 14px/1.5 system-ui,sans-serif; }
+.ed-restore[hidden]{ display:none; }
+.ed-restore b{ display:block; margin-bottom:4px; font-weight:600; }
+.ed-restore .ed-when{ color:var(--ed-bar-mut); font-size:12px; }
+.ed-restore .ed-row{ display:flex; gap:8px; margin-top:10px; }
+.ed-restore button{ appearance:none; border:1px solid var(--ed-bar-bd); background:transparent; color:var(--ed-bar-ink);
+  padding:7px 12px; border-radius:8px; cursor:pointer; font:inherit; }
+.ed-restore button.ed-primary{ background:var(--ed-accent); color:var(--ed-accent-ink); border-color:transparent; }
+.ed-restore button:hover{ background:var(--ed-btn-hover); }
+
+@media (max-width:640px){
+  .ed-controls{ right:10px; bottom:10px; }
+  .ed-controls button{ padding:9px 12px; }
+  .ed-bar{ top:8px; left:8px; right:8px; transform:none; max-width:none; justify-content:flex-start; }
+}
+@media print{ .ed-controls,.ed-bar,.ed-toast,.ed-restore{ display:none !important; } #doc-content{ outline:0 !important; } }

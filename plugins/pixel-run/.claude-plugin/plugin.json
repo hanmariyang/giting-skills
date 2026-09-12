@@ -1,0 +1,9 @@
+{
+  "name": "pixel-run",
+  "version": "0.1.0",
+  "description": "캐릭터 참조 이미지 하나로 픽셀아트 달리기 사이클을 만든다. 4x4·16프레임 스프라이트 시트 프롬프트 템플릿 + 결정적 후처리기(자르기·제자리 정렬·투명 GIF 조립·QA). 캐릭터가 미끄러지지 않고 제자리서 달린다.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["pixel-art", "sprite-sheet", "run-cycle", "animation", "gif", "gamedev", "chibi", "korean"]
+}

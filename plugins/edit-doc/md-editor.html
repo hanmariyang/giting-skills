@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markdown 편집기 · edit-md</title>
+<style>
+:root{--fg:#1c1c22;--mut:#6b6b76;--bg:#fff;--panel:#fafafb;--rule:#e6e6ec;--accent:#5b5bd6;--code:#f4f4f6}
+@media(prefers-color-scheme:dark){:root{--fg:#e8e8ee;--mut:#a0a0aa;--bg:#16161a;--panel:#1c1c22;--rule:#2a2a32;--accent:#9b9bf0;--code:#26262c}}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Pretendard",system-ui,sans-serif;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--rule);background:var(--panel)}
+header .ttl{font-weight:700;margin-right:auto;max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+header button{appearance:none;border:1px solid var(--rule);background:var(--bg);color:var(--fg);height:30px;padding:0 10px;border-radius:7px;cursor:pointer;font:inherit}
+header button:hover{background:var(--rule)}
+header button.on{background:var(--accent);color:#fff;border-color:transparent}
+header .primary{background:var(--accent);color:#fff;border-color:transparent}
+header .sep{width:1px;height:20px;background:var(--rule);margin:0 3px}
+header .stats{color:var(--mut);font-size:12px;margin-left:4px}
+main{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr}
+#md-src{border:0;outline:0;resize:none;padding:20px;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);color:var(--fg);width:100%;height:100%}
+.pv{overflow:auto;padding:20px 24px;border-left:1px solid var(--rule);background:var(--panel)}
+body[data-view="source"] main{grid-template-columns:1fr}body[data-view="source"] .pv{display:none}
+body[data-view="preview"] main{grid-template-columns:1fr}body[data-view="preview"] #md-src{display:none}body[data-view="preview"] .pv{border-left:0}
+#md-preview{max-width:44rem}
+#md-preview h1{font-size:1.8rem;margin:.2em 0 .4em}#md-preview h2{font-size:1.35rem;margin:1.4em 0 .3em}#md-preview h3{font-size:1.12rem}
+#md-preview p{margin:0 0 1em;line-height:1.7}#md-preview a{color:var(--accent)}
+#md-preview pre{background:var(--code);padding:1em;border-radius:8px;overflow:auto}#md-preview code{font-family:ui-monospace,monospace}
+#md-preview blockquote{border-left:3px solid var(--accent);margin:1em 0;padding:.2em 1em;color:var(--mut)}
+#md-preview table{border-collapse:collapse}#md-preview th,#md-preview td{border:1px solid var(--rule);padding:.4em .7em}
+#md-preview img{max-width:100%}#md-preview hr{border:0;border-top:1px solid var(--rule);margin:2em 0}
+.md-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);background:#1c1c22;color:#fff;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+@media(prefers-color-scheme:dark){.md-toast{background:#f0f0f4;color:#1c1c22}}
+.md-toast.show{opacity:1;transform:translateX(-50%)}
+.md-restore{position:fixed;left:16px;bottom:16px;background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;box-shadow:0 6px 24px rgba(0,0,0,.16);z-index:40;max-width:min(92vw,360px)}
+.md-restore[hidden]{display:none}.md-restore b{display:block;margin-bottom:4px}.md-restore .w{color:var(--mut);font-size:12px}
+.md-restore .row{display:flex;gap:8px;margin-top:10px}.md-restore button{border:1px solid var(--rule);background:var(--bg);color:var(--fg);padding:7px 12px;border-radius:8px;cursor:pointer}
+.md-restore .primary{background:var(--accent);color:#fff;border-color:transparent}
+@media(max-width:720px){main{grid-template-columns:1fr}body:not([data-view="preview"]) .pv{display:none}header .ttl{max-width:100%;order:-1;width:100%}}
+</style>
+</head>
+<body data-view="split">
+<header>
+  <span class="ttl" id="md-title">document</span>
+  <button type="button" id="md-bold" title="굵게"><b>B</b></button>
+  <button type="button" id="md-italic" title="기울임"><i>I</i></button>
+  <button type="button" id="md-h" title="제목">H</button>
+  <button type="button" id="md-ul" title="목록">•</button>
+  <button type="button" id="md-ol" title="번호 목록">1.</button>
+  <button type="button" id="md-quote" title="인용">❝</button>
+  <button type="button" id="md-code" title="코드">&lt;/&gt;</button>
+  <button type="button" id="md-link" title="링크">🔗</button>
+  <span class="sep"></span>
+  <button type="button" id="md-view-split" title="분할">◫</button>
+  <button type="button" id="md-view-source" title="소스만">☰</button>
+  <button type="button" id="md-view-preview" title="미리보기만">👁</button>
+  <span class="sep"></span>
+  <button type="button" id="md-open" title="열기 (Cmd/Ctrl+O)">열기</button>
+  <button type="button" id="md-save" class="primary" title="저장 (Cmd/Ctrl+S)">저장</button>
+  <button type="button" id="md-saveas" title="다른 이름으로">다른 이름</button>
+  <button type="button" id="md-exporthtml" title="HTML로 내보내기">HTML</button>
+  <span class="stats" id="md-stats"></span>
+</header>
+<main>
+  <textarea id="md-src" spellcheck="false"># 제목을 여기에
+
+**edit-md** 는 마크다운을 왼쪽에서 쓰고 오른쪽에서 바로 봅니다. `Cmd/Ctrl+S` 로 `.md` 파일에 저장합니다.
+
+## 되는 것
+
+- 굵게, *기울임*, `인라인 코드`, ~~취소선~~
+- 목록, 번호 목록, 인용, 구분선
+- 링크와 이미지, 표
+
+> 열기 → 고치기 → 저장. 지원 브라우저는 같은 파일로 다시 저장합니다.
+
+| 기능 | 단축키 |
+| --- | --- |
+| 저장 | Cmd/Ctrl+S |
+| 열기 | Cmd/Ctrl+O |
+| 굵게 | Cmd/Ctrl+B |
+</textarea>
+  <div class="pv"><article id="md-preview"></article></div>
+</main>
+<div id="md-toast" class="md-toast"></div>
+<div id="md-restore" class="md-restore" hidden>
+  <b>저장하지 않은 자동저장 백업이 있습니다</b><span class="w" id="md-restore-when"></span>
+  <div class="row"><button type="button" class="primary" id="md-restore-yes">불러오기</button><button type="button" id="md-restore-no">무시</button></div>
+</div>
+<script>
+/*!
+ * save-engine.js — browser file saving for editable standalone documents.
+ * File System Access API (remember the file across sessions via IndexedDB) with
+ * a Blob-download fallback, plus a localStorage autosave. Standard web APIs only:
+ * no server, no dependencies. Shared by edit-doc's HTML editor and Markdown editor.
+ * Giting edit-doc. MIT.
+ */
+(function (global) {
+  'use strict';
+
+  var DB_NAME = 'giting-edit-doc';
+  var STORE = 'handles';
+  var supported = typeof global.showSaveFilePicker === 'function';
+
+  function openDb() {
+    return new Promise(function (resolve, reject) {
+      var req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = function () { req.result.createObjectStore(STORE); };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function () { reject(req.error); };
+    });
+  }
+  function idbGet(key) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve) {
+        var r = db.transaction(STORE, 'readonly').objectStore(STORE).get(key);
+        r.onsuccess = function () { resolve(r.result || null); db.close(); };
+        r.onerror = function () { resolve(null); db.close(); };
+      });
+    }).catch(function () { return null; });
+  }
+  function idbSet(key, val) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve) {
+        var r = db.transaction(STORE, 'readwrite').objectStore(STORE).put(val, key);
+        r.onsuccess = function () { resolve(true); db.close(); };
+        r.onerror = function () { resolve(false); db.close(); };
+      });
+    }).catch(function () { return false; });
+  }
+
+  function download(text, name, mime) {
+    var blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name || 'document';
+    a.setAttribute('data-ed-transient', '');
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+
+  function verifyPermission(handle) {
+    if (!handle.queryPermission) return Promise.resolve(true);
+    var q = { mode: 'readwrite' };
+    return handle.queryPermission(q).then(function (p) {
+      if (p === 'granted') return true;
+      return handle.requestPermission(q).then(function (p2) { return p2 === 'granted'; });
+    });
+  }
+
+  // opts: { key, accept:{mime:[ext]}, acceptDesc, mime }
+  function Engine(opts) {
+    opts = opts || {};
+    this.key = opts.key || ('url:' + location.origin + location.pathname);
+    this.accept = opts.accept || { 'text/html': ['.html', '.htm'] };
+    this.acceptDesc = opts.acceptDesc || 'HTML 문서';
+    this.mime = opts.mime || 'text/html;charset=utf-8';
+    this.handle = null;
+  }
+  Engine.prototype.savedName = function () { return this.handle && this.handle.name ? this.handle.name : null; };
+  Engine.prototype.restore = function () {
+    var self = this;
+    if (!supported) return Promise.resolve(null);
+    return idbGet(this.key).then(function (h) {
+      if (h && typeof h.createWritable === 'function') { self.handle = h; return h; }
+      return null;
+    });
+  };
+  // returns { method: 'file'|'download'|'cancel', name?, reason? }
+  Engine.prototype.save = function (text, suggestedName, forceNew) {
+    var self = this;
+    if (!supported) { download(text, suggestedName, this.mime); return Promise.resolve({ method: 'download' }); }
+    return Promise.resolve().then(function () {
+      if (forceNew || !self.handle) {
+        return global.showSaveFilePicker({
+          suggestedName: suggestedName,
+          types: [{ description: self.acceptDesc, accept: self.accept }]
+        }).then(function (h) { self.handle = h; });
+      }
+      return verifyPermission(self.handle).then(function (ok) {
+        if (!ok) { var e = new Error('perm'); e.code = 'perm'; throw e; }
+      });
+    }).then(function () {
+      return self.handle.createWritable().then(function (w) {
+        return w.write(text).then(function () { return w.close(); });
+      });
+    }).then(function () {
+      return idbSet(self.key, self.handle).then(function () { return { method: 'file', name: self.handle.name }; });
+    }).catch(function (err) {
+      if (err && err.name === 'AbortError') return { method: 'cancel' };
+      download(text, suggestedName, self.mime);
+      if (forceNew) self.handle = null;
+      return { method: 'download', reason: err && (err.code || err.name) };
+    });
+  };
+
+  function Autosave(key) { this.key = 'giting-edit-doc:autosave:' + key; this.last = null; this.timer = null; }
+  Autosave.prototype.schedule = function (getText) {
+    var self = this;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(function () { self.flush(getText); }, 700);
+  };
+  Autosave.prototype.pending = function () { return this.timer !== null; };
+  Autosave.prototype.flush = function (getText) {
+    clearTimeout(this.timer); this.timer = null;
+    try {
+      var t = getText();
+      if (t === this.last) return true;
+      localStorage.setItem(this.key, JSON.stringify({ ts: new Date().toISOString(), text: t }));
+      this.last = t; return true;
+    } catch (e) { return false; }
+  };
+  Autosave.prototype.read = function () {
+    try { var raw = localStorage.getItem(this.key); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  };
+  Autosave.prototype.clear = function () { try { localStorage.removeItem(this.key); } catch (e) {} };
+  Autosave.prototype.markSaved = function (t) { this.last = t; };
+
+  global.GitingSave = { supported: supported, Engine: Engine, Autosave: Autosave, download: download };
+})(window);
+
+/*!
+ * md-render.js — a small, dependency-free Markdown -> HTML renderer for the
+ * edit-md live preview. Escapes HTML first (safe for untrusted text), then handles
+ * the common blocks: headings, fenced/indented code, blockquotes, lists (ul/ol),
+ * hr, tables, paragraphs, and inline bold/italic/code/links/images. Not a full
+ * CommonMark implementation; deliberately compact. Giting edit-doc. MIT.
+ */
+(function (global) {
+  'use strict';
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function inline(s) {
+    // code spans first (protect their content)
+    var codes = [];
+    s = s.replace(/`([^`]+)`/g, function (_, c) { codes.push('<code>' + c + '</code>'); return ' ' + (codes.length - 1) + ' '; });
+    // images then links
+    s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, function (_, a, u) { return '<img src="' + u + '" alt="' + a + '">'; });
+    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, function (_, t, u) {
+      var safe = /^(https?:|mailto:|#|\/)/i.test(u) ? u : '#';
+      return '<a href="' + safe + '"' + (/^https?:/i.test(u) ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + t + '</a>';
+    });
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/__([^_]+)__/g, '<strong>$1</strong>');
+    s = s.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>').replace(/(^|[^_])_([^_\n]+)_/g, '$1<em>$2</em>');
+    s = s.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+    // restore code spans
+    s = s.replace(/ (\d+) /g, function (_, i) { return codes[+i]; });
+    return s;
+  }
+
+  function tableRow(line) { return line.trim().replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }); }
+  function isTableSep(line) { return /^\s*\|?[\s:-]*-[-\s:|]*\|?\s*$/.test(line) && line.indexOf('-') >= 0; }
+
+  function render(src) {
+    var lines = esc(src.replace(/\r\n?/g, '\n')).split('\n');
+    var out = [], i = 0;
+    function para(buf) { if (buf.length) out.push('<p>' + inline(buf.join(' ')) + '</p>'); }
+    while (i < lines.length) {
+      var line = lines[i];
+      // fenced code
+      var fence = line.match(/^\s*```(.*)$/);
+      if (fence) {
+        var code = [], j = i + 1;
+        while (j < lines.length && !/^\s*```\s*$/.test(lines[j])) { code.push(lines[j]); j++; }
+        out.push('<pre><code>' + code.join('\n') + '</code></pre>');
+        i = j + 1; continue;
+      }
+      // blank
+      if (/^\s*$/.test(line)) { i++; continue; }
+      // heading
+      var h = line.match(/^(#{1,6})\s+(.*)$/);
+      if (h) { out.push('<h' + h[1].length + '>' + inline(h[2].trim()) + '</h' + h[1].length + '>'); i++; continue; }
+      // hr
+      if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { out.push('<hr>'); i++; continue; }
+      // blockquote
+      if (/^\s*>/.test(line)) {
+        var qb = [];
+        while (i < lines.length && /^\s*>/.test(lines[i])) { qb.push(lines[i].replace(/^\s*>\s?/, '')); i++; }
+        out.push('<blockquote>' + render(qb.join('\n')) + '</blockquote>'); continue;
+      }
+      // table
+      if (line.indexOf('|') >= 0 && i + 1 < lines.length && isTableSep(lines[i + 1])) {
+        var head = tableRow(line), rows = [], k = i + 2;
+        while (k < lines.length && lines[k].indexOf('|') >= 0 && !/^\s*$/.test(lines[k])) { rows.push(tableRow(lines[k])); k++; }
+        var th = head.map(function (c) { return '<th>' + inline(c) + '</th>'; }).join('');
+        var tb = rows.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + inline(c) + '</td>'; }).join('') + '</tr>'; }).join('');
+        out.push('<table><thead><tr>' + th + '</tr></thead><tbody>' + tb + '</tbody></table>');
+        i = k; continue;
+      }
+      // lists
+      var ul = line.match(/^(\s*)[-*+]\s+(.*)$/), ol = line.match(/^(\s*)\d+\.\s+(.*)$/);
+      if (ul || ol) {
+        var ordered = !!ol, items = [];
+        while (i < lines.length) {
+          var m = lines[i].match(ordered ? /^(\s*)\d+\.\s+(.*)$/ : /^(\s*)[-*+]\s+(.*)$/);
+          if (!m) break;
+          items.push('<li>' + inline(m[2]) + '</li>'); i++;
+        }
+        out.push('<' + (ordered ? 'ol' : 'ul') + '>' + items.join('') + '</' + (ordered ? 'ol' : 'ul') + '>'); continue;
+      }
+      // paragraph (gather until blank / block start)
+      var buf = [];
+      while (i < lines.length && !/^\s*$/.test(lines[i]) && !/^(#{1,6}\s|\s*>|\s*```|\s*([-*_])(\s*\2){2,}\s*$)/.test(lines[i])
+             && !(lines[i].match(/^(\s*)[-*+]\s+/) || lines[i].match(/^(\s*)\d+\.\s+/))) { buf.push(lines[i]); i++; }
+      para(buf);
+    }
+    return out.join('\n');
+  }
+
+  global.GitingMd = { render: render };
+})(window);
+
+/*!
+ * md-editor-app.js — the standalone Markdown editor (source + live preview) that
+ * opens and saves a .md file. A .md is plain text so it cannot carry a JS editor;
+ * this is a reusable tool that edits any markdown file, using GitingSave to write
+ * back to disk (or download) and GitingMd for the preview. Giting edit-doc. MIT.
+ */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var ta = $('md-src'), preview = $('md-preview'), title = $('md-title');
+  if (!ta) return;
+
+  var docKey = 'md:' + location.origin + location.pathname;
+  var engine = new window.GitingSave.Engine({
+    key: docKey, accept: { 'text/markdown': ['.md', '.markdown', '.mdown'], 'text/plain': ['.txt'] },
+    acceptDesc: 'Markdown 문서', mime: 'text/markdown;charset=utf-8'
+  });
+  var autosave = new window.GitingSave.Autosave(docKey);
+  var curName = 'document.md';
+
+  function toast(t) {
+    var el = $('md-toast'); if (!el) return;
+    el.textContent = t; el.classList.add('show');
+    clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove('show'); }, 2800);
+  }
+  function getText() { return ta.value; }
+  function renderPreview() { if (preview) preview.innerHTML = window.GitingMd.render(ta.value); }
+  function stats() {
+    var t = ta.value, words = (t.trim().match(/\S+/g) || []).length;
+    var c = $('md-stats'); if (c) c.textContent = words + '단어 · ' + t.length + '자';
+  }
+  function firstHeading() {
+    var m = ta.value.match(/^#{1,6}\s+(.+)$/m);
+    return (m ? m[1] : 'document').replace(/[\\/:*?"<>|]/g, '').trim().slice(0, 60) || 'document';
+  }
+  function suggestName() { return (curName && /\.(md|markdown|mdown|txt)$/i.test(curName)) ? curName : (firstHeading() + '.md'); }
+
+  function onChange() {
+    renderPreview(); stats(); autosave.schedule(getText);
+    if (title) title.textContent = firstHeading();
+  }
+  ta.addEventListener('input', onChange);
+  window.addEventListener('pagehide', function () { if (autosave.pending()) autosave.flush(getText); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden' && autosave.pending()) autosave.flush(getText);
+  });
+
+  // ---- open ----
+  function loadText(text, name) {
+    ta.value = text; curName = name || curName; onChange();
+    autosave.markSaved(text); toast('열었습니다 · ' + (name || ''));
+  }
+  function openFile() {
+    if (window.showOpenFilePicker) {
+      window.showOpenFilePicker({ types: [{ description: 'Markdown', accept: { 'text/markdown': ['.md', '.markdown', '.mdown'], 'text/plain': ['.txt'] } }] })
+        .then(function (arr) {
+          var handle = arr[0]; engine.handle = handle;
+          return handle.getFile().then(function (f) { return f.text().then(function (t) { loadText(t, f.name); }); });
+        }).catch(function (e) { if (e && e.name !== 'AbortError') toast('열기에 실패했습니다'); });
+    } else {
+      var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.md,.markdown,.mdown,.txt,text/markdown,text/plain';
+      inp.onchange = function () { var f = inp.files[0]; if (!f) return; f.text().then(function (t) { loadText(t, f.name); }); };
+      inp.click();
+    }
+  }
+
+  // ---- save ----
+  function reportSave(res) {
+    if (!res || res.method === 'cancel') return;
+    autosave.markSaved(getText());
+    if (res.method === 'file') { curName = res.name || curName; toast('저장했습니다 · ' + res.name); }
+    else toast('내려받았습니다 (이 브라우저는 직접 저장을 지원하지 않아 다운로드했습니다)');
+  }
+  function save(forceNew) {
+    autosave.flush(getText);
+    engine.save(getText(), suggestName(), forceNew).then(reportSave).catch(function () { toast('저장에 실패했습니다'); });
+  }
+  function exportHtml() {
+    var docHtml = '<!doctype html>\n<html lang="ko"><head><meta charset="utf-8">'
+      + '<meta name="viewport" content="width=device-width,initial-scale=1"><title>' + firstHeading() + '</title>'
+      + '<style>body{max-width:52rem;margin:2rem auto;padding:0 1.2rem;font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c1c22}'
+      + 'pre{background:#f4f4f6;padding:1rem;border-radius:8px;overflow:auto}code{font-family:ui-monospace,monospace}'
+      + 'blockquote{border-left:3px solid #d0d0d8;margin:0;padding:.2rem 1rem;color:#55555f}'
+      + 'table{border-collapse:collapse}th,td{border:1px solid #d0d0d8;padding:.4rem .7rem}img{max-width:100%}'
+      + '@media(prefers-color-scheme:dark){body{background:#16161a;color:#e8e8ee}pre{background:#26262c}}</style></head><body>'
+      + window.GitingMd.render(ta.value) + '</body></html>';
+    window.GitingSave.download(docHtml, firstHeading() + '.html', 'text/html;charset=utf-8');
+    toast('HTML로 내려받았습니다');
+  }
+
+  // ---- toolbar: wrap/prefix selection ----
+  function surround(before, after) {
+    ta.focus();
+    var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value, sel = v.slice(s, e);
+    ta.value = v.slice(0, s) + before + sel + after + v.slice(e);
+    ta.selectionStart = s + before.length; ta.selectionEnd = e + before.length;
+    onChange();
+  }
+  function prefixLines(prefix) {
+    ta.focus();
+    var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value;
+    var ls = v.lastIndexOf('\n', s - 1) + 1;
+    var block = v.slice(ls, e).split('\n').map(function (l) { return prefix + l; }).join('\n');
+    ta.value = v.slice(0, ls) + block + v.slice(e); onChange();
+  }
+  var acts = {
+    'md-bold': function () { surround('**', '**'); }, 'md-italic': function () { surround('*', '*'); },
+    'md-code': function () { surround('`', '`'); }, 'md-h': function () { prefixLines('## '); },
+    'md-ul': function () { prefixLines('- '); }, 'md-ol': function () { prefixLines('1. '); },
+    'md-quote': function () { prefixLines('> '); },
+    'md-link': function () { var u = window.prompt('링크 주소', 'https://'); if (u) surround('[', '](' + u + ')'); }
+  };
+  Object.keys(acts).forEach(function (id) { var b = $(id); if (b) b.addEventListener('click', acts[id]); });
+
+  // ---- view modes ----
+  function setView(mode) {
+    document.body.setAttribute('data-view', mode);
+    ['split', 'source', 'preview'].forEach(function (m) { var b = $('md-view-' + m); if (b) b.classList.toggle('on', m === mode); });
+  }
+  ['split', 'source', 'preview'].forEach(function (m) { var b = $('md-view-' + m); if (b) b.addEventListener('click', function () { setView(m); }); });
+
+  // controls
+  var o = $('md-open'); if (o) o.addEventListener('click', openFile);
+  var sv = $('md-save'); if (sv) sv.addEventListener('click', function () { save(false); });
+  var sa = $('md-saveas'); if (sa) sa.addEventListener('click', function () { save(true); });
+  var ex = $('md-exporthtml'); if (ex) ex.addEventListener('click', exportHtml);
+
+  document.addEventListener('keydown', function (e) {
+    var mod = e.metaKey || e.ctrlKey; if (!mod) return;
+    var k = e.key.toLowerCase();
+    if (k === 's') { e.preventDefault(); save(false); }
+    else if (k === 'o') { e.preventDefault(); openFile(); }
+    else if (k === 'b') { e.preventDefault(); surround('**', '**'); }
+    else if (k === 'i') { e.preventDefault(); surround('*', '*'); }
+  });
+
+  // boot
+  window.EditMd = { getText: getText, setText: function (t) { loadText(t, curName); } };
+  engine.restore();
+  setView('split');
+  // restore autosave if newer than initial content
+  var a = autosave.read();
+  if (a && a.text && a.text !== ta.value) {
+    var banner = $('md-restore');
+    if (banner) {
+      var w = $('md-restore-when'); if (w) { try { w.textContent = new Date(a.ts).toLocaleString('ko-KR'); } catch (e) { w.textContent = a.ts; } }
+      banner.hidden = false;
+      var y = $('md-restore-yes'), n = $('md-restore-no');
+      if (y) y.onclick = function () { loadText(a.text, curName); banner.hidden = true; };
+      if (n) n.onclick = function () { banner.hidden = true; autosave.markSaved(ta.value); };
+    }
+  } else { autosave.markSaved(ta.value); }
+  onChange();
+})();
+
+</script>
+</body>
+</html>
