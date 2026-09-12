@@ -308,7 +308,14 @@ ${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 \`\`\`html
 ${code[it.id].trim()}
 \`\`\`` : ''}
-`).join('\n')}`).join('\n')}`;
+`).join('\n')}`).join('\n')}
+${menu.recipes ? `
+## 화면 조합 레시피 (shadcn — 조립하지 재발명하지 마라)
+
+${menu.recipes.map(r => `### ${r.screen} — ${r.ko}
+- 조합: ${r.combo.join(' + ')}
+- shadcn: ${r.sc}
+- 요청 문장: ${r.ask}`).join('\n\n')}` : ''}`;
 
 // ── 5. 출력 ────────────────────────────────────────────────────
 // 정본 갤러리 = giting.kr/skills (2026-09-12 owner 확정 — 우리 도메인에서 서빙, GitHub 은 소스 버튼).
@@ -378,7 +385,16 @@ const CORE_CSS = `
 .uigal td.als { color: var(--ink-3); font-size: 12px; }
 .uigal td.askcell { min-width: 220px; }
 .uigal td.askcell span { color: var(--ink-2); }
-.uigal td.askcell button { margin-left: 6px; }`;
+.uigal td.askcell button { margin-left: 6px; }
+.uigal .rcp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .uigal .rcp { grid-template-columns: 1fr; } }
+.uigal .rcpi { border: 1px solid var(--line); border-radius: 13px; background: var(--paper); padding: 13px 15px; }
+.uigal .rcpi header { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.uigal .rcpi h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.uigal .rcpk { flex: 1; min-width: 0; font-size: 12px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uigal .rcpc { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
+.uigal .rcptag { font-family: var(--mono); font-size: 11.5px; color: #0F766E; background: color-mix(in srgb, #0F766E 8%, transparent); border: 1px solid color-mix(in srgb, #0F766E 22%, transparent); border-radius: 6px; padding: 2px 8px; }
+.uigal .rcpsc { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.55; }`;
 
 const CORE_JS = `
 (function () {
@@ -416,6 +432,17 @@ ${menu.categories.map(cat => `
   <div class="ggrid">${bycat(cat.id).map(cardHtml).join('\n')}</div>
   ${tableHtml(cat)}
 </section>`).join('\n')}
+${menu.recipes ? `
+<section class="cat" id="c-recipes">
+  <h2><span class="no">＋</span> 화면 조합 레시피 <span class="count">${menu.recipes.length} · shadcn</span></h2>
+  <p style="font-size:13px;color:var(--ink-2);margin:-6px 0 14px">낱개 컴포넌트를 아는 다음 단계 — 흔한 화면이 어떤 조합으로 만들어지는지. "조립하지 재발명하지 마라"(shadcn 공식 원칙).</p>
+  <div class="rcp">${menu.recipes.map(r => `<article class="rcpi">
+    <header><h3>${esc(r.screen)}</h3><span class="rcpk">${esc(r.ko)}</span>
+      <button class="copy tiny" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
+    <div class="rcpc">${r.combo.map(c => `<span class="rcptag">${esc(c)}</span>`).join('')}</div>
+    <p class="rcpsc">${esc(r.sc)}</p>
+  </article>`).join('\n')}</div>
+</section>` : ''}
 <script>${CORE_JS}</script>
 </div>
 `;

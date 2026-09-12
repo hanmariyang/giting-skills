@@ -739,3 +739,46 @@
 - 정의: 잘못된 상태의 표시. 빨간 테두리와 원인 안내가 세트다.
 - 요청 문장: 입력이 틀리면 에러 상태로 바꿔줘. 빨간 테두리에 칸 아래 이유까지.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-error.html
+
+
+## 화면 조합 레시피 (shadcn — 조립하지 재발명하지 마라)
+
+### 설정 페이지 — 프로필·알림·계정 같은 설정 화면
+- 조합: Tabs + Card + Field + Switch + Button
+- shadcn: Tabs로 섹션 나누고 각 섹션은 Card, 폼은 FieldGroup+Field, 켜고끄기는 Switch
+- 요청 문장: 설정 페이지를 shadcn 으로 만들어줘. 상단 Tabs 로 섹션 나누고, 각 섹션은 Card, 입력은 FieldGroup+Field, 토글은 Switch 로.
+
+### 대시보드 — 지표·차트·목록을 한 화면에
+- 조합: Sidebar + Card + Chart + Table + Badge
+- shadcn: 왼쪽 Sidebar 고정, 지표는 Card, 추이는 Chart, 목록은 Table, 상태는 Badge
+- 요청 문장: 대시보드를 shadcn 으로 만들어줘. 왼쪽 Sidebar, 상단 지표 Card 행, 아래 Chart 와 Table, 상태 표시는 Badge 로.
+
+### 로그인·회원가입 — 인증 화면
+- 조합: Card + Field + InputGroup + Button + Separator
+- shadcn: 가운데 Card, 입력은 Field, 아이콘 붙은 입력은 InputGroup, 소셜 구분은 Separator
+- 요청 문장: 로그인 화면을 shadcn 으로 만들어줘. 가운데 Card 안에 FieldGroup+Field, 소셜 로그인은 Separator 로 구분, 버튼은 Button.
+
+### 목록 + 상세 — 항목 클릭하면 상세가 뜨는 화면
+- 조합: Table + Sheet + Badge + Button + DropdownMenu
+- shadcn: 목록은 Table, 행 클릭시 오른쪽 Sheet 로 상세, 행별 액션은 DropdownMenu
+- 요청 문장: 목록-상세 화면을 shadcn 으로. 목록은 Table, 행 클릭하면 오른쪽 Sheet 로 상세, 각 행 우측 액션은 DropdownMenu.
+
+### 결제·주문 — 단계별 진행 화면
+- 조합: Stepper + Card + Field + RadioGroup + Button
+- shadcn: 진행은 상단 단계 표시, 각 단계는 Card, 배송/결제 선택은 RadioGroup
+- 요청 문장: 결제 플로우를 shadcn 으로. 상단에 단계 표시, 각 단계는 Card, 옵션 선택은 RadioGroup, 다음/이전은 Button.
+
+### 확인·경고 — 삭제·탈퇴 같은 되돌릴 수 없는 액션
+- 조합: AlertDialog + Button + Alert
+- shadcn: 되돌릴 수 없는 액션은 AlertDialog(제목 필수), 인라인 경고는 Alert
+- 요청 문장: 삭제 확인을 shadcn AlertDialog 로. 제목·설명·취소/삭제 버튼, 삭제는 destructive variant 로.
+
+### 검색·필터 — 검색바 + 필터 결과
+- 조합: InputGroup + Combobox + Badge + ToggleGroup
+- shadcn: 검색은 InputGroup(돋보기 아이콘), 자동완성은 Combobox, 필터 칩은 Badge, 정렬 토글은 ToggleGroup
+- 요청 문장: 검색+필터 바를 shadcn 으로. 검색은 InputGroup 에 아이콘, 자동완성은 Combobox, 적용된 필터는 Badge, 정렬은 ToggleGroup.
+
+### 빈 화면·로딩 — 데이터 없거나 불러오는 중
+- 조합: Empty + Skeleton + Spinner
+- shadcn: 데이터 없으면 Empty(아이콘+안내+액션), 불러오는 중은 Skeleton, 짧은 대기는 Spinner
+- 요청 문장: 데이터 없을 때는 shadcn Empty(아이콘+문구+버튼), 로딩 중은 Skeleton 으로 자리 잡아줘.
