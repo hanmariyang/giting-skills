@@ -1,0 +1,338 @@
+# 안 만들어도 되는 것 사전 (codelazy) — Giting Skills
+
+> AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준으로 되돌리는 사전. 증상 → 범인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → before/after 코드. 5개 코스 15개 항목.
+> 유형: [즉방형] 표준에 정답 있음, 바로 되돌림 · [분기형] 추상화가 때로 정당함, 진단 먼저.
+> 공식: 만들라고 하기 전에 → '이거 진짜 만들어야 돼?' 먼저 → 표준으로 되면 그걸로
+>   ✕ "이거 캐싱 기능 클래스로 하나 만들어줘" → ○ "이거 캐싱하고 싶은데 파이썬 표준으로 되면 그걸로 해줘. 새로 만들지 말고"
+> 갤러리: https://giting.kr/skills/codelazy · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install codelazy@giting
+
+## 01 표준이 이미 함
+
+### "결과 캐싱을 직접 만든다" [즉방형] (실측 27줄 → 17줄)
+- 별칭: "캐시 클래스 만들어줘" · "같은 인자면 다시 계산 안 하게" · "메모이제이션 구현"
+- 범인: 딕셔너리에 키를 넣고 있으면 꺼내는 캐시 로직을 직접 짠다
+- 처방: 표준 functools.cache 데코레이터 한 줄. 만들 게 없다.
+- 요청 문장: 이 함수 결과를 캐싱하고 싶어. 캐시를 직접 만들지 말고 functools.cache 로 해줘.
+- 확인: @cache 한 줄 붙였고 자작 캐시 딕셔너리가 없으면 성공.
+- 부풀린 코드:
+```python
+_cache = {}
+def compute(a, b):
+    key = (a, b)
+    if key in _cache:
+        return _cache[key]
+    result = a + b  # 실제 계산
+    _cache[key] = result
+    return result
+```
+- 표준으로:
+```python
+from functools import cache
+
+@cache
+def compute(a, b):
+    return a + b  # 실제 계산
+```
+
+### "개수 세는 딕셔너리를 직접 만든다" [즉방형]
+- 별칭: "단어 빈도 세줘" · "몇 번 나왔는지 카운트" · "집계 딕셔너리"
+- 범인: if 키 있으면 +1, 없으면 1 로 세는 코드를 직접 짠다
+- 처방: 표준 collections.Counter. 세는 것도, 최다 뽑는 것도 다 있다.
+- 요청 문장: 이 리스트에서 각 항목이 몇 번 나오는지 세줘. 직접 딕셔너리 돌리지 말고 Counter 로.
+- 확인: Counter 를 썼고 수동 if-else 카운트가 없으면 성공.
+- 부풀린 코드:
+```python
+counts = {}
+for w in words:
+    if w in counts:
+        counts[w] += 1
+    else:
+        counts[w] = 1
+```
+- 표준으로:
+```python
+from collections import Counter
+counts = Counter(words)
+```
+
+### "없는 키 기본값 처리를 직접 만든다" [즉방형]
+- 별칭: "키 없으면 빈 리스트로" · "그룹핑" · "기본값 딕셔너리"
+- 범인: 키가 없으면 초기화하고 append 하는 분기를 직접 짠다
+- 처방: 표준 defaultdict, 또는 값 조회는 dict.get(key, 기본값).
+- 요청 문장: 키가 없을 때 기본값으로 처리하고 싶어. 수동 if 대신 defaultdict 나 dict.get 으로.
+- 확인: defaultdict/get 을 썼고 'if key not in d' 초기화가 없으면 성공.
+- 부풀린 코드:
+```python
+groups = {}
+for item in items:
+    if item.cat not in groups:
+        groups[item.cat] = []
+    groups[item.cat].append(item)
+```
+- 표준으로:
+```python
+from collections import defaultdict
+groups = defaultdict(list)
+for item in items:
+    groups[item.cat].append(item)
+```
+
+### "상수 모음을 클래스로 직접 만든다" [즉방형]
+- 별칭: "상태값 상수 정의" · "타입 상수 클래스" · "매직 넘버 정리"
+- 범인: STATUS_A=1, STATUS_B=2 를 담은 상수 클래스를 손으로 만든다
+- 처방: 표준 enum.Enum. 값 검증·이름·순회가 공짜로 딸려 온다.
+- 요청 문장: 이 상태값들을 상수로 정리하고 싶어. 직접 클래스 만들지 말고 enum.Enum 으로.
+- 확인: Enum 을 상속했고, 검증 없는 맨 상수 클래스가 아니면 성공.
+- 부풀린 코드:
+```python
+class Status:
+    PENDING = 1
+    ACTIVE = 2
+    DONE = 3
+    # 오타·중복·순회 전부 수동
+```
+- 표준으로:
+```python
+from enum import Enum
+
+class Status(Enum):
+    PENDING = 1
+    ACTIVE = 2
+    DONE = 3
+```
+
+### "임시 파일 경로를 직접 만든다" [즉방형]
+- 별칭: "임시파일 이름 랜덤 생성" · "temp 폴더에 저장" · "충돌 안 나는 파일명"
+- 범인: 타임스탬프·랜덤으로 임시 파일명을 조합하고 정리까지 직접 한다
+- 처방: 표준 tempfile. 경로 생성·정리·충돌 방지가 다 들어 있다.
+- 요청 문장: 임시 파일이 필요해. 파일명을 직접 만들지 말고 tempfile 로 안전하게.
+- 확인: tempfile 을 썼고 수동 파일명 조합·랜덤이 없으면 성공.
+- 부풀린 코드:
+```python
+import time, random
+name = f"/tmp/tmp_{int(time.time())}_{random.randint(0,9999)}.txt"
+# 충돌·정리 직접 관리
+```
+- 표준으로:
+```python
+import tempfile
+with tempfile.NamedTemporaryFile(suffix=".txt") as f:
+    ...  # 자동 정리
+```
+
+## 02 한 줄이면 됨
+
+### "중복 제거를 루프로 만든다" [즉방형] (실측 12줄 → 1줄)
+- 별칭: "중복 없애줘 순서는 유지" · "unique 하게" · "겹치는 것 제거"
+- 범인: seen 집합을 만들고 for 로 돌며 없는 것만 담는 여러 줄을 짠다
+- 처방: 순서 유지 중복 제거는 표준 한 줄. dict.fromkeys.
+- 요청 문장: 리스트 중복을 없애되 순서는 유지하고 싶어. 루프 말고 dict.fromkeys 한 줄로.
+- 확인: 한 줄이고 seen 집합 루프가 없으면 성공.
+- 부풀린 코드:
+```python
+def dedup(items):
+    seen = set()
+    result = []
+    for x in items:
+        if x not in seen:
+            seen.add(x)
+            result.append(x)
+    return result
+```
+- 표준으로:
+```python
+def dedup(items):
+    return list(dict.fromkeys(items))
+```
+
+### "중첩 리스트 펴기를 재귀로 만든다" [즉방형]
+- 별칭: "리스트 안 리스트 하나로" · "flatten" · "평탄화"
+- 범인: 한 겹 펴는 데도 재귀 함수를 짠다
+- 처방: 한 겹이면 표준 itertools.chain 한 줄. 재귀는 진짜 깊이 모를 때만.
+- 요청 문장: 이 중첩 리스트를 한 겹 펴줘. 재귀 만들지 말고 itertools.chain 으로.
+- 확인: 한 겹 평탄화면 chain 한 줄, 재귀 없으면 성공.
+- 부풀린 코드:
+```python
+def flatten(nested):
+    result = []
+    for sub in nested:
+        for x in sub:
+            result.append(x)
+    return result
+```
+- 표준으로:
+```python
+from itertools import chain
+flat = list(chain.from_iterable(nested))
+```
+
+### "JSON 저장·로드를 클래스로 감싼다" [즉방형]
+- 별칭: "JSON 저장 유틸" · "설정 파일 매니저" · "load/save 래퍼"
+- 범인: json.dump/load 두 줄을 감싸는 Manager 클래스를 만든다
+- 처방: 저장·로드는 각각 한 줄. 클래스로 감쌀 게 없다.
+- 요청 문장: 이 데이터를 JSON 파일로 저장/로드하고 싶어. 매니저 클래스 만들지 말고 json 으로 직접.
+- 확인: json.dump/load 직접 호출이고 래퍼 클래스가 없으면 성공.
+- 부풀린 코드:
+```python
+class JsonStore:
+    def __init__(self, path): self.path = path
+    def save(self, data):
+        with open(self.path, 'w') as f: json.dump(data, f)
+    def load(self):
+        with open(self.path) as f: return json.load(f)
+```
+- 표준으로:
+```python
+import json
+json.dump(data, open(path, 'w'), ensure_ascii=False, indent=2)
+data = json.load(open(path))
+```
+
+## 03 라이브러리 안 깔아도 됨
+
+### "CSV 조금 다루는데 pandas 를 깐다" [즉방형]
+- 별칭: "CSV 열 합계" · "csv 읽어서 계산" · "엑셀 데이터 처리"
+- 범인: 열 하나 합치는 데 pandas 를 설치한다 (수십 MB 의존성)
+- 처방: 표준 csv 모듈이면 충분하다. pandas 는 진짜 표 연산이 많을 때만.
+- 요청 문장: CSV 에서 amount 열 합계만 구하면 돼. pandas 깔지 말고 표준 csv 로.
+- 확인: 'import csv' 이고 pandas 의존성이 없으면 성공.
+- 부풀린 코드:
+```python
+import pandas as pd  # pip install pandas
+df = pd.read_csv(path)
+total = df['amount'].sum()
+```
+- 표준으로:
+```python
+import csv
+total = sum(float(r['amount']) for r in csv.DictReader(open(path)))
+```
+
+### "간단한 요청 하나에 무거운 클라이언트를 깐다" [분기형]
+- 별칭: "API 호출 라이브러리" · "http 요청 패키지" · "requests 설치"
+- 범인: GET 한 번에 큰 HTTP 프레임워크를 의존성으로 추가한다
+- 갈림길: [GET/POST 몇 번, 단순 JSON] → 표준 urllib.request 로 충분. 새 의존성 없음 · [세션·재시도·인증·풀링이 실제로 필요] → 그때는 requests/httpx 가 정당하다. 필요를 확인하고 추가
+- 요청 문장: 이 API 를 호출하는데, 단순한 요청이면 표준 urllib 로 하고, 세션·재시도가 진짜 필요할 때만 라이브러리를 쓸지 먼저 알려줘.
+- 확인: 단순 요청인데 새 의존성이 안 늘었으면 성공.
+- 부풀린 코드:
+```python
+import requests  # pip install requests
+r = requests.get(url).json()
+```
+- 표준으로:
+```python
+import json, urllib.request
+r = json.load(urllib.request.urlopen(url))
+```
+
+## 04 안 시킨 추상화
+
+### "설정값 몇 개에 클래스 계층을 만든다" [분기형]
+- 별칭: "설정 관리 시스템" · "BaseConfig 상속" · "환경별 config 클래스"
+- 범인: 필드 3개 설정에 추상 베이스 + 환경별 하위 클래스 + 팩토리를 만든다
+- 갈림길: [필드 몇 개, 환경 분기 없음] → dataclass 하나면 끝. 계층 만들지 않는다 · [환경별(dev/prod)로 값이 실제로 갈림] → 그래도 dataclass + 딕셔너리 하나. 상속 계층은 값이 아니라 동작이 갈릴 때만
+- 요청 문장: 설정값을 정리하고 싶어. 바로 만들지 말고 필드가 몇 개인지, 환경별로 갈리는지 보고 dataclass 하나로 될지 판단해서 알려줘.
+- 확인: dataclass 하나이고 안 시킨 상속 계층·팩토리가 없으면 성공.
+- 부풀린 코드:
+```python
+class BaseConfig:
+    def __init__(self): ...
+class DevConfig(BaseConfig): ...
+class ProdConfig(BaseConfig): ...
+class ConfigFactory:
+    def create(self, env): ...
+```
+- 표준으로:
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Config:
+    email: str = ""
+    notify: bool = True
+    theme: str = "light"
+```
+
+### "커스텀 예외 계층을 미리 만든다" [분기형]
+- 별칭: "예외 클래스 정의" · "에러 타입 계층" · "커스텀 익셉션"
+- 범인: 기본 예외로 되는데 AppError→ValidationError 같은 계층을 미리 판다
+- 갈림길: [그냥 '잘못된 입력'을 알리면 됨] → 표준 ValueError/TypeError 로 충분 · [호출부가 예외 종류로 분기 처리를 실제로 함] → 그때만 커스텀 예외 하나. 계층은 분기가 여러 갈래일 때만
+- 요청 문장: 여기서 에러를 던지고 싶어. 커스텀 예외 계층 만들지 말고, 표준 예외로 될지 아니면 호출부가 종류로 분기하는지 확인해서 정해줘.
+- 확인: 표준 예외로 됐거나, 커스텀이 실제 분기에 쓰이면 성공.
+- 부풀린 코드:
+```python
+class AppError(Exception): pass
+class ValidationError(AppError): pass
+class NotFoundError(AppError): pass
+# 아무도 종류로 분기 안 함
+```
+- 표준으로:
+```python
+raise ValueError("이메일 형식이 올바르지 않습니다")
+```
+
+### "싱글톤 패턴을 구현한다" [분기형]
+- 별칭: "인스턴스 하나만" · "전역 객체" · "싱글톤 클래스"
+- 범인: __new__ 오버라이드나 메타클래스로 싱글톤을 구현한다
+- 갈림길: [그냥 하나만 있으면 되는 값·설정] → 모듈 전역 변수 하나. 파이썬 모듈은 이미 싱글톤이다 · [지연 초기화·리소스 관리가 실제로 필요] → 그때는 @lru_cache 로 감싼 팩토리 함수 하나면 족하다
+- 요청 문장: 이걸 하나만 존재하게 하고 싶어. 싱글톤 패턴 구현하지 말고, 모듈 전역이나 lru_cache 로 될지 먼저 판단해줘.
+- 확인: 모듈 전역·lru_cache 로 됐고 __new__/메타클래스 싱글톤이 없으면 성공.
+- 부풀린 코드:
+```python
+class DB:
+    _instance = None
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+```
+- 표준으로:
+```python
+# db.py — 모듈이 이미 싱글톤
+connection = connect()  # import 하면 하나만 존재
+```
+
+## 05 안 시킨 확장점
+
+### "안 시킨 미들웨어·훅 시스템을 판다" [분기형]
+- 별칭: "확장 가능하게" · "훅 붙일 수 있게" · "플러그인 지원"
+- 범인: 지금 필요 없는데 나중을 위해 미들웨어 체인·이벤트 훅을 미리 만든다
+- 갈림길: [지금 훅이 0~1개] → 그냥 함수 안에 직접 쓴다. 훅 시스템 만들지 않는다 (YAGNI) · [실제로 여러 곳이 끼어들어야 함이 지금 확인됨] → 그때 최소한의 콜백 리스트 하나. 프레임워크는 아니다
+- 요청 문장: 이 기능에 나중에 뭔가 끼울 수도 있는데, 지금 훅 시스템 만들지 말고 실제로 필요한 게 몇 개인지 보고 판단해줘.
+- 확인: 지금 안 쓰는 확장점이 없으면 성공. 나중은 나중에.
+- 부풀린 코드:
+```python
+class Pipeline:
+    def __init__(self): self.middlewares = []
+    def use(self, mw): self.middlewares.append(mw)
+    def run(self, x):
+        for mw in self.middlewares: x = mw(x)
+        return x
+# 미들웨어는 0개
+```
+- 표준으로:
+```python
+def process(x):
+    return transform(x)  # 필요해지면 그때 확장
+```
+
+### "플러그인 로더를 미리 만든다" [분기형]
+- 별칭: "동적 로딩" · "플러그인 등록 시스템" · "확장 모듈 자동 발견"
+- 범인: 선택지가 3개인데 파일 스캔·동적 import 하는 플러그인 시스템을 만든다
+- 갈림길: [선택지가 고정된 소수(2~5개)] → 딕셔너리 매핑 하나. {이름: 함수} · [제3자가 실제로 플러그인을 추가하는 구조] → 그때 entry_points 같은 표준 메커니즘. 자작 로더 아님
+- 요청 문장: 동작을 이름으로 고르게 하고 싶어. 플러그인 로더 만들지 말고, 선택지가 고정이면 딕셔너리 매핑으로 될지 봐줘.
+- 확인: 고정 선택지가 딕셔너리 매핑이면 성공. 동적 스캔 없음.
+- 부풀린 코드:
+```python
+import importlib, os
+def load_plugins(folder):
+    for f in os.listdir(folder):
+        if f.endswith('.py'):
+            importlib.import_module(...)  # 동적 발견
+```
+- 표준으로:
+```python
+HANDLERS = {"json": to_json, "csv": to_csv, "xml": to_xml}
+result = HANDLERS[fmt](data)
+```

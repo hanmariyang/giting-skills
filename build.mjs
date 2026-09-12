@@ -693,3 +693,124 @@ writeFileSync(join(ROOT, 'docs', 'css-menu', 'index.html'), redirect.replace(/gi
 writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms.txt'), cdict(false));
 writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms-full.txt'), cdict(true));
 console.log(`built css-menu: components ${cmenu.items.length} · core ${(cssCore.length / 1024).toFixed(0)}KB`);
+
+// ═══════════════════════════════════════════════════════════════
+// ── 안 만들어도 되는 것 사전 (codelazy) — 03 ──────────────────
+// 매체가 화면이 아니라 코드. before/after 를 나란히 보여준다(iframe 없음).
+const LP = join(ROOT, 'plugins', 'codelazy');
+const lmenu = JSON.parse(readFileSync(join(LP, 'menu.json'), 'utf8'));
+const lby = id => lmenu.items.filter(i => i.category === id);
+const lKind = it => it.kind === 'branch' ? '분기형' : '즉방형';
+
+const lCardHtml = it => `
+<article class="item ${it.kind}" id="${it.id}">
+  <header><span class="kind ${it.kind}">${lKind(it)}</span><h3>"${esc(it.name)}"</h3>
+    ${it.measured ? `<span class="meas">${esc(it.measured)}</span>` : ''}
+    <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+  <div class="diff">
+    <div class="side bad"><div class="dt">✗ 부풀린 코드</div><pre><code>${esc(it.before)}</code></pre></div>
+    <div class="side good"><div class="dt">✓ 표준으로</div><pre><code>${esc(it.after)}</code></pre></div>
+  </div>
+  <footer>
+    ${it.kind === 'branch'
+      ? `<span class="one"><b>갈림길:</b> ${it.branches.map(b => esc(b.q)).join(' / ')}</span>`
+      : `<span class="one"><b>처방:</b> ${esc(it.rx)}</span>`}
+    <span class="ck">${esc(it.check)}</span>
+  </footer>
+</article>`;
+
+const lTableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>증상</th><th>유형</th><th>이렇게 말해도</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${lby(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">"${esc(it.name)}"</a></td>
+  <td class="mono">${lKind(it)}</td>
+  <td class="als">${it.aliases.map(a => `"${esc(a)}"`).join(' · ')}</td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const lf = lmenu.formula;
+const LGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.lzgal') + `
+.lzgal .ggrid { grid-template-columns: 1fr; }
+.lzgal .item h3 { font-size: 15px; }
+.lzgal .kind { flex: none; font-size: 10.5px; font-weight: 800; border-radius: 6px; padding: 2px 7px; }
+.lzgal .kind.direct { background: #eff6f1; color: #1f7a4d; }
+.lzgal .kind.branch { background: #f3effa; color: #5b4aa8; }
+.lzgal .meas { flex: none; font-family: var(--mono); font-size: 11px; color: var(--accent-deep); background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 6px; padding: 2px 8px; }
+.lzgal .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+@media (max-width: 640px) { .lzgal .diff { grid-template-columns: 1fr; } }
+.lzgal .side { background: var(--paper); min-width: 0; }
+.lzgal .dt { font-size: 11px; font-weight: 800; padding: 7px 12px; }
+.lzgal .bad .dt { background: #fbf1ef; color: #c4372b; }
+.lzgal .good .dt { background: #eff6f1; color: #1f7a4d; }
+.lzgal .side pre { margin: 0; padding: 11px 13px; overflow-x: auto; }
+.lzgal .side code { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--ink); white-space: pre; }
+.lzgal .item footer { display: grid; gap: 3px; }
+.lzgal .item .one { font-size: 12.5px; color: var(--ink-2); }
+.lzgal .item .one b { color: var(--ink); font-weight: 700; }
+.lzgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
+
+const lzCore = `<div class="lzgal">
+<style>${LGAL_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(lf.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(lf.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(lf.good)}」</div>
+  </div>
+</div>
+<nav class="gnav" aria-label="코스">
+  ${lmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${lby(c.id).length}</a>`).join('\n  ')}
+</nav>
+${lmenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${lby(cat.id).length}</span></h2>
+  <div class="ggrid">${lby(cat.id).map(lCardHtml).join('\n')}</div>
+  ${lTableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.lzgal')}</script>
+</div>
+`;
+
+const ldict = () => `# 안 만들어도 되는 것 사전 (codelazy) — Giting Skills
+
+> AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준으로 되돌리는 사전. 증상 → 범인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → before/after 코드. 5개 코스 ${lmenu.items.length}개 항목.
+> 유형: [즉방형] 표준에 정답 있음, 바로 되돌림 · [분기형] 추상화가 때로 정당함, 진단 먼저.
+> 공식: ${lf.pattern}
+>   ✕ "${lf.bad}" → ○ "${lf.good}"
+> 갤러리: https://giting.kr/skills/codelazy · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install codelazy@giting
+
+${lmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${lby(cat.id).map(it => `### "${it.name}" [${lKind(it)}]${it.measured ? ` (${it.measured})` : ''}
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 범인: ${it.culprit}
+${it.kind === 'branch'
+  ? `- 갈림길: ${it.branches.map(b => `[${b.q}] → ${b.a}`).join(' · ')}`
+  : `- 처방: ${it.rx}`}
+- 요청 문장: ${it.ask}
+- 확인: ${it.check}
+- 부풀린 코드:
+\`\`\`python
+${it.before}
+\`\`\`
+- 표준으로:
+\`\`\`python
+${it.after}
+\`\`\`
+`).join('\n')}`).join('\n')}`;
+
+if (SITE_DIR) {
+  const LS = join(SITE_DIR, 'codelazy');
+  mkdirSync(LS, { recursive: true });
+  writeFileSync(join(LS, 'gallery-core.html'), lzCore);
+  writeFileSync(join(LS, 'llms.txt'), ldict());
+  writeFileSync(join(LS, 'llms-full.txt'), ldict());
+}
+mkdirSync(join(ROOT, 'docs', 'codelazy'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'codelazy', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/codelazy'));
+writeFileSync(join(ROOT, 'docs', 'codelazy', 'llms.txt'), ldict());
+console.log(`built codelazy: items ${lmenu.items.length} · core ${(lzCore.length / 1024).toFixed(0)}KB`);

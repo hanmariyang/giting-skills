@@ -1,0 +1,9 @@
+{
+  "name": "codelazy",
+  "version": "0.1.0",
+  "description": "안 만들어도 되는 것 사전 — AI가 부풀리기 쉬운 지점을 증상으로 짚고, 표준 한 줄로 되돌리는 요청 문장 + 실측 before/after. ponytail 계보(MIT)를 우리 증상 사전 포맷으로 재구현.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["over-engineering", "yagni", "stdlib", "korean", "vibe-coding", "code-review"]
+}
