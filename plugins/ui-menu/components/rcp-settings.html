@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설정 페이지 Tabs+Card+Field+Switch+Button — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f7f8fa; padding: 14px; }
+  .sc * { box-sizing: border-box; }
+  .sc .card { background: #fff; border: 1px solid #e8e8ee; border-radius: 12px; padding: 16px; }
+  .sc .tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+  .sc .tab { padding: 6px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; color: #6b6b76; }
+  .sc .tab.on { background: #17171b; color: #fff; }
+  .sc h4 { margin: 0 0 3px; font-size: 14px; }
+  .sc .desc { margin: 0 0 14px; font-size: 12px; color: #9a9aa4; }
+  .sc .field { margin-bottom: 12px; }
+  .sc label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+  .sc input { width: 100%; padding: 8px 11px; border: 1px solid #e0e0e6; border-radius: 8px; font-size: 13px; }
+  .sc .row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-top: 1px solid #f0f0f4; }
+  .sc .sw { width: 38px; height: 22px; background: #17171b; border-radius: 999px; position: relative; flex: none; }
+  .sc .sw::after { content: ''; position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; background: #fff; border-radius: 50%; }
+  .sc .btn { margin-top: 12px; width: 100%; padding: 9px; background: #17171b; color: #fff; border: 0; border-radius: 8px; font-size: 13px; font-weight: 600; }
+</style>
+<div class="sc">
+  <div class="tabs"><span class="tab on">프로필</span><span class="tab">알림</span><span class="tab">계정</span></div>
+  <div class="card">
+    <h4>프로필</h4><p class="desc">공개 정보를 관리합니다</p>
+    <div class="field"><label>이름</label><input value="김하마"></div>
+    <div class="field"><label>이메일</label><input value="hama@example.com"></div>
+    <div class="row"><span style="font-size:13px">마케팅 수신 동의</span><span class="sw"></span></div>
+    <button class="btn">저장</button>
+  </div>
+</div>
+<p class="cap">Tabs + Card + Field + Switch + Button</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

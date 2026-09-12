@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {

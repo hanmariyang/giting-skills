@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결제·주문 Stepper+Card+Field+RadioGroup+Button — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .co { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f7f8fa; padding: 14px; height: 100%; }
+  .co * { box-sizing: border-box; }
+  .co .steps { display: flex; align-items: center; margin-bottom: 14px; }
+  .co .st { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #9a9aa4; }
+  .co .st .n { width: 22px; height: 22px; border-radius: 50%; background: #e8e8ee; color: #9a9aa4; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .co .st.on .n { background: #17171b; color: #fff; }
+  .co .st.on { color: #17171b; font-weight: 600; }
+  .co .line { flex: 1; height: 1px; background: #e8e8ee; margin: 0 8px; }
+  .co .card { background: #fff; border: 1px solid #e8e8ee; border-radius: 12px; padding: 16px; }
+  .co h4 { margin: 0 0 12px; font-size: 14px; }
+  .co .opt { display: flex; align-items: center; gap: 9px; padding: 9px 0; font-size: 13px; }
+  .co .radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #17171b; position: relative; flex: none; }
+  .co .opt.on .radio::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: #17171b; }
+  .co .btns { display: flex; gap: 8px; margin-top: 12px; }
+  .co .btn { flex: 1; padding: 9px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid #17171b; }
+  .co .btn.p { background: #17171b; color: #fff; }
+</style>
+<div class="co">
+  <div class="steps">
+    <div class="st"><span class="n">✓</span>배송지</div><div class="line"></div>
+    <div class="st on"><span class="n">2</span>결제</div><div class="line"></div>
+    <div class="st"><span class="n">3</span>확인</div>
+  </div>
+  <div class="card">
+    <h4>결제 방법</h4>
+    <div class="opt on"><span class="radio"></span>신용카드</div>
+    <div class="opt"><span class="radio"></span>계좌이체</div>
+    <div class="btns"><button class="btn">이전</button><button class="btn p">다음</button></div>
+  </div>
+</div>
+<p class="cap">Stepper + Card + Field + RadioGroup + Button</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

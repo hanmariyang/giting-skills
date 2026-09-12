@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로그인·회원가입 Card+Field+InputGroup+Button+Separator — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .lg { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f7f8fa; height: 100%; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .lg * { box-sizing: border-box; }
+  .lg .card { background: #fff; border: 1px solid #e8e8ee; border-radius: 14px; padding: 22px; width: 240px; }
+  .lg h4 { margin: 0 0 16px; font-size: 16px; text-align: center; }
+  .lg .field { margin-bottom: 11px; }
+  .lg label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+  .lg .ig { display: flex; align-items: center; border: 1px solid #e0e0e6; border-radius: 8px; padding: 0 10px; }
+  .lg .ig span { color: #9a9aa4; font-size: 13px; }
+  .lg .ig input { flex: 1; border: 0; padding: 9px 8px; font-size: 13px; outline: none; }
+  .lg .btn { width: 100%; padding: 9px; background: #17171b; color: #fff; border: 0; border-radius: 8px; font-size: 13px; font-weight: 600; }
+  .lg .sep { display: flex; align-items: center; gap: 8px; margin: 14px 0; color: #9a9aa4; font-size: 11px; }
+  .lg .sep::before, .lg .sep::after { content: ''; flex: 1; height: 1px; background: #e8e8ee; }
+  .lg .social { width: 100%; padding: 8px; border: 1px solid #e0e0e6; border-radius: 8px; background: #fff; font-size: 12px; }
+</style>
+<div class="lg">
+  <div class="card">
+    <h4>로그인</h4>
+    <div class="field"><label>이메일</label><div class="ig"><span>✉</span><input value="hama@example.com"></div></div>
+    <div class="field"><label>비밀번호</label><div class="ig"><span>🔒</span><input type="password" value="1234"></div></div>
+    <button class="btn">로그인</button>
+    <div class="sep">또는</div>
+    <button class="social">Google 로 계속</button>
+  </div>
+</div>
+<p class="cap">Card + Field + InputGroup + Button + Separator</p>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

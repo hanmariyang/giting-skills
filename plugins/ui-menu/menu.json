@@ -1727,7 +1727,8 @@
         "Button"
       ],
       "sc": "Tabs로 섹션 나누고 각 섹션은 Card, 폼은 FieldGroup+Field, 켜고끄기는 Switch",
-      "ask": "설정 페이지를 shadcn 으로 만들어줘. 상단 Tabs 로 섹션 나누고, 각 섹션은 Card, 입력은 FieldGroup+Field, 토글은 Switch 로."
+      "ask": "설정 페이지를 shadcn 으로 만들어줘. 상단 Tabs 로 섹션 나누고, 각 섹션은 Card, 입력은 FieldGroup+Field, 토글은 Switch 로.",
+      "id": "rcp-settings"
     },
     {
       "screen": "대시보드",
@@ -1740,7 +1741,8 @@
         "Badge"
       ],
       "sc": "왼쪽 Sidebar 고정, 지표는 Card, 추이는 Chart, 목록은 Table, 상태는 Badge",
-      "ask": "대시보드를 shadcn 으로 만들어줘. 왼쪽 Sidebar, 상단 지표 Card 행, 아래 Chart 와 Table, 상태 표시는 Badge 로."
+      "ask": "대시보드를 shadcn 으로 만들어줘. 왼쪽 Sidebar, 상단 지표 Card 행, 아래 Chart 와 Table, 상태 표시는 Badge 로.",
+      "id": "rcp-dashboard"
     },
     {
       "screen": "로그인·회원가입",
@@ -1753,7 +1755,8 @@
         "Separator"
       ],
       "sc": "가운데 Card, 입력은 Field, 아이콘 붙은 입력은 InputGroup, 소셜 구분은 Separator",
-      "ask": "로그인 화면을 shadcn 으로 만들어줘. 가운데 Card 안에 FieldGroup+Field, 소셜 로그인은 Separator 로 구분, 버튼은 Button."
+      "ask": "로그인 화면을 shadcn 으로 만들어줘. 가운데 Card 안에 FieldGroup+Field, 소셜 로그인은 Separator 로 구분, 버튼은 Button.",
+      "id": "rcp-login"
     },
     {
       "screen": "목록 + 상세",
@@ -1766,7 +1769,8 @@
         "DropdownMenu"
       ],
       "sc": "목록은 Table, 행 클릭시 오른쪽 Sheet 로 상세, 행별 액션은 DropdownMenu",
-      "ask": "목록-상세 화면을 shadcn 으로. 목록은 Table, 행 클릭하면 오른쪽 Sheet 로 상세, 각 행 우측 액션은 DropdownMenu."
+      "ask": "목록-상세 화면을 shadcn 으로. 목록은 Table, 행 클릭하면 오른쪽 Sheet 로 상세, 각 행 우측 액션은 DropdownMenu.",
+      "id": "rcp-listdetail"
     },
     {
       "screen": "결제·주문",
@@ -1779,7 +1783,8 @@
         "Button"
       ],
       "sc": "진행은 상단 단계 표시, 각 단계는 Card, 배송/결제 선택은 RadioGroup",
-      "ask": "결제 플로우를 shadcn 으로. 상단에 단계 표시, 각 단계는 Card, 옵션 선택은 RadioGroup, 다음/이전은 Button."
+      "ask": "결제 플로우를 shadcn 으로. 상단에 단계 표시, 각 단계는 Card, 옵션 선택은 RadioGroup, 다음/이전은 Button.",
+      "id": "rcp-checkout"
     },
     {
       "screen": "확인·경고",
@@ -1790,7 +1795,8 @@
         "Alert"
       ],
       "sc": "되돌릴 수 없는 액션은 AlertDialog(제목 필수), 인라인 경고는 Alert",
-      "ask": "삭제 확인을 shadcn AlertDialog 로. 제목·설명·취소/삭제 버튼, 삭제는 destructive variant 로."
+      "ask": "삭제 확인을 shadcn AlertDialog 로. 제목·설명·취소/삭제 버튼, 삭제는 destructive variant 로.",
+      "id": "rcp-confirm"
     },
     {
       "screen": "검색·필터",
@@ -1802,7 +1808,8 @@
         "ToggleGroup"
       ],
       "sc": "검색은 InputGroup(돋보기 아이콘), 자동완성은 Combobox, 필터 칩은 Badge, 정렬 토글은 ToggleGroup",
-      "ask": "검색+필터 바를 shadcn 으로. 검색은 InputGroup 에 아이콘, 자동완성은 Combobox, 적용된 필터는 Badge, 정렬은 ToggleGroup."
+      "ask": "검색+필터 바를 shadcn 으로. 검색은 InputGroup 에 아이콘, 자동완성은 Combobox, 적용된 필터는 Badge, 정렬은 ToggleGroup.",
+      "id": "rcp-search"
     },
     {
       "screen": "빈 화면·로딩",
@@ -1813,7 +1820,8 @@
         "Spinner"
       ],
       "sc": "데이터 없으면 Empty(아이콘+안내+액션), 불러오는 중은 Skeleton, 짧은 대기는 Spinner",
-      "ask": "데이터 없을 때는 shadcn Empty(아이콘+문구+버튼), 로딩 중은 Skeleton 으로 자리 잡아줘."
+      "ask": "데이터 없을 때는 shadcn Empty(아이콘+문구+버튼), 로딩 중은 Skeleton 으로 자리 잡아줘.",
+      "id": "rcp-empty"
     }
   ]
 }
