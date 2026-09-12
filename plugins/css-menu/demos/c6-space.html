@@ -1,0 +1,72 @@
+<!-- @sp-gap-bad h=180 -->
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:18px;padding:8px 12px;font-size:12px">알림 설정</div>
+  <div class="card" style="margin-top:4px;margin-bottom:9px;padding:8px 12px;font-size:12px">계정 관리</div>
+  <div class="card" style="margin-top:16px;padding:8px 12px;font-size:12px">로그아웃</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">항목마다 제각각 margin — 18px, 13px, 16px…</p>
+
+<!-- @sp-gap-good h=180 -->
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
+  <div class="card" style="padding:8px 12px;font-size:12px">알림 설정</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">계정 관리</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">로그아웃</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">부모 gap 하나 — 어디든 12px</p>
+
+<!-- @sp-imgap-bad h=150 -->
+<div style="width:170px;background:#ffd8cf;border-radius:10px;overflow:hidden">
+  <div style="font-size:0"><img alt="" style="width:170px;height:64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0);border:0;display:inline-block;font-size:13px;vertical-align:baseline" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></div>
+  <img alt="" style="width:170px;height:64px;margin-top:-64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <div style="background:#fff;padding:8px 10px;font-size:12px;margin-top:5px">상품명 <span class="mut">← 위에 분홍 틈</span></div>
+</div>
+
+<!-- @sp-imgap-good h=150 -->
+<div style="width:170px;background:#ffd8cf;border-radius:10px;overflow:hidden">
+  <img alt="" style="display:block;width:170px;height:64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <div style="background:#fff;padding:8px 10px;font-size:12px">상품명 <span class="mut">← display:block, 딱 붙음</span></div>
+</div>
+
+<!-- @sp-edge-bad h=180 -->
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">마지막 항목 아래에도 여백이 남음</p>
+
+<!-- @sp-edge-good h=180 -->
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">gap은 사이에만 — 끝이 깔끔</p>
+
+<!-- @sp-where-bad h=180 -->
+<div class="card" style="padding:4px 6px">
+  <b style="font-size:13px;line-height:1.1">답답한 카드</b>
+  <p style="margin:0;font-size:12px;line-height:1.15">안쪽 여백도 없고 줄 간격도 빽빽하고 아래 카드와도 붙어 있어서 어디를 늘려야 할지 모르겠는 상태다.</p>
+</div>
+<div class="card" style="padding:4px 6px;margin-top:2px;font-size:12px">다음 카드</div>
+
+<!-- @sp-where-good h=180 -->
+<div style="display:grid;gap:12px">
+  <div class="card" style="padding:12px 14px">
+    <b style="font-size:13px">여백 세 가지를 각각</b>
+    <p style="margin:4px 0 0;font-size:12px;line-height:1.6">안쪽 여백(padding)은 상자 안, 상자 간격(gap)은 상자 사이, 줄 간격(line-height)은 글줄 사이. 이름이 다르면 처방도 다르다.</p>
+  </div>
+  <div class="card" style="padding:12px 14px;font-size:12px">다음 카드</div>
+</div>
+
+<!-- @sp-lineheight-bad h=170 -->
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:2.1">제목이 두 줄이 되면 휑하게 벌어짐</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.1">본문은 반대로 줄 간격이 좁아서 빽빽하게 읽힌다. 제목과 본문이 서로의 수치를 바꿔 낀 상태다.</p>
+</div>
+
+<!-- @sp-lineheight-good h=170 -->
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:1.25">제목이 두 줄이어도 조밀하게 붙음</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.65">본문은 1.5~1.7로 숨을 쉰다. 제목은 조밀하게, 본문은 여유 있게 — 역할마다 다른 값이 정답이다.</p>
+</div>

@@ -1,0 +1,2901 @@
+# CSS 증상 사전 (css-menu) — Giting Skills
+
+> 깨진 화면을 CSS 용어가 아니라 증상으로 찾는 사전. 증상(사람 말) → 범인 후보 → 처방 또는 갈림길 진단 → AI에게 시키는 문장 → 깨진/고친 실물. 8개 코스 42개 항목.
+> 항목 유형 2가지 — [즉방형]: 상황 불문 같은 처방, 문장을 그대로 쓴다. [분기형]: 상황 의존 — 바로 고치라고 하지 말고 진단부터 시킨다.
+> AI한테 시키는 공식: 증상 그대로 말하기 → 사전에서 범인 찾기 → 문장 복사
+>   ✕ "화면이 좀 깨졌는데 예쁘게 고쳐줘" → ○ "팝업이 떠 있는 동안 뒤 화면이 스크롤되지 않게 잠가줘"
+> 갤러리: https://giting.kr/skills/css-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install css-menu@giting
+
+## 01 정렬이 안 맞아요
+
+### "세로 가운데가 안 맞아요" (vertical-center) [즉방형]
+- 별칭: "위에 붙어요" · "어중간하게 떠요" · "가운데 오라니까 좌우만 가운데예요"
+- 범인: 감싸는 상자에 높이가 없다 — 내용만큼만 커서 '가운데'랄 공간 자체가 없음 / 가로만 가운데 정렬했다 (세로축 지시가 빠짐) / margin auto를 줬는데 부모가 flex/grid가 아님
+- 처방: 부모 상자에 높이부터 주고, flex의 세로축으로 가운데를 잡는다.
+- 요청 문장: 이 요소를 감싸는 부모에 높이를 주고, flex로 가로세로 다 가운데 정렬해줘. 부모 높이가 왜 없었는지도 한 줄로 알려줘.
+- 확인: 창 높이를 바꿔도 항상 정가운데면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/al-vcenter.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"세로 가운데가 안 맞아요" — CSS 증상 사전</title>
+<!--
+  증상: "세로 가운데가 안 맞아요" (vertical-center) · 유형: 즉방형
+  범인: 감싸는 상자에 높이가 없다 — 내용만큼만 커서 '가운데'랄 공간 자체가 없음 / 가로만 가운데 정렬했다 (세로축 지시가 빠짐) / margin auto를 줬는데 부모가 flex/grid가 아님
+  처방: 부모 상자에 높이부터 주고, flex의 세로축으로 가운데를 잡는다.
+  AI에게: 이 요소를 감싸는 부모에 높이를 주고, flex로 가로세로 다 가운데 정렬해줘. 부모 높이가 왜 없었는지도 한 줄로 알려줘.
+  확인: 창 높이를 바꿔도 항상 정가운데면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:130px;text-align:center">로그인</div>
+<p class="mut" style="margin:8px 2px 0">부모 높이가 없어서 위에 붙음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div class="card" style="width:130px;text-align:center">로그인</div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 창 높이를 바꿔도 항상 정가운데면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "가로 가운데로 안 와요" (horizontal-center) [즉방형]
+- 별칭: "왼쪽에 붙어요" · "가운데 오라고 했는데 안 와요"
+- 범인: 상자는 가운데인데 안의 글자만 왼쪽 (상자 정렬과 글자 정렬은 다른 지시) / 상자 너비가 100%라 가운데로 올 여지가 없음
+- 처방: 글자는 글자 정렬(text-align), 상자는 너비 제한 + margin auto. 어느 쪽을 원하는지부터 정한다.
+- 요청 문장: 이거 가로 가운데 정렬해줘. 상자 자체를 가운데 둘지, 안의 글자만 가운데 둘지 구분해서 맞는 쪽으로 해줘.
+- 확인: 상자와 글자 중 의도한 쪽만 정확히 가운데면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/al-hcenter.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"가로 가운데로 안 와요" — CSS 증상 사전</title>
+<!--
+  증상: "가로 가운데로 안 와요" (horizontal-center) · 유형: 즉방형
+  범인: 상자는 가운데인데 안의 글자만 왼쪽 (상자 정렬과 글자 정렬은 다른 지시) / 상자 너비가 100%라 가운데로 올 여지가 없음
+  처방: 글자는 글자 정렬(text-align), 상자는 너비 제한 + margin auto. 어느 쪽을 원하는지부터 정한다.
+  AI에게: 이거 가로 가운데 정렬해줘. 상자 자체를 가운데 둘지, 안의 글자만 가운데 둘지 구분해서 맞는 쪽으로 해줘.
+  확인: 상자와 글자 중 의도한 쪽만 정확히 가운데면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:120px">
+<div class="card" style="width:150px">공지사항</div>
+<p class="mut" style="margin:8px 2px 0">너비 제한은 있는데 가운데로 오라는 지시가 없음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:120px">
+<div class="card" style="width:150px;margin:0 auto;text-align:center">공지사항</div>
+<p class="mut" style="margin:8px 2px 0;text-align:center">상자: margin auto · 글자: text-align</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 상자와 글자 중 의도한 쪽만 정확히 가운데면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "아이콘이랑 글자 높이가 안 맞아요" (icon-text-align) [즉방형]
+- 별칭: "아이콘이 위로 떠 있어요" · "체크 표시가 글자보다 올라가 있어요"
+- 범인: 아이콘과 글자를 그냥 나란히 놓기만 함 — 세로 기준을 맞추라는 지시가 없음
+- 처방: 한 상자로 묶어 flex 세로 가운데(align-items: center), 사이 간격은 gap.
+- 요청 문장: 아이콘과 글자를 한 상자로 묶어서 세로 가운데로 맞추고, 사이 간격은 gap으로 줘.
+- 확인: 글자 크기를 키워도 아이콘이 항상 글줄 가운데에 있으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/al-icon.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"아이콘이랑 글자 높이가 안 맞아요" — CSS 증상 사전</title>
+<!--
+  증상: "아이콘이랑 글자 높이가 안 맞아요" (icon-text-align) · 유형: 즉방형
+  범인: 아이콘과 글자를 그냥 나란히 놓기만 함 — 세로 기준을 맞추라는 지시가 없음
+  처방: 한 상자로 묶어 flex 세로 가운데(align-items: center), 사이 간격은 gap.
+  AI에게: 아이콘과 글자를 한 상자로 묶어서 세로 가운데로 맞추고, 사이 간격은 gap으로 줘.
+  확인: 글자 크기를 키워도 아이콘이 항상 글줄 가운데에 있으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:110px">
+<div class="card">
+  <span style="display:inline-block;width:20px;height:20px;background:#1f7a4d;border-radius:50%;vertical-align:top;color:#fff;font-size:12px;text-align:center;line-height:20px">✓</span>
+  결제가 완료되었습니다
+</div>
+<p class="mut" style="margin:8px 2px 0">아이콘이 글줄 위로 떠 있음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:110px">
+<div class="card" style="display:flex;align-items:center;gap:8px">
+  <span style="flex:none;width:20px;height:20px;background:#1f7a4d;border-radius:50%;color:#fff;font-size:12px;text-align:center;line-height:20px">✓</span>
+  결제가 완료되었습니다
+</div>
+<p class="mut" style="margin:8px 2px 0">flex 세로 가운데 + gap</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 글자 크기를 키워도 아이콘이 항상 글줄 가운데에 있으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "양쪽 끝으로 보내고 싶은데 한쪽에 몰려요" (space-between) [즉방형]
+- 별칭: "제목은 왼쪽, 버튼은 오른쪽에 두고 싶어요" · "한 줄에 양끝으로 벌리고 싶어요"
+- 범인: 나란히 놓기만 하고 '사이를 벌려라'는 지시(space-between)가 없음
+- 처방: 한 상자에 넣고 flex 양끝 정렬(justify-content: space-between).
+- 요청 문장: 이 줄의 왼쪽엔 제목, 오른쪽 끝엔 버튼이 가게 양끝 정렬해줘.
+- 확인: 화면 폭을 줄이거나 늘려도 양끝이 유지되면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/al-between.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"양쪽 끝으로 보내고 싶은데 한쪽에 몰려요" — CSS 증상 사전</title>
+<!--
+  증상: "양쪽 끝으로 보내고 싶은데 한쪽에 몰려요" (space-between) · 유형: 즉방형
+  범인: 나란히 놓기만 하고 '사이를 벌려라'는 지시(space-between)가 없음
+  처방: 한 상자에 넣고 flex 양끝 정렬(justify-content: space-between).
+  AI에게: 이 줄의 왼쪽엔 제목, 오른쪽 끝엔 버튼이 가게 양끝 정렬해줘.
+  확인: 화면 폭을 줄이거나 늘려도 양끝이 유지되면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:110px">
+<div class="card">
+  <b>주문 내역</b>
+  <button class="btn" style="padding:6px 12px;font-size:12px">전체 보기</button>
+</div>
+<p class="mut" style="margin:8px 2px 0">양끝으로 벌리라는 지시가 없어 나란히 붙음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:110px">
+<div class="card" style="display:flex;justify-content:space-between;align-items:center">
+  <b>주문 내역</b>
+  <button class="btn" style="padding:6px 12px;font-size:12px">전체 보기</button>
+</div>
+<p class="mut" style="margin:8px 2px 0">flex 양끝 정렬 (space-between)</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 화면 폭을 줄이거나 늘려도 양끝이 유지되면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "마지막 카드만 혼자 이상해요" (last-row) [분기형]
+- 별칭: "마지막 줄이 벌어져요" · "마지막 카드만 혼자 커져요" · "마지막 줄만 가운데로 가요"
+- 범인: 마지막 줄은 채울 카드가 부족해서 정렬 규칙이 그대로 드러나는 자리 — 무엇이 '정상'인지부터 정해야 함
+- 갈림길: [마지막 카드가 늘어나 줄을 꽉 채움] → 카드 폭을 고정하고 왼쪽 정렬로. '채우는 게' 의도였는지 확인 · [마지막 줄에 빈칸이 생겨 허전함] → 빈칸은 정상. 그래도 거슬리면 자리 채움 카드(placeholder)를 넣을지 결정 · [마지막 줄만 가운데로 감] → 전체를 왼쪽 정렬로 통일할지 결정
+- 요청 문장: 카드 목록 마지막 줄이 이상해. 바로 고치지 말고 지금 정렬 방식이 뭔지 설명해주고, 마지막 줄을 왼쪽 정렬로 둘지 꽉 채울지 선택지를 보여줘. 고른 다음에 고치자.
+- 확인: 카드 개수를 하나 줄이거나 늘려도 마지막 줄이 의도대로 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/al-lastcard.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"마지막 카드만 혼자 이상해요" — CSS 증상 사전</title>
+<!--
+  증상: "마지막 카드만 혼자 이상해요" (last-row) · 유형: 분기형
+  범인: 마지막 줄은 채울 카드가 부족해서 정렬 규칙이 그대로 드러나는 자리 — 무엇이 '정상'인지부터 정해야 함
+  갈림길: [마지막 카드가 늘어나 줄을 꽉 채움] → 카드 폭을 고정하고 왼쪽 정렬로. '채우는 게' 의도였는지 확인 · [마지막 줄에 빈칸이 생겨 허전함] → 빈칸은 정상. 그래도 거슬리면 자리 채움 카드(placeholder)를 넣을지 결정 · [마지막 줄만 가운데로 감] → 전체를 왼쪽 정렬로 통일할지 결정
+  AI에게: 카드 목록 마지막 줄이 이상해. 바로 고치지 말고 지금 정렬 방식이 뭔지 설명해주고, 마지막 줄을 왼쪽 정렬로 둘지 꽉 채울지 선택지를 보여줘. 고른 다음에 고치자.
+  확인: 카드 개수를 하나 줄이거나 늘려도 마지막 줄이 의도대로 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+  <div class="card" style="width:31%;height:44px"></div>
+</div>
+<p class="mut" style="margin:8px 2px 0">마지막 줄만 혼자 가운데로 감</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+  <div class="card" style="height:44px"></div>
+</div>
+<p class="mut" style="margin:8px 2px 0">그리드로 왼쪽 정렬 통일 — 빈칸은 정상</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 카드 개수를 하나 줄이거나 늘려도 마지막 줄이 의도대로 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 02 삐져나와요 · 잘려요
+
+### "이미지가 상자를 뚫고 나가요" (img-overflow) [즉방형]
+- 별칭: "사진이 너무 커요" · "사진이 상자 밖으로 나가요"
+- 범인: 이미지에 최대 폭 제한이 없음 — 원본 크기 그대로 나옴
+- 처방: 이미지에 max-width: 100%를 기본으로 깐다.
+- 요청 문장: 이미지가 상자를 넘지 않게 max-width 100%를 기본으로 깔아줘.
+- 확인: 아주 큰 사진을 넣어도 상자 안에 들어오면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/of-image.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"이미지가 상자를 뚫고 나가요" — CSS 증상 사전</title>
+<!--
+  증상: "이미지가 상자를 뚫고 나가요" (img-overflow) · 유형: 즉방형
+  범인: 이미지에 최대 폭 제한이 없음 — 원본 크기 그대로 나옴
+  처방: 이미지에 max-width: 100%를 기본으로 깐다.
+  AI에게: 이미지가 상자를 넘지 않게 max-width 100%를 기본으로 깔아줘.
+  확인: 아주 큰 사진을 넣어도 상자 안에 들어오면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:170px">
+  <div style="width:260px;height:70px;border-radius:8px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)"></div>
+  <p class="mut" style="margin:6px 0 0">사진이 상자를 뚫고 나감</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:170px">
+  <div style="max-width:100%;height:70px;border-radius:8px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)"></div>
+  <p class="mut" style="margin:6px 0 0">max-width 100% — 상자 안으로</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 아주 큰 사진을 넣어도 상자 안에 들어오면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "긴 영어·링크가 상자를 뚫어요" (long-string) [즉방형]
+- 별칭: "URL이 삐져나가요" · "영어 한 덩어리가 안 끊겨요"
+- 범인: 공백 없는 긴 문자열은 브라우저가 끊을 자리를 못 찾음 — 한 덩어리로 밀고 나감
+- 처방: 긴 문자열엔 overflow-wrap — 상자 안에서 강제로 줄바꿈.
+- 요청 문장: URL 같은 긴 문자열이 상자 안에서 줄바꿈되게 overflow-wrap을 적용해줘.
+- 확인: 아주 긴 링크를 넣어도 상자 폭이 변하지 않으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/of-url.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"긴 영어·링크가 상자를 뚫어요" — CSS 증상 사전</title>
+<!--
+  증상: "긴 영어·링크가 상자를 뚫어요" (long-string) · 유형: 즉방형
+  범인: 공백 없는 긴 문자열은 브라우저가 끊을 자리를 못 찾음 — 한 덩어리로 밀고 나감
+  처방: 긴 문자열엔 overflow-wrap — 상자 안에서 강제로 줄바꿈.
+  AI에게: URL 같은 긴 문자열이 상자 안에서 줄바꿈되게 overflow-wrap을 적용해줘.
+  확인: 아주 긴 링크를 넣어도 상자 폭이 변하지 않으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:140px">
+<div class="card" style="width:180px">
+  안내 문서:
+  <span style="white-space:nowrap;font-size:11.5px;color:#f05032">https://docs.example.com/payments/webhooks-guide</span>
+</div>
+<p class="mut" style="margin:8px 2px 0">긴 링크가 상자를 뚫음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:140px">
+<div class="card" style="width:180px">
+  안내 문서:
+  <span style="overflow-wrap:anywhere;font-size:11.5px;color:#f05032">https://docs.example.com/payments/webhooks-guide</span>
+</div>
+<p class="mut" style="margin:8px 2px 0">overflow-wrap — 상자 안에서 줄바꿈</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 아주 긴 링크를 넣어도 상자 폭이 변하지 않으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "펼친 메뉴가 잘려서 반만 보여요" (clipped-popover) [분기형]
+- 별칭: "드롭다운이 카드 안에 갇혀요" · "툴팁이 잘려요"
+- 범인: 어떤 조상이 넘치는 것을 자르고 있음 — 누가 자르는지에 따라 처방이 다름
+- 갈림길: [부모 카드에 overflow hidden이 있음] → 그 카드만 hidden을 풀 수 있는지 확인. 못 풀면 메뉴를 카드 밖 레이어로 · [조상에 transform이나 블러(backdrop-filter) 효과가 있음] → 떠 있는 요소의 기준이 그 조상으로 바뀌는 함정. 효과를 다른 요소로 옮기거나 메뉴를 밖으로
+- 요청 문장: 펼침 메뉴가 잘려. 바로 고치지 말고 어느 조상이 자르는지(overflow인지, transform·블러 효과인지) 찾아서 알려주고, 메뉴를 밖으로 뺄지 그 속성을 풀지 확인받고 고쳐줘.
+- 확인: 메뉴가 카드 경계를 넘어 전부 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/of-dropdown.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"펼친 메뉴가 잘려서 반만 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "펼친 메뉴가 잘려서 반만 보여요" (clipped-popover) · 유형: 분기형
+  범인: 어떤 조상이 넘치는 것을 자르고 있음 — 누가 자르는지에 따라 처방이 다름
+  갈림길: [부모 카드에 overflow hidden이 있음] → 그 카드만 hidden을 풀 수 있는지 확인. 못 풀면 메뉴를 카드 밖 레이어로 · [조상에 transform이나 블러(backdrop-filter) 효과가 있음] → 떠 있는 요소의 기준이 그 조상으로 바뀌는 함정. 효과를 다른 요소로 옮기거나 메뉴를 밖으로
+  AI에게: 펼침 메뉴가 잘려. 바로 고치지 말고 어느 조상이 자르는지(overflow인지, transform·블러 효과인지) 찾아서 알려주고, 메뉴를 밖으로 뺄지 그 속성을 풀지 확인받고 고쳐줘.
+  확인: 메뉴가 카드 경계를 넘어 전부 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div class="card" style="overflow:hidden;height:80px;position:relative">
+  <div style="display:flex;justify-content:space-between;align-items:center"><b>필터</b><span class="mut">▾</span></div>
+  <div style="position:absolute;top:40px;left:13px;width:130px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px">
+    <div style="padding:8px 12px">최신순</div>
+    <div style="padding:8px 12px">인기순</div>
+    <div style="padding:8px 12px">가격순</div>
+  </div>
+</div>
+<p class="mut" style="margin:8px 2px 0">카드의 overflow hidden이 메뉴를 자름</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div class="card" style="height:80px;position:relative">
+  <div style="display:flex;justify-content:space-between;align-items:center"><b>필터</b><span class="mut">▾</span></div>
+  <div style="position:absolute;top:40px;left:13px;width:130px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px;z-index:2">
+    <div style="padding:8px 12px">최신순</div>
+    <div style="padding:8px 12px">인기순</div>
+    <div style="padding:8px 12px">가격순</div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 메뉴가 카드 경계를 넘어 전부 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "글자가 표시도 없이 뚝 잘려요" (text-cut) [즉방형]
+- 별칭: "끝이 잘렸는데 …도 없어요" · "제목이 중간에 끊겨요"
+- 범인: 넘침을 숨기기만 하고 말줄임(…) 처리가 없음
+- 처방: 한 줄 말줄임 세트 — 줄바꿈 금지 + 넘침 숨김 + ellipsis.
+- 요청 문장: 이 글자가 상자를 넘으면 …으로 줄여줘. 한 줄 기준으로.
+- 확인: 긴 제목이 …으로 끝나면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/of-ellipsis.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"글자가 표시도 없이 뚝 잘려요" — CSS 증상 사전</title>
+<!--
+  증상: "글자가 표시도 없이 뚝 잘려요" (text-cut) · 유형: 즉방형
+  범인: 넘침을 숨기기만 하고 말줄임(…) 처리가 없음
+  처방: 한 줄 말줄임 세트 — 줄바꿈 금지 + 넘침 숨김 + ellipsis.
+  AI에게: 이 글자가 상자를 넘으면 …으로 줄여줘. 한 줄 기준으로.
+  확인: 긴 제목이 …으로 끝나면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:110px">
+<div class="card" style="width:180px;white-space:nowrap;overflow:hidden">주문하신 상품이 오늘 출발했습니다</div>
+<p class="mut" style="margin:8px 2px 0">표시 없이 뚝 잘림</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:110px">
+<div class="card" style="width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">주문하신 상품이 오늘 출발했습니다</div>
+<p class="mut" style="margin:8px 2px 0">…으로 줄었다는 표시가 남음</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 긴 제목이 …으로 끝나면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "따라와야 할 헤더가 안 따라와요" (sticky-fail) [즉방형]
+- 별칭: "sticky가 안 먹어요" · "스크롤하면 고정이 풀려요"
+- 범인: 조상 중 하나가 overflow를 갖고 있음 — sticky가 그 안에 갇힘 / 붙을 위치(top) 지정이 빠짐
+- 처방: 조상들의 overflow를 확인해서 풀고, top 값을 지정한다.
+- 요청 문장: 이 헤더가 스크롤해도 위에 붙어 있게 해줘. 조상에 overflow가 걸려 있으면 찾아서 알려주고 풀어줘.
+- 확인: 스크롤해도 헤더가 위에 붙어 있으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/of-sticky.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"따라와야 할 헤더가 안 따라와요" — CSS 증상 사전</title>
+<!--
+  증상: "따라와야 할 헤더가 안 따라와요" (sticky-fail) · 유형: 즉방형
+  범인: 조상 중 하나가 overflow를 갖고 있음 — sticky가 그 안에 갇힘 / 붙을 위치(top) 지정이 빠짐
+  처방: 조상들의 overflow를 확인해서 풀고, top 값을 지정한다.
+  AI에게: 이 헤더가 스크롤해도 위에 붙어 있게 해줘. 조상에 overflow가 걸려 있으면 찾아서 알려주고 풀어줘.
+  확인: 스크롤해도 헤더가 위에 붙어 있으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+  <div style="padding:9px 12px;border-bottom:1px solid #e4e4ea;background:#fff"><b>섹션 제목</b> <span class="mut">(스크롤하면 사라짐)</span></div>
+  <div style="padding:10px 12px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="bar"></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+  <div style="position:sticky;top:0;padding:9px 12px;border-bottom:1px solid #e4e4ea;background:#fff;z-index:2"><b>섹션 제목</b> <span class="mut">(따라옴)</span></div>
+  <div style="padding:10px 12px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="bar"></div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 스크롤해도 헤더가 위에 붙어 있으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 03 스크롤이 이상해요
+
+### "스크롤이 두 개 생겨요" (double-scroll) [즉방형]
+- 별칭: "안에서도 밖에서도 스크롤돼요" · "스크롤이 이상하게 두 번 걸려요"
+- 범인: 바깥과 안쪽 상자가 둘 다 스크롤을 가짐 / flex 자식이 min-height: 0 없이 넘쳐서 부모까지 밀어냄 (헤더 고정 화면의 단골)
+- 처방: 스크롤 주인을 하나만 정한다. 목록이 주인, 바깥은 hidden, 중간 flex 상자엔 min-height: 0.
+- 요청 문장: 스크롤이 이중으로 걸려. 목록 하나만 스크롤하게 하고, 바깥은 overflow hidden, 중간 flex 상자들엔 min-height 0을 넣어줘.
+- 확인: 바깥은 안 움직이고 목록만 움직이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sc-double.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"스크롤이 두 개 생겨요" — CSS 증상 사전</title>
+<!--
+  증상: "스크롤이 두 개 생겨요" (double-scroll) · 유형: 즉방형
+  범인: 바깥과 안쪽 상자가 둘 다 스크롤을 가짐 / flex 자식이 min-height: 0 없이 넘쳐서 부모까지 밀어냄 (헤더 고정 화면의 단골)
+  처방: 스크롤 주인을 하나만 정한다. 목록이 주인, 바깥은 hidden, 중간 flex 상자엔 min-height: 0.
+  AI에게: 스크롤이 이중으로 걸려. 목록 하나만 스크롤하게 하고, 바깥은 overflow hidden, 중간 flex 상자들엔 min-height 0을 넣어줘.
+  확인: 바깥은 안 움직이고 목록만 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:8px;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="height:120px;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <div style="height:80px"></div>
+  <p class="mut">바깥도 안쪽도 굴러감 — 스크롤 2개</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;overflow:hidden">
+  <div class="card" style="flex:none;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="flex:1;min-height:0;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <p class="mut" style="flex:none;margin:0">목록만 굴러감 — min-height:0이 열쇠</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 바깥은 안 움직이고 목록만 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "팝업 떴는데 뒤 배경이 같이 스크롤돼요" (scroll-lock) [즉방형]
+- 별칭: "팝업 뒤가 움직여요" · "팝업 위에서 굴리면 뒤가 내려가요"
+- 범인: 팝업을 열 때 본문 스크롤을 잠그지 않음
+- 처방: 팝업이 열릴 때 본문 스크롤을 잠그고, 닫힐 때 풀어준다.
+- 요청 문장: 팝업이 떠 있는 동안 뒤 화면이 스크롤되지 않게 잠그고, 닫으면 원래대로 돌려줘.
+- 확인: 팝업 위에서 휠을 굴려도 뒤가 안 움직이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sc-bg.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"팝업 떴는데 뒤 배경이 같이 스크롤돼요" — CSS 증상 사전</title>
+<!--
+  증상: "팝업 떴는데 뒤 배경이 같이 스크롤돼요" (scroll-lock) · 유형: 즉방형
+  범인: 팝업을 열 때 본문 스크롤을 잠그지 않음
+  처방: 팝업이 열릴 때 본문 스크롤을 잠그고, 닫힐 때 풀어준다.
+  AI에게: 팝업이 떠 있는 동안 뒤 화면이 스크롤되지 않게 잠그고, 닫으면 원래대로 돌려줘.
+  확인: 팝업 위에서 휠을 굴려도 뒤가 안 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div style="height:100%;position:relative;border-radius:10px;overflow:hidden;border:1px solid #e4e4ea">
+  <div style="height:100%;overflow-y:auto;background:#fff;padding:10px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:65%"></div><div class="bar"></div><div class="bar" style="width:80%"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(23,23,27,.35);display:flex;align-items:center;justify-content:center;pointer-events:none">
+    <div class="card" style="width:150px;text-align:center;pointer-events:auto"><b>팝업</b><p class="mut" style="margin:4px 0 0">뒤가 같이 굴러감</p></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="height:100%;position:relative;border-radius:10px;overflow:hidden;border:1px solid #e4e4ea">
+  <div style="height:100%;overflow:hidden;background:#fff;padding:10px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:65%"></div><div class="bar"></div><div class="bar" style="width:80%"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(23,23,27,.35);display:flex;align-items:center;justify-content:center">
+    <div class="card" style="width:150px;text-align:center"><b>팝업</b><p class="mut" style="margin:4px 0 0">뒤는 잠김</p></div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 팝업 위에서 휠을 굴려도 뒤가 안 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "내용이 더 있는데 스크롤이 안 돼요" (no-scroll) [즉방형]
+- 별칭: "아래가 더 있는 것 같은데 못 내려가요" · "잘린 채로 멈춰 있어요"
+- 범인: 어딘가의 overflow hidden이 전체 스크롤을 잠갔음 / 높이 100%가 이어지다 중간에 끊겨 내용 높이를 모름
+- 처방: 잠근 범인을 찾고, 스크롤이 필요한 영역 하나에만 스크롤을 준다.
+- 요청 문장: 이 화면이 스크롤이 안 돼. overflow hidden이 걸린 데를 찾아서 알려주고, 스크롤이 필요한 영역만 스크롤되게 고쳐줘.
+- 확인: 내용 끝까지 내려가지면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sc-none.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"내용이 더 있는데 스크롤이 안 돼요" — CSS 증상 사전</title>
+<!--
+  증상: "내용이 더 있는데 스크롤이 안 돼요" (no-scroll) · 유형: 즉방형
+  범인: 어딘가의 overflow hidden이 전체 스크롤을 잠갔음 / 높이 100%가 이어지다 중간에 끊겨 내용 높이를 모름
+  처방: 잠근 범인을 찾고, 스크롤이 필요한 영역 하나에만 스크롤을 준다.
+  AI에게: 이 화면이 스크롤이 안 돼. overflow hidden이 걸린 데를 찾아서 알려주고, 스크롤이 필요한 영역만 스크롤되게 고쳐줘.
+  확인: 내용 끝까지 내려가지면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div style="height:100%;overflow:hidden;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:8px;align-content:start">
+  <b style="font-size:13px">공지사항</b>
+  <div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:8px;align-content:start">
+  <b style="font-size:13px">공지사항 <span class="mut" style="font-weight:400">(굴려보세요)</span></b>
+  <div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:75%"></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 내용 끝까지 내려가지면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "페이지 이동할 때 화면이 좌우로 덜컹해요" (scrollbar-shift) [즉방형]
+- 별칭: "어떤 페이지는 살짝 밀려 보여요" · "내용이 튀는 느낌이에요"
+- 범인: 긴 페이지에만 스크롤바가 생겨서 그 폭만큼 내용이 밀림
+- 처방: 스크롤바 자리를 항상 확보한다 (scrollbar-gutter: stable).
+- 요청 문장: 페이지 이동할 때 스크롤바 때문에 화면이 덜컹이지 않게 스크롤바 자리를 항상 확보해줘.
+- 확인: 짧은 페이지와 긴 페이지를 오가도 내용이 안 움직이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sc-jitter.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"페이지 이동할 때 화면이 좌우로 덜컹해요" — CSS 증상 사전</title>
+<!--
+  증상: "페이지 이동할 때 화면이 좌우로 덜컹해요" (scrollbar-shift) · 유형: 즉방형
+  범인: 긴 페이지에만 스크롤바가 생겨서 그 폭만큼 내용이 밀림
+  처방: 스크롤바 자리를 항상 확보한다 (scrollbar-gutter: stable).
+  AI에게: 페이지 이동할 때 스크롤바 때문에 화면이 덜컹이지 않게 스크롤바 자리를 항상 확보해줘.
+  확인: 짧은 페이지와 긴 페이지를 오가도 내용이 안 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var b=this.nextElementSibling.firstElementChild;b.style.height=b.style.height==='40px'?'220px':'40px'">짧은 페이지 ↔ 긴 페이지</button>
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+    <div style="height:220px;padding:10px"><div class="card" style="width:150px;margin:0 auto;text-align:center">내용 (덜컹임)</div></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var b=this.nextElementSibling.firstElementChild;b.style.height=b.style.height==='40px'?'220px':'40px'">짧은 페이지 ↔ 긴 페이지</button>
+  <div style="flex:1;min-height:0;overflow-y:auto;scrollbar-gutter:stable;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+    <div style="height:220px;padding:10px"><div class="card" style="width:150px;margin:0 auto;text-align:center">내용 (안 움직임)</div></div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 짧은 페이지와 긴 페이지를 오가도 내용이 안 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "채팅처럼 아래부터 보여야 하는데 위에서 시작해요" (stick-to-bottom) [즉방형]
+- 별칭: "새 메시지가 안 보여요" · "맨 아래로 안 내려가요"
+- 범인: 목록이 위에서부터 쌓이기만 하고, 최신 항목으로 내려주는 처리가 없음
+- 처방: 새 항목이 추가되면 맨 아래로 스크롤시킨다.
+- 요청 문장: 이 메시지 목록이 항상 최신(맨 아래)이 보이게 해줘. 새 메시지가 오면 자동으로 맨 아래로 내려가게.
+- 확인: 새 항목이 추가될 때마다 최신 항목이 바로 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sc-chat.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"채팅처럼 아래부터 보여야 하는데 위에서 시작해요" — CSS 증상 사전</title>
+<!--
+  증상: "채팅처럼 아래부터 보여야 하는데 위에서 시작해요" (stick-to-bottom) · 유형: 즉방형
+  범인: 목록이 위에서부터 쌓이기만 하고, 최신 항목으로 내려주는 처리가 없음
+  처방: 새 항목이 추가되면 맨 아래로 스크롤시킨다.
+  AI에게: 이 메시지 목록이 항상 최신(맨 아래)이 보이게 해줘. 새 메시지가 오면 자동으로 맨 아래로 내려가게.
+  확인: 새 항목이 추가될 때마다 최신 항목이 바로 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:8px 10px;font-size:12px;line-height:2" id="cb">
+    옛날 메시지 1<br>옛날 메시지 2<br>옛날 메시지 3<br>옛날 메시지 4<br>옛날 메시지 5<br>옛날 메시지 6
+  </div>
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var l=this.previousElementSibling;l.insertAdjacentHTML('beforeend','<br><b>새 메시지</b> (안 보임)')">메시지 도착시키기</button>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:8px 10px;font-size:12px;line-height:2">
+    옛날 메시지 1<br>옛날 메시지 2<br>옛날 메시지 3<br>옛날 메시지 4<br>옛날 메시지 5<br>옛날 메시지 6
+  </div>
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var l=this.previousElementSibling;l.insertAdjacentHTML('beforeend','<br><b>새 메시지</b> ✓');l.scrollTop=l.scrollHeight">메시지 도착시키기</button>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 새 항목이 추가될 때마다 최신 항목이 바로 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 04 겹치고 가려져요
+
+### "버튼이 멀쩡한데 클릭이 안 돼요" (click-blocked) [즉방형]
+- 별칭: "눌러도 반응이 없어요" · "어떤 데는 되고 어떤 데는 안 돼요"
+- 범인: 투명한 요소가 위를 덮고 있음 — 그라디언트 장식, 닫힌 줄 알았던 오버레이 / 쌓임 순서 경쟁에서 밀림
+- 처방: 장식용 덮개에는 pointer-events: none — 보이되 클릭은 통과시킨다.
+- 요청 문장: 이 버튼이 클릭이 안 돼. 위를 덮고 있는 요소를 찾아서 알려주고, 장식용이면 pointer-events none을 줘서 클릭이 통과되게 해줘.
+- 확인: 버튼 전체 어디를 눌러도 반응하면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/zx-click.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"버튼이 멀쩡한데 클릭이 안 돼요" — CSS 증상 사전</title>
+<!--
+  증상: "버튼이 멀쩡한데 클릭이 안 돼요" (click-blocked) · 유형: 즉방형
+  범인: 투명한 요소가 위를 덮고 있음 — 그라디언트 장식, 닫힌 줄 알았던 오버레이 / 쌓임 순서 경쟁에서 밀림
+  처방: 장식용 덮개에는 pointer-events: none — 보이되 클릭은 통과시킨다.
+  AI에게: 이 버튼이 클릭이 안 돼. 위를 덮고 있는 요소를 찾아서 알려주고, 장식용이면 pointer-events none을 줘서 클릭이 통과되게 해줘.
+  확인: 버튼 전체 어디를 눌러도 반응하면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div style="position:relative;display:inline-block">
+    <button class="btn" onclick="this.querySelector('b').textContent=+this.querySelector('b').textContent+1">담기 <b style="color:#ffb3a0">0</b></button>
+    <div style="position:absolute;inset:-26px;background:linear-gradient(transparent,rgba(240,80,50,.06))"></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div style="position:relative;display:inline-block">
+    <button class="btn" onclick="this.querySelector('b').textContent=+this.querySelector('b').textContent+1">담기 <b style="color:#8fe3b6">0</b></button>
+    <div style="position:absolute;inset:-26px;background:linear-gradient(transparent,rgba(240,80,50,.06));pointer-events:none"></div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 버튼 전체 어디를 눌러도 반응하면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "팝업이 다른 것 뒤에 깔려요" (stacking-context) [분기형]
+- 별칭: "모달이 헤더 뒤로 가요" · "z-index를 아무리 올려도 안 돼요"
+- 범인: 쌓임 순서(z-index) 문제는 두 종류 — 단순 숫자 경쟁이거나, 조상이 만든 '층' 안에 갇혔거나
+- 갈림길: [숫자 경쟁 (같은 층에서 밀림)] → 화면 전체의 층 규칙을 정리 (헤더 10, 드롭다운 100, 모달 1000처럼) · [조상에 transform·filter·opacity가 있어서 그 안에 갇힘] → 숫자를 올려도 소용없음. 팝업을 문서 최상위로 이동(portal)
+- 요청 문장: 팝업이 헤더 뒤에 깔려. z-index 숫자만 올리지 말고, 조상 때문에 층 안에 갇힌 건지 먼저 확인해서 알려주고, 갇혔으면 팝업을 문서 최상위로 옮겨줘.
+- 확인: 팝업이 항상 모든 것 위에 뜨면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/zx-modal.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"팝업이 다른 것 뒤에 깔려요" — CSS 증상 사전</title>
+<!--
+  증상: "팝업이 다른 것 뒤에 깔려요" (stacking-context) · 유형: 분기형
+  범인: 쌓임 순서(z-index) 문제는 두 종류 — 단순 숫자 경쟁이거나, 조상이 만든 '층' 안에 갇혔거나
+  갈림길: [숫자 경쟁 (같은 층에서 밀림)] → 화면 전체의 층 규칙을 정리 (헤더 10, 드롭다운 100, 모달 1000처럼) · [조상에 transform·filter·opacity가 있어서 그 안에 갇힘] → 숫자를 올려도 소용없음. 팝업을 문서 최상위로 이동(portal)
+  AI에게: 팝업이 헤더 뒤에 깔려. z-index 숫자만 올리지 말고, 조상 때문에 층 안에 갇힌 건지 먼저 확인해서 알려주고, 갇혔으면 팝업을 문서 최상위로 옮겨줘.
+  확인: 팝업이 항상 모든 것 위에 뜨면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;z-index:10;background:#17171b;color:#fff;font-size:12px;padding:8px 12px;border-radius:8px 8px 0 0">고정 헤더 (z-index 10)</div>
+  <div style="position:absolute;inset:0;transform:translateZ(0)">
+    <div style="position:absolute;left:50%;top:38%;transform:translateX(-50%);z-index:9999;width:160px" class="card">
+      <b>팝업 (z-index 9999)</b>
+      <p class="mut" style="margin:4px 0 0">그래도 헤더 뒤에 깔림 — 조상 transform이 만든 층 안</p>
+    </div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;z-index:10;background:#17171b;color:#fff;font-size:12px;padding:8px 12px;border-radius:8px 8px 0 0">고정 헤더 (z-index 10)</div>
+  <div style="position:absolute;left:50%;top:8px;transform:translateX(-50%);z-index:1000;width:160px" class="card">
+    <b>팝업 (문서 최상위로 이동)</b>
+    <p class="mut" style="margin:4px 0 0">층 밖으로 꺼내면 숫자가 다시 통함</p>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 팝업이 항상 모든 것 위에 뜨면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "겹친 글자 뒤가 비쳐 보여요" (no-backdrop) [즉방형]
+- 별칭: "글자 뒤가 지저분해요" · "떠 있는 게 뒤랑 섞여 보여요"
+- 범인: 떠 있는 요소에 배경색이 없음 — 뒤 내용이 그대로 비침
+- 처방: 떠 있는 요소에는 배경을 반드시 명시한다.
+- 요청 문장: 이 떠 있는 요소에 배경색을 줘서 뒤 내용이 비치지 않게 해줘.
+- 확인: 뒤 내용이 전혀 안 비치면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/zx-text.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"겹친 글자 뒤가 비쳐 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "겹친 글자 뒤가 비쳐 보여요" (no-backdrop) · 유형: 즉방형
+  범인: 떠 있는 요소에 배경색이 없음 — 뒤 내용이 그대로 비침
+  처방: 떠 있는 요소에는 배경을 반드시 명시한다.
+  AI에게: 이 떠 있는 요소에 배경색을 줘서 뒤 내용이 비치지 않게 해줘.
+  확인: 뒤 내용이 전혀 안 비치면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:130px">
+<div style="height:100%;position:relative">
+  <p style="margin:0;font-size:12px;line-height:1.8;color:#55555f">주문 내역을 확인하시려면 마이페이지로 이동해 주세요. 배송은 결제 후 2일 이내에 시작됩니다. 교환·환불 규정은 고객센터에서 안내합니다.</p>
+  <div style="position:absolute;left:20px;top:26px;padding:6px 12px;font-size:12px;font-weight:700">떠 있는 라벨 (배경 없음)</div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:130px">
+<div style="height:100%;position:relative">
+  <p style="margin:0;font-size:12px;line-height:1.8;color:#55555f">주문 내역을 확인하시려면 마이페이지로 이동해 주세요. 배송은 결제 후 2일 이내에 시작됩니다. 교환·환불 규정은 고객센터에서 안내합니다.</p>
+  <div style="position:absolute;left:20px;top:26px;padding:6px 12px;font-size:12px;font-weight:700;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 3px 10px rgba(23,23,27,.1)">떠 있는 라벨 (배경 세트)</div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 뒤 내용이 전혀 안 비치면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "그림자가 잘려요" (clipped-shadow) [즉방형]
+- 별칭: "카드 그림자가 한쪽만 나와요" · "그림자가 반듯하게 끊겨요"
+- 범인: 부모의 overflow hidden이 그림자까지 자름 / 그림자가 퍼질 여백 없이 경계에 꽉 붙음
+- 처방: 자르는 부모를 찾아서 풀거나, 그림자가 퍼질 여백을 확보한다.
+- 요청 문장: 카드 그림자가 잘려. 잘라먹는 부모를 찾아서 알려주고, 그림자가 온전히 보이게 고쳐줘.
+- 확인: 그림자 네 방향이 모두 자연스럽게 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/zx-shadow.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"그림자가 잘려요" — CSS 증상 사전</title>
+<!--
+  증상: "그림자가 잘려요" (clipped-shadow) · 유형: 즉방형
+  범인: 부모의 overflow hidden이 그림자까지 자름 / 그림자가 퍼질 여백 없이 경계에 꽉 붙음
+  처방: 자르는 부모를 찾아서 풀거나, 그림자가 퍼질 여백을 확보한다.
+  AI에게: 카드 그림자가 잘려. 잘라먹는 부모를 찾아서 알려주고, 그림자가 온전히 보이게 고쳐줘.
+  확인: 그림자 네 방향이 모두 자연스럽게 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:140px">
+<div style="overflow:hidden;height:90px;padding:0">
+  <div class="card" style="margin:0;box-shadow:0 10px 24px rgba(23,23,27,.28)"><b>카드</b><p class="mut" style="margin:3px 0 0">부모의 overflow hidden이 그림자를 반듯하게 자름</p></div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:140px">
+<div style="height:90px;padding:6px">
+  <div class="card" style="margin:0;box-shadow:0 10px 24px rgba(23,23,27,.28)"><b>카드</b><p class="mut" style="margin:3px 0 0">자르는 부모를 풀고 여백 확보 — 그림자가 온전함</p></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 그림자 네 방향이 모두 자연스럽게 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "목차 누르면 제목이 헤더에 가려요" (anchor-under-header) [즉방형]
+- 별칭: "이동하면 위가 잘려요" · "링크 타고 가면 반쯤 가려져 있어요"
+- 범인: 고정 헤더 높이만큼 내려서 멈추라는 지시(scroll-margin)가 없음
+- 처방: 이동 목적지에 scroll-margin-top을 헤더 높이만큼 준다.
+- 요청 문장: 페이지 안에서 이동할 때 고정 헤더에 제목이 가리지 않게, 이동 지점에 헤더 높이만큼 여유를 줘.
+- 확인: 목차를 눌렀을 때 제목이 헤더 아래로 온전히 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/zx-anchor.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"목차 누르면 제목이 헤더에 가려요" — CSS 증상 사전</title>
+<!--
+  증상: "목차 누르면 제목이 헤더에 가려요" (anchor-under-header) · 유형: 즉방형
+  범인: 고정 헤더 높이만큼 내려서 멈추라는 지시(scroll-margin)가 없음
+  처방: 이동 목적지에 scroll-margin-top을 헤더 높이만큼 준다.
+  AI에게: 페이지 안에서 이동할 때 고정 헤더에 제목이 가리지 않게, 이동 지점에 헤더 높이만큼 여유를 줘.
+  확인: 목차를 눌렀을 때 제목이 헤더 아래로 온전히 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;position:relative;background:#fff;border:1px solid #e4e4ea;border-radius:10px;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;background:rgba(255,255,255,.92);border-bottom:1px solid #e4e4ea;padding:8px 12px;font-size:12px;z-index:2"><b>고정 헤더</b></div>
+  <div style="padding:22px 12px 12px">
+    <b style="font-size:14px;color:#c4372b">2. 결제 방법</b> <span class="mut">← 이동 직후, 헤더에 반쯤 가림</span>
+    <div style="display:grid;gap:8px;margin-top:10px"><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div style="height:100%;position:relative;background:#fff;border:1px solid #e4e4ea;border-radius:10px;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;background:rgba(255,255,255,.92);border-bottom:1px solid #e4e4ea;padding:8px 12px;font-size:12px;z-index:2"><b>고정 헤더</b></div>
+  <div style="padding:48px 12px 12px">
+    <b style="font-size:14px;color:#1f7a4d">2. 결제 방법</b> <span class="mut">← scroll-margin으로 헤더 아래 착지</span>
+    <div style="display:grid;gap:8px;margin-top:10px"><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div></div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 목차를 눌렀을 때 제목이 헤더 아래로 온전히 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 05 폰에서만 깨져요
+
+### "폰에서 아래 버튼이 주소창에 가려요" (100vh-trap) [즉방형]
+- 별칭: "밑이 잘려요" · "버튼이 반만 보여요"
+- 범인: 화면 높이를 100vh로 잡음 — 폰 브라우저의 주소창 높이를 무시한 값
+- 처방: 100vh 대신 100dvh(주소창을 반영하는 동적 높이)로 바꾼다.
+- 요청 문장: 화면 높이 100vh를 100dvh로 바꿔서, 폰에서 주소창이 있어도 아래 버튼이 잘리지 않게 해줘.
+- 확인: 폰에서 주소창이 보이는 상태로도 하단 버튼이 다 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-dvh.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"폰에서 아래 버튼이 주소창에 가려요" — CSS 증상 사전</title>
+<!--
+  증상: "폰에서 아래 버튼이 주소창에 가려요" (100vh-trap) · 유형: 즉방형
+  범인: 화면 높이를 100vh로 잡음 — 폰 브라우저의 주소창 높이를 무시한 값
+  처방: 100vh 대신 100dvh(주소창을 반영하는 동적 높이)로 바꾼다.
+  AI에게: 화면 높이 100vh를 100dvh로 바꿔서, 폰에서 주소창이 있어도 아래 버튼이 잘리지 않게 해줘.
+  확인: 폰에서 주소창이 보이는 상태로도 하단 버튼이 다 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 증상 (재현 시뮬레이션)</div><div class="stage" style="height:210px">
+<div style="height:100%;display:flex;justify-content:center">
+  <div style="width:110px;background:#fff;border:2px solid #17171b;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;position:relative">
+    <div style="flex:1;padding:8px;display:grid;gap:6px;align-content:start"><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div></div>
+    <div style="position:absolute;left:8px;right:8px;bottom:8px;background:#17171b;color:#fff;font-size:10px;text-align:center;padding:7px 0;border-radius:7px">결제하기</div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:24px;background:#dfe1e6;display:flex;align-items:center;justify-content:center;font-size:9px;color:#55555f">주소창 ← 버튼을 가림</div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 상태 (시뮬레이션)</div><div class="stage" style="height:210px">
+<div style="height:100%;display:flex;justify-content:center">
+  <div style="width:110px;background:#fff;border:2px solid #17171b;border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="flex:1;padding:8px;display:grid;gap:6px;align-content:start"><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div></div>
+    <div style="margin:0 8px 4px;background:#1f7a4d;color:#fff;font-size:10px;text-align:center;padding:7px 0;border-radius:7px">결제하기 ✓</div>
+    <div style="height:24px;background:#dfe1e6;display:flex;align-items:center;justify-content:center;font-size:9px;color:#55555f">주소창 (100dvh가 비켜줌)</div>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 폰에서 주소창이 보이는 상태로도 하단 버튼이 다 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "폰에서 버튼이 잘 안 눌려요" (tap-target) [즉방형]
+- 별칭: "자꾸 옆에 걸 눌러요" · "터치가 어렵대요"
+- 범인: 탭 영역이 손가락보다 작음 (44px 미만) / 누를 것들끼리 다닥다닥 붙어 있음
+- 처방: 탭 영역 최소 44px + 서로 간격.
+- 요청 문장: 모바일에서 모든 버튼과 링크의 탭 영역을 최소 44px로 키우고, 서로 붙어 있지 않게 간격을 줘.
+- 확인: 엄지로 연속해서 눌러도 옆 것이 안 눌리면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-tap.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"폰에서 버튼이 잘 안 눌려요" — CSS 증상 사전</title>
+<!--
+  증상: "폰에서 버튼이 잘 안 눌려요" (tap-target) · 유형: 즉방형
+  범인: 탭 영역이 손가락보다 작음 (44px 미만) / 누를 것들끼리 다닥다닥 붙어 있음
+  처방: 탭 영역 최소 44px + 서로 간격.
+  AI에게: 모바일에서 모든 버튼과 링크의 탭 영역을 최소 44px로 키우고, 서로 붙어 있지 않게 간격을 줘.
+  확인: 엄지로 연속해서 눌러도 옆 것이 안 눌리면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card">
+  <p class="mut" style="margin:0 0 6px">손가락 폭(약 44px)보다 작고 다닥다닥:</p>
+  <a href="#" style="font-size:11px;margin-right:4px">수정</a><a href="#" style="font-size:11px;margin-right:4px">삭제</a><a href="#" style="font-size:11px;margin-right:4px">복사</a><a href="#" style="font-size:11px">공유</a>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card">
+  <p class="mut" style="margin:0 0 6px">탭 영역 44px + 간격:</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:36px;border:1px solid #e4e4ea;border-radius:8px;font-size:12px;text-decoration:none;color:#17171b;padding:0 10px">수정</a>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:36px;border:1px solid #e4e4ea;border-radius:8px;font-size:12px;text-decoration:none;color:#17171b;padding:0 10px">삭제</a>
+    <a href="#" style="display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:36px;border:1px solid #e4e4ea;border-radius:8px;font-size:12px;text-decoration:none;color:#17171b;padding:0 10px">공유</a>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 엄지로 연속해서 눌러도 옆 것이 안 눌리면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "아이폰에서 입력칸 누르면 화면이 확대돼요" (ios-input-zoom) [즉방형]
+- 별칭: "입력하려고 하면 커져요" · "입력 끝나도 확대가 안 풀려요"
+- 범인: 입력칸 글자가 16px보다 작으면 iOS가 잘 보이라고 자동 확대함
+- 처방: 입력칸 글자 크기를 16px 이상으로.
+- 요청 문장: 모든 입력칸의 글자 크기를 16px 이상으로 맞춰서 아이폰의 자동 확대를 막아줘.
+- 확인: 아이폰에서 입력칸을 눌러도 화면이 안 커지면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-zoom.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"아이폰에서 입력칸 누르면 화면이 확대돼요" — CSS 증상 사전</title>
+<!--
+  증상: "아이폰에서 입력칸 누르면 화면이 확대돼요" (ios-input-zoom) · 유형: 즉방형
+  범인: 입력칸 글자가 16px보다 작으면 iOS가 잘 보이라고 자동 확대함
+  처방: 입력칸 글자 크기를 16px 이상으로.
+  AI에게: 모든 입력칸의 글자 크기를 16px 이상으로 맞춰서 아이폰의 자동 확대를 막아줘.
+  확인: 아이폰에서 입력칸을 눌러도 화면이 안 커지면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 증상 (재현 시뮬레이션)</div><div class="stage" style="height:170px">
+<div style="height:100%;display:flex;justify-content:center;align-items:center">
+  <div style="width:120px;height:120px;background:#fff;border:2px solid #17171b;border-radius:14px;overflow:hidden;position:relative">
+    <div style="position:absolute;left:-40px;top:-30px;width:220px;padding:10px;transform:scale(1.5)">
+      <p style="margin:0 0 4px;font-size:9px">이메일</p>
+      <input style="width:120px;font-size:12px;padding:4px" value="확대돼 버림">
+    </div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 상태 (시뮬레이션)</div><div class="stage" style="height:170px">
+<div style="height:100%;display:flex;justify-content:center;align-items:center">
+  <div style="width:120px;height:120px;background:#fff;border:2px solid #17171b;border-radius:14px;padding:10px">
+    <p style="margin:0 0 4px;font-size:9px">이메일</p>
+    <input style="width:90px;font-size:16px;padding:4px" placeholder="16px — 그대로">
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 아이폰에서 입력칸을 눌러도 화면이 안 커지면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "폰에서 한 번 눌러선 안 되고 두 번 눌러야 해요" (hover-dependent) [즉방형]
+- 별칭: "첫 탭은 무시돼요" · "PC에선 되는데 폰에서 이상해요"
+- 범인: 마우스를 올렸을 때(hover)만 나타나는 메뉴 — 폰엔 마우스가 없어서 첫 탭이 hover 역할로 소모됨
+- 처방: hover에만 의존하지 말고 탭(클릭)으로도 열리게 한다.
+- 요청 문장: hover에만 반응하는 메뉴를 터치 기기에서는 한 번 탭으로 열리게 바꿔줘.
+- 확인: 폰에서 한 번 탭에 바로 열리면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-hover.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"폰에서 한 번 눌러선 안 되고 두 번 눌러야 해요" — CSS 증상 사전</title>
+<!--
+  증상: "폰에서 한 번 눌러선 안 되고 두 번 눌러야 해요" (hover-dependent) · 유형: 즉방형
+  범인: 마우스를 올렸을 때(hover)만 나타나는 메뉴 — 폰엔 마우스가 없어서 첫 탭이 hover 역할로 소모됨
+  처방: hover에만 의존하지 말고 탭(클릭)으로도 열리게 한다.
+  AI에게: hover에만 반응하는 메뉴를 터치 기기에서는 한 번 탭으로 열리게 바꿔줘.
+  확인: 폰에서 한 번 탭에 바로 열리면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div class="card" style="position:relative">
+  <style>.hvmenu{display:none;position:absolute;top:38px;left:13px;width:120px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px;z-index:2}.hvwrap:hover .hvmenu{display:block}</style>
+  <span class="hvwrap" style="position:static"><b style="cursor:pointer">메뉴 ▾</b><span class="mut"> (마우스 올리면만 열림 — 폰에선 탭해도 반응 없음)</span>
+    <div class="hvmenu"><div style="padding:8px 12px">내 정보</div><div style="padding:8px 12px">로그아웃</div></div>
+  </span>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div class="card" style="position:relative">
+  <b style="cursor:pointer" onclick="var m=this.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block'">메뉴 ▾</b>
+  <div style="display:none;position:absolute;top:38px;left:13px;width:120px;background:#fff;border:1px solid #e4e4ea;border-radius:8px;box-shadow:0 6px 16px rgba(23,23,27,.12);font-size:12px;z-index:2"><div style="padding:8px 12px">내 정보</div><div style="padding:8px 12px">로그아웃</div></div>
+  <span class="mut"> (탭·클릭으로 열림 — 눌러보세요)</span>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 폰에서 한 번 탭에 바로 열리면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "PC는 멀쩡한데 폰에서 옆으로 밀려요" (fixed-width) [즉방형]
+- 별칭: "폰에서 가로 스크롤이 생겨요" · "화면이 좌우로 흔들려요"
+- 범인: 어떤 요소가 픽셀 고정 폭(예: 600px) — 폰 화면(390px)보다 큼 / 넓은 표가 통째로 밀고 나감
+- 처방: 고정 폭은 max-width로 바꾸고, 넓은 표는 자기 상자 안에서만 가로 스크롤.
+- 요청 문장: 폰에서 화면보다 넓어지는 요소를 찾아서 알려주고, 고정 폭은 max-width로 바꾸고 표는 자기 상자 안에서만 스크롤되게 해줘.
+- 확인: 폰 폭에서 화면이 좌우로 안 움직이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-fixedwidth.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"PC는 멀쩡한데 폰에서 옆으로 밀려요" — CSS 증상 사전</title>
+<!--
+  증상: "PC는 멀쩡한데 폰에서 옆으로 밀려요" (fixed-width) · 유형: 즉방형
+  범인: 어떤 요소가 픽셀 고정 폭(예: 600px) — 폰 화면(390px)보다 큼 / 넓은 표가 통째로 밀고 나감
+  처방: 고정 폭은 max-width로 바꾸고, 넓은 표는 자기 상자 안에서만 가로 스크롤.
+  AI에게: 폰에서 화면보다 넓어지는 요소를 찾아서 알려주고, 고정 폭은 max-width로 바꾸고 표는 자기 상자 안에서만 스크롤되게 해줘.
+  확인: 폰 폭에서 화면이 좌우로 안 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div style="overflow-x:auto;height:100%">
+  <div class="card" style="width:420px">
+    <b>주간 리포트</b>
+    <p class="mut" style="margin:4px 0 0">width: 420px 고정 — 폰 화면(390px)보다 넓어서 화면째 밀림 →</p>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="max-width:420px">
+  <b>주간 리포트</b>
+  <p class="mut" style="margin:4px 0 0">max-width: 420px — 넓은 화면에선 420px, 좁으면 화면에 맞춤</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 폰 폭에서 화면이 좌우로 안 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "앱처럼 만들었는데 헤더까지 같이 밀려요" (app-shell-scroll) [즉방형]
+- 별칭: "당기면 전체가 움직여요" · "고정해 둔 위아래가 출렁여요"
+- 범인: 스크롤 주인이 문서 전체로 잡혀 있음 — 본문만 움직여야 하는데 다 같이 움직임 / 중간 flex 상자에 min-height: 0이 빠져 본문이 부모를 밀어냄
+- 처방: 위아래는 고정, 본문 영역 하나만 스크롤 주인으로. 문서 전체 스크롤은 잠근다.
+- 요청 문장: 헤더와 하단탭은 고정하고 본문만 스크롤되게 해줘. 문서 전체 스크롤은 잠그고, 중간 flex 상자에는 min-height 0을 넣어줘.
+- 확인: 본문을 당겨도 헤더·하단탭이 전혀 안 움직이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/mb-appshell.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"앱처럼 만들었는데 헤더까지 같이 밀려요" — CSS 증상 사전</title>
+<!--
+  증상: "앱처럼 만들었는데 헤더까지 같이 밀려요" (app-shell-scroll) · 유형: 즉방형
+  범인: 스크롤 주인이 문서 전체로 잡혀 있음 — 본문만 움직여야 하는데 다 같이 움직임 / 중간 flex 상자에 min-height: 0이 빠져 본문이 부모를 밀어냄
+  처방: 위아래는 고정, 본문 영역 하나만 스크롤 주인으로. 문서 전체 스크롤은 잠근다.
+  AI에게: 헤더와 하단탭은 고정하고 본문만 스크롤되게 해줘. 문서 전체 스크롤은 잠그고, 중간 flex 상자에는 min-height 0을 넣어줘.
+  확인: 본문을 당겨도 헤더·하단탭이 전혀 안 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+  <div style="padding:8px 12px;border-bottom:1px solid #e4e4ea;font-size:12px"><b>앱 헤더</b> <span class="mut">(같이 밀려 올라감)</span></div>
+  <div style="padding:10px 12px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;display:flex;flex-direction:column;background:#fff;border:1px solid #e4e4ea;border-radius:10px;overflow:hidden">
+  <div style="flex:none;padding:8px 12px;border-bottom:1px solid #e4e4ea;font-size:12px"><b>앱 헤더</b> <span class="mut">(고정)</span></div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:10px 12px;display:grid;gap:8px;align-content:start">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div>
+  </div>
+  <div style="flex:none;padding:7px 12px;border-top:1px solid #e4e4ea;font-size:11px;color:#9a9aa4;display:flex;gap:14px"><span>홈</span><span>검색</span><span>내 정보</span></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 본문을 당겨도 헤더·하단탭이 전혀 안 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 06 간격이 이상해요
+
+### "간격이 어떨 땐 크고 어떨 땐 작아요" (margin-collapse) [즉방형]
+- 별칭: "위아래 여백이 들쭉날쭉해요" · "같은 간격을 줬는데 달라 보여요"
+- 범인: 항목마다 제각각 margin을 줌 — 이웃한 margin끼리 겹치고 접혀서 예측이 안 됨
+- 처방: 개별 margin 대신 부모의 gap 하나로 통일한다.
+- 요청 문장: 이 목록의 위아래 간격을 항목별 margin 대신 부모의 gap으로 통일해줘.
+- 확인: 어느 두 항목 사이든 간격이 똑같으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sp-gap.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"간격이 어떨 땐 크고 어떨 땐 작아요" — CSS 증상 사전</title>
+<!--
+  증상: "간격이 어떨 땐 크고 어떨 땐 작아요" (margin-collapse) · 유형: 즉방형
+  범인: 항목마다 제각각 margin을 줌 — 이웃한 margin끼리 겹치고 접혀서 예측이 안 됨
+  처방: 개별 margin 대신 부모의 gap 하나로 통일한다.
+  AI에게: 이 목록의 위아래 간격을 항목별 margin 대신 부모의 gap으로 통일해줘.
+  확인: 어느 두 항목 사이든 간격이 똑같으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:18px;padding:8px 12px;font-size:12px">알림 설정</div>
+  <div class="card" style="margin-top:4px;margin-bottom:9px;padding:8px 12px;font-size:12px">계정 관리</div>
+  <div class="card" style="margin-top:16px;padding:8px 12px;font-size:12px">로그아웃</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">항목마다 제각각 margin — 18px, 13px, 16px…</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
+  <div class="card" style="padding:8px 12px;font-size:12px">알림 설정</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">계정 관리</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">로그아웃</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">부모 gap 하나 — 어디든 12px</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 어느 두 항목 사이든 간격이 똑같으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "이미지 밑에 정체불명 틈이 있어요" (img-baseline-gap) [즉방형]
+- 별칭: "사진 아래 흰 줄이 생겨요" · "사진과 상자가 안 붙어요"
+- 범인: 이미지가 '글자'로 취급돼서 글줄 바닥의 여유 공간이 아래에 생김
+- 처방: 이미지를 display: block으로.
+- 요청 문장: 이미지 아래에 생기는 미세한 틈을 없애줘. display block으로 바꾸면 될 거야.
+- 확인: 사진과 아래 상자가 딱 붙으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sp-imgap.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"이미지 밑에 정체불명 틈이 있어요" — CSS 증상 사전</title>
+<!--
+  증상: "이미지 밑에 정체불명 틈이 있어요" (img-baseline-gap) · 유형: 즉방형
+  범인: 이미지가 '글자'로 취급돼서 글줄 바닥의 여유 공간이 아래에 생김
+  처방: 이미지를 display: block으로.
+  AI에게: 이미지 아래에 생기는 미세한 틈을 없애줘. display block으로 바꾸면 될 거야.
+  확인: 사진과 아래 상자가 딱 붙으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div style="width:170px;background:#ffd8cf;border-radius:10px;overflow:hidden">
+  <div style="font-size:0"><img alt="" style="width:170px;height:64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0);border:0;display:inline-block;font-size:13px;vertical-align:baseline" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></div>
+  <img alt="" style="width:170px;height:64px;margin-top:-64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <div style="background:#fff;padding:8px 10px;font-size:12px;margin-top:5px">상품명 <span class="mut">← 위에 분홍 틈</span></div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div style="width:170px;background:#ffd8cf;border-radius:10px;overflow:hidden">
+  <img alt="" style="display:block;width:170px;height:64px;background:linear-gradient(120deg,#2ba8e0,#6b5ae0)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <div style="background:#fff;padding:8px 10px;font-size:12px">상품명 <span class="mut">← display:block, 딱 붙음</span></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 사진과 아래 상자가 딱 붙으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "첫 번째랑 마지막만 간격이 달라요" (edge-margin) [즉방형]
+- 별칭: "목록 끝에 여백이 남아요" · "끝만 이상하게 떠요"
+- 범인: 모든 항목에 margin-bottom을 줘서 마지막 항목 뒤에도 여백이 남음
+- 처방: margin 대신 gap — 사이에만 간격이 생기고 끝엔 안 남는다.
+- 요청 문장: 항목 '사이'에만 간격이 생기게, 항목별 margin을 부모 gap으로 바꿔줘.
+- 확인: 목록 맨 끝의 남는 여백이 사라지면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sp-edge.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"첫 번째랑 마지막만 간격이 달라요" — CSS 증상 사전</title>
+<!--
+  증상: "첫 번째랑 마지막만 간격이 달라요" (edge-margin) · 유형: 즉방형
+  범인: 모든 항목에 margin-bottom을 줘서 마지막 항목 뒤에도 여백이 남음
+  처방: margin 대신 gap — 사이에만 간격이 생기고 끝엔 안 남는다.
+  AI에게: 항목 '사이'에만 간격이 생기게, 항목별 margin을 부모 gap으로 바꿔줘.
+  확인: 목록 맨 끝의 남는 여백이 사라지면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="margin-bottom:12px;padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">마지막 항목 아래에도 여백이 남음</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 1</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 2</div>
+  <div class="card" style="padding:8px 12px;font-size:12px">항목 3</div>
+</div>
+<p class="mut" style="margin:8px 2px 0">gap은 사이에만 — 끝이 깔끔</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 목록 맨 끝의 남는 여백이 사라지면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "답답한데 어디를 늘려야 할지 모르겠어요" (which-space) [분기형]
+- 별칭: "여백을 줬는데 여전히 답답해요" · "뭔가 빽빽해요"
+- 범인: '여백'은 세 종류 — 상자 안(padding), 상자 사이(gap), 글줄 사이(line-height). 어디가 부족한지에 따라 처방이 다름
+- 갈림길: [상자 안이 답답 (글자가 테두리에 붙음)] → 안쪽 여백(padding)을 늘린다 · [상자끼리 붙어 있음] → 상자 사이 간격(gap)을 늘린다 · [글줄이 빽빽함] → 줄 간격(line-height)을 조정한다
+- 요청 문장: 이 화면이 답답해 보여. 바로 고치지 말고 안쪽 여백·상자 간격·줄 간격 중 어디가 부족한지 진단해서 보여주고, 하나씩 확인받으면서 조정하자.
+- 확인: '어디' 여백이 문제였는지 이름을 알게 되면 성공. 고침은 그다음.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sp-where.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"답답한데 어디를 늘려야 할지 모르겠어요" — CSS 증상 사전</title>
+<!--
+  증상: "답답한데 어디를 늘려야 할지 모르겠어요" (which-space) · 유형: 분기형
+  범인: '여백'은 세 종류 — 상자 안(padding), 상자 사이(gap), 글줄 사이(line-height). 어디가 부족한지에 따라 처방이 다름
+  갈림길: [상자 안이 답답 (글자가 테두리에 붙음)] → 안쪽 여백(padding)을 늘린다 · [상자끼리 붙어 있음] → 상자 사이 간격(gap)을 늘린다 · [글줄이 빽빽함] → 줄 간격(line-height)을 조정한다
+  AI에게: 이 화면이 답답해 보여. 바로 고치지 말고 안쪽 여백·상자 간격·줄 간격 중 어디가 부족한지 진단해서 보여주고, 하나씩 확인받으면서 조정하자.
+  확인: '어디' 여백이 문제였는지 이름을 알게 되면 성공. 고침은 그다음.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:180px">
+<div class="card" style="padding:4px 6px">
+  <b style="font-size:13px;line-height:1.1">답답한 카드</b>
+  <p style="margin:0;font-size:12px;line-height:1.15">안쪽 여백도 없고 줄 간격도 빽빽하고 아래 카드와도 붙어 있어서 어디를 늘려야 할지 모르겠는 상태다.</p>
+</div>
+<div class="card" style="padding:4px 6px;margin-top:2px;font-size:12px">다음 카드</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
+<div style="display:grid;gap:12px">
+  <div class="card" style="padding:12px 14px">
+    <b style="font-size:13px">여백 세 가지를 각각</b>
+    <p style="margin:4px 0 0;font-size:12px;line-height:1.6">안쪽 여백(padding)은 상자 안, 상자 간격(gap)은 상자 사이, 줄 간격(line-height)은 글줄 사이. 이름이 다르면 처방도 다르다.</p>
+  </div>
+  <div class="card" style="padding:12px 14px;font-size:12px">다음 카드</div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> '어디' 여백이 문제였는지 이름을 알게 되면 성공. 고침은 그다음.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "줄 간격이 답답하거나 휑해요" (line-height) [분기형]
+- 별칭: "글이 빽빽해요" · "제목이 붕 떠 보여요"
+- 범인: 줄 간격은 한 가지 정답이 없음 — 본문·제목·한 줄 라벨이 각각 다른 값을 원함
+- 갈림길: [본문 문단] → 1.5~1.7이 편안한 범위 · [큰 제목] → 1.1~1.3 — 본문 수치를 주면 휑해짐 · [버튼·라벨 같은 한 줄짜리] → 줄 간격보다 상자의 안쪽 여백(padding)으로 잡는 게 안정적
+- 요청 문장: 줄 간격이 이상해. 본문인지 제목인지 한 줄 라벨인지 구분해서 각각 맞는 줄 간격으로 조정해줘. 어디를 어떻게 바꿨는지 알려줘.
+- 확인: 제목은 조밀하고 본문은 숨 쉬면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/sp-lineheight.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"줄 간격이 답답하거나 휑해요" — CSS 증상 사전</title>
+<!--
+  증상: "줄 간격이 답답하거나 휑해요" (line-height) · 유형: 분기형
+  범인: 줄 간격은 한 가지 정답이 없음 — 본문·제목·한 줄 라벨이 각각 다른 값을 원함
+  갈림길: [본문 문단] → 1.5~1.7이 편안한 범위 · [큰 제목] → 1.1~1.3 — 본문 수치를 주면 휑해짐 · [버튼·라벨 같은 한 줄짜리] → 줄 간격보다 상자의 안쪽 여백(padding)으로 잡는 게 안정적
+  AI에게: 줄 간격이 이상해. 본문인지 제목인지 한 줄 라벨인지 구분해서 각각 맞는 줄 간격으로 조정해줘. 어디를 어떻게 바꿨는지 알려줘.
+  확인: 제목은 조밀하고 본문은 숨 쉬면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:170px">
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:2.1">제목이 두 줄이 되면 휑하게 벌어짐</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.1">본문은 반대로 줄 간격이 좁아서 빽빽하게 읽힌다. 제목과 본문이 서로의 수치를 바꿔 낀 상태다.</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:170px">
+<div class="card">
+  <b style="display:block;font-size:16px;line-height:1.25">제목이 두 줄이어도 조밀하게 붙음</b>
+  <p style="margin:6px 0 0;font-size:12px;line-height:1.65">본문은 1.5~1.7로 숨을 쉰다. 제목은 조밀하게, 본문은 여유 있게 — 역할마다 다른 값이 정답이다.</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 제목은 조밀하고 본문은 숨 쉬면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 07 글자가 이상해요
+
+### "한글이 단어 중간에서 끊겨요" (korean-break) [분기형]
+- 별칭: "단어가 반 토막 나요" · "제목 줄바꿈이 지저분해요"
+- 범인: 줄바꿈은 한 가지 처방이 없음 — 같은 keep-all이 제목에선 약이고 좁은 표 칸에선 넘침 사고
+- 갈림길: [제목·본문이 어색하게 꺾임] → keep-all 후보. 단, 좁은 칸이 있는 화면이면 적용 범위를 제한 · [표·배지 같은 좁은 칸] → keep-all을 주면 칸을 뚫는다. 칸 폭이나 말줄임이 먼저 · [URL·코드가 끊기는 것] → break 계열이 오히려 정답인 자리. 건드리지 않는다
+- 요청 문장: 한글 줄바꿈이 어색해. 바로 고치지 말고 어디가 끊기는지(제목·본문인지, 표나 배지 같은 좁은 칸인지, URL·코드인지) 먼저 진단해서 알려줘. 그다음 어느 범위에만 적용할지 확인받고 고쳐줘.
+- 확인: 제목은 단어 단위로 꺾이고, 표는 안 뚫리면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/tx-break.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"한글이 단어 중간에서 끊겨요" — CSS 증상 사전</title>
+<!--
+  증상: "한글이 단어 중간에서 끊겨요" (korean-break) · 유형: 분기형
+  범인: 줄바꿈은 한 가지 처방이 없음 — 같은 keep-all이 제목에선 약이고 좁은 표 칸에선 넘침 사고
+  갈림길: [제목·본문이 어색하게 꺾임] → keep-all 후보. 단, 좁은 칸이 있는 화면이면 적용 범위를 제한 · [표·배지 같은 좁은 칸] → keep-all을 주면 칸을 뚫는다. 칸 폭이나 말줄임이 먼저 · [URL·코드가 끊기는 것] → break 계열이 오히려 정답인 자리. 건드리지 않는다
+  AI에게: 한글 줄바꿈이 어색해. 바로 고치지 말고 어디가 끊기는지(제목·본문인지, 표나 배지 같은 좁은 칸인지, URL·코드인지) 먼저 진단해서 알려줘. 그다음 어느 범위에만 적용할지 확인받고 고쳐줘.
+  확인: 제목은 단어 단위로 꺾이고, 표는 안 뚫리면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:170px;word-break:break-all;font-weight:700;font-size:14px">주문이 완료되었습니다. 배송조회는 마이페이지에서 확인하세요.</div>
+<p class="mut" style="margin:8px 2px 0">break-all — 음절 단위로 뚝뚝 끊김</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:170px;word-break:keep-all;overflow-wrap:anywhere;font-weight:700;font-size:14px">주문이 완료되었습니다. 배송조회는 마이페이지에서 확인하세요.</div>
+<p class="mut" style="margin:8px 2px 0">keep-all — 단어 단위로 꺾임 (제목·본문 갈래)</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 제목은 단어 단위로 꺾이고, 표는 안 뚫리면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "소개글을 두 줄까지만 보여주고 싶어요" (line-clamp) [즉방형]
+- 별칭: "카드마다 글 길이가 달라 들쭉날쭉해요" · "설명이 너무 길게 나와요"
+- 범인: 줄 수 제한이 없어서 글 길이대로 카드 높이가 제각각
+- 처방: 여러 줄 말줄임(line-clamp)으로 N줄에서 …으로 자른다.
+- 요청 문장: 이 소개글을 2줄까지만 보여주고 넘치면 …으로 잘라줘. 카드 높이가 일정해지게.
+- 확인: 긴 글이 든 카드도 높이가 같으면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/tx-clamp.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"소개글을 두 줄까지만 보여주고 싶어요" — CSS 증상 사전</title>
+<!--
+  증상: "소개글을 두 줄까지만 보여주고 싶어요" (line-clamp) · 유형: 즉방형
+  범인: 줄 수 제한이 없어서 글 길이대로 카드 높이가 제각각
+  처방: 여러 줄 말줄임(line-clamp)으로 N줄에서 …으로 자른다.
+  AI에게: 이 소개글을 2줄까지만 보여주고 넘치면 …으로 잘라줘. 카드 높이가 일정해지게.
+  확인: 긴 글이 든 카드도 높이가 같으면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start">
+  <div class="card" style="font-size:11.5px"><b style="display:block;margin-bottom:3px">상품 A</b>설명이 짧다.</div>
+  <div class="card" style="font-size:11.5px"><b style="display:block;margin-bottom:3px">상품 B</b>이 상품의 설명은 아주 길어서 카드가 혼자 끝없이 길어지고 옆 카드와 높이가 어긋나 목록 전체가 들쭉날쭉해 보인다.</div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start">
+  <div class="card" style="font-size:11.5px"><b style="display:block;margin-bottom:3px">상품 A</b><span style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">설명이 짧다.</span></div>
+  <div class="card" style="font-size:11.5px"><b style="display:block;margin-bottom:3px">상품 B</b><span style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">이 상품의 설명은 아주 길어서 카드가 혼자 끝없이 길어지고 옆 카드와 높이가 어긋나 보인다.</span></div>
+</div>
+<p class="mut" style="margin:8px 2px 0">2줄에서 …로 — 카드 높이 통일</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 긴 글이 든 카드도 높이가 같으면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "숫자가 바뀔 때마다 폭이 들썩여요" (tabular-nums) [즉방형]
+- 별칭: "타이머가 흔들려요" · "가격 바뀔 때 옆이 밀려요"
+- 범인: 글꼴의 숫자 폭이 제각각 (1은 좁고 8은 넓음) — 값이 바뀔 때마다 전체가 밀림
+- 처방: 고정폭 숫자(tabular-nums)를 켠다.
+- 요청 문장: 이 숫자 표시에 고정폭 숫자(tabular-nums)를 적용해서 값이 바뀌어도 폭이 흔들리지 않게 해줘.
+- 확인: 11:11이 88:88로 바뀌어도 주변이 안 밀리면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/tx-jitter.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"숫자가 바뀔 때마다 폭이 들썩여요" — CSS 증상 사전</title>
+<!--
+  증상: "숫자가 바뀔 때마다 폭이 들썩여요" (tabular-nums) · 유형: 즉방형
+  범인: 글꼴의 숫자 폭이 제각각 (1은 좁고 8은 넓음) — 값이 바뀔 때마다 전체가 밀림
+  처방: 고정폭 숫자(tabular-nums)를 켠다.
+  AI에게: 이 숫자 표시에 고정폭 숫자(tabular-nums)를 적용해서 값이 바뀌어도 폭이 흔들리지 않게 해줘.
+  확인: 11:11이 88:88로 바뀌어도 주변이 안 밀리면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="display:flex;align-items:baseline;gap:6px">
+  <span style="font-family:Georgia,serif;font-size:22px;font-weight:700" data-tick>0:00</span>
+  <span class="mut">경과 ← 초가 바뀔 때 폭이 들썩임</span>
+</div>
+<script>
+(function(){var s=0;setInterval(function(){s=(s+7)%600;document.querySelectorAll('[data-tick]').forEach(function(e){e.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')})},700)})();
+</script>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="display:flex;align-items:baseline;gap:6px">
+  <span style="font-family:Georgia,serif;font-variant-numeric:tabular-nums;font-size:22px;font-weight:700" data-tick>0:00</span>
+  <span class="mut">경과 ← 고정폭 숫자, 흔들리지 않음</span>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 11:11이 88:88로 바뀌어도 주변이 안 밀리면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "어떤 기기에선 글꼴이 달라 보여요" (font-fallback) [분기형]
+- 별칭: "내 폰이랑 회사 PC랑 달라요" · "굵기가 이상한 데가 있어요"
+- 범인: 글꼴이 다르게 보이는 원인은 여러 층 — 로딩 실패인지, 기기 기본값 차이인지, 굵기 미지원인지
+- 갈림길: [웹폰트가 늦거나 실패] → 대체 글꼴(폴백) 지정이 있는지 확인 · [기기 기본 글꼴 차이] → 시스템 글꼴 스택을 명시적으로 정리 · [특정 굵기만 이상함] → 그 굵기를 글꼴이 지원하는지 확인 (없으면 브라우저가 흉내내서 뭉개짐)
+- 요청 문장: 기기마다 글꼴이 다르게 보여. 웹폰트가 제대로 로드되는지, 대체 글꼴이 뭔지, 쓰는 굵기를 글꼴이 지원하는지 순서로 확인해서 알려주고 정리해줘.
+- 확인: 주요 기기에서 같은 인상으로 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/tx-font.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"어떤 기기에선 글꼴이 달라 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "어떤 기기에선 글꼴이 달라 보여요" (font-fallback) · 유형: 분기형
+  범인: 글꼴이 다르게 보이는 원인은 여러 층 — 로딩 실패인지, 기기 기본값 차이인지, 굵기 미지원인지
+  갈림길: [웹폰트가 늦거나 실패] → 대체 글꼴(폴백) 지정이 있는지 확인 · [기기 기본 글꼴 차이] → 시스템 글꼴 스택을 명시적으로 정리 · [특정 굵기만 이상함] → 그 굵기를 글꼴이 지원하는지 확인 (없으면 브라우저가 흉내내서 뭉개짐)
+  AI에게: 기기마다 글꼴이 다르게 보여. 웹폰트가 제대로 로드되는지, 대체 글꼴이 뭔지, 쓰는 굵기를 글꼴이 지원하는지 순서로 확인해서 알려주고 정리해줘.
+  확인: 주요 기기에서 같은 인상으로 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="font-size:12px;display:grid;gap:6px">
+  <div><b>내 폰:</b> <span style="font-family:'Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span></div>
+  <div><b>다른 기기:</b> <span style="font-family:'Times New Roman',serif">가벼운 아침 루틴</span> <span class="mut">← 웹폰트 실패, 대체 지정 없음</span></div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="font-size:12px;display:grid;gap:6px">
+  <div><b>내 폰:</b> <span style="font-family:'Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span></div>
+  <div><b>다른 기기:</b> <span style="font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif">가벼운 아침 루틴</span> <span class="mut">← 폴백 사슬을 지정해 비슷한 인상 유지</span></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 주요 기기에서 같은 인상으로 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "회색 글씨가 너무 안 보인대요" (contrast) [즉방형]
+- 별칭: "흐릿해요" · "야외에서 안 읽혀요"
+- 범인: 보조 글자 색을 너무 연하게 잡음 — 배경과의 대비 부족
+- 처방: 본문 글자는 배경과 대비 4.5:1 이상을 지킨다.
+- 요청 문장: 이 화면 글자 색들의 대비를 점검해서, 4.5:1이 안 되는 글자를 더 진하게 올려줘.
+- 확인: 화면 밝기를 확 낮춰도 읽히면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/tx-contrast.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"회색 글씨가 너무 안 보인대요" — CSS 증상 사전</title>
+<!--
+  증상: "회색 글씨가 너무 안 보인대요" (contrast) · 유형: 즉방형
+  범인: 보조 글자 색을 너무 연하게 잡음 — 배경과의 대비 부족
+  처방: 본문 글자는 배경과 대비 4.5:1 이상을 지킨다.
+  AI에게: 이 화면 글자 색들의 대비를 점검해서, 4.5:1이 안 되는 글자를 더 진하게 올려줘.
+  확인: 화면 밝기를 확 낮춰도 읽히면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:140px">
+<div class="card">
+  <b style="font-size:13px">배송 안내</b>
+  <p style="margin:5px 0 0;font-size:12px;color:#c9c9d1">오후 2시 이전 주문은 당일 출고됩니다. 도서산간은 2~3일 추가될 수 있습니다.</p>
+</div>
+<p class="mut" style="margin:8px 2px 0">대비 1.6:1 — 밝은 곳에선 증발</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:140px">
+<div class="card">
+  <b style="font-size:13px">배송 안내</b>
+  <p style="margin:5px 0 0;font-size:12px;color:#55555f">오후 2시 이전 주문은 당일 출고됩니다. 도서산간은 2~3일 추가될 수 있습니다.</p>
+</div>
+<p class="mut" style="margin:8px 2px 0">대비 7:1 — 보조 글자도 읽힘</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 화면 밝기를 확 낮춰도 읽히면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## 08 안 보여요 · 사라졌어요
+
+### "다크 모드에서 글자가 안 보여요" (dark-mode-pair) [즉방형]
+- 별칭: "밤에 보면 까매요" · "흰 화면에 흰 글씨가 됐어요"
+- 범인: 글자색만 바꾸고 배경을 안 바꿈 (또는 그 반대) — 색은 언제나 배경과 세트인데 한쪽만 지정함
+- 처방: 색을 정할 땐 배경+글자를 항상 세트로. 다크 모드도 세트째 뒤집는다.
+- 요청 문장: 다크 모드에서 안 보이는 글자를 찾아줘. 색을 고칠 땐 배경과 글자를 항상 세트로 지정해줘.
+- 확인: 라이트/다크를 오가도 모든 글자가 읽히면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-dark.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"다크 모드에서 글자가 안 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "다크 모드에서 글자가 안 보여요" (dark-mode-pair) · 유형: 즉방형
+  범인: 글자색만 바꾸고 배경을 안 바꿈 (또는 그 반대) — 색은 언제나 배경과 세트인데 한쪽만 지정함
+  처방: 색을 정할 땐 배경+글자를 항상 세트로. 다크 모드도 세트째 뒤집는다.
+  AI에게: 다크 모드에서 안 보이는 글자를 찾아줘. 색을 고칠 땐 배경과 글자를 항상 세트로 지정해줘.
+  확인: 라이트/다크를 오가도 모든 글자가 읽히면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:140px">
+<div style="height:100%;background:#1a1a1e;border-radius:10px;padding:12px">
+  <b style="color:#f2f2f4;font-size:13px">다크 모드 화면</b>
+  <p style="margin:6px 0 0;font-size:12px;color:#2c2c31">이 안내문은 글자색을 라이트 모드 값 그대로 두어서 배경에 잠겨 보이지 않는다.</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:140px">
+<div style="height:100%;background:#1a1a1e;border-radius:10px;padding:12px">
+  <b style="color:#f2f2f4;font-size:13px">다크 모드 화면</b>
+  <p style="margin:6px 0 0;font-size:12px;color:#b9bac2">배경과 글자를 세트로 뒤집으면 어느 모드에서도 읽힌다.</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 라이트/다크를 오가도 모든 글자가 읽히면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "분명 넣었는데 높이가 0이에요" (collapsed-parent) [즉방형]
+- 별칭: "상자가 접혔어요" · "배경색이 안 보여요"
+- 범인: 자식들이 전부 '떠 있음'(absolute·float) — 부모가 자기 높이를 계산할 재료가 없음
+- 처방: 띄울 필요 없는 자식은 흐름으로 되돌려 부모가 높이를 갖게 한다.
+- 요청 문장: 이 상자 높이가 0으로 접혀 있어. 자식이 전부 떠 있어서(absolute·float) 그런지 확인해서 알려주고, 높이가 잡히게 고쳐줘.
+- 확인: 상자의 배경과 테두리가 내용을 감싸면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-height.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"분명 넣었는데 높이가 0이에요" — CSS 증상 사전</title>
+<!--
+  증상: "분명 넣었는데 높이가 0이에요" (collapsed-parent) · 유형: 즉방형
+  범인: 자식들이 전부 '떠 있음'(absolute·float) — 부모가 자기 높이를 계산할 재료가 없음
+  처방: 띄울 필요 없는 자식은 흐름으로 되돌려 부모가 높이를 갖게 한다.
+  AI에게: 이 상자 높이가 0으로 접혀 있어. 자식이 전부 떠 있어서(absolute·float) 그런지 확인해서 알려주고, 높이가 잡히게 고쳐줘.
+  확인: 상자의 배경과 테두리가 내용을 감싸면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div style="background:#fff;border:2px dashed #c4372b;border-radius:10px;padding:0 10px">
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 1</span></div>
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 2</span></div>
+</div>
+<div style="clear:both"></div>
+<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘 — 자식이 전부 떠 있어서</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div style="background:#fff;border:2px dashed #1f7a4d;border-radius:10px;padding:8px 10px;display:flex;gap:8px">
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 1</span></div>
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 2</span></div>
+</div>
+<p class="mut" style="margin:10px 2px 0">flex 흐름으로 — 부모(초록 점선)가 자식을 감쌈</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 상자의 배경과 테두리가 내용을 감싸면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "만들었다는데 화면에 안 보여요" (not-visible) [분기형]
+- 별칭: "분명 추가했대요" · "어디 갔는지 모르겠어요"
+- 범인: '안 보임'의 원인은 네 층 — 없거나, 크기가 없거나, 가려졌거나, 화면 밖이거나. 순서대로 좁혀야 함
+- 갈림길: [아예 안 그려짐] → 조건에 걸려 요소 자체가 없는지부터 확인 · [있는데 크기 0이거나 투명] → 높이·투명도 확인 · [있는데 다른 것 뒤에 깔림] → 겹침 코스로 (zx-modal 참고) · [있는데 화면 밖] → 위치 값이 화면을 벗어났는지 확인
+- 요청 문장: 추가했다는 요소가 화면에 안 보여. 바로 고치지 말고 ①요소가 존재하는지 ②크기·투명도 ③다른 것 뒤인지 ④화면 밖인지 순서로 진단해서, 어디서 걸렸는지 알려줘.
+- 확인: 원인의 이름을 알게 되면 성공. 고침은 그다음.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-where.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"만들었다는데 화면에 안 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "만들었다는데 화면에 안 보여요" (not-visible) · 유형: 분기형
+  범인: '안 보임'의 원인은 네 층 — 없거나, 크기가 없거나, 가려졌거나, 화면 밖이거나. 순서대로 좁혀야 함
+  갈림길: [아예 안 그려짐] → 조건에 걸려 요소 자체가 없는지부터 확인 · [있는데 크기 0이거나 투명] → 높이·투명도 확인 · [있는데 다른 것 뒤에 깔림] → 겹침 코스로 (zx-modal 참고) · [있는데 화면 밖] → 위치 값이 화면을 벗어났는지 확인
+  AI에게: 추가했다는 요소가 화면에 안 보여. 바로 고치지 말고 ①요소가 존재하는지 ②크기·투명도 ③다른 것 뒤인지 ④화면 밖인지 순서로 진단해서, 어디서 걸렸는지 알려줘.
+  확인: 원인의 이름을 알게 되면 성공. 고침은 그다음.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+  <div style="font-size:30px">🤷</div>
+  <p class="mut" style="margin:0;text-align:center">"버튼 추가했다는데요…"<br>어디서부터 봐야 할지 모르는 상태</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div style="display:grid;gap:6px;font-size:12px">
+  <div class="card" style="padding:7px 11px">① 요소가 <b>존재</b>하는가 (조건에 걸려 안 그려졌나)</div>
+  <div class="card" style="padding:7px 11px">② <b>크기·투명도</b>가 0은 아닌가</div>
+  <div class="card" style="padding:7px 11px">③ 다른 것 <b>뒤</b>에 깔렸나</div>
+  <div class="card" style="padding:7px 11px">④ <b>화면 밖</b>으로 나갔나</div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 원인의 이름을 알게 되면 성공. 고침은 그다음.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "버튼이 하얗게만 나와요" (nested-button) [즉방형]
+- 별칭: "버튼 글자만 있고 상자가 안 보여요" · "스타일이 통째로 안 먹어요"
+- 범인: 버튼 안에 버튼을 넣는 등 HTML 규칙이 어긋나면, 브라우저가 구조를 멋대로 재배치해서 스타일이 붕 뜸 / 배경색 미지정
+- 처방: 버튼 안에 버튼 금지. 구조부터 확인하고 배경·글자색을 세트로 지정.
+- 요청 문장: 이 버튼이 스타일 없이 하얗게 나와. 버튼 안에 버튼이 중첩돼 있지는 않은지 HTML 구조부터 확인해서 알려주고 고쳐줘.
+- 확인: 버튼이 의도한 색과 모양으로 나오면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-button.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"버튼이 하얗게만 나와요" — CSS 증상 사전</title>
+<!--
+  증상: "버튼이 하얗게만 나와요" (nested-button) · 유형: 즉방형
+  범인: 버튼 안에 버튼을 넣는 등 HTML 규칙이 어긋나면, 브라우저가 구조를 멋대로 재배치해서 스타일이 붕 뜸 / 배경색 미지정
+  처방: 버튼 안에 버튼 금지. 구조부터 확인하고 배경·글자색을 세트로 지정.
+  AI에게: 이 버튼이 스타일 없이 하얗게 나와. 버튼 안에 버튼이 중첩돼 있지는 않은지 HTML 구조부터 확인해서 알려주고 고쳐줘.
+  확인: 버튼이 의도한 색과 모양으로 나오면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:140px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div>
+    <button class="btn">장바구니 <button class="btn" style="background:#f05032">+1</button></button>
+    <p class="mut" style="margin:8px 0 0;text-align:center">버튼 안에 버튼 — 브라우저가 구조를 재배치해 스타일이 붕 뜸</p>
+  </div>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:140px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center">
+  <div>
+    <button class="btn">장바구니 <span style="background:#f05032;border-radius:6px;padding:2px 7px;margin-left:4px">+1</span></button>
+    <p class="mut" style="margin:8px 0 0;text-align:center">안쪽은 span으로 — 구조가 맞으면 스타일이 붙는다</p>
+  </div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 버튼이 의도한 색과 모양으로 나오면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "새로고침하면 잠깐 깨졌다가 돌아와요" (flash-unstyled) [즉방형]
+- 별칭: "처음에 민낯이 보여요" · "글꼴이 바뀌면서 출렁여요"
+- 범인: 스타일과 글꼴이 늦게 도착 — 그 사이에 꾸며지지 않은 HTML이 먼저 보임
+- 처방: CSS는 head에서 먼저 로드, 글꼴은 교체 시 출렁임을 줄이는 설정(font-display)을 쓴다.
+- 요청 문장: 새로고침할 때 잠깐 깨져 보이는 걸 줄여줘. CSS가 head에서 먼저 로드되는지, 글꼴 로딩 설정(font-display)이 있는지 확인해서 고쳐줘.
+- 확인: 새로고침을 연타해도 민낯 화면이 안 보이면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-flash.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"새로고침하면 잠깐 깨졌다가 돌아와요" — CSS 증상 사전</title>
+<!--
+  증상: "새로고침하면 잠깐 깨졌다가 돌아와요" (flash-unstyled) · 유형: 즉방형
+  범인: 스타일과 글꼴이 늦게 도착 — 그 사이에 꾸며지지 않은 HTML이 먼저 보임
+  처방: CSS는 head에서 먼저 로드, 글꼴은 교체 시 출렁임을 줄이는 설정(font-display)을 쓴다.
+  AI에게: 새로고침할 때 잠깐 깨져 보이는 걸 줄여줘. CSS가 head에서 먼저 로드되는지, 글꼴 로딩 설정(font-display)이 있는지 확인해서 고쳐줘.
+  확인: 새로고침을 연타해도 민낯 화면이 안 보이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 증상 (재현 시뮬레이션)</div><div class="stage" style="height:170px">
+<div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:12px;font-family:'Times New Roman',serif">
+  <div style="font-size:10px;color:#c4372b;font-family:-apple-system,sans-serif;margin-bottom:6px">로드 직후 0.3초 — 스타일 도착 전</div>
+  <h4 style="margin:0;font-weight:400">Shopping Mall</h4>
+  <p style="margin:4px 0"><a href="#" style="color:#0000ee">Home</a> <a href="#" style="color:#0000ee">Products</a> <a href="#" style="color:#0000ee">Cart</a></p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 상태 (시뮬레이션)</div><div class="stage" style="height:170px">
+<div class="card">
+  <div style="font-size:10px;color:#1f7a4d;margin-bottom:6px">같은 순간 — CSS 선로드 + font-display</div>
+  <b style="font-size:14px">Shopping Mall</b>
+  <div style="display:flex;gap:10px;margin-top:6px;font-size:12px"><span style="color:#f05032;font-weight:600">홈</span><span class="mut">상품</span><span class="mut">장바구니</span></div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 새로고침을 연타해도 민낯 화면이 안 보이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### "이미지가 엑박이에요" (broken-image) [즉방형]
+- 별칭: "사진이 안 나와요" · "배포하니까 이미지만 사라졌어요"
+- 범인: 경로가 틀림 (대소문자, 폴더 위치, 배포 후 주소 변화) — CSS 문제가 아닌 경우가 대부분
+- 처방: 경로와 파일 존재부터 검증한다. 스타일은 그다음.
+- 요청 문장: 이 이미지가 왜 안 뜨는지 경로와 파일 존재부터 확인해서 알려주고 고쳐줘. 배포 환경에서만 안 뜨는 거면 그 이유도.
+- 확인: 이미지가 뜨면 성공.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components/iv-image.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"이미지가 엑박이에요" — CSS 증상 사전</title>
+<!--
+  증상: "이미지가 엑박이에요" (broken-image) · 유형: 즉방형
+  범인: 경로가 틀림 (대소문자, 폴더 위치, 배포 후 주소 변화) — CSS 문제가 아닌 경우가 대부분
+  처방: 경로와 파일 존재부터 검증한다. 스타일은 그다음.
+  AI에게: 이 이미지가 왜 안 뜨는지 경로와 파일 존재부터 확인해서 알려주고 고쳐줘. 배포 환경에서만 안 뜨는 거면 그 이유도.
+  확인: 이미지가 뜨면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:180px">
+  <img src="Logo.PNG" alt="로고 이미지" style="max-width:100%;min-height:44px;border:1px dashed #c4372b;border-radius:6px">
+  <p class="mut" style="margin:6px 0 0">src="Logo.PNG" — 실제 파일은 logo.png. 대소문자도 경로다</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
+<div class="card" style="width:180px">
+  <img alt="로고 이미지" style="display:block;width:100%;height:44px;border-radius:6px;background:linear-gradient(120deg,#f05032,#e8506e)" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <p class="mut" style="margin:6px 0 0">경로·파일명이 정확하면 뜬다. 스타일 문제가 아니었다</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 이미지가 뜨면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```

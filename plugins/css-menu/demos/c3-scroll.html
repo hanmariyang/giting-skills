@@ -1,0 +1,82 @@
+<!-- @sc-double-bad h=190 -->
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:8px;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="height:120px;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <div style="height:80px"></div>
+  <p class="mut">바깥도 안쪽도 굴러감 — 스크롤 2개</p>
+</div>
+
+<!-- @sc-double-good h=190 -->
+<div style="height:100%;display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;overflow:hidden">
+  <div class="card" style="flex:none;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="flex:1;min-height:0;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <p class="mut" style="flex:none;margin:0">목록만 굴러감 — min-height:0이 열쇠</p>
+</div>
+
+<!-- @sc-bg-bad h=180 -->
+<div style="height:100%;position:relative;border-radius:10px;overflow:hidden;border:1px solid #e4e4ea">
+  <div style="height:100%;overflow-y:auto;background:#fff;padding:10px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:65%"></div><div class="bar"></div><div class="bar" style="width:80%"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(23,23,27,.35);display:flex;align-items:center;justify-content:center;pointer-events:none">
+    <div class="card" style="width:150px;text-align:center;pointer-events:auto"><b>팝업</b><p class="mut" style="margin:4px 0 0">뒤가 같이 굴러감</p></div>
+  </div>
+</div>
+
+<!-- @sc-bg-good h=180 -->
+<div style="height:100%;position:relative;border-radius:10px;overflow:hidden;border:1px solid #e4e4ea">
+  <div style="height:100%;overflow:hidden;background:#fff;padding:10px;display:grid;gap:8px">
+    <div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:65%"></div><div class="bar"></div><div class="bar" style="width:80%"></div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(23,23,27,.35);display:flex;align-items:center;justify-content:center">
+    <div class="card" style="width:150px;text-align:center"><b>팝업</b><p class="mut" style="margin:4px 0 0">뒤는 잠김</p></div>
+  </div>
+</div>
+
+<!-- @sc-none-bad h=160 -->
+<div style="height:100%;overflow:hidden;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:8px;align-content:start">
+  <b style="font-size:13px">공지사항</b>
+  <div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div>
+</div>
+
+<!-- @sc-none-good h=160 -->
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:8px;align-content:start">
+  <b style="font-size:13px">공지사항 <span class="mut" style="font-weight:400">(굴려보세요)</span></b>
+  <div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar"></div><div class="bar" style="width:75%"></div><div class="bar"></div><div class="bar" style="width:80%"></div><div class="bar"></div><div class="bar" style="width:70%"></div><div class="bar"></div><div class="bar" style="width:75%"></div>
+</div>
+
+<!-- @sc-jitter-bad h=170 -->
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var b=this.nextElementSibling.firstElementChild;b.style.height=b.style.height==='40px'?'220px':'40px'">짧은 페이지 ↔ 긴 페이지</button>
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+    <div style="height:220px;padding:10px"><div class="card" style="width:150px;margin:0 auto;text-align:center">내용 (덜컹임)</div></div>
+  </div>
+</div>
+
+<!-- @sc-jitter-good h=170 -->
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var b=this.nextElementSibling.firstElementChild;b.style.height=b.style.height==='40px'?'220px':'40px'">짧은 페이지 ↔ 긴 페이지</button>
+  <div style="flex:1;min-height:0;overflow-y:auto;scrollbar-gutter:stable;background:#fff;border:1px solid #e4e4ea;border-radius:10px">
+    <div style="height:220px;padding:10px"><div class="card" style="width:150px;margin:0 auto;text-align:center">내용 (안 움직임)</div></div>
+  </div>
+</div>
+
+<!-- @sc-chat-bad h=190 -->
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:8px 10px;font-size:12px;line-height:2" id="cb">
+    옛날 메시지 1<br>옛날 메시지 2<br>옛날 메시지 3<br>옛날 메시지 4<br>옛날 메시지 5<br>옛날 메시지 6
+  </div>
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var l=this.previousElementSibling;l.insertAdjacentHTML('beforeend','<br><b>새 메시지</b> (안 보임)')">메시지 도착시키기</button>
+</div>
+
+<!-- @sc-chat-good h=190 -->
+<div style="height:100%;display:flex;flex-direction:column;gap:8px">
+  <div style="flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:8px 10px;font-size:12px;line-height:2">
+    옛날 메시지 1<br>옛날 메시지 2<br>옛날 메시지 3<br>옛날 메시지 4<br>옛날 메시지 5<br>옛날 메시지 6
+  </div>
+  <button class="btn" style="align-self:flex-start;padding:7px 12px;font-size:12px" onclick="var l=this.previousElementSibling;l.insertAdjacentHTML('beforeend','<br><b>새 메시지</b> ✓');l.scrollTop=l.scrollHeight">메시지 도착시키기</button>
+</div>

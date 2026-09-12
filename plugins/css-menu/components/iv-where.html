@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"만들었다는데 화면에 안 보여요" — CSS 증상 사전</title>
+<!--
+  증상: "만들었다는데 화면에 안 보여요" (not-visible) · 유형: 분기형
+  범인: '안 보임'의 원인은 네 층 — 없거나, 크기가 없거나, 가려졌거나, 화면 밖이거나. 순서대로 좁혀야 함
+  갈림길: [아예 안 그려짐] → 조건에 걸려 요소 자체가 없는지부터 확인 · [있는데 크기 0이거나 투명] → 높이·투명도 확인 · [있는데 다른 것 뒤에 깔림] → 겹침 코스로 (zx-modal 참고) · [있는데 화면 밖] → 위치 값이 화면을 벗어났는지 확인
+  AI에게: 추가했다는 요소가 화면에 안 보여. 바로 고치지 말고 ①요소가 존재하는지 ②크기·투명도 ③다른 것 뒤인지 ④화면 밖인지 순서로 진단해서, 어디서 걸렸는지 알려줘.
+  확인: 원인의 이름을 알게 되면 성공. 고침은 그다음.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+  <div style="font-size:30px">🤷</div>
+  <p class="mut" style="margin:0;text-align:center">"버튼 추가했다는데요…"<br>어디서부터 봐야 할지 모르는 상태</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div style="display:grid;gap:6px;font-size:12px">
+  <div class="card" style="padding:7px 11px">① 요소가 <b>존재</b>하는가 (조건에 걸려 안 그려졌나)</div>
+  <div class="card" style="padding:7px 11px">② <b>크기·투명도</b>가 0은 아닌가</div>
+  <div class="card" style="padding:7px 11px">③ 다른 것 <b>뒤</b>에 깔렸나</div>
+  <div class="card" style="padding:7px 11px">④ <b>화면 밖</b>으로 나갔나</div>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 원인의 이름을 알게 되면 성공. 고침은 그다음.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

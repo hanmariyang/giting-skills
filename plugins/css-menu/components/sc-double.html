@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"스크롤이 두 개 생겨요" — CSS 증상 사전</title>
+<!--
+  증상: "스크롤이 두 개 생겨요" (double-scroll) · 유형: 즉방형
+  범인: 바깥과 안쪽 상자가 둘 다 스크롤을 가짐 / flex 자식이 min-height: 0 없이 넘쳐서 부모까지 밀어냄 (헤더 고정 화면의 단골)
+  처방: 스크롤 주인을 하나만 정한다. 목록이 주인, 바깥은 hidden, 중간 flex 상자엔 min-height: 0.
+  AI에게: 스크롤이 이중으로 걸려. 목록 하나만 스크롤하게 하고, 바깥은 overflow hidden, 중간 flex 상자들엔 min-height 0을 넣어줘.
+  확인: 바깥은 안 움직이고 목록만 움직이면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;overflow-y:auto;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px">
+  <div class="card" style="margin-bottom:8px;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="height:120px;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <div style="height:80px"></div>
+  <p class="mut">바깥도 안쪽도 굴러감 — 스크롤 2개</p>
+</div>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:190px">
+<div style="height:100%;display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;overflow:hidden">
+  <div class="card" style="flex:none;padding:7px 11px"><b>고정하고 싶은 헤더</b></div>
+  <div style="flex:1;min-height:0;overflow-y:auto;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;line-height:2">
+    메시지 1<br>메시지 2<br>메시지 3<br>메시지 4<br>메시지 5<br>메시지 6<br>메시지 7<br>메시지 8
+  </div>
+  <p class="mut" style="flex:none;margin:0">목록만 굴러감 — min-height:0이 열쇠</p>
+</div>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 바깥은 안 움직이고 목록만 움직이면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

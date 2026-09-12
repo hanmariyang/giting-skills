@@ -434,3 +434,194 @@ if (SITE_DIR) {
   siteMsg = ' · (GITING_SITE_DIR 미설정 — giting.kr 갤러리 미갱신)';
 }
 console.log(`built: components ${menu.items.length} · gallery ${(html.length / 1024).toFixed(0)}KB · docs=redirect+llms${siteMsg}`);
+
+// ═══════════════════════════════════════════════════════════════
+// ── CSS 증상 사전 (css-menu) — 02 ──────────────────────────────
+// 항목당 demos 프래그먼트 2개(@<id>-bad / @<id>-good)를 짝지어
+// before/after 자가완결 컴포넌트 1파일로 굽는다. 갤러리는 .cssgal 스코프.
+// 비개발자(기획자·디자이너) 우선: 증상·범인·확인법 전부 사람 말, 속성명은 괄호 보조.
+const CP = join(ROOT, 'plugins', 'css-menu');
+const cmenu = JSON.parse(readFileSync(join(CP, 'menu.json'), 'utf8'));
+const RAW_C = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/css-menu/components';
+
+const cfrags = {};
+for (const f of readdirSync(join(CP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(CP, 'demos', f), 'utf8');
+  const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    const id = parts[i], opts = parts[i + 1], body = parts[i + 2].trim();
+    cfrags[id] = { h: Number((opts.match(/h=(\d+)/) || [])[1] || 150), body };
+  }
+}
+const cmissing = cmenu.items.flatMap(it => [`${it.id}-bad`, `${it.id}-good`].filter(k => !cfrags[k]));
+if (cmissing.length) { console.error('css-menu 데모 없는 프래그먼트:', cmissing.join(', ')); process.exit(1); }
+
+const C_BASE = `  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }`;
+
+const cKindLabel = it => it.kind === 'branch' ? '분기형' : '즉방형';
+const cBadTag = it => it.sim ? '✗ 증상 (재현 시뮬레이션)' : '✗ 깨진 그대로';
+const cGoodTag = it => it.sim ? '✓ 고친 상태 (시뮬레이션)' : '✓ 고친 그대로';
+
+const cStandalone = it => `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"${it.name.ko}" — CSS 증상 사전</title>
+<!--
+  증상: "${it.name.ko}" (${it.name.dx}) · 유형: ${cKindLabel(it)}
+  범인: ${it.culprits.join(' / ')}
+  ${it.kind === 'branch'
+    ? `갈림길: ${it.branches.map(b => `[${b.q}] → ${b.a}`).join(' · ')}`
+    : `처방: ${it.rx}`}
+  AI에게: ${it.ask}
+  확인: ${it.check}
+-->
+<style>
+${C_BASE}
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">${cBadTag(it)}</div><div class="stage" style="height:${cfrags[it.id + '-bad'].h}px">
+${cfrags[it.id + '-bad'].body}
+  </div></section>
+  <section class="pane good"><div class="tag">${cGoodTag(it)}</div><div class="stage" style="height:${cfrags[it.id + '-good'].h}px">
+${cfrags[it.id + '-good'].body}
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> ${it.check}</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+`;
+
+rmSync(join(CP, 'components'), { recursive: true, force: true });
+mkdirSync(join(CP, 'components'), { recursive: true });
+const ccode = {};
+for (const it of cmenu.items) {
+  ccode[it.id] = cStandalone(it);
+  writeFileSync(join(CP, 'components', `${it.id}.html`), ccode[it.id]);
+}
+
+const cby = id => cmenu.items.filter(i => i.category === id);
+const cIframeH = it => Math.max(cfrags[it.id + '-bad'].h, cfrags[it.id + '-good'].h) + 30 + 34;
+
+const cCardHtml = it => `
+<article class="item ${it.kind}" id="${it.id}">
+  <header><span class="kind ${it.kind}">${cKindLabel(it)}</span><h3>"${it.name.ko}"</h3><span class="en">${it.name.dx}</span>
+    <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button>
+    <button class="tiny codebtn" title="코드 보기">코드</button>
+  </header>
+  <iframe title="${it.name.ko} — 깨진/고친 실물" loading="lazy" style="height:${cIframeH(it)}px" srcdoc="${attr(ccode[it.id])}"></iframe>
+  <footer>
+    ${it.kind === 'branch'
+      ? `<span class="one"><b>갈림길:</b> ${it.branches.map(b => esc(b.q)).join(' / ')}</span>`
+      : `<span class="one"><b>범인 1순위:</b> ${esc(it.culprits[0])}</span>`}
+  </footer>
+  <div class="codebox" hidden><pre><code>${esc(ccode[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
+</article>`;
+
+const cTableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>증상</th><th>유형</th><th>이렇게 말해도 통해요</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${cby(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">"${it.name.ko}"</a></td>
+  <td class="mono">${cKindLabel(it)}</td>
+  <td class="als">${it.aliases.map(a => `"${esc(a)}"`).join(' · ')}</td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const cf = cmenu.formula;
+const CSSGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.cssgal') + `
+.cssgal .ggrid { grid-template-columns: 1fr; }
+.cssgal .item h3 { font-size: 15px; }
+.cssgal .kind { flex: none; font-size: 10.5px; font-weight: 800; border-radius: 6px; padding: 2px 7px; }
+.cssgal .kind.direct { background: #eff6f1; color: #1f7a4d; }
+.cssgal .kind.branch { background: #f3effa; color: #5b4aa8; }
+.cssgal .item footer { display: grid; gap: 3px; }
+.cssgal .item .one { font-size: 12px; color: var(--ink-2); }
+.cssgal .item .one b { color: var(--ink); font-weight: 700; }
+.cssgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
+
+const cssCore = `<div class="cssgal">
+<style>${CSSGAL_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(cf.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(cf.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(cf.good)}」</div>
+  </div>
+</div>
+<nav class="gnav" aria-label="코스">
+  ${cmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${cby(c.id).length}</a>`).join('\n  ')}
+</nav>
+${cmenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${cby(cat.id).length}</span></h2>
+  <div class="ggrid">${cby(cat.id).map(cCardHtml).join('\n')}</div>
+  ${cTableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.cssgal')}</script>
+</div>
+`;
+
+const cdict = full => `# CSS 증상 사전 (css-menu) — Giting Skills
+
+> 깨진 화면을 CSS 용어가 아니라 증상으로 찾는 사전. 증상(사람 말) → 범인 후보 → 처방 또는 갈림길 진단 → AI에게 시키는 문장 → 깨진/고친 실물. 8개 코스 ${cmenu.items.length}개 항목.
+> 항목 유형 2가지 — [즉방형]: 상황 불문 같은 처방, 문장을 그대로 쓴다. [분기형]: 상황 의존 — 바로 고치라고 하지 말고 진단부터 시킨다.
+> AI한테 시키는 공식: ${cf.pattern}
+>   ✕ "${cf.bad}" → ○ "${cf.good}"
+> 갤러리: https://giting.kr/skills/css-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install css-menu@giting
+
+${cmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${cby(cat.id).map(it => `### "${it.name.ko}" (${it.name.dx}) [${cKindLabel(it)}]
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 범인: ${it.culprits.join(' / ')}
+${it.kind === 'branch'
+  ? `- 갈림길: ${it.branches.map(b => `[${b.q}] → ${b.a}`).join(' · ')}`
+  : `- 처방: ${it.rx}`}
+- 요청 문장: ${it.ask}
+- 확인: ${it.check}
+- 레퍼런스: ${RAW_C}/${it.id}.html${full ? `
+
+\`\`\`html
+${ccode[it.id].trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}`;
+
+if (SITE_DIR) {
+  const CS = join(SITE_DIR, 'css-menu');
+  mkdirSync(CS, { recursive: true });
+  writeFileSync(join(CS, 'gallery-core.html'), cssCore);
+  writeFileSync(join(CS, 'llms.txt'), cdict(false));
+  writeFileSync(join(CS, 'llms-full.txt'), cdict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'css-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'css-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/css-menu'));
+writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms.txt'), cdict(false));
+writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms-full.txt'), cdict(true));
+console.log(`built css-menu: components ${cmenu.items.length} · core ${(cssCore.length / 1024).toFixed(0)}KB`);

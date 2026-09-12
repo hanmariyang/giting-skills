@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"분명 넣었는데 높이가 0이에요" — CSS 증상 사전</title>
+<!--
+  증상: "분명 넣었는데 높이가 0이에요" (collapsed-parent) · 유형: 즉방형
+  범인: 자식들이 전부 '떠 있음'(absolute·float) — 부모가 자기 높이를 계산할 재료가 없음
+  처방: 띄울 필요 없는 자식은 흐름으로 되돌려 부모가 높이를 갖게 한다.
+  AI에게: 이 상자 높이가 0으로 접혀 있어. 자식이 전부 떠 있어서(absolute·float) 그런지 확인해서 알려주고, 높이가 잡히게 고쳐줘.
+  확인: 상자의 배경과 테두리가 내용을 감싸면 성공.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13px; background: #fff; word-break: keep-all; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; }
+  .pane { min-width: 0; display: flex; flex-direction: column; }
+  .pane + .pane { border-left: 1px solid #e8e8ee; }
+  .tag { flex: none; font-size: 11px; font-weight: 800; padding: 7px 12px; }
+  .bad .tag { background: #fbf1ef; color: #c4372b; }
+  .good .tag { background: #eff6f1; color: #1f7a4d; }
+  .stage { flex: 1; background: #f6f7f9; padding: 12px; position: relative; overflow: hidden; }
+  .card { background: #fff; border: 1px solid #e4e4ea; border-radius: 10px; padding: 10px 13px; box-shadow: 0 1px 4px rgba(23,23,27,.05); }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+  .btn { display: inline-block; border: 0; border-radius: 9px; background: #17171b; color: #fff; font-size: 12.5px; padding: 9px 16px; cursor: pointer; font-family: inherit; }
+  .chk { font-size: 11.5px; color: #55555f; padding: 8px 12px; border-top: 1px solid #f0f0f4; background: #fff; }
+  .chk b { color: #17171b; }
+</style>
+</head>
+<body>
+<div class="duo">
+  <section class="pane bad"><div class="tag">✗ 깨진 그대로</div><div class="stage" style="height:160px">
+<div style="background:#fff;border:2px dashed #c4372b;border-radius:10px;padding:0 10px">
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 1</span></div>
+  <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 2</span></div>
+</div>
+<div style="clear:both"></div>
+<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘 — 자식이 전부 떠 있어서</p>
+  </div></section>
+  <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
+<div style="background:#fff;border:2px dashed #1f7a4d;border-radius:10px;padding:8px 10px;display:flex;gap:8px">
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 1</span></div>
+  <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 2</span></div>
+</div>
+<p class="mut" style="margin:10px 2px 0">flex 흐름으로 — 부모(초록 점선)가 자식을 감쌈</p>
+  </div></section>
+</div>
+<div class="chk"><b>고쳐졌는지 확인:</b> 상자의 배경과 테두리가 내용을 감싸면 성공.</div>
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

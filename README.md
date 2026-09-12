@@ -32,6 +32,22 @@ Curated Claude Code skills from [Giting](https://giting.kr), the open-source fie
 3. **구현** — 검증된 레퍼런스 HTML을 기반으로 기존 코드 스타일에 맞춰 이식
 4. **제안** — "이 목록이 너무 길어" → 상황에 맞는 컴포넌트를 근거와 함께 추천
 
+### 02 · css-menu — CSS 증상 사전
+
+깨진 화면을 CSS 용어가 아니라 **증상**으로 찾는 사전입니다. "가운데 정렬이 안 돼요", "스크롤이 두 개예요", "버튼이 안 눌려요"를 그대로 입구로 씁니다. 기획자·디자이너 등 비개발자 우선 설계.
+
+- **8개 코스 42개 항목**: ①정렬 ②삐져나옴·잘림 ③스크롤 ④겹침·가려짐 ⑤폰에서만 ⑥간격 ⑦글자 ⑧안 보임
+- **깨진/고친 실물 나란히**: 전 항목이 before/after 실제 동작 HTML — 이중 스크롤은 굴려보고, 막힌 버튼은 눌러본다
+- **즉방형 34 · 분기형 8**: 상황 불문 같은 처방인 것만 "고쳐줘" 문장을 주고, 상황 의존(한글 줄바꿈·줄 간격 등)은 **진단 먼저** — 일률 처방으로 위장하지 않는 것이 검수 기준
+- **확인법 동봉**: 항목마다 "고쳐졌는지 눈으로 확인하는 방법" ("창 높이를 바꿔도 가운데면 성공")
+- **에이전트 채널**: [llms.txt](https://giting.kr/skills/css-menu/llms.txt) · [llms-full.txt](https://giting.kr/skills/css-menu/llms-full.txt)
+
+라이브 갤러리: **https://giting.kr/skills/css-menu**
+
+```
+/plugin install css-menu@giting
+```
+
 ## 등재 기준
 
 - 실제로 써 보고 검수한 것만 올립니다 (자동 수집 없음)
