@@ -69,6 +69,13 @@ for (const it of menu.items) {
   code[it.id] = standalone(it);
   writeFileSync(join(PLUGIN, 'components', `${it.id}.html`), code[it.id]);
 }
+// 레시피 데모도 자가완결 파일로 (조립된 화면 실물)
+const rcode = {};
+for (const r of (menu.recipes || [])) {
+  if (!frags[r.id]) { console.error('레시피 데모 없음:', r.id); process.exit(1); }
+  rcode[r.id] = standalone({ id: r.id, name: { ko: r.screen, en: r.combo.join('+') } });
+  writeFileSync(join(PLUGIN, 'components', `${r.id}.html`), rcode[r.id]);
+}
 
 // ── 3. 갤러리 ──────────────────────────────────────────────────
 const bycat = id => menu.items.filter(i => i.category === id);
@@ -394,6 +401,7 @@ const CORE_CSS = `
 .uigal .rcpk { flex: 1; min-width: 0; font-size: 12px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .uigal .rcpc { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
 .uigal .rcptag { font-family: var(--mono); font-size: 11.5px; color: #0F766E; background: color-mix(in srgb, #0F766E 8%, transparent); border: 1px solid color-mix(in srgb, #0F766E 22%, transparent); border-radius: 6px; padding: 2px 8px; }
+.uigal .rcpi iframe { width: 100%; border: 0; border-radius: 9px; display: block; background: #fff; margin: 4px 0 10px; border: 1px solid var(--line); }
 .uigal .rcpsc { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.55; }`;
 
 const CORE_JS = `
@@ -436,9 +444,10 @@ ${menu.recipes ? `
 <section class="cat" id="c-recipes">
   <h2><span class="no">＋</span> 화면 조합 레시피 <span class="count">${menu.recipes.length} · shadcn</span></h2>
   <p style="font-size:13px;color:var(--ink-2);margin:-6px 0 14px">낱개 컴포넌트를 아는 다음 단계 — 흔한 화면이 어떤 조합으로 만들어지는지. "조립하지 재발명하지 마라"(shadcn 공식 원칙).</p>
-  <div class="rcp">${menu.recipes.map(r => `<article class="rcpi">
+  <div class="rcp">${menu.recipes.map(r => `<article class="rcpi" id="${r.id}">
     <header><h3>${esc(r.screen)}</h3><span class="rcpk">${esc(r.ko)}</span>
       <button class="copy tiny" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
+    <iframe title="${esc(r.screen)} 조합 데모" loading="lazy" style="height:${frags[r.id].h}px" srcdoc="${attr(rcode[r.id])}"></iframe>
     <div class="rcpc">${r.combo.map(c => `<span class="rcptag">${esc(c)}</span>`).join('')}</div>
     <p class="rcpsc">${esc(r.sc)}</p>
   </article>`).join('\n')}</div>
