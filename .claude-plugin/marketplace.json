@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.8.0"
+    "version": "0.9.0"
   },
   "plugins": [
     {
@@ -38,6 +38,16 @@
       "name": "pixel-run",
       "source": "./plugins/pixel-run",
       "description": "캐릭터 참조 한 장으로 픽셀아트 달리기 사이클 — 4x4·16프레임 프롬프트 템플릿 + 결정적 후처리기(자르기·제자리 정렬·투명 GIF·QA). 제자리서 달리고 안 미끄러짐"
+    },
+    {
+      "name": "product-shot",
+      "source": "./plugins/product-shot",
+      "description": "AI 제품 사진 — 제형(물성 5축)·로고 안 틀리는 제품 이미지(재생성 금지·합성)·미니멀 광고컷 + 레퍼런스에서 제품색 뽑는 결정적 색 추출기"
+    },
+    {
+      "name": "session-mention",
+      "source": "./plugins/session-mention",
+      "description": "Claude Code 세션끼리 @메시지 진단·해결 — @가 안 걸리는 이유(이름 없음·공백·중복)·-n/rename/fork·세션 명령. 공식 문서 검증본"
     }
   ]
 }
