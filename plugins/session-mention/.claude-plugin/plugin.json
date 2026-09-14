@@ -1,0 +1,9 @@
+{
+  "name": "session-mention",
+  "version": "0.1.0",
+  "description": "Claude Code 세션끼리 @메시지(cross-session messaging) 진단·해결 가이드. @가 안 걸리는 이유(이름 없음·공백·중복), -n/·/rename·-r·fork 차이, 세션 목록·백그라운드·정리 명령. 공식 문서 검증본(옛 자료의 Windows 미지원·rename 중복 오류를 바로잡음).",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["claude-code", "cross-session-messaging", "session", "mention", "orchestration", "korean", "troubleshooting"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "product-shot",
+  "version": "0.1.0",
+  "description": "AI로 상업용 제품 사진을 만든다 — 제형(텍스처) 컷, 로고·패키지를 원본 그대로 지키는 제품 이미지, 미니멀 광고컷. 물성 프롬프트 문법 + 원본 보존 규율(로고 재생성 금지·합성 워크플로) + 광고컷 레시피 + 레퍼런스에서 HEX/RGB 뽑는 결정적 색 추출기.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["product-photography", "ai-image", "cosmetics", "texture-shot", "logo-preservation", "ad-creative", "korean", "ecommerce"]
+}
