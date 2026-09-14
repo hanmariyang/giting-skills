@@ -1,0 +1,9 @@
+{
+  "name": "sheet-io",
+  "version": "0.1.0",
+  "description": "스프레드시트(로컬 CSV·공개 Google Sheet)를 안전하고 싸게 읽고 쓴다. 통째로 붓지 않고 스키마·샘플·통계만(토큰 절약), 앞자리 0·전화번호를 텍스트로 보존, 통째 덮어쓰기 대신 안전한 추가. stdlib만(pandas·gspread 불필요), 공개 시트는 CSV export URL로 인증 없이.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["spreadsheet", "csv", "google-sheets", "data", "no-dependency", "korean", "claude-code"]
+}

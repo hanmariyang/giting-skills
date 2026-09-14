@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.9.0"
+    "version": "0.10.0"
   },
   "plugins": [
     {
@@ -48,6 +48,11 @@
       "name": "session-mention",
       "source": "./plugins/session-mention",
       "description": "Claude Code 세션끼리 @메시지 진단·해결 — @가 안 걸리는 이유(이름 없음·공백·중복)·-n/rename/fork·세션 명령. 공식 문서 검증본"
+    },
+    {
+      "name": "sheet-io",
+      "source": "./plugins/sheet-io",
+      "description": "스프레드시트(로컬 CSV·공개 Google Sheet)를 안전·저비용으로 읽고 쓰기 — 통째 안 붓고 스키마·샘플·통계만, 앞자리 0·전화번호 텍스트 보존, 안전한 추가. stdlib만·인증 없음"
     }
   ]
 }
