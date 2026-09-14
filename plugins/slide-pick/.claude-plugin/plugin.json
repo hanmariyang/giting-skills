@@ -1,0 +1,9 @@
+{
+  "name": "slide-pick",
+  "version": "0.1.0",
+  "description": "PPT·발표자료를 만들기 전에 '무엇을 그릴지' 고르는 선택 사전. 슬라이드마다 청중이 내릴 판단을 먼저 정하고, 거기에 맞는 레이아웃·차트·도형을 고르고 이름을 붙이고, 오해를 부르는 선택을 막는다. 선택 방법 + 채워 쓰는 PPT 프롬프트 템플릿 + 레이아웃·차트(의도별)·SmartArt 분류.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["ppt", "presentation", "slides", "chart", "smartart", "data-viz", "korean", "deck"]
+}
