@@ -1,0 +1,9 @@
+{
+  "name": "font-menu",
+  "version": "0.1.0",
+  "description": "웹폰트 사전 — 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 '어디서 어떻게' 불러오는지 스니펫째 준다. Google Fonts·Fontshare·jsDelivr 로딩법이 폰트마다 다르고, 틀리면 조용히 폴백된다. 맥락(본문·테크·랜딩·세리프·모노·한글)별 짝·라이선스·안 쓸 때까지. AI가 늘 쓰는 Inter만 얹는 것도, Google에 없는 폰트를 Google 링크에 박아 폴백시키는 것도 막는다.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["font", "webfont", "typography", "google-fonts", "fontshare", "pretendard", "korean", "landing", "vibe-coding", "dictionary"]
+}

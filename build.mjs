@@ -940,3 +940,139 @@ mkdirSync(join(ROOT, 'docs', 'type-menu'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'type-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/type-menu'));
 writeFileSync(join(ROOT, 'docs', 'type-menu', 'llms.txt'), tdict());
 console.log(`built type-menu: items ${tmenu.items.length} · core ${(tpCore.length / 1024).toFixed(0)}KB`);
+
+// ── 웹폰트 사전 (font-menu) — 05 ──────────────────────────────
+// 카드마다 폰트를 실물로 렌더한다(갤러리 상단에 @import 주입). 라이선스·출처·복사용 로드 스니펫.
+const FP = join(ROOT, 'plugins', 'font-menu');
+const fmenu = JSON.parse(readFileSync(join(FP, 'menu.json'), 'utf8'));
+const fby = id => fmenu.items.filter(i => i.category === id);
+const srcClass = s => s === 'Google Fonts' ? 'google' : s === 'Fontshare' ? 'fontshare' : 'jsdelivr';
+
+const fCardHtml = it => `
+<article class="fitem" id="${it.id}">
+  <div class="spec" style="font-family:${attr(it.css)}">
+    <div class="fbig">${esc(it.family)}</div>
+    <div class="fpan">${esc(it.pan)}</div>
+    ${it.panKo ? `<div class="fpan ko">${esc(it.panKo)}</div>` : ''}
+    <div class="fwts"><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:700">Bold</span></div>
+  </div>
+  <div class="fmeta">
+    <span class="frole">${esc(it.role)}</span>
+    <span class="lic ${it.license.tone}">${esc(it.license.name)}</span>
+    <span class="fsrc ${srcClass(it.source)}">${esc(it.source)}</span>
+  </div>
+  <div class="floadrow"><code>${esc(it.load)}</code><button class="copy tiny" data-copy="${attr(it.load)}" title="로드 스니펫 복사">복사</button></div>
+  <div class="fnotes">
+    <p><b>언제</b>${esc(it.use)}</p>
+    <p><b>안 쓸 때</b>${esc(it.whenNot)}</p>
+    <p><b>짝</b>${esc(it.pairsWith)}</p>
+    <p class="flic">${esc(it.license.blurb)} · 두께 ${esc(it.weights)}</p>
+  </div>
+</article>`;
+
+const fTableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>폰트</th><th>출처</th><th>라이선스</th><th>역할</th><th>로드 스니펫</th></tr></thead>
+<tbody>
+${fby(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}" style="font-family:${attr(it.css)}">${esc(it.family)}</a></td>
+  <td class="mono"><span class="fsrc ${srcClass(it.source)}">${esc(it.source)}</span></td>
+  <td class="mono">${esc(it.license.name)}</td>
+  <td class="als">${esc(it.role)}</td>
+  <td class="askcell"><span>${esc(it.vibe)}</span><button class="copy tiny" data-copy="${attr(it.load)}">스니펫</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const ff = fmenu.formula;
+const fImports = [...new Set(fmenu.items.map(i => i.import))].join('\n');
+const FGAL_CSS = fImports + '\n' + CORE_CSS.replace(/\.uigal/g, '.fmgal') + `
+.fmgal .ggrid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 860px) { .fmgal .ggrid { grid-template-columns: 1fr; } }
+.fmgal .floaders { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; padding: 13px 16px; background: var(--gwash); }
+.fmgal .floaders > b { display: block; font-size: 13px; margin-bottom: 8px; }
+.fmgal .floaders .lrow { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin-top: 5px; }
+.fmgal .spec { padding: 18px 16px 15px; border-bottom: 1px solid var(--line); }
+.fmgal .fbig { font-size: 34px; line-height: 1.05; letter-spacing: -.02em; color: var(--ink); }
+.fmgal .fpan { font-size: 17px; color: var(--ink-2); margin-top: 9px; line-height: 1.35; }
+.fmgal .fpan.ko { margin-top: 3px; }
+.fmgal .fwts { margin-top: 11px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 15px; color: var(--ink-3); }
+.fmgal .fmeta { display: flex; flex-wrap: wrap; gap: 6px 8px; padding: 10px 14px; border-bottom: 1px solid var(--gwash); align-items: center; }
+.fmgal .frole { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.fmgal .lic { font-size: 10.5px; font-weight: 800; border-radius: 6px; padding: 2px 8px; }
+.fmgal .lic.ok { background: #eff6f1; color: #1f7a4d; }
+.fmgal .lic.cdn { background: #fbf3e8; color: #a8620f; }
+.fmgal .fsrc { font-size: 11px; font-family: var(--mono); color: var(--ink-2); display: inline-flex; align-items: center; gap: 5px; }
+.fmgal .fmeta .fsrc { margin-left: auto; }
+.fmgal .fsrc::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.fmgal .fsrc.google::before { background: #4285F4; }
+.fmgal .fsrc.fontshare::before { background: #E8344E; }
+.fmgal .fsrc.jsdelivr::before { background: #E84D3D; }
+.fmgal .floadrow { display: flex; gap: 8px; align-items: flex-start; padding: 10px 14px; background: var(--gwash); border-bottom: 1px solid var(--line); }
+.fmgal .floadrow code { font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: var(--ink-2); flex: 1; min-width: 0; white-space: normal; word-break: break-all; }
+.fmgal .fnotes { padding: 11px 14px 13px; display: grid; gap: 5px; margin-top: auto; }
+.fmgal .fnotes p { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+.fmgal .fnotes b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+.fmgal .fnotes .flic { font-size: 11px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 6px; margin-top: 2px; }
+.fmgal td a { letter-spacing: -.01em; }`;
+
+const fpCore = `<div class="fmgal">
+<style>${FGAL_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(ff.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(ff.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(ff.good)}」</div>
+  </div>
+</div>
+<div class="floaders"><b>로더가 폰트마다 다르다 — 이름만 안다고 안 뜬다</b>
+  ${Object.entries(fmenu.loaders).map(([k, v]) => `<div class="lrow"><span class="fsrc ${srcClass(k)}">${esc(k)}</span> ${esc(v)}</div>`).join('\n  ')}
+</div>
+<nav class="gnav" aria-label="맥락">
+  ${fmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${fby(c.id).length}</a>`).join('\n  ')}
+</nav>
+${fmenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${fby(cat.id).length}</span></h2>
+  <div class="ggrid">${fby(cat.id).map(fCardHtml).join('\n')}</div>
+  ${fTableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.fmgal')}</script>
+</div>
+`;
+
+const fdict = () => `# 웹폰트 사전 (font-menu) — Giting Skills
+
+> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 6개 맥락 ${fmenu.items.length}종.
+> 대원칙: 로더가 폰트마다 다르다 — ${Object.entries(fmenu.loaders).map(([k, v]) => `[${k}] ${v}`).join(' ')}
+> 가장 흔한 사고: Google에 없는 폰트(Satoshi·Clash Display·General Sans)를 Google <link>에 박아 조용히 시스템 폰트로 폴백. 반드시 각 폰트의 출처 로더로.
+> 공식: ${ff.pattern}
+> 갤러리(폰트 실물 렌더): https://giting.kr/skills/font-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install font-menu@giting
+
+${fmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${fby(cat.id).map(it => `### ${it.family} — ${it.role} [${it.source}]
+- 인상: ${it.vibe}
+- 라이선스: ${it.license.name} (${it.license.blurb})
+- 두께: ${it.weights}
+- 언제: ${it.use}
+- 안 쓸 때: ${it.whenNot}
+- 짝: ${it.pairsWith}
+- font-family: ${it.css}
+- 로드:
+\`\`\`html
+${it.load}
+\`\`\`
+`).join('\n')}`).join('\n')}`;
+
+if (SITE_DIR) {
+  const FS = join(SITE_DIR, 'font-menu');
+  mkdirSync(FS, { recursive: true });
+  writeFileSync(join(FS, 'gallery-core.html'), fpCore);
+  writeFileSync(join(FS, 'llms.txt'), fdict());
+  writeFileSync(join(FS, 'llms-full.txt'), fdict());
+}
+mkdirSync(join(ROOT, 'docs', 'font-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'font-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/font-menu'));
+writeFileSync(join(ROOT, 'docs', 'font-menu', 'llms.txt'), fdict());
+console.log(`built font-menu: items ${fmenu.items.length} · core ${(fpCore.length / 1024).toFixed(0)}KB`);

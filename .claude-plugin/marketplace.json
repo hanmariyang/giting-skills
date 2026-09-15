@@ -63,6 +63,11 @@
       "name": "design-brief",
       "source": "./plugins/design-brief",
       "description": "AI가 밋밋한 기본 룩 대신 일관된 UI를 짓게 하는 DESIGN.md 생성 — 팔레트·타입·간격+'왜' 템플릿 + 안티-슬롭 + 46 스타일 + 색 추출기"
+    },
+    {
+      "name": "font-menu",
+      "source": "./plugins/font-menu",
+      "description": "웹폰트 사전 — 인상으로 폰트 고르고 어디서 어떻게 불러오는지 로딩 스니펫째. 6맥락 24종, Google/Fontshare/jsDelivr 로더 구분·라이선스·짝. Google에 없는 폰트를 Google 링크에 박아 폴백시키는 사고를 막음"
     }
   ]
 }

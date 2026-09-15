@@ -1,0 +1,332 @@
+# 웹폰트 사전 (font-menu) — Giting Skills
+
+> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 6개 맥락 24종.
+> 대원칙: 로더가 폰트마다 다르다 — [Google Fonts] Google에 있는 폰트. <link>로 불러오고 폴백 스택 필수. 파일 번들·상용 자유. [Fontshare] Indian Type Foundry 배포. Google에 없음. api.fontshare.com 에서만 로드. 무료·상용은 되지만 파일 재배포·번들은 라이선스 위반. CDN <link>로만 쓴다. [jsDelivr] Google에 없는 오픈 폰트(Pretendard 등)를 GitHub 저장소째 CDN으로 서빙. OFL이라 번들도 가능하지만 CDN <link>가 가장 간편.
+> 가장 흔한 사고: Google에 없는 폰트(Satoshi·Clash Display·General Sans)를 Google <link>에 박아 조용히 시스템 폰트로 폴백. 반드시 각 폰트의 출처 로더로.
+> 공식: 어떤 인상을 원하는지 말하기 → 사전에서 짝 고르기 → 로딩 스니펫째 시키기
+> 갤러리(폰트 실물 렌더): https://giting.kr/skills/font-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install font-menu@giting
+
+## 01 국룰 · 본문 · UI
+
+### Inter — 본문 · UI [Google Fonts]
+- 인상: 중립 · 읽기 쉬움. 숫자·UI 라벨이 또렷하다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 600 · 700
+- 언제: 대시보드 · 앱 UI · 본문. '무난하게'가 필요할 때 기본값.
+- 안 쓸 때: 히어로에 개성이 필요할 때. Inter는 '안전'이지 '인상'이 아니다. 제목까지 Inter면 AI가 만든 티가 난다.
+- 짝: 제목에 Space Grotesk · Instrument Serif · Fraunces를 얹고 본문만 Inter.
+- font-family: 'Inter', system-ui, sans-serif
+- 로드:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+### Geist — 본문 · UI [Google Fonts]
+- 인상: Vercel이 만든 현대적 산세리프. Inter보다 조금 더 각이 살아 있다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 600 · 700
+- 언제: Inter가 식상할 때의 안전한 대안. 개발자 도구·SaaS UI.
+- 안 쓸 때: 따뜻함·클래식이 필요할 때. Geist는 차갑고 기하학적이다.
+- 짝: 본문 Geist + 코드 Geist Mono(같은 가족이라 자연스럽다).
+- font-family: 'Geist', system-ui, sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+### IBM Plex Sans — 본문 · UI [Google Fonts]
+- 인상: 기업 신뢰감 + 은근한 개성. 네모난 몸통, 살짝 튀는 디테일.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 600 · 700
+- 언제: B2B·엔터프라이즈 톤. 한글판(IBM Plex Sans KR)이 있어 국문 병기도 일관된다.
+- 안 쓸 때: 가볍고 트렌디한 랜딩엔 다소 무겁다.
+- 짝: IBM Plex Sans + IBM Plex Mono + IBM Plex Sans KR. 한 가족으로 다국어까지.
+- font-family: 'IBM Plex Sans', system-ui, sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+## 02 AI · 테크 스타트업
+
+### Space Grotesk — 제목 · 로고 · UI [Google Fonts]
+- 인상: 요즘 AI 스타트업이 제일 많이 쓰는 기하학 산세리프. 미래적·또렷.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: 제목·로고타입·수치 강조. 본문 Inter와 짝지으면 '테크 스타트업' 룩 완성.
+- 안 쓸 때: 긴 본문. 장문엔 피로하다. 제목·라벨용으로 아껴 쓴다. 이미 흔해서 개성은 약해지는 중.
+- 짝: 제목 Space Grotesk + 본문 Inter/Sora. 코드는 Space Mono(같은 가족감).
+- font-family: 'Space Grotesk', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+### Sora — 제목 · 본문 [Google Fonts]
+- 인상: 깔끔한 기하학. Space Grotesk보다 얌전해서 본문까지 버틴다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: 테크 톤이되 제목·본문을 한 폰트로 통일하고 싶을 때.
+- 안 쓸 때: 감성·따뜻함이 필요한 브랜드.
+- 짝: 제목·본문 Sora 단독, 또는 제목 Space Grotesk + 본문 Sora.
+- font-family: 'Sora', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+### Satoshi — 제목 · 본문 · UI [Fontshare]
+- 인상: 요즘 랜딩페이지에 자주 보이는 중립적 네오그로테스크. 군더더기 없다.
+- 라이선스: Fontshare (ITF) 무료 (무료·상용 OK · 파일 번들·재배포 금지 · CDN 로드만)
+- 두께: 400 · 500 · 700
+- 언제: 제목·본문 통합 산세리프. 랜딩·SaaS 전반.
+- 안 쓸 때: ⚠️ Google Fonts에 없다. Google 링크에 family=Satoshi를 박으면 조용히 폴백된다. 반드시 위 Fontshare <link>로. 파일을 프로젝트에 넣어 재배포하면 안 된다.
+- 짝: 제목·본문 Satoshi 단독, 또는 제목 Clash Display + 본문 Satoshi.
+- font-family: 'Satoshi', sans-serif
+- 로드:
+```html
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+```
+
+### Plus Jakarta Sans — 제목 · 본문 [Google Fonts]
+- 인상: 따뜻하고 둥근 기하학. 차가운 테크에 인간미를 더한다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: 스타트업 랜딩·앱. Space Grotesk가 너무 차가울 때.
+- 안 쓸 때: 격식·전통 브랜드.
+- 짝: 제목·본문 Plus Jakarta Sans 단독. Google에 있어 로드가 간편.
+- font-family: 'Plus Jakarta Sans', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+## 03 랜딩 히어로
+
+### Clash Display — 히어로 제목 전용 [Fontshare]
+- 인상: 크게 키우면 강렬한 디스플레이. 랜딩 히어로 한 문장을 각인시킨다.
+- 라이선스: Fontshare (ITF) 무료 (무료·상용 OK · 파일 번들·재배포 금지 · CDN 로드만)
+- 두께: 400 · 600 · 700
+- 언제: 큰 제목·히어로 한 줄. 굵게 크게.
+- 안 쓸 때: 본문·작은 글씨엔 절대 금지(가독성 급락). ⚠️ Google에 없다. Fontshare <link>로만.
+- 짝: 히어로 Clash Display + 본문 Satoshi/Inter.
+- font-family: 'Clash Display', sans-serif
+- 로드:
+```html
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,600,700&display=swap" rel="stylesheet">
+```
+
+### Bricolage Grotesque — 제목 · 디스플레이 [Google Fonts]
+- 인상: 일부러 삐뚤한 그로테스크. '틀에서 벗어난' 개성. AI가 만든 티를 확실히 지운다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 600 · 800
+- 언제: 개성 있는 제목이 필요한 랜딩·포트폴리오·에디토리얼.
+- 안 쓸 때: 보수적·엔터프라이즈 톤. 튀는 게 목적이라 격식과는 안 맞는다.
+- 짝: 제목 Bricolage + 본문 Inter/Manrope. Google에 있어 로드 간편.
+- font-family: 'Bricolage Grotesque', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+```
+
+### General Sans — 제목 · 본문 [Fontshare]
+- 인상: 요즘 랜딩에 자주 보이는 만능 산세리프. 제목·본문 다 받는다.
+- 라이선스: Fontshare (ITF) 무료 (무료·상용 OK · 파일 번들·재배포 금지 · CDN 로드만)
+- 두께: 400 · 500 · 600
+- 언제: 한 폰트로 랜딩 전체를 통일하고 싶을 때.
+- 안 쓸 때: ⚠️ Latin 전용. 한글이 없다. 'Pretendard가 식상할 때'의 대안으로 얘기되지만 국문엔 못 쓴다(한글은 시스템 폰트로 폴백). Google에도 없으니 Fontshare <link>로만.
+- 짝: 영문 전용 프로젝트에서 제목·본문 General Sans 단독.
+- font-family: 'General Sans', sans-serif
+- 로드:
+```html
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+```
+
+### Manrope — 제목 · 본문 [Google Fonts]
+- 인상: 깔끔하고 살짝 둥근 기하학. 랜딩 본문의 단골.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700 · 800
+- 언제: 제품 랜딩·SaaS 본문. 두께 폭이 넓어 위계 잡기 좋다.
+- 안 쓸 때: 강한 개성이 필요한 히어로. Manrope는 얌전한 쪽.
+- 짝: 제목 Clash Display/Bricolage + 본문 Manrope.
+- font-family: 'Manrope', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+```
+
+## 04 고급 · 에디토리얼
+
+### Instrument Serif — 제목 · 디스플레이 세리프 [Google Fonts]
+- 인상: 제목만 이걸로 바꿔도 고급스러워진다. 크게 키운 얇은 세리프의 우아함.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 400 italic
+- 언제: 히어로 제목·인용구. 본문은 산세리프로 받친다.
+- 안 쓸 때: 본문·작은 글씨(단일 굵기라 위계가 약하다). 굵은 헤드라인이 필요하면 Playfair/Fraunces.
+- 짝: 제목 Instrument Serif + 본문 Inter/Satoshi. 요즘 프리미엄 랜딩 공식.
+- font-family: 'Instrument Serif', Georgia, serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+```
+
+### Fraunces — 제목 · 본문 세리프 [Google Fonts]
+- 인상: 말랑하고 살짝 삐뚠 '소프트 세리프'. 프리미엄 랜딩의 요즘 얼굴.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 600 · 900
+- 언제: 감성·프리미엄 브랜드 제목. opsz(옵티컬 사이즈) 축이 있어 크게·작게 다 예쁘다.
+- 안 쓸 때: 차갑고 기술적인 톤.
+- 짝: 제목 Fraunces + 본문 Inter/Manrope.
+- font-family: 'Fraunces', Georgia, serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900&display=swap" rel="stylesheet">
+```
+
+### Newsreader — 본문 세리프 · 에디토리얼 [Google Fonts]
+- 인상: 긴 글을 읽히려고 만든 세리프. 블로그·아티클 본문에 편안하다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · italic
+- 언제: 긴 본문·매거진·아티클. 이탤릭이 예뻐 인용에 좋다.
+- 안 쓸 때: 짧은 UI 라벨·버튼.
+- 짝: 제목 Fraunces/Playfair + 본문 Newsreader, 또는 본문 Newsreader 단독.
+- font-family: 'Newsreader', Georgia, serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+```
+
+### Playfair Display — 제목 · 럭셔리 세리프 [Google Fonts]
+- 인상: 굵기 대비가 큰 클래식 세리프. 패션·뷰티·웨딩의 '고급' 신호.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 600 · 800
+- 언제: 럭셔리·격식 브랜드 제목. 크게 굵게.
+- 안 쓸 때: 본문(가는 획이 작은 크기에서 뭉갠다). 이미 흔해서 신선함은 약하다. 개성 원하면 Fraunces.
+- 짝: 제목 Playfair Display + 본문 Inter/Newsreader.
+- font-family: 'Playfair Display', Georgia, serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;800&display=swap" rel="stylesheet">
+```
+
+## 05 코드 · 모노
+
+### JetBrains Mono — 코드 · 터미널 [Google Fonts]
+- 인상: 코드용 표준. 0과 O, 1과 l이 확실히 구분된다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: 코드 블록·터미널·기술 문서의 등폭.
+- 안 쓸 때: 일반 본문(등폭은 장문에 부적합).
+- 짝: 본문 산세리프 아무거나 + 코드 JetBrains Mono.
+- font-family: 'JetBrains Mono', monospace
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+### Geist Mono — 코드 · 데이터 [Google Fonts]
+- 인상: Geist의 등폭 짝. 현대적이고 데이터·숫자가 깔끔하다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: 본문이 Geist일 때의 코드·수치 등폭. 대시보드 숫자.
+- 안 쓸 때: 본문 산세리프가 Geist가 아니면 어색할 수 있다.
+- 짝: 본문 Geist + 코드 Geist Mono(한 가족).
+- font-family: 'Geist Mono', monospace
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+### Space Mono — 제목 · 라벨 · 코드 [Google Fonts]
+- 인상: 개성 강한 레트로 등폭. 코드보다 '분위기용'으로 더 쓴다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 700
+- 언제: 테크 브랜드의 라벨·태그·수치 강조. Space Grotesk와 한 가족감.
+- 안 쓸 때: 긴 코드 블록(가독성은 JetBrains Mono가 낫다).
+- 짝: 제목 Space Grotesk + 라벨 Space Mono.
+- font-family: 'Space Mono', monospace
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+```
+
+### IBM Plex Mono — 코드 · 기술 문서 [Google Fonts]
+- 인상: IBM Plex 가족의 등폭. 살짝 인간적인 코드 폰트.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 600
+- 언제: 본문이 IBM Plex Sans일 때의 코드. 기술 백서·문서.
+- 안 쓸 때: 본문 가족이 Plex가 아닐 때는 굳이.
+- 짝: IBM Plex Sans + IBM Plex Mono + IBM Plex Sans KR.
+- font-family: 'IBM Plex Mono', monospace
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+```
+
+## 06 한글
+
+### Pretendard — 한글 본문 · UI (국룰) [jsDelivr]
+- 인상: 한글 웹의 사실상 국룰. Apple 시스템 폰트 느낌을 웹에서.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능 · 국문 기본값)
+- 두께: 45~920 (Variable)
+- 언제: 국문 본문·UI 기본값. dynamic-subset이라 필요한 글자만 받아 빠르다.
+- 안 쓸 때: '모두가 쓰는 폰트'라 차별화는 없다. 개성이 필요하면 Wanted Sans/Gowun Batang.
+- 짝: 국문 Pretendard + 영문·숫자도 Pretendard가 받는다. 세리프 강조엔 Gowun Batang.
+- font-family: 'Pretendard Variable', Pretendard, system-ui, sans-serif
+- 로드:
+```html
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+```
+
+### Wanted Sans — 한글 제목 · 본문 [jsDelivr]
+- 인상: 원티드가 만든 현대적 한글 산세리프. Pretendard보다 살짝 또렷하고 개성 있다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 100~900 (Variable)
+- 언제: 'Pretendard가 식상할 때'의 국문 대안. 제목·본문 다 받는다.
+- 안 쓸 때: jsDelivr 버전 경로가 바뀔 수 있으니 릴리스 버전 확인. 극도로 보수적인 기관 사이트엔 Noto Sans KR가 무난.
+- 짝: 국문 제목·본문 Wanted Sans 단독.
+- font-family: 'Wanted Sans Variable', 'Wanted Sans', sans-serif
+- 로드:
+```html
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
+```
+
+### Noto Sans KR — 한글 본문 · UI (안전) [Google Fonts]
+- 인상: 구글 범용 한글. 무난하고 어디서나 안전하게 뜬다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 700
+- 언제: Google Fonts 하나로 한/영을 끝내고 싶을 때. jsDelivr를 못 쓰는 환경.
+- 안 쓸 때: 세련·트렌디한 인상. 그건 Pretendard/Wanted Sans가 낫다.
+- 짝: 제목 Noto Sans KR 700 + 본문 400. 영문은 Inter로 갈아도 자연스럽다.
+- font-family: 'Noto Sans KR', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+```
+
+### IBM Plex Sans KR — 한글 본문 (Plex 가족) [Google Fonts]
+- 인상: IBM Plex의 한글판. 영문 IBM Plex Sans와 톤이 일관된다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 500 · 600
+- 언제: 영문 IBM Plex Sans를 쓰는 프로젝트의 국문 병기. 다국어 일관성.
+- 안 쓸 때: Plex 가족을 안 쓰면 굳이.
+- 짝: IBM Plex Sans + IBM Plex Sans KR + IBM Plex Mono.
+- font-family: 'IBM Plex Sans KR', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+```
+
+### Gowun Batang — 한글 세리프 · 감성 [Google Fonts]
+- 인상: 부드러운 한글 명조. 감성·문학·에세이 톤.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능)
+- 두께: 400 · 700
+- 언제: 국문 제목·인용에 고급·서정 느낌. 본문 산세리프와 짝.
+- 안 쓸 때: UI 라벨·버튼(명조는 작은 글씨에 약하다).
+- 짝: 제목 Gowun Batang + 본문 Pretendard.
+- font-family: 'Gowun Batang', serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+```
