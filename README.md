@@ -72,6 +72,16 @@ AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준 한 줄로 되�
 
 라이브: **https://giting.kr/skills/type-menu**
 
+### 05 · font-menu — 웹폰트 사전
+
+"폰트 예쁘게 넣어줘"라고 하면 AI는 늘 쓰던 Inter만 얹거나, Google Fonts에 없는 폰트(Satoshi·General Sans)를 Google 링크에 박아 조용히 시스템 폰트로 폴백시킨다. 인상으로 폰트를 고르고, 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전.
+
+- **6개 맥락 24종**: 국룰·본문 / AI·테크 / 랜딩 히어로 / 고급·세리프 / 코드·모노 / 한글
+- **로더가 폰트마다 다르다**: Google Fonts(번들 자유) · Fontshare(CDN 로드만, 번들 금지) · jsDelivr(Pretendard 등). 출처별 정확한 `<link>`를 준다
+- **24종 로드 URL 전수 실측**: 전부 GET 해 @font-face·패밀리명이 실제로 오는지 확인(silent fallback 0). 짝·라이선스·안 쓸 때·AI 티 경고 포함
+
+라이브: **https://giting.kr/skills/font-menu**
+
 ## 등재 기준
 
 - 실제로 써 보고 검수한 것만 올립니다 (자동 수집 없음)
