@@ -1,0 +1,23 @@
+{
+  "name": "app-menu",
+  "version": "0.1.0",
+  "description": "앱 UI 메뉴판 — '아래에서 올라오는 판'을 바텀시트라 부르게 해 주는 모바일 앱 UI 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브 프레임워크명(SwiftUI·Flutter·React Native) 매핑. 8개 코스 72항목. 웹은 ui-menu.",
+  "author": {
+    "name": "Giting",
+    "url": "https://giting.kr"
+  },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": [
+    "mobile",
+    "app",
+    "ui",
+    "ios",
+    "android",
+    "swiftui",
+    "flutter",
+    "react-native",
+    "korean",
+    "dictionary"
+  ]
+}
