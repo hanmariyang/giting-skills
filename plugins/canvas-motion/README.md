@@ -12,6 +12,7 @@ recipes/
   flagship-iso-hub.html  시뮬(아이소) — 물류 허브: A* 로봇 + 보이드 드론 + 데이터 스트림 + 발광 타워
   aurora-flow.html       제너러티브(추상) — 노이즈 플로우필드 × 2,400 입자 × 잔광 리본
   constellation-net.html 네트워크(추상) — 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우
+  book-shelf-timeline.html 타임라인(서사) — 책장 꽂힘 → 한 권 뽑기 → 페이지 펼침 → 바코드 수렴
 lint/
   motion-lint.mjs        규율 점검 — reduced-motion·라이브러리금지·rAF·DPR·고정timestep·깊이정렬·시드
 skills/canvas-motion/SKILL.md
