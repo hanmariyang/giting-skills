@@ -27,7 +27,7 @@ description: "웹 랜딩·히어로·데모에 창발적(살아 있는) 모션 �
 
 **코어 `CM`**
 - `setupCanvas(canvas,{width,height,maxDpr})` → `{ctx,w,h,dpr}`. DPR 대응(선명함), 논리 좌표는 CSS 픽셀.
-- `loop({tick,update,render,settle,reduced})` → `{stop}`. **고정 timestep**: `update(dt)` 는 tick 초마다 정확히, `render(alpha,now)` 는 매 프레임. **alpha(0~1)** 로 두 시뮬 상태 사이를 보간해 끊김을 없앤다. `reduced`(reduced-motion)면 `settle` 번만 밟고 정지 프레임 1장. 탭 숨으면 자동 일시정지.
+- `loop({tick,update,render,settle,reduced})` → `{stop}`. **고정 timestep**: `update(dt)` 는 tick 초마다 정확히, `render(now,alpha)` 는 매 프레임. ⚠️ **첫 인자가 `now`(밀리초 타임스탬프)**, 둘째가 `alpha`(다음 tick까지 0~1, 보간용). 타임라인(t 기반)이면 `render(now){ var t=(now/1000)%DUR }`. `reduced`(reduced-motion)면 `settle` 번만 밟고 정지 프레임 1장(`staticAt` 로 그 시각 지정). 탭 숨으면 자동 일시정지.
 - `ease.{linear,inOutSine,outCubic,inOutCubic,outBack,outElastic}` · `lerp(a,b,t)` · `clamp` · `seg(t,a,b)`(구간 진행률, 타임라인용).
 - `iso(tw,ox,oy)` → `P(x,y,h)`: 격자→아이소 화면. **h 는 픽셀 높이**(격자 단위 아님 — 타워는 40~150px).
 - `drawList()` → `{add(depth,fn),flush()}`: **깊이 정렬**(painter's). 아이소 가림은 `depth = x+y`.

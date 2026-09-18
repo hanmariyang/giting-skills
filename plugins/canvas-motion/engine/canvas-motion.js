@@ -45,7 +45,7 @@
 
     if (reduced) {                          // 정지 프레임 1장(접근성)
       if (o.settle) for (var i = 0; i < o.settle; i++) update(tick);
-      render(1, 0);
+      render(o.staticAt || 0, 1);           // (now, alpha)
       return { stop: function () {}, reduced: true };
     }
     function frame(now) {
@@ -54,7 +54,7 @@
       var dt = Math.min((now - last) / 1000, maxFrame);
       last = now; acc += dt;
       while (acc >= tick) { update(tick); acc -= tick; }
-      render(acc / tick, now);              // alpha: 다음 tick 까지 얼마나 왔나(0~1)
+      render(now, acc / tick);              // ⚠️ (now[밀리초], alpha[다음 tick까지 0~1]). now 가 첫 인자다.
       raf = root.requestAnimationFrame(frame);
     }
     function onVis() { if (document.hidden) { running = false; } else if (!running) { running = true; last = 0; raf = root.requestAnimationFrame(frame); } }
