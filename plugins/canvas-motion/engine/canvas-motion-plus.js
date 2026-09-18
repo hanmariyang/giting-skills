@@ -123,6 +123,38 @@
     return out;
   }
 
+  // ── 큐레이션 스킴 (design-brief 안티-슬롭: 무지개 금지, 절제 + 단일 액센트) ──
+  // 각 스킴 = { bg:[상,하], cols:[주 색 3~4, analogous/듀오톤], accent:단일 강조 }
+  var SCHEMES = {
+    aurora: { bg: ['#0a0f1e', '#111a30'], cols: ['#34e0c4', '#4f7cf6', '#7c6cf0', '#3fb6e8'], accent: '#ffd166' },
+    cyber:  { bg: ['#070a12', '#0d1424'], cols: ['#22d3ee', '#3b82f6', '#60a5fa', '#818cf8'], accent: '#f472b6' },
+    ember:  { bg: ['#160c0b', '#241410'], cols: ['#f59e0b', '#fb7185', '#f9a8d4', '#fbbf24'], accent: '#fde68a' },
+    mono:   { bg: ['#0b0e14', '#141b28'], cols: ['#8493ad', '#9fb0cc', '#657188', '#b6c6e4'], accent: '#22d3ee' }
+  };
+  function scheme(name) { return SCHEMES[name] || SCHEMES.aurora; }
+
+  // ── 색 → rgba (hex/hsl 공통) ──────────────────────────
+  function rgba(c, a) {
+    if (!c) return 'rgba(0,0,0,' + a + ')';
+    if (c[0] === '#') { var h = c.length === 4 ? c.replace(/#(.)(.)(.)/, '#$1$1$2$2$3$3') : c, n = parseInt(h.slice(1), 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+    if (c.indexOf('hsl') === 0) return c.replace('hsl(', 'hsla(').replace(')', ',' + a + ')');
+    return c;
+  }
+
+  // ── 값싼 스프라이트 글로우 (shadowBlur 대체 — 10~100x 빠름) ──
+  // makeGlow(color,r) → 오프스크린 캔버스(방사형 그라디언트) 1회 생성.
+  // blit(ctx,x,y,scale?) 로 매 프레임 그린다(globalCompositeOperation='lighter' 권장).
+  function makeGlow(color, r, inner) {
+    var cv = document.createElement('canvas'); cv.width = cv.height = r * 2;
+    var g = cv.getContext('2d'), grad = g.createRadialGradient(r, r, 0, r, r, r);
+    grad.addColorStop(0, rgba(color, inner != null ? inner : 0.9));
+    grad.addColorStop(0.35, rgba(color, (inner != null ? inner : 0.9) * 0.5));
+    grad.addColorStop(1, rgba(color, 0));
+    g.fillStyle = grad; g.fillRect(0, 0, r * 2, r * 2);
+    var sprite = { canvas: cv, r: r, blit: function (ctx, x, y, s) { s = s || 1; var rr = r * s; ctx.drawImage(cv, x - rr, y - rr, rr * 2, rr * 2); } };
+    return sprite;
+  }
+
   // ── 아이소 3면 박스 (코어 iso 투영과 함께) ─────────────
   function isoBox(ctx, P, x, y, z, w, d, h, c) {
     function face(pts, fill) { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); }
@@ -136,7 +168,8 @@
     makeNoise: makeNoise, flowField: flowField,
     spatialHash: spatialHash, steer: steer, particles: particles,
     camera: camera, astar: astar, glow: glow, palette: palette, isoBox: isoBox,
-    version: '0.1.0'
+    scheme: scheme, rgba: rgba, makeGlow: makeGlow,
+    version: '0.2.0'
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.CMX;
 })(typeof window !== 'undefined' ? window : this);

@@ -34,7 +34,8 @@ description: "웹 랜딩·히어로·데모에 창발적(살아 있는) 모션 �
 - `steer.{seek,arrive,separate,align,cohesion,follow,integrate}`: 레이놀즈 스티어링/보이드.
 - `particles(max)` → `emit/update/draw`: 파티클 이미터.
 - `camera(w,h)`: pan/zoom, 월드↔화면. `astar(walkable,cols,rows)`: 격자 A*.
-- `glow(ctx,color,blur,fn)`: 빛번짐. `palette(seed,n)`: 조화 HSL 세트. `isoBox(ctx,P,x,y,z,w,d,h,c)`: 아이소 3면 박스.
+- `scheme(name)`: **큐레이션 팔레트**(aurora·cyber·ember·mono) → `{bg:[상,하], cols:[쿨 3~4], accent:단일}`. **design-brief 안티-슬롭: 무지개 랜덤 팔레트 금지, 절제 + 단일 액센트.** `rgba(color,a)`: hex/hsl → rgba.
+- `makeGlow(color,r,inner)` → 스프라이트 `{blit(ctx,x,y,scale)}`: **shadowBlur 대체(10~100x 빠름).** 매 프레임 `glow()`(shadowBlur) 호출은 성능을 죽인다 — 색별로 1회 `makeGlow` 하고 `blit` 하라(`lighter` 합성). `isoBox(ctx,P,x,y,z,w,d,h,c)`: 아이소 3면 박스. `glow(ctx,...)`: shadowBlur(1회성·소량만).
 
 ## 새 모션 만들기 — 절차
 
@@ -66,7 +67,8 @@ CM.loop({tick:1/60, render:function(){ draw((performance.now()/1000)%DUR); }, se
 - **DPR 대응** — `setupCanvas` 사용(레티나 선명함).
 - **아이소는 깊이 정렬 필수** — `drawList`(depth=x+y) 없이는 가림이 깨진다.
 - **시드 고정** — 창발 시뮬은 `rng(seed)` 로 결정적이게(재현·검증).
-- **성능 예산** — 60fps 목표. 입자 수천 개면 dpr 상한을 낮추고 배열(Float32)로 관리. `lighter` 합성은 아끼기.
+- **성능 예산** — 60fps 목표. ⚠️ **매 프레임 `ctx.shadowBlur`/`glow()`가 가장 흔한 병목이다** — `makeGlow` 스프라이트로 대체하라(색별 1회 생성 후 blit). 입자 수천 개면 dpr 상한을 낮추고 배열(Float32)로 관리. 정적 요소(바닥 격자)는 오프스크린에 1회 굽고 blit. `lighter` 합성은 아끼기.
+- **미감** — 무지개 랜덤 팔레트를 쓰지 마라(아마추어 신호). `scheme()`으로 절제된 쿨/듀오톤 + 단일 액센트. 액센트는 10~15%만.
 - **라이브러리 0** — 외부 애니 라이브러리 금지. 순수 Canvas 2D.
 
 ## 금지

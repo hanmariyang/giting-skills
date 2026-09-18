@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>canvas-motion · 오로라 플로우</title>
+<style>
+  html,body{margin:0;height:100%;background:#0a0f1e;overflow:hidden}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  canvas{max-width:100%;max-height:100%;border-radius:12px}
+  .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#42506e}
+  .cap b{color:#8fa6d6}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1280" height="720"></canvas></div>
+<div class="cap"><b>canvas-motion</b> · 노이즈 플로우필드 × 2,400 입자 × 잔광 리본 · 큐레이션 팔레트 · 의존성 0</div>
+
+<script src="../engine/canvas-motion.js"></script>
+<script src="../engine/canvas-motion-plus.js"></script>
+<script>
+(function(){
+'use strict';
+var canvas=document.getElementById('c');
+var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:1.5});
+var ctx=S.ctx, W=S.w, H=S.h, TAU=CMX.TAU;
+
+var SEED=5, rnd=CM.rng(SEED);
+var sc=CMX.scheme('aurora');                 // 절제된 쿨 + 단일 웜 액센트
+var noise=CMX.makeNoise(SEED), field=CMX.flowField(noise,0.0015,TAU*2.0);
+
+var N=2400, ps=new Float32Array(N*4), cols=new Array(N);
+for(var i=0;i<N;i++){ ps[i*4]=rnd()*W; ps[i*4+1]=rnd()*H; ps[i*4+2]=0; ps[i*4+3]=0;
+  cols[i]= rnd()<0.12 ? sc.accent : sc.cols[(rnd()*sc.cols.length)|0]; } // 액센트는 12%만 (design-brief: 강조는 아껴서)
+var SP=40, T=0;
+
+function update(dt){
+  T+=dt;
+  for(var i=0;i<N;i++){
+    var x=ps[i*4],y=ps[i*4+1], f=field(x,y,T*3.5);
+    var vx=ps[i*4+2]*0.88+f[0]*SP*0.12, vy=ps[i*4+3]*0.88+f[1]*SP*0.12;
+    x+=vx*dt*3; y+=vy*dt*3;
+    if(x<0)x+=W; else if(x>W)x-=W; if(y<0)y+=H; else if(y>H)y-=H;
+    ps[i*4]=x; ps[i*4+1]=y; ps[i*4+2]=vx; ps[i*4+3]=vy;
+  }
+}
+function render(){
+  // 딥 그라운드 위 잔광
+  ctx.globalCompositeOperation='source-over';
+  var g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,CMX.rgba(sc.bg[0],0.09)); g.addColorStop(1,CMX.rgba(sc.bg[1],0.09));
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(var i=0;i<N;i++){ var sp=Math.min(1,Math.hypot(ps[i*4+2],ps[i*4+3])/SP);
+    ctx.fillStyle=cols[i]; ctx.globalAlpha=0.16+sp*0.5; ctx.fillRect(ps[i*4]-1,ps[i*4+1]-1,2,2); }
+  ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+}
+var bg=ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,sc.bg[0]); bg.addColorStop(1,sc.bg[1]); ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+CM.loop({tick:1/60, update:update, render:render, settle:80});
+})();
+</script>
+</body>
+</html>

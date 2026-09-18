@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>canvas-motion · 플래그십 — 살아있는 아이소메트릭 물류 허브</title>
+<title>canvas-motion · 플래그십 — 아이소메트릭 물류 허브</title>
 <style>
-  html,body{margin:0;height:100%;background:#06070d;overflow:hidden}
+  html,body{margin:0;height:100%;background:#0a0f1e;overflow:hidden}
   #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-  canvas{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
-  .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#5b6b8a}
-  .cap b{color:#9fb4d8}
+  canvas{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+  .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#42506e}
+  .cap b{color:#8fa6d6}
 </style>
 </head>
 <body>
 <div id="stage"><canvas id="c" width="1280" height="720"></canvas></div>
-<div class="cap"><b>canvas-motion</b> · A* 로봇 + 보이드 드론 + 플로우필드 입자 + 글로우 타워 · 의존성 0 · seed 고정</div>
+<div class="cap"><b>canvas-motion</b> · A* 로봇 + 보이드 드론 + 데이터 스트림 + 발광 타워 · 스프라이트 글로우(경량) · 의존성 0</div>
 
 <script src="../engine/canvas-motion.js"></script>
 <script src="../engine/canvas-motion-plus.js"></script>
@@ -22,130 +22,108 @@
 (function(){
 'use strict';
 var canvas=document.getElementById('c');
-var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:2});
-var ctx=S.ctx, W=S.w, H=S.h;
-var V=CMX.V, TAU=CMX.TAU;
+var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:1.5});
+var ctx=S.ctx, W=S.w, H=S.h, dpr=S.dpr, V=CMX.V, TAU=CMX.TAU;
+var sc=CMX.scheme('aurora');                          // 절제된 쿨 + 웜 액센트
 
-// ── 결정적 씬 (seed 고정) ─────────────────────────────
-var SEED=11, rnd=CM.rng(SEED);
-var COLS=22, ROWS=22, TW=40, OX=W/2, OY=210;
+// ── 결정적 씬 ─────────────────────────────────────────
+var SEED=6, rnd=CM.rng(SEED);
+var COLS=20, ROWS=20, TW=42, OX=W/2, OY=210;
 var P=CM.iso(TW,OX,OY);
-var pal=CMX.palette(SEED,6);
+function towerCol(i){ return i%5===0 ? sc.accent : sc.cols[i%sc.cols.length]; }
 
 var wall={}, buildings=[], pads=[];
 function bkey(x,y){return x+','+y;}
 (function layout(){
-  for(var i=0;i<12;i++){                              // 데이터 타워 (밀도 ↑)
-    var bw=2+((rnd()*2)|0), bd=2+((rnd()*2)|0), tries=0, bx, by, ok;
-    do{ bx=1+((rnd()*(COLS-bw-2))|0); by=1+((rnd()*(ROWS-bd-2))|0); ok=true;
+  for(var i=0;i<9;i++){                                // 타워 (절제 — 9개)
+    var bw=1+((rnd()*2)|0)+1, bd=1+((rnd()*2)|0)+1, tries=0, bx, by, ok;
+    do{ bx=2+((rnd()*(COLS-bw-3))|0); by=2+((rnd()*(ROWS-bd-3))|0); ok=true;
         for(var x=bx-1;x<bx+bw+1&&ok;x++)for(var y=by-1;y<by+bd+1;y++)if(wall[bkey(x,y)]){ok=false;break;}
     }while(!ok&&++tries<40); if(!ok)continue;
     for(var x2=bx;x2<bx+bw;x2++)for(var y2=by;y2<by+bd;y2++)wall[bkey(x2,y2)]=1;
-    buildings.push({x:bx,y:by,w:bw,d:bd,h:46+rnd()*118,c:pal[i%pal.length],lit:(rnd()*97)|0});  // h = 픽셀
+    buildings.push({x:bx,y:by,w:bw,d:bd,h:58+rnd()*100,c:towerCol(i),lit:(rnd()*97)|0});
   }
-  for(var k=0;k<10;k++){                              // 물류 패드(발광)
-    var px,py,tr=0; do{px=1+((rnd()*(COLS-2))|0); py=1+((rnd()*(ROWS-2))|0); tr++;}while(wall[bkey(px,py)]&&tr<60);
-    if(!wall[bkey(px,py)])pads.push({x:px,y:py,col:pal[(k+2)%pal.length]});
-  }
+  for(var k=0;k<7;k++){ var px,py,tr=0; do{px=1+((rnd()*(COLS-2))|0); py=1+((rnd()*(ROWS-2))|0); tr++;}while(wall[bkey(px,py)]&&tr<60); if(!wall[bkey(px,py)])pads.push({x:px,y:py,col:sc.cols[k%sc.cols.length]}); }
 })();
 function walkable(x,y){return x>=0&&y>=0&&x<COLS&&y<ROWS&&!wall[bkey(x,y)];}
 var findPath=CMX.astar(walkable,COLS,ROWS);
 
-// ── 지상 로봇 (A* + 칸 보간 + 글로우 트레일) ───────────
-var robots=[], trail=CMX.particles(1400);
-for(var r=0;r<10;r++){var s=pads[r%pads.length]; robots.push({x:s.x,y:s.y,fx:s.x,fy:s.y,mt:0,path:[],col:r%2?'#ff466a':'#3fe0cf',tgt:null,wait:0,acc:rnd()*0.3});}
+// ── 글로우 스프라이트 (색별 1회, 재사용) ───────────────
+var G={}; function glowFor(col,r){ var k=col+'@'+r; return G[k]||(G[k]=CMX.makeGlow(col,r,0.85)); }
+
+// ── 바닥 격자 캐시 (1회 렌더 → 매 프레임 blit) ─────────
+var floor=document.createElement('canvas'); floor.width=W*dpr; floor.height=H*dpr;
+(function bakeFloor(){ var f=floor.getContext('2d'); f.setTransform(dpr,0,0,dpr,0,0);
+  for(var y=0;y<ROWS;y++)for(var x=0;x<COLS;x++){ if(wall[bkey(x,y)])continue; var a=P(x,y),b=P(x+1,y),c=P(x+1,y+1),d=P(x,y+1); f.beginPath(); f.moveTo(a[0],a[1]); f.lineTo(b[0],b[1]); f.lineTo(c[0],c[1]); f.lineTo(d[0],d[1]); f.closePath(); f.fillStyle='rgba(120,150,220,0.03)'; f.fill(); f.strokeStyle='rgba(120,150,220,0.05)'; f.lineWidth=1; f.stroke(); }
+})();
+
+// ── 지상 로봇 (A* + 보간 + 트레일) ─────────────────────
+var robots=[], trail=CMX.particles(500);
+for(var r=0;r<6;r++){var s=pads[r%pads.length]; robots.push({x:s.x,y:s.y,fx:s.x,fy:s.y,mt:0,path:[],col:r%2?sc.accent:sc.cols[0],tgt:null,wait:0,acc:rnd()*0.3});}
 function repath(rb){var t,g; do{t=pads[(rnd()*pads.length)|0];}while(t.x===rb.x&&t.y===rb.y); g=findPath(rb.x,rb.y,t.x,t.y); rb.path=g||[]; rb.tgt=t;}
 robots.forEach(repath);
 
-// ── 드론 군집 (보이드 + 플로우필드) — 허브 위를 배회 ────
-var noise=CMX.makeNoise(SEED+3), field=CMX.flowField(noise,0.005,TAU*1.0);
-var hash=CMX.spatialHash(70), drones=[];
-for(var d0=0;d0<60;d0++)drones.push({p:[220+rnd()*(W-440), 90+rnd()*260], v:V.fromAngle(rnd()*TAU,24), maxS:105+rnd()*45, maxF:200, col:pal[d0%pal.length]});
-var BX0=170,BX1=W-170,BY0=70,BY1=360;                 // 배회 영역(허브 위 밴드)
+// ── 드론 군집 (보이드) — 허브 위, 절제된 수 ────────────
+var noise=CMX.makeNoise(SEED+2), field=CMX.flowField(noise,0.005,TAU*0.9);
+var hash=CMX.spatialHash(72), drones=[];
+for(var d0=0;d0<24;d0++)drones.push({p:[300+rnd()*(W-600), 90+rnd()*210], v:V.fromAngle(rnd()*TAU,26), maxS:100+rnd()*40, maxF:190, col: d0%4===0?sc.accent:sc.cols[3]});
+var BX0=210,BX1=W-210,BY0=70,BY1=330;
 
-// ── 플로우필드 데이터 입자 (대각 스트림, 글로우) ───────
-var stream=CMX.particles(1100), emitAcc=0;
-
+// ── 데이터 스트림 ─────────────────────────────────────
+var stream=CMX.particles(500), emitAcc=0;
 var T=0, cam={x:0,z:1}, TICK=1/60;
 
 function update(dt){
   T+=dt;
-  robots.forEach(function(rb){
-    rb.acc+=dt;
-    if(rb.acc>=0.26){ rb.acc=0;
-      if(!rb.path.length){repath(rb);return;}
-      var n=rb.path[0];
-      if(robots.some(function(o){return o!==rb&&o.x===n.x&&o.y===n.y;})){ if(++rb.wait>4){var np=findPath(rb.x,rb.y,rb.tgt.x,rb.tgt.y);if(np)rb.path=np;rb.wait=0;} return; }
-      rb.wait=0; rb.fx=rb.x; rb.fy=rb.y; rb.x=n.x; rb.y=n.y; rb.mt=T; rb.path.shift();
-    }
-  });
-  // 로봇 트레일: 매 프레임 현 위치에서 방출(부드러운 잔광)
-  robots.forEach(function(rb){ var t=Math.min(1,(T-rb.mt)/0.26), px=rb.fx+(rb.x-rb.fx)*t, py=rb.fy+(rb.y-rb.fy)*t, c=P(px+.5,py+.5); if(rnd()<0.6)trail.emit({p:[c[0],c[1]],v:[(rnd()-.5)*6,-6-rnd()*6],life:.75,size:2.2,col:rb.col}); });
+  robots.forEach(function(rb){ rb.acc+=dt; if(rb.acc>=0.28){ rb.acc=0;
+    if(!rb.path.length){repath(rb);return;} var n=rb.path[0];
+    if(robots.some(function(o){return o!==rb&&o.x===n.x&&o.y===n.y;})){ if(++rb.wait>4){var np=findPath(rb.x,rb.y,rb.tgt.x,rb.tgt.y);if(np)rb.path=np;rb.wait=0;} return; }
+    rb.wait=0; rb.fx=rb.x; rb.fy=rb.y; rb.x=n.x; rb.y=n.y; rb.mt=T; rb.path.shift(); } });
+  robots.forEach(function(rb){ var t=Math.min(1,(T-rb.mt)/0.28), px=rb.fx+(rb.x-rb.fx)*t, py=rb.fy+(rb.y-rb.fy)*t, c=P(px+.5,py+.5); if(rnd()<0.5)trail.emit({p:[c[0],c[1]],v:[(rnd()-.5)*5,-5-rnd()*5],life:.7,size:2,col:rb.col}); });
   trail.update(dt);
-  // 드론 보이드
   hash.clear(); drones.forEach(function(a){hash.insert(a);});
-  drones.forEach(function(a){
-    var nb=hash.near(a.p,70), f=[0,0];
-    f=V.add(f,V.mul(CMX.steer.separate(a,nb,28),1.8));
-    f=V.add(f,V.mul(CMX.steer.align(a,nb,54),1.0));
-    f=V.add(f,V.mul(CMX.steer.cohesion(a,nb,66),1.0));
-    f=V.add(f,V.mul(CMX.steer.follow(a,field,T),0.5));
-    if(a.p[0]<BX0)f[0]+=80; if(a.p[0]>BX1)f[0]-=80;
-    if(a.p[1]<BY0)f[1]+=80; if(a.p[1]>BY1)f[1]-=80;
-    CMX.steer.integrate(a,dt,f);
-  });
-  // 데이터 스트림
-  emitAcc+=dt; while(emitAcc>0.025){emitAcc-=0.025; var sy=180+rnd()*380; stream.emit({p:[-20,sy],v:V.fromAngle(-0.22+(rnd()-.5)*0.12,140+rnd()*70),life:7,size:1.5+rnd()*1.8,col:pal[(rnd()*pal.length)|0]});}
+  drones.forEach(function(a){ var nb=hash.near(a.p,72), f=[0,0];
+    f=V.add(f,V.mul(CMX.steer.separate(a,nb,30),1.7)); f=V.add(f,V.mul(CMX.steer.align(a,nb,56),1.0)); f=V.add(f,V.mul(CMX.steer.cohesion(a,nb,68),1.0)); f=V.add(f,V.mul(CMX.steer.follow(a,field,T),0.5));
+    if(a.p[0]<BX0)f[0]+=80; if(a.p[0]>BX1)f[0]-=80; if(a.p[1]<BY0)f[1]+=80; if(a.p[1]>BY1)f[1]-=80;
+    CMX.steer.integrate(a,dt,f); });
+  emitAcc+=dt; while(emitAcc>0.04){emitAcc-=0.04; var sy=200+rnd()*340; stream.emit({p:[-20,sy],v:V.fromAngle(-0.2+(rnd()-.5)*0.1,130+rnd()*60),life:7,size:1.5+rnd()*1.4,col: rnd()<0.2?sc.accent:sc.cols[3]});}
   stream.update(dt);
-  cam.x=Math.sin(T*0.14)*64; cam.z=1+Math.sin(T*0.2)*0.018;
+  cam.x=Math.sin(T*0.13)*54; cam.z=1+Math.sin(T*0.18)*0.015;
 }
 
-function drawTile(x,y,fill,line){var a=P(x,y),b=P(x+1,y),c=P(x+1,y+1),d=P(x,y+1);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(d[0],d[1]);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(line){ctx.strokeStyle=line;ctx.lineWidth=1;ctx.stroke();}}
 function tower(b){
-  // 3면 음영: 같은 hue, 밝기 차 → 입체. 지붕 밝게, 우측 중간, 좌측 어둡게.
-  CMX.isoBox(ctx,P,b.x,b.y,0,b.w,b.d,b.h,{t:hla(b.c,'l',34,0.96), r:hla(b.c,'l',20,0.95), l:hla(b.c,'l',11,0.95)});
-  // 지붕 발광 테두리
-  var tp=[P(b.x,b.y,b.h),P(b.x+b.w,b.y,b.h),P(b.x+b.w,b.y+b.d,b.h),P(b.x,b.y+b.d,b.h)];
-  CMX.glow(ctx,b.c,8,function(){ctx.strokeStyle=hla(b.c,'l',60,0.9);ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(tp[0][0],tp[0][1]);for(var i=1;i<4;i++)ctx.lineTo(tp[i][0],tp[i][1]);ctx.closePath();ctx.stroke();});
-  // 창문 격자 (우측 면, 발광) — 시간에 따라 깜빡
-  var rows=Math.floor(b.h/13), cols2=b.w*3;
-  for(var wz=0;wz<rows;wz++)for(var wc=0;wc<cols2;wc++){ var on=((wc*7+wz*3+b.lit)%4)!==0 && (Math.sin(T*1.2+wc+wz*2+b.lit)>-0.4); if(!on)continue; var fx=b.x+b.w-0.02, fy=b.y+0.16+wc*(b.d*0.98/cols2), fz=6+wz*13; var q=P(fx,fy,fz); ctx.fillStyle=hla(b.c,'l',70,0.85); ctx.fillRect(q[0]-1.6,q[1]-4.4,3,4); }
+  CMX.isoBox(ctx,P,b.x,b.y,0,b.w,b.d,b.h,{t:CMX.rgba(b.c,0.92), r:CMX.rgba(b.c,0.5), l:CMX.rgba(b.c,0.28)});
+  // 지붕 발광(스프라이트) + 창문(우측면)
+  var top=P(b.x+b.w/2,b.y+b.d/2,b.h); glowFor(b.c,26).blit(ctx,top[0],top[1],0.8);
+  var rows=Math.floor(b.h/14), cols2=b.w*3;
+  for(var wz=0;wz<rows;wz++)for(var wc=0;wc<cols2;wc++){ if((wc*7+wz*3+b.lit)%4===0)continue; if(Math.sin(T*1.1+wc+wz*2+b.lit)<-0.3)continue; var q=P(b.x+b.w-0.02,b.y+0.16+wc*(b.d*0.98/cols2),6+wz*14); ctx.fillStyle=CMX.rgba(b.c,0.9); ctx.fillRect(q[0]-1.5,q[1]-4.2,3,4); }
 }
-function render(alpha){
-  var day=(Math.sin(T*0.04)*0.5+0.5);
-  var top=mix([6,7,13],[16,17,38],day), bot=mix([12,13,26],[38,26,56],day);
-  var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,rgb(top));g.addColorStop(1,rgb(bot));ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+function render(){
+  var g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,sc.bg[0]); g.addColorStop(1,sc.bg[1]); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
   ctx.save(); ctx.translate(cam.x,0); ctx.translate(W/2,H/2); ctx.scale(cam.z,cam.z); ctx.translate(-W/2,-H/2);
-  // 바닥
-  for(var y=0;y<ROWS;y++)for(var x=0;x<COLS;x++){ if(wall[bkey(x,y)])continue; drawTile(x,y,'rgba(120,150,220,0.035)','rgba(120,150,220,0.055)'); }
-  // 패드
-  pads.forEach(function(pd){ var pulse=0.5+0.5*Math.sin(T*2+pd.x*1.3); CMX.glow(ctx,pd.col,10+pulse*14,function(){drawTile(pd.x,pd.y,hexA(pd.col,0.20+pulse*0.20),null);}); });
+  ctx.drawImage(floor,0,0,W,H);                        // 캐시된 바닥
+  // 패드 글로우(스프라이트)
+  ctx.globalCompositeOperation='lighter';
+  pads.forEach(function(pd){ var pulse=0.6+0.4*Math.sin(T*2+pd.x*1.3), c=P(pd.x+.5,pd.y+.5); glowFor(pd.col,20).blit(ctx,c[0],c[1],pulse); });
+  ctx.globalCompositeOperation='source-over';
   // 깊이 정렬: 타워 + 로봇
   var dl=CM.drawList();
   buildings.forEach(function(b){ dl.add(b.x+b.y, function(){tower(b);}); });
-  robots.forEach(function(rb){ var t=Math.min(1,(T-rb.mt)/0.26), px=rb.fx+(rb.x-rb.fx)*t, py=rb.fy+(rb.y-rb.fy)*t;
-    dl.add(px+py+0.9, function(){ var c=P(px+.5,py+.5); ctx.fillStyle='rgba(0,0,0,.4)'; ctx.beginPath(); ctx.ellipse(c[0],c[1]+2,TW*.26,TW*.13,0,0,TAU); ctx.fill();
-      CMX.glow(ctx,rb.col,13,function(){CMX.isoBox(ctx,P,px+.25,py+.25,0,.5,.5,15,{t:rb.col,l:hexA(rb.col,0.5),r:hexA(rb.col,0.72)});}); }); });
+  robots.forEach(function(rb){ var t=Math.min(1,(T-rb.mt)/0.28), px=rb.fx+(rb.x-rb.fx)*t, py=rb.fy+(rb.y-rb.fy)*t;
+    dl.add(px+py+0.9, function(){ var c=P(px+.5,py+.5); ctx.fillStyle='rgba(0,0,0,.4)'; ctx.beginPath(); ctx.ellipse(c[0],c[1]+2,TW*.24,TW*.12,0,0,TAU); ctx.fill();
+      ctx.globalCompositeOperation='lighter'; glowFor(rb.col,16).blit(ctx,c[0],c[1]-6,0.9); ctx.globalCompositeOperation='source-over';
+      CMX.isoBox(ctx,P,px+.26,py+.26,0,.48,.48,15,{t:CMX.rgba(rb.col,1),l:CMX.rgba(rb.col,0.5),r:CMX.rgba(rb.col,0.72)}); }); });
   dl.flush();
-  // 트레일(가산 글로우)
   ctx.globalCompositeOperation='lighter'; trail.draw(ctx); ctx.globalCompositeOperation='source-over';
   ctx.restore();
-  // 데이터 스트림(가산)
-  ctx.globalCompositeOperation='lighter'; ctx.save(); ctx.shadowBlur=8; ctx.shadowColor='#8fc7ff'; stream.draw(ctx); ctx.restore();
-  // 드론(가산 글로우 + 꼬리)
-  drones.forEach(function(a){ ctx.shadowBlur=9; ctx.shadowColor=a.col; ctx.fillStyle=a.col; ctx.beginPath(); ctx.arc(a.p[0],a.p[1],2.2,0,TAU); ctx.fill();
-    var tail=V.sub(a.p,V.mul(V.norm(a.v),8)); ctx.strokeStyle=hexA(a.col,0.5); ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(a.p[0],a.p[1]); ctx.lineTo(tail[0],tail[1]); ctx.stroke(); });
-  ctx.shadowBlur=0; ctx.globalCompositeOperation='source-over';
+  // 데이터 스트림 + 드론 (화면 공간, 스프라이트 글로우)
+  ctx.globalCompositeOperation='lighter';
+  stream.draw(ctx);
+  drones.forEach(function(a){ glowFor(a.col,9).blit(ctx,a.p[0],a.p[1],1); ctx.fillStyle=CMX.rgba(a.col,0.95); ctx.beginPath(); ctx.arc(a.p[0],a.p[1],1.8,0,TAU); ctx.fill();
+    var tail=V.sub(a.p,V.mul(V.norm(a.v),7)); ctx.strokeStyle=CMX.rgba(a.col,0.4); ctx.lineWidth=1.3; ctx.beginPath(); ctx.moveTo(a.p[0],a.p[1]); ctx.lineTo(tail[0],tail[1]); ctx.stroke(); });
+  ctx.globalCompositeOperation='source-over';
 }
-
-// ── 색 유틸 ───────────────────────────────────────────
-function rgb(a){return 'rgb('+(a[0]|0)+','+(a[1]|0)+','+(a[2]|0)+')';}
-function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
-function hexA(c,al){ if(c[0]==='#'){var n=parseInt(c.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+al+')';} return c.replace('hsl(','hsla(').replace(')',','+al+')'); }
-// hsl 팔레트에서 명도(l)만 바꿔 면 음영. c=hsl(h,s,l), setL 로 새 명도.
-function hla(c,mode,setL,al){ var m=/hsl\((\d+),(\d+)%?,(\d+)%?\)/.exec(c); if(!m)return hexA(c,al); return 'hsla('+m[1]+','+m[2]+'%,'+setL+'%,'+al+')'; }
-
-CM.loop({tick:TICK, update:update, render:render, settle:150});
+CM.loop({tick:TICK, update:update, render:render, settle:120});
 })();
 </script>
 </body>

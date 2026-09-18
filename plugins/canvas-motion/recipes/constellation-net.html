@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>canvas-motion · 별자리 네트워크</title>
+<style>
+  html,body{margin:0;height:100%;background:#070a12;overflow:hidden}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  canvas{max-width:100%;max-height:100%;border-radius:12px}
+  .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#3c4a68}
+  .cap b{color:#7ea6e0}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1280" height="720"></canvas></div>
+<div class="cap"><b>canvas-motion</b> · 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우 · 공간해시 · 의존성 0</div>
+
+<script src="../engine/canvas-motion.js"></script>
+<script src="../engine/canvas-motion-plus.js"></script>
+<script>
+(function(){
+'use strict';
+var canvas=document.getElementById('c');
+var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:2});
+var ctx=S.ctx, W=S.w, H=S.h, V=CMX.V, TAU=CMX.TAU;
+
+var SEED=14, rnd=CM.rng(SEED);
+var sc=CMX.scheme('cyber');                  // 절제된 시안/블루 + 마젠타 액센트
+var D=155;                                    // 연결 거리
+var hash=CMX.spatialHash(D);
+var nodes=[];
+for(var i=0;i<108;i++){ var hub=rnd()<0.14; nodes.push({ p:[rnd()*W, rnd()*H], v:V.fromAngle(rnd()*TAU, 6+rnd()*10), hub:hub, r:hub?2.6:1.4, col: hub?(rnd()<0.4?sc.accent:sc.cols[0]) : sc.cols[1+((rnd()*3)|0)] }); }
+// 허브용 글로우 스프라이트 (색별 1회 생성 — 재사용)
+var glows={}; nodes.forEach(function(n){ if(n.hub&&!glows[n.col]) glows[n.col]=CMX.makeGlow(n.col,22,0.8); });
+
+var T=0;
+function update(dt){
+  T+=dt;
+  for(var i=0;i<nodes.length;i++){ var n=nodes[i];
+    // 아주 느린 유기적 표류 (노이즈 없이 사인 흔들림)
+    n.v[0]+=Math.sin(T*0.4+i)*2*dt; n.v[1]+=Math.cos(T*0.33+i*1.7)*2*dt;
+    n.v=V.limit(n.v,16);
+    n.p[0]+=n.v[0]*dt*3; n.p[1]+=n.v[1]*dt*3;
+    if(n.p[0]<0||n.p[0]>W)n.v[0]*=-1; if(n.p[1]<0||n.p[1]>H)n.v[1]*=-1;   // 소프트 바운스
+    n.p[0]=CM.clamp(n.p[0],0,W); n.p[1]=CM.clamp(n.p[1],0,H);
+  }
+}
+function render(){
+  var g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,sc.bg[0]); g.addColorStop(1,sc.bg[1]); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  // 연결선 (근접만, 거리 페이드) — 공간해시로 이웃만
+  hash.clear(); for(var i=0;i<nodes.length;i++)hash.insert(nodes[i]);
+  ctx.lineWidth=1; ctx.globalCompositeOperation='lighter';
+  for(var a=0;a<nodes.length;a++){ var na=nodes[a], nb=hash.near(na.p,D);
+    for(var b=0;b<nb.length;b++){ var m=nb[b]; if(m===na||m.p[0]<na.p[0])continue; // 중복 방지
+      var d=V.dist(na.p,m.p); if(d>D)continue; var al=(1-d/D); al*=al*0.5;
+      ctx.strokeStyle=CMX.rgba(na.hub||m.hub?sc.accent:sc.cols[0], al);
+      ctx.beginPath(); ctx.moveTo(na.p[0],na.p[1]); ctx.lineTo(m.p[0],m.p[1]); ctx.stroke();
+    }
+  }
+  // 허브 글로우 (스프라이트, 맥박)
+  for(var h=0;h<nodes.length;h++){ var n=nodes[h]; if(!n.hub)continue; var pulse=0.7+0.3*Math.sin(T*1.6+h); glows[n.col].blit(ctx,n.p[0],n.p[1],pulse); }
+  // 노드 점
+  for(var k=0;k<nodes.length;k++){ var nk=nodes[k]; ctx.globalAlpha=nk.hub?1:0.85; ctx.fillStyle=nk.col; ctx.beginPath(); ctx.arc(nk.p[0],nk.p[1],nk.r,0,TAU); ctx.fill(); }
+  ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+}
+CM.loop({tick:1/60, update:update, render:render, settle:1});
+})();
+</script>
+</body>
+</html>

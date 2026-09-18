@@ -7,10 +7,11 @@
 ```
 engine/
   canvas-motion.js       코어 — 고정 timestep 루프+보간·이징·아이소 투영·깊이 정렬·시드 rng
-  canvas-motion-plus.js  고급 — 노이즈/플로우필드·보이드(스티어링)·공간해시·카메라·A*·파티클·글로우·팔레트
+  canvas-motion-plus.js  고급 — 노이즈/플로우필드·보이드·공간해시·카메라·A*·파티클·큐레이션 스킴·스프라이트 글로우·팔레트
 recipes/
-  flagship-iso-hub.html  시뮬 구동 쇼피스 — 야간 아이소 물류 허브: A* 로봇 + 보이드 드론 + 플로우필드 입자 + 발광 타워
-  flow-field-art.html    제너러티브 — 노이즈 플로우필드 × 3,000 입자 × 잔광 트레일
+  flagship-iso-hub.html  시뮬(아이소) — 물류 허브: A* 로봇 + 보이드 드론 + 데이터 스트림 + 발광 타워
+  aurora-flow.html       제너러티브(추상) — 노이즈 플로우필드 × 2,400 입자 × 잔광 리본
+  constellation-net.html 네트워크(추상) — 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우
 lint/
   motion-lint.mjs        규율 점검 — reduced-motion·라이브러리금지·rAF·DPR·고정timestep·깊이정렬·시드
 skills/canvas-motion/SKILL.md

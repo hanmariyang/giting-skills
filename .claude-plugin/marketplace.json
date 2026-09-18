@@ -77,7 +77,7 @@
     {
       "name": "canvas-motion",
       "source": "./plugins/canvas-motion",
-      "description": "창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + rAF 로 살아 있는 모션. 고정 timestep 루프·아이소 투영·깊이 정렬·보이드·플로우필드·A*·파티클·글로우 + reduced-motion/DPR 규율(motion-lint). 쇼피스 2종 동봉"
+      "description": "창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + rAF 로 살아 있는 모션. 고정 timestep 루프·아이소·깊이 정렬·보이드·플로우필드·A*·파티클·스프라이트 글로우·큐레이션 스킴 + reduced-motion/DPR/성능 규율(motion-lint). 쇼피스 3종(아이소 허브·오로라 플로우·별자리 네트워크)"
     }
   ]
 }
