@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.12.0"
+    "version": "0.13.0"
   },
   "plugins": [
     {
@@ -73,6 +73,11 @@
       "name": "font-menu",
       "source": "./plugins/font-menu",
       "description": "웹폰트 사전 — 인상으로 폰트 고르고 어디서 어떻게 불러오는지 로딩 스니펫째. 6맥락 24종, Google/Fontshare/jsDelivr 로더 구분·라이선스·짝. Google에 없는 폰트를 Google 링크에 박아 폴백시키는 사고를 막음"
+    },
+    {
+      "name": "canvas-motion",
+      "source": "./plugins/canvas-motion",
+      "description": "창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + rAF 로 살아 있는 모션. 고정 timestep 루프·아이소 투영·깊이 정렬·보이드·플로우필드·A*·파티클·글로우 + reduced-motion/DPR 규율(motion-lint). 쇼피스 2종 동봉"
     }
   ]
 }

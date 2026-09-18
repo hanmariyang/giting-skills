@@ -1,0 +1,23 @@
+{
+  "name": "canvas-motion",
+  "version": "0.1.0",
+  "description": "창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + requestAnimationFrame 으로 살아 있는 모션. 고정 timestep 루프·아이소 투영·깊이 정렬·보이드·플로우필드·A*·파티클·글로우 + reduced-motion/DPR 규율(motion-lint). 시뮬 구동/타임라인 두 모드.",
+  "author": {
+    "name": "Giting",
+    "url": "https://giting.kr"
+  },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": [
+    "canvas",
+    "animation",
+    "motion-graphics",
+    "generative",
+    "simulation",
+    "isometric",
+    "boids",
+    "particles",
+    "flow-field",
+    "vibe-coding"
+  ]
+}

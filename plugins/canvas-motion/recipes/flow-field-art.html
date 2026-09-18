@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>canvas-motion · 플로우필드 제너러티브 아트</title>
+<style>
+  html,body{margin:0;height:100%;background:#05060a;overflow:hidden}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  canvas{max-width:100%;max-height:100%;border-radius:10px}
+  .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#4a5570}
+  .cap b{color:#8fa0c8}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1280" height="720"></canvas></div>
+<div class="cap"><b>canvas-motion</b> · 노이즈 플로우필드 × 3,000 입자 × 잔광 트레일 · 의존성 0 · seed 고정</div>
+
+<script src="../engine/canvas-motion.js"></script>
+<script src="../engine/canvas-motion-plus.js"></script>
+<script>
+(function(){
+'use strict';
+var canvas=document.getElementById('c');
+var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:1.5});   // 입자 많음 → dpr 상한 낮게(성능)
+var ctx=S.ctx, W=S.w, H=S.h, V=CMX.V, TAU=CMX.TAU;
+
+var SEED=23, rnd=CM.rng(SEED);
+var pal=CMX.palette(SEED,7);
+var noise=CMX.makeNoise(SEED), field=CMX.flowField(noise,0.0016,TAU*2.2);
+
+// 경량 입자 배열(풀 대신 — 수천 개는 직접 관리가 빠름)
+var N=3000, ps=new Float32Array(N*4);   // x,y,vx,vy
+for(var i=0;i<N;i++){ps[i*4]=rnd()*W; ps[i*4+1]=rnd()*H; ps[i*4+2]=0; ps[i*4+3]=0;}
+var cols=new Array(N); for(var j=0;j<N;j++)cols[j]=pal[(rnd()*pal.length)|0];
+var SP=42;                               // 속도
+
+var T=0;
+function update(dt){
+  T+=dt;
+  for(var i=0;i<N;i++){
+    var x=ps[i*4],y=ps[i*4+1];
+    var f=field(x,y,T*4);                 // 흐름 방향(시간에 따라 서서히 회전)
+    var vx=ps[i*4+2]*0.86+f[0]*SP*0.14, vy=ps[i*4+3]*0.86+f[1]*SP*0.14;  // 관성 + 흐름
+    x+=vx*dt*3; y+=vy*dt*3;
+    if(x<0)x+=W; else if(x>W)x-=W;         // 화면 래핑
+    if(y<0)y+=H; else if(y>H)y-=H;
+    ps[i*4]=x; ps[i*4+1]=y; ps[i*4+2]=vx; ps[i*4+3]=vy;
+  }
+}
+function render(alpha){
+  // 잔광: 지우지 않고 반투명 검정으로 덮어 트레일 생성
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='rgba(5,6,10,0.075)'; ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(var i=0;i<N;i++){
+    var sp=Math.min(1,Math.hypot(ps[i*4+2],ps[i*4+3])/SP);
+    ctx.fillStyle=cols[i]; ctx.globalAlpha=0.22+sp*0.6;
+    ctx.fillRect(ps[i*4]-1,ps[i*4+1]-1,2,2);
+  }
+  ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+}
+// 첫 프레임 배경 채움(reduced-motion 도 한 장 나오게)
+ctx.fillStyle='#05060a'; ctx.fillRect(0,0,W,H);
+CM.loop({tick:1/60, update:update, render:render, settle:60});
+})();
+</script>
+</body>
+</html>
