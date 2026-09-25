@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>디바이스 프레임 히어로 Device Frame Hero — 랜딩 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+</style>
+</head>
+<body>
+<style>
+  .hdv { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hdv .wrap { max-width:960px; margin:0 auto; padding:52px 24px; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center; }
+  @media (max-width:680px){ .hdv .wrap { grid-template-columns:1fr; gap:28px; } }
+  .hdv .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hdv h1 { font-size:clamp(26px,4.6vw,42px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hdv p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:40ch; }
+  .hdv .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hdv .frame { border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 40px 70px -44px rgba(20,20,40,.45); background:#fff; }
+  .hdv .frame .bar { height:36px; background:#f2f3f6; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:7px; padding:0 12px; }
+  .hdv .frame .bar i { width:9px; height:9px; border-radius:50%; background:#d3d5da; }
+  .hdv .frame .bar .addr { margin-left:8px; height:16px; flex:1; background:#fff; border:1px solid var(--line); border-radius:6px; }
+  .hdv .frame .screen { padding:16px; display:grid; gap:10px; min-height:170px; align-content:start; }
+  .hdv .frame .screen .row { height:10px; background:#eceded; border-radius:5px; }
+  .hdv .frame .screen .row.acc { background:color-mix(in srgb, var(--acc) 24%, #eceded); }
+  .hdv .cap { grid-column:1/-1; font-size:11.5px; color:#a9aab0; margin-top:6px; }
+</style>
+<section class="hdv"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">디바이스 프레임 히어로</div>
+    <h1>진짜 도는 제품처럼 보이게</h1>
+    <p>스크린샷을 브라우저 창(또는 폰) 프레임에 넣으면 화면이 '캡처'가 아니라 '도는 제품'으로 읽힌다. 기본으로 추천하는 형태.</p>
+    <button class="btn">데모 열기</button>
+  </div>
+  <div class="frame">
+    <div class="bar"><i></i><i></i><i></i><span class="addr"></span></div>
+    <div class="screen"><div class="row acc" style="width:55%"></div><div class="row" style="width:92%"></div><div class="row" style="width:84%"></div><div class="row" style="width:74%"></div><div class="row" style="width:64%"></div></div>
+  </div>
+  <div class="cap">프레임 안은 실제 스크린샷 자리. 색·폰트는 제품 design-brief에서.</div>
+</div></section>
+<script>
+document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
+</script>
+</body>
+</html>

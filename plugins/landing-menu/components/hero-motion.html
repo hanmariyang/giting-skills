@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모션 히어로 Motion Hero — 랜딩 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+</style>
+</head>
+<body>
+<style>
+  .hmo { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#2b6fb0;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hmo .wrap { max-width:960px; margin:0 auto; padding:52px 24px; display:grid; grid-template-columns:1fr 1.1fr; gap:40px; align-items:center; }
+  @media (max-width:680px){ .hmo .wrap { grid-template-columns:1fr; gap:26px; } }
+  .hmo .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hmo h1 { font-size:clamp(26px,4.6vw,42px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hmo p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:40ch; }
+  .hmo .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hmo .player { position:relative; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 40px 70px -44px rgba(20,30,50,.45); background:#0e1620; aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; }
+  .hmo .player .play { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; }
+  .hmo .player .play:after { content:""; border-left:16px solid var(--acc); border-top:10px solid transparent; border-bottom:10px solid transparent; margin-left:4px; }
+  .hmo .player .tag { position:absolute; left:12px; bottom:10px; font-size:11px; color:#cdd6e0; font-family:ui-monospace,monospace; }
+  .hmo .cap { grid-column:1/-1; font-size:11.5px; color:#a9aab0; }
+</style>
+<section class="hmo"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">모션 히어로</div>
+    <h1>동작이 핵심이면, 움직여라</h1>
+    <p>카피 옆에 자동재생·무한반복·음소거 영상으로 제품이 움직이는 모습을 보여 준다. 정지 포스터를 지정하고, 모션 줄임 설정이면 멈춘다.</p>
+    <button class="btn">30초 보기</button>
+  </div>
+  <div class="player"><div class="play"></div><span class="tag">autoplay · loop · muted · playsinline</span></div>
+  <div class="cap">여기 &lt;video&gt; 자리(자동재생 영상). 정지 포스터 필수, prefers-reduced-motion이면 정지 이미지로 대체.</div>
+</div></section>
+<script>
+document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
+</script>
+</body>
+</html>

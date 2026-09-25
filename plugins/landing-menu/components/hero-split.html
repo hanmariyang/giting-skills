@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>분할 히어로 Split Hero — 랜딩 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+</style>
+</head>
+<body>
+<style>
+  .hsp { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#b8442e;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hsp .wrap { max-width:980px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch; min-height:340px; }
+  @media (max-width:680px){ .hsp .wrap { grid-template-columns:1fr; } .hsp .visual{ min-height:180px; } }
+  .hsp .copy { padding:52px 40px 52px 0; align-self:center; }
+  @media (max-width:680px){ .hsp .copy { padding:44px 0 24px; } }
+  .hsp .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hsp h1 { font-size:clamp(26px,4.4vw,40px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hsp p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:36ch; }
+  .hsp .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hsp .visual { background:linear-gradient(135deg,#faf3f1,#f3ece9); border-left:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+  .hsp .visual .card { width:70%; max-width:260px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 24px 44px -30px rgba(80,40,30,.4); padding:16px; display:grid; gap:9px; }
+  .hsp .visual .card .row { height:10px; background:#eceded; border-radius:5px; }
+  .hsp .visual .card .row.acc { background:color-mix(in srgb, var(--acc) 26%, #eceded); }
+</style>
+<section class="hsp"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">분할 히어로</div>
+    <h1>카피와 이미지가 대등할 때</h1>
+    <p>화면을 좌우로 반씩 나눠 왼쪽에 카피, 오른쪽에 비주얼을 놓는다. 모바일에선 위아래로 쌓인다.</p>
+    <button class="btn">둘러보기</button>
+  </div>
+  <div class="visual"><div class="card"><div class="row acc" style="width:50%"></div><div class="row"></div><div class="row" style="width:80%"></div><div class="row" style="width:60%"></div></div></div>
+</div></section>
+<script>
+document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
+</script>
+</body>
+</html>
