@@ -1,0 +1,19 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>상단바 Top Bar — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .tb { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .tb .bar { border-bottom:1px solid var(--line); display:flex; align-items:center; gap:18px; padding:14px 22px; max-width:1000px; margin:0 auto; }
+  .tb .logo { display:flex; align-items:center; gap:8px; font-weight:800; font-size:16px; letter-spacing:-.02em; }
+  .tb .logo .m { width:22px; height:22px; border-radius:6px; background:var(--acc); }
+  .tb .nav { margin-left:auto; display:flex; align-items:center; gap:20px; }
+  .tb .nav a { color:var(--mut); text-decoration:none; font-size:14px; font-weight:600; }
+  .tb .nav a:hover { color:var(--ink); }
+  .tb .btn { background:var(--acc); color:#fff; border:0; border-radius:9px; padding:9px 16px; font-size:13.5px; font-weight:700; }
+  .tb .ph { max-width:1000px; margin:0 auto; padding:22px; color:#c3c4c9; font-size:12px; }
+  @media (max-width:600px){ .tb .nav a { display:none; } }
+</style>
+<section class="tb">
+  <div class="bar"><span class="logo"><span class="m"></span>Product</span><nav class="nav"><a href="#">기능</a><a href="#">가격</a><a href="#">문서</a><button class="btn">시작하기</button></nav></div>
+  <div class="ph">← 상단 고정 바(스크롤해도 위에 붙음). 좁은 화면에선 메뉴가 햄버거로.</div>
+</section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

@@ -1,0 +1,19 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>후기 카드 Testimonial — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .tst { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .tst .wrap { max-width:960px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:680px){ .tst .wrap { grid-template-columns:1fr; } }
+  .tst .card { border:1px solid var(--line); border-radius:12px; padding:20px; display:flex; flex-direction:column; }
+  .tst .q { font-size:14.5px; line-height:1.6; color:var(--ink); flex:1; }
+  .tst .who { margin:16px 0 0; display:flex; align-items:center; gap:10px; }
+  .tst .av { width:34px; height:34px; border-radius:50%; background:#e7e8ee; flex:none; }
+  .tst .nm { font-size:13px; font-weight:700; color:var(--ink); }
+  .tst .rl { font-size:11.5px; color:var(--mut); }
+</style>
+<section class="tst"><div class="wrap">
+  <div class="card"><p class="q">"매번 손으로 하던 정리가 사라졌다. 이제 팀이 결과만 본다."</p><div class="who"><span class="av"></span><span><span class="nm">김도현</span><br><span class="rl">PM · 스타트업</span></span></div></div>
+  <div class="card"><p class="q">"설치 5분. 그날 바로 실무에 썼다. 이게 제일 놀라웠다."</p><div class="who"><span class="av"></span><span><span class="nm">이서연</span><br><span class="rl">1인 개발자</span></span></div></div>
+  <div class="card"><p class="q">"디자인 팀 전체가 갈아탔다. 되돌아갈 이유가 없다."</p><div class="who"><span class="av"></span><span><span class="nm">박준</span><br><span class="rl">디자인 리드</span></span></div></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

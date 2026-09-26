@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>통계 스트립 Stat Strip — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .sts { --ink:#1a1b1f; --mut:#6b6c74; --acc:#127a5e; --line:#ececed; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .sts .wrap { max-width:860px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; text-align:center; }
+  @media (max-width:560px){ .sts .wrap { grid-template-columns:1fr; gap:20px; } }
+  .sts .n { font-size:clamp(30px,6vw,46px); font-weight:800; letter-spacing:-.03em; color:var(--ink); }
+  .sts .n .u { color:var(--acc); }
+  .sts .l { margin:6px 0 0; font-size:13px; color:var(--mut); }
+  .sts .cap { grid-column:1/-1; font-size:11px; color:#a9aab0; margin-top:2px; }
+</style>
+<section class="sts"><div class="wrap">
+  <div><div class="n">12,400<span class="u">+</span></div><div class="l">활성 사용자</div></div>
+  <div><div class="n">99.9<span class="u">%</span></div><div class="l">가동 시간</div></div>
+  <div><div class="n">4.8<span class="u">★</span></div><div class="l">평균 평점</div></div>
+  <div class="cap">⚠️ 예시 숫자다. 반드시 실제 값으로 교체하고, 지어낸 지표는 넣지 않는다.</div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

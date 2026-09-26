@@ -1,0 +1,22 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>타임라인 Timeline — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .tl { --ink:#1a1b1f; --mut:#6b6c74; --line:#e0e1e4; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .tl .wrap { max-width:640px; margin:0 auto; padding:40px 24px 40px 44px; position:relative; }
+  .tl .wrap:before { content:""; position:absolute; left:30px; top:44px; bottom:40px; width:2px; background:var(--line); }
+  .tl .e { position:relative; padding:0 0 22px 26px; }
+  .tl .e:last-child { padding-bottom:0; }
+  .tl .e .dot { position:absolute; left:-15px; top:3px; width:12px; height:12px; border-radius:50%; background:var(--acc); box-shadow:0 0 0 4px #f7f8f7; }
+  .tl .e.future .dot { background:#c9cbce; }
+  .tl .d { font-family:ui-monospace,monospace; font-size:12px; color:var(--acc); font-weight:700; }
+  .tl .e.future .d { color:var(--mut); }
+  .tl h4 { font-size:15px; font-weight:700; margin:3px 0 0; }
+  .tl .e.future h4 { color:var(--mut); }
+  .tl p { font-size:13px; color:var(--mut); margin:4px 0 0; line-height:1.5; }
+</style>
+<section class="tl"><div class="wrap">
+  <div class="e"><span class="dot"></span><div class="d">2024</div><h4>첫 공개</h4><p>MVP를 오픈소스로 냈다.</p></div>
+  <div class="e"><span class="dot"></span><div class="d">2025</div><h4>v2 재작성</h4><p>플러그인 구조로 다시 지었다.</p></div>
+  <div class="e future"><span class="dot"></span><div class="d">다음</div><h4>MCP · 헤드리스</h4><p>에이전트·자동화 지원(예정, 흐리게).</p></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

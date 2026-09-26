@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>비포/애프터 Before After — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .ba { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; --del:#b34a3a; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .ba .wrap { max-width:820px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .ba .wrap { grid-template-columns:1fr; } }
+  .ba .col { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .ba .tag { padding:9px 14px; font-size:12px; font-weight:700; }
+  .ba .col.b .tag { background:#faf1ef; color:var(--del); }
+  .ba .col.a .tag { background:#eef6f2; color:var(--acc); }
+  .ba .body { padding:16px; display:grid; gap:8px; min-height:120px; align-content:start; }
+  .ba .ln { height:10px; background:#ececed; border-radius:5px; }
+  .ba .col.b .ln { opacity:.55; }
+  .ba .col.a .ln.hi { background:color-mix(in srgb,var(--acc) 28%,#ececed); width:60%; }
+</style>
+<section class="ba"><div class="wrap">
+  <div class="col b"><div class="tag">전 · 손으로</div><div class="body"><div class="ln" style="width:90%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:60%"></div></div></div>
+  <div class="col a"><div class="tag">후 · 자동으로</div><div class="body"><div class="ln hi"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:76%"></div></div></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

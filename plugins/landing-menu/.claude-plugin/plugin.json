@@ -1,6 +1,6 @@
 {
   "name": "landing-menu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "랜딩 메뉴판 — 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 히어로·신뢰·기능·작동·전환·뼈대 섹션의 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML + 제너릭 템플릿을 피하는 규칙. 룩은 design-brief에서, 구조는 여기서.",
   "author": {
     "name": "Giting",

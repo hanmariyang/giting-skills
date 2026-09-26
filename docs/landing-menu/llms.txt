@@ -1,0 +1,208 @@
+# 랜딩 메뉴판 (landing-menu) — Giting Skills
+
+> 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML. 6개 코스 26개 항목.
+> 룩(색·폰트)은 design-brief에서, 이 사전은 구조·순서만.
+> 공식: [섹션 이름] + [순서/위치] + [제품 톤 = design-brief] + [실제 콘텐츠]  (✕ "랜딩 만들어줘" → ○ "히어로는 디바이스 프레임형(왼쪽 카피 + 오른쪽 실제 스크린샷), 그 아래 로고 바, 기능은 번갈아 행 3개, 마지막에 CTA 밴드. 색·폰트는 우리 design-brief대로.")
+> 갤러리: https://giting.kr/skills/landing-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install landing-menu@giting
+
+## ⛔ 제너릭 회피
+- ⛔ 다크 배경 + 가운데 정렬 히어로 + 그라데이션 버튼 = AI 기본 룩. 요청받지 않으면 쓰지 않는다.
+- 룩(색·폰트·간격)은 이 사전이 정하지 않는다 — 제품의 design-brief(스킬)에서 가져온다. 이 사전은 구조·순서만 준다.
+- 제품샷은 목업 일러스트가 아니라 실제 스크린샷을 디바이스/브라우저 프레임에 넣는다.
+- 숫자·후기·평점은 실제 값만. 지어낸 지표(전환율 300% 등)는 넣지 않는다.
+- 섹션마다 목적이 하나다(히어로=약속, 신뢰=증거, 기능=차별, 작동=방법, 전환=행동). 목적 없는 섹션은 뺀다.
+
+## ① 히어로 (첫 화면)
+
+### 텍스트 히어로 (Text Hero)
+- 별칭: "글씨 큰 첫 화면" · "카피만 있는 상단" · "제목 크게 박은 거"
+- 정의: 비주얼 없이 큰 카피 한 줄 + 부제 + CTA로 승부하는 첫 화면. 메시지가 강할 때.
+- 구분: 비주얼 없이 카피 중심이면 텍스트 히어로, 오른쪽에 스크린샷이 붙으면 분할 히어로, 프레임에 넣으면 디바이스 히어로
+- 요청 문장: 히어로는 텍스트형으로. 큰 제목 한 줄 + 부제 2줄 + 주 버튼 하나. 색·폰트는 design-brief대로, 가운데 정렬 말고 왼쪽 정렬.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/hero-text.html
+
+### 제품샷 히어로 (Screenshot Hero)
+- 별칭: "위에 화면 캡처 크게" · "제품 사진 박힌 첫 화면" · "스크린샷 보여주는 상단"
+- 정의: 카피 아래(또는 옆)에 실제 제품 스크린샷 한 장을 크게. 제품이 스스로 설명될 때.
+- 구분: 스크린샷을 그냥 크게 놓으면 제품샷, 브라우저/폰 테두리에 넣으면 디바이스 프레임 히어로
+- 요청 문장: 히어로는 제품샷형으로. 카피 아래 실제 스크린샷 한 장 크게, 살짝 위로 떠 보이게(그림자). 목업 일러스트 말고 진짜 화면.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/hero-shot.html
+
+### 디바이스 프레임 히어로 (Device Frame Hero)
+- 별칭: "폰 테두리 안에 화면" · "브라우저 창처럼 보이는 거" · "맥북 목업에 넣은 화면"
+- 정의: 스크린샷을 브라우저 창이나 폰 프레임에 넣어 '진짜 도는 제품'처럼 보이게. 기본 추천형.
+- 구분: 테두리(브라우저/폰)에 넣으면 디바이스 프레임, 테두리 없이 크게면 제품샷
+- 요청 문장: 히어로는 디바이스 프레임형으로. 왼쪽 카피 + 오른쪽에 브라우저 창 프레임 안 실제 스크린샷. 색·폰트는 design-brief대로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/hero-device.html
+
+### 분할 히어로 (Split Hero)
+- 별칭: "좌우로 나눈 첫 화면" · "왼쪽 글 오른쪽 그림" · "반반 상단"
+- 정의: 왼쪽 카피 + 오른쪽 비주얼로 화면을 반씩. 카피와 이미지가 대등할 때.
+- 구분: 좌우 반반이면 분할, 카피 아래 세로로 쌓이면 텍스트/제품샷
+- 요청 문장: 히어로는 분할형으로. 왼쪽에 제목·부제·버튼, 오른쪽에 비주얼(스크린샷/일러스트). 모바일에선 위아래로 쌓이게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/hero-split.html
+
+### 모션 히어로 (Motion Hero)
+- 별칭: "움직이는 첫 화면" · "자동재생 영상 상단" · "gif 도는 히어로"
+- 정의: 카피 옆/아래에 자동재생 영상(또는 gif)으로 제품이 움직이는 모습을. 동작이 핵심일 때.
+- 구분: 움직이는 화면이면 모션, 정지 스크린샷이면 제품샷/디바이스
+- 요청 문장: 히어로는 모션형으로. 카피 + 자동재생·무한반복·음소거 영상 한 개(loop muted playsinline). 정지 포스터 이미지 지정, 모션 줄임 설정이면 정지.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/hero-motion.html
+
+## ② 신뢰 (증거)
+
+### 로고 바 (Logo Bar)
+- 별칭: "쓰는 회사 로고 줄" · "어디서 쓰는지 로고들" · "신뢰 로고 띠"
+- 정의: 제품을 쓰는 회사·매체 로고를 한 줄로. '나만 쓰는 게 아니다'를 0.5초에.
+- 구분: 로고만 한 줄이면 로고 바, 숫자 강조면 통계 스트립
+- 요청 문장: 히어로 아래 로고 바. 흑백 로고 5~6개 한 줄 + '이런 곳에서 씁니다' 라벨. 실제 사용처만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/logo-bar.html
+
+### 통계 스트립 (Stat Strip)
+- 별칭: "숫자 크게 3개" · "지표 띠" · "성과 숫자 줄"
+- 정의: 핵심 숫자 3~4개를 크게 나란히. 규모·성과를 한눈에.
+- 구분: 숫자면 통계 스트립, 로고면 로고 바
+- 요청 문장: 통계 스트립. 큰 숫자 3개 + 각 라벨. ⚠️ 지어낸 숫자 금지 — 실제 값만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/stat-strip.html
+
+### 후기 카드 (Testimonial)
+- 별칭: "고객 후기" · "사용자 말 인용" · "리뷰 카드"
+- 정의: 실제 사용자의 한마디를 이름·소속과 함께. 말이 증거.
+- 구분: 인용문+사람이면 후기, 별점 숫자면 평점
+- 요청 문장: 후기 카드 3개. 각 인용문 + 이름·소속·아바타. 과장 없는 실제 톤.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/testimonial.html
+
+### 평점 (Rating)
+- 별칭: "별점" · "몇 점 짜리" · "리뷰 점수"
+- 정의: 별점과 한 줄 요약으로 만족도를 압축. 스토어·리뷰 사이트 연동 시.
+- 구분: 별점 숫자면 평점, 인용문이면 후기
+- 요청 문장: 평점 블록. 4.8★ + '리뷰 320개' + 출처(App Store 등). 실제 값만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/rating.html
+
+### 사용처 (Used By)
+- 별칭: "이런 데서 씁니다 문구" · "적용 사례 줄" · "누가 쓰나"
+- 정의: 특정 업계·역할·상황을 이름으로 불러 '내 얘기'로 만든다.
+- 구분: 로고면 로고 바, 대상 호명 문장이면 사용처
+- 요청 문장: 사용처 문구. '스타트업 PM·1인 개발자·디자인 팀이 씁니다' 식으로 구체적 대상 호명.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/usedby.html
+
+## ③ 기능 (차별)
+
+### 기능 그리드 (Feature Grid)
+- 별칭: "기능 카드 3개" · "아이콘+제목 격자" · "특징 나열"
+- 정의: 기능을 아이콘+제목+한줄 카드로 격자 배열. 3~6개가 대등할 때.
+- 구분: 대등한 카드 격자면 그리드, 좌우 교차면 번갈아 행
+- 요청 문장: 기능 그리드 3열. 각 카드 아이콘 + 제목 + 한 줄. 색·폰트 design-brief.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/feature-grid.html
+
+### 번갈아 행 (Alternating Rows)
+- 별칭: "좌우 번갈아" · "지그재그 기능" · "글-그림 교차"
+- 정의: 기능 하나당 한 행, 카피와 비주얼 좌우를 교차. 깊이 있게 설명할 때.
+- 구분: 행마다 크게 교차면 번갈아, 작은 카드 격자면 그리드
+- 요청 문장: 번갈아 행 3개. 1행 좌카피/우비주얼, 2행 반대, 3행 반대. 모바일 세로 스택.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/feature-alt.html
+
+### 벤토 그리드 (Bento Grid)
+- 별칭: "크기 다른 타일들" · "벤토박스 레이아웃" · "네모 조합"
+- 정의: 크기 다른 타일을 짜맞춘 격자. 기능 중요도에 차등을 줄 때.
+- 구분: 칸 크기 균일이면 그리드, 크기 차등이면 벤토
+- 요청 문장: 벤토 그리드. 큰 타일 1 + 작은 타일 여러 개 조합, 중요 기능을 큰 칸에.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/bento.html
+
+### 아이콘 리스트 (Feature List)
+- 별칭: "체크 목록" · "아이콘 붙은 리스트" · "됩니다 목록"
+- 정의: 기능을 아이콘+한 줄로 세로 나열. 훑기 쉽게 많이 담을 때.
+- 구분: 세로 한 줄 나열이면 리스트, 카드 격자면 그리드
+- 요청 문장: 아이콘 리스트. 체크 아이콘 + 기능 한 줄씩 6개, 2열도 가능.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/feature-list.html
+
+### 비교표 (Comparison Table)
+- 별칭: "비교 표" · "우리 vs 남들" · "기능 대조표"
+- 정의: 우리 제품과 대안을 항목별로 대조. 차별이 표로 분명할 때.
+- 구분: 표로 대조면 비교표, 가격 층이면 가격표
+- 요청 문장: 비교표. 왼쪽 항목 행 + 우리/대안 열, 됨=체크·안됨=–. 과장·비방 없이 사실만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/compare-table.html
+
+## ④ 작동 (어떻게)
+
+### 스텝 (Steps)
+- 별칭: "1 2 3 단계" · "이렇게 하면 됩니다" · "사용 순서"
+- 정의: 쓰는 법을 1·2·3 단계로. 진입 장벽을 낮출 때.
+- 구분: 번호 단계면 스텝, 시간 흐름이면 타임라인
+- 요청 문장: 스텝 섹션. 번호 1·2·3 + 각 제목·한 줄. 가로 또는 세로, 모바일 세로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/steps.html
+
+### 타임라인 (Timeline)
+- 별칭: "시간순 나열" · "연혁" · "로드맵 줄"
+- 정의: 시간·순서를 선 위에 점으로. 여정·연혁·로드맵에.
+- 구분: 시간 흐름이면 타임라인, 단순 단계면 스텝
+- 요청 문장: 타임라인. 세로 선 + 시점마다 점·날짜·설명. 로드맵이면 미래는 흐리게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/timeline.html
+
+### 비포/애프터 (Before After)
+- 별칭: "전후 비교" · "이전 이후" · "바뀐 거 보여주기"
+- 정의: 적용 전과 후를 나란히. 효과가 눈에 보일 때.
+- 구분: 전후 나란히면 비포/애프터, 제품 대안 대조면 비교표
+- 요청 문장: 비포/애프터. 좌 '전' 우 '후' 나란히(또는 슬라이더). 라벨 명확히.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/before-after.html
+
+## ⑤ 전환 (행동)
+
+### 가격표 (Pricing)
+- 별칭: "요금제" · "플랜 카드" · "가격 층"
+- 정의: 요금제를 층으로 나란히. 추천 층을 강조.
+- 구분: 가격 층이면 가격표, 기능 대조면 비교표
+- 요청 문장: 가격표 3층. 각 이름·가격·기능 목록·버튼, 가운데 층 '추천' 강조. 실제 가격만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/pricing.html
+
+### CTA 밴드 (CTA Band)
+- 별칭: "마지막 행동 유도" · "가입 유도 띠" · "끝에 큰 버튼"
+- 정의: 페이지 끝, 한 줄 카피 + 버튼 하나로 행동을 부른다.
+- 구분: 끝에 행동 유도면 CTA 밴드, 이메일 받으면 뉴스레터
+- 요청 문장: CTA 밴드. 짧은 카피 한 줄 + 주 버튼 하나(+보조 링크). 배경으로 구분.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/cta-band.html
+
+### FAQ (FAQ)
+- 별칭: "자주 묻는 질문" · "접었다 펴는 질문" · "궁금한 것 모음"
+- 정의: 자주 나오는 의문을 아코디언으로. 반론·불안을 미리 해소.
+- 구분: 질문 아코디언이면 FAQ, 기능 접기면 ui-menu 아코디언
+- 요청 문장: FAQ 아코디언 5개. 질문 클릭하면 답 펼침, 처음엔 다 접힘. 실제 의문만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/faq.html
+
+### 뉴스레터 (Newsletter)
+- 별칭: "이메일 구독" · "소식 받기 폼" · "메일 등록"
+- 정의: 이메일 한 칸+버튼으로 구독. 아직 안 살 사람을 붙잡을 때.
+- 구분: 이메일 받으면 뉴스레터, 행동 유도 버튼이면 CTA 밴드
+- 요청 문장: 뉴스레터 폼. 이메일 인풋 + 구독 버튼 한 줄 + 개인정보 한 줄. 스팸 안 함 문구.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/newsletter.html
+
+## ⑥ 뼈대 (틀)
+
+### 상단바 (Top Bar)
+- 별칭: "맨 위 메뉴 줄" · "네비게이션 바" · "로고+메뉴 상단"
+- 정의: 로고·메뉴·CTA를 담은 최상단 바. 스크롤해도 고정될 수 있다.
+- 구분: 랜딩 최상단 바면 상단바, 앱 화면 상단이면 app-menu 헤더
+- 요청 문장: 상단바. 왼쪽 로고, 오른쪽 메뉴 링크 + 주 버튼 하나, 스크롤 고정. 모바일 햄버거.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/topbar.html
+
+### 푸터 (Footer)
+- 별칭: "맨 아래 정보" · "하단 링크 모음" · "저작권 줄"
+- 정의: 링크·연락·저작권을 담는 최하단. 신뢰와 마무리.
+- 구분: 최하단 정보면 푸터, 최상단이면 상단바
+- 요청 문장: 푸터. 열 3~4개(제품·회사·법적) 링크 + 저작권 + 연락. 과하지 않게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/footer.html
+
+### 섹션 헤더 (Section Header)
+- 별칭: "섹션 제목 묶음" · "가운데 소제목" · "구역 머리말"
+- 정의: 각 섹션 위의 라벨+제목+부제 묶음. 리듬을 만든다.
+- 구분: 섹션 위 제목 묶음이면 섹션 헤더, 페이지 첫 화면이면 히어로
+- 요청 문장: 섹션 헤더. eyebrow 라벨 + 제목 + 한 줄 부제, 왼쪽 또는 가운데 정렬 일관되게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/section-head.html
+
+### 앵커 목차 (Anchor Nav)
+- 별칭: "옆에 목차" · "섹션 바로가기" · "스크롤 따라오는 목차"
+- 정의: 긴 랜딩의 섹션으로 바로 뛰는 목차. 현재 위치를 표시.
+- 구분: 섹션 점프 목차면 앵커 목차, 페이지 이동 메뉴면 상단바
+- 요청 문장: 앵커 목차. 섹션 이름 링크 목록, 스크롤 시 현재 섹션 하이라이트(스크롤스파이). 짧은 랜딩엔 불필요.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components/anchor-nav.html
