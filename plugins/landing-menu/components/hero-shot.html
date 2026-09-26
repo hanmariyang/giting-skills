@@ -1,0 +1,35 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>제품샷 히어로 Screenshot Hero — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .hsh { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; --card:#fff;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#f7f8f7; }
+  .hsh .wrap { max-width:900px; margin:0 auto; padding:56px 24px 40px; text-align:center; }
+  .hsh .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hsh h1 { font-size:clamp(26px,5vw,44px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hsh p { font-size:16px; color:var(--mut); margin:14px auto 0; max-width:44ch; line-height:1.6; }
+  .hsh .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hsh .shot { margin:36px auto 0; max-width:760px; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 40px 70px -40px rgba(20,40,30,.4); overflow:hidden; }
+  .hsh .shot .fauxbar { height:34px; background:#f0f1f0; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:6px; padding:0 12px; }
+  .hsh .shot .fauxbar i { width:9px; height:9px; border-radius:50%; background:#d3d5d3; }
+  .hsh .shot .screen { display:grid; grid-template-columns:120px 1fr; min-height:180px; }
+  .hsh .screen .side { background:#fafbfa; border-right:1px solid var(--line); padding:14px; display:grid; gap:8px; align-content:start; }
+  .hsh .screen .row { height:9px; background:#e9eae9; border-radius:4px; }
+  .hsh .screen .main { padding:16px; display:grid; gap:10px; align-content:start; }
+  .hsh .screen .main .row.acc { background:color-mix(in srgb, var(--acc) 22%, #e9eae9); }
+  .hsh .cap { font-size:11.5px; color:#a9aab0; margin:12px 0 0; }
+</style>
+<section class="hsh"><div class="wrap">
+  <div class="eyebrow">제품샷 히어로</div>
+  <h1>제품이 스스로 설명하게</h1>
+  <p>카피 아래 실제 스크린샷 한 장을 크게, 살짝 떠 보이게 놓는다. 목업 일러스트가 아니라 진짜 화면이어야 한다.</p>
+  <button class="btn">무료로 써 보기</button>
+  <div class="shot">
+    <div class="fauxbar"><i></i><i></i><i></i></div>
+    <div class="screen">
+      <div class="side"><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div></div>
+      <div class="main"><div class="row acc" style="width:60%"></div><div class="row" style="width:90%"></div><div class="row" style="width:80%"></div><div class="row" style="width:70%"></div></div>
+    </div>
+  </div>
+  <div class="cap">실제 스크린샷 자리(여기선 구조만 표시). 진짜 제품 화면을 넣는다.</div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

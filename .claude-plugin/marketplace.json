@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.12.0"
+    "version": "0.14.0"
   },
   "plugins": [
     {
@@ -73,6 +73,16 @@
       "name": "font-menu",
       "source": "./plugins/font-menu",
       "description": "웹폰트 사전 — 인상으로 폰트 고르고 어디서 어떻게 불러오는지 로딩 스니펫째. 6맥락 24종, Google/Fontshare/jsDelivr 로더 구분·라이선스·짝. Google에 없는 폰트를 Google 링크에 박아 폴백시키는 사고를 막음"
+    },
+    {
+      "name": "canvas-motion",
+      "source": "./plugins/canvas-motion",
+      "description": "창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + rAF 로 살아 있는 모션. 고정 timestep 루프·아이소·깊이 정렬·보이드·플로우필드·A*·파티클·스프라이트 글로우·큐레이션 스킴 + reduced-motion/DPR/성능 규율(motion-lint). 쇼피스 3종(아이소 허브·오로라 플로우·별자리 네트워크)"
+    },
+    {
+      "name": "landing-menu",
+      "source": "./plugins/landing-menu",
+      "description": "랜딩 메뉴판 — 랜딩을 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 6코스(히어로·신뢰·기능·작동·전환·뼈대) 별칭→정식명→요청문장→실물 HTML + 제너릭 회피 규칙. 룩은 design-brief, 구조는 여기. v0.1=히어로 5종"
     }
   ]
 }

@@ -1,0 +1,110 @@
+<title>푸실 — 책장에서 한 줄로</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg0:#0c0e12;--bg1:#14171e;--panel:#171a21;--line:#242832;--ink:#e9e7e2;--ink2:#a8aeb8;--warm:#ff9d52;}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--bg0);color:var(--ink);font-family:'IBM Plex Sans KR',system-ui,sans-serif;word-break:keep-all;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:40px 22px}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.14em;color:var(--warm);border:1px solid color-mix(in srgb,var(--warm) 34%,var(--line));border-radius:999px;padding:5px 14px;text-transform:uppercase}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.14;letter-spacing:-.03em;font-weight:800;margin:16px 0 0;text-wrap:balance}
+  h1 .w{color:var(--warm)}
+  .stage{margin:22px 0 6px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),var(--bg1));overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  canvas{display:block;width:100%}
+  .cap{padding:11px 18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink2)}
+  .cap b{color:var(--ink)}
+</style>
+<div class="wrap">
+  <span class="badge">푸실 · 읽는 중을 함께</span>
+  <h1>책장에서 꺼내, <span class="w">읽는 중</span>을 펼친다</h1>
+  <div class="stage">
+    <canvas id="c" height="380"></canvas>
+    <div class="cap"><b>책장</b>에 책이 꽂히고 → 한 권을 <b>뽑아</b> → 페이지가 <b>펼쳐지면</b> → 그 쪽들이 곧 <b>바코드</b>가 된다. 색=최근성, 맥박=지금 읽는 사람.</div>
+  </div>
+</div>
+
+<script src="../engine/canvas-motion.js"></script>
+<script>
+(function(){
+'use strict';
+var cv=document.getElementById('c');
+var S=CM.setupCanvas(cv,{width:(document.querySelector('.stage').clientWidth||836),height:380,maxDpr:2});
+var ctx=S.ctx, W=S.w, H=S.h;
+var E=CM.ease, lerp=CM.lerp, seg=CM.seg, rnd=CM.rng(9);
+var DUR=12.5;
+
+// ── 책장 (책 스파인) ──────────────────────────────────
+var N=22, shelfY=H*0.72, band=W*0.8, x0=(W-band)/2;
+var bookPal=['#c0503a','#2f7d74','#c98a2a','#3f5b8f','#8a4b6e','#4a7a4e','#b4460f','#6d757f'];
+var books=[]; var order=[]; for(var i=0;i<N;i++)order.push(i);
+for(var s=order.length-1;s>0;s--){var j=(rnd()*(s+1))|0;var tmp=order[s];order[s]=order[j];order[j]=tmp;} // 셔플(무작위 꽂힘)
+for(var b=0;b<N;b++){ var w=band/N; books.push({ x:x0+b*w, w:w-2, h:78+((rnd()*70)|0), col:bookPal[(rnd()*bookPal.length)|0], slot:order.indexOf(b)/N }); }
+var FOCUS=10; books[FOCUS].col='#ff9d52';                 // 뽑을 책(따뜻)
+
+// ── 페이지 (펼침 → 바코드 수렴) ────────────────────────
+var M=64, pages=[];
+for(var p=0;p<M;p++){ var rec=p/M; // 최근성: 앞쪽 페이지가 방금
+  pages.push({ ang:(-1.15+2.3*(p/(M-1)))*(0.9+rnd()*0.2), len:52+rnd()*30, wob:(rnd()-.5)*0.25,
+    col: pageColor(rec), threads:(rnd()<0.22?1+((rnd()*6)|0):0), live:(rnd()<0.09) }); }
+function pageColor(rec){ // 따뜻(방금)→식음
+  var W2=[255,157,82],M2=[200,106,42],C=[168,174,184],O=[77,86,102];
+  function mx(a,b,t){return 'rgb('+((a[0]+(b[0]-a[0])*t)|0)+','+((a[1]+(b[1]-a[1])*t)|0)+','+((a[2]+(b[2]-a[2])*t)|0)+')';}
+  return rec<.4?mx(W2,M2,rec/.4):rec<.75?mx(M2,C,(rec-.4)/.35):mx(C,O,(rec-.75)/.25);
+}
+
+function drawBook(bk,alpha,dy,scale){ ctx.globalAlpha=alpha; scale=scale||1;
+  var w=bk.w*scale, h=bk.h*scale, x=bk.x-(w-bk.w)/2, y=shelfY-h+dy;
+  ctx.fillStyle=bk.col; ctx.fillRect(x,y,w,h);
+  ctx.fillStyle='rgba(255,255,255,.10)'; ctx.fillRect(x,y,w,3);                    // 상단 하이라이트
+  ctx.fillStyle='rgba(0,0,0,.22)'; ctx.fillRect(x+w-2,y,2,h);                      // 우측 그림자
+  ctx.globalAlpha=1;
+}
+
+function render(now){
+  var t=(now/1000)%DUR;
+  ctx.clearRect(0,0,W,H);
+  // 선반
+  ctx.fillStyle='rgba(255,255,255,.05)'; ctx.fillRect(x0-10,shelfY,band+20,2);
+  ctx.fillStyle='rgba(0,0,0,.25)'; ctx.fillRect(x0-10,shelfY+2,band+20,7);
+
+  var pull=seg(t,4.4,6.0), open=seg(t,6.0,9.0), toBar=seg(t,9.0,10.8), fade=1-seg(t,11.6,12.4);
+
+  // 1) 책장 꽂힘 (0~3.2, slot 순서 스태거) + 포커스 외 디밍
+  for(var i=0;i<N;i++){ var bk=books[i];
+    var inn=E.outBack(seg(t, bk.slot*2.6, bk.slot*2.6+1.1));   // 아래에서 튀어오르듯
+    var dy=(1-inn)*150;
+    var dim = i===FOCUS ? 1 : (1-seg(t,3.4,4.2)*0.72);
+    if(i===FOCUS && (pull>0||open>0)) continue;                 // 포커스는 아래서 따로 그림
+    drawBook(bk,dim*fade,dy,1);
+  }
+
+  // 2) 포커스 책: 뽑혀 중앙 상단으로
+  var fb=books[FOCUS], cx=lerp(fb.x+fb.w/2, W/2, pull), topY=lerp(shelfY, shelfY-fb.h-70, pull);
+  if(pull>0 && open<0.05){ ctx.save(); ctx.translate(cx-(fb.x+fb.w/2),-(shelfY-topY)); drawBook(fb,fade,0,1+pull*0.15); ctx.restore(); }
+
+  // 3) 페이지 펼침 (스파인 중심에서 부채꼴) → 4) 바코드로 수렴
+  if(open>0){
+    var px=W/2, py=shelfY-fb.h-40;                             // 펼침 피벗
+    var barY=shelfY-46, barX0=x0, barW=band, bpw=barW/M;
+    for(var p=0;p<M;p++){ var pg=pages[p];
+      var oa=E.outCubic(seg(t, 6.0+ (p/M)*1.2, 6.0+(p/M)*1.2+1.4)); // 페이지 스태거
+      // 부채꼴 끝점
+      var ang=pg.ang*oa + Math.sin(now/700+p)*pg.wob*oa;
+      var fx=px+Math.sin(ang)*pg.len*oa*2.0, fy=py-Math.cos(ang)*pg.len*oa*1.5 - 10*oa;
+      // 바코드 목표점(수직 바)
+      var bx=barX0+p*bpw, byTop=barY, byBot=barY+80;
+      // 보간: 펼침(선) → 바코드(수직 바)
+      var ax=lerp(px, fx, oa), ay=lerp(py, fy, oa);
+      var X=lerp(ax, bx, toBar), yTop=lerp(ay, byTop, toBar), yBot=lerp(py, byBot, toBar);
+      var alive=pg.live;
+      ctx.globalAlpha = fade*( alive ? (.55+.45*Math.sin(now/340+p)) : (toBar>0? (pg.threads?Math.min(1,.4+pg.threads*0.09):0.5) : 0.85) );
+      ctx.strokeStyle=pg.col; ctx.lineWidth=Math.max(1.4, bpw*0.7);
+      ctx.beginPath(); ctx.moveTo(X, yBot); ctx.lineTo(X, yTop); ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    // 바코드 진도 표식(수렴 후)
+    if(toBar>0.6){ var mx=barX0+FOCUS*bpw; ctx.globalAlpha=fade*(toBar-0.6)/0.4; ctx.fillStyle='#b4460f'; ctx.fillRect(mx-.8,barY-5,1.6,90); ctx.beginPath(); ctx.arc(mx,barY-7,3,0,7); ctx.fill(); ctx.globalAlpha=1; }
+  }
+}
+CM.loop({tick:1/60, render:render, settle:0});
+})();
+</script>

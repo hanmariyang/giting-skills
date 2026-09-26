@@ -1,0 +1,23 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>가격표 Pricing — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .pr { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8fb; }
+  .pr .wrap { max-width:900px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:start; }
+  @media (max-width:680px){ .pr .wrap { grid-template-columns:1fr; } }
+  .pr .p { background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px; }
+  .pr .p.best { border-color:var(--acc); box-shadow:0 20px 40px -28px color-mix(in srgb,var(--acc) 60%,transparent); position:relative; }
+  .pr .p.best .badge { position:absolute; top:-10px; left:22px; background:var(--acc); color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; }
+  .pr .nm { font-size:13px; color:var(--mut); font-weight:700; }
+  .pr .price { font-size:30px; font-weight:800; letter-spacing:-.02em; margin:8px 0 0; }
+  .pr .price small { font-size:13px; color:var(--mut); font-weight:500; }
+  .pr ul { list-style:none; padding:0; margin:16px 0 0; display:grid; gap:8px; font-size:13px; color:var(--ink); }
+  .pr li:before { content:"✓"; color:var(--acc); font-weight:800; margin-right:7px; }
+  .pr .btn { margin:18px 0 0; width:100%; border-radius:10px; padding:11px; font-size:14px; font-weight:700; cursor:pointer; border:1px solid var(--acc); background:#fff; color:var(--acc); }
+  .pr .p.best .btn { background:var(--acc); color:#fff; }
+</style>
+<section class="pr"><div class="wrap">
+  <div class="p"><div class="nm">Free</div><div class="price">₩0</div><ul><li>기본 기능</li><li>1인 사용</li><li>로컬 실행</li></ul><button class="btn">시작하기</button></div>
+  <div class="p best"><span class="badge">추천</span><div class="nm">Pro</div><div class="price">₩9,900<small> /월</small></div><ul><li>모든 기능</li><li>무제한 사용</li><li>우선 지원</li></ul><button class="btn">Pro 쓰기</button></div>
+  <div class="p"><div class="nm">Team</div><div class="price">₩29,000<small> /월</small></div><ul><li>팀 공유</li><li>관리 콘솔</li><li>SSO</li></ul><button class="btn">문의하기</button></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>뉴스레터 Newsletter — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .nl { --ink:#1a1b1f; --mut:#6b6c74; --line:#dcdce0; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .nl .wrap { max-width:560px; margin:0 auto; padding:44px 24px; text-align:center; }
+  .nl h3 { font-size:20px; font-weight:800; margin:0; }
+  .nl p { font-size:13.5px; color:var(--mut); margin:8px 0 0; }
+  .nl .form { margin:18px auto 0; display:flex; gap:8px; max-width:400px; }
+  @media (max-width:420px){ .nl .form { flex-direction:column; } }
+  .nl input { flex:1; border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; }
+  .nl button { background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 20px; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .nl .fine { font-size:11.5px; color:#a9aab0; margin:10px 0 0; }
+</style>
+<section class="nl"><div class="wrap">
+  <h3>소식 받기</h3>
+  <p>새 기능과 업데이트를 가끔 보내드립니다.</p>
+  <form class="form" onsubmit="return false"><input type="email" placeholder="이메일 주소" aria-label="이메일"><button>구독</button></form>
+  <div class="fine">스팸은 보내지 않습니다. 언제든 해지할 수 있어요.</div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

@@ -1,0 +1,85 @@
+<!-- @logo-bar h=170 full -->
+<style>
+  .lgb { --mut:#8a8b92; --line:#ececed; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .lgb .wrap { max-width:900px; margin:0 auto; padding:36px 24px; text-align:center; }
+  .lgb .lab { font-size:12px; letter-spacing:.1em; color:var(--mut); text-transform:uppercase; }
+  .lgb .row { margin:20px 0 0; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:18px 40px; }
+  .lgb .logo { display:flex; align-items:center; gap:8px; color:#b3b4ba; font-weight:800; font-size:17px; letter-spacing:-.02em; filter:grayscale(1); opacity:.85; }
+  .lgb .logo .m { width:20px; height:20px; border-radius:5px; background:#c8c9ce; }
+  .lgb .cap { margin:18px 0 0; font-size:11px; color:#b7b8bd; }
+</style>
+<section class="lgb"><div class="wrap">
+  <div class="lab">이런 곳에서 씁니다</div>
+  <div class="row">
+    <span class="logo"><span class="m"></span>Northwind</span>
+    <span class="logo"><span class="m"></span>Acme</span>
+    <span class="logo"><span class="m"></span>Loop</span>
+    <span class="logo"><span class="m"></span>Vertex</span>
+    <span class="logo"><span class="m"></span>Kite</span>
+    <span class="logo"><span class="m"></span>Slate</span>
+  </div>
+  <div class="cap">실제 사용처 로고로 교체. 흑백·저채도로 통일해 히어로를 안 이긴다.</div>
+</div></section>
+
+<!-- @stat-strip h=200 full -->
+<style>
+  .sts { --ink:#1a1b1f; --mut:#6b6c74; --acc:#127a5e; --line:#ececed; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .sts .wrap { max-width:860px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; text-align:center; }
+  @media (max-width:560px){ .sts .wrap { grid-template-columns:1fr; gap:20px; } }
+  .sts .n { font-size:clamp(30px,6vw,46px); font-weight:800; letter-spacing:-.03em; color:var(--ink); }
+  .sts .n .u { color:var(--acc); }
+  .sts .l { margin:6px 0 0; font-size:13px; color:var(--mut); }
+  .sts .cap { grid-column:1/-1; font-size:11px; color:#a9aab0; margin-top:2px; }
+</style>
+<section class="sts"><div class="wrap">
+  <div><div class="n">12,400<span class="u">+</span></div><div class="l">활성 사용자</div></div>
+  <div><div class="n">99.9<span class="u">%</span></div><div class="l">가동 시간</div></div>
+  <div><div class="n">4.8<span class="u">★</span></div><div class="l">평균 평점</div></div>
+  <div class="cap">⚠️ 예시 숫자다. 반드시 실제 값으로 교체하고, 지어낸 지표는 넣지 않는다.</div>
+</div></section>
+
+<!-- @testimonial h=320 full -->
+<style>
+  .tst { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .tst .wrap { max-width:960px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:680px){ .tst .wrap { grid-template-columns:1fr; } }
+  .tst .card { border:1px solid var(--line); border-radius:12px; padding:20px; display:flex; flex-direction:column; }
+  .tst .q { font-size:14.5px; line-height:1.6; color:var(--ink); flex:1; }
+  .tst .who { margin:16px 0 0; display:flex; align-items:center; gap:10px; }
+  .tst .av { width:34px; height:34px; border-radius:50%; background:#e7e8ee; flex:none; }
+  .tst .nm { font-size:13px; font-weight:700; color:var(--ink); }
+  .tst .rl { font-size:11.5px; color:var(--mut); }
+</style>
+<section class="tst"><div class="wrap">
+  <div class="card"><p class="q">"매번 손으로 하던 정리가 사라졌다. 이제 팀이 결과만 본다."</p><div class="who"><span class="av"></span><span><span class="nm">김도현</span><br><span class="rl">PM · 스타트업</span></span></div></div>
+  <div class="card"><p class="q">"설치 5분. 그날 바로 실무에 썼다. 이게 제일 놀라웠다."</p><div class="who"><span class="av"></span><span><span class="nm">이서연</span><br><span class="rl">1인 개발자</span></span></div></div>
+  <div class="card"><p class="q">"디자인 팀 전체가 갈아탔다. 되돌아갈 이유가 없다."</p><div class="who"><span class="av"></span><span><span class="nm">박준</span><br><span class="rl">디자인 리드</span></span></div></div>
+</div></section>
+
+<!-- @rating h=190 full -->
+<style>
+  .rtg { --ink:#1a1b1f; --mut:#6b6c74; --star:#e8a33d; --line:#e7e7ea; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .rtg .wrap { max-width:520px; margin:0 auto; padding:40px 24px; display:flex; align-items:center; gap:22px; justify-content:center; }
+  @media (max-width:480px){ .rtg .wrap { flex-direction:column; gap:12px; } }
+  .rtg .big { font-size:52px; font-weight:800; letter-spacing:-.03em; color:var(--ink); line-height:1; }
+  .rtg .stars { color:var(--star); font-size:20px; letter-spacing:2px; }
+  .rtg .meta { font-size:13px; color:var(--mut); margin-top:6px; }
+  .rtg .src { font-size:11.5px; color:#a9aab0; margin-top:4px; }
+</style>
+<section class="rtg"><div class="wrap">
+  <div class="big">4.8</div>
+  <div><div class="stars">★★★★★</div><div class="meta">리뷰 320개 · 만족도 96%</div><div class="src">출처: App Store · 실제 값으로 교체</div></div>
+</div></section>
+
+<!-- @usedby h=170 full -->
+<style>
+  .ub { --ink:#1a1b1f; --mut:#6b6c74; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8fb; }
+  .ub .wrap { max-width:760px; margin:0 auto; padding:40px 24px; text-align:center; }
+  .ub p { font-size:clamp(17px,3vw,22px); line-height:1.5; color:var(--ink); font-weight:600; }
+  .ub p b { color:var(--acc); }
+  .ub .cap { margin:14px 0 0; font-size:11.5px; color:#a9aab0; }
+</style>
+<section class="ub"><div class="wrap">
+  <p><b>스타트업 PM</b>, <b>1인 개발자</b>, <b>디자인 팀</b>이 매주 씁니다.</p>
+  <div class="cap">막연한 '모두'가 아니라 구체적 대상을 호명 — 읽는 사람이 '내 얘기'로 받게.</div>
+</div></section>

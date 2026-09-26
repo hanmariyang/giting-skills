@@ -1,0 +1,19 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>기능 그리드 Feature Grid — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .fg { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .fg .wrap { max-width:960px; margin:0 auto; padding:44px 24px; }
+  .fg .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:680px){ .fg .grid { grid-template-columns:1fr; } }
+  .fg .c { border:1px solid var(--line); border-radius:12px; padding:20px; }
+  .fg .ic { width:36px; height:36px; border-radius:9px; background:color-mix(in srgb,var(--acc) 14%,#fff); display:flex; align-items:center; justify-content:center; }
+  .fg .ic i { width:15px; height:15px; border-radius:4px; background:var(--acc); }
+  .fg h3 { font-size:16px; font-weight:700; margin:14px 0 0; }
+  .fg p { font-size:13.5px; color:var(--mut); line-height:1.6; margin:6px 0 0; }
+</style>
+<section class="fg"><div class="wrap"><div class="grid">
+  <div class="c"><div class="ic"><i></i></div><h3>빠른 시작</h3><p>설치 없이 한 줄로 붙는다. 오늘 바로 실무에.</p></div>
+  <div class="c"><div class="ic"><i></i></div><h3>로컬 우선</h3><p>데이터가 기기를 떠나지 않는다. 업로드 0.</p></div>
+  <div class="c"><div class="ic"><i></i></div><h3>열린 포맷</h3><p>결과가 표준 형식으로 남아 종속되지 않는다.</p></div>
+</div></div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

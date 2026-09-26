@@ -1,0 +1,55 @@
+<!-- @steps h=300 full -->
+<style>
+  .st { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .st .wrap { max-width:900px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:640px){ .st .wrap { grid-template-columns:1fr; gap:18px; } }
+  .st .s { }
+  .st .n { width:34px; height:34px; border-radius:50%; background:var(--acc); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; }
+  .st h3 { font-size:16px; font-weight:700; margin:14px 0 0; }
+  .st p { font-size:13.5px; color:var(--mut); line-height:1.6; margin:6px 0 0; }
+</style>
+<section class="st"><div class="wrap">
+  <div class="s"><div class="n">1</div><h3>연결한다</h3><p>한 줄 설치로 붙인다. 계정도 설정도 없다.</p></div>
+  <div class="s"><div class="n">2</div><h3>맡긴다</h3><p>하고 싶은 걸 한 줄로 말하면 나머지는 알아서.</p></div>
+  <div class="s"><div class="n">3</div><h3>받는다</h3><p>결과가 표준 포맷으로 남는다. 바로 쓴다.</p></div>
+</div></section>
+
+<!-- @timeline h=360 full -->
+<style>
+  .tl { --ink:#1a1b1f; --mut:#6b6c74; --line:#e0e1e4; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .tl .wrap { max-width:640px; margin:0 auto; padding:40px 24px 40px 44px; position:relative; }
+  .tl .wrap:before { content:""; position:absolute; left:30px; top:44px; bottom:40px; width:2px; background:var(--line); }
+  .tl .e { position:relative; padding:0 0 22px 26px; }
+  .tl .e:last-child { padding-bottom:0; }
+  .tl .e .dot { position:absolute; left:-15px; top:3px; width:12px; height:12px; border-radius:50%; background:var(--acc); box-shadow:0 0 0 4px #f7f8f7; }
+  .tl .e.future .dot { background:#c9cbce; }
+  .tl .d { font-family:ui-monospace,monospace; font-size:12px; color:var(--acc); font-weight:700; }
+  .tl .e.future .d { color:var(--mut); }
+  .tl h4 { font-size:15px; font-weight:700; margin:3px 0 0; }
+  .tl .e.future h4 { color:var(--mut); }
+  .tl p { font-size:13px; color:var(--mut); margin:4px 0 0; line-height:1.5; }
+</style>
+<section class="tl"><div class="wrap">
+  <div class="e"><span class="dot"></span><div class="d">2024</div><h4>첫 공개</h4><p>MVP를 오픈소스로 냈다.</p></div>
+  <div class="e"><span class="dot"></span><div class="d">2025</div><h4>v2 재작성</h4><p>플러그인 구조로 다시 지었다.</p></div>
+  <div class="e future"><span class="dot"></span><div class="d">다음</div><h4>MCP · 헤드리스</h4><p>에이전트·자동화 지원(예정, 흐리게).</p></div>
+</div></section>
+
+<!-- @before-after h=340 full -->
+<style>
+  .ba { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; --del:#b34a3a; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .ba .wrap { max-width:820px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .ba .wrap { grid-template-columns:1fr; } }
+  .ba .col { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .ba .tag { padding:9px 14px; font-size:12px; font-weight:700; }
+  .ba .col.b .tag { background:#faf1ef; color:var(--del); }
+  .ba .col.a .tag { background:#eef6f2; color:var(--acc); }
+  .ba .body { padding:16px; display:grid; gap:8px; min-height:120px; align-content:start; }
+  .ba .ln { height:10px; background:#ececed; border-radius:5px; }
+  .ba .col.b .ln { opacity:.55; }
+  .ba .col.a .ln.hi { background:color-mix(in srgb,var(--acc) 28%,#ececed); width:60%; }
+</style>
+<section class="ba"><div class="wrap">
+  <div class="col b"><div class="tag">전 · 손으로</div><div class="body"><div class="ln" style="width:90%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:60%"></div></div></div>
+  <div class="col a"><div class="tag">후 · 자동으로</div><div class="body"><div class="ln hi"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:76%"></div></div></div>
+</div></section>

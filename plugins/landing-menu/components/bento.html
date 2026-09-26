@@ -1,0 +1,22 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>벤토 그리드 Bento Grid — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .bt { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#b8442e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .bt .wrap { max-width:960px; margin:0 auto; padding:44px 24px; }
+  .bt .grid { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:120px; gap:14px; }
+  @media (max-width:680px){ .bt .grid { grid-template-columns:repeat(2,1fr); } }
+  .bt .t { border:1px solid var(--line); border-radius:14px; padding:18px; display:flex; flex-direction:column; justify-content:flex-end; }
+  .bt .big { grid-column:span 2; grid-row:span 2; background:color-mix(in srgb,var(--acc) 8%,#fff); }
+  .bt .t h4 { font-size:15px; font-weight:800; margin:0; }
+  .bt .big h4 { font-size:22px; }
+  .bt .t p { font-size:12.5px; color:var(--mut); margin:6px 0 0; line-height:1.5; }
+  @media (max-width:680px){ .bt .big { grid-column:span 2; grid-row:span 1; } }
+</style>
+<section class="bt"><div class="wrap"><div class="grid">
+  <div class="t big"><h4>핵심 기능</h4><p>가장 중요한 것을 제일 큰 칸에. 크기가 위계를 만든다.</p></div>
+  <div class="t"><h4>속도</h4><p>실시간</p></div>
+  <div class="t"><h4>보안</h4><p>로컬</p></div>
+  <div class="t"><h4>연동</h4><p>MCP</p></div>
+  <div class="t"><h4>내보내기</h4><p>표준 포맷</p></div>
+</div></div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

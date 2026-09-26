@@ -1076,3 +1076,203 @@ mkdirSync(join(ROOT, 'docs', 'font-menu'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'font-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/font-menu'));
 writeFileSync(join(ROOT, 'docs', 'font-menu', 'llms.txt'), fdict());
 console.log(`built font-menu: items ${fmenu.items.length} · core ${(fpCore.length / 1024).toFixed(0)}KB`);
+
+// ── 앱 UI 사전 (app-menu) — 06 ──────────────────────────────────
+// ui-menu 의 모바일판. 데모 HTML 없이 카드(별칭·정의·요청문·네이티브명)+테이블. 웹은 ui-menu.
+const AP = join(ROOT, 'plugins', 'app-menu');
+const amenu = JSON.parse(readFileSync(join(AP, 'menu.json'), 'utf8'));
+const aby = id => amenu.items.filter(i => i.category === id);
+
+const aCardHtml = it => `
+<article class="item" id="${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span></header>
+  <footer>
+    <span class="al">"${esc(it.aliases[0])}"${it.aliases[1] ? ` · "${esc(it.aliases[1])}"` : ''}</span>
+    <span class="one">${esc(it.oneliner)}</span>
+    <div class="askline"><code>${esc(it.ask)}</code><button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">복사</button></div>
+    ${it.native ? `<span class="nat">${esc(it.native)}</span>` : ''}
+    ${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}
+  </footer>
+</article>`;
+
+const aTableHtml = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>한글</th><th>영문</th><th>네이티브</th><th>이렇게 말해도</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${aby(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">${esc(it.name.ko)}</a></td>
+  <td class="mono">${esc(it.name.en)}</td>
+  <td class="mono nat2">${it.native ? esc(it.native) : '·'}</td>
+  <td class="als">"${esc(it.aliases[0])}"</td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+
+const af = amenu.formula;
+const AGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.apgal') + `
+.apgal .ggrid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 860px) { .apgal .ggrid { grid-template-columns: 1fr; } }
+.apgal .note { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--gwash); font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+.apgal .note b { color: var(--ink); }
+.apgal .item footer { display: block; }
+.apgal .item .al { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+.apgal .item .one { display: block; margin-top: 6px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.apgal .item .askline { margin-top: 9px; display: flex; gap: 8px; align-items: flex-start; background: var(--gwash); border-radius: 9px; padding: 8px 10px; }
+.apgal .item .askline code { flex: 1; min-width: 0; font-family: var(--mono); font-size: 11.5px; line-height: 1.5; color: var(--ink); white-space: normal; word-break: break-word; }
+.apgal .item .nat { display: block; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 6px; }
+.apgal .item .vs { display: block; margin-top: 6px; font-size: 11.5px; color: var(--ink-3); }
+.apgal td.nat2 { white-space: normal; min-width: 150px; color: #0F766E; }`;
+
+const apCore = `<div class="apgal">
+<style>${AGAL_CSS}</style>
+<div class="formula">
+  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(af.pattern)}</span></div>
+  <div class="fx">
+    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(af.bad)}」</div>
+    <div class="good"><span class="mark">○ 이렇게</span>「${esc(af.good)}」</div>
+  </div>
+</div>
+<div class="note"><b>모바일 앱 UI 전용.</b> 웹 UI 는 <b>ui-menu</b> 를 쓴다. 같은 단어라도 앱과 웹의 관례가 다르다 — 모달은 앱에선 아래서 올라오는 풀스크린, 셀렉트는 드롭다운이 아니라 시트로 연다. 네이티브 열은 SwiftUI · Flutter · React Native 의 실제 컴포넌트명.</div>
+<nav class="gnav" aria-label="분류">
+  ${amenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${aby(c.id).length}</a>`).join('\n  ')}
+</nav>
+${amenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${aby(cat.id).length}</span></h2>
+  <div class="ggrid">${aby(cat.id).map(aCardHtml).join('\n')}</div>
+  ${aTableHtml(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.apgal')}</script>
+</div>
+`;
+
+const adict = () => `# 앱 UI 메뉴판 (app-menu) — Giting Skills
+
+> 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 ${amenu.items.length}항목.
+> 웹 UI 는 ui-menu. 같은 단어라도 관례가 다르다(모달=앱은 풀스크린, 셀렉트=앱은 시트).
+> 공식: ${af.pattern}
+> 갤러리: https://giting.kr/skills/app-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install app-menu@giting
+
+${amenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${aby(cat.id).map(it => `### ${it.name.ko} — ${it.name.en}
+- 별칭: ${it.aliases.join(' · ')}
+- 정의: ${it.oneliner}
+- 요청: ${it.ask}${it.vs ? `
+- 구분: ${it.vs}` : ''}${it.native ? `
+- 네이티브: ${it.native}` : ''}
+`).join('\n')}`).join('\n')}`;
+
+if (SITE_DIR) {
+  const AS = join(SITE_DIR, 'app-menu');
+  mkdirSync(AS, { recursive: true });
+  writeFileSync(join(AS, 'gallery-core.html'), apCore);
+  writeFileSync(join(AS, 'llms.txt'), adict());
+  writeFileSync(join(AS, 'llms-full.txt'), adict());
+}
+mkdirSync(join(ROOT, 'docs', 'app-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'app-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/app-menu'));
+writeFileSync(join(ROOT, 'docs', 'app-menu', 'llms.txt'), adict());
+console.log(`built app-menu: items ${amenu.items.length} · core ${(apCore.length / 1024).toFixed(0)}KB`);
+
+// ── 랜딩 메뉴판 (landing-menu) — 07 ─────────────────────────────
+// 랜딩 섹션 사전. 전폭 섹션이라 카드는 1열. 룩은 design-brief, 구조는 여기.
+const LMP = join(ROOT, 'plugins', 'landing-menu');
+const lmMenu = JSON.parse(readFileSync(join(LMP, 'menu.json'), 'utf8'));
+const lmBy = id => lmMenu.items.filter(i => i.category === id);
+const lmFrags = {};
+for (const fn of readdirSync(join(LMP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(LMP, 'demos', fn), 'utf8');
+  const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3)
+    lmFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 360), body: parts[i + 2].trim() };
+}
+const lmMiss = lmMenu.items.filter(it => !lmFrags[it.id]).map(it => it.id);
+if (lmMiss.length) { console.error('landing-menu 데모 없는 항목:', lmMiss.join(', ')); process.exit(1); }
+const lmStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${it.name.ko} ${it.name.en} — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+${lmFrags[it.id].body}
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>`;
+const lmCode = {};
+rmSync(join(LMP, 'components'), { recursive: true, force: true });
+mkdirSync(join(LMP, 'components'), { recursive: true });
+for (const it of lmMenu.items) { lmCode[it.id] = lmStandalone(it); writeFileSync(join(LMP, 'components', `${it.id}.html`), lmCode[it.id]); }
+const LM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components';
+const LM_CSS = `.lmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e5e1;--acc:#0E7B62;--bg:#faf9f6;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.lmgal .lm-formula{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px}
+.lmgal .lm-formula .fp{font-size:14px;font-weight:700}.lmgal .lm-formula .fp span{color:var(--acc);font-weight:600;margin-left:8px}
+.lmgal .lm-formula .fx{margin:10px 0 0;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.lmgal .lm-anti{margin:8px 0 0;font-size:12px;color:#8A6A1F}
+.lmgal .lm-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.lmgal .lm-nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.lmgal .lm-nav a b{color:var(--acc);margin-right:5px}
+.lmgal .lm-cat{margin:0 0 30px}
+.lmgal .lm-cat h2{font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.lmgal .lm-cat h2 .no{color:var(--acc)}.lmgal .lm-cat h2 .count{font-size:12px;color:var(--ink2);font-weight:600}
+.lmgal .lm-grid{display:grid;gap:16px}
+.lmgal .lm-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.lmgal .lm-card header{display:flex;align-items:baseline;gap:9px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.lmgal .lm-card header h3{font-size:15px;font-weight:800;margin:0}.lmgal .lm-card header .en{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--ink2)}
+.lmgal .lm-card header .copy{margin-left:auto;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 10px;cursor:pointer;color:var(--ink)}
+.lmgal .lm-card iframe{display:block;width:100%;border:0;background:#fff}
+.lmgal .lm-card footer{padding:12px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink2);display:grid;gap:5px}
+.lmgal .lm-card footer .al{color:var(--ink);font-weight:600}
+.lmgal .lm-card footer .vs{color:#8A6A1F}
+@media(prefers-color-scheme:dark){.lmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.lmgal .lm-formula,.lmgal .lm-card{background:#1d1d20}.lmgal .lm-nav a{background:#1d1d20}}`;
+const lmCard = it => `<article class="lm-card" id="l-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장 복사</button></header>
+  <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${lmFrags[it.id].h}px" srcdoc="${attr(lmCode[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span>${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}</footer>
+</article>`;
+const lmF = lmMenu.formula;
+const lmCore = `<div class="lmgal">
+<style>${LM_CSS}</style>
+<div class="lm-formula">
+  <div class="fp">AI한테 시키는 공식<span>${esc(lmF.pattern)}</span></div>
+  <div class="fx">✕ 「${esc(lmF.bad)}」 → ○ 「${esc(lmF.good)}」</div>
+  <div class="lm-anti">⛔ ${esc(lmMenu.antiGeneric[0])}</div>
+</div>
+<nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}</nav>
+${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${lmBy(cat.id).length}</span></h2>
+  <div class="lm-grid">${lmBy(cat.id).map(lmCard).join('\n')}</div>
+</section>`).join('\n')}
+<script>document.querySelectorAll('.lmgal .copy').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.getAttribute('data-copy'));var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
+</div>
+`;
+const lmDict = full => `# 랜딩 메뉴판 (landing-menu) — Giting Skills
+
+> 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML. 6개 코스 ${lmMenu.items.length}개 항목.
+> 룩(색·폰트)은 design-brief에서, 이 사전은 구조·순서만.
+> 공식: ${lmF.pattern}  (✕ "${lmF.bad}" → ○ "${lmF.good}")
+> 갤러리: https://giting.kr/skills/landing-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install landing-menu@giting
+
+## ⛔ 제너릭 회피
+${lmMenu.antiGeneric.map(a => `- ${a}`).join('\n')}
+
+${lmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${lmBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}
+- 요청 문장: ${it.ask}
+- 레퍼런스: ${LM_RAW}/${it.id}.html${full ? `
+
+\`\`\`html
+${lmCode[it.id].trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}`;
+if (SITE_DIR) {
+  const LS = join(SITE_DIR, 'landing-menu');
+  mkdirSync(LS, { recursive: true });
+  writeFileSync(join(LS, 'gallery-core.html'), lmCore);
+  writeFileSync(join(LS, 'llms.txt'), lmDict(false));
+  writeFileSync(join(LS, 'llms-full.txt'), lmDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'landing-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'landing-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/landing-menu'));
+writeFileSync(join(ROOT, 'docs', 'landing-menu', 'llms.txt'), lmDict(false));
+console.log(`built landing-menu: items ${lmMenu.items.length} · core ${(lmCore.length / 1024).toFixed(0)}KB`);

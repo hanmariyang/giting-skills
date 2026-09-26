@@ -1,0 +1,99 @@
+<!-- @feature-grid h=340 full -->
+<style>
+  .fg { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .fg .wrap { max-width:960px; margin:0 auto; padding:44px 24px; }
+  .fg .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:680px){ .fg .grid { grid-template-columns:1fr; } }
+  .fg .c { border:1px solid var(--line); border-radius:12px; padding:20px; }
+  .fg .ic { width:36px; height:36px; border-radius:9px; background:color-mix(in srgb,var(--acc) 14%,#fff); display:flex; align-items:center; justify-content:center; }
+  .fg .ic i { width:15px; height:15px; border-radius:4px; background:var(--acc); }
+  .fg h3 { font-size:16px; font-weight:700; margin:14px 0 0; }
+  .fg p { font-size:13.5px; color:var(--mut); line-height:1.6; margin:6px 0 0; }
+</style>
+<section class="fg"><div class="wrap"><div class="grid">
+  <div class="c"><div class="ic"><i></i></div><h3>빠른 시작</h3><p>설치 없이 한 줄로 붙는다. 오늘 바로 실무에.</p></div>
+  <div class="c"><div class="ic"><i></i></div><h3>로컬 우선</h3><p>데이터가 기기를 떠나지 않는다. 업로드 0.</p></div>
+  <div class="c"><div class="ic"><i></i></div><h3>열린 포맷</h3><p>결과가 표준 형식으로 남아 종속되지 않는다.</p></div>
+</div></div></section>
+
+<!-- @feature-alt h=460 full -->
+<style>
+  .fa { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .fa .wrap { max-width:960px; margin:0 auto; padding:36px 24px; display:grid; gap:28px; }
+  .fa .row { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
+  .fa .row.rev .copy { order:2; }
+  @media (max-width:680px){ .fa .row, .fa .row.rev { grid-template-columns:1fr; gap:14px; } .fa .row.rev .copy { order:0; } }
+  .fa .eyebrow { font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .fa h3 { font-size:21px; font-weight:800; letter-spacing:-.02em; margin:8px 0 0; }
+  .fa p { font-size:14.5px; color:var(--mut); line-height:1.65; margin:10px 0 0; max-width:34ch; }
+  .fa .vis { background:#f4f6f5; border:1px solid var(--line); border-radius:12px; min-height:150px; display:grid; gap:9px; padding:18px; align-content:center; }
+  .fa .vis .b { height:11px; background:#e4e7e5; border-radius:5px; }
+  .fa .vis .b.a { background:color-mix(in srgb,var(--acc) 30%,#e4e7e5); width:55%; }
+</style>
+<section class="fa"><div class="wrap">
+  <div class="row"><div class="copy"><div class="eyebrow">기능 1</div><h3>한 줄에서 시작</h3><p>아이디어 한 줄만 던지면 나머지는 같이 채운다. 빈 문서 앞에서 막힐 일이 없다.</p></div><div class="vis"><div class="b a"></div><div class="b"></div><div class="b" style="width:80%"></div></div></div>
+  <div class="row rev"><div class="copy"><div class="eyebrow">기능 2</div><h3>단계마다 확인</h3><p>앞을 고치면 뒤가 다시 열린다. 마음대로 덮어쓰지 않고 다시 묻는다.</p></div><div class="vis"><div class="b" style="width:70%"></div><div class="b a"></div><div class="b" style="width:85%"></div></div></div>
+</div></section>
+
+<!-- @bento h=440 full -->
+<style>
+  .bt { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#b8442e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .bt .wrap { max-width:960px; margin:0 auto; padding:44px 24px; }
+  .bt .grid { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:120px; gap:14px; }
+  @media (max-width:680px){ .bt .grid { grid-template-columns:repeat(2,1fr); } }
+  .bt .t { border:1px solid var(--line); border-radius:14px; padding:18px; display:flex; flex-direction:column; justify-content:flex-end; }
+  .bt .big { grid-column:span 2; grid-row:span 2; background:color-mix(in srgb,var(--acc) 8%,#fff); }
+  .bt .t h4 { font-size:15px; font-weight:800; margin:0; }
+  .bt .big h4 { font-size:22px; }
+  .bt .t p { font-size:12.5px; color:var(--mut); margin:6px 0 0; line-height:1.5; }
+  @media (max-width:680px){ .bt .big { grid-column:span 2; grid-row:span 1; } }
+</style>
+<section class="bt"><div class="wrap"><div class="grid">
+  <div class="t big"><h4>핵심 기능</h4><p>가장 중요한 것을 제일 큰 칸에. 크기가 위계를 만든다.</p></div>
+  <div class="t"><h4>속도</h4><p>실시간</p></div>
+  <div class="t"><h4>보안</h4><p>로컬</p></div>
+  <div class="t"><h4>연동</h4><p>MCP</p></div>
+  <div class="t"><h4>내보내기</h4><p>표준 포맷</p></div>
+</div></div></section>
+
+<!-- @feature-list h=280 full -->
+<style>
+  .fl { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .fl .wrap { max-width:760px; margin:0 auto; padding:40px 24px; display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
+  @media (max-width:560px){ .fl .wrap { grid-template-columns:1fr; } }
+  .fl .it { display:flex; align-items:flex-start; gap:11px; }
+  .fl .ck { width:20px; height:20px; border-radius:50%; background:var(--acc); flex:none; margin-top:1px; position:relative; }
+  .fl .ck:after { content:""; position:absolute; left:6px; top:5px; width:5px; height:9px; border:2px solid #fff; border-top:0; border-left:0; transform:rotate(42deg); }
+  .fl .it span { font-size:14px; color:var(--ink); line-height:1.5; }
+</style>
+<section class="fl"><div class="wrap">
+  <div class="it"><span class="ck"></span><span>키보드만으로 전부 조작</span></div>
+  <div class="it"><span class="ck"></span><span>오프라인에서 그대로 작동</span></div>
+  <div class="it"><span class="ck"></span><span>버전마다 자동 저장</span></div>
+  <div class="it"><span class="ck"></span><span>내보내기 형식 4종</span></div>
+  <div class="it"><span class="ck"></span><span>다크 모드 시스템 추종</span></div>
+  <div class="it"><span class="ck"></span><span>가져오기 원클릭</span></div>
+</div></section>
+
+<!-- @compare-table h=340 full -->
+<style>
+  .ct { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .ct .wrap { max-width:720px; margin:0 auto; padding:44px 24px; }
+  .ct table { width:100%; border-collapse:collapse; font-size:14px; }
+  .ct th, .ct td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; }
+  .ct thead th { font-size:12px; color:var(--mut); font-weight:700; }
+  .ct thead th.us { color:var(--acc); }
+  .ct td.c { text-align:center; }
+  .ct .y { color:var(--acc); font-weight:800; }
+  .ct .n { color:#c3c4c9; }
+  .ct tbody td:first-child { color:var(--ink); }
+</style>
+<section class="ct"><div class="wrap"><table>
+  <thead><tr><th>기능</th><th class="c us">우리</th><th class="c">대안</th></tr></thead>
+  <tbody>
+    <tr><td>로컬 실행</td><td class="c y">✓</td><td class="c n">–</td></tr>
+    <tr><td>MCP 연동</td><td class="c y">✓</td><td class="c n">–</td></tr>
+    <tr><td>업로드 없음</td><td class="c y">✓</td><td class="c n">–</td></tr>
+    <tr><td>오픈소스</td><td class="c y">✓</td><td class="c n">–</td></tr>
+  </tbody>
+</table></div></section>

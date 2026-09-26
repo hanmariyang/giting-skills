@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>아이콘 리스트 Feature List — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .fl { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8f7; }
+  .fl .wrap { max-width:760px; margin:0 auto; padding:40px 24px; display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
+  @media (max-width:560px){ .fl .wrap { grid-template-columns:1fr; } }
+  .fl .it { display:flex; align-items:flex-start; gap:11px; }
+  .fl .ck { width:20px; height:20px; border-radius:50%; background:var(--acc); flex:none; margin-top:1px; position:relative; }
+  .fl .ck:after { content:""; position:absolute; left:6px; top:5px; width:5px; height:9px; border:2px solid #fff; border-top:0; border-left:0; transform:rotate(42deg); }
+  .fl .it span { font-size:14px; color:var(--ink); line-height:1.5; }
+</style>
+<section class="fl"><div class="wrap">
+  <div class="it"><span class="ck"></span><span>키보드만으로 전부 조작</span></div>
+  <div class="it"><span class="ck"></span><span>오프라인에서 그대로 작동</span></div>
+  <div class="it"><span class="ck"></span><span>버전마다 자동 저장</span></div>
+  <div class="it"><span class="ck"></span><span>내보내기 형식 4종</span></div>
+  <div class="it"><span class="ck"></span><span>다크 모드 시스템 추종</span></div>
+  <div class="it"><span class="ck"></span><span>가져오기 원클릭</span></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

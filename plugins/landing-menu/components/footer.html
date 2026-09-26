@@ -1,0 +1,24 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>푸터 Footer — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .ft { --ink:#e9e9ec; --mut:#9a9ba2; --line:#2a2b30; --acc:#7c9bff; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#16171b; color:var(--ink); }
+  .ft .wrap { max-width:960px; margin:0 auto; padding:44px 24px 28px; }
+  .ft .cols { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:24px; }
+  @media (max-width:640px){ .ft .cols { grid-template-columns:1fr 1fr; } }
+  .ft .brand { font-weight:800; font-size:16px; }
+  .ft .brand p { color:var(--mut); font-size:13px; margin:10px 0 0; line-height:1.6; max-width:26ch; }
+  .ft h5 { font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:.06em; margin:0 0 10px; }
+  .ft ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  .ft a { color:#c8c9cf; text-decoration:none; font-size:13.5px; }
+  .ft .base { border-top:1px solid var(--line); margin-top:28px; padding-top:18px; display:flex; justify-content:space-between; color:var(--mut); font-size:12px; flex-wrap:wrap; gap:8px; }
+</style>
+<section class="ft"><div class="wrap">
+  <div class="cols">
+    <div class="brand">Product<p>작고 셀프호스트되는 도구를 만듭니다.</p></div>
+    <div><h5>제품</h5><ul><li><a href="#">기능</a></li><li><a href="#">가격</a></li><li><a href="#">변경 이력</a></li></ul></div>
+    <div><h5>회사</h5><ul><li><a href="#">소개</a></li><li><a href="#">블로그</a></li><li><a href="#">연락</a></li></ul></div>
+    <div><h5>법적</h5><ul><li><a href="#">개인정보</a></li><li><a href="#">이용약관</a></li></ul></div>
+  </div>
+  <div class="base"><span>© 2026 Product</span><span>hello@example.com</span></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

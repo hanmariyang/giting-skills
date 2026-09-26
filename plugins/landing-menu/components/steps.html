@@ -1,0 +1,17 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>스텝 Steps — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .st { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .st .wrap { max-width:900px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:640px){ .st .wrap { grid-template-columns:1fr; gap:18px; } }
+  .st .s { }
+  .st .n { width:34px; height:34px; border-radius:50%; background:var(--acc); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; }
+  .st h3 { font-size:16px; font-weight:700; margin:14px 0 0; }
+  .st p { font-size:13.5px; color:var(--mut); line-height:1.6; margin:6px 0 0; }
+</style>
+<section class="st"><div class="wrap">
+  <div class="s"><div class="n">1</div><h3>연결한다</h3><p>한 줄 설치로 붙인다. 계정도 설정도 없다.</p></div>
+  <div class="s"><div class="n">2</div><h3>맡긴다</h3><p>하고 싶은 걸 한 줄로 말하면 나머지는 알아서.</p></div>
+  <div class="s"><div class="n">3</div><h3>받는다</h3><p>결과가 표준 포맷으로 남는다. 바로 쓴다.</p></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

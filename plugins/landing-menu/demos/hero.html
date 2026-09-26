@@ -1,0 +1,141 @@
+<!-- @hero-text h=380 full -->
+<style>
+  .htx { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; --acc-ink:#fff;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .htx .wrap { max-width:820px; margin:0 auto; padding:64px 24px 56px; }
+  .htx .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .htx h1 { font-size:clamp(30px,6vw,52px); line-height:1.12; letter-spacing:-.03em; font-weight:800; margin:16px 0 0; max-width:16ch; }
+  .htx p { font-size:clamp(15px,2.4vw,18px); color:var(--mut); line-height:1.65; margin:18px 0 0; max-width:48ch; }
+  .htx .cta { margin:28px 0 0; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .htx .btn { background:var(--acc); color:var(--acc-ink); border:0; border-radius:10px; padding:13px 22px; font-size:15px; font-weight:700; cursor:pointer; }
+  .htx .lnk { color:var(--ink); font-weight:600; font-size:14px; text-decoration:none; border-bottom:1.5px solid var(--line); }
+  .htx .note { margin:36px 0 0; font-size:11.5px; color:#a9aab0; border-top:1px dashed var(--line); padding-top:12px; }
+</style>
+<section class="htx"><div class="wrap">
+  <div class="eyebrow">텍스트 히어로</div>
+  <h1>던진 한 줄이, 끝난 일이 됩니다</h1>
+  <p>메시지가 강하면 비주얼이 없어도 된다. 큰 카피 한 줄과 그것을 구체화하는 부제, 그리고 다음 행동 하나로 첫 화면을 연다.</p>
+  <div class="cta"><button class="btn">시작하기</button><a class="lnk" href="#">어떻게 되는지 보기</a></div>
+  <div class="note">색·폰트·간격은 이 데모가 아니라 제품 design-brief에서 온다. 이 섹션은 구조(왼쪽 정렬·카피/부제/CTA 하나)만 보여 준다.</div>
+</div></section>
+
+<!-- @hero-shot h=460 full -->
+<style>
+  .hsh { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; --card:#fff;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#f7f8f7; }
+  .hsh .wrap { max-width:900px; margin:0 auto; padding:56px 24px 40px; text-align:center; }
+  .hsh .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hsh h1 { font-size:clamp(26px,5vw,44px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hsh p { font-size:16px; color:var(--mut); margin:14px auto 0; max-width:44ch; line-height:1.6; }
+  .hsh .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hsh .shot { margin:36px auto 0; max-width:760px; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 40px 70px -40px rgba(20,40,30,.4); overflow:hidden; }
+  .hsh .shot .fauxbar { height:34px; background:#f0f1f0; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:6px; padding:0 12px; }
+  .hsh .shot .fauxbar i { width:9px; height:9px; border-radius:50%; background:#d3d5d3; }
+  .hsh .shot .screen { display:grid; grid-template-columns:120px 1fr; min-height:180px; }
+  .hsh .screen .side { background:#fafbfa; border-right:1px solid var(--line); padding:14px; display:grid; gap:8px; align-content:start; }
+  .hsh .screen .row { height:9px; background:#e9eae9; border-radius:4px; }
+  .hsh .screen .main { padding:16px; display:grid; gap:10px; align-content:start; }
+  .hsh .screen .main .row.acc { background:color-mix(in srgb, var(--acc) 22%, #e9eae9); }
+  .hsh .cap { font-size:11.5px; color:#a9aab0; margin:12px 0 0; }
+</style>
+<section class="hsh"><div class="wrap">
+  <div class="eyebrow">제품샷 히어로</div>
+  <h1>제품이 스스로 설명하게</h1>
+  <p>카피 아래 실제 스크린샷 한 장을 크게, 살짝 떠 보이게 놓는다. 목업 일러스트가 아니라 진짜 화면이어야 한다.</p>
+  <button class="btn">무료로 써 보기</button>
+  <div class="shot">
+    <div class="fauxbar"><i></i><i></i><i></i></div>
+    <div class="screen">
+      <div class="side"><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div></div>
+      <div class="main"><div class="row acc" style="width:60%"></div><div class="row" style="width:90%"></div><div class="row" style="width:80%"></div><div class="row" style="width:70%"></div></div>
+    </div>
+  </div>
+  <div class="cap">실제 스크린샷 자리(여기선 구조만 표시). 진짜 제품 화면을 넣는다.</div>
+</div></section>
+
+<!-- @hero-device h=440 full -->
+<style>
+  .hdv { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hdv .wrap { max-width:960px; margin:0 auto; padding:52px 24px; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:center; }
+  @media (max-width:680px){ .hdv .wrap { grid-template-columns:1fr; gap:28px; } }
+  .hdv .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hdv h1 { font-size:clamp(26px,4.6vw,42px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hdv p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:40ch; }
+  .hdv .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hdv .frame { border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 40px 70px -44px rgba(20,20,40,.45); background:#fff; }
+  .hdv .frame .bar { height:36px; background:#f2f3f6; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:7px; padding:0 12px; }
+  .hdv .frame .bar i { width:9px; height:9px; border-radius:50%; background:#d3d5da; }
+  .hdv .frame .bar .addr { margin-left:8px; height:16px; flex:1; background:#fff; border:1px solid var(--line); border-radius:6px; }
+  .hdv .frame .screen { padding:16px; display:grid; gap:10px; min-height:170px; align-content:start; }
+  .hdv .frame .screen .row { height:10px; background:#eceded; border-radius:5px; }
+  .hdv .frame .screen .row.acc { background:color-mix(in srgb, var(--acc) 24%, #eceded); }
+  .hdv .cap { grid-column:1/-1; font-size:11.5px; color:#a9aab0; margin-top:6px; }
+</style>
+<section class="hdv"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">디바이스 프레임 히어로</div>
+    <h1>진짜 도는 제품처럼 보이게</h1>
+    <p>스크린샷을 브라우저 창(또는 폰) 프레임에 넣으면 화면이 '캡처'가 아니라 '도는 제품'으로 읽힌다. 기본으로 추천하는 형태.</p>
+    <button class="btn">데모 열기</button>
+  </div>
+  <div class="frame">
+    <div class="bar"><i></i><i></i><i></i><span class="addr"></span></div>
+    <div class="screen"><div class="row acc" style="width:55%"></div><div class="row" style="width:92%"></div><div class="row" style="width:84%"></div><div class="row" style="width:74%"></div><div class="row" style="width:64%"></div></div>
+  </div>
+  <div class="cap">프레임 안은 실제 스크린샷 자리. 색·폰트는 제품 design-brief에서.</div>
+</div></section>
+
+<!-- @hero-split h=420 full -->
+<style>
+  .hsp { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#b8442e;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hsp .wrap { max-width:980px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch; min-height:340px; }
+  @media (max-width:680px){ .hsp .wrap { grid-template-columns:1fr; } .hsp .visual{ min-height:180px; } }
+  .hsp .copy { padding:52px 40px 52px 0; align-self:center; }
+  @media (max-width:680px){ .hsp .copy { padding:44px 0 24px; } }
+  .hsp .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hsp h1 { font-size:clamp(26px,4.4vw,40px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hsp p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:36ch; }
+  .hsp .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hsp .visual { background:linear-gradient(135deg,#faf3f1,#f3ece9); border-left:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+  .hsp .visual .card { width:70%; max-width:260px; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 24px 44px -30px rgba(80,40,30,.4); padding:16px; display:grid; gap:9px; }
+  .hsp .visual .card .row { height:10px; background:#eceded; border-radius:5px; }
+  .hsp .visual .card .row.acc { background:color-mix(in srgb, var(--acc) 26%, #eceded); }
+</style>
+<section class="hsp"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">분할 히어로</div>
+    <h1>카피와 이미지가 대등할 때</h1>
+    <p>화면을 좌우로 반씩 나눠 왼쪽에 카피, 오른쪽에 비주얼을 놓는다. 모바일에선 위아래로 쌓인다.</p>
+    <button class="btn">둘러보기</button>
+  </div>
+  <div class="visual"><div class="card"><div class="row acc" style="width:50%"></div><div class="row"></div><div class="row" style="width:80%"></div><div class="row" style="width:60%"></div></div></div>
+</div></section>
+
+<!-- @hero-motion h=440 full -->
+<style>
+  .hmo { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#2b6fb0;
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; color:var(--ink); background:#fff; }
+  .hmo .wrap { max-width:960px; margin:0 auto; padding:52px 24px; display:grid; grid-template-columns:1fr 1.1fr; gap:40px; align-items:center; }
+  @media (max-width:680px){ .hmo .wrap { grid-template-columns:1fr; gap:26px; } }
+  .hmo .eyebrow { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .hmo h1 { font-size:clamp(26px,4.6vw,42px); line-height:1.14; letter-spacing:-.03em; font-weight:800; margin:14px 0 0; }
+  .hmo p { font-size:16px; color:var(--mut); line-height:1.6; margin:16px 0 0; max-width:40ch; }
+  .hmo .btn { margin:22px 0 0; background:var(--acc); color:#fff; border:0; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; }
+  .hmo .player { position:relative; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 40px 70px -44px rgba(20,30,50,.45); background:#0e1620; aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; }
+  .hmo .player .play { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; }
+  .hmo .player .play:after { content:""; border-left:16px solid var(--acc); border-top:10px solid transparent; border-bottom:10px solid transparent; margin-left:4px; }
+  .hmo .player .tag { position:absolute; left:12px; bottom:10px; font-size:11px; color:#cdd6e0; font-family:ui-monospace,monospace; }
+  .hmo .cap { grid-column:1/-1; font-size:11.5px; color:#a9aab0; }
+</style>
+<section class="hmo"><div class="wrap">
+  <div class="copy">
+    <div class="eyebrow">모션 히어로</div>
+    <h1>동작이 핵심이면, 움직여라</h1>
+    <p>카피 옆에 자동재생·무한반복·음소거 영상으로 제품이 움직이는 모습을 보여 준다. 정지 포스터를 지정하고, 모션 줄임 설정이면 멈춘다.</p>
+    <button class="btn">30초 보기</button>
+  </div>
+  <div class="player"><div class="play"></div><span class="tag">autoplay · loop · muted · playsinline</span></div>
+  <div class="cap">여기 &lt;video&gt; 자리(자동재생 영상). 정지 포스터 필수, prefers-reduced-motion이면 정지 이미지로 대체.</div>
+</div></section>

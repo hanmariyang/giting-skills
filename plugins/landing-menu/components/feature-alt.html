@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>번갈아 행 Alternating Rows — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .fa { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#127a5e; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; }
+  .fa .wrap { max-width:960px; margin:0 auto; padding:36px 24px; display:grid; gap:28px; }
+  .fa .row { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
+  .fa .row.rev .copy { order:2; }
+  @media (max-width:680px){ .fa .row, .fa .row.rev { grid-template-columns:1fr; gap:14px; } .fa .row.rev .copy { order:0; } }
+  .fa .eyebrow { font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+  .fa h3 { font-size:21px; font-weight:800; letter-spacing:-.02em; margin:8px 0 0; }
+  .fa p { font-size:14.5px; color:var(--mut); line-height:1.65; margin:10px 0 0; max-width:34ch; }
+  .fa .vis { background:#f4f6f5; border:1px solid var(--line); border-radius:12px; min-height:150px; display:grid; gap:9px; padding:18px; align-content:center; }
+  .fa .vis .b { height:11px; background:#e4e7e5; border-radius:5px; }
+  .fa .vis .b.a { background:color-mix(in srgb,var(--acc) 30%,#e4e7e5); width:55%; }
+</style>
+<section class="fa"><div class="wrap">
+  <div class="row"><div class="copy"><div class="eyebrow">기능 1</div><h3>한 줄에서 시작</h3><p>아이디어 한 줄만 던지면 나머지는 같이 채운다. 빈 문서 앞에서 막힐 일이 없다.</p></div><div class="vis"><div class="b a"></div><div class="b"></div><div class="b" style="width:80%"></div></div></div>
+  <div class="row rev"><div class="copy"><div class="eyebrow">기능 2</div><h3>단계마다 확인</h3><p>앞을 고치면 뒤가 다시 열린다. 마음대로 덮어쓰지 않고 다시 묻는다.</p></div><div class="vis"><div class="b" style="width:70%"></div><div class="b a"></div><div class="b" style="width:85%"></div></div></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

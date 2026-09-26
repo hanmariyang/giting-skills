@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>앵커 목차 Anchor Nav — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .an { --ink:#1a1b1f; --mut:#6b6c74; --line:#e7e7ea; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f7f8fb; }
+  .an .wrap { max-width:760px; margin:0 auto; padding:40px 24px; display:grid; grid-template-columns:160px 1fr; gap:28px; }
+  @media (max-width:560px){ .an .wrap { grid-template-columns:1fr; } }
+  .an nav { position:sticky; top:16px; align-self:start; display:grid; gap:4px; }
+  .an nav a { font-size:13.5px; color:var(--mut); text-decoration:none; padding:6px 10px; border-left:2px solid transparent; }
+  .an nav a.on { color:var(--acc); font-weight:700; border-left-color:var(--acc); background:#fff; border-radius:0 8px 8px 0; }
+  .an .body { display:grid; gap:10px; }
+  .an .body .b { height:12px; background:#e7e8ee; border-radius:6px; }
+  .an .body .b:nth-child(1){ width:60%; background:color-mix(in srgb,var(--acc) 24%,#e7e8ee); }
+</style>
+<section class="an"><div class="wrap">
+  <nav><a class="on" href="#">개요</a><a href="#">기능</a><a href="#">가격</a><a href="#">FAQ</a></nav>
+  <div class="body"><div class="b"></div><div class="b" style="width:92%"></div><div class="b" style="width:80%"></div><div class="b" style="width:88%"></div><div class="b" style="width:70%"></div></div>
+</div></section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
