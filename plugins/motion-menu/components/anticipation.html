@@ -1,0 +1,11 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>안티시페이션 Anticipation — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .an{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .anc{position:absolute;top:50%;margin-top:-24px;left:8%;width:48px;height:48px;border-radius:10px;background:#7a5af0;animation:an 2.6s ease-in-out infinite}
+  @keyframes an{0%{transform:translateX(0)}18%{transform:translateX(-16px)}55%,100%{transform:translateX(230px)}}
+  @media(prefers-reduced-motion:reduce){.anc{animation:none}}
+</style>
+<div class="an"><div class="anc"></div></div>
+<p class="cap">안티시페이션 · 가기 전에 반대로 살짝 뺀다(준비 동작)</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

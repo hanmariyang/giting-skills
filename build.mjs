@@ -1276,3 +1276,150 @@ mkdirSync(join(ROOT, 'docs', 'landing-menu'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'landing-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/landing-menu'));
 writeFileSync(join(ROOT, 'docs', 'landing-menu', 'llms.txt'), lmDict(false));
 console.log(`built landing-menu: items ${lmMenu.items.length} · core ${(lmCore.length / 1024).toFixed(0)}KB`);
+
+// ── 모션 메뉴판 (motion-menu) — 08 ──────────────────────────────
+// 영상·카메라 모션 사전. 데모는 CSS 로 재현한 움직임(iframe), 원맥락은 AI 영상 생성 프롬프트.
+// 강조·전환 항목엔 ⭐(현장 다빈도) 배지. recipes = 샷 단위 조합. 스코프 .mogal.
+const MMP = join(ROOT, 'plugins', 'motion-menu');
+const moMenu = JSON.parse(readFileSync(join(MMP, 'menu.json'), 'utf8'));
+const moBy = id => moMenu.items.filter(i => i.category === id);
+const moFrags = {};
+for (const fn of readdirSync(join(MMP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(MMP, 'demos', fn), 'utf8');
+  const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3)
+    moFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 220), body: parts[i + 2].trim() };
+}
+const moMiss = [...moMenu.items, ...moMenu.recipes].filter(it => !moFrags[it.id]).map(it => it.id);
+if (moMiss.length) { console.error('motion-menu 데모 없는 항목:', moMiss.join(', ')); process.exit(1); }
+const moStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+${moFrags[it.id].body}
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>`;
+const moCode = {};
+rmSync(join(MMP, 'components'), { recursive: true, force: true });
+mkdirSync(join(MMP, 'components'), { recursive: true });
+for (const it of moMenu.items) { moCode[it.id] = moStandalone(it); writeFileSync(join(MMP, 'components', `${it.id}.html`), moCode[it.id]); }
+const moRcode = {};
+for (const r of moMenu.recipes) { moRcode[r.id] = moStandalone({ id: r.id, name: { ko: r.shot, en: r.combo.join('+') } }); writeFileSync(join(MMP, 'components', `${r.id}.html`), moRcode[r.id]); }
+const MO_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components';
+const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.mogal .mo-formula{background:var(--paper);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:0 0 18px}
+.mogal .mo-fh{padding:11px 16px;background:var(--bg);font-size:13px;font-weight:700;display:flex;gap:9px;flex-wrap:wrap;align-items:baseline}
+.mogal .mo-fh span{font-weight:500;color:var(--ink2);font-family:ui-monospace,monospace;font-size:12px}
+.mogal .mo-fx{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:720px){.mogal .mo-fx{grid-template-columns:1fr}}
+.mogal .mo-fx>div{padding:12px 16px;font-size:14px}
+.mogal .mo-fx .bad{color:var(--ink3);border-right:1px solid var(--line)}
+@media(max-width:720px){.mogal .mo-fx .bad{border-right:0;border-bottom:1px solid var(--line)}}
+.mogal .mo-fx .mk{display:block;font-size:11px;font-family:ui-monospace,monospace;margin-bottom:3px}
+.mogal .bad .mk{color:#C0392B}.mogal .good .mk{color:#17B26A}
+.mogal .mo-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.mogal .mo-nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
+.mogal .mo-nav a b{color:var(--acc);margin-right:5px}
+.mogal .mo-cat{margin:0 0 30px;scroll-margin-top:80px}
+.mogal .mo-cat h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px;margin:0 0 6px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.mogal .mo-cat h2 .no{color:var(--acc)}.mogal .mo-cat h2 .count{font-size:12px;color:var(--ink3);font-weight:600}
+.mogal .mo-note{font-size:12.5px;color:var(--ink2);margin:0 0 14px}
+.mogal .mo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.mogal .mo-grid{grid-template-columns:1fr}}
+.mogal .mo-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column}
+.mogal .mo-card header{display:flex;align-items:center;gap:7px;padding:9px 13px;border-bottom:1px solid var(--line)}
+.mogal .mo-card header h3{font-size:14.5px;font-weight:700;margin:0}
+.mogal .mo-card .star{color:var(--acc2);font-size:12px}
+.mogal .mo-card .en{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink3);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mogal .mo-card .copy{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink2)}
+.mogal .mo-card .copy:hover{border-color:var(--ink3);color:var(--ink)}
+.mogal .mo-card .copy.ok{border-color:var(--acc2);color:var(--acc)}
+.mogal .mo-card iframe{display:block;width:100%;border:0;background:#fff}
+.mogal .mo-card footer{padding:9px 13px 11px;border-top:1px solid var(--bg);display:flex;flex-wrap:wrap;gap:4px 9px;align-items:baseline;margin-top:auto}
+.mogal .mo-card .al{font-size:12px;color:var(--acc)}
+.mogal .mo-card .one{font-size:12px;color:var(--ink2)}
+.mogal .mo-card .ask{flex-basis:100%;font-size:11.5px;color:var(--ink2);border-top:1px dashed var(--line);padding-top:6px;margin-top:3px}
+.mogal .mo-card .ask b{color:var(--ink3);font-weight:600;font-family:ui-monospace,monospace;font-size:10.5px}
+.mogal .mo-card .vs{flex-basis:100%;font-size:11.5px;color:var(--ink3)}
+.mogal .mo-rcp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.mogal .mo-rcp{grid-template-columns:1fr}}
+.mogal .mo-rcpi{border:1px solid var(--line);border-radius:13px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+.mogal .mo-rcpi header{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.mogal .mo-rcpi h3{font-size:15px;font-weight:700;margin:0}
+.mogal .mo-rcpi .rk{flex:1;min-width:0;font-size:12px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mogal .mo-rcpi iframe{display:block;width:100%;border:0;background:#fff}
+.mogal .mo-rcpc{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px 0}
+.mogal .mo-rtag{font-family:ui-monospace,monospace;font-size:11px;color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,transparent);border:1px solid color-mix(in srgb,var(--acc) 22%,transparent);border-radius:6px;padding:2px 8px}
+.mogal .mo-rcpsc{margin:9px 14px 12px;font-size:12.5px;color:var(--ink2);line-height:1.55}
+@media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b}}`;
+const moStar = it => it.star ? '<span class="star" title="현장에서 특히 많이 쓰는 것">★</span>' : '';
+const moCard = it => `<article class="mo-card" id="m-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+  <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[it.id].h}px" srcdoc="${attr(moCode[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
+</article>`;
+const moF = moMenu.formula;
+const catNote = { emphasis: '대부분 현장 용어예요. ★는 특히 자주 씁니다.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.' };
+const moCore = `<div class="mogal">
+<style>${MO_CSS}</style>
+<div class="mo-formula">
+  <div class="mo-fh">AI한테 시키는 공식<span>${esc(moF.pattern)}</span></div>
+  <div class="mo-fx">
+    <div class="bad"><span class="mk">✕ 이렇게 말고</span>「${esc(moF.bad)}」</div>
+    <div class="good"><span class="mk">○ 이렇게</span>「${esc(moF.good)}」</div>
+  </div>
+</div>
+<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moMenu.recipes.length}</a></nav>
+${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${moBy(cat.id).length}</span></h2>
+  ${catNote[cat.id] ? `<p class="mo-note">${catNote[cat.id]}</p>` : ''}
+  <div class="mo-grid">${moBy(cat.id).map(moCard).join('\n')}</div>
+</section>`).join('\n')}
+<section class="mo-cat" id="mc-recipes">
+  <h2><span class="no">＋</span> 조합 레시피 <span class="count">${moMenu.recipes.length} · 샷 단위</span></h2>
+  <p class="mo-note">낱개 모션을 아는 다음 단계 — 흔한 샷이 어떤 조합으로 만들어지는지.</p>
+  <div class="mo-rcp">${moMenu.recipes.map(r => `<article class="mo-rcpi" id="m-${r.id}">
+    <header><h3>${esc(r.shot)}</h3><span class="rk">${esc(r.ko)}</span><button class="copy" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
+    <iframe title="${esc(r.shot)} 조합 데모" loading="lazy" style="height:${moFrags[r.id].h}px" srcdoc="${attr(moRcode[r.id])}"></iframe>
+    <div class="mo-rcpc">${r.combo.map(c => `<span class="mo-rtag">${esc(c)}</span>`).join('')}</div>
+    <p class="mo-rcpsc">${esc(r.sc)}</p>
+  </article>`).join('\n')}</div>
+</section>
+<script>(function(){var g=document.querySelector('.mogal');if(!g)return;g.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var o=b.textContent;b.textContent='복사됨';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1100);});})();</script>
+</div>
+`;
+const moDict = full => `# 모션 메뉴판 (motion-menu) — Giting Skills
+
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 3개 코스 ${moMenu.items.length}개 항목.
+> 쓰임 1순위 = AI 영상 생성(Runway·Kling·Sora 등) 프롬프트. 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
+> 공식: ${moF.pattern}  (✕ "${moF.bad}" → ○ "${moF.good}")
+> 갤러리: https://giting.kr/skills/motion-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting
+
+${moMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+${catNote[cat.id] ? `${catNote[cat.id]}\n` : ''}
+${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : ''}
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 정의: ${it.oneliner}
+- 구분: ${it.vs}
+- 요청 문장: ${it.ask}
+- 데모: ${MO_RAW}/${it.id}.html${full ? `
+
+\`\`\`html
+${moCode[it.id].trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}
+## ＋ 조합 레시피 (샷 단위)
+
+${moMenu.recipes.map(r => `### ${r.shot} — ${r.ko}
+- 조합: ${r.combo.join(' + ')}
+- 설명: ${r.sc}
+- 요청 문장: ${r.ask}`).join('\n\n')}`;
+if (SITE_DIR) {
+  const MS = join(SITE_DIR, 'motion-menu');
+  mkdirSync(MS, { recursive: true });
+  writeFileSync(join(MS, 'gallery-core.html'), moCore);
+  writeFileSync(join(MS, 'llms.txt'), moDict(false));
+  writeFileSync(join(MS, 'llms-full.txt'), moDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'motion-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'motion-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/motion-menu'));
+writeFileSync(join(ROOT, 'docs', 'motion-menu', 'llms.txt'), moDict(false));
+console.log(`built motion-menu: items ${moMenu.items.length} · recipes ${moMenu.recipes.length} · core ${(moCore.length / 1024).toFixed(0)}KB`);

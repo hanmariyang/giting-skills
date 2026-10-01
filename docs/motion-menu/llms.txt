@@ -1,0 +1,193 @@
+# 모션 메뉴판 (motion-menu) — Giting Skills
+
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 3개 코스 23개 항목.
+> 쓰임 1순위 = AI 영상 생성(Runway·Kling·Sora 등) 프롬프트. 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
+> 공식: [어디에/무엇에] + [모션 이름] + [방향] + [시간 또는 프레임]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 오른쪽으로 팬해줘. 1초 동안.")
+> 갤러리: https://giting.kr/skills/motion-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting
+
+## ① 카메라 기본
+
+### 팬 (Pan)
+- 별칭: "화면을 옆으로 둘러봐줘" · "좌우로 훑어줘" · "옆으로 쭉 돌려줘"
+- 정의: 제자리에서 좌우로 돌기.
+- 구분: 카메라가 제자리에서 좌우로 돌면 팬, 몸이 옆으로 이동하면 트랙
+- 요청 문장: 첫 화면에서 오른쪽으로 팬해줘. 1초 동안.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pan.html
+
+### 틸트 (Tilt)
+- 별칭: "위아래로 훑어줘" · "아래서 위로 올려다봐줘" · "위로 올려줘"
+- 정의: 제자리에서 위아래로 돌기.
+- 구분: 제자리에서 위아래로 돌면 틸트, 몸이 위아래로 이동하면 페데스탈
+- 요청 문장: 제품 아래에서 위로 틸트 업해줘. 1.5초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/tilt.html
+
+### 롤 (Roll)
+- 별칭: "화면을 기울여줘" · "비스듬히 돌려줘" · "수평선 틀어줘"
+- 정의: 화면이 기울어짐.
+- 구분: 렌즈 방향 축으로 돌아 수평선이 기운다. 평면을 눕히는 퍼스펙티브 틸트와 다르다
+- 요청 문장: 마지막 컷에서 화면을 5도 롤해줘. 0.5초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/roll.html
+
+### 트랙 (Track)
+- 별칭: "따라가면서 옆으로 움직여줘" · "같이 옆으로 이동해줘" · "달려가며 옆에서 찍어줘"
+- 정의: 카메라 몸이 옆으로 이동.
+- 구분: 몸이 옆으로 움직이면 트랙(가까운 게 더 많이 움직임), 제자리서 돌면 팬
+- 요청 문장: 카드 세 장을 따라 왼쪽으로 트랙해줘. 2초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/track.html
+
+### 페데스탈 (Pedestal)
+- 별칭: "카메라를 위로 올려줘" · "높이를 올려서 찍어줘" · "수직으로 올라가며"
+- 정의: 카메라 몸이 위아래로 이동.
+- 구분: 몸이 위아래로 움직이면 페데스탈(가까운 게 더 많이 움직임), 제자리서 돌면 틸트
+- 요청 문장: 건물 아래에서 위로 페데스탈 업해줘. 2초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pedestal.html
+
+### 달리 (Dolly)
+- 별칭: "앞으로 다가가줘" · "가까이 들어가줘" · "밀고 들어가줘"
+- 정의: 카메라 몸이 앞뒤로 이동, 배경도 변함.
+- 구분: 몸이 다가가 배경까지 변하면 달리, 렌즈만 당겨 다 같은 비율로 커지면 줌
+- 요청 문장: 캐릭터 쪽으로 달리 인해줘. 배경도 같이 변하게. 1.5초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dolly.html
+
+### 줌 (Zoom)
+- 별칭: "확대해줘" · "당겨줘" · "줌 인해줘"
+- 정의: 렌즈만 당김, 배경은 그대로.
+- 구분: 렌즈만 당겨 전부 같은 비율로 커지면 줌, 몸이 다가가 배경이 변하면 달리
+- 요청 문장: 제목에 줌 인해줘. 1초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/zoom.html
+
+### 오빗 (Orbit)
+- 별칭: "주위를 빙 돌아줘" · "둘러서 돌려줘" · "제품 돌려서 보여줘"
+- 정의: 대상 주위를 돌기.
+- 구분: 대상은 가운데 두고 그 둘레를 돌면 오빗, 평면을 겹쳐 깊이를 주면 2.5D 카메라
+- 요청 문장: 제품 주위를 180도 오빗해줘. 3초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/orbit.html
+
+## ② 강조 · 전환
+대부분 현장 용어예요. ★는 특히 자주 씁니다.
+
+### 휩 팬 (Whip Pan) ★
+- 별칭: "확 넘겨줘" · "휙 전환해줘" · "빠르게 쏠리면서 바꿔줘"
+- 정의: 확 쏠리면서 장면 전환.
+- 구분: 팬을 아주 빠르게 해 잔상과 함께 장면이 넘어간다. 느린 팬과 용도가 다르다
+- 요청 문장: 첫 화면에서 둘째 화면으로 휩 팬으로 넘겨줘. 0.4초 안에.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/whip-pan.html
+
+### 스냅 줌 (Snap Zoom) ★
+- 별칭: "확 당겨줘" · "갑자기 확대해줘" · "크래시 줌"
+- 정의: 몇 프레임 만에 확 당김.
+- 구분: 몇 프레임에 걸쳐 확 당기면 스냅 줌, 중간 과정 없이 0프레임이면 펀치 인
+- 요청 문장: 가운데 카드로 스냅 줌 해줘. 4프레임 안에.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/snap-zoom.html
+
+### 펀치 인 (Punch In) ★
+- 별칭: "바로 확대해줘" · "컷으로 키워줘" · "툭 커지게"
+- 정의: 과정 없이 컷으로 확대.
+- 구분: 0프레임(즉시 컷)이면 펀치 인, 몇 프레임 걸치면 스냅 줌
+- 요청 문장: 3초에서 얼굴로 펀치 인 해줘. 중간 동작 없이 컷으로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/punch-in.html
+
+### 줌 아웃 트랙 인 (Dolly Zoom)
+- 별칭: "배경만 빨려 들어가게" · "히치콕 줌" · "현기증 효과"
+- 정의: 인물은 그대로, 배경만 변함.
+- 구분: 카메라는 앞으로(트랙 인), 렌즈는 넓게(줌 아웃)를 동시에. 인물 크기는 유지, 배경만 변한다
+- 요청 문장: 인물 크기는 그대로 두고 배경만 멀어지게 줌 아웃 트랙 인 해줘. 카메라는 앞으로. 2초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dolly-zoom.html
+
+### 스피드 램핑 (Speed Ramp) ★
+- 별칭: "느렸다 빨라졌다 하게" · "속도 조절해줘" · "슬로우 넣었다 빠르게"
+- 정의: 느리게 → 빠르게 → 느리게.
+- 구분: 한 클립 안에서 속도를 바꾸면 스피드 램핑, 속도 곡선만 주면 이징
+- 요청 문장: 카드가 지나갈 때 스피드 램핑 줘. 느리게 0.5초, 빠르게 0.3초, 다시 느리게 0.5초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/speed-ramp.html
+
+### 패럴랙스 (Parallax)
+- 별칭: "배경이랑 앞이 다르게 움직이게" · "깊이감 있게 스크롤" · "레이어 따로 움직여줘"
+- 정의: 가까운 게 더 빨리 움직임.
+- 구분: 레이어마다 속도를 다르게 하면 패럴랙스, 겹친 레이어를 카메라로 돌면 2.5D 카메라
+- 요청 문장: 스크롤할 때 배경은 조금, 앞 레이어는 많이 움직이게 패럴랙스 줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/parallax.html
+
+### 랙 포커스 (Rack Focus)
+- 별칭: "초점 옮겨줘" · "앞에서 뒤로 포커스 바꿔줘" · "핀 옮겨줘"
+- 정의: 초점을 옮겨 시선 이동.
+- 구분: 몸·화각은 그대로 두고 초점만 옮기면 랙 포커스, 몸이 움직이면 트랙/달리
+- 요청 문장: 앞 글자에서 뒤 제품으로 랙 포커스 해줘. 1초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/rack-focus.html
+
+### 퍼스펙티브 틸트 (Perspective Tilt)
+- 별칭: "비스듬히 눕혀줘" · "3D처럼 기울여줘" · "원근감 주게 눕혀줘"
+- 정의: 평면을 비스듬히 눕힘.
+- 구분: 평면을 눕혀 위쪽이 멀어져 보이면 퍼스펙티브 틸트, 수평선만 기울면 롤
+- 요청 문장: 화면을 뒤로 20도 눕혀서 퍼스펙티브 틸트 해줘. 1초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/perspective-tilt.html
+
+### 2.5D 카메라 (2.5D Camera) ★
+- 별칭: "평면을 입체처럼" · "레이어 겹쳐서 깊이" · "2.5D로 움직여줘"
+- 정의: 평면을 앞뒤로 겹쳐 깊이 만들기.
+- 구분: 겹친 레이어를 카메라로 돌면 2.5D 카메라, 레이어 속도만 다르게 하면 패럴랙스
+- 요청 문장: 배경·중간·앞 세 레이어를 앞뒤로 겹치고, 2.5D 카메라로 천천히 돌아줘. 2.5초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/camera-2-5d.html
+
+## ③ 타이밍
+같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.
+
+### 이징 (Easing)
+- 별칭: "자연스럽게 움직이게" · "딱딱하지 않게" · "부드럽게 해줘"
+- 정의: 가속·감속 곡선.
+- 구분: 속도에 곡선을 주면 이징, 일정한 속도면 리니어(기계처럼 보임)
+- 요청 문장: 모든 움직임에 이징 넣어줘. 일정한 속도(리니어) 말고.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/easing.html
+
+### 이즈 아웃 (Ease Out)
+- 별칭: "들어올 때 천천히 멈추게" · "빠르게 왔다 천천히 서게"
+- 정의: 빠르게 시작, 천천히 멈춤.
+- 구분: 빠르게 시작해 천천히 멈추면 이즈 아웃(등장에 제일 많이 씀), 반대면 이즈 인
+- 요청 문장: 카드 등장은 이즈 아웃으로. 빠르게 들어와서 천천히 멈추게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/ease-out.html
+
+### 오버슈트 (Overshoot)
+- 별칭: "살짝 튕기게" · "통통 튀게" · "살짝 지나쳤다 돌아오게"
+- 정의: 살짝 지나쳤다 돌아옴.
+- 구분: 목표를 지나쳤다 돌아오면 오버슈트, 움직이기 전에 반대로 빼면 안티시페이션
+- 요청 문장: 버튼이 커질 때 110%까지 갔다가 100%로 돌아오게 오버슈트 줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/overshoot.html
+
+### 안티시페이션 (Anticipation)
+- 별칭: "움직이기 전 준비동작" · "반동 주게" · "웅크렸다 가게"
+- 정의: 움직이기 전 반대로 살짝.
+- 구분: 움직이기 전에 반대로 빼면 안티시페이션, 끝나고 지나쳤다 오면 오버슈트
+- 요청 문장: 점프 전에 0.15초 살짝 웅크리는 안티시페이션 넣어줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/anticipation.html
+
+### 스태거 (Stagger)
+- 별칭: "하나씩 차례로 나오게" · "시간차로 등장" · "순서대로 뜨게"
+- 정의: 여러 개를 시간차로.
+- 구분: 여러 요소를 시간차로 움직이면 스태거, 한 요소의 속도 곡선은 이징
+- 요청 문장: 카드 세 장을 0.1초 간격 스태거로 등장시켜줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stagger.html
+
+### 모션 블러 (Motion Blur)
+- 별칭: "빠를 때 흐릿하게" · "잔상 남게" · "번지게 해줘"
+- 정의: 빠른 움직임에 잔상.
+- 구분: 빠른 움직임에 잔상을 남기면 모션 블러, 없으면 뚝뚝 끊겨 보인다
+- 요청 문장: 휩 팬 구간에만 가로 모션 블러 넣어줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/motion-blur.html
+
+## ＋ 조합 레시피 (샷 단위)
+
+### 제품 소개 오프너 — 제목이 툭 들어오고 카드가 차례로 뜨는 15초 인트로
+- 조합: Punch In + Ease Out + Stagger
+- 설명: 제목은 펀치 인으로 바로 키우고, 카드는 이즈 아웃 + 스태거로 하나씩
+- 요청 문장: 오프너 만들어줘. 제목은 펀치 인으로 들어오고, 아래 카드 세 장은 0.1초 간격 스태거로 이즈 아웃 등장.
+
+### 장면 전환 — 컷과 컷 사이를 확 넘기는 전환
+- 조합: Whip Pan + Motion Blur
+- 설명: 휩 팬으로 넘기고 그 구간에만 가로 모션 블러
+- 요청 문장: 첫 컷에서 둘째 컷으로 휩 팬으로 넘겨줘. 0.4초, 그 구간에만 가로 모션 블러.
+
+### 깊이감 히어로 — 레이어가 살아 있는 입체 히어로 배경
+- 조합: Parallax + 2.5D Camera + Ease Out
+- 설명: 배경·중간·앞 레이어를 겹쳐 2.5D 카메라로 천천히, 등장은 이즈 아웃
+- 요청 문장: 배경·중간·앞 세 레이어를 겹치고 2.5D 카메라로 천천히 2.5초 돌아줘. 각 레이어는 이즈 아웃으로 등장.

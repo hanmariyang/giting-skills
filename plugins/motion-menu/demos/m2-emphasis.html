@@ -1,0 +1,104 @@
+<!-- @whip-pan h=220 full -->
+<style>
+  .wp{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .wpr{position:absolute;inset:0;display:flex;width:200%;animation:wp 2.6s cubic-bezier(.8,0,.2,1) infinite}
+  .wpr>div{flex:0 0 50%;display:flex;align-items:center;justify-content:center;font:600 20px system-ui;color:#0c0f15}
+  .wa{background:#E7D6BC}.wb{background:#4fb8e8}
+  @keyframes wp{0%,38%{transform:translateX(0);filter:blur(0)}50%{filter:blur(6px)}48%,100%{transform:translateX(-50%);filter:blur(0)}}
+  @media(prefers-reduced-motion:reduce){.wpr{animation:none}}
+</style>
+<div class="wp"><div class="wpr"><div class="wa">화면 1</div><div class="wb">화면 2</div></div></div>
+<p class="cap">휩 팬 · 확 쏠리며 넘어간다. 잔상(블러)이 남는다</p>
+
+<!-- @snap-zoom h=220 full -->
+<style>
+  .sz{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .szc{width:60px;height:60px;border-radius:10px;background:#E07A3F;animation:sz 2.4s steps(1,end) infinite}
+  @keyframes sz{0%{transform:scale(1)}20%{transform:scale(1.25)}40%{transform:scale(1.6)}60%,100%{transform:scale(2.1)}}
+  @media(prefers-reduced-motion:reduce){.szc{animation:none}}
+</style>
+<div class="sz"><div class="szc"></div></div>
+<p class="cap">스냅 줌 · 몇 프레임(계단)으로 확. 중간 단계가 보인다(≠펀치 인)</p>
+
+<!-- @punch-in h=220 full -->
+<style>
+  .pi{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .pic{width:60px;height:60px;border-radius:10px;background:#7a5af0;animation:pi 2s steps(1,end) infinite}
+  @keyframes pi{0%,50%{transform:scale(1)}50.01%,100%{transform:scale(2.1)}}
+  @media(prefers-reduced-motion:reduce){.pic{animation:none}}
+</style>
+<div class="pi"><div class="pic"></div></div>
+<p class="cap">펀치 인 · 중간 없이 컷으로 툭. 0프레임(≠스냅 줌)</p>
+
+<!-- @dolly-zoom h=240 full -->
+<style>
+  .dz{position:relative;height:190px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .dzbg{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#1b2130 0 2px,transparent 2px 40px),repeating-linear-gradient(#1b2130 0 2px,transparent 2px 40px);animation:dzb 4s ease-in-out infinite alternate}
+  .dzp{position:relative;width:56px;height:84px;border-radius:12px;background:#E7D6BC}
+  @keyframes dzb{from{transform:scale(1.6)}to{transform:scale(.7)}}
+  @media(prefers-reduced-motion:reduce){.dzbg{animation:none}}
+</style>
+<div class="dz"><div class="dzbg"></div><div class="dzp"></div></div>
+<p class="cap">줌 아웃 트랙 인 · 인물은 그대로, 배경만 밀려난다(현기증)</p>
+
+<!-- @speed-ramp h=220 full -->
+<style>
+  .sr{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .srt{position:absolute;left:0;top:50%;width:46px;height:46px;margin-top:-23px;border-radius:10px;background:#4fb8e8;animation:sr 3s infinite}
+  @keyframes sr{0%{left:6%}30%{left:24%}45%{left:72%}70%{left:88%}100%{left:88%}}
+  @media(prefers-reduced-motion:reduce){.srt{animation:none}}
+</style>
+<div class="sr"><div class="srt"></div></div>
+<p class="cap">스피드 램핑 · 느리게 → 확 빠르게 → 다시 느리게 (한 클립 안)</p>
+
+<!-- @parallax h=220 full -->
+<style>
+  .px{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .pl{position:absolute;inset:0;width:160%}
+  .p1{background:radial-gradient(circle at 20% 30%,#2a3550 0 6px,transparent 7px) 0 0/70px 70px;animation:px1 5s linear infinite alternate}
+  .p2{background:radial-gradient(circle at 40% 60%,#39506a 0 9px,transparent 10px) 0 0/90px 90px;animation:px2 5s linear infinite alternate}
+  .p3{background:radial-gradient(circle at 15% 75%,#E07A3F 0 14px,transparent 15px) 0 0/110px 110px;animation:px3 5s linear infinite alternate}
+  @keyframes px1{to{transform:translateX(-8%)}}
+  @keyframes px2{to{transform:translateX(-22%)}}
+  @keyframes px3{to{transform:translateX(-44%)}}
+  @media(prefers-reduced-motion:reduce){.pl{animation:none}}
+</style>
+<div class="px"><div class="pl p1"></div><div class="pl p2"></div><div class="pl p3"></div></div>
+<p class="cap">패럴랙스 · 레이어마다 다른 속도. 앞이 더 빨리 움직인다</p>
+
+<!-- @rack-focus h=220 full -->
+<style>
+  .rf{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:space-around}
+  .rfo{width:60px;height:60px;border-radius:12px}
+  .rfa{background:#E7D6BC;animation:rfa 4s ease-in-out infinite alternate}
+  .rfb{background:#E07A3F;animation:rfb 4s ease-in-out infinite alternate}
+  @keyframes rfa{0%,40%{filter:blur(0);opacity:1}60%,100%{filter:blur(5px);opacity:.55}}
+  @keyframes rfb{0%,40%{filter:blur(5px);opacity:.55}60%,100%{filter:blur(0);opacity:1}}
+  @media(prefers-reduced-motion:reduce){.rfa,.rfb{animation:none}}
+</style>
+<div class="rf"><div class="rfo rfa"></div><div class="rfo rfb"></div></div>
+<p class="cap">랙 포커스 · 몸은 그대로, 초점만 앞에서 뒤로 옮겨 시선을 끈다</p>
+
+<!-- @perspective-tilt h=220 full -->
+<style>
+  .pt{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;perspective:500px}
+  .ptc{width:120px;height:90px;border-radius:10px;background:linear-gradient(#E7D6BC,#b9a888);animation:pt 4s ease-in-out infinite alternate}
+  @keyframes pt{from{transform:rotateX(0)}to{transform:rotateX(52deg)}}
+  @media(prefers-reduced-motion:reduce){.ptc{animation:none}}
+</style>
+<div class="pt"><div class="ptc"></div></div>
+<p class="cap">퍼스펙티브 틸트 · 평면을 뒤로 눕힌다. 위쪽이 멀어져 보인다(≠롤)</p>
+
+<!-- @camera-2-5d h=240 full -->
+<style>
+  .cd{position:relative;height:190px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;perspective:800px;display:flex;align-items:center;justify-content:center}
+  .cds{position:relative;width:140px;height:140px;transform-style:preserve-3d;animation:cd 6s ease-in-out infinite alternate}
+  .cl{position:absolute;inset:0;margin:auto;border-radius:12px}
+  .l1{width:130px;height:90px;background:#2a3550;transform:translateZ(-60px)}
+  .l2{width:100px;height:70px;background:#39607a;transform:translateZ(0)}
+  .l3{width:60px;height:60px;background:#E07A3F;transform:translateZ(60px)}
+  @keyframes cd{from{transform:rotateY(-22deg)}to{transform:rotateY(22deg)}}
+  @media(prefers-reduced-motion:reduce){.cds{animation:none}}
+</style>
+<div class="cd"><div class="cds"><div class="cl l1"></div><div class="cl l2"></div><div class="cl l3"></div></div></div>
+<p class="cap">2.5D 카메라 · 겹친 평면 레이어를 카메라로 돌려 깊이를 만든다</p>

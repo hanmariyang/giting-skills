@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>줌 Zoom — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .st7{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .sc7{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:
+    radial-gradient(circle at 20% 25%,#39506a 0 7px,transparent 8px) 0 0/50px 50px,#141821;
+    animation:zm 4s ease-in-out infinite alternate}
+  .h7{width:46px;height:46px;border-radius:10px;background:#E07A3F}
+  @keyframes zm{from{transform:scale(1)}to{transform:scale(1.7)}}
+  @media(prefers-reduced-motion:reduce){.sc7{animation:none}}
+</style>
+<div class="st7"><div class="sc7"><div class="h7"></div></div></div>
+<p class="cap">줌 · 렌즈만 당긴다. 전부 같은 비율로 커진다(≠달리)</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

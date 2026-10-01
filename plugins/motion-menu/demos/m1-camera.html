@@ -1,0 +1,108 @@
+<!-- @pan h=220 full -->
+<style>
+  .st{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;perspective:700px}
+  .sc{position:absolute;inset:0;width:180%;background:
+    radial-gradient(circle at 20% 40%,#E07A3F55 0 7px,transparent 8px),
+    radial-gradient(circle at 70% 70%,#4fb8e855 0 7px,transparent 8px),
+    linear-gradient(90deg,#1b2130 1px,transparent 1px) 0 0/36px 36px,
+    linear-gradient(#1b2130 1px,transparent 1px) 0 0/36px 36px,#141821;
+    animation:pan 3.6s ease-in-out infinite alternate}
+  .hero{position:absolute;left:40%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:10px;background:#E7D6BC}
+  @keyframes pan{from{transform:translateX(0)}to{transform:translateX(-33%)}}
+  @media(prefers-reduced-motion:reduce){.sc{animation:none}}
+</style>
+<div class="st"><div class="sc"></div><div class="hero"></div></div>
+<p class="cap">팬 · 제자리에서 좌우로. 화면 속 모든 게 똑같이 밀린다</p>
+
+<!-- @tilt h=220 full -->
+<style>
+  .st2{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .sc2{position:absolute;left:0;right:0;top:0;height:200%;background:
+    radial-gradient(circle at 30% 15%,#4fb8e855 0 7px,transparent 8px),
+    radial-gradient(circle at 70% 80%,#E07A3F55 0 7px,transparent 8px),
+    linear-gradient(90deg,#1b2130 1px,transparent 1px) 0 0/36px 36px,
+    linear-gradient(#1b2130 1px,transparent 1px) 0 0/36px 36px,#141821;
+    animation:tilt 3.6s ease-in-out infinite alternate}
+  @keyframes tilt{from{transform:translateY(-30%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.sc2{animation:none}}
+</style>
+<div class="st2"><div class="sc2"></div></div>
+<p class="cap">틸트 · 제자리에서 위아래로. 아래에서 위로 올려다본다</p>
+
+<!-- @roll h=220 full -->
+<style>
+  .st3{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .sc3{width:150%;height:150%;background:
+    linear-gradient(#20633f 0 60%,#9fc7b0 60% 62%,#141821 62%);
+    animation:roll 4s ease-in-out infinite alternate}
+  @keyframes roll{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+  @media(prefers-reduced-motion:reduce){.sc3{animation:none}}
+</style>
+<div class="st3"><div class="sc3"></div></div>
+<p class="cap">롤 · 렌즈 축으로 돌아 수평선이 기운다</p>
+
+<!-- @track h=220 full -->
+<style>
+  .st4{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .far,.near{position:absolute;inset:0;width:180%}
+  .far{background:radial-gradient(circle at 25% 30%,#39506a 0 9px,transparent 10px) 0 0/90px 90px;animation:trk 4s linear infinite alternate}
+  .near{background:radial-gradient(circle at 15% 70%,#E07A3F 0 13px,transparent 14px) 0 0/70px 70px;animation:trk2 4s linear infinite alternate}
+  @keyframes trk{from{transform:translateX(0)}to{transform:translateX(-18%)}}
+  @keyframes trk2{from{transform:translateX(0)}to{transform:translateX(-40%)}}
+  @media(prefers-reduced-motion:reduce){.far,.near{animation:none}}
+</style>
+<div class="st4"><div class="far"></div><div class="near"></div></div>
+<p class="cap">트랙 · 몸이 옆으로 이동. 가까운 게 더 많이 움직인다(≠팬)</p>
+
+<!-- @pedestal h=220 full -->
+<style>
+  .st5{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .f5,.n5{position:absolute;left:0;right:0;top:0;height:200%}
+  .f5{background:radial-gradient(circle at 70% 20%,#39506a 0 9px,transparent 10px) 0 0/90px 90px;animation:ped 4s linear infinite alternate}
+  .n5{background:radial-gradient(circle at 30% 15%,#4fb8e8 0 13px,transparent 14px) 0 0/70px 70px;animation:ped2 4s linear infinite alternate}
+  @keyframes ped{from{transform:translateY(-16%)}to{transform:translateY(0)}}
+  @keyframes ped2{from{transform:translateY(-38%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.f5,.n5{animation:none}}
+</style>
+<div class="st5"><div class="f5"></div><div class="n5"></div></div>
+<p class="cap">페데스탈 · 몸이 위아래로 이동. 가까운 게 더 많이(≠틸트)</p>
+
+<!-- @dolly h=220 full -->
+<style>
+  .st6{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;perspective:420px}
+  .sc6{position:absolute;inset:0;transform-style:preserve-3d;animation:dol 4s ease-in-out infinite alternate}
+  .bg6{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,#2a3550 0,#141821 70%),repeating-radial-gradient(circle at 50% 50%,#1b2130 0 1px,transparent 1px 30px);transform:translateZ(-140px)}
+  .h6{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:10px;background:#E7D6BC;transform:translateZ(0)}
+  @keyframes dol{from{transform:translateZ(0)}to{transform:translateZ(110px)}}
+  @media(prefers-reduced-motion:reduce){.sc6{animation:none}}
+</style>
+<div class="st6"><div class="sc6"><div class="bg6"></div><div class="h6"></div></div></div>
+<p class="cap">달리 · 몸이 다가간다. 배경도 같이 변한다(≠줌)</p>
+
+<!-- @zoom h=220 full -->
+<style>
+  .st7{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .sc7{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:
+    radial-gradient(circle at 20% 25%,#39506a 0 7px,transparent 8px) 0 0/50px 50px,#141821;
+    animation:zm 4s ease-in-out infinite alternate}
+  .h7{width:46px;height:46px;border-radius:10px;background:#E07A3F}
+  @keyframes zm{from{transform:scale(1)}to{transform:scale(1.7)}}
+  @media(prefers-reduced-motion:reduce){.sc7{animation:none}}
+</style>
+<div class="st7"><div class="sc7"><div class="h7"></div></div></div>
+<p class="cap">줌 · 렌즈만 당긴다. 전부 같은 비율로 커진다(≠달리)</p>
+
+<!-- @orbit h=220 full -->
+<style>
+  .st8{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;perspective:600px;display:flex;align-items:center;justify-content:center}
+  .sc8{transform-style:preserve-3d;animation:orb 5s linear infinite}
+  .face{position:absolute;width:70px;height:70px;margin:-35px;border-radius:10px;background:#E7D6BC;left:50%;top:50%}
+  .face.b{background:#7a5af0aa;transform:rotateY(90deg) translateZ(35px)}
+  .face.c{background:#4fb8e8aa;transform:rotateY(180deg) translateZ(35px)}
+  .face.d{background:#E07A3Faa;transform:rotateY(270deg) translateZ(35px)}
+  .face.a{transform:translateZ(35px)}
+  @keyframes orb{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+  @media(prefers-reduced-motion:reduce){.sc8{animation:none}}
+</style>
+<div class="st8"><div class="sc8"><div class="face a"></div><div class="face b"></div><div class="face c"></div><div class="face d"></div></div></div>
+<p class="cap">오빗 · 대상 주위를 돈다. 대상은 가운데, 배경만 돈다</p>
