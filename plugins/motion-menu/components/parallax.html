@@ -1,0 +1,16 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>패럴랙스 Parallax — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .px{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .pl{position:absolute;inset:0;width:160%}
+  .p1{background:radial-gradient(circle at 20% 30%,#2a3550 0 6px,transparent 7px) 0 0/70px 70px;animation:px1 5s linear infinite alternate}
+  .p2{background:radial-gradient(circle at 40% 60%,#39506a 0 9px,transparent 10px) 0 0/90px 90px;animation:px2 5s linear infinite alternate}
+  .p3{background:radial-gradient(circle at 15% 75%,#E07A3F 0 14px,transparent 15px) 0 0/110px 110px;animation:px3 5s linear infinite alternate}
+  @keyframes px1{to{transform:translateX(-8%)}}
+  @keyframes px2{to{transform:translateX(-22%)}}
+  @keyframes px3{to{transform:translateX(-44%)}}
+  @media(prefers-reduced-motion:reduce){.pl{animation:none}}
+</style>
+<div class="px"><div class="pl p1"></div><div class="pl p2"></div><div class="pl p3"></div></div>
+<p class="cap">패럴랙스 · 레이어마다 다른 속도. 앞이 더 빨리 움직인다</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

@@ -1,0 +1,11 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>이즈 아웃 Ease Out — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .eo{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .eoc{position:absolute;top:50%;margin-top:-24px;width:48px;height:48px;border-radius:10px;background:#4fb8e8;animation:eo 2.6s cubic-bezier(.16,1,.3,1) infinite}
+  @keyframes eo{0%{left:-14%}70%,100%{left:calc(100% - 60px)}}
+  @media(prefers-reduced-motion:reduce){.eoc{animation:none}}
+</style>
+<div class="eo"><div class="eoc"></div></div>
+<p class="cap">이즈 아웃 · 빠르게 들어와 천천히 멈춘다. 등장에 제일 많이 쓴다</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

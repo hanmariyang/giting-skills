@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>랙 포커스 Rack Focus — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .rf{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:space-around}
+  .rfo{width:60px;height:60px;border-radius:12px}
+  .rfa{background:#E7D6BC;animation:rfa 4s ease-in-out infinite alternate}
+  .rfb{background:#E07A3F;animation:rfb 4s ease-in-out infinite alternate}
+  @keyframes rfa{0%,40%{filter:blur(0);opacity:1}60%,100%{filter:blur(5px);opacity:.55}}
+  @keyframes rfb{0%,40%{filter:blur(5px);opacity:.55}60%,100%{filter:blur(0);opacity:1}}
+  @media(prefers-reduced-motion:reduce){.rfa,.rfb{animation:none}}
+</style>
+<div class="rf"><div class="rfo rfa"></div><div class="rfo rfb"></div></div>
+<p class="cap">랙 포커스 · 몸은 그대로, 초점만 앞에서 뒤로 옮겨 시선을 끈다</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

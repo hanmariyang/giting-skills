@@ -1,0 +1,109 @@
+<!-- @easing h=220 full -->
+<style>
+  .es{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 14px}
+  .esr{position:relative;height:34px}
+  .esl{position:absolute;left:4px;top:7px;font:600 11px system-ui;color:#8b93a1}
+  .esb{position:absolute;top:0;width:28px;height:28px;border-radius:8px}
+  .lin{background:#6c7687;animation:esmv 3s linear infinite alternate}
+  .eas{background:#E07A3F;animation:esmv 3s cubic-bezier(.5,0,.1,1) infinite alternate}
+  @keyframes esmv{from{left:70px}to{left:calc(100% - 32px)}}
+  @media(prefers-reduced-motion:reduce){.esb{animation:none}}
+</style>
+<div class="es">
+  <div class="esr"><span class="esl">리니어</span><div class="esb lin"></div></div>
+  <div class="esr"><span class="esl">이징</span><div class="esb eas"></div></div>
+</div>
+<p class="cap">이징 · 가속·감속 곡선. 없으면(위, 리니어) 기계처럼 보인다</p>
+
+<!-- @ease-out h=220 full -->
+<style>
+  .eo{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .eoc{position:absolute;top:50%;margin-top:-24px;width:48px;height:48px;border-radius:10px;background:#4fb8e8;animation:eo 2.6s cubic-bezier(.16,1,.3,1) infinite}
+  @keyframes eo{0%{left:-14%}70%,100%{left:calc(100% - 60px)}}
+  @media(prefers-reduced-motion:reduce){.eoc{animation:none}}
+</style>
+<div class="eo"><div class="eoc"></div></div>
+<p class="cap">이즈 아웃 · 빠르게 들어와 천천히 멈춘다. 등장에 제일 많이 쓴다</p>
+
+<!-- @overshoot h=220 full -->
+<style>
+  .ov{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .ovc{width:60px;height:60px;border-radius:12px;background:#E07A3F;animation:ov 2.4s cubic-bezier(.34,1.7,.5,1) infinite}
+  @keyframes ov{0%{transform:scale(.4)}60%,100%{transform:scale(1)}}
+  @media(prefers-reduced-motion:reduce){.ovc{animation:none}}
+</style>
+<div class="ov"><div class="ovc"></div></div>
+<p class="cap">오버슈트 · 목표(100%)를 살짝 지나쳐 110%까지 갔다 돌아온다</p>
+
+<!-- @anticipation h=220 full -->
+<style>
+  .an{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .anc{position:absolute;top:50%;margin-top:-24px;left:8%;width:48px;height:48px;border-radius:10px;background:#7a5af0;animation:an 2.6s ease-in-out infinite}
+  @keyframes an{0%{transform:translateX(0)}18%{transform:translateX(-16px)}55%,100%{transform:translateX(230px)}}
+  @media(prefers-reduced-motion:reduce){.anc{animation:none}}
+</style>
+<div class="an"><div class="anc"></div></div>
+<p class="cap">안티시페이션 · 가기 전에 반대로 살짝 뺀다(준비 동작)</p>
+
+<!-- @stagger h=220 full -->
+<style>
+  .sg{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:14px}
+  .sgc{width:40px;height:72px;border-radius:10px;background:#E7D6BC;animation:sg 2.8s cubic-bezier(.16,1,.3,1) infinite}
+  .sgc:nth-child(2){animation-delay:.12s}
+  .sgc:nth-child(3){animation-delay:.24s}
+  @keyframes sg{0%{opacity:0;transform:translateY(26px)}35%,100%{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.sgc{animation:none;opacity:1;transform:none}}
+</style>
+<div class="sg"><div class="sgc"></div><div class="sgc"></div><div class="sgc"></div></div>
+<p class="cap">스태거 · 여러 개를 0.1초씩 시간차로. 하나씩 차례로 뜬다</p>
+
+<!-- @motion-blur h=220 full -->
+<style>
+  .mb{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .mbc{position:absolute;top:50%;margin-top:-22px;width:44px;height:44px;border-radius:10px;background:#4fb8e8;animation:mb 2.2s ease-in-out infinite}
+  @keyframes mb{0%{left:6%;filter:blur(0)}45%{filter:blur(7px)}50%{left:72%}90%,100%{left:78%;filter:blur(0)}}
+  @media(prefers-reduced-motion:reduce){.mbc{animation:none}}
+</style>
+<div class="mb"><div class="mbc"></div></div>
+<p class="cap">모션 블러 · 빠른 구간에 가로 잔상. 없으면 뚝뚝 끊겨 보인다</p>
+
+<!-- @rcp-opener h=240 full -->
+<style>
+  .ro{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+  .rot{font:800 26px system-ui;color:#E7D6BC;animation:rot 3.2s steps(1,end) infinite}
+  .rorow{display:flex;gap:10px}
+  .roc{width:46px;height:30px;border-radius:7px;background:#E07A3F;animation:roc 3.2s cubic-bezier(.16,1,.3,1) infinite}
+  .roc:nth-child(2){animation-delay:.12s}.roc:nth-child(3){animation-delay:.24s}
+  @keyframes rot{0%,10%{transform:scale(2.2);opacity:0}11%,100%{transform:scale(1);opacity:1}}
+  @keyframes roc{0%,35%{opacity:0;transform:translateY(22px)}60%,100%{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.rot,.roc{animation:none;opacity:1;transform:none}}
+</style>
+<div class="ro"><div class="rot">GITING</div><div class="rorow"><div class="roc"></div><div class="roc"></div><div class="roc"></div></div></div>
+<p class="cap">오프너 · 제목은 펀치 인, 카드는 이즈 아웃 + 스태거</p>
+
+<!-- @rcp-transition h=240 full -->
+<style>
+  .rt{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .rtr{position:absolute;inset:0;display:flex;width:200%;animation:rt 2.8s cubic-bezier(.8,0,.2,1) infinite}
+  .rtr>div{flex:0 0 50%;display:flex;align-items:center;justify-content:center;font:700 22px system-ui;color:#0c0f15}
+  .rt1{background:#E7D6BC}.rt2{background:#E07A3F}
+  @keyframes rt{0%,36%{transform:translateX(0);filter:blur(0)}50%{filter:blur(8px)}46%,100%{transform:translateX(-50%);filter:blur(0)}}
+  @media(prefers-reduced-motion:reduce){.rtr{animation:none}}
+</style>
+<div class="rt"><div class="rtr"><div class="rt1">컷 A</div><div class="rt2">컷 B</div></div></div>
+<p class="cap">장면 전환 · 휩 팬으로 넘기고 그 구간에만 모션 블러</p>
+
+<!-- @rcp-hero h=260 full -->
+<style>
+  .rh{position:relative;height:220px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;perspective:900px;display:flex;align-items:center;justify-content:center}
+  .rhs{position:relative;width:170px;height:150px;transform-style:preserve-3d;animation:rh 6s ease-in-out infinite alternate}
+  .rhl{position:absolute;inset:0;margin:auto;border-radius:12px}
+  .rh1{width:160px;height:110px;background:#2a3550;transform:translateZ(-70px);animation:rhin 3s cubic-bezier(.16,1,.3,1) both}
+  .rh2{width:120px;height:82px;background:#39607a;transform:translateZ(0);animation:rhin 3s cubic-bezier(.16,1,.3,1) .12s both}
+  .rh3{width:70px;height:70px;background:#E07A3F;transform:translateZ(70px);animation:rhin 3s cubic-bezier(.16,1,.3,1) .24s both}
+  @keyframes rh{from{transform:rotateY(-20deg)}to{transform:rotateY(20deg)}}
+  @keyframes rhin{0%{opacity:0}100%{opacity:1}}
+  @media(prefers-reduced-motion:reduce){.rhs,.rhl{animation:none;opacity:1}}
+</style>
+<div class="rh"><div class="rhs"><div class="rhl rh1"></div><div class="rhl rh2"></div><div class="rhl rh3"></div></div></div>
+<p class="cap">깊이감 히어로 · 레이어를 2.5D 카메라로 돌리고 이즈 아웃 등장</p>
