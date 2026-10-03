@@ -1,0 +1,15 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BPM 비트 싱크 Beat-synced Cut — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bs{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:12px;animation:bsbg .5s steps(1,end) infinite}
+  @keyframes bsbg{0%{background:#141821}50%{background:#191f2b}}
+  .bs i{width:20px;border-radius:6px;background:#38BE86;height:30px;animation:bsp .5s cubic-bezier(.2,.9,.3,1) infinite}
+  .bs i:nth-child(2){animation-delay:.08s;background:#E07A3F}
+  .bs i:nth-child(3){animation-delay:.16s}
+  .bs i:nth-child(4){animation-delay:.24s;background:#E07A3F}
+  @keyframes bsp{0%{transform:scaleY(2.4)}40%,100%{transform:scaleY(1)}}
+  @media(prefers-reduced-motion:reduce){.bs,.bs i{animation:none}}
+</style>
+<div class="bs"><i></i><i></i><i></i><i></i></div>
+<p class="cap">BPM 비트 싱크 · 강조와 컷이 음악 비트에 딱딱 맞아떨어진다 (120 BPM)</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
