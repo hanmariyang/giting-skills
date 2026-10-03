@@ -1,0 +1,125 @@
+<!-- @slow-motion h=220 full -->
+<style>
+  .sw{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .swb{position:absolute;left:50%;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:#4fb8e8;animation:sw 3.2s cubic-bezier(.4,0,.6,1) infinite}
+  .swr{position:absolute;left:50%;bottom:20px;width:20px;height:20px;margin-left:-10px;border:2px solid #4fb8e8;border-radius:50%;opacity:0;animation:swr 3.2s ease-out infinite}
+  .swtag{position:absolute;top:10px;right:12px;font:700 13px var(--mono,ui-monospace,monospace);color:#9fd4ef;letter-spacing:.04em}
+  @keyframes sw{0%{top:-30px}70%{top:120px}72%,100%{top:120px}}
+  @keyframes swr{0%,70%{transform:scale(.4);opacity:0}76%{opacity:.7}100%{transform:scale(2.6);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.swb{animation:none;top:120px}.swr{animation:none;opacity:0}}
+</style>
+<div class="sw"><span class="swtag">0.25×</span><div class="swb"></div><div class="swr"></div></div>
+<p class="cap">슬로 모션 · 실제보다 느리게 재생해 순간을 늘린다(균일 0.25배). ≠ 한 클립 안 속도 변화 스피드 램핑</p>
+
+<!-- @time-lapse h=220 full -->
+<style>
+  .tl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;animation:tlbg 3.2s linear infinite}
+  @keyframes tlbg{0%{background:linear-gradient(#2a4a7a,#6f9fd0)}30%{background:linear-gradient(#e08a3f,#f0c27a)}55%{background:linear-gradient(#3a2a52,#7a5a86)}80%,100%{background:linear-gradient(#10131f,#24304a)}}
+  .tls{position:absolute;top:26px;width:34px;height:34px;border-radius:50%;background:#ffe9b0;box-shadow:0 0 22px 6px rgba(255,220,140,.7);animation:tls 3.2s linear infinite}
+  @keyframes tls{0%{left:-10%;top:90px}50%{top:20px}100%{left:100%;top:90px}}
+  @media(prefers-reduced-motion:reduce){.tl,.tls{animation:none}.tl{background:linear-gradient(#e08a3f,#f0c27a)}.tls{left:46%;top:20px}}
+</style>
+<div class="tl"><div class="tls"></div></div>
+<p class="cap">타임랩스 · 긴 시간을 압축해 빠르게(해 지남·낮→밤). ≠ 걸으며 찍어 이동까지 있는 하이퍼랩스</p>
+
+<!-- @freeze-frame h=220 full -->
+<style>
+  .fz{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .fzb{position:absolute;top:50%;margin-top:-20px;width:40px;height:40px;border-radius:50%;background:#38BE86;animation:fz 3s linear infinite}
+  .fzf{position:absolute;inset:6px;border:3px solid #E7D6BC;border-radius:8px;opacity:0;animation:fzf 3s linear infinite}
+  .fztag{position:absolute;top:12px;left:14px;font:800 13px system-ui;color:#E7D6BC;letter-spacing:.1em;opacity:0;animation:fzf 3s linear infinite}
+  @keyframes fz{0%{left:6%}26%{left:52%}52%{left:52%}60%{left:90%}100%{left:90%}}
+  @keyframes fzf{0%,26%{opacity:0}30%,50%{opacity:1}54%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.fzb,.fzf,.fztag{animation:none}.fzb{left:52%}.fzf,.fztag{opacity:1}}
+</style>
+<div class="fz"><div class="fzb"></div><div class="fzf"></div><span class="fztag">FREEZE</span></div>
+<p class="cap">프리즈 프레임 · 한 프레임에서 화면이 딱 멈춘다(흰 테두리). ≠ 비트마다 짧게 멈추는 비트 프리즈</p>
+
+<!-- @reverse h=220 full -->
+<style>
+  .rv{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .rv i{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:5px;background:#E07A3F;animation:rv 2.8s cubic-bezier(.5,0,.5,1) infinite}
+  .rv i:nth-child(1){--x:-120px;--y:-44px}.rv i:nth-child(2){--x:120px;--y:-44px;background:#38BE86}
+  .rv i:nth-child(3){--x:-120px;--y:44px;background:#4fb8e8}.rv i:nth-child(4){--x:120px;--y:44px}
+  .rvtag{position:absolute;top:10px;right:12px;font:700 13px system-ui;color:#9fe3c3}
+  @keyframes rv{0%{transform:translate(var(--x),var(--y));opacity:.5}50%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--x),var(--y));opacity:.5}}
+  @media(prefers-reduced-motion:reduce){.rv i{animation:none;transform:translate(0,0)}}
+</style>
+<div class="rv"><i></i><i></i><i></i><i></i><span class="rvtag">◀ REV</span></div>
+<p class="cap">리버스 · 거꾸로 재생해 흩어진 조각이 도로 모인다. ≠ 앞뒤로 왕복하는 핑퐁 루프</p>
+
+<!-- @strobe h=220 full -->
+<style>
+  .sb{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;animation:sb 2.4s steps(1,end) infinite}
+  @keyframes sb{0%,60%{background:#141821}64%{background:#fff}68%{background:#141821}72%{background:#fff}76%{background:#141821}80%{background:#fff}84%{background:#141821}88%{background:#fff}92%,100%{background:#141821}}
+  .sbt{font:900 30px system-ui;color:#8b93a1;mix-blend-mode:difference}
+  @media(prefers-reduced-motion:reduce){.sb{animation:none;background:#141821}}
+</style>
+<div class="sb"><span class="sbt">DROP</span></div>
+<p class="cap">스트로브 · 밝기가 빠르게 켜졌다 꺼졌다 점멸(광과민 주의). ≠ 색 채널 어긋나는 RGB 분리</p>
+
+<!-- @light-leak h=220 full -->
+<style>
+  .ll{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#1b2430,#121722);display:flex;align-items:center;justify-content:center;font:800 24px system-ui;color:#55617a}
+  .ll::after{content:"";position:absolute;top:-20%;bottom:-20%;width:55%;right:-55%;background:radial-gradient(ellipse at center,rgba(255,170,90,.9),rgba(255,120,60,.35) 45%,transparent 72%);filter:blur(6px);animation:ll 3s ease-in-out infinite}
+  @keyframes ll{0%,55%{right:-55%}80%,100%{right:70%}}
+  @media(prefers-reduced-motion:reduce){.ll::after{animation:none;right:20%}}
+</style>
+<div class="ll">SCENE</div>
+<p class="cap">라이트 릭 · 따뜻한 빛이 가장자리로 새어 번진다(필름 감성). ≠ 또렷한 광이 쓰는 라이트 스윕</p>
+
+<!-- @lens-flare h=220 full -->
+<style>
+  .lf{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#0d1320;display:flex;align-items:center;justify-content:center;font:800 26px system-ui;color:#2f3b52}
+  .lfp{position:absolute;top:50%;margin-top:-6px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 18px 8px rgba(255,245,210,.85);animation:lf 3.4s ease-in-out infinite}
+  .lfp::before,.lfp::after{content:"";position:absolute;left:50%;top:50%;background:linear-gradient(90deg,transparent,rgba(255,240,200,.85),transparent)}
+  .lfp::before{width:150px;height:2px;margin:-1px 0 0 -75px}
+  .lfp::after{width:2px;height:70px;margin:-35px 0 0 -1px}
+  @keyframes lf{0%{left:-6%}100%{left:106%}}
+  @media(prefers-reduced-motion:reduce){.lfp{animation:none;left:50%}}
+</style>
+<div class="lf">LOGO<div class="lfp"></div></div>
+<p class="cap">렌즈 플레어 · 강한 광원이 렌즈에 맺혀 빛살·고리가 생긴다. ≠ 밝은 영역이 번지는 블룸/글로우</p>
+
+<!-- @bloom-glow h=220 full -->
+<style>
+  .bg{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#0c0f17;display:flex;align-items:center;justify-content:center}
+  .bgt{font:800 40px system-ui;color:#9ff3d6;animation:bg 2.4s ease-in-out infinite}
+  @keyframes bg{0%,100%{text-shadow:0 0 6px rgba(56,190,134,.5),0 0 14px rgba(56,190,134,.25)}50%{text-shadow:0 0 14px rgba(56,190,134,.95),0 0 34px rgba(56,190,134,.7),0 0 60px rgba(56,190,134,.4)}}
+  @media(prefers-reduced-motion:reduce){.bgt{animation:none;text-shadow:0 0 16px rgba(56,190,134,.8),0 0 36px rgba(56,190,134,.5)}}
+</style>
+<div class="bg"><span class="bgt">NEON</span></div>
+<p class="cap">블룸 · 글로우 · 밝은 부분이 부드럽게 번져 빛나 보인다. ≠ 점광원이 맺히는 렌즈 플레어</p>
+
+<!-- @split-screen h=220 full -->
+<style>
+  .ss{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;display:flex}
+  .ssa,.ssb{flex:1;display:flex;align-items:center;justify-content:center;font:800 15px system-ui;letter-spacing:.08em}
+  .ssa{background:#2a3550;color:#aeb8cc}.ssb{background:#1a3b31;color:#9fe3c3}
+  .ssd{position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;background:#E7D6BC;animation:ss 2.6s ease-in-out infinite}
+  @keyframes ss{0%,100%{opacity:.5}50%{opacity:1;box-shadow:0 0 10px rgba(231,214,188,.6)}}
+  @media(prefers-reduced-motion:reduce){.ssd{animation:none}}
+</style>
+<div class="ss"><div class="ssa">BEFORE</div><div class="ssb">AFTER</div><div class="ssd"></div></div>
+<p class="cap">스플릿 스크린 · 화면을 나눠 둘 이상 장면을 동시에. ≠ 작은 창 하나를 겹치는 화면 속 화면(PiP)</p>
+
+<!-- @pip h=220 full -->
+<style>
+  .pp{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#243b2f,#141821);display:flex;align-items:center;justify-content:center;font:800 22px system-ui;color:#4a6a5a}
+  .ppw{position:absolute;right:14px;bottom:14px;width:92px;height:58px;border-radius:7px;background:linear-gradient(135deg,#3a5270,#1b2334);border:2px solid #E7D6BC;display:flex;align-items:center;justify-content:center;font:700 11px system-ui;color:#cdd7e6;animation:pp 3.4s cubic-bezier(.16,1,.3,1) infinite}
+  @keyframes pp{0%{transform:translate(20px,20px) scale(.6);opacity:0}18%,86%{transform:none;opacity:1}100%{transform:translate(20px,20px) scale(.6);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.ppw{animation:none}}
+</style>
+<div class="pp">MAIN<div class="ppw">CAM</div></div>
+<p class="cap">화면 속 화면(PiP) · 큰 화면 위에 작은 창을 겹쳐 둘을 함께. ≠ 화면을 반반 나누는 스플릿 스크린</p>
+
+<!-- @datamosh h=220 full -->
+<style>
+  .dm{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#4fb8e8;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(5,1fr)}
+  .dm i{background:#E07A3F;filter:blur(1px);animation:dm 3.2s cubic-bezier(.6,0,.4,1) infinite}
+  @keyframes dm{0%,30%{transform:translateX(0);background:#E07A3F}55%{transform:translateX(26px);background:#b98bbf}80%,100%{transform:translateX(0);background:#4fb8e8}}
+  @media(prefers-reduced-motion:reduce){.dm i{animation:none;transform:translateX(13px);background:#b98bbf}}
+</style>
+<div class="dm" id="dmgrid"></div>
+<p class="cap">데이터모시 · 영상 압축의 번짐을 의도로 써 픽셀이 밀려 흐물흐물 섞인다(근사 재현). ≠ 또렷이 깨지는 글리치</p>
+<script>(function(){var g=document.getElementById('dmgrid');if(!g)return;for(var i=0;i<50;i++){var s=document.createElement('i');s.style.animationDelay=(Math.random()*0.5).toFixed(2)+'s';g.appendChild(s);}})();</script>

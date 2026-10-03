@@ -1,7 +1,7 @@
 {
   "name": "motion-menu",
-  "version": "0.2.0",
-  "description": "모션 메뉴판 — '역동적으로 해줘' 대신 이름으로 시키는 영상·화면 모션 사전. 별칭 → 정식 명칭(한글·영어) → 요청 문장 → 만드는 법(AI 영상·모션 그래픽·CSS) → 움직이는 실물 데모 44종. 카메라 기본·강조/전환·전환/디졸브/리빌·키네틱 타이포·타이밍/질감 5코스, 헷갈리는 쌍 구분 + 애칭 표시 포함. AI 영상 생성(Runway·Kling·Sora)·모션 그래픽(HyperFrames 등) 프롬프트용",
+  "version": "0.3.0",
+  "description": "모션 메뉴판 — '역동적으로 해줘' 대신 이름으로 시키는 영상·화면 모션 사전. 별칭 → 정식 명칭(한글·영어) → 요청 문장 → 만드는 법(AI 영상·모션 그래픽·CSS) → 움직이는 실물 데모 60종. 카메라 기본·강조/전환·전환/디졸브/리빌·키네틱 타이포·타이밍/질감·효과/시간(슬로 모션·타임랩스·스트로브·블룸·스플릿 스크린 등) 6코스, 헷갈리는 쌍 구분 + 애칭 표시 포함. AI 영상 생성(Runway·Kling·Sora)·모션 그래픽(HyperFrames 등) 프롬프트용",
   "author": {
     "name": "Giting",
     "url": "https://giting.kr"
@@ -16,6 +16,8 @@
     "transition",
     "kinetic-typography",
     "motion-graphics",
+    "vfx",
+    "time-effects",
     "korean",
     "vibe-coding",
     "dictionary"

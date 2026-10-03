@@ -49,3 +49,58 @@
 </style>
 <div class="ri"><div class="rin">안상현</div><div class="rinum">19.5만</div><div class="ris">시간·돈·감정에서 자유로워지는 법</div></div>
 <p class="cap">모션 그래픽 자기소개 · 이름 → 숫자 → 한 문장이 비트마다 바뀐다</p>
+
+<!-- @arc h=220 full -->
+<style>
+  .ar{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .ar .g{position:absolute;width:8px;height:8px;margin:-4px;border-radius:50%;background:#2f3b52}
+  .arb{position:absolute;width:26px;height:26px;margin:-13px;border-radius:50%;background:#E07A3F;animation:arb 2.6s linear infinite}
+  @keyframes arb{0%{left:6%;top:124px}25%{left:28%;top:52px}50%{left:50%;top:26px}75%{left:72%;top:52px}100%{left:94%;top:124px}}
+  @media(prefers-reduced-motion:reduce){.arb{animation:none;left:50%;top:26px}}
+</style>
+<div class="ar"><i class="g" style="left:6%;top:124px"></i><i class="g" style="left:28%;top:52px"></i><i class="g" style="left:50%;top:26px"></i><i class="g" style="left:72%;top:52px"></i><i class="g" style="left:94%;top:124px"></i><div class="arb"></div></div>
+<p class="cap">호 운동(아크) · 자연물은 직선이 아니라 곡선(점선 궤적)을 그리며 움직인다</p>
+
+<!-- @bounce h=220 full -->
+<style>
+  .bn{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .bn::after{content:"";position:absolute;left:0;right:0;bottom:24px;height:2px;background:#2a3550}
+  .bnb{position:absolute;left:50%;width:40px;height:40px;margin-left:-20px;border-radius:50%;background:#38BE86;animation:bn 2.2s cubic-bezier(.3,0,.5,1) infinite}
+  @keyframes bn{0%{top:8px}28%{top:106px}44%{top:48px}58%{top:106px}70%{top:78px}80%{top:106px}88%{top:94px}100%{top:106px}}
+  @media(prefers-reduced-motion:reduce){.bnb{animation:none;top:106px}}
+</style>
+<div class="bn"><div class="bnb"></div></div>
+<p class="cap">바운스 · 바닥에 닿아 점점 작게 여러 번 튄다(중력감). ≠ 한 번 지나쳤다 오는 오버슈트</p>
+
+<!-- @follow-through h=220 full -->
+<style>
+  .fl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .flw{position:absolute;top:50%;margin-top:-22px;animation:flw 3s cubic-bezier(.5,0,.2,1) infinite}
+  .flh{width:44px;height:44px;border-radius:50%;background:#E7D6BC}
+  .flt{position:absolute;right:38px;top:8px;width:46px;height:28px;background:#38BE86;border-radius:14px 2px 2px 14px;transform-origin:right center;animation:flt 3s cubic-bezier(.5,0,.2,1) infinite}
+  @keyframes flw{0%{left:4%}40%,100%{left:58%}}
+  @keyframes flt{0%{transform:rotate(0)}30%{transform:rotate(16deg)}55%{transform:rotate(-10deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+  @media(prefers-reduced-motion:reduce){.flw,.flt{animation:none}.flw{left:58%}}
+</style>
+<div class="fl"><div class="flw"><div class="flt"></div><div class="flh"></div></div></div>
+<p class="cap">팔로 스루 · 본체가 멈춰도 딸린 꼬리·천이 관성으로 늦게 따라 멈춘다</p>
+
+<!-- @smear h=220 full -->
+<style>
+  .sm{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .smb{position:absolute;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:9px;background:#E07A3F;transform-origin:center;animation:sm 2.6s linear infinite}
+  @keyframes sm{0%,34%{left:8%;transform:scaleX(1);border-radius:9px;opacity:1}42%{left:24%;transform:scaleX(4.5);border-radius:9px/18px;opacity:.75}56%{left:66%;transform:scaleX(4.5);border-radius:9px/18px;opacity:.75}64%,100%{left:88%;transform:scaleX(1);border-radius:9px;opacity:1}}
+  @media(prefers-reduced-motion:reduce){.smb{animation:none;left:46%;transform:scaleX(4.5);opacity:.75}}
+</style>
+<div class="sm"><div class="smb"></div></div>
+<p class="cap">스미어 프레임 · 빠른 중간 프레임을 형태째 길게 늘여 속도감(손그림 기법). ≠ 흐릿한 모션 블러</p>
+
+<!-- @loop h=220 full -->
+<style>
+  .lo{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .lor{width:74px;height:74px;border-radius:50%;border:8px solid #243049;border-top-color:#38BE86;animation:lo 1.1s linear infinite}
+  @keyframes lo{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.lor{animation:none}}
+</style>
+<div class="lo"><div class="lor"></div></div>
+<p class="cap">심리스 루프 · 끝과 처음이 이어져 끊김 없이 반복된다. ≠ 앞뒤로 왕복하는 핑퐁 루프</p>
