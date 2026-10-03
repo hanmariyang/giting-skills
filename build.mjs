@@ -1337,6 +1337,12 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-card .one{font-size:12px;color:var(--ink2)}
 .mogal .mo-card .ask{flex-basis:100%;font-size:11.5px;color:var(--ink2);border-top:1px dashed var(--line);padding-top:6px;margin-top:3px}
 .mogal .mo-card .ask b{color:var(--ink3);font-weight:600;font-family:ui-monospace,monospace;font-size:10.5px}
+.mogal .mo-card .coined{flex:none;font-size:9.5px;font-weight:700;color:#8A6A1F;background:color-mix(in srgb,#C79A3A 14%,transparent);border:1px solid color-mix(in srgb,#C79A3A 32%,transparent);border-radius:5px;padding:1px 6px}
+.mogal .mo-card .mks{flex-basis:100%;display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:10.5px;color:var(--ink3)}
+.mogal .mk{font-family:ui-monospace,monospace;font-size:10px;border-radius:5px;padding:1px 7px;border:1px solid var(--line)}
+.mogal .mk-ai{color:#1c6fb0;background:color-mix(in srgb,#2BA8E0 10%,transparent);border-color:color-mix(in srgb,#2BA8E0 28%,transparent)}
+.mogal .mk-mg{color:var(--acc);background:color-mix(in srgb,var(--acc) 9%,transparent);border-color:color-mix(in srgb,var(--acc) 26%,transparent)}
+.mogal .mk-css{color:#0F766E;background:color-mix(in srgb,#0F766E 9%,transparent);border-color:color-mix(in srgb,#0F766E 26%,transparent)}
 .mogal .mo-card .vs{flex-basis:100%;font-size:11.5px;color:var(--ink3)}
 .mogal .mo-rcp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:720px){.mogal .mo-rcp{grid-template-columns:1fr}}
@@ -1350,13 +1356,16 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-rcpsc{margin:9px 14px 12px;font-size:12.5px;color:var(--ink2);line-height:1.55}
 @media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b}}`;
 const moStar = it => it.star ? '<span class="star" title="현장에서 특히 많이 쓰는 것">★</span>' : '';
+const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
+const moMake = it => (it.make || []).map(k => `<span class="mk mk-${k}">${MAKE_LBL[k] || k}</span>`).join('');
+const moCoined = it => it.coined ? '<span class="coined" title="표준 용어가 아닌 애칭/지어낸 이름. 정식명은 영문·구분 참고">애칭</span>' : '';
 const moCard = it => `<article class="mo-card" id="m-${it.id}">
-  <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+  <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}${moCoined(it)}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
   <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[it.id].h}px" srcdoc="${attr(moCode[it.id])}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
 </article>`;
 const moF = moMenu.formula;
-const catNote = { emphasis: '대부분 현장 용어예요. ★는 특히 자주 씁니다.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.' };
+const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.' };
 const moCore = `<div class="mogal">
 <style>${MO_CSS}</style>
 <div class="mo-formula">
@@ -1387,18 +1396,20 @@ ${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
 `;
 const moDict = full => `# 모션 메뉴판 (motion-menu) — Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 3개 코스 ${moMenu.items.length}개 항목.
-> 쓰임 1순위 = AI 영상 생성(Runway·Kling·Sora 등) 프롬프트. 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 ${moMenu.items.length}개 항목.
+> 각 항목엔 '만드는 법'이 붙습니다 — AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
+> 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: ${moF.pattern}  (✕ "${moF.bad}" → ○ "${moF.good}")
 > 갤러리: https://giting.kr/skills/motion-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting
 
 ${moMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 ${catNote[cat.id] ? `${catNote[cat.id]}\n` : ''}
-${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : ''}
+${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : ''}${it.coined ? ' [애칭]' : ''}
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
-- 정의: ${it.oneliner}
-- 구분: ${it.vs}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}
+- 만드는 법: ${(it.make || []).map(k => MAKE_LBL[k] || k).join(' · ')}
 - 요청 문장: ${it.ask}
 - 데모: ${MO_RAW}/${it.id}.html${full ? `
 

@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>텍스트 샌드위치 Text Sandwich — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .sw{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .swt{font:900 46px system-ui;letter-spacing:.06em;color:#2a3550;position:relative;z-index:1}
+  .swo{position:absolute;z-index:2;width:50px;height:50px;border-radius:12px;background:#E07A3F;left:-60px;animation:sw 3s ease-in-out infinite}
+  @keyframes sw{0%{left:-60px}50%{left:calc(100% + 10px)}100%{left:calc(100% + 10px)}}
+  @media(prefers-reduced-motion:reduce){.swo{animation:none;left:50%;margin-left:-25px}}
+</style>
+<div class="sw"><span class="swt">MOTION</span><span class="swo"></span></div>
+<p class="cap">텍스트 샌드위치 · 큰 글자 사이로 요소가 지나가며 끼워 강조(지어낸 구도)</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

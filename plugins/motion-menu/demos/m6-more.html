@@ -1,0 +1,51 @@
+<!-- @squash-stretch h=220 full -->
+<style>
+  .sq{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .sqb{position:absolute;left:50%;top:18px;width:50px;height:50px;margin-left:-25px;border-radius:50%;background:#E07A3F;transform-origin:center bottom;animation:sq 1.8s cubic-bezier(.5,.05,.5,.95) infinite}
+  @keyframes sq{0%{top:18px;transform:scaleY(1.15) scaleX(.9)}40%{top:96px;transform:scaleY(1.2) scaleX(.85)}50%{top:106px;transform:scaleY(.55) scaleX(1.4)}60%{top:96px;transform:scaleY(1.2) scaleX(.85)}100%{top:18px;transform:scaleY(1.15) scaleX(.9)}}
+  @media(prefers-reduced-motion:reduce){.sqb{animation:none;top:96px}}
+</style>
+<div class="sq"><div class="sqb"></div></div>
+<p class="cap">스쿼시 앤 스트레치 · 떨어질 땐 늘어나고 바닥에선 눌린다 (무게·탄성)</p>
+
+<!-- @motion-trail h=220 full -->
+<style>
+  .mt{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .mt i{position:absolute;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:9px;background:#38BE86;animation:mt 2.4s cubic-bezier(.6,0,.2,1) infinite}
+  .mt i:nth-child(2){opacity:.5;animation-delay:.07s}
+  .mt i:nth-child(3){opacity:.28;animation-delay:.14s}
+  .mt i:nth-child(4){opacity:.14;animation-delay:.21s}
+  @keyframes mt{0%{left:8%}45%{left:78%}100%{left:78%}}
+  @media(prefers-reduced-motion:reduce){.mt i{animation:none;left:78%}}
+</style>
+<div class="mt"><i></i><i></i><i></i><i></i></div>
+<p class="cap">모션 트레일 · 빠른 움직임 뒤에 또렷한 잔상 복사본이 따라붙는다(≠블러)</p>
+
+<!-- @beat-sync h=220 full -->
+<style>
+  .bs{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:12px;animation:bsbg .5s steps(1,end) infinite}
+  @keyframes bsbg{0%{background:#141821}50%{background:#191f2b}}
+  .bs i{width:20px;border-radius:6px;background:#38BE86;height:30px;animation:bsp .5s cubic-bezier(.2,.9,.3,1) infinite}
+  .bs i:nth-child(2){animation-delay:.08s;background:#E07A3F}
+  .bs i:nth-child(3){animation-delay:.16s}
+  .bs i:nth-child(4){animation-delay:.24s;background:#E07A3F}
+  @keyframes bsp{0%{transform:scaleY(2.4)}40%,100%{transform:scaleY(1)}}
+  @media(prefers-reduced-motion:reduce){.bs,.bs i{animation:none}}
+</style>
+<div class="bs"><i></i><i></i><i></i><i></i></div>
+<p class="cap">BPM 비트 싱크 · 강조와 컷이 음악 비트에 딱딱 맞아떨어진다 (120 BPM)</p>
+
+<!-- @rcp-intro h=240 full -->
+<style>
+  .ri{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#101611;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;animation:ribg 2.4s steps(1,end) infinite}
+  @keyframes ribg{0%,33%{background:#101611}34%,66%{background:#12201a}67%,100%{background:#1a130f}}
+  .rin{font:900 30px system-ui;color:#38BE86;animation:ri1 2.4s steps(1,end) infinite}
+  .rinum{font:800 40px system-ui;color:#E7D6BC;animation:ri2 2.4s steps(1,end) infinite}
+  .ris{font:600 15px system-ui;color:#E07A3F;animation:ri3 2.4s steps(1,end) infinite}
+  @keyframes ri1{0%,33%{opacity:1;transform:scale(1)}0%{transform:scale(1.3)}34%,100%{opacity:0}}
+  @keyframes ri2{0%,33%{opacity:0}34%,66%{opacity:1}34%{transform:scale(1.3)}67%,100%{opacity:0}}
+  @keyframes ri3{0%,66%{opacity:0}67%,100%{opacity:1}67%{transform:translateY(10px)}80%,100%{transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.rin,.rinum,.ris{animation:none}.rinum,.ris{opacity:0}}
+</style>
+<div class="ri"><div class="rin">안상현</div><div class="rinum">19.5만</div><div class="ris">시간·돈·감정에서 자유로워지는 법</div></div>
+<p class="cap">모션 그래픽 자기소개 · 이름 → 숫자 → 한 문장이 비트마다 바뀐다</p>

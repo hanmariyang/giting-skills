@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>모션 트레일 Motion Trail — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .mt{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .mt i{position:absolute;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:9px;background:#38BE86;animation:mt 2.4s cubic-bezier(.6,0,.2,1) infinite}
+  .mt i:nth-child(2){opacity:.5;animation-delay:.07s}
+  .mt i:nth-child(3){opacity:.28;animation-delay:.14s}
+  .mt i:nth-child(4){opacity:.14;animation-delay:.21s}
+  @keyframes mt{0%{left:8%}45%{left:78%}100%{left:78%}}
+  @media(prefers-reduced-motion:reduce){.mt i{animation:none;left:78%}}
+</style>
+<div class="mt"><i></i><i></i><i></i><i></i></div>
+<p class="cap">모션 트레일 · 빠른 움직임 뒤에 또렷한 잔상 복사본이 따라붙는다(≠블러)</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

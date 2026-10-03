@@ -1,0 +1,127 @@
+<!-- @match-cut h=220 full -->
+<style>
+  .mc{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;animation:mcbg 3.2s steps(1,end) infinite}
+  @keyframes mcbg{0%,50%{background:#1b2a3a}50.01%,100%{background:#2a1b2e}}
+  .mco{width:66px;height:66px;border-radius:50%;background:#E07A3F;box-shadow:0 0 0 6px rgba(224,122,63,.18)}
+  @media(prefers-reduced-motion:reduce){.mc{animation:none;background:#1b2a3a}}
+</style>
+<div class="mc"><div class="mco"></div></div>
+<p class="cap">매치 컷 · 같은 형태(원)가 그대로 남아 컷을 숨긴다. 배경 장면만 바뀜</p>
+
+<!-- @cross-dissolve h=220 full -->
+<style>
+  .cd{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .cda,.cdb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 20px system-ui;color:#0c0f15}
+  .cda{background:#E7D6BC;animation:cdfa 3s ease-in-out infinite}
+  .cdb{background:#4fb8e8;animation:cdfb 3s ease-in-out infinite}
+  @keyframes cdfa{0%,30%{opacity:1}55%,100%{opacity:0}}
+  @keyframes cdfb{0%,30%{opacity:0}55%,100%{opacity:1}}
+  @media(prefers-reduced-motion:reduce){.cda,.cdb{animation:none}.cdb{opacity:.5}}
+</style>
+<div class="cd"><div class="cda">화면 A</div><div class="cdb">화면 B</div></div>
+<p class="cap">크로스 디졸브 · A가 서서히 사라지며 B가 겹쳐 떠오른다 (가장 기본 전환)</p>
+
+<!-- @pixel-dissolve h=220 full -->
+<style>
+  .pd{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#4fb8e8;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(6,1fr)}
+  .pd i{background:#E7D6BC;animation:pdc 3.2s steps(1,end) infinite}
+  @keyframes pdc{0%,40%{opacity:1}60%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.pd i{animation:none;opacity:1}.pd i:nth-child(2n){opacity:0}}
+</style>
+<div class="pd" id="pdgrid"></div>
+<p class="cap">픽셀(그리드) 디졸브 · 칸칸이 흩어지며 아래 화면이 차오른다</p>
+<script>(function(){var g=document.getElementById('pdgrid');if(!g)return;for(var i=0;i<72;i++){var s=document.createElement('i');s.style.animationDelay=(Math.random()*0.9).toFixed(2)+'s';g.appendChild(s);}})();</script>
+
+<!-- @iris-wipe h=220 full -->
+<style>
+  .iw{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#E7D6BC}
+  .iwb{position:absolute;inset:0;background:#1A8F63;display:flex;align-items:center;justify-content:center;font:700 19px system-ui;color:#fff;clip-path:circle(0% at 50% 50%);animation:iw 3s ease-in-out infinite}
+  @keyframes iw{0%,20%{clip-path:circle(0% at 50% 50%)}55%,100%{clip-path:circle(75% at 50% 50%)}}
+  @media(prefers-reduced-motion:reduce){.iwb{animation:none;clip-path:circle(75% at 50% 50%)}}
+</style>
+<div class="iw"><div class="iwb">화면 B</div></div>
+<p class="cap">원 아이리스 ·『원 팝 전환』 · 원이 가운데서 커지며 다음 화면을 연다</p>
+
+<!-- @wipe h=220 full -->
+<style>
+  .wp{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#E07A3F}
+  .wpb{position:absolute;inset:0;background:#4fb8e8;display:flex;align-items:center;justify-content:center;font:700 19px system-ui;color:#fff;clip-path:inset(0 100% 0 0);animation:wp 3s ease-in-out infinite}
+  @keyframes wp{0%,20%{clip-path:inset(0 100% 0 0)}55%,100%{clip-path:inset(0 0 0 0)}}
+  @media(prefers-reduced-motion:reduce){.wpb{animation:none;clip-path:inset(0 0 0 0)}}
+</style>
+<div class="wp"><div class="wpb">화면 B</div></div>
+<p class="cap">와이프 · 직선 경계가 왼쪽에서 오른쪽으로 쓸며 다음 화면을 드러냄</p>
+
+<!-- @mask-reveal h=220 full -->
+<style>
+  .mr{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .mrt{font:800 40px system-ui;color:#38BE86;letter-spacing:.04em;clip-path:inset(0 0 0 100%);animation:mr 3s cubic-bezier(.5,0,.1,1) infinite}
+  @keyframes mr{0%,15%{clip-path:inset(0 0 0 100%)}60%,100%{clip-path:inset(0 0 0 0)}}
+  @media(prefers-reduced-motion:reduce){.mrt{animation:none;clip-path:inset(0 0 0 0)}}
+</style>
+<div class="mr"><div class="mrt">LOGO</div></div>
+<p class="cap">마스크 리빌 · 형태(마스크)를 따라 내용이 그려지듯 드러난다</p>
+
+<!-- @morph-cut h=220 full -->
+<style>
+  .mo{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#1b2130;display:flex;align-items:center;justify-content:center}
+  .mof{position:absolute;width:70px;height:84px;border-radius:40px 40px 34px 34px;background:#E7D6BC}
+  .mof.a{animation:moa 2.8s ease-in-out infinite}
+  .mof.b{background:#cdbfa6;animation:mob 2.8s ease-in-out infinite}
+  @keyframes moa{0%,35%{opacity:1;transform:translateX(0) rotate(0)}50%,100%{opacity:0;transform:translateX(7px) rotate(3deg)}}
+  @keyframes mob{0%,35%{opacity:0;transform:translateX(-7px) rotate(-3deg)}50%,100%{opacity:1;transform:translateX(0) rotate(0)}}
+  @media(prefers-reduced-motion:reduce){.mof{animation:none}.mof.b{opacity:1}}
+</style>
+<div class="mo"><div class="mof a"></div><div class="mof b"></div></div>
+<p class="cap">모프 컷 · 두 테이크(얼굴)를 보간해 블렌딩, 점프컷 자국을 메운다</p>
+
+<!-- @glitch h=220 full -->
+<style>
+  .gl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#0c0f15;display:flex;align-items:center;justify-content:center}
+  .glt{position:relative;font:800 38px system-ui;color:#E7D6BC;letter-spacing:.04em}
+  .glt::before,.glt::after{content:"GLITCH";position:absolute;left:0;top:0}
+  .glt::before{color:#ff4d6d;animation:gla 1.6s steps(2,end) infinite}
+  .glt::after{color:#4fb8e8;animation:glb 1.6s steps(2,end) infinite}
+  @keyframes gla{0%,70%{clip-path:inset(0 0 100% 0);transform:none}76%{clip-path:inset(10% 0 40% 0);transform:translateX(-5px)}82%{clip-path:inset(60% 0 10% 0);transform:translateX(4px)}88%,100%{clip-path:inset(0 0 100% 0);transform:none}}
+  @keyframes glb{0%,70%{clip-path:inset(0 0 100% 0);transform:none}79%{clip-path:inset(45% 0 20% 0);transform:translateX(5px)}85%{clip-path:inset(20% 0 55% 0);transform:translateX(-4px)}90%,100%{clip-path:inset(0 0 100% 0);transform:none}}
+  @media(prefers-reduced-motion:reduce){.glt::before,.glt::after{animation:none;clip-path:inset(0 0 100% 0)}}
+</style>
+<div class="gl"><div class="glt">GLITCH</div></div>
+<p class="cap">글리치 · 순간적으로 어긋나고 깨져 디지털 오류처럼 보인다</p>
+
+<!-- @rgb-split h=220 full -->
+<style>
+  .rs{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#0c0f15;display:flex;align-items:center;justify-content:center}
+  .rst{position:relative;font:800 40px system-ui;letter-spacing:.04em}
+  .rst span{position:absolute;left:0;top:0;mix-blend-mode:screen}
+  .rsk{color:#E7D6BC}
+  .rsr{color:#ff3b3b;animation:rsr 2.6s ease-in-out infinite}
+  .rsb{color:#3b7bff;animation:rsb 2.6s ease-in-out infinite}
+  @keyframes rsr{0%,20%,80%,100%{transform:translateX(0)}45%,55%{transform:translateX(-7px)}}
+  @keyframes rsb{0%,20%,80%,100%{transform:translateX(0)}45%,55%{transform:translateX(7px)}}
+  @media(prefers-reduced-motion:reduce){.rsr{transform:translateX(-4px)}.rsb{transform:translateX(4px)}.rsr,.rsb{animation:none}}
+</style>
+<div class="rs"><div class="rst"><span class="rsr">MOTION</span><span class="rsb">MOTION</span><span class="rsk">MOTION</span></div></div>
+<p class="cap">RGB 분리(색수차) · 색 채널이 어긋났다 다시 모인다</p>
+
+<!-- @light-sweep h=220 full -->
+<style>
+  .ls{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .lsl{position:relative;width:180px;height:60px;border-radius:12px;background:linear-gradient(#2a3550,#1b2334);overflow:hidden;display:flex;align-items:center;justify-content:center;font:800 22px system-ui;color:#E7D6BC}
+  .lsl::after{content:"";position:absolute;top:-20%;left:-40%;width:40%;height:140%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-18deg);animation:ls 2.6s ease-in-out infinite}
+  @keyframes ls{0%,55%{left:-40%}80%,100%{left:120%}}
+  @media(prefers-reduced-motion:reduce){.lsl::after{animation:none;left:50%}}
+</style>
+<div class="ls"><div class="lsl">LOGO</div></div>
+<p class="cap">라이트 스윕(샤인) · 하이라이트가 로고 표면을 미끄러져 지나간다</p>
+
+<!-- @screen-dive h=220 full -->
+<style>
+  .sd{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;perspective:600px}
+  .sds{width:150px;height:96px;border-radius:10px;background:#1b2334;border:3px solid #39506a;display:flex;align-items:center;justify-content:center;overflow:hidden;animation:sd 3.4s cubic-bezier(.6,0,.3,1) infinite}
+  .sdi{width:70%;height:60%;border-radius:6px;background:linear-gradient(135deg,#1A8F63,#38BE86);display:flex;align-items:center;justify-content:center;font:700 13px system-ui;color:#eafff4}
+  @keyframes sd{0%,20%{transform:scale(1)}70%,100%{transform:scale(6);border-radius:0}}
+  @media(prefers-reduced-motion:reduce){.sds{animation:none}}
+</style>
+<div class="sd"><div class="sds"><div class="sdi">안의 장면</div></div></div>
+<p class="cap">화면 속 다이브(푸시스루) · 카메라가 화면 속으로 들어가 그 안 장면이 꽉 찬다</p>

@@ -1,0 +1,80 @@
+<!-- @kinetic-typography h=220 full -->
+<style>
+  .kt{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:10px;font:800 30px system-ui;color:#8b93a1}
+  .kt b{display:inline-block;animation:ktp 3s steps(1,end) infinite}
+  .kt b:nth-child(1){animation-delay:0s}.kt b:nth-child(2){animation-delay:1s}.kt b:nth-child(3){animation-delay:2s}
+  @keyframes ktp{0%,33%{color:#38BE86;transform:scale(1.35)}34%,100%{color:#8b93a1;transform:scale(1)}}
+  @media(prefers-reduced-motion:reduce){.kt b{animation:none}.kt b:nth-child(1){color:#38BE86}}
+</style>
+<div class="kt"><b>말이</b><b>리듬을</b><b>탄다</b></div>
+<p class="cap">키네틱 타이포그래피 · 글자 자체가 움직여 뜻과 리듬을 전한다</p>
+
+<!-- @type-on h=220 full -->
+<style>
+  .to{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .tol{font:700 26px var(--mono,'JetBrains Mono',ui-monospace,monospace);color:#E7D6BC;white-space:nowrap;overflow:hidden;border-right:3px solid #38BE86;width:14ch;animation:tow 3.4s steps(14,end) infinite,toc .7s step-end infinite}
+  @keyframes tow{0%{width:0}70%,100%{width:14ch}}
+  @keyframes toc{50%{border-color:transparent}}
+  @media(prefers-reduced-motion:reduce){.tol{animation:toc .7s step-end infinite;width:14ch}}
+</style>
+<div class="to"><div class="tol">Hello, world!</div></div>
+<p class="cap">타입온 · 글자가 한 자씩 타자 치듯 나타난다 (커서 깜빡임)</p>
+
+<!-- @text-stagger h=220 full -->
+<style>
+  .ts{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;padding-left:28px}
+  .ts span{font:800 22px system-ui;color:#E7D6BC;animation:tsr 3s cubic-bezier(.16,1,.3,1) infinite}
+  .ts span:nth-child(2){animation-delay:.12s;color:#38BE86}
+  .ts span:nth-child(3){animation-delay:.24s}
+  @keyframes tsr{0%{opacity:0;transform:translateY(22px)}30%,100%{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.ts span{animation:none;opacity:1;transform:none}}
+</style>
+<div class="ts"><span>한 줄</span><span>또 한 줄</span><span>마지막 줄</span></div>
+<p class="cap">텍스트 스태거 등장 · 줄·단어가 0.1초 간격으로 차례차례 올라온다</p>
+
+<!-- @word-morph h=220 full -->
+<style>
+  .wm{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .wm span{position:absolute;font:800 34px system-ui;color:#E7D6BC}
+  .wma{animation:wma 3s ease-in-out infinite}
+  .wmb{color:#38BE86;animation:wmb 3s ease-in-out infinite}
+  @keyframes wma{0%,30%{opacity:1;filter:blur(0);transform:scale(1)}50%,100%{opacity:0;filter:blur(6px);transform:scale(.85)}}
+  @keyframes wmb{0%,30%{opacity:0;filter:blur(6px);transform:scale(1.15)}50%,100%{opacity:1;filter:blur(0);transform:scale(1)}}
+  @media(prefers-reduced-motion:reduce){.wma,.wmb{animation:none}.wmb{opacity:1}.wma{opacity:0}}
+</style>
+<div class="wm"><span class="wma">아이디어</span><span class="wmb">완성</span></div>
+<p class="cap">워드 모프 · 한 단어의 글자가 녹듯 다른 단어로 변형된다</p>
+
+<!-- @text-sandwich h=220 full -->
+<style>
+  .sw{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
+  .swt{font:900 46px system-ui;letter-spacing:.06em;color:#2a3550;position:relative;z-index:1}
+  .swo{position:absolute;z-index:2;width:50px;height:50px;border-radius:12px;background:#E07A3F;left:-60px;animation:sw 3s ease-in-out infinite}
+  @keyframes sw{0%{left:-60px}50%{left:calc(100% + 10px)}100%{left:calc(100% + 10px)}}
+  @media(prefers-reduced-motion:reduce){.swo{animation:none;left:50%;margin-left:-25px}}
+</style>
+<div class="sw"><span class="swt">MOTION</span><span class="swo"></span></div>
+<p class="cap">텍스트 샌드위치 · 큰 글자 사이로 요소가 지나가며 끼워 강조(지어낸 구도)</p>
+
+<!-- @lower-third h=220 full -->
+<style>
+  .lt{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#243b2f,#141821)}
+  .ltb{position:absolute;left:0;bottom:22px;background:rgba(10,14,18,.78);backdrop-filter:blur(3px);border-left:4px solid #38BE86;border-radius:0 10px 10px 0;padding:9px 18px 9px 14px;animation:lt 3.4s cubic-bezier(.16,1,.3,1) infinite}
+  .ltb .n{font:800 17px system-ui;color:#fff}.ltb .r{font:500 12px system-ui;color:#9fe3c3;margin-top:2px}
+  @keyframes lt{0%{transform:translateX(-110%)}20%,80%{transform:translateX(0)}100%{transform:translateX(-110%)}}
+  @media(prefers-reduced-motion:reduce){.ltb{animation:none}}
+</style>
+<div class="lt"><div class="ltb"><div class="n">안상현</div><div class="r">시니어 엔지니어</div></div></div>
+<p class="cap">로어서드 · 화면 하단에 이름·직함 자막이 슬라이드 인</p>
+
+<!-- @letter-flythrough h=220 full -->
+<style>
+  .lf{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;perspective:500px}
+  .lft{font:900 72px system-ui;letter-spacing:.05em;color:#38BE86;animation:lf 3.4s cubic-bezier(.6,0,.3,1) infinite}
+  .lfn{position:absolute;font:800 18px system-ui;color:#E7D6BC;opacity:0;animation:lfn 3.4s cubic-bezier(.6,0,.3,1) infinite}
+  @keyframes lf{0%,15%{transform:scale(1);opacity:1}70%,100%{transform:scale(9);opacity:0}}
+  @keyframes lfn{0%,55%{opacity:0}80%,100%{opacity:1}}
+  @media(prefers-reduced-motion:reduce){.lft,.lfn{animation:none}.lfn{opacity:0}}
+</style>
+<div class="lf"><div class="lft">AI</div><div class="lfn">프롬프트 한 줄</div></div>
+<p class="cap">글자 관통 플라이스루 · 카메라가 글자 속을 뚫고 지나 다음 장면으로</p>
