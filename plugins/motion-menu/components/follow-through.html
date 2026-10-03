@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>팔로 스루 Follow Through — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .fl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .flw{position:absolute;top:50%;margin-top:-22px;animation:flw 3s cubic-bezier(.5,0,.2,1) infinite}
+  .flh{width:44px;height:44px;border-radius:50%;background:#E7D6BC}
+  .flt{position:absolute;right:38px;top:8px;width:46px;height:28px;background:#38BE86;border-radius:14px 2px 2px 14px;transform-origin:right center;animation:flt 3s cubic-bezier(.5,0,.2,1) infinite}
+  @keyframes flw{0%{left:4%}40%,100%{left:58%}}
+  @keyframes flt{0%{transform:rotate(0)}30%{transform:rotate(16deg)}55%{transform:rotate(-10deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+  @media(prefers-reduced-motion:reduce){.flw,.flt{animation:none}.flw{left:58%}}
+</style>
+<div class="fl"><div class="flw"><div class="flt"></div><div class="flh"></div></div></div>
+<p class="cap">팔로 스루 · 본체가 멈춰도 딸린 꼬리·천이 관성으로 늦게 따라 멈춘다</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
