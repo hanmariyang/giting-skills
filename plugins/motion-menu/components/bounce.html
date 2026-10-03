@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>바운스 Bounce — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bn{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .bn::after{content:"";position:absolute;left:0;right:0;bottom:24px;height:2px;background:#2a3550}
+  .bnb{position:absolute;left:50%;width:40px;height:40px;margin-left:-20px;border-radius:50%;background:#38BE86;animation:bn 2.2s cubic-bezier(.3,0,.5,1) infinite}
+  @keyframes bn{0%{top:8px}28%{top:106px}44%{top:48px}58%{top:106px}70%{top:78px}80%{top:106px}88%{top:94px}100%{top:106px}}
+  @media(prefers-reduced-motion:reduce){.bnb{animation:none;top:106px}}
+</style>
+<div class="bn"><div class="bnb"></div></div>
+<p class="cap">바운스 · 바닥에 닿아 점점 작게 여러 번 튄다(중력감). ≠ 한 번 지나쳤다 오는 오버슈트</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

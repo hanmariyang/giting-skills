@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>프리즈 프레임 Freeze Frame — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .fz{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
+  .fzb{position:absolute;top:50%;margin-top:-20px;width:40px;height:40px;border-radius:50%;background:#38BE86;animation:fz 3s linear infinite}
+  .fzf{position:absolute;inset:6px;border:3px solid #E7D6BC;border-radius:8px;opacity:0;animation:fzf 3s linear infinite}
+  .fztag{position:absolute;top:12px;left:14px;font:800 13px system-ui;color:#E7D6BC;letter-spacing:.1em;opacity:0;animation:fzf 3s linear infinite}
+  @keyframes fz{0%{left:6%}26%{left:52%}52%{left:52%}60%{left:90%}100%{left:90%}}
+  @keyframes fzf{0%,26%{opacity:0}30%,50%{opacity:1}54%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.fzb,.fzf,.fztag{animation:none}.fzb{left:52%}.fzf,.fztag{opacity:1}}
+</style>
+<div class="fz"><div class="fzb"></div><div class="fzf"></div><span class="fztag">FREEZE</span></div>
+<p class="cap">프리즈 프레임 · 한 프레임에서 화면이 딱 멈춘다(흰 테두리). ≠ 비트마다 짧게 멈추는 비트 프리즈</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

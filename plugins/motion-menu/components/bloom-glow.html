@@ -1,0 +1,11 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>블룸 · 글로우 Bloom / Glow — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#0c0f17;display:flex;align-items:center;justify-content:center}
+  .bgt{font:800 40px system-ui;color:#9ff3d6;animation:bg 2.4s ease-in-out infinite}
+  @keyframes bg{0%,100%{text-shadow:0 0 6px rgba(56,190,134,.5),0 0 14px rgba(56,190,134,.25)}50%{text-shadow:0 0 14px rgba(56,190,134,.95),0 0 34px rgba(56,190,134,.7),0 0 60px rgba(56,190,134,.4)}}
+  @media(prefers-reduced-motion:reduce){.bgt{animation:none;text-shadow:0 0 16px rgba(56,190,134,.8),0 0 36px rgba(56,190,134,.5)}}
+</style>
+<div class="bg"><span class="bgt">NEON</span></div>
+<p class="cap">블룸 · 글로우 · 밝은 부분이 부드럽게 번져 빛나 보인다. ≠ 점광원이 맺히는 렌즈 플레어</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

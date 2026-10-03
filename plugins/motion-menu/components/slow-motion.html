@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>슬로 모션 Slow Motion — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .sw{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .swb{position:absolute;left:50%;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:#4fb8e8;animation:sw 3.2s cubic-bezier(.4,0,.6,1) infinite}
+  .swr{position:absolute;left:50%;bottom:20px;width:20px;height:20px;margin-left:-10px;border:2px solid #4fb8e8;border-radius:50%;opacity:0;animation:swr 3.2s ease-out infinite}
+  .swtag{position:absolute;top:10px;right:12px;font:700 13px var(--mono,ui-monospace,monospace);color:#9fd4ef;letter-spacing:.04em}
+  @keyframes sw{0%{top:-30px}70%{top:120px}72%,100%{top:120px}}
+  @keyframes swr{0%,70%{transform:scale(.4);opacity:0}76%{opacity:.7}100%{transform:scale(2.6);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.swb{animation:none;top:120px}.swr{animation:none;opacity:0}}
+</style>
+<div class="sw"><span class="swtag">0.25×</span><div class="swb"></div><div class="swr"></div></div>
+<p class="cap">슬로 모션 · 실제보다 느리게 재생해 순간을 늘린다(균일 0.25배). ≠ 한 클립 안 속도 변화 스피드 램핑</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

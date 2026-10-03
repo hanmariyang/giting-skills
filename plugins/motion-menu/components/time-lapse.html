@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>타임랩스 Time-Lapse — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .tl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;animation:tlbg 3.2s linear infinite}
+  @keyframes tlbg{0%{background:linear-gradient(#2a4a7a,#6f9fd0)}30%{background:linear-gradient(#e08a3f,#f0c27a)}55%{background:linear-gradient(#3a2a52,#7a5a86)}80%,100%{background:linear-gradient(#10131f,#24304a)}}
+  .tls{position:absolute;top:26px;width:34px;height:34px;border-radius:50%;background:#ffe9b0;box-shadow:0 0 22px 6px rgba(255,220,140,.7);animation:tls 3.2s linear infinite}
+  @keyframes tls{0%{left:-10%;top:90px}50%{top:20px}100%{left:100%;top:90px}}
+  @media(prefers-reduced-motion:reduce){.tl,.tls{animation:none}.tl{background:linear-gradient(#e08a3f,#f0c27a)}.tls{left:46%;top:20px}}
+</style>
+<div class="tl"><div class="tls"></div></div>
+<p class="cap">타임랩스 · 긴 시간을 압축해 빠르게(해 지남·낮→밤). ≠ 걸으며 찍어 이동까지 있는 하이퍼랩스</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
