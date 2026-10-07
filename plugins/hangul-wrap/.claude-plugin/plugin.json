@@ -1,0 +1,9 @@
+{
+  "name": "hangul-wrap",
+  "version": "0.1.0",
+  "description": "한글 줄바꿈 실측·교정. 어절이 두 줄로 쪼개진 자리를 실제 브라우저에서 폭별로 재서 찾고(의존성 0 검사기), 제목·본문·좁은 칸·코드 자리별로 다르게 고친 뒤 다시 잰다. keep-all 을 아무 데나 줘서 칸을 뚫는 사고까지 잡는다.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["korean", "hangul", "line-break", "word-break", "keep-all", "text-wrap", "css", "typography", "vibe-coding"]
+}

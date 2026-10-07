@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.15.0"
+    "version": "0.16.0"
   },
   "plugins": [
     {
@@ -88,6 +88,11 @@
       "name": "motion-menu",
       "source": "./plugins/motion-menu",
       "description": "모션 메뉴판 — '역동적으로 해줘' 대신 이름으로 시키는 영상·화면 모션 사전. 6코스 60항목(카메라 기본·강조/전환·전환/디졸브/리빌·키네틱 타이포·타이밍/질감·효과/시간) 별칭→정식명(한·영)→요청 문장→만드는 법(AI 영상·모션 그래픽·CSS)→움직이는 실물 데모 + 헷갈리는 쌍 구분 + 애칭 표시 + 샷 조합 레시피. AI 영상 생성(Runway·Kling·Sora)·모션 그래픽(HyperFrames 등) 프롬프트용"
+    },
+    {
+      "name": "hangul-wrap",
+      "source": "./plugins/hangul-wrap",
+      "description": "한글 줄바꿈 실측·교정. 어절이 두 줄로 쪼개진 자리(간단/한)를 실제 브라우저에서 폭별로 재서 찾고, 제목·본문·좁은 칸·코드 자리별로 다르게 고친 뒤 다시 잰다. 의존성 0 검사기 포함(끝 코드로 배포 앞 검사 가능). keep-all 을 아무 데나 줘서 칸을 뚫는 사고, break-all 로 넘침을 덮는 사고까지 잡는다"
     }
   ]
 }

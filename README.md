@@ -108,6 +108,20 @@ ui-menu의 **모바일판**. "아래에서 올라오는 판"을 **바텀시트**
 /plugin install landing-menu@giting
 ```
 
+### 08 · hangul-wrap: 한글 줄바꿈 실측·교정
+
+한글이 어절 중간에서 꺾이는 자리(`간단/한`)를 **실제 브라우저로 폭별로 재서** 찾고, 자리별로 고친 뒤 다시 잰다.
+
+- **의존성 0 검사기** `scripts/wrapcheck.mjs`: 글자 위치로 줄을 되살려 쪼개짐 · 넘침 · 외톨이를 잡는다. 문제 있으면 끝 코드 1
+- **자리별 처방**: 제목 keep-all+balance · 본문 keep-all+pretty · 좁은 칸은 keep-all 금지 · 코드·주소는 overflow-wrap: anywhere
+- **실측**: 예시 페이지 쪼개짐 11 → 0 · 넘침 2 → 0. giting.kr 매거진 1호 34 → 0, 2호 52 → 0
+
+라이브: **https://giting.kr/skills/hangul-wrap**
+
+```
+/plugin install hangul-wrap@giting
+```
+
 ## 등재 기준
 
 - 실제로 써 보고 검수한 것만 올립니다 (자동 수집 없음)
