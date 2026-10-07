@@ -6,6 +6,10 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'nod
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// 공통 조각(규칙·도구 표·스킬 목록)을 모든 SKILL.md 에 먼저 맞춘다. 정본은 shared/
+import { execFileSync } from 'node:child_process';
+execFileSync(process.execPath, [join(ROOT, 'sync-shared.mjs')], { stdio: 'inherit' });
+
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const PLUGIN = join(ROOT, 'plugins', 'ui-menu');
 const menu = JSON.parse(readFileSync(join(PLUGIN, 'menu.json'), 'utf8'));

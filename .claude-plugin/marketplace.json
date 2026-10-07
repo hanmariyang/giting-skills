@@ -6,9 +6,14 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.16.0"
+    "version": "0.17.0"
   },
   "plugins": [
+    {
+      "name": "skill-router",
+      "source": "./plugins/skill-router",
+      "description": "Giting Skills 입구. 「어떤 스킬 써야 해?」를 받아 맞는 스킬 많아야 둘로 안내하고, 안 깔려 있으면 설치 명령 한 줄을 준다. 일은 하지 않고 안내만 한다"
+    },
     {
       "name": "ui-menu",
       "source": "./plugins/ui-menu",
