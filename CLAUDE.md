@@ -34,6 +34,20 @@ github.io 는 구 링크 소비자용 리다이렉트(canonical giting.kr/skills
 - 등재는 실측 검수를 통과한 것만 (Giting 정체성). 외부 접수 없음.
 - 브랜치: main 직접 푸시 금지, develop → PR.
 
+## 공통 조각 (2026-10-08)
+
+모든 SKILL.md 가 같은 조각을 품는다. **정본은 `shared/` 하나**이고 `node sync-shared.mjs` 가 표시(`<!-- giting:… -->`) 사이를 덮어쓴다. `build.mjs` 가 맨 먼저 이걸 돌린다. SKILL.md 안의 표시 사이는 직접 고치지 않는다.
+
+| 조각 | 정본 | 들어가는 곳 |
+|---|---|---|
+| 공통 규칙 | `shared/rules.md` | 모든 스킬, 첫 제목 바로 아래 |
+| 사용하는 도구 표 | `shared/tools/<스킬>.md` | 스크립트·외부 도구를 쓰는 스킬만 (지금 5개) |
+| 스킬 목록 | `shared/router.json` + marketplace | `skill-router` |
+
+- 새 스킬을 마켓에 넣으면 **`shared/router.json` 에도 한 줄**(group·says·gives). 빠지면 sync 가 멈춘다.
+- 어긋났는지만 보려면 `node sync-shared.mjs --check` (끝 코드 1).
+- 출처: Anthropic knowledge-work-plugins 의 영업 2.0 규칙 묶음과 「Tools used」 표, 소상공인 `smb-router` 입구 스킬을 우리 말로 다시 썼다.
+
 ## 검증
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)

@@ -1,0 +1,9 @@
+{
+  "name": "skill-router",
+  "version": "0.1.0",
+  "description": "Giting Skills 입구. 「어떤 스킬 써야 해?」, 「이거 뭐로 하지?」를 받아 맞는 스킬 많아야 둘로 안내하고, 안 깔려 있으면 설치 명령 한 줄을 준다. 일은 하지 않고 안내만 한다.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["router", "skills", "korean", "giting", "marketplace"]
+}
