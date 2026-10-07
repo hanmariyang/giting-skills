@@ -1,0 +1,31 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>줄바꿈 후</title><style>*{box-sizing:border-box}body{margin:0;padding:24px 16px;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#16181d;background:#fff;line-height:1.6}
+.hero{max-width:720px}.eyebrow{color:#3a5bd9;font-weight:600;margin:0 0 8px}
+h1{font-size:34px;line-height:1.25;margin:0 0 14px;letter-spacing:-.01em}.lead{font-size:17px;margin:0;color:#3b3f48}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
+.card{border:1px solid #e4e6eb;border-radius:12px;padding:16px}.card h3{font-size:22px;margin:8px 0 6px}.card p{margin:0;font-size:15px;color:#3b3f48}
+.badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:#eef1fb;color:#3a5bd9}
+.plans{border-collapse:collapse;width:100%;max-width:520px;font-size:15px}.plans td,.plans th{border-bottom:1px solid #e4e6eb;padding:8px 6px;text-align:left;width:33%}
+.note{font-size:14px;color:#5a5f6a}code{font-size:13px;background:#f3f4f7;padding:1px 4px;border-radius:4px}
+/* hangul-wrap 기본값. :where() 라 명시도 0, 컴포넌트 규칙이 언제나 이긴다 */
+:where(h1,h2,h3,h4,h5,h6,p,li,dd,dt,blockquote,figcaption){word-break:keep-all;overflow-wrap:break-word}
+:where(h1,h2,h3,h4,h5,h6){text-wrap:balance}
+:where(p,li,dd,blockquote,figcaption){text-wrap:pretty}
+:where(pre,code,kbd,samp){overflow-wrap: anywhere;}
+/* 좁은 칸은 keep-all 을 주지 않는다. 대신 꺾이면 안 되는 짧은 묶음만 묶는다 */
+.plans td{white-space:nowrap}
+</style></head><body><header class="hero">
+  <p class="eyebrow">새로 나온 기능</p>
+  <h1>흩어진 업무 기록을 한곳에서 정리하는 가장 간단한 방법</h1>
+  <p class="lead">회의록, 할 일, 결정 사항이 여러 도구에 나뉘어 있으면 다시 찾는 데만 하루에 삼십 분 넘게 걸립니다. 한 번 연결하면 지난 기록까지 자동으로 모아 드립니다.</p>
+</header>
+<section class="cards">
+  <article class="card"><span class="badge">무료 체험</span><h3>자동 분류</h3><p>제목과 본문을 읽어 프로젝트별로 알아서 나눕니다. 직접 폴더를 만들 필요가 없습니다.</p></article>
+  <article class="card"><span class="badge">팀 요금제</span><h3>권한 관리</h3><p>사람마다 볼 수 있는 범위를 정하고, 외부 협력사에는 필요한 문서만 공유합니다.</p></article>
+</section>
+<table class="plans">
+  <tr><th>요금제</th><th>월 요금</th><th>저장 공간</th></tr>
+  <tr><td>개인</td><td>무료</td><td>5기가바이트</td></tr>
+  <tr><td>스타트업</td><td>월 9,900원</td><td>100기가바이트</td></tr>
+</table>
+<p class="note">연동 주소: <code>https://api.example.com/v2/workspaces/connect?token=abcdefghijklmnop</code></p>
+</body></html>
