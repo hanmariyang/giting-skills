@@ -1,0 +1,17 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>설명 영상 Stagger (Follow-through)+Zoom+Lower-third+Cross Dissolve — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .rx{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#fbfbfa}
+  .rx .st{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:16px;animation:rxz 6s ease-in-out infinite;transform-origin:30% 50%}
+  .rx .n{width:70px;height:44px;border:2px solid #16181d;border-radius:8px;display:flex;align-items:center;justify-content:center;font:700 13px system-ui;color:#16181d;opacity:0;animation:rxn 6s ease-out infinite}
+  .rx .a{width:26px;height:2px;background:#16181d;opacity:0;animation:rxn 6s ease-out infinite}
+  .rx .n:nth-child(1){animation-delay:0s}.rx .a:nth-child(2){animation-delay:.3s}.rx .n:nth-child(3){animation-delay:.6s}.rx .a:nth-child(4){animation-delay:.9s}.rx .n:nth-child(5){animation-delay:1.2s}
+  @keyframes rxn{0%{opacity:0;transform:translateY(6px)}6%,85%{opacity:1;transform:none}100%{opacity:0}}
+  @keyframes rxz{0%,30%{transform:scale(1)}45%,70%{transform:scale(1.6)}85%,100%{transform:scale(1)}}
+  .rx .lt{position:absolute;left:14px;bottom:12px;background:#16181d;color:#fff;font:600 12px system-ui;padding:5px 10px;border-radius:6px;opacity:0;animation:rxl 6s ease-out infinite}
+  @keyframes rxl{0%,40%{opacity:0;transform:translateX(-8px)}48%,70%{opacity:1;transform:none}78%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.rx .st,.rx .n,.rx .a,.rx .lt{animation:none;opacity:1}}
+</style>
+<div class="rx"><div class="st"><div class="n">입력</div><div class="a"></div><div class="n">처리</div><div class="a"></div><div class="n">결과</div></div><div class="lt">1단계 · 입력이 들어온다</div></div>
+<p class="cap">설명 영상 · 도식이 한 조각씩 그려지고, 설명하는 부분으로 줌, 이름표는 로어 서드</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
