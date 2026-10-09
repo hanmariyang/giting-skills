@@ -104,3 +104,62 @@
 </style>
 <div class="lo"><div class="lor"></div></div>
 <p class="cap">심리스 루프 · 끝과 처음이 이어져 끊김 없이 반복된다. ≠ 앞뒤로 왕복하는 핑퐁 루프</p>
+
+<!-- @rcp-showreel h=240 full -->
+<style>
+  .rs{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#0e0f14}
+  .rs>div{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;animation:rs 4.8s steps(1,end) infinite}
+  .rs .s1{font:900 34px system-ui;color:#F2F2F2;letter-spacing:-.02em}
+  .rs .s2{font:900 64px system-ui;color:#F05032}
+  .rs .s3{background:repeating-conic-gradient(#2a2d3a 0 25%,#0e0f14 0 50%) 0 0/40px 40px}
+  .rs .s4{font:800 30px system-ui;color:#7FD6C2}
+  .rs .s5{font:700 22px system-ui;color:#F2F2F2}
+  .rs .s1{animation-delay:0s}.rs .s2{animation-delay:-3.84s}.rs .s3{animation-delay:-2.88s}.rs .s4{animation-delay:-1.92s}.rs .s5{animation-delay:-.96s}
+  @keyframes rs{0%,19.9%{opacity:1}20%,100%{opacity:0}}
+  .rs .s2 span{display:inline-block;animation:rsz .96s ease-out infinite}
+  @keyframes rsz{0%{transform:scale(2.4)}30%,100%{transform:scale(1)}}
+  .rs .s4 span{clip-path:inset(0 100% 0 0);animation:rsm .96s ease-out infinite}
+  @keyframes rsm{0%{clip-path:inset(0 100% 0 0)}50%,100%{clip-path:inset(0 0 0 0)}}
+  .rs .beat{position:absolute;left:12px;bottom:10px;display:flex;gap:4px}
+  .rs .beat i{width:6px;height:6px;border-radius:50%;background:#3a3d4a;animation:rsb .96s steps(1,end) infinite}
+  @keyframes rsb{0%,20%{background:#F05032}21%,100%{background:#3a3d4a}}
+  @media(prefers-reduced-motion:reduce){.rs>div,.rs span,.rs .beat i{animation:none}.rs .s5{opacity:1}}
+</style>
+<div class="rs"><div class="s1">MOTION</div><div class="s2"><span>15</span></div><div class="s3"></div><div class="s4"><span>REVEAL</span></div><div class="s5">이름 한 줄</div><div class="beat"><i></i><i></i><i></i><i></i></div></div>
+<p class="cap">15초 쇼릴 · 비트마다 컷, 장면마다 기법이 바뀌고 이름 한 줄로 끝난다</p>
+
+<!-- @rcp-launch h=240 full -->
+<style>
+  .rl{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#f4f5f7}
+  .rl>div{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;opacity:0;animation:rl 6s steps(1,end) infinite}
+  .rl .p1{font:600 18px system-ui;color:#5a5f6a}
+  .rl .p2 b{font:900 34px system-ui;color:#16181d;clip-path:circle(0% at 50% 50%);animation:rlm 1.5s ease-out infinite}
+  .rl .p3{background:#fff;inset:22px 40px;border-radius:10px;box-shadow:0 6px 20px #0002;align-items:flex-start;padding:0 22px;animation-name:rl,rld}
+  .rl .p3 span{font:600 15px system-ui;color:#16181d;opacity:0;transform:translateY(8px);animation:rlt 1.5s ease-out infinite}
+  .rl .p3 span:nth-child(2){animation-delay:.15s}.rl .p3 span:nth-child(3){animation-delay:.3s}
+  .rl .p4 b{font:800 26px system-ui;color:#fff;background:#2F55D4;padding:10px 20px;border-radius:10px;animation:rlp 1.5s ease-out infinite}
+  .rl .p1{animation-delay:0s}.rl .p2{animation-delay:-4.5s}.rl .p3{animation-delay:-3s}.rl .p4{animation-delay:-1.5s}
+  @keyframes rl{0%,24.9%{opacity:1}25%,100%{opacity:0}}
+  @keyframes rlm{0%{clip-path:circle(0% at 50% 50%)}60%,100%{clip-path:circle(75% at 50% 50%)}}
+  @keyframes rlt{0%{opacity:0;transform:translateY(8px)}40%,100%{opacity:1;transform:none}}
+  @keyframes rlp{0%{transform:scale(.6)}30%{transform:scale(1.08)}45%,100%{transform:scale(1)}}
+  @media(prefers-reduced-motion:reduce){.rl>div,.rl b,.rl span{animation:none}.rl .p4{opacity:1}}
+</style>
+<div class="rl"><div class="p1">회의록이 다섯 군데 흩어져 있다</div><div class="p2"><b>Brand</b></div><div class="p3"><span>① 자동으로 모으기</span><span>② 프로젝트별 정리</span><span>③ 한 번에 찾기</span></div><div class="p4"><b>지금 시작하기</b></div></div>
+<p class="cap">제품 출시 영상 · 문제 → 로고 리빌 → 기능 셋 → 행동 유도</p>
+
+<!-- @rcp-explainer h=240 full -->
+<style>
+  .rx{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#fbfbfa}
+  .rx .st{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:16px;animation:rxz 6s ease-in-out infinite;transform-origin:30% 50%}
+  .rx .n{width:70px;height:44px;border:2px solid #16181d;border-radius:8px;display:flex;align-items:center;justify-content:center;font:700 13px system-ui;color:#16181d;opacity:0;animation:rxn 6s ease-out infinite}
+  .rx .a{width:26px;height:2px;background:#16181d;opacity:0;animation:rxn 6s ease-out infinite}
+  .rx .n:nth-child(1){animation-delay:0s}.rx .a:nth-child(2){animation-delay:.3s}.rx .n:nth-child(3){animation-delay:.6s}.rx .a:nth-child(4){animation-delay:.9s}.rx .n:nth-child(5){animation-delay:1.2s}
+  @keyframes rxn{0%{opacity:0;transform:translateY(6px)}6%,85%{opacity:1;transform:none}100%{opacity:0}}
+  @keyframes rxz{0%,30%{transform:scale(1)}45%,70%{transform:scale(1.6)}85%,100%{transform:scale(1)}}
+  .rx .lt{position:absolute;left:14px;bottom:12px;background:#16181d;color:#fff;font:600 12px system-ui;padding:5px 10px;border-radius:6px;opacity:0;animation:rxl 6s ease-out infinite}
+  @keyframes rxl{0%,40%{opacity:0;transform:translateX(-8px)}48%,70%{opacity:1;transform:none}78%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.rx .st,.rx .n,.rx .a,.rx .lt{animation:none;opacity:1}}
+</style>
+<div class="rx"><div class="st"><div class="n">입력</div><div class="a"></div><div class="n">처리</div><div class="a"></div><div class="n">결과</div></div><div class="lt">1단계 · 입력이 들어온다</div></div>
+<p class="cap">설명 영상 · 도식이 한 조각씩 그려지고, 설명하는 부분으로 줌, 이름표는 로어 서드</p>
