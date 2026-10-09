@@ -1,6 +1,6 @@
 ---
 name: design-brief
-description: "Produce a project DESIGN.md so an AI coding agent builds consistent, non-generic UI instead of the default AI look. Use when the user wants a design system, a reusable style brief, to match a reference site's feel, to keep pages consistent, or says the AI's output looks generic. Ships a DESIGN.md template (palette+roles, type, spacing, components, and the reasoning), an anti-slop checklist of the looks AI defaults to, a named catalog of visual styles to choose from, and a deterministic color extractor to seed the brief from a real reference."
+description: "Produce a project DESIGN.md so an AI coding agent builds consistent, non-generic UI instead of the default AI look. Use when the user wants a design system, a reusable style brief, to match a reference site's feel, to keep pages consistent, or says the AI's output looks generic. Ships a DESIGN.md template (palette+roles, type, spacing, components, and the reasoning), an anti-slop checklist of the looks AI defaults to, a named catalog of visual styles to choose from, and a deterministic color extractor to seed the brief from a real reference. When the user names a site they like (a URL or a well-known product, '~ 같은 느낌으로'), MEASURE it with scripts/site_tokens.mjs before choosing any value; do not pick colors or fonts by memory."
 ---
 
 # design-brief — a DESIGN.md that stops the generic AI look
@@ -20,8 +20,9 @@ description: "Produce a project DESIGN.md so an AI coding agent builds consisten
 
 | 도구 | 쓰는 곳 | 꼭 필요? | 없으면 |
 |---|---|---|---|
-| Python 3 + Pillow | `scripts/extract_palette.py` 로 레퍼런스에서 색 뽑기 | 아니오 | 사용자가 준 hex 나 스타일 카탈로그로 팔레트를 정하고, 「이미지에서 뽑지 않았다」고 적는다 |
-| 레퍼런스 이미지 | 팔레트의 씨앗 | 아니오 | 스타일 카탈로그에서 방향을 고른다 |
+| Node 22 이상 + 크롬 계열 브라우저 | `scripts/site_tokens.mjs` 로 좋아하는 사이트를 재서 DESIGN.md 초안 만들기 | 아니오 | 캡처를 받아 `extract_palette.py` 로 색만 뽑고, 글꼴 · 둥글기 · 간격은 「재지 않았다」고 적는다 |
+| Python 3 + Pillow | `scripts/extract_palette.py` 로 이미지에서 색 뽑기 | 아니오 | 사용자가 준 hex 나 스타일 카탈로그로 팔레트를 정하고, 「이미지에서 뽑지 않았다」고 적는다 |
+| 레퍼런스(사이트 주소나 이미지) | 팔레트와 글자의 씨앗 | 아니오 | 스타일 카탈로그에서 방향을 고른다 |
 <!-- /giting:tools -->
 
 AI coders produce generic layouts because nothing tells them what THIS product looks like.
@@ -88,11 +89,49 @@ It prints HEX + RGB (and a "product colors, background dropped" line). Put those
 into the Palette section with roles. Match the reference's FEEL, not its exact pixels, and
 never copy a real brand's identity.
 
+## Seed the whole brief from a live site (measured)
+
+**Default whenever a site is named.** If the user mentions a site ("linear.app 같은 느낌",
+"like Stripe"), run this first. Choosing values from memory of how a site looks is the
+failure this tool exists to prevent. The scripts live in this plugin's root, two levels up
+from this skill: `<this skill's base directory>/../../scripts/site_tokens.mjs`. Resolve that
+absolute path; the user's working folder will not contain it.
+
+If the user names a site they like ("make it feel like linear.app", "이 사이트 느낌으로"),
+measure it instead of guessing. The tool opens the page in a real browser and reads the
+**rendered** styles, weighted by how much text and area each value covers:
+
+```sh
+node scripts/site_tokens.mjs https://example.com                 # DESIGN.md draft to stdout
+node scripts/site_tokens.mjs https://example.com --out DESIGN.md # write the draft
+node scripts/site_tokens.mjs https://example.com --json          # raw tokens
+node scripts/site_tokens.mjs https://example.com --dark          # measure the dark scheme
+node scripts/site_tokens.mjs https://example.com --shot shot.png # also save a capture
+```
+
+It fills, with roles: ground · surface · ink · muted · accent (+ a second accent) · line,
+body/display/mono faces, the type scale (size · weight · line-height · share of text),
+button and card radius, button padding, the spacing unit and common steps, shadows.
+Contrast against the ground is printed next to each text color.
+
+Rules for using it:
+
+- **It is a starting point, not a copy.** The draft carries no logo, name, or image, and
+  leaves Direction, Components, Voice and Anti-slop for you to fill. Change the values so
+  the result is this product, not the measured site. Never ship another brand's look.
+- **"(못 잼)" means not measured, not "none".** Say so in the brief. The usual gap is the
+  accent: some sites keep their brand color only in the logo or photos, which the tool
+  skips on purpose. Then save a capture with `--shot` and run `extract_palette.py` on it,
+  and mark that accent as approximate.
+- It reads the first four screens at one width (default 1440). For a mobile-first product,
+  also measure with `--width 390`.
+- Needs Node 22+ and a Chrome-family browser (`CHROME_PATH` if it is not in a standard place).
+
 ## Procedure
 
 1. Ask (or infer) the one thing: what is this product and who is it for. That anchors every choice.
 2. Pick a direction from the catalog; write what it is and is not.
-3. If there is a reference, run `extract_palette.py` and seed real HEX.
+3. If there is a reference site, run `site_tokens.mjs` for a measured draft; if there is a reference image, run `extract_palette.py`. Seed real values, never defaults.
 4. Fill the DESIGN.md sections, each token with a role and a one-line WHY.
 5. Add the anti-slop floor (which defaults this project rejects).
 6. Save as `DESIGN.md` at the repo root so any agent reads it before building UI.
@@ -109,4 +148,5 @@ never copy a real brand's identity.
 
 - This skill does not design the UI; it writes the brief that makes the agent's design consistent and specific. The agent still builds; the brief constrains.
 - The color extractor reads pixels only (Pillow, no network). It seeds colors; it does not judge taste.
+- The site measurer reads computed styles of what is rendered (no CSS parsing, no guessing). Checked against two sites whose real tokens are known: ground, ink, line, accent, fonts, card radius and spacing unit matched the source values.
 - The idea of a reusable design brief for AI is common (e.g., getdesign.md, DESIGN.md conventions). This is an independent template with its own sections, anti-slop list, style catalog, and tool.
