@@ -48,6 +48,11 @@
       "id": "screen-transition",
       "no": "⑦",
       "ko": "화면 전환 40"
+    },
+    {
+      "id": "background",
+      "no": "⑧",
+      "ko": "배경 40"
     }
   ],
   "items": [
@@ -2138,6 +2143,851 @@
       "oneliner": "좁은 세로 띠가 섞인 순서로 위아래에서 바뀌어 들어온다.",
       "ask": "Strip Shuffle 로 넘겨줘. 세로 띠 8줄이 섞인 순서로, 홀수는 아래서 짝수는 위에서 들어오게. 0.7초.",
       "vs": "좁은 띠가 섞이면 스트립 셔플, 넓은 판이 차례면 슬라이딩 패널"
+    },
+    {
+      "id": "halftone-pulse",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "팝 · 오프닝",
+      "name": {
+        "ko": "하프톤 펄스",
+        "en": "Halftone Pulse"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가운데서 점이 퍼지면서 커졌다 작아지게",
+        "점들이 숨 쉬듯 두근거리게",
+        "망점이 물결처럼 퍼져 나가게"
+      ],
+      "oneliner": "가운데에서 바깥으로 점 크기가 파도처럼 커졌다 작아진다.",
+      "ask": "Halftone Pulse 배경으로 깔아줘. 가운데서 바깥으로 점 크기 파동, 한 바퀴 4초, 반복.",
+      "vs": "점 크기가 퍼지면 펄스, 점이 띠로 지나가면 하프톤 그라디언트"
+    },
+    {
+      "id": "dot-wave",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "음악 · 배경",
+      "name": {
+        "ko": "도트 웨이브",
+        "en": "Dot Wave"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "점들이 물결처럼 출렁이게",
+        "두 겹 점이 번갈아 커졌다 작아지게",
+        "땡땡이가 파도타기 하게"
+      ],
+      "oneliner": "두 겹의 점이 엇갈린 박자로 커졌다 작아지며 물결을 만든다.",
+      "ask": "Dot Wave 배경으로 해줘. 점 두 겹이 엇박으로 커졌다 작아지게, 대각선 물결, 4초 반복."
+    },
+    {
+      "id": "halftone-gradient",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "레트로 · 인쇄",
+      "name": {
+        "ko": "하프톤 그라디언트",
+        "en": "Halftone Gradient"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "인쇄물 망점 띠가 비스듬히 지나가게",
+        "점 크기로 그라데이션이 흐르게",
+        "신문 인쇄 같은 점이 쓸고 지나가게"
+      ],
+      "oneliner": "큰 점에서 작은 점으로 이어지는 망점 띠가 비스듬히 화면을 지나간다.",
+      "ask": "Halftone Gradient 배경으로 깔아줘. 망점 띠가 왼쪽에서 오른쪽으로 비스듬히, 4초마다 한 번.",
+      "vs": "점 크기가 퍼지면 펄스, 점이 띠로 지나가면 하프톤 그라디언트"
+    },
+    {
+      "id": "polka-drift",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "귀여움 · 패턴",
+      "name": {
+        "ko": "폴카 드리프트",
+        "en": "Polka Drift"
+      },
+      "make": [
+        "css",
+        "mg"
+      ],
+      "aliases": [
+        "땡땡이 무늬가 대각선으로 천천히 흐르게",
+        "물방울무늬가 미끄러지게",
+        "큰 점 작은 점이 같이 떠내려가게"
+      ],
+      "oneliner": "큰 점과 작은 점이 엇갈린 땡땡이 무늬가 대각선으로 끊김 없이 흐른다.",
+      "ask": "Polka Drift 배경으로 해줘. 큰 점·작은 점 땡땡이, 오른쪽 아래로 천천히, 끊김 없이 반복."
+    },
+    {
+      "id": "dot-spiral",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "몽환 · 배경",
+      "name": {
+        "ko": "도트 스파이럴",
+        "en": "Dot Spiral"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "해바라기 씨처럼 점이 돌게",
+        "점이 소용돌이 모양으로 천천히 회전하게",
+        "은하수처럼 점이 감기게"
+      ],
+      "oneliner": "황금각으로 놓인 점들이 해바라기 무늬를 이루며 천천히 돈다.",
+      "ask": "Dot Spiral 배경으로 깔아줘. 해바라기 배열(황금각 137.5도) 점 260개, 천천히 회전."
+    },
+    {
+      "id": "dot-matrix",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "음악 · 테크",
+      "name": {
+        "ko": "도트 매트릭스",
+        "en": "Dot Matrix"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "전광판 점이 이퀄라이저처럼 오르내리게",
+        "LED 점으로 막대가 출렁이게",
+        "전광판 불이 음악 따라 켜지게"
+      ],
+      "oneliner": "LED 점으로 된 막대들이 음악 이퀄라이저처럼 오르내린다.",
+      "ask": "Dot Matrix 배경으로 해줘. LED 점 막대 이퀄라이저, 꼭대기 점만 흰색, 박자에 맞춰 오르내리게."
+    },
+    {
+      "id": "dot-rings",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "최면 · MV",
+      "name": {
+        "ko": "도트 링",
+        "en": "Dot Rings"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "점으로 된 동그라미가 겹겹이 반대로 돌게",
+        "점 고리가 엇갈려 회전하게",
+        "과녁 모양 점이 빙빙 돌게"
+      ],
+      "oneliner": "점으로 된 동심원 고리가 한 겹씩 반대 방향으로 돈다.",
+      "ask": "Dot Rings 배경으로 깔아줘. 점 동심원 여러 겹, 안쪽부터 한 겹씩 반대 방향 회전."
+    },
+    {
+      "id": "comic-dots",
+      "category": "background",
+      "group": "DOTS",
+      "mood": "팝 · 만화",
+      "name": {
+        "ko": "코믹 도트",
+        "en": "Comic Dots"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "만화책 인쇄처럼 점이 어긋나게",
+        "색 점이 살짝 밀려서 겹치게",
+        "미국 만화 같은 망점 느낌"
+      ],
+      "oneliner": "두 색 망점이 인쇄가 어긋난 것처럼 살짝 밀려 흔들린다.",
+      "ask": "Comic Dots 배경으로 해줘. 검정·포인트색 망점 두 겹, 인쇄 어긋남처럼 살짝 흔들리게."
+    },
+    {
+      "id": "perspective-grid",
+      "category": "background",
+      "group": "GRID",
+      "mood": "SF · 질주",
+      "name": {
+        "ko": "원근 격자",
+        "en": "Perspective Grid"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "바닥이랑 천장 격자가 앞으로 달려오게",
+        "레트로 게임 바닥처럼 격자가 흐르게",
+        "소실점으로 빨려 들어가는 바둑판"
+      ],
+      "oneliner": "바닥과 천장의 격자가 소실점에서 이쪽으로 끝없이 다가온다.",
+      "ask": "Perspective Grid 배경으로 깔아줘. 가운데 소실점, 바닥·천장 격자가 앞으로 다가오게, 2초에 한 칸."
+    },
+    {
+      "id": "grid-zoom",
+      "category": "background",
+      "group": "GRID",
+      "mood": "비트 · 테크",
+      "name": {
+        "ko": "격자 줌",
+        "en": "Infinite Grid Zoom"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "모눈이 끝없이 확대되게",
+        "격자 안으로 계속 들어가게",
+        "모눈종이가 무한히 커지게"
+      ],
+      "oneliner": "모눈이 두 배로 커질 때마다 사이에 새 선이 생겨 끝없이 확대되는 것처럼 보인다.",
+      "ask": "Infinite Grid Zoom 배경으로 해줘. 모눈이 2초마다 두 배로 커지고 새 선이 스며들게, 끊김 없이."
+    },
+    {
+      "id": "grid-wave",
+      "category": "background",
+      "group": "GRID",
+      "mood": "테크 · 실험",
+      "name": {
+        "ko": "격자 물결",
+        "en": "Grid Wave"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "모눈종이가 천처럼 출렁이게",
+        "격자가 바람에 흔들리게",
+        "바둑판이 물결치게"
+      ],
+      "oneliner": "격자 전체가 천처럼 가로·세로로 부드럽게 출렁인다.",
+      "ask": "Grid Wave 배경으로 깔아줘. 모눈 격자가 천처럼 출렁이게, 진폭 작게, 8초 반복."
+    },
+    {
+      "id": "moire-grid",
+      "category": "background",
+      "group": "GRID",
+      "mood": "최면 · 실험",
+      "name": {
+        "ko": "무아레 격자",
+        "en": "Moiré Grid"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "격자 두 장이 반대로 돌면서 무늬가 생기게",
+        "겹친 모눈이 일렁이게",
+        "TV 화면 줄무늬 같은 착시"
+      ],
+      "oneliner": "격자 두 장이 반대로 돌며 겹친 자리에 일렁이는 무아레가 생긴다.",
+      "ask": "Moiré Grid 배경으로 해줘. 격자 두 장을 반대로 천천히 회전, 겹친 무늬가 보이게.",
+      "vs": "선 두 겹이 비스듬히 미끄러지면 크로스해치, 격자 두 장이 돌면 무아레 격자"
+    },
+    {
+      "id": "isometric-grid",
+      "category": "background",
+      "group": "GRID",
+      "mood": "게임 · 설명",
+      "name": {
+        "ko": "아이소메트릭 격자",
+        "en": "Isometric Grid"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "비스듬한 격자 위로 상자가 솟아오르게",
+        "게임 맵처럼 큐브가 올라왔다 내려가게",
+        "입체 모눈 위 블록"
+      ],
+      "oneliner": "비스듬한 입체 격자 위로 큐브들이 차례로 솟았다 내려간다.",
+      "ask": "Isometric Grid 배경으로 깔아줘. 30도 입체 격자, 큐브 다섯 개가 차례로 솟았다 내려가게."
+    },
+    {
+      "id": "hex-grid",
+      "category": "background",
+      "group": "GRID",
+      "mood": "SF · UI",
+      "name": {
+        "ko": "육각 격자",
+        "en": "Hex Grid"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "벌집 칸이 숨 쉬듯 반짝이게",
+        "육각형 타일에 불이 들어오게",
+        "벌집 무늬가 물결치게"
+      ],
+      "oneliner": "벌집 칸이 가운데에서부터 물결처럼 밝아졌다 어두워진다.",
+      "ask": "Hex Grid 배경으로 해줘. 벌집 타일, 가운데서 바깥으로 밝기 물결, 4초 반복."
+    },
+    {
+      "id": "truchet-tiles",
+      "category": "background",
+      "group": "GRID",
+      "mood": "디자인 · 패턴",
+      "name": {
+        "ko": "트루셰 타일",
+        "en": "Truchet Tiles"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "타일이 돌면서 미로 무늬가 바뀌게",
+        "곡선 타일이 뒤집혀 길이 이어지게",
+        "사분원 무늬가 달라지게"
+      ],
+      "oneliner": "사분원 두 개를 그린 타일이 하나씩 돌며 이어진 곡선 무늬가 계속 바뀐다.",
+      "ask": "Truchet Tiles 배경으로 깔아줘. 사분원 타일, 아무 칸이나 90도씩 돌아 무늬가 바뀌게.",
+      "vs": "타일이 사분원이면 트루셰, 원·반원·삼각이면 바우하우스 타일"
+    },
+    {
+      "id": "checker-scroll",
+      "category": "background",
+      "group": "GRID",
+      "mood": "팝 · 패턴",
+      "name": {
+        "ko": "체커 스크롤",
+        "en": "Checker Scroll"
+      },
+      "make": [
+        "css",
+        "mg"
+      ],
+      "aliases": [
+        "체크무늬가 비스듬히 흘러가게",
+        "바둑판이 대각선으로 미끄러지게",
+        "레이싱 깃발 무늬가 지나가게"
+      ],
+      "oneliner": "살짝 기운 체크무늬가 대각선으로 끊김 없이 흐른다.",
+      "ask": "Checker Scroll 배경으로 해줘. 체크무늬 15도 기울여서 대각선으로 천천히, 끊김 없이."
+    },
+    {
+      "id": "speed-lines",
+      "category": "background",
+      "group": "LINES",
+      "mood": "질주 · 전환",
+      "name": {
+        "ko": "스피드 라인",
+        "en": "Speed Lines"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "굵기 다른 선이 빠르게 지나가게",
+        "바람 가르듯 선이 휙휙 날아가게",
+        "빨리 달리는 느낌의 가로선"
+      ],
+      "oneliner": "굵기와 길이가 다른 가로선이 서로 다른 속도로 화면을 가로지른다.",
+      "ask": "Speed Lines 배경으로 깔아줘. 가로선 스물몇 개, 굵기·속도 제각각, 왼쪽에서 오른쪽으로.",
+      "vs": "선이 가운데로 모이면 집중선, 옆으로 지나가면 스피드 라인"
+    },
+    {
+      "id": "equalizer-stripes",
+      "category": "background",
+      "group": "LINES",
+      "mood": "음악 · 배경",
+      "name": {
+        "ko": "이퀄라이저 줄무늬",
+        "en": "Equalizer Stripes"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가로줄이 음악처럼 굵었다 가늘었다 하게",
+        "줄무늬가 박자 타게",
+        "이퀄라이저처럼 줄이 출렁이게"
+      ],
+      "oneliner": "가로 줄무늬마다 굵기가 이퀄라이저처럼 따로 커졌다 줄어든다.",
+      "ask": "Equalizer Stripes 배경으로 해줘. 가로 줄무늬 12줄, 줄마다 굵기가 박자처럼 따로 출렁이게."
+    },
+    {
+      "id": "radial-burst",
+      "category": "background",
+      "group": "LINES",
+      "mood": "집중 · 강조",
+      "name": {
+        "ko": "집중선",
+        "en": "Radial Burst"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "만화 집중선처럼 가운데로 모이게",
+        "가운데로 선이 쫙 모이게",
+        "뭔가 터질 것 같은 방사선"
+      ],
+      "oneliner": "가장자리에서 가운데를 향한 집중선이 깜빡이며 길이가 바뀐다.",
+      "ask": "Radial Burst 배경으로 깔아줘. 만화 집중선, 가운데 비우고 선 길이가 초당 6번 바뀌게.",
+      "vs": "선이 가운데로 모이면 집중선, 옆으로 지나가면 스피드 라인"
+    },
+    {
+      "id": "wave-lines",
+      "category": "background",
+      "group": "LINES",
+      "mood": "세련 · 배경",
+      "name": {
+        "ko": "물결선",
+        "en": "Wave Lines"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "물결선이 여러 겹 겹쳐서 출렁이게",
+        "산맥처럼 선이 넘실대게",
+        "등고선이 흐르게"
+      ],
+      "oneliner": "물결선 열두 줄이 겹쳐 산맥처럼 넘실댄다.",
+      "ask": "Wave Lines 배경으로 해줘. 물결선 12줄 겹쳐서, 셋 중 하나만 포인트색, 8초 반복.",
+      "vs": "굵은 물결 하나면 소프트 웨이브, 가는 선 여러 겹이면 물결선"
+    },
+    {
+      "id": "ripple-interference",
+      "category": "background",
+      "group": "LINES",
+      "mood": "물 · 몽환",
+      "name": {
+        "ko": "물결 간섭",
+        "en": "Ripple Interference"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "두 군데서 물결이 퍼져서 겹치게",
+        "물방울 두 개 떨어진 것처럼",
+        "동그라미 파문이 엇갈리게"
+      ],
+      "oneliner": "두 점에서 퍼지는 동심원 파문이 겹치며 간섭 무늬를 만든다.",
+      "ask": "Ripple Interference 배경으로 깔아줘. 두 점에서 동심원 파문, 2초에 한 겹, 멀어질수록 흐리게."
+    },
+    {
+      "id": "barber-stripes",
+      "category": "background",
+      "group": "LINES",
+      "mood": "팝 · 패턴",
+      "name": {
+        "ko": "이발소 줄무늬",
+        "en": "Barber Stripes"
+      },
+      "make": [
+        "css",
+        "mg"
+      ],
+      "aliases": [
+        "사선 줄무늬가 계속 흘러가게",
+        "이발소 간판처럼 줄이 돌아가게",
+        "공사장 띠처럼 빗금이 지나가게"
+      ],
+      "oneliner": "굵은 사선 줄무늬가 리본처럼 살짝 휘며 옆으로 흐른다.",
+      "ask": "Barber Stripes 배경으로 해줘. 굵은 사선 줄무늬, 옆으로 흐르고 살짝 휘게, 끊김 없이."
+    },
+    {
+      "id": "line-tunnel",
+      "category": "background",
+      "group": "LINES",
+      "mood": "SF · 도입",
+      "name": {
+        "ko": "선 터널",
+        "en": "Line Tunnel"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "네모 선이 겹겹이 다가오게",
+        "사각 터널 안으로 들어가게",
+        "액자가 계속 이쪽으로 오게"
+      ],
+      "oneliner": "선으로만 그린 네모가 겹겹이 이쪽으로 다가와 터널이 된다.",
+      "ask": "Line Tunnel 배경으로 깔아줘. 사각 선 터널, 1초에 한 겹씩 다가오게, 셋 중 하나만 포인트색.",
+      "vs": "네모가 그냥 다가오면 선 터널, 다각형이 돌면서 다가오면 다각형 터널"
+    },
+    {
+      "id": "crosshatch",
+      "category": "background",
+      "group": "LINES",
+      "mood": "손그림 · 질감",
+      "name": {
+        "ko": "크로스해치",
+        "en": "Crosshatch"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "빗금 두 겹이 엇갈려 일렁이게",
+        "펜으로 그은 빗금 느낌",
+        "사선이 겹쳐서 무늬가 흔들리게"
+      ],
+      "oneliner": "방향이 다른 빗금 두 겹이 서로 반대로 미끄러지며 무늬가 흔들린다.",
+      "ask": "Crosshatch 배경으로 해줘. 빗금 두 겹 반대 방향, 서로 반대로 천천히 미끄러지게.",
+      "vs": "선 두 겹이 비스듬히 미끄러지면 크로스해치, 격자 두 장이 돌면 무아레 격자"
+    },
+    {
+      "id": "bubble-pop",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "팝 · 귀여움",
+      "name": {
+        "ko": "버블 팝",
+        "en": "Bubble Pop"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "동그라미가 통통 튀어나왔다 사라지게",
+        "비눗방울이 뽁뽁 생기게",
+        "원이 여기저기서 팡팡 생기게"
+      ],
+      "oneliner": "동그라미가 여기저기서 튕기듯 커졌다가 줄어들며 사라진다.",
+      "ask": "Bubble Pop 배경으로 깔아줘. 원 16개, 자리 바꿔 가며 튕기듯 나타났다 사라지게(오버슈트)."
+    },
+    {
+      "id": "floating-shapes",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "차분 · 배경",
+      "name": {
+        "ko": "떠다니는 도형",
+        "en": "Floating Shapes"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "알약 모양이랑 물결선이 둥둥 떠다니게",
+        "도형이 천천히 흘러다니게",
+        "모양들이 둥실둥실"
+      ],
+      "oneliner": "알약 모양과 물결선이 제자리 근처에서 천천히 떠다닌다.",
+      "ask": "Floating Shapes 배경으로 해줘. 알약·물결선 9개, 제자리 근처에서 천천히 떠다니게."
+    },
+    {
+      "id": "polygon-tunnel",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "SF · 도입",
+      "name": {
+        "ko": "다각형 터널",
+        "en": "Polygon Tunnel"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "육각형이 꼬이면서 다가오게",
+        "다각형 터널로 빨려 들어가게",
+        "비틀린 터널"
+      ],
+      "oneliner": "육각형이 겹겹이 비틀리며 이쪽으로 다가온다.",
+      "ask": "Polygon Tunnel 배경으로 깔아줘. 육각형 터널, 겹마다 조금씩 비틀려서 다가오게.",
+      "vs": "네모가 그냥 다가오면 선 터널, 다각형이 돌면서 다가오면 다각형 터널"
+    },
+    {
+      "id": "orbit-shapes",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "테크 · 설명",
+      "name": {
+        "ko": "궤도 도형",
+        "en": "Orbit Shapes"
+      },
+      "make": [
+        "mg"
+      ],
+      "aliases": [
+        "기울어진 궤도를 따라 도형이 돌게",
+        "행성처럼 도형이 빙빙 돌게",
+        "원자 모형처럼"
+      ],
+      "oneliner": "점선 궤도 여러 개를 따라 작은 도형들이 서로 다른 속도로 돈다.",
+      "ask": "Orbit Shapes 배경으로 해줘. 기울어진 점선 궤도 4개, 도형이 각자 다른 속도로 돌게."
+    },
+    {
+      "id": "kaleidoscope",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "사이키 · MV",
+      "name": {
+        "ko": "만화경",
+        "en": "Kaleidoscope"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "도형이 거울에 비친 것처럼 돌게",
+        "만화경 들여다보는 느낌",
+        "대칭 무늬가 피어나게"
+      ],
+      "oneliner": "한 조각에 그린 도형을 거울로 12번 비춰 대칭 무늬가 돈다.",
+      "ask": "Kaleidoscope 배경으로 깔아줘. 12조각 거울 대칭, 조각 안 도형이 들락날락, 천천히 회전."
+    },
+    {
+      "id": "confetti-fall",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "축하 · 공지",
+      "name": {
+        "ko": "꽃가루",
+        "en": "Confetti Fall"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "종이 꽃가루가 빙글빙글 떨어지게",
+        "축하 꽃가루 날리게",
+        "색종이가 흩날리게"
+      ],
+      "oneliner": "종잇조각이 뒤집히며 돌고 흔들리며 떨어진다.",
+      "ask": "Confetti Fall 배경으로 해줘. 종이 꽃가루 40개, 뒤집히며 회전하고 좌우로 흔들리며 떨어지게."
+    },
+    {
+      "id": "blob-morph",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "부드러움 · 배경",
+      "name": {
+        "ko": "블롭 모프",
+        "en": "Blob Morph"
+      },
+      "make": [
+        "ai",
+        "mg"
+      ],
+      "aliases": [
+        "말랑한 덩어리가 꿀렁꿀렁 움직이게",
+        "물방울 모양이 계속 바뀌게",
+        "젤리처럼 일렁이는 도형"
+      ],
+      "oneliner": "가장자리가 계속 일렁이는 말랑한 덩어리들이 천천히 떠다닌다.",
+      "ask": "Blob Morph 배경으로 깔아줘. 덩어리 4개, 가장자리가 천천히 일렁이고 조금씩 떠다니게."
+    },
+    {
+      "id": "pinwheels",
+      "category": "background",
+      "group": "SHAPES",
+      "mood": "팝 · 여름",
+      "name": {
+        "ko": "바람개비",
+        "en": "Pinwheels"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "바람개비가 여러 개 돌게",
+        "크고 작은 바람개비가 제각각 돌게",
+        "팔랑개비 무늬"
+      ],
+      "oneliner": "크기가 다른 바람개비가 제각각 다른 빠르기와 방향으로 돈다.",
+      "ask": "Pinwheels 배경으로 해줘. 바람개비 5개, 크기·속도·방향 제각각."
+    },
+    {
+      "id": "color-blocks",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "세련 · 브랜드",
+      "name": {
+        "ko": "컬러 블록",
+        "en": "Color Blocks"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "큰 색면이 천천히 자리를 바꾸게",
+        "색 덩어리가 넓어졌다 좁아지게",
+        "면 분할이 바뀌게"
+      ],
+      "oneliner": "큰 색면 세 개가 2초마다 폭을 바꾸며 다시 나뉜다.",
+      "ask": "Color Blocks 배경으로 깔아줘. 세로 색면 3개, 2초마다 폭이 바뀌게(이즈 인아웃)."
+    },
+    {
+      "id": "eclipse-circle",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "세련 · 타이틀",
+      "name": {
+        "ko": "일식 원",
+        "en": "Eclipse Circle"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "큰 원 둘레를 테두리가 따라 돌게",
+        "일식처럼 원이 살짝 어긋나게",
+        "원 하나에 링이 맴돌게"
+      ],
+      "oneliner": "큰 원은 가만히 있고 테두리 링만 조금 어긋난 채 맴돈다.",
+      "ask": "Eclipse Circle 배경으로 해줘. 가운데 큰 원, 테두리 링이 살짝 어긋난 채 8초에 한 바퀴."
+    },
+    {
+      "id": "bauhaus-tiles",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "디자인 · 패턴",
+      "name": {
+        "ko": "바우하우스 타일",
+        "en": "Bauhaus Tiles"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "원이랑 반원 타일이 90도씩 돌게",
+        "바우하우스 포스터처럼",
+        "기하학 타일이 딱딱 돌아가게"
+      ],
+      "oneliner": "원·반원·사분원·삼각 타일이 하나씩 90도씩 딱딱 돈다.",
+      "ask": "Bauhaus Tiles 배경으로 깔아줘. 원·반원·사분원·삼각 타일, 칸마다 다른 때에 90도씩 돌게.",
+      "vs": "타일이 사분원이면 트루셰, 원·반원·삼각이면 바우하우스 타일"
+    },
+    {
+      "id": "concentric-arcs",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "세련 · 로고",
+      "name": {
+        "ko": "동심원 호",
+        "en": "Concentric Arcs"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "굵은 원호가 겹겹이 돌게",
+        "로딩 표시처럼 호가 돌게",
+        "반원 고리가 엇갈려 돌게"
+      ],
+      "oneliner": "굵은 원호 세 개가 같은 중심에서 서로 다른 속도로 돈다.",
+      "ask": "Concentric Arcs 배경으로 해줘. 굵은 원호 3개 동심원, 안쪽부터 속도·방향 다르게."
+    },
+    {
+      "id": "sliding-bands",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "세련 · 배경",
+      "name": {
+        "ko": "슬라이딩 밴드",
+        "en": "Sliding Bands"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가로 띠 세 줄이 엇갈려 미끄러지게",
+        "띠가 딱딱 멈추며 옆으로 가게",
+        "세 줄이 번갈아 밀리게"
+      ],
+      "oneliner": "가로 띠 세 줄이 서로 반대로 미끄러졌다 멈추기를 되풀이한다.",
+      "ask": "Sliding Bands 배경으로 깔아줘. 가로 띠 3줄, 2초마다 반 칸씩 엇갈려 미끄러지고 멈추게."
+    },
+    {
+      "id": "square-snap",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "비트 · 로고",
+      "name": {
+        "ko": "스퀘어 스냅",
+        "en": "Square Snap"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "네모가 움찔했다가 탁 90도 돌게",
+        "박자마다 사각형이 딱 돌게",
+        "네모가 끊어서 회전"
+      ],
+      "oneliner": "네모가 살짝 뒤로 움찔한 뒤 탁 하고 90도 돈다. 2초마다.",
+      "ask": "Square Snap 배경으로 해줘. 네모 하나, 2초마다 살짝 뒤로 당겼다가 90도 탁(오버슈트)."
+    },
+    {
+      "id": "soft-wave",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "차분 · 배경",
+      "name": {
+        "ko": "소프트 웨이브",
+        "en": "Soft Wave"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "굵은 물결 하나가 느긋하게 출렁이게",
+        "잔잔한 파도 선",
+        "큰 곡선이 천천히 흐르게"
+      ],
+      "oneliner": "굵은 물결선 하나와 가는 선 하나가 느긋하게 출렁인다.",
+      "ask": "Soft Wave 배경으로 깔아줘. 굵은 물결 하나와 가는 선 하나, 8초에 한 번 출렁이게.",
+      "vs": "굵은 물결 하나면 소프트 웨이브, 가는 선 여러 겹이면 물결선"
+    },
+    {
+      "id": "nested-squares",
+      "category": "background",
+      "group": "MINIMAL",
+      "mood": "아트 · 배경",
+      "name": {
+        "ko": "겹친 사각형",
+        "en": "Nested Squares"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "겹겹 네모가 차례로 비틀리게",
+        "네모 안에 네모가 꼬이게",
+        "사각형이 소용돌이처럼 흔들리게"
+      ],
+      "oneliner": "겹겹이 놓인 네모가 안쪽부터 시차를 두고 비틀렸다 돌아온다.",
+      "ask": "Nested Squares 배경으로 해줘. 네모 9겹, 안쪽부터 시차를 두고 좌우로 비틀리게."
     }
   ],
   "recipes": [

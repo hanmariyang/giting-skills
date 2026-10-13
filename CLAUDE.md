@@ -58,6 +58,16 @@ node plugins/motion-menu/tools/transitions/render.mjs <폴더> sheet            
 ```
 갤러리 데모와 홍보 영상이 같은 함수에서 나온다. 한 경로에 감는 방향이 반대인 도형을 넣으면 겹친 곳이 지워진다(코너 와이프에서 밟음) — 도형마다 따로 칠한다.
 
+## 모션 메뉴판 ⑧ 배경 40 (2026-10-13)
+
+⑦과 같은 구조다. `demos/m9-background.html` 은 생성물, 정본은 `plugins/motion-menu/tools/backgrounds/engine.js`(배경 하나 = `BG[id](c,w,h,t,k)`, t 는 초)와 menu.json.
+```bash
+node plugins/motion-menu/tools/backgrounds/gen.mjs        # engine.js → demos/m9 (그다음 build.mjs)
+FFMPEG=<ffmpeg> node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> video   # 홍보 영상 5편(1080×1920, 8초, 무음)
+node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet                    # 40개를 0·2·4·6초에서 멈춘 한 장
+```
+**모든 움직임은 8초에 한 바퀴** 돌아 영상 끝이 처음과 이어진다. 회전은 도형의 대칭각 배수로만 돌린다(바람개비 8날=45°, 만화경 12조각=60°). 색을 정체성에 붙인 겹(터널 등)은 주기 안 바뀜 횟수로 나눠떨어지는 개수로 칠한다(8초에 8겹 지나가면 4색 주기, 3색 주기는 끝에서 색이 튄다).
+
 ## 검증
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)
