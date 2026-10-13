@@ -1,6 +1,6 @@
 # 모션 메뉴판 (motion-menu) — Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 140개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 180개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다 — AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
@@ -1120,6 +1120,297 @@
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: Nested Squares 배경으로 해줘. 네모 9겹, 안쪽부터 시차를 두고 좌우로 비틀리게.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/nested-squares.html
+
+## ⑨ 글자 연출 40
+글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.
+
+### 워드 버스트 (Word Burst)
+- 별칭: "한 단어가 쾅 하고 터지면서 나오게" · "글자가 펑 튀어나오고 파편이 튀게" · "임팩트 있게 한 단어 박기"
+- 정의: 한 단어가 크게 들이받듯 나오며 흔들리고 주변으로 파편이 튄다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Word Burst 로 「쾅」 넣어줘. 2.4배에서 0.12초 만에 제자리, 살짝 흔들림, 파편 12개.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/word-burst.html
+
+### 레터 슬램 (Letter Slam)
+- 별칭: "한 글자씩 쿵쿵 때려 박게" · "글자가 박자 맞춰 하나씩 찍히게" · "도장 찍듯 한 자씩"
+- 정의: 글자가 하나씩 크게 떨어지며 박자에 맞춰 찍힌다.
+- 구분: 한 자씩 쿵쿵이면 레터 슬램, 한 자씩 부드럽게 나타나면 텍스트 스태거(④)
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Letter Slam 으로 「오늘도간다」 넣어줘. 글자당 0.28초 간격, 2.3배에서 떨어지듯.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/letter-slam.html
+
+### 스탬프 (Text Stamp)
+- 별칭: "도장 찍듯 쾅쾅 찍히게" · "확정 도장이 하나씩 늘어나게" · "빨간 도장 찍히는 느낌"
+- 정의: 네모 테두리 글자가 도장처럼 기울어 찍히며 하나씩 늘어난다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Text Stamp 로 「확정」「완료」「승인」 찍어줘. 하나씩 0.9초 간격, 1.7배에서 오버슈트로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stamp-text.html
+
+### 펀치 줌 (Punch Zoom)
+- 별칭: "글자가 멀리서 확 날아와 박히게" · "안쪽에서 튀어나오며 잔상 남게" · "화면 쪽으로 쭉 당겨지듯"
+- 정의: 글자가 화면 안쪽에서 확 다가오고 잔상이 꼬리를 남긴다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Punch Zoom 으로 「돌파」 넣어줘. 0.08배에서 0.3초 만에 꽉 차게, 잔상 4겹.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/punch-zoom.html
+
+### 키네틱 스택 (Kinetic Stack)
+- 별칭: "단어가 양옆에서 날아와 쌓이게" · "가사가 한 줄씩 들어와 쌓이게" · "좌우로 번갈아 들어오는 문장"
+- 정의: 단어가 좌우에서 번갈아 날아들어 위에서 아래로 쌓인다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Kinetic Stack 으로 「지금 / 바로 / 시작」 쌓아줘. 줄마다 좌우 번갈아 0.35초씩.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/kinetic-stack.html
+
+### 스트레치 (Stretch Text)
+- 별칭: "글자가 위로 쭉 늘어났다 돌아오게" · "고무줄처럼 세로로 늘어나게" · "글자가 키가 커졌다 작아지게"
+- 정의: 바닥은 그대로 두고 글자가 하나씩 위로 쭉 늘어났다 돌아온다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Stretch Text 로 「늘어나」 넣어줘. 글자마다 시차를 두고 세로로 1.9배까지.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stretch-text.html
+
+### 텍스트 줌 스루 (Text Zoom Through)
+- 별칭: "글자 안으로 뚫고 들어가 다음 말로" · "단어를 뚫고 지나가며 넘어가게" · "글자가 확 커지면서 사라지고 다음 단어"
+- 정의: 단어가 화면을 넘게 커지며 지나가고 뒤에서 다음 단어가 다가온다.
+- 구분: 단어를 뚫고 다음 단어로 가면 텍스트 줌 스루, 글자 하나하나가 날아오면 레터 플라이스루(④)
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Zoom Through 로 「하나 둘 셋 넷」 이어줘. 단어당 2초, 뚫고 지나가며 다음 단어.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-zoom-through.html
+
+### 스퀴즈 스왑 (Squeeze Swap)
+- 별칭: "글자가 찌그러졌다 튕기며 다른 말로" · "고무처럼 눌렸다가 바뀌게" · "말랑하게 찌부됐다 튀어 오르게"
+- 정의: 단어가 납작하게 눌렸다가 다른 단어로 바뀌며 출렁 튕겨 오른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Squeeze Swap 으로 「말랑 → 쫀득」 바꿔줘. 0.4초 눌렸다가 감쇠 진동으로 튕기게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/squeeze-swap.html
+
+### 자이언트 스크롤 (Giant Text Scroll)
+- 별칭: "화면보다 큰 글자가 옆으로 지나가게" · "거대한 글씨가 끊어서 흘러가게" · "큰 글자 띠 아래 작은 글자 띠"
+- 정의: 화면을 넘는 큰 글자가 끊어 가며 흐르고 아래 작은 띠가 반대로 돈다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Giant Text Scroll 로 「오늘 밤 서울」 흘려줘. 큰 글자는 2초마다 이즈 인아웃, 아래 작은 띠는 일정하게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/giant-scroll.html
+
+### 세로 기둥 (Vertical Text Columns)
+- 별칭: "세로쓰기 글자가 위아래로 흐르게" · "세로 줄이 서로 반대로 흘러가게" · "글자 기둥이 엇갈리게"
+- 정의: 세로로 쓴 글자 기둥들이 서로 반대 방향으로 흐른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Vertical Text Columns 로 「고요」「질주」 세로로 흘려줘. 기둥마다 방향·속도 다르게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/vertical-columns.html
+
+### 리피트 웨이브 (Repeating Text Wave)
+- 별칭: "같은 단어가 빼곡하고 물결처럼 색이 바뀌게" · "단어 타일에 물결이 지나가게" · "글자 벽지가 파도치게"
+- 정의: 같은 단어를 빼곡히 깔고 그 위로 색 반전 물결이 지나간다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Repeating Text Wave 로 「흐름」 깔아줘. 격자로 빼곡히, 대각선 물결로 색 반전.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/repeat-wave.html
+
+### 사선 띠 (Diagonal Text Bands)
+- 별칭: "비스듬한 띠에 글자가 흘러가게" · "기울어진 띠가 서로 반대로 흐르게" · "사선 현수막 글자"
+- 정의: 비스듬한 띠 세 줄에서 글자가 서로 반대 방향으로 흐른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Diagonal Text Bands 로 「새벽 세시」 흘려줘. 띠 3줄 12도 기울이고 번갈아 반대로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/diagonal-bands.html
+
+### 곡선 따라 글자 (Text on Path)
+- 별칭: "글자가 물결 선을 따라 흐르게" · "리본처럼 휘어진 글씨" · "곡선 위를 기차처럼 지나가게"
+- 정의: 물결 모양 길을 따라 글자가 기울기를 맞추며 흘러간다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text on Path 로 「물결 따라 흘러요」 흘려줘. 사인 곡선 길, 글자가 곡선 기울기를 따라 돌게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-on-path.html
+
+### 전광판 겹띠 (Marquee Stack)
+- 별칭: "전광판 띠 여러 줄이 각자 흐르게" · "굵기·속도 다른 띠가 겹쳐 흐르게" · "가게 앞 전광판 느낌"
+- 정의: 글자 크기와 빠르기가 다른 띠 네 줄이 엇갈려 흐른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Marquee Stack 으로 「오늘 한정」「신상 공개」… 띠 4줄 흘려줘. 줄마다 크기·속도·방향 다르게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/marquee-stack.html
+
+### 패럴랙스 기둥 (Parallax Columns)
+- 별칭: "세로 글자 기둥이 멀고 가깝게 다른 속도로" · "앞 글자는 빠르고 뒤 글자는 느리게" · "세 겹 세로쓰기가 흐르게"
+- 정의: 작고 흐린 기둥은 느리게, 크고 진한 기둥은 빠르게 흘러 깊이가 생긴다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Parallax Columns 로 「밤비거리」 세로 기둥 3겹 흘려줘. 뒤는 작고 느리게, 앞은 크고 빠르게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/parallax-columns.html
+
+### 테이프 교차 (Caution Tape)
+- 별칭: "출입 금지 테이프가 X 자로 지나가게" · "경고 띠 두 줄이 엇갈려 흐르게" · "공사장 테이프 글자"
+- 정의: 글자가 찍힌 테이프 두 줄이 X 자로 엇갈리며 흐른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Caution Tape 로 「출입 금지」 교차시켜줘. 테이프 2줄 ±12도, 서로 반대로 흐르게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/caution-tape.html
+
+### 텍스트 터널 (Text Tunnel)
+- 별칭: "글자 윤곽이 겹겹이 다가오게" · "단어 안으로 계속 들어가게" · "글자 모양 터널"
+- 정의: 단어 윤곽이 겹겹이 커지며 다가와 글자 모양 터널이 된다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Tunnel 로 「우주」 넣어줘. 윤곽선 10겹, 1초에 한 겹씩 다가오게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-tunnel.html
+
+### 글자 복도 (Text Corridor)
+- 별칭: "양쪽 벽에 글자가 있는 복도를 걷게" · "글자 벽 사이로 앞으로 나아가게" · "글자로 된 복도"
+- 정의: 양쪽 벽에 쓴 글자와 바닥선이 원근으로 다가와 복도를 걷는 느낌이 든다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Corridor 로 「나아가」 벽에 써서 복도로 걸어가줘. 가운데 소실점, 2초에 한 칸.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-corridor.html
+
+### 텍스트 실린더 (Text Cylinder)
+- 별칭: "글자가 원통에 감겨 돌게" · "세 줄이 원기둥처럼 엇갈려 돌게" · "빙글빙글 도는 글자 기둥"
+- 정의: 원통에 감긴 글자 세 줄이 서로 반대로 돈다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Text Cylinder 로 「계속간다」 원통에 감아 돌려줘. 줄 3개, 가운데 줄만 반대 방향.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-cylinder.html
+
+### 텍스트 소용돌이 (Text Vortex)
+- 별칭: "글자가 꼬이면서 소용돌이로 빨려 들게" · "단어가 비틀리며 겹겹이 감기게" · "회오리 글자"
+- 정의: 단어가 겹마다 조금씩 비틀리며 커져 소용돌이를 만든다.
+- 구분: 윤곽이 그대로 다가오면 텍스트 터널, 비틀리며 감기면 텍스트 소용돌이
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Vortex 로 「회오리」 넣어줘. 겹마다 18도씩 비틀고 2초에 한 겹 다가오게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-vortex.html
+
+### 링 텍스트 (Ring Text Tunnel)
+- 별칭: "동그랗게 쓴 글자 고리가 다가오게" · "원형 문구가 겹겹이 돌면서 오게" · "글자 링 터널"
+- 정의: 원을 따라 쓴 글자 고리가 겹겹이 돌며 다가온다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Ring Text Tunnel 로 「빨려 든다」 원형으로 써서 다가오게 해줘. 고리마다 반대로 회전.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/ring-text.html
+
+### 텍스트 궤도 (Text Orbit)
+- 별칭: "글자가 타원 궤도를 돌게" · "단어가 앞뒤로 돌며 커졌다 작아지게" · "행성처럼 도는 글자"
+- 정의: 글자들이 기울어진 타원을 돌며 앞에선 크고 뒤에선 작고 흐려진다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Orbit 으로 「궤도를 돈다」 돌려줘. 타원 궤도, 앞은 크고 진하게 뒤는 작고 흐리게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-orbit.html
+
+### 텍스트 큐브 (Text Cube)
+- 별칭: "상자가 굴러가며 면마다 다른 단어" · "주사위 돌듯 단어가 바뀌게" · "네모가 아래로 굴러 다음 말로"
+- 정의: 정육면체가 위로 구르며 다음 면의 단어가 나타난다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Text Cube 로 「봄 여름 가을 겨울」 굴려줘. 2초마다 90도, 이즈 인아웃.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-cube.html
+
+### 돌출 입체 (Extruded Text)
+- 별칭: "글자가 두께 있는 입체처럼" · "입체 글씨 그림자 방향이 돌게" · "3D 블록 글자"
+- 정의: 두께가 있는 글자의 옆면 방향이 천천히 한 바퀴 돈다.
+- 구분: 짧은 두께면 돌출 입체, 화면 끝까지 늘어나면 롱 섀도
+- 만드는 법: 모션 그래픽
+- 요청 문장: Extruded Text 로 「입체」 넣어줘. 두께 14겹, 두께 방향이 8초에 한 바퀴.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/extrude-text.html
+
+### 스플릿 플랩 (Split Flap)
+- 별칭: "공항 전광판처럼 판이 착착 넘어가게" · "기차역 행선지 판 넘어가듯" · "글자 판이 위아래로 접히며 바뀌게"
+- 정의: 위아래 반쪽 판이 접혀 넘어가며 글자가 한 칸씩 바뀐다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Split Flap 으로 「서울행 → 부산행」 바꿔줘. 칸마다 0.15초 시차, 반쪽 판이 접히게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/split-flap.html
+
+### 플립 카드 (Flip Cards)
+- 별칭: "카드가 한 장씩 뒤집히며 글자가 바뀌게" · "글자 카드가 차례로 뒤집히게" · "뒤집으면 다른 말"
+- 정의: 글자 카드가 차례로 뒤집히며 뒷면의 다른 글자가 나온다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Flip Cards 로 「새소식 → 신메뉴」 바꿔줘. 카드 3장, 0.18초 시차로 뒤집기.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/flip-cards.html
+
+### 타자 바꿈 (Typewriter Swap)
+- 별칭: "타자 치듯 쓰고 지우고 다음 문장" · "커서 깜빡이며 글이 써졌다 지워지게" · "채팅 치는 느낌"
+- 정의: 한 자씩 쳐서 쓰고 커서가 깜빡인 뒤 지우고 다음 문장을 친다.
+- 구분: 쓰고 끝이면 타입온(④), 쓰고 지우고 다음 문장까지면 타자 바꿈
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Typewriter Swap 으로 「밤이 오기 전에 / 다시 한 번 더」 쳐줘. 쓰기 2.2초·멈춤·지우기.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/typewriter-swap.html
+
+### 슬롯 (Slot Text)
+- 별칭: "슬롯머신처럼 돌다가 탁 멈추게" · "글자 릴이 차례로 멈추게" · "뽑기 결과 나오듯"
+- 정의: 글자 릴이 빠르게 돌다가 하나씩 멈추며 결과를 보여 준다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Slot Text 로 「대박」 나오게 해줘. 릴 2개, 1.4초·1.9초에 차례로 멈춤.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/slot-text.html
+
+### 오도미터 (Odometer)
+- 별칭: "숫자가 굴러가며 올라가게" · "계기판처럼 숫자가 돌아가게" · "누적 숫자가 촤르륵 올라가게"
+- 정의: 자릿수 바퀴가 굴러가며 숫자가 목표값까지 올라간다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Odometer 로 0 에서 12,480 까지 올려줘. 2.6초 이즈 아웃, 자릿수가 위로 굴러가게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/odometer.html
+
+### 헤드라인 스왑 (Headline Swap)
+- 별칭: "뉴스 자막처럼 제목이 위로 바뀌게" · "속보 띠 문구가 갈아 끼워지게" · "헤드라인이 밀려 올라가게"
+- 정의: 이름표는 그대로 두고 띠 안 헤드라인만 위로 밀려 바뀐다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Headline Swap 으로 「속보」 띠에 문구 4개 바꿔줘. 2초마다 위로 0.6초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/headline-swap.html
+
+### LED 글자 (LED Text)
+- 별칭: "전광판 점 글자가 흘러가게" · "LED 도트로 쓴 글씨" · "점 하나하나 켜지는 글자"
+- 정의: 글자를 LED 점으로 찍어 옆으로 흘려보낸다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: LED Text 로 「새 소식 도착」 흘려줘. 9줄 점 글씨, 꺼진 점은 어둡게 보이게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/led-text.html
+
+### 위아래 가르기 (Split Halves)
+- 별칭: "글자가 위아래로 갈라지고 속 단어가 나오게" · "단어를 반으로 쪼개 숨은 말 보이게" · "겉말이 벌어지며 속말"
+- 정의: 단어의 위아래 반쪽이 반대로 벌어지며 사이에서 다른 말이 나온다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Split Halves 로 「겉모습」 사이에서 「속마음」 나오게 해줘. 위는 왼쪽, 아래는 오른쪽으로 벌어지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/split-halves.html
+
+### 윤곽 채우기 (Outline Fill)
+- 별칭: "윤곽선 글자가 한 줄씩 칠해지게" · "빈 글자 속이 차례로 채워지게" · "외곽선만 있다가 색이 차게"
+- 정의: 윤곽선만 있던 글자 줄이 한 줄씩 왼쪽부터 칠해진다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Outline Fill 로 「질풍노도」 줄 4개 채워줘. 줄마다 1.6초 시차로 왼쪽부터.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/outline-fill.html
+
+### 글리치 슬라이스 (Glitch Slices)
+- 별칭: "큰 글자가 가로로 썰려서 어긋나게" · "글씨가 지직거리며 조각나게" · "잘린 글자가 좌우로 튀게"
+- 정의: 큰 글자를 가로로 썰어 조각마다 좌우로 튀었다 돌아온다.
+- 구분: 화면 전체가 지직이면 글리치(③), 글자만 썰려 어긋나면 글리치 슬라이스
+- 만드는 법: 모션 그래픽
+- 요청 문장: Glitch Slices 로 「붕괴」 넣어줘. 가로 7조각, 2초마다 0.5초씩 어긋나게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/glitch-slices.html
+
+### 무늬 마스크 (Text Mask Pattern)
+- 별칭: "글자 안에서 줄무늬가 흐르게" · "글씨 모양 창으로 무늬가 보이게" · "글자 속에 패턴 넣기"
+- 정의: 글자를 창 삼아 그 안에서만 사선 줄무늬가 흐른다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Text Mask Pattern 으로 「축제」 안에 사선 줄무늬 흘려줘. 글자 밖은 바탕 그대로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pattern-mask.html
+
+### 롱 섀도 (Long Shadow)
+- 별칭: "긴 그림자가 글자 뒤로 쭉 뻗게" · "그림자 방향이 빙 돌게" · "플랫 디자인 긴 그림자"
+- 정의: 글자 뒤로 화면 끝까지 뻗는 그림자의 방향이 천천히 돈다.
+- 구분: 짧은 두께면 돌출 입체, 화면 끝까지 늘어나면 롱 섀도
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Long Shadow 로 「빛과 그림자」 넣어줘. 그림자 60겹, 방향이 8초에 한 바퀴.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/long-shadow.html
+
+### 리퀴드 필 (Liquid Fill)
+- 별칭: "글자 속에 물이 차오르게" · "윤곽 글씨에 액체가 출렁이며 채워지게" · "컵에 물 차듯 글자가 차게"
+- 정의: 윤곽 글자 안에 물결치는 액체가 아래부터 차오른다.
+- 만드는 법: 모션 그래픽
+- 요청 문장: Liquid Fill 로 「가득」 채워줘. 3초 동안 차오르고 수면은 출렁이게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/liquid-fill.html
+
+### 형광펜 (Highlight Text)
+- 별칭: "형광펜으로 쓱 칠하듯" · "중요한 말에 밑줄 마커 긋게" · "글자 뒤로 색이 쓱 지나가게"
+- 정의: 형광펜이 글자 뒤로 왼쪽에서 오른쪽으로 쓱 그어진다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Highlight Text 로 「말의 힘」에 형광펜 그어줘. 0.6초 이즈 아웃, 살짝 기울게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/highlighter.html
+
+### 경계 반전 (Split Invert)
+- 별칭: "사선 경계를 넘으면 색이 뒤집히게" · "반은 흰 글씨 반은 검은 글씨" · "경계가 움직이며 색이 바뀌게"
+- 정의: 사선 경계가 좌우로 오가며 양쪽의 바탕과 글자 색이 서로 뒤집힌다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Split Invert 로 「반전」 넣어줘. 사선 경계가 좌우로 오가고 경계 양쪽 색 반전.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/split-invert.html
+
+### 텍스트 에코 (Text Echo)
+- 별칭: "글자가 8 자로 움직이며 잔상이 남게" · "지나간 자리에 글자가 흐리게 남게" · "꼬리 달린 글씨"
+- 정의: 단어가 8 자를 그리며 움직이고 지나간 자리에 흐린 잔상이 따라온다.
+- 구분: 글자에 잔상이면 텍스트 에코, 물체에 꼬리면 모션 트레일(⑤)
+- 만드는 법: 모션 그래픽
+- 요청 문장: Text Echo 로 「잔상」 넣어줘. 8 자 궤도, 잔상 10겹 점점 흐리게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-echo.html
 
 ## ＋ 조합 레시피 (샷 단위)
 

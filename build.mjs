@@ -1369,7 +1369,7 @@ const moCard = it => `<article class="mo-card" id="m-${it.id}">
   <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
 </article>`;
 const moF = moMenu.formula;
-const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.' };
+const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.' };
 const moCore = `<div class="mogal">
 <style>${MO_CSS}</style>
 <div class="mo-formula">

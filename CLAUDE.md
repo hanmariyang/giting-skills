@@ -68,6 +68,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 ```
 **모든 움직임은 8초에 한 바퀴** 돌아 영상 끝이 처음과 이어진다. 회전은 도형의 대칭각 배수로만 돌린다(바람개비 8날=45°, 만화경 12조각=60°). 색을 정체성에 붙인 겹(터널 등)은 주기 안 바뀜 횟수로 나눠떨어지는 개수로 칠한다(8초에 8겹 지나가면 4색 주기, 3색 주기는 끝에서 색이 튄다).
 
+## 모션 메뉴판 ⑨ 글자 연출 40 (2026-10-13)
+
+⑦·⑧과 같은 구조. `demos/m10-text-motion.html` 은 생성물, 정본은 `plugins/motion-menu/tools/text/engine.js`(`TX[id](c,w,h,t,k)`, 8초 주기)와 menu.json. 명령은 ⑧의 `backgrounds` 를 `text` 로 바꾸면 된다.
+글자로 오려 내는 합성(무늬 마스크·리퀴드 필)은 helpers 의 `layer()` 로 따로 그린 판에서 한다. 본 칸에 `source-atop` 을 쓰면 바탕까지 칠해진다. 좁은 칸에서는 `fit()` 으로 글자를 줄인다(영상 칸 272×130 에서 넘치던 것이 여럿이었다).
+
 ## 검증
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)
