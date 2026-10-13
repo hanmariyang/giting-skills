@@ -580,6 +580,11 @@ const UI_JS = `
   var on = !reduce; try { if (localStorage.getItem('uim-auto') === 'off') on = false; } catch (e) {}
   var st = new Map(); // iframe → { vis, user, ready, loops, busy }
   frames.forEach(function (f) { st.set(f, { vis: false, user: false, ready: false, loops: 0, busy: false }); });
+  // 큰 페이지에서는 iframe 이 이 스크립트보다 먼저 떠서 'ready' 를 놓친다(2026-10-14 운영에서 자동 시연이 안 돌던 원인). 이미 뜬 것은 여기서 준비로 친다.
+  frames.forEach(function (f) {
+    function mark() { try { if (f.contentWindow && f.contentWindow.UIM && f.contentDocument.readyState === 'complete') { var s = st.get(f); if (!s.busy) { s.ready = true; kick(f); } } } catch (e) {} }
+    f.addEventListener('load', mark); mark();
+  });
   function byWin(w) { for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === w) return frames[i]; }
   function send(f, m) { try { f.contentWindow.postMessage({ uim: m }, '*'); } catch (e) {} }
   function kick(f) { var s = st.get(f); if (on && s.vis && s.ready && !s.user && !s.busy && s.loops < 3) { s.busy = true; send(f, 'play'); } }
