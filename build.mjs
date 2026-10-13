@@ -81,6 +81,116 @@ for (const r of (menu.recipes || [])) {
   writeFileSync(join(PLUGIN, 'components', `${r.id}.html`), rcode[r.id]);
 }
 
+// ── 2-1. 자동 시연 (갤러리 iframe 전용 — 복사 코드·components/ 에는 안 들어간다) ──
+const demoSteps = JSON.parse(readFileSync(join(PLUGIN, 'demo-steps.json'), 'utf8'));
+const stepIds = Object.keys(demoSteps).filter(k => !k.startsWith('_'));
+const strayStep = stepIds.filter(id => !frags[id]);
+if (strayStep.length) { console.error('데모 없는 시연 단계:', strayStep.join(', ')); process.exit(1); }
+
+// iframe 안에서 도는 시연기. 부모가 {uim:'play'|'stop'} 을 보낸다.
+// :hover·:active·:focus 는 스크립트로 못 켜므로 같은 규칙을 .uim-* 클래스로 복제해 켠다.
+// 진짜 사람 입력(isTrusted)이 오면 즉시 멈추고 부모에게 알린다 — 그 카드는 다시 자동으로 돌지 않는다.
+const RUNNER = `(function () {
+  var S = window.UIM || [], run = 0, cur, alive = false;
+  var MAP = [[/:hover/g, '.uim-hover'], [/:active/g, '.uim-active'], [/:focus-visible/g, '.uim-focus'], [/:focus(?![-\\w])/g, '.uim-focus']];
+  function clone(list, sheet) {
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i];
+      if (r.cssRules && r.media) { clone(r.cssRules, sheet); continue; }
+      if (!r.selectorText || !/:(hover|active|focus)/.test(r.selectorText)) continue;
+      var sel = r.selectorText; MAP.forEach(function (m) { sel = sel.replace(m[0], m[1]); });
+      try { sheet.insertRule(sel + '{' + r.style.cssText + '}', sheet.cssRules.length); } catch (e) {}
+    }
+  }
+  try { var st = document.createElement('style'); document.head.appendChild(st);
+    [].forEach.call(document.styleSheets, function (s) { if (s.ownerNode !== st) try { clone(s.cssRules, st.sheet); } catch (e) {} }); } catch (e) {}
+  function cursor() {
+    if (cur) return cur;
+    cur = document.createElement('div');
+    cur.setAttribute('aria-hidden', 'true');
+    cur.style.cssText = 'position:fixed;left:0;top:0;width:18px;height:18px;z-index:2147483647;pointer-events:none;transition:transform .45s cubic-bezier(.3,.7,.2,1),opacity .2s;opacity:0;transform:translate(60vw,80vh)';
+    cur.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 1.5l12 7.2-5.3 1.2-2.6 5.1z" fill="#17171b" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    document.body.appendChild(cur); return cur;
+  }
+  function q(sel) { return document.querySelector(sel); }
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function moveTo(el) {
+    var c = cursor(), b = el.getBoundingClientRect();
+    c.style.opacity = '1';
+    c.style.transform = 'translate(' + (b.left + Math.min(b.width / 2, 40)) + 'px,' + (b.top + b.height / 2) + 'px)';
+    return wait(480);
+  }
+  function chain(el, cls, on) { for (var n = el; n && n.classList; n = n.parentElement) n.classList.toggle(cls, on); }
+  function fire(el, type) { el.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, view: window })); }
+  function setVal(el, v) {
+    var proto = el.tagName === 'SELECT' ? HTMLSelectElement : el.tagName === 'TEXTAREA' ? HTMLTextAreaElement : HTMLInputElement;
+    Object.getOwnPropertyDescriptor(proto.prototype, 'value').set.call(el, v);
+    el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  var OPS = {
+    wait: function (ms) { return wait(ms); },
+    tap: function (sel) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      chain(el, 'uim-hover', true); chain(el, 'uim-active', true); fire(el, 'mousedown');
+      return wait(140); }).then(function () { chain(el, 'uim-active', false); fire(el, 'mouseup'); el.click(); return wait(220); })
+      .then(function () { chain(el, 'uim-hover', false); }); },
+    hover: function (sel, ms) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      chain(el, 'uim-hover', true); fire(el, 'mouseover'); fire(el, 'mouseenter'); return wait(ms || 900); })
+      .then(function () { chain(el, 'uim-hover', false); fire(el, 'mouseout'); fire(el, 'mouseleave'); }); },
+    press: function (sel, ms) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      chain(el, 'uim-hover', true); chain(el, 'uim-active', true); return wait(ms || 500); })
+      .then(function () { chain(el, 'uim-active', false); chain(el, 'uim-hover', false); }); },
+    focus: function (sel) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      try { el.focus({ focusVisible: true, preventScroll: true }); } catch (e) { el.focus(); } el.classList.add('uim-focus'); return wait(200); }); },
+    blur: function () { var a = document.activeElement; if (a && a.blur) a.blur();
+      [].forEach.call(document.querySelectorAll('.uim-focus'), function (n) { n.classList.remove('uim-focus'); }); },
+    type: function (sel, text) { var el = q(sel); if (!el) return; return OPS.focus(sel).then(function () {
+      var i = 0; return (function next() { if (i >= text.length || !alive) return;
+        setVal(el, el.value + text[i++]); return wait(85).then(next); })(); }); },
+    clear: function (sel) { var el = q(sel); if (el) setVal(el, ''); },
+    key: function (sel, key) { var el = q(sel); if (!el) return;
+      el.dispatchEvent(new KeyboardEvent('keydown', { key: key, bubbles: true, cancelable: true })); return wait(150); },
+    set: function (sel, v) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      if (el.type !== 'range') { setVal(el, el.tagName === 'SELECT' ? [].filter.call(el.options, function (o) { return o.text === String(v) || o.value === String(v); }).map(function (o) { return o.value; })[0] || v : v); return wait(200); }
+      var from = +el.value, to = +v, n = 14, k = 0;
+      return (function step() { if (k++ >= n || !alive) return; setVal(el, Math.round(from + (to - from) * k / n)); return wait(35).then(step); })(); }); },
+    scroll: function (sel, px) { var el = q(sel); if (!el) return; return moveTo(el).then(function () {
+      el.scrollBy({ top: px, behavior: 'smooth' }); return wait(600); }); },
+    drag: function (a, b) { var s = q(a), t = q(b); if (!s || !t) return; var dt = new DataTransfer();
+      return moveTo(s).then(function () { s.dispatchEvent(new DragEvent('dragstart', { bubbles: true, dataTransfer: dt })); return moveTo(t); })
+      .then(function () { t.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: dt })); return wait(300); })
+      .then(function () { t.dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt }));
+        s.dispatchEvent(new DragEvent('dragend', { bubbles: true, dataTransfer: dt })); }); }
+  };
+  function play() {
+    if (alive) return; alive = true; var my = ++run, i = 0;
+    (function next() {
+      if (!alive || my !== run) return;
+      if (i >= S.length) { if (cur) cur.style.opacity = '0'; parent.postMessage({ uim: 'done' }, '*'); alive = false; return; }
+      var s = S[i++]; Promise.resolve(OPS[s[0]] && OPS[s[0]].apply(null, s.slice(1))).then(next, next);
+    })();
+  }
+  function stop() { alive = false; run++; if (cur) cur.style.opacity = '0'; }
+  addEventListener('message', function (e) { if (e.source !== parent || !e.data) return;
+    if (e.data.uim === 'play') play(); else if (e.data.uim === 'stop') stop(); });
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
+    addEventListener(t, function (e) { if (!e.isTrusted) return; if (alive) { stop(); } parent.postMessage({ uim: 'user' }, '*'); }, true);
+  });
+  parent.postMessage({ uim: 'ready' }, '*');
+})();`;
+const demoDoc = (id, doc) => demoSteps[id]
+  ? doc.replace(/<\/body>\s*<\/html>\s*$/, `<script>window.UIM=${JSON.stringify(demoSteps[id]).replace(/</g, '\\u003c')};${RUNNER}</script>\n</body>\n</html>\n`)
+  : doc;
+
+// 「프롬프트」 버튼이 복사하는 지침 (코드는 클릭 때 카드의 코드 상자에서 붙인다 — 페이지에 코드를 두 번 싣지 않는다)
+const PROMPT_TAIL = [
+  '지침',
+  '1. 먼저 이 프로젝트의 프레임워크, 스타일 방식, 테마(다크 모드) 방식을 확인하고 그 방식으로 옮기세요. 견본 HTML 을 그대로 붙이지 마세요.',
+  '2. 색·간격·둥글기는 프로젝트에 이미 있는 값(토큰·변수)을 쓰세요. 견본의 색은 자리 표시일 뿐입니다.',
+  '3. 키보드로 끝까지 조작되게 하고, 포커스가 보이게 하고, 동작 줄이기 설정을 지키세요.',
+  '4. 이미 비슷한 요소가 있으면 새로 만들지 말고 그것을 고치세요.',
+  '5. 끝나면 세 칸으로 나눠 알려 주세요: 바꾼 파일 / 확인한 것(라이트·다크, 모바일 폭, 키보드) / 확인하지 못한 것.',
+].join('\n');
+
 // ── 3. 갤러리 ──────────────────────────────────────────────────
 const bycat = id => menu.items.filter(i => i.category === id);
 
@@ -88,9 +198,11 @@ const cardHtml = it => `
 <article class="item" id="${it.id}">
   <header><h3>${it.name.ko}</h3><span class="en">${it.name.en}</span>
     <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button>
+    <button class="tiny promptbtn" data-ask="${attr(it.ask)}" data-name="${attr(`${it.name.ko} (${it.name.en})`)}" data-alias="${attr(it.aliases.join(' · '))}" title="요청 문장 + 견본 코드 + 적용 지침 복사">프롬프트</button>
     <button class="tiny codebtn" title="코드 보기">코드</button>
+    <button class="tiny linkbtn" data-id="${it.id}" title="이 항목 주소 복사" aria-label="${it.name.ko} 주소 복사">#</button>
   </header>
-  <iframe title="${it.name.ko} 데모" loading="lazy" style="height:${frags[it.id].h}px" srcdoc="${attr(code[it.id])}"></iframe>
+  <iframe title="${it.name.ko} 데모" loading="lazy"${demoSteps[it.id] ? ' data-demo' : ''} style="height:${frags[it.id].h}px" srcdoc="${attr(demoDoc(it.id, code[it.id]))}"></iframe>
   <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}</footer>
   <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
@@ -426,8 +538,79 @@ const CORE_JS = `
   });
 })();`;
 
+// ui-menu 갤러리에만 붙는 것 (CORE_* 는 다른 사전들이 접두어만 바꿔 같이 쓴다)
+const UI_CSS = `
+.uigal .item { scroll-margin-top: 90px; }
+.uigal .item:target { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.uigal .gtools { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: 12.5px; color: var(--ink-3); }
+.uigal .autobtn { border: 1px solid var(--line); background: var(--paper); color: var(--ink-2); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12px; cursor: pointer; }
+.uigal .autobtn[aria-pressed="false"] { color: var(--ink-3); }
+.uigal .autobtn:focus-visible, .uigal .tiny:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }`;
+
+const UI_JS = `
+(function () {
+  var root = document.querySelector('.uigal');
+  if (!root) return;
+  function flash(btn, t) { var old = btn.textContent; btn.textContent = t; btn.classList.add('ok');
+    setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1100); }
+  function put(text) { try { return navigator.clipboard.writeText(text); } catch (e) { return Promise.reject(e); } }
+  var TAIL = ${JSON.stringify(PROMPT_TAIL)};
+  root.addEventListener('click', function (e) {
+    var pb = e.target.closest('.promptbtn');
+    if (pb) {
+      var card = pb.closest('.item'), code = card.querySelector('.codebox code').textContent;
+      var text = pb.dataset.ask + '\\n\\n' +
+        '이 UI 의 이름은 ' + pb.dataset.name + ' 입니다. 흔히 "' + pb.dataset.alias.split(' · ').join('", "') + '" 라고도 부릅니다.\\n' +
+        '아래는 동작을 보여 주는 견본입니다(의존성 없는 HTML 한 장).\\n\\n\\u0060\\u0060\\u0060html\\n' + code.trim() + '\\n\\u0060\\u0060\\u0060\\n\\n' + TAIL + '\\n\\n' +
+        '[넣을 곳] 페이지나 컴포넌트 이름을 적으세요\\n[바꿀 것] 기존 요소를 바꾸는 거라면 적으세요 (없으면 지우기)';
+      put(text).then(function () { flash(pb, '복사됨'); }, function () { flash(pb, '복사 안 됨'); });
+      return;
+    }
+    var lb = e.target.closest('.linkbtn');
+    if (lb) {
+      var url = location.origin + location.pathname + '#' + lb.dataset.id;
+      try { history.replaceState(null, '', '#' + lb.dataset.id); } catch (err) {}
+      put(url).then(function () { flash(lb, '✓'); }, function () {});
+    }
+  });
+
+  // 자동 시연 — 화면에 보이는 카드만, 사람 손이 닿으면 그 카드는 멈춘다, 동작 줄이기면 아예 안 돈다
+  var frames = [].slice.call(root.querySelectorAll('iframe[data-demo]'));
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var on = !reduce; try { if (localStorage.getItem('uim-auto') === 'off') on = false; } catch (e) {}
+  var st = new Map(); // iframe → { vis, user, ready, loops, busy }
+  frames.forEach(function (f) { st.set(f, { vis: false, user: false, ready: false, loops: 0, busy: false }); });
+  function byWin(w) { for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === w) return frames[i]; }
+  function send(f, m) { try { f.contentWindow.postMessage({ uim: m }, '*'); } catch (e) {} }
+  function kick(f) { var s = st.get(f); if (on && s.vis && s.ready && !s.user && !s.busy && s.loops < 3) { s.busy = true; send(f, 'play'); } }
+  addEventListener('message', function (e) {
+    var f = e.data && e.data.uim && byWin(e.source); if (!f) return; var s = st.get(f);
+    if (e.data.uim === 'ready') { s.ready = true; s.busy = false; kick(f); }
+    else if (e.data.uim === 'user') { s.user = true; s.busy = false; }
+    else if (e.data.uim === 'done') { s.loops++; s.busy = false;
+      if (s.loops < 3 && on && s.vis && !s.user) setTimeout(function () { if (s.vis && on && !s.user) { s.ready = false; f.srcdoc = f.srcdoc; } }, 1400); }
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) {
+      var s = st.get(en.target); s.vis = en.isIntersecting;
+      if (s.vis) kick(en.target); else { send(en.target, 'stop'); s.busy = false; }
+    }); }, { threshold: 0.6 });
+    frames.forEach(function (f) { io.observe(f); });
+  }
+  var btn = root.querySelector('.autobtn');
+  if (btn) {
+    if (reduce) { btn.hidden = true; }
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.textContent = on ? '자동 시연 끄기' : '자동 시연 켜기';
+    btn.addEventListener('click', function () {
+      on = !on; try { localStorage.setItem('uim-auto', on ? 'on' : 'off'); } catch (e) {}
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.textContent = on ? '자동 시연 끄기' : '자동 시연 켜기';
+      frames.forEach(function (f) { var s = st.get(f); if (on) { s.loops = 0; kick(f); } else { send(f, 'stop'); s.busy = false; } });
+    });
+  }
+})();`;
+
 const core = `<div class="uigal">
-<style>${CORE_CSS}</style>
+<style>${CORE_CSS}${UI_CSS}</style>
 <div class="formula">
   <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(f.pattern)}</span></div>
   <div class="fx">
@@ -438,6 +621,7 @@ const core = `<div class="uigal">
 <nav class="gnav" aria-label="코스">
   ${menu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${bycat(c.id).length}</a>`).join('\n  ')}
 </nav>
+<div class="gtools"><button type="button" class="autobtn" aria-pressed="true">자동 시연 끄기</button><span>화면에 보이는 데모가 스스로 움직여요. 직접 눌러도 됩니다. 「프롬프트」는 요청 문장·견본 코드·적용 지침을 한 번에 복사하고, 「#」은 그 항목 주소를 복사해요.</span></div>
 ${menu.categories.map(cat => `
 <section class="cat" id="c-${cat.id}">
   <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${bycat(cat.id).length}</span></h2>
@@ -451,12 +635,12 @@ ${menu.recipes ? `
   <div class="rcp">${menu.recipes.map(r => `<article class="rcpi" id="${r.id}">
     <header><h3>${esc(r.screen)}</h3><span class="rcpk">${esc(r.ko)}</span>
       <button class="copy tiny" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
-    <iframe title="${esc(r.screen)} 조합 데모" loading="lazy" style="height:${frags[r.id].h}px" srcdoc="${attr(rcode[r.id])}"></iframe>
+    <iframe title="${esc(r.screen)} 조합 데모" loading="lazy"${demoSteps[r.id] ? ' data-demo' : ''} style="height:${frags[r.id].h}px" srcdoc="${attr(demoDoc(r.id, rcode[r.id]))}"></iframe>
     <div class="rcpc">${r.combo.map(c => `<span class="rcptag">${esc(c)}</span>`).join('')}</div>
     <p class="rcpsc">${esc(r.sc)}</p>
   </article>`).join('\n')}</div>
 </section>` : ''}
-<script>${CORE_JS}</script>
+<script>${CORE_JS}${UI_JS}</script>
 </div>
 `;
 

@@ -83,3 +83,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)
 - JSON: `node -e "JSON.parse(...)"` 3파일 (menu / marketplace / plugin)
+
+## UI 메뉴판 갤러리 — 자동 시연·프롬프트·항목 주소 (2026-10-14)
+
+- **자동 시연**: 정본 `plugins/ui-menu/demo-steps.json`(항목 id → 단계 배열). 빌드가 갤러리 iframe 의 srcdoc 에만 시연기(`RUNNER`)를 붙인다. **`components/`·코드 복사에는 안 들어간다.** 화면에 60% 이상 보이는 카드만 돌고, 세 번 돌면 멈추고, 사람이 누르면 그 카드는 다시 안 돈다. 동작 줄이기 설정이면 아예 안 돈다. 위쪽 「자동 시연 끄기」가 브라우저에 기억된다.
+- `:hover`·`:active`·`:focus` 는 스크립트로 못 켜서, 시연기가 같은 규칙을 `.uim-hover`·`.uim-active`·`.uim-focus` 로 복제해 켠다. 시연 단계를 고치면 헤드리스로 전부 돌려 본다(선택자가 있는지·화면이 바뀌는지·오류 0).
+- **「프롬프트」**: 요청 문장 + 이름·별칭 + 견본 코드 + 적용 지침 5줄(`PROMPT_TAIL`, 끝은 「바꾼 파일 / 확인한 것 / 확인하지 못한 것」). 코드는 클릭 때 카드의 코드 상자에서 가져온다(페이지에 두 번 싣지 않는다).
+- **「#」**: 그 항목 주소를 복사한다. 항목 id 가 곧 앵커다(`giting.kr/skills/ui-menu#tabs`). giting 페이지의 다른 id 와 겹치지 않는지 확인했다(2026-10-14).
+- ⚠️ `UI_JS` 는 템플릿 문자열 안의 JS 라서 줄바꿈은 `\\n` 으로 두 번 이스케이프한다. 한 번만 쓰면 빌드는 되고 페이지에서 SyntaxError 가 난다(실제로 밟음). 고친 뒤엔 `gallery-core.html` 의 마지막 `<script>` 를 떼어 `node --check`.
