@@ -1,0 +1,48 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>파티클 Particles — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bs{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bs" role="img" aria-label="파티클 데모: 반복해서 움직이는 모션"></canvas>
+<p class="cap">파티클 · 작은 조각 수십 개가 한 점에서 솟구쳤다가 중력으로 떨어지며 사라진다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = clamp(t); var s = 1.9; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var frac = function (v) { return v - Math.floor(v); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var W8 = function (t, n) { return TAU * (n || 1) * t / 8; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 900) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var say = function (c, s, x, y, px, col, al, wt) { c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var tw = function (c, s, px, wt) { c.font = FONT(px, wt); return c.measureText(s).width; };
+var dot = function (c, x, y, r) { if (r > .3) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+var heart = function (c, x, y, s) { c.beginPath(); c.moveTo(x, y + s * .35); c.bezierCurveTo(x - s * .9, y - s * .3, x - s * .45, y - s * .95, x, y - s * .45); c.bezierCurveTo(x + s * .45, y - s * .95, x + s * .9, y - s * .3, x, y + s * .35); c.fill(); };
+// 밤 · 낮 두 장면 (바꿈 묶음이 같이 쓴다)
+var night = function (c, w, h, k) { bgc(c, w, h, k.ink); c.fillStyle = k.paper; for (var i = 0; i < 9; i++) dot(c, hash(i) * w, hash(i + 9) * h, h * .012); say(c, '밤', w * .4, h / 2, h * .5, k.paper); c.fillStyle = k.acc; dot(c, w * .66, h * .45, h * .16); c.fillStyle = k.ink; dot(c, w * .7, h * .4, h * .15); };
+var day = function (c, w, h, k) { bgc(c, w, h, k.paper); c.fillStyle = k.acc; c.globalAlpha = .25; dot(c, w * .3, h / 2, h * .26); c.globalAlpha = 1; dot(c, w * .3, h / 2, h * .18); say(c, '낮', w * .62, h / 2, h * .5, k.ink); };
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var p = frac(t / 2), cols = [k.acc, k.paper, k.deep];
+  for (var i = 0; i < 40; i++) {
+    var a = -Math.PI / 2 + (hash(i) - .5) * 1.8, v = h * (1 + 1.4 * hash(i + 4)), tt = p * 1.1;
+    var x = w / 2 + Math.cos(a) * v * tt * .9, y = h * .9 + Math.sin(a) * v * tt + h * 1.6 * tt * tt, s = h * (.02 + .02 * hash(i + 8));
+    c.save(); c.globalAlpha = clamp(1.2 - p * 1.2); c.translate(x, y); c.rotate(tt * 6 + i); c.fillStyle = cols[i % 3];
+    if (i % 3 === 0) c.fillRect(-s, -s, s * 2, s * 2); else if (i % 3 === 1) dot(c, 0, 0, s); else { c.beginPath(); c.moveTo(0, -s * 1.2); c.lineTo(s, s); c.lineTo(-s, s); c.closePath(); c.fill(); }
+    c.restore();
+  }
+  c.fillStyle = k.paper; c.beginPath(); c.roundRect(w / 2 - h * .12, h * .86, h * .24, h * .1, h * .03); c.fill();
+};
+var cv=document.querySelector('canvas.bs'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function fit(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:(now-t0)/1000,K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+fit();addEventListener('resize',fit);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

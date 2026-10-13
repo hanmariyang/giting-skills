@@ -1,6 +1,6 @@
 # 모션 메뉴판 (motion-menu) — Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 180개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 188개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다 — AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
@@ -156,6 +156,14 @@
 - 요청 문장: 손 동작을 매치 컷으로 다음 장면 같은 위치에 이어줘.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/match-cut.html
 
+### 임팩트 셰이크 (Impact Shake)
+- 별칭: "쾅 떨어지면서 화면이 흔들리게" · "지진 난 것처럼 들썩이게" · "세게 내려꽂히는 느낌"
+- 정의: 물체가 크게 떨어져 박히는 순간 화면 전체가 짧게 흔들리다 잦아든다.
+- 구분: 글자만 흔들리면 워드 버스트(⑨), 화면 전체가 들썩이면 임팩트 셰이크
+- 만드는 법: AI 영상 · 모션 그래픽 · CSS
+- 요청 문장: Impact Shake 넣어줘. 2.6배에서 0.14초 만에 박히고 화면이 0.4초 흔들리다 잦아들게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/impact-shake.html
+
 ## ③ 전환 · 디졸브 · 리빌
 장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.
 
@@ -239,6 +247,22 @@
 - 요청 문장: 노트북 화면 속으로 다이브해서 화면 안 장면이 꽉 차게. 1초.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/screen-dive.html
 
+### 라인 드로 (Line Draw)
+- 별칭: "선이 그려지면서 나오게" · "그래프 선이 쭉 이어지게" · "펜으로 긋듯이 선이 나타나게"
+- 정의: 선이 시작점부터 끝까지 그려지며 드러난다. 화살촉이 끝을 따라간다.
+- 구분: 모양 안이 드러나면 마스크 리빌, 선 자체가 그어지면 라인 드로
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Line Draw 로 그래프 선 그려줘. 1.6초 이즈 인아웃, 끝에 화살촉 따라가게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/line-draw.html
+
+### 셰이프 모프 (Shape Morph)
+- 별칭: "네모가 동그라미로 말랑하게 바뀌게" · "도형이 다른 도형으로 변신하게" · "모양이 녹아서 바뀌게"
+- 정의: 한 도형의 크기와 둥근 정도가 이어서 바뀌어 다른 도형이 된다.
+- 구분: 장면이 장면으로 녹으면 모프 컷, 도형 하나가 다른 도형이 되면 셰이프 모프
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Shape Morph 로 네모를 원으로 바꿔줘. 0.8초 이즈 인아웃, 크기·둥글기를 같이.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/shape-morph.html
+
 ## ④ 키네틱 타이포
 글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.
 
@@ -297,6 +321,14 @@
 - 만드는 법: 모션 그래픽
 - 요청 문장: 큰 글자 'AI' 속으로 관통해 다음 장면이 나오게. 0.8초.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/letter-flythrough.html
+
+### 카운트업 (Count-up)
+- 별칭: "숫자가 촤르륵 올라가게" · "0부터 목표 숫자까지 세게" · "성과 숫자가 차오르게"
+- 정의: 숫자가 0부터 목표값까지 빠르게 올라가다 천천히 멈춘다. 막대가 같이 찬다.
+- 구분: 자릿수 바퀴가 굴러가면 오도미터(⑨), 숫자만 바뀌며 올라가면 카운트업
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Count-up 으로 0 에서 2,454 까지 올려줘. 2.4초 이즈 아웃, 아래 진행 막대 같이.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/count-up.html
 
 ## ⑤ 타이밍 · 질감
 같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.
@@ -413,6 +445,22 @@
 - 요청 문장: 로더 아이콘을 끊김 없는 심리스 루프로 계속 돌게.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/loop.html
 
+### 팝인 (Pop-in)
+- 별칭: "툭 하고 튀어나오게" · "작았다가 뿅 커지게" · "아이콘이 통통 등장하게"
+- 정의: 0에서 커지며 목표 크기를 살짝 넘었다가 돌아와 자리 잡는다.
+- 구분: 튕기는 정도만 말하면 오버슈트, 0에서 커지며 나오는 등장 전체면 팝인
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Pop-in 으로 등장시켜줘. 0에서 0.3초, 오버슈트로 1.1배 찍고 제자리.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pop-in.html
+
+### 리퀴드 모션 (Liquid Motion)
+- 별칭: "물방울처럼 출렁이며 움직이게" · "젤리처럼 흔들리며 가게" · "말랑하게 늘어나며 미끄러지게"
+- 정의: 덩어리가 움직이는 쪽으로 늘어나고 가장자리가 출렁이며 미끄러진다.
+- 구분: 눌렸다 늘어나는 탄성이면 스쿼시 앤 스트레치, 가장자리가 출렁이는 액체면 리퀴드 모션
+- 만드는 법: 모션 그래픽
+- 요청 문장: Liquid Motion 으로 움직여줘. 가는 쪽으로 늘어나고 가장자리가 출렁이게, 좌우 왕복 8초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/liquid-motion.html
+
 ## ⑥ 효과 · 시간
 
 ### 슬로 모션 (Slow Motion) ★
@@ -502,6 +550,21 @@
 - 만드는 법: 모션 그래픽
 - 요청 문장: 두 장면 사이를 데이터모시로 픽셀이 밀려 섞이며 넘어가게.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/datamosh.html
+
+### 버스트 (Burst)
+- 별칭: "하트가 팡 터지듯" · "좋아요 누르면 퍼지는 느낌" · "가운데서 점이 사방으로 튀게"
+- 정의: 아이콘이 툭 커지는 순간 둘레로 점이 사방으로 퍼진다.
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Burst 넣어줘. 하트가 1.3배로 튀고 점 10개가 사방으로 퍼지며 사라지게, 0.6초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/burst.html
+
+### 파티클 (Particles)
+- 별칭: "색종이가 펑 하고 쏟아지게" · "작은 조각이 분수처럼 튀게" · "축하 폭죽 터지듯"
+- 정의: 작은 조각 수십 개가 한 점에서 솟구쳤다가 중력으로 떨어지며 사라진다.
+- 구분: 하나가 튀며 둘레로 퍼지면 버스트, 조각 수십 개가 솟구쳐 떨어지면 파티클
+- 만드는 법: AI 영상 · 모션 그래픽
+- 요청 문장: Particles 로 터뜨려줘. 조각 40개, 아래 가운데서 위로 솟았다 중력으로 떨어지게, 1.2초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/particles.html
 
 ## ⑦ 화면 전환 40
 장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.

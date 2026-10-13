@@ -73,6 +73,12 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 ⑦·⑧과 같은 구조. `demos/m10-text-motion.html` 은 생성물, 정본은 `plugins/motion-menu/tools/text/engine.js`(`TX[id](c,w,h,t,k)`, 8초 주기)와 menu.json. 명령은 ⑧의 `backgrounds` 를 `text` 로 바꾸면 된다.
 글자로 오려 내는 합성(무늬 마스크·리퀴드 필)은 helpers 의 `layer()` 로 따로 그린 판에서 한다. 본 칸에 `source-atop` 을 쓰면 바탕까지 칠해진다. 좁은 칸에서는 `fit()` 으로 글자를 줄인다(영상 칸 272×130 에서 넘치던 것이 여럿이었다).
 
+## 모션 기본기 24 (2026-10-13)
+
+코스가 아니라 흩어진 기본기 24개를 한 결로 다시 그린 홍보용 묶음이다. 정본 `plugins/motion-menu/tools/basics/engine.js`(`BS[id]`), 순서는 `basics/gen.mjs` 의 `ORDER`.
+24개 중 16개는 원래 코스의 CSS 데모가 갤러리에 그대로 있고, 이때 새로 넣은 8개(`NEW`: 팝인·버스트·라인 드로·카운트업·셰이프 모프·리퀴드 모션·파티클·임팩트 셰이크)만 `demos/m11-basics.html` 로 나간다. 영상은 `render.mjs` 가 24개 전부로 3편을 굽는다.
+⚠️ `render.mjs <폴더> video FEEL` 처럼 묶음 하나만 구우면 파일 번호가 01 부터 매겨진다. 고쳐 굽기만 할 때는 이름을 되돌린다.
+
 ## 검증
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)
