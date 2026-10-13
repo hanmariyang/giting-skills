@@ -1,5 +1,6 @@
 // 화면 전환 40 홍보 영상 — 묶음마다 1080×1920 영상 하나 (8개씩 5편)
 // node plugins/motion-menu/tools/transitions/render.mjs <출력폴더> [sheet|video] [묶음…]
+//   covers: 묶음마다 전환 한가운데 멈춘 한 장(still-<묶음>.png) — 레이아웃 확인용
 //   sheet: 전환 40개를 진행 0.3 · 0.6 에서 멈춘 확인용 한 장(sheet.png)
 //   video: 프레임을 PNG 로 떠서 FFMPEG(환경변수, 기본 ffmpeg)로 mp4 를 굽는다. 무음
 // 그리는 함수는 engine.js 그대로다. 갤러리 데모와 영상이 같은 함수에서 나온다.
@@ -32,41 +33,49 @@ var D=${JSON.stringify(data)}, cv=document.getElementById('v'), c=cv.getContext(
 var SANS='-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif', MONO='"SF Mono",Menlo,monospace';
 function txt(s,x,y,font,col,al){c.font=font;c.fillStyle=col;c.textAlign=al||'left';c.textBaseline='alphabetic';c.fillText(s,x,y);}
 function pill(s,x,y,font,bg,fg,padX,hh,right){c.font=font;var tw=c.measureText(s).width,w=tw+padX*2,x0=right?x-w:x;c.fillStyle=bg;c.beginPath();c.roundRect(x0,y,w,hh,hh/2);c.fill();c.fillStyle=fg;c.textAlign='center';c.textBaseline='middle';c.fillText(s,x0+w/2,y+hh/2+1);}
-function cell(it,x,y,w,h,p,dir,G,n){
+function cell(it,x,y,w,h,p,dir,G,n,r,tag){
   var K={acc:G.acc,deep:G.deep,paper:'#F4F1EA',ink:'#14161B',n:n};
-  c.save();c.translate(x,y);c.beginPath();c.roundRect(0,0,w,h,18);c.clip();
+  c.save();c.translate(x,y);c.beginPath();c.roundRect(0,0,w,h,r||18);c.clip();
   var SA=scene(c,w,h,K.ink,K.paper,'A'),SB=scene(c,w,h,K.acc,K.ink,'B');
   if(p===null)(dir?SB:SA)();else if(dir)TR[it.id](c,w,h,p,SB,SA,K);else TR[it.id](c,w,h,p,SA,SB,K);
   c.restore();
-  pill(it.mood,x+w-14,y+14,'700 19px '+SANS,'rgba(20,22,27,.88)','#F4F1EA',13,34,true);
+  if(tag)pill(it.mood,x+w-14,y+14,'700 19px '+SANS,'rgba(20,22,27,.88)','#F4F1EA',13,34,true);
 }
 // 한 칸의 시간표: 4초 주기 = 머묾 .4 · A→B 1.4 · 머묾 .6 · B→A 1.4 · 머묾 .2
 function phase(t){t=((t%4)+4)%4;if(t<.4)return[null,0];if(t<1.8)return[(t-.4)/1.4,0];if(t<2.4)return[null,1];if(t<3.8)return[(t-2.4)/1.4,1];return[null,0];}
+// Giting 인스타 카드 결: 흰 지면 · 검은 태그 칩 · 굵은 제목 · 아래 GITING. 한 줄 = 하던 말 → 이름
+var GROUPS=Object.keys(D);
 window.draw=function(g,t){
-  var G=D[g];
-  c.fillStyle='#08090B';c.fillRect(0,0,1080,1920);
-  c.fillStyle='#111318';c.fillRect(0,236,1080,1384);
-  txt('GITING · SCREEN TRANSITION 40',56,316,'700 24px '+MONO,G.acc);
-  pill(g,1024,282,'800 24px '+MONO,G.acc,'#14161B',18,44,true);
-  txt(G.label,1024,358,'500 24px '+SANS,'#9A9BA3','right');
-  txt('말로 설명하던 그 전환, 이름은 이거예요',56,384,'600 32px '+SANS,'#A9AAB0');
-  txt('화면 전환 ',56,470,'800 82px '+SANS,'#F4F1EA');
-  c.font='800 82px '+SANS;var tw=c.measureText('화면 전환 ').width;txt('40가지',56+tw,470,'800 82px '+SANS,G.acc);
-  var W=474,H=150,X=[56,550],Y0=516,PY=254;
+  var G=D[g],INK='#16181D',SUB='#6B6F7A',LINE='#E6E7EA';
+  c.fillStyle='#FFFFFF';c.fillRect(0,0,1080,1920);
+  pill('AI 레벨업 · 시키는 말',56,196,'700 26px '+SANS,INK,'#FFFFFF',20,52,false);
+  txt('말로 하던 그 전환,',56,334,'800 70px '+SANS,INK);
+  txt('이름은 따로 있어요',56,422,'800 70px '+SANS,INK);
+  c.font='700 26px '+MONO;var gw=c.measureText(g).width;
+  c.fillStyle=G.acc;c.beginPath();c.arc(64,488,8,0,7);c.fill();
+  txt(g,84,497,'700 26px '+MONO,INK);
+  txt(G.label,84+gw+18,497,'500 26px '+SANS,SUB);
+  txt((GROUPS.indexOf(g)+1)+' / '+GROUPS.length,1024,497,'600 26px '+MONO,SUB,'right');
+  c.fillStyle=INK;c.fillRect(56,526,968,3);
+  var TW=272,TH=130,RY=546,RH=138;
   G.items.forEach(function(it,i){
-    var x=X[i%2],y=Y0+Math.floor(i/2)*PY,ph=phase(t-i*.11),n=Math.floor((t-i*.11+8)/2);
-    cell(it,x,y,W,H,ph[0],ph[1],G,n);
-    txt(String(it.no).padStart(2,'0'),x,y+H+56,'800 46px '+MONO,G.acc);
-    txt(it.en,x+76,y+H+50,'700 33px '+SANS,'#F4F1EA');
-    txt('「'+it.say+'」',x+72,y+H+88,'500 22px '+SANS,'#8B8D96');
+    var y=RY+i*RH,ph=phase(t-i*.11),n=Math.floor((t-i*.11+8)/2);
+    cell(it,56,y+4,TW,TH,ph[0],ph[1],G,n,12,false);
+    txt('「'+it.say+'」',358,y+54,'500 28px '+SANS,SUB);
+    txt('→',358,y+108,'700 38px '+SANS,G.acc);
+    txt(it.en,410,y+108,'800 42px '+SANS,INK);
+    txt(String(it.no).padStart(2,'0'),1024,y+108,'600 24px '+MONO,'#A4A8B1','right');
+    if(i<G.items.length-1){c.fillStyle=LINE;c.fillRect(358,y+RH-1,666,2);}
   });
-  txt('이름으로 시키면 AI 가 알아들어요 · giting.kr/skills',540,1580,'600 24px '+SANS,'#6E7079','center');
+  c.fillStyle=INK;c.fillRect(56,1660,968,3);
+  txt('GITING',56,1712,'800 26px '+MONO,INK);
+  txt('40개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
 };
 window.sheet=function(){
   cv.width=1080;cv.height=40*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
   var k=0;Object.keys(D).forEach(function(g){var G=D[g];G.items.forEach(function(it){
     var y=20+k*120;txt(String(it.no).padStart(2,'0')+' '+it.id,20,y+60,'600 22px '+MONO,'#ccc');
-    [.15,.35,.55,.8].forEach(function(p,j){cell(it,260+j*205,y,195,100,p,0,G,1);});k++;});});
+    [.15,.35,.55,.8].forEach(function(p,j){cell(it,260+j*205,y,195,100,p,0,G,1,18,true);});k++;});});
 };
 </script>`;
 const PAGE = join(OUT, 'render-page.html'); writeFileSync(PAGE, page);
@@ -85,7 +94,8 @@ await send('Runtime.enable'); await send('Page.enable');
 await send('Page.navigate', { url: 'file://' + PAGE }); await sleep(800);
 const png = async name => writeFileSync(name, Buffer.from((await ev(`document.getElementById('v').toDataURL('image/png')`)).split(',')[1], 'base64'));
 
-if (mode === 'sheet') { await ev('sheet()'); await png(join(OUT, 'sheet.png')); console.log('sheet', join(OUT, 'sheet.png')); }
+if (mode === 'covers') { for (const g of groups) { await ev(`draw(${JSON.stringify(g)}, 1.1)`); await png(join(OUT, `still-${g}.png`)); } console.log('covers', groups.join(' ')); }
+else if (mode === 'sheet') { await ev('sheet()'); await png(join(OUT, 'sheet.png')); console.log('sheet', join(OUT, 'sheet.png')); }
 else {
   const FF = process.env.FFMPEG || 'ffmpeg';
   for (const g of groups) {
