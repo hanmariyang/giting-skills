@@ -48,6 +48,16 @@ github.io 는 구 링크 소비자용 리다이렉트(canonical giting.kr/skills
 - 어긋났는지만 보려면 `node sync-shared.mjs --check` (끝 코드 1).
 - 출처: Anthropic knowledge-work-plugins 의 영업 2.0 규칙 묶음과 「Tools used」 표, 소상공인 `smb-router` 입구 스킬을 우리 말로 다시 썼다.
 
+## 모션 메뉴판 ⑦ 화면 전환 40 (2026-10-13)
+
+`plugins/motion-menu/demos/m8-screen-transition.html` 은 **생성물**이다. 정본은 `plugins/motion-menu/tools/transitions/engine.js`(전환 하나 = 캔버스 함수 하나)와 menu.json.
+```bash
+node plugins/motion-menu/tools/transitions/gen.mjs        # engine.js → demos/m8 (그다음 build.mjs)
+FFMPEG=<ffmpeg> node plugins/motion-menu/tools/transitions/render.mjs <폴더> video   # 홍보 영상 5편(1080×1920, 8초, 무음)
+node plugins/motion-menu/tools/transitions/render.mjs <폴더> sheet                    # 40개 멈춤 확인 한 장
+```
+갤러리 데모와 홍보 영상이 같은 함수에서 나온다. 한 경로에 감는 방향이 반대인 도형을 넣으면 겹친 곳이 지워진다(코너 와이프에서 밟음) — 도형마다 따로 칠한다.
+
 ## 검증
 
 - 갤러리: headless Chrome 스크린샷으로 실측 확인 (iframe srcdoc 데모가 실제 렌더되는지)

@@ -1,0 +1,103 @@
+// 화면 전환 40 홍보 영상 — 묶음마다 1080×1920 영상 하나 (8개씩 5편)
+// node plugins/motion-menu/tools/transitions/render.mjs <출력폴더> [sheet|video] [묶음…]
+//   sheet: 전환 40개를 진행 0.3 · 0.6 에서 멈춘 확인용 한 장(sheet.png)
+//   video: 프레임을 PNG 로 떠서 FFMPEG(환경변수, 기본 ffmpeg)로 mp4 를 굽는다. 무음
+// 그리는 함수는 engine.js 그대로다. 갤러리 데모와 영상이 같은 함수에서 나온다.
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { setTimeout as sleep } from 'node:timers/promises';
+import { PALETTE, mix } from './gen.mjs';
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const [, , outArg, mode = 'video', ...only] = process.argv;
+if (!outArg) { console.error('출력 폴더를 주세요'); process.exit(1); }
+const OUT = resolve(outArg); mkdirSync(OUT, { recursive: true });
+const menu = JSON.parse(readFileSync(join(HERE, '..', '..', 'menu.json'), 'utf8'));
+const items = menu.items.filter(i => i.category === 'screen-transition');
+const groups = Object.keys(PALETTE).filter(g => !only.length || only.includes(g));
+const FPS = 30, SECS = 8;
+
+const data = Object.fromEntries(Object.keys(PALETTE).map(g => [g, {
+  acc: PALETTE[g].acc, deep: mix(PALETTE[g].acc, '#14161B', .55), label: PALETTE[g].label,
+  items: items.filter(i => i.group === g).map(i => ({ id: i.id, no: items.indexOf(i) + 1, en: i.name.en, say: i.aliases[0], mood: i.mood })),
+}]));
+
+const page = `<!doctype html><meta charset="utf-8"><body style="margin:0;background:#000">
+<canvas id="v" width="1080" height="1920"></canvas>
+<script>${readFileSync(join(HERE, 'engine.js'), 'utf8')}</script>
+<script>
+var D=${JSON.stringify(data)}, cv=document.getElementById('v'), c=cv.getContext('2d');
+var SANS='-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif', MONO='"SF Mono",Menlo,monospace';
+function txt(s,x,y,font,col,al){c.font=font;c.fillStyle=col;c.textAlign=al||'left';c.textBaseline='alphabetic';c.fillText(s,x,y);}
+function pill(s,x,y,font,bg,fg,padX,hh,right){c.font=font;var tw=c.measureText(s).width,w=tw+padX*2,x0=right?x-w:x;c.fillStyle=bg;c.beginPath();c.roundRect(x0,y,w,hh,hh/2);c.fill();c.fillStyle=fg;c.textAlign='center';c.textBaseline='middle';c.fillText(s,x0+w/2,y+hh/2+1);}
+function cell(it,x,y,w,h,p,dir,G,n){
+  var K={acc:G.acc,deep:G.deep,paper:'#F4F1EA',ink:'#14161B',n:n};
+  c.save();c.translate(x,y);c.beginPath();c.roundRect(0,0,w,h,18);c.clip();
+  var SA=scene(c,w,h,K.ink,K.paper,'A'),SB=scene(c,w,h,K.acc,K.ink,'B');
+  if(p===null)(dir?SB:SA)();else if(dir)TR[it.id](c,w,h,p,SB,SA,K);else TR[it.id](c,w,h,p,SA,SB,K);
+  c.restore();
+  pill(it.mood,x+w-14,y+14,'700 19px '+SANS,'rgba(20,22,27,.88)','#F4F1EA',13,34,true);
+}
+// 한 칸의 시간표: 4초 주기 = 머묾 .4 · A→B 1.4 · 머묾 .6 · B→A 1.4 · 머묾 .2
+function phase(t){t=((t%4)+4)%4;if(t<.4)return[null,0];if(t<1.8)return[(t-.4)/1.4,0];if(t<2.4)return[null,1];if(t<3.8)return[(t-2.4)/1.4,1];return[null,0];}
+window.draw=function(g,t){
+  var G=D[g];
+  c.fillStyle='#08090B';c.fillRect(0,0,1080,1920);
+  c.fillStyle='#111318';c.fillRect(0,236,1080,1384);
+  txt('GITING · SCREEN TRANSITION 40',56,316,'700 24px '+MONO,G.acc);
+  pill(g,1024,282,'800 24px '+MONO,G.acc,'#14161B',18,44,true);
+  txt(G.label,1024,358,'500 24px '+SANS,'#9A9BA3','right');
+  txt('말로 설명하던 그 전환, 이름은 이거예요',56,384,'600 32px '+SANS,'#A9AAB0');
+  txt('화면 전환 ',56,470,'800 82px '+SANS,'#F4F1EA');
+  c.font='800 82px '+SANS;var tw=c.measureText('화면 전환 ').width;txt('40가지',56+tw,470,'800 82px '+SANS,G.acc);
+  var W=474,H=150,X=[56,550],Y0=516,PY=254;
+  G.items.forEach(function(it,i){
+    var x=X[i%2],y=Y0+Math.floor(i/2)*PY,ph=phase(t-i*.11),n=Math.floor((t-i*.11+8)/2);
+    cell(it,x,y,W,H,ph[0],ph[1],G,n);
+    txt(String(it.no).padStart(2,'0'),x,y+H+56,'800 46px '+MONO,G.acc);
+    txt(it.en,x+76,y+H+50,'700 33px '+SANS,'#F4F1EA');
+    txt('「'+it.say+'」',x+72,y+H+88,'500 22px '+SANS,'#8B8D96');
+  });
+  txt('이름으로 시키면 AI 가 알아들어요 · giting.kr/skills',540,1580,'600 24px '+SANS,'#6E7079','center');
+};
+window.sheet=function(){
+  cv.width=1080;cv.height=40*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
+  var k=0;Object.keys(D).forEach(function(g){var G=D[g];G.items.forEach(function(it){
+    var y=20+k*120;txt(String(it.no).padStart(2,'0')+' '+it.id,20,y+60,'600 22px '+MONO,'#ccc');
+    [.15,.35,.55,.8].forEach(function(p,j){cell(it,260+j*205,y,195,100,p,0,G,1);});k++;});});
+};
+</script>`;
+const PAGE = join(OUT, 'render-page.html'); writeFileSync(PAGE, page);
+
+const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', PORT = 9600 + (process.pid % 200), PROFILE = join(OUT, '.chrome');
+const proc = spawn(CHROME, ['--headless', '--no-sandbox', `--remote-debugging-port=${PORT}`, `--user-data-dir=${PROFILE}`, 'about:blank'], { stdio: 'ignore' });
+const done = () => { try { proc.kill('SIGKILL'); } catch {} };
+process.on('exit', done);
+let tg = null; for (let i = 0; i < 60 && !tg; i++) { try { tg = (await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json()).find(x => x.type === 'page'); } catch {} if (!tg) await sleep(250); }
+const ws = new WebSocket(tg.webSocketDebuggerUrl); await new Promise(r => (ws.onopen = r));
+let id = 0; const pend = new Map(), errs = [];
+ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); } if (m.method === 'Runtime.exceptionThrown') errs.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text); };
+const send = (m, p = {}) => new Promise(r => { const n = ++id; pend.set(n, r); ws.send(JSON.stringify({ id: n, method: m, params: p })); });
+const ev = async x => { const r = await send('Runtime.evaluate', { expression: x, returnByValue: true, awaitPromise: true }); if (r.result.exceptionDetails) throw new Error(r.result.exceptionDetails.exception?.description); return r.result.result.value; };
+await send('Runtime.enable'); await send('Page.enable');
+await send('Page.navigate', { url: 'file://' + PAGE }); await sleep(800);
+const png = async name => writeFileSync(name, Buffer.from((await ev(`document.getElementById('v').toDataURL('image/png')`)).split(',')[1], 'base64'));
+
+if (mode === 'sheet') { await ev('sheet()'); await png(join(OUT, 'sheet.png')); console.log('sheet', join(OUT, 'sheet.png')); }
+else {
+  const FF = process.env.FFMPEG || 'ffmpeg';
+  for (const g of groups) {
+    const dir = join(OUT, 'frames-' + g); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir);
+    for (let f = 0; f < FPS * SECS; f++) { await ev(`draw(${JSON.stringify(g)}, ${f / FPS})`); await png(join(dir, String(f).padStart(4, '0') + '.png')); }
+    await ev(`draw(${JSON.stringify(g)}, 0.2)`); await png(join(OUT, `cover-${g}.png`));
+    const name = `${String(groups.indexOf(g) + 1).padStart(2, '0')}-${g.toLowerCase()}.mp4`;
+    const r = spawnSync(FF, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(dir, '%04d.png'), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-preset', 'slow', '-movflags', '+faststart', join(OUT, name)]);
+    if (r.status) { console.error(r.stderr.toString()); process.exit(1); }
+    rmSync(dir, { recursive: true, force: true });
+    console.log('video', name);
+  }
+}
+console.log('errors:', errs.length ? errs : 'none');
+ws.close(); done(); await sleep(500); rmSync(PROFILE, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); process.exit(0);

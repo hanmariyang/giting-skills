@@ -1,6 +1,6 @@
 {
   "name": "모션 메뉴판",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "'역동적으로 해줘' 대신 이름으로 시키는 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한·영) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 카메라 모션부터 모션 그래픽 전환·키네틱 타이포·효과·시간까지 6개 코스 60개 항목. 항목마다 '무엇으로 만드나'(AI 영상·모션 그래픽·CSS)를 표시한다. AI 영상 생성·모션그래픽(HyperFrames 등)·CSS 애니메이션 프롬프트용.",
   "formula": {
     "pattern": "[무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임]",
@@ -43,6 +43,11 @@
       "id": "effects",
       "no": "⑥",
       "ko": "효과 · 시간"
+    },
+    {
+      "id": "screen-transition",
+      "no": "⑦",
+      "ko": "화면 전환 40"
     }
   ],
   "items": [
@@ -1253,6 +1258,886 @@
       "oneliner": "영상 압축의 번짐(키프레임 제거)을 의도로 써 화면이 흐물흐물 섞인다.",
       "ask": "두 장면 사이를 데이터모시로 픽셀이 밀려 섞이며 넘어가게.",
       "vs": "압축 아티팩트로 녹듯 섞이면 데이터모시, 또렷이 어긋나 깨지면 글리치"
+    },
+    {
+      "id": "color-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "기본 · 만능",
+      "name": {
+        "ko": "색 와이프",
+        "en": "Color Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "색이 여러 겹 지나가면서 바뀌게",
+        "물감 띠가 차르르 지나가게",
+        "색깔 커튼이 세 번 지나가게"
+      ],
+      "oneliner": "색 세 겹이 시차를 두고 화면을 가로지른 뒤 다음 화면이 남는다.",
+      "ask": "Color Wipe 로 넘겨줘. 색 세 겹이 0.1초 간격으로 왼쪽에서 오른쪽으로, 전체 0.6초.",
+      "vs": "한 겹이면 그냥 와이프, 색 띠가 겹겹이면 컬러 와이프"
+    },
+    {
+      "id": "diagonal-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "세련 · 스타일리시",
+      "name": {
+        "ko": "사선 와이프",
+        "en": "Diagonal Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "비스듬하게 쓸고 지나가게",
+        "사선으로 넘어가게",
+        "대각선 줄 그으면서 바뀌게"
+      ],
+      "oneliner": "비스듬한 경계가 줄무늬 두 줄을 달고 지나간다.",
+      "ask": "Diagonal Wipe 로 넘겨줘. 경계는 30도 사선, 뒤에 검은 줄 두 개를 달고. 0.5초.",
+      "vs": "경계가 사선으로 한 번 지나가면 사선 와이프, 각도가 바뀌며 갈라지면 사선 스플릿"
+    },
+    {
+      "id": "multi-stripe-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "블라인드 · 정돈",
+      "name": {
+        "ko": "줄무늬 와이프",
+        "en": "Multi Stripe Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "블라인드처럼 줄줄이 바뀌게",
+        "가로줄이 엇갈려 들어오게",
+        "줄무늬로 채워지면서 넘어가게"
+      ],
+      "oneliner": "가로 띠 여섯 줄이 왼쪽·오른쪽에서 번갈아 미끄러져 들어온다.",
+      "ask": "Multi Stripe Wipe 로 넘겨줘. 가로 띠 6줄, 짝수 줄은 왼쪽에서 홀수 줄은 오른쪽에서, 줄마다 0.05초 차이.",
+      "vs": "가로 띠가 좌우로 엇갈리면 스트라이프, 같은 방향에 속도만 다르면 밴드 스플릿"
+    },
+    {
+      "id": "zigzag-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "팝 · 기세",
+      "name": {
+        "ko": "지그재그 와이프",
+        "en": "Zigzag Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "톱니 모양으로 쓸고 가게",
+        "삐죽삐죽한 경계로 바뀌게",
+        "번개 모양으로 지나가게"
+      ],
+      "oneliner": "톱니 모양 끝을 단 색면이 화면을 가로지른다.",
+      "ask": "Zigzag Wipe 로 넘겨줘. 경계는 톱니 6개, 흰 색면이 먼저 지나가고 다음 화면이 따라오게. 0.5초.",
+      "vs": "톱니 경계가 옆으로 쓸면 지그재그 와이프, 위에서 아래로 흐르며 흔들리면 지그재그 스플릿"
+    },
+    {
+      "id": "slice-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "날카로움 · 뮤비",
+      "name": {
+        "ko": "슬라이스 와이프",
+        "en": "Slice Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "칼로 베듯이 사선으로 꽂히게",
+        "사선 띠가 위아래로 엇갈려 들어오게",
+        "썰어서 바꾸는 느낌으로"
+      ],
+      "oneliner": "사선 띠가 위아래에서 번갈아 꽂히며 화면을 채운다.",
+      "ask": "Slice Wipe 로 넘겨줘. 사선 띠 5개가 위·아래 번갈아 꽂히게, 0.6초. 박자에 맞춰.",
+      "vs": "띠가 위아래로 번갈아 꽂히면 슬라이스, 한쪽에서 차례로 미끄러지면 사선 패널"
+    },
+    {
+      "id": "bars-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "리듬 · 음악",
+      "name": {
+        "ko": "바 와이프",
+        "en": "Bars Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가운데서 막대가 위아래로 쭉 뻗게",
+        "세로줄이 자라면서 바뀌게",
+        "가운데서부터 쫙 펼쳐지게"
+      ],
+      "oneliner": "가운데 가로선에서 세로 막대가 위아래로 뻗어 화면을 메운다.",
+      "ask": "Bars Wipe 로 넘겨줘. 세로 막대 9개가 가운데 선에서 위아래로 뻗게, 막대마다 시작이 조금씩 달라. 0.5초.",
+      "vs": "가운데서 위아래로 뻗으면 바 와이프, 바닥에서 이퀄라이저처럼 솟으면 바 패널"
+    },
+    {
+      "id": "brush-wipe",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "손맛 · 팝",
+      "name": {
+        "ko": "붓 와이프",
+        "en": "Brush Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "붓으로 칠하듯이 바뀌게",
+        "페인트 롤러로 밀듯이",
+        "손으로 칠한 느낌으로 넘어가게"
+      ],
+      "oneliner": "굵은 붓 자국이 좌우로 오가며 화면을 칠해 덮는다.",
+      "ask": "Brush Wipe 로 넘겨줘. 둥근 끝 붓 자국 4줄이 지그재그로 오가며 칠하게. 0.8초.",
+      "vs": "오가며 칠하면 붓 와이프, 위에서 흘러내리면 드립 와이프"
+    },
+    {
+      "id": "curtain-slide",
+      "category": "screen-transition",
+      "group": "SWEEP",
+      "mood": "무대 · 오프닝",
+      "name": {
+        "ko": "커튼 슬라이드",
+        "en": "Curtain Slide"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "커튼 닫히듯이 바뀌게",
+        "양쪽에서 가운데로 탁 닫히게",
+        "무대 막처럼 넘어가게"
+      ],
+      "oneliner": "양옆 막이 가운데로 튕기듯 닫히며 다음 화면이 된다.",
+      "ask": "Curtain Slide 로 넘겨줘. 양옆에서 가운데로 닫히고 끝에서 살짝 튕기게(overshoot). 0.6초.",
+      "vs": "가운데로 닫히면 커튼, 가운데서 네 귀퉁이로 열리면 쿼드 오픈"
+    },
+    {
+      "id": "circle-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "아이리스 · 만능",
+      "name": {
+        "ko": "원 와이프",
+        "en": "Circle Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "동그라미가 퍼지면서 바뀌게",
+        "원이 콕 찍힌 데서 퍼지게",
+        "물방울 떨어진 데서 번지듯"
+      ],
+      "oneliner": "원이 매번 다른 자리에서 커지며 다음 화면을 연다.",
+      "ask": "Circle Wipe 로 넘겨줘. 원 중심은 컷마다 다른 자리(누른 곳·주인공 얼굴), 0.5초.",
+      "vs": "중심이 가운데로 고정이면 원 아이리스(iris-wipe), 자리를 옮겨 다니면 원 와이프"
+    },
+    {
+      "id": "block-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "디지털 · 게임",
+      "name": {
+        "ko": "블록 와이프",
+        "en": "Block Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "네모가 하나씩 탁탁 채워지게",
+        "픽셀 블록으로 바뀌게",
+        "테트리스처럼 칸이 채워지게"
+      ],
+      "oneliner": "네모 블록이 무작위 순서로 탁탁 놓이며 화면을 채운다.",
+      "ask": "Block Wipe 로 넘겨줘. 10×4 블록이 무작위 순서로, 부드럽지 않고 딱딱 끊기게. 0.6초.",
+      "vs": "칸이 무작위로 놓이면 블록 와이프, 박자마다 색이 바뀌며 뒤섞이면 모자이크 플래시"
+    },
+    {
+      "id": "shutter-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "사진 · 영상감",
+      "name": {
+        "ko": "셔터 와이프",
+        "en": "Shutter Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "카메라 셔터 닫히듯이",
+        "조리개가 조여 들면서 바뀌게",
+        "찰칵 하고 넘어가게"
+      ],
+      "oneliner": "카메라 조리개 날이 돌며 닫혀 다음 화면만 남는다.",
+      "ask": "Shutter Wipe 로 넘겨줘. 6각 조리개가 돌면서 닫히게, 날 경계선 보이게. 0.5초.",
+      "vs": "조리개가 닫히면 셔터, 원이 열리면 아이리스"
+    },
+    {
+      "id": "clock-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "시간 · 타이머",
+      "name": {
+        "ko": "시계 와이프",
+        "en": "Clock Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "시곗바늘처럼 돌면서 바뀌게",
+        "부채꼴로 쓸면서",
+        "타이머 돌듯이 넘어가게"
+      ],
+      "oneliner": "시곗바늘처럼 12시에서 한 바퀴 돌며 다음 화면을 칠한다.",
+      "ask": "Clock Wipe 로 넘겨줘. 12시 방향에서 시계 방향으로 한 바퀴, 0.7초.",
+      "vs": "바늘 하나가 한 바퀴면 시계 와이프, 날 여러 개가 함께 굵어지면 바람개비"
+    },
+    {
+      "id": "diamond-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "레트로 · 무늬",
+      "name": {
+        "ko": "다이아몬드 와이프",
+        "en": "Diamond Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "마름모가 가운데서 퍼지게",
+        "다이아 무늬로 번지게",
+        "체크무늬가 물결처럼 바뀌게"
+      ],
+      "oneliner": "마름모 무늬가 가운데서 물결처럼 퍼져 화면을 덮는다.",
+      "ask": "Diamond Wipe 로 넘겨줘. 마름모 격자가 가운데서 바깥으로 물결처럼 커지게. 0.7초.",
+      "vs": "마름모가 물결로 퍼지면 다이아몬드, 칸이 뒤집히면 체커 패널"
+    },
+    {
+      "id": "star-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "코믹 · 축하",
+      "name": {
+        "ko": "별 와이프",
+        "en": "Star Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "별 모양으로 열리게",
+        "반짝 별이 커지면서 바뀌게",
+        "축하하듯 별로 넘어가게"
+      ],
+      "oneliner": "별 모양 창이 돌면서 커져 다음 화면을 연다.",
+      "ask": "Star Wipe 로 넘겨줘. 다섯 꼭짓점 별이 반 바퀴 돌며 커지게, 0.6초. 일부러 촌스럽게.",
+      "vs": "모양이 별이면 스타, 원이면 아이리스. 같은 계열의 모양만 다르다"
+    },
+    {
+      "id": "pinwheel-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "팝 · 여름",
+      "name": {
+        "ko": "바람개비 와이프",
+        "en": "Pinwheel Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "바람개비처럼 돌면서 바뀌게",
+        "부채꼴 여러 개가 한꺼번에",
+        "빙글 돌면서 채워지게"
+      ],
+      "oneliner": "바람개비 날 여섯 개가 함께 굵어지며 화면을 칠한다.",
+      "ask": "Pinwheel Wipe 로 넘겨줘. 날 6개가 가운데서 동시에 굵어지며 살짝 돌게. 0.6초.",
+      "vs": "날 여러 개가 함께 굵어지면 바람개비, 바늘 하나가 한 바퀴면 시계"
+    },
+    {
+      "id": "corner-wipe",
+      "category": "screen-transition",
+      "group": "SHAPE",
+      "mood": "심플 · 만능",
+      "name": {
+        "ko": "코너 와이프",
+        "en": "Corner Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "네 모서리에서 밀고 들어오게",
+        "귀퉁이부터 덮이게",
+        "삼각형이 모여서 바뀌게"
+      ],
+      "oneliner": "네 귀퉁이에서 삼각형이 밀고 나와 가운데서 만난다.",
+      "ask": "Corner Wipe 로 넘겨줘. 네 귀퉁이 삼각형이 0.05초 차이로 차례로 밀고 들어오게. 0.6초.",
+      "vs": "귀퉁이 삼각형이 모이면 코너, 사방 직사각형이 쌓이면 프레임 스택"
+    },
+    {
+      "id": "liquid-wipe",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "청량 · 물",
+      "name": {
+        "ko": "액체 와이프",
+        "en": "Liquid Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "물이 차오르듯이 바뀌게",
+        "출렁이면서 채워지게",
+        "음료 따르듯이 넘어가게"
+      ],
+      "oneliner": "물결치는 수면이 아래에서 차올라 화면을 채운다.",
+      "ask": "Liquid Wipe 로 넘겨줘. 아래에서 수면이 출렁이며 차오르게, 진한 색 물결이 먼저 오고 다음 화면이 따라오게. 0.8초.",
+      "vs": "아래에서 차오르면 리퀴드, 경계가 물결인 채 위에서 내려오면 웨이브 스플릿"
+    },
+    {
+      "id": "drip-wipe",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "팝 · 페인트",
+      "name": {
+        "ko": "드립 와이프",
+        "en": "Drip Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "페인트 흘러내리듯이",
+        "위에서 줄줄 녹아내리게",
+        "물감이 뚝뚝 떨어지며 바뀌게"
+      ],
+      "oneliner": "페인트가 위에서 줄줄 흘러내리듯 화면을 덮는다.",
+      "ask": "Drip Wipe 로 넘겨줘. 위에서 페인트 줄기 5개가 길이를 달리해 흘러내리고 끝은 둥글게. 0.8초.",
+      "vs": "흘러내리면 드립, 붓으로 오가면 브러시"
+    },
+    {
+      "id": "ripple-wipe",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "물 · 몽환",
+      "name": {
+        "ko": "파문 와이프",
+        "en": "Ripple Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "물수제비처럼 퍼지게",
+        "동그란 물결이 번지면서",
+        "파장이 퍼지듯 바뀌게"
+      ],
+      "oneliner": "가운데서 파문이 몇 겹 퍼지고 마지막 물결이 화면을 채운다.",
+      "ask": "Ripple Wipe 로 넘겨줘. 가운데서 고리 3겹이 퍼지고 마지막에 원이 화면을 채우게. 0.9초.",
+      "vs": "고리가 먼저 퍼지면 파문, 원 하나가 바로 커지면 아이리스"
+    },
+    {
+      "id": "text-wipe",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "타이틀 · 글자",
+      "name": {
+        "ko": "텍스트 와이프",
+        "en": "Text Wipe"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "글자 속으로 들어가면서 바뀌게",
+        "글자가 확 커지면서 넘어가게",
+        "제목 안으로 빨려 들어가게"
+      ],
+      "oneliner": "단어가 화면보다 커질 때까지 확대되며 글자 속 색으로 넘어간다.",
+      "ask": "Text Wipe 로 넘겨줘. 가운데 단어가 가속하며 커지고, 글자 획이 화면을 덮으면 그 색이 다음 화면. 0.8초.",
+      "vs": "글자가 커져 덮으면 텍스트 와이프, 글자 모양 창으로 영상이 보이면 텍스트 마스크"
+    },
+    {
+      "id": "impact-flash",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "액션 · 강조",
+      "name": {
+        "ko": "임팩트 플래시",
+        "en": "Impact Flash"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "번쩍 하면서 바뀌게",
+        "쾅 하고 넘어가게",
+        "플래시 터지듯이"
+      ],
+      "oneliner": "하얗게 번쩍인 순간 장면이 바뀌고 충격파가 퍼진다.",
+      "ask": "Impact Flash 로 넘겨줘. 흰 번쩍임 0.1초 사이에 컷, 충격파 고리 하나가 퍼지게. 비트 첫 박에.",
+      "vs": "한 번 번쩍이고 넘어가면 임팩트 플래시, 여러 번 깜빡이면 스트로브"
+    },
+    {
+      "id": "wave-split",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "부드러움 · 자연",
+      "name": {
+        "ko": "웨이브 스플릿",
+        "en": "Wave Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "물결 모양으로 천천히 나뉘게",
+        "출렁이는 경계로 바뀌게",
+        "부드럽게 물결치며 넘어가게"
+      ],
+      "oneliner": "물결치는 경계가 위에서 아래로 천천히 내려오며 갈린다.",
+      "ask": "Wave Split 로 넘겨줘. 경계는 사인 물결 한 주기 반, 천천히 흔들리며 위에서 아래로. 1초.",
+      "vs": "물결 경계가 내려오면 웨이브 스플릿, 아래서 차오르면 리퀴드"
+    },
+    {
+      "id": "zigzag-split",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "팝 · 기세",
+      "name": {
+        "ko": "지그재그 스플릿",
+        "en": "Zigzag Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "톱니가 흐르면서 내려오게",
+        "지그재그 선이 움직이며 바뀌게",
+        "삐죽한 경계가 흔들리며"
+      ],
+      "oneliner": "톱니 경계가 옆으로 흐르며 흔들리고 위에서 아래로 내려온다.",
+      "ask": "Zigzag Split 로 넘겨줘. 톱니 경계가 옆으로 흘러가면서 위에서 아래로 내려오게. 0.7초.",
+      "vs": "톱니가 흐르며 내려오면 스플릿, 톱니 끝이 옆으로 쓸면 지그재그 와이프"
+    },
+    {
+      "id": "circle-split",
+      "category": "screen-transition",
+      "group": "FLUID",
+      "mood": "로고 · 쿨",
+      "name": {
+        "ko": "서클 스플릿",
+        "en": "Circle Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "원이 반으로 쪼개지며 돌게",
+        "반원 두 개가 돌면서 커지게",
+        "로고처럼 원이 갈라지며 바뀌게"
+      ],
+      "oneliner": "원이 반으로 갈라진 채 돌며 커지다 하나로 닫힌다.",
+      "ask": "Circle Split 로 넘겨줘. 반원 두 쪽이 벌어진 채 반 바퀴 돌며 커지고 끝에서 붙게. 0.7초.",
+      "vs": "원이 갈라져 돌면 서클 스플릿, 하나로 커지기만 하면 원 와이프"
+    },
+    {
+      "id": "horizontal-split",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "기본 · 정돈",
+      "name": {
+        "ko": "가로 스플릿",
+        "en": "Horizontal Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "위아래가 반대로 들어오게",
+        "위는 왼쪽에서 아래는 오른쪽에서",
+        "반반 엇갈리며 바뀌게"
+      ],
+      "oneliner": "위 절반과 아래 절반이 서로 반대 방향에서 들어온다.",
+      "ask": "Horizontal Split 로 넘겨줘. 위 절반은 왼쪽에서, 아래 절반은 오른쪽에서 동시에. 0.5초.",
+      "vs": "위아래가 엇갈리면 가로 스플릿, 좌우가 엇갈리면 세로 스플릿"
+    },
+    {
+      "id": "vertical-split",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "게임 · 쿨",
+      "name": {
+        "ko": "세로 스플릿",
+        "en": "Vertical Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "슬롯머신처럼 위아래로 바뀌게",
+        "왼쪽은 내려오고 오른쪽은 올라오게",
+        "반반 엇갈려서"
+      ],
+      "oneliner": "왼쪽 절반은 위에서, 오른쪽 절반은 아래에서 슬롯처럼 바뀐다.",
+      "ask": "Vertical Split 로 넘겨줘. 왼쪽 절반은 위에서, 오른쪽 절반은 아래에서, 끝에서 살짝 튕기게. 0.5초.",
+      "vs": "좌우가 엇갈리면 세로 스플릿, 위아래가 엇갈리면 가로 스플릿"
+    },
+    {
+      "id": "triple-split",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "스타일리시",
+      "name": {
+        "ko": "트리플 스플릿",
+        "en": "Triple Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "세 조각이 차례로 넘어가게",
+        "사선 세 칸이 도미노처럼",
+        "삼등분해서 하나씩 바뀌게"
+      ],
+      "oneliner": "사선 세 조각이 도미노처럼 차례로 넘어간다.",
+      "ask": "Triple Split 로 넘겨줘. 사선 3등분, 왼쪽부터 0.12초 간격으로 위에서 아래로. 0.7초.",
+      "vs": "세 조각이 차례면 트리플, 여러 띠가 미끄러지면 사선 패널"
+    },
+    {
+      "id": "four-panel",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "심플 · 팝",
+      "name": {
+        "ko": "4분할 패널",
+        "en": "Four Panel"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "네 칸이 하나씩 바뀌게",
+        "화면을 4등분해서 차례로",
+        "네모 네 개가 돌아가며 바뀌게"
+      ],
+      "oneliner": "2×2 네 칸이 시계 방향으로 하나씩 바뀐다.",
+      "ask": "Four Panel 로 넘겨줘. 2×2 칸이 왼쪽 위부터 시계 방향으로 0.1초 간격, 칸마다 가운데서 펼쳐지게. 0.7초.",
+      "vs": "네 칸이 차례면 4분할, 아홉 칸이 입체로 뒤집히면 그리드 플립"
+    },
+    {
+      "id": "sliding-panels",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "세련 · 뮤비",
+      "name": {
+        "ko": "슬라이딩 패널",
+        "en": "Sliding Panels"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "세로 판이 하나씩 올라오게",
+        "카드가 차례로 밀려 들어오게",
+        "기둥이 하나씩 솟듯이"
+      ],
+      "oneliner": "세로 패널 네 장이 아래에서 한 장씩 밀려 올라온다.",
+      "ask": "Sliding Panels 로 넘겨줘. 세로 패널 4장이 아래에서 0.08초 간격으로 밀려 올라오게, 이즈 아웃. 0.7초.",
+      "vs": "넓은 판이 한 방향이면 슬라이딩 패널, 좁은 띠가 위아래 섞이면 스트립 셔플"
+    },
+    {
+      "id": "diagonal-panels",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "속도감",
+      "name": {
+        "ko": "사선 패널",
+        "en": "Diagonal Panels"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "사선 판이 연달아 들어오게",
+        "비스듬한 띠가 줄지어 밀려오게",
+        "빗금 패널이 차례로"
+      ],
+      "oneliner": "사선 띠 패널이 오른쪽에서 잇달아 미끄러져 들어온다.",
+      "ask": "Diagonal Panels 로 넘겨줘. 사선 띠 4장이 오른쪽에서 0.07초 간격으로 미끄러져 들어오게. 0.6초.",
+      "vs": "띠가 한쪽에서 줄지어 오면 사선 패널, 위아래로 번갈아 꽂히면 슬라이스"
+    },
+    {
+      "id": "quad-open",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "개막 · 오프닝",
+      "name": {
+        "ko": "쿼드 오픈",
+        "en": "Quad Open"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "십자로 쪼개져서 열리게",
+        "네 조각으로 갈라지며 열리게",
+        "문 열리듯이 사방으로"
+      ],
+      "oneliner": "화면이 십자로 갈라져 네 귀퉁이로 열리며 다음 화면이 드러난다.",
+      "ask": "Quad Open 으로 넘겨줘. 앞 화면이 십자로 4등분되어 네 귀퉁이로 밀려나며 열리게. 0.6초.",
+      "vs": "가운데서 바깥으로 열리면 쿼드 오픈, 바깥에서 가운데로 닫히면 커튼"
+    },
+    {
+      "id": "checker-panels",
+      "category": "screen-transition",
+      "group": "PANEL",
+      "mood": "레트로 · 디지털",
+      "name": {
+        "ko": "체커 패널",
+        "en": "Checker Panels"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "체크무늬가 뒤집히면서 바뀌게",
+        "바둑판 칸이 차례로 넘어가게",
+        "타일이 팔랑팔랑"
+      ],
+      "oneliner": "체크무늬 칸이 왼쪽부터 팔랑팔랑 뒤집힌다.",
+      "ask": "Checker Panels 로 넘겨줘. 10×4 체크 칸이 왼쪽부터, 칸 색 따라 한 박자 엇갈려 뒤집히게. 0.8초.",
+      "vs": "작은 칸이 체크무늬로 엇갈리면 체커, 큰 칸 아홉이 입체로 돌면 그리드 플립"
+    },
+    {
+      "id": "diagonal-split",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "날카로움 · 뮤비",
+      "name": {
+        "ko": "사선 스플릿",
+        "en": "Diagonal Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "사선이 돌면서 갈라지게",
+        "비스듬히 쪼개지며 바뀌게",
+        "각도가 바뀌는 선으로 나뉘게"
+      ],
+      "oneliner": "사선 분할선이 각도를 바꾸며 화면을 가르고 지나간다.",
+      "ask": "Diagonal Split 로 넘겨줘. 분할선이 60도에서 120도로 돌며 왼쪽에서 오른쪽으로. 0.6초.",
+      "vs": "선 각도가 변하면 사선 스플릿, 각도 고정에 줄무늬를 달면 사선 와이프"
+    },
+    {
+      "id": "mosaic-flash",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "비트 · 아트",
+      "name": {
+        "ko": "모자이크 플래시",
+        "en": "Mosaic Flash"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "박자마다 칸이 번쩍번쩍 바뀌게",
+        "색 블록이 뒤섞이다 넘어가게",
+        "모자이크처럼 깜빡이며"
+      ],
+      "oneliner": "색 블록이 박자마다 뒤섞이다 다음 화면으로 굳는다.",
+      "ask": "Mosaic Flash 로 넘겨줘. 4×3 칸이 박자마다 색을 바꾸다 6박째에 다음 화면으로. BPM 에 맞춰.",
+      "vs": "박자마다 뒤섞이면 모자이크 플래시, 칸이 한 번씩만 놓이면 블록 와이프"
+    },
+    {
+      "id": "frame-stack",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "타이틀 · 창",
+      "name": {
+        "ko": "프레임 스택",
+        "en": "Frame Stack"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "사방에서 판이 쌓이게",
+        "액자처럼 조여 들게",
+        "가운데 창만 남았다가 닫히게"
+      ],
+      "oneliner": "위·오른쪽·아래·왼쪽에서 판이 차례로 겹쳐 들어오며 가운데 창이 닫힌다.",
+      "ask": "Frame Stack 으로 넘겨줘. 위, 오른쪽, 아래, 왼쪽 순서로 판이 0.07초 간격으로 들어와 가운데 창이 닫히게. 0.7초.",
+      "vs": "사방 판이 쌓이면 프레임 스택, 귀퉁이 삼각형이 모이면 코너"
+    },
+    {
+      "id": "bar-panels",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "음악 · 비트",
+      "name": {
+        "ko": "바 패널",
+        "en": "Bar Panels"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "이퀄라이저처럼 솟게",
+        "막대그래프가 올라가듯이",
+        "음악 막대가 튀어 오르며"
+      ],
+      "oneliner": "세로 색 막대가 이퀄라이저처럼 출렁이며 솟아 화면을 채운다.",
+      "ask": "Bar Panels 로 넘겨줘. 세로 막대 11개가 바닥에서 높이를 출렁이며 솟아 화면을 채우게. 음악 비트에 맞춰.",
+      "vs": "바닥에서 출렁이며 솟으면 바 패널, 가운데서 위아래로 뻗으면 바 와이프"
+    },
+    {
+      "id": "band-split",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "속도 · 팝",
+      "name": {
+        "ko": "밴드 스플릿",
+        "en": "Band Split"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가로줄이 속도 다르게 들어오게",
+        "줄마다 빠르기가 달라서 들쭉날쭉",
+        "띠가 경주하듯이"
+      ],
+      "oneliner": "가로 띠 다섯 줄이 같은 방향에서 서로 다른 속도로 흘러든다.",
+      "ask": "Band Split 로 넘겨줘. 가로 띠 5줄이 왼쪽에서 들어오되 줄마다 속도를 다르게. 0.7초.",
+      "vs": "같은 방향에 속도만 다르면 밴드, 좌우로 엇갈리면 줄무늬 와이프"
+    },
+    {
+      "id": "grid-flip",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "테크 · 입체",
+      "name": {
+        "ko": "그리드 플립",
+        "en": "Grid Flip"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "카드 뒤집듯이 칸이 바뀌게",
+        "아홉 칸이 빙글 뒤집히게",
+        "타일이 입체로 돌아가며"
+      ],
+      "oneliner": "3×3 칸이 대각선 순서로 입체처럼 뒤집히며 바뀐다.",
+      "ask": "Grid Flip 으로 넘겨줘. 3×3 칸이 왼쪽 위부터 대각선 순서로 Y축 180도 뒤집히게. 0.8초.",
+      "vs": "아홉 칸이 입체로 돌면 그리드 플립, 작은 칸이 체크로 엇갈리면 체커"
+    },
+    {
+      "id": "panel-zoom-out",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "줌감 · 도입",
+      "name": {
+        "ko": "패널 줌 아웃",
+        "en": "Panel Zoom Out"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "가운데서 네모가 겹겹이 커지게",
+        "액자가 여러 겹 퍼지듯",
+        "안에서 바깥으로 펼쳐지게"
+      ],
+      "oneliner": "겹겹 판이 가운데서 차례로 커지며 마지막 판이 다음 화면이 된다.",
+      "ask": "Panel Zoom Out 으로 넘겨줘. 가운데서 네모 판 3겹이 0.1초 간격으로 커지고 마지막 판이 다음 화면. 0.7초.",
+      "vs": "네모가 겹겹이 커지면 패널 줌 아웃, 화면 자체가 다가오면 줌"
+    },
+    {
+      "id": "strip-shuffle",
+      "category": "screen-transition",
+      "group": "MOSAIC",
+      "mood": "리듬 · 뮤비",
+      "name": {
+        "ko": "스트립 셔플",
+        "en": "Strip Shuffle"
+      },
+      "make": [
+        "mg",
+        "css"
+      ],
+      "aliases": [
+        "세로줄이 뒤섞이며 바뀌게",
+        "띠가 위아래로 엇갈려 들어오게",
+        "카드 섞듯이 줄이 바뀌게"
+      ],
+      "oneliner": "좁은 세로 띠가 섞인 순서로 위아래에서 바뀌어 들어온다.",
+      "ask": "Strip Shuffle 로 넘겨줘. 세로 띠 8줄이 섞인 순서로, 홀수는 아래서 짝수는 위에서 들어오게. 0.7초.",
+      "vs": "좁은 띠가 섞이면 스트립 셔플, 넓은 판이 차례면 슬라이딩 패널"
     }
   ],
   "recipes": [
