@@ -163,3 +163,45 @@
 </style>
 <div class="rx"><div class="st"><div class="n">입력</div><div class="a"></div><div class="n">처리</div><div class="a"></div><div class="n">결과</div></div><div class="lt">1단계 · 입력이 들어온다</div></div>
 <p class="cap">설명 영상 · 도식이 한 조각씩 그려지고, 설명하는 부분으로 줌, 이름표는 로어 서드</p>
+
+<!-- @overlapping-action h=220 full -->
+<style>
+  .ov{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .ovp{position:absolute;top:50%;border-radius:50%;animation:ovm 3.2s cubic-bezier(.45,0,.2,1) infinite}
+  .ov1{width:40px;height:40px;margin-top:-34px;background:#E7D6BC;animation-delay:0s}
+  .ov2{width:52px;height:40px;margin-top:-20px;border-radius:20px;background:#7a5af0;animation-delay:.12s;margin-left:-40px}
+  .ov3{width:30px;height:16px;margin-top:-4px;border-radius:8px;background:#38BE86;animation-delay:.24s;margin-left:-72px}
+  @keyframes ovm{0%,8%{left:22%}45%,100%{left:70%}}
+  @media(prefers-reduced-motion:reduce){.ovp{animation:none;left:70%}}
+</style>
+<div class="ov"><div class="ovp ov3"></div><div class="ovp ov2"></div><div class="ovp ov1"></div></div>
+<p class="cap">오버래핑 액션 · 머리(살구) → 몸(보라) → 꼬리(초록)가 조금씩 늦게 출발하고 늦게 멈춘다</p>
+
+<!-- @hold h=220 full -->
+<style>
+  .hd{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .hdb{position:absolute;bottom:34px;width:46px;height:46px;border-radius:10px;background:#7a5af0;animation:hdm 3.4s cubic-bezier(.4,0,.2,1) infinite}
+  .hdl{position:absolute;left:0;right:0;bottom:33px;height:1px;background:#2c3342}
+  .hdt{position:absolute;left:50%;top:18px;transform:translateX(-50%);font:600 11px ui-monospace,monospace;color:#E07A3F;opacity:0;animation:hdt 3.4s infinite}
+  @keyframes hdm{0%{left:6%;transform:translateY(0)}22%{left:30%;transform:translateY(-70px)}36%{left:46%;transform:translateY(0) scale(1.12,.86)}40%,66%{left:46%;transform:translateY(0) scale(1)}100%{left:84%;transform:translateY(0)}}
+  @keyframes hdt{0%,38%{opacity:0}42%,64%{opacity:1}68%,100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.hdb,.hdt{animation:none}.hdb{left:46%}}
+</style>
+<div class="hd"><div class="hdl"></div><div class="hdt">HOLD 0.3s</div><div class="hdb"></div></div>
+<p class="cap">홀드 · 착지한 포즈에서 잠깐 멈췄다가 다음 동작으로 간다</p>
+
+<!-- @secondary-action h=220 full -->
+<style>
+  .sa{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .saw{position:absolute;bottom:30px;animation:saw 4s linear infinite}
+  .sab{position:relative;width:56px;height:50px;border-radius:24px 24px 14px 14px;background:#E7D6BC;animation:sab .5s ease-in-out infinite alternate}
+  .sae{position:absolute;top:-16px;width:12px;height:24px;border-radius:8px 8px 2px 2px;background:#E7D6BC;transform-origin:50% 100%;animation:sae .5s ease-in-out infinite alternate}
+  .sae.l{left:8px}.sae.r{right:8px;animation-delay:.12s}
+  .sa i{position:absolute;top:18px;width:5px;height:5px;border-radius:50%;background:#141821}.sa i.l{left:16px}.sa i.r{right:16px}
+  @keyframes saw{0%{left:-14%}100%{left:104%}}
+  @keyframes sab{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
+  @keyframes sae{0%{transform:rotate(-14deg)}100%{transform:rotate(12deg)}}
+  @media(prefers-reduced-motion:reduce){.saw,.sab,.sae{animation:none}.saw{left:40%}}
+</style>
+<div class="sa"><div class="saw"><div class="sab"><span class="sae l"></span><span class="sae r"></span><i class="l"></i><i class="r"></i></div></div></div>
+<p class="cap">세컨더리 액션 · 걷는 게 주 동작, 흔들리는 귀가 보조 동작</p>

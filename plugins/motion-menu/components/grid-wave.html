@@ -31,13 +31,13 @@ var F=function (c, w, h, t, k) {
 };
 var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
 var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
-function fit(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
 function frame(now){
   var r=cv.getBoundingClientRect();
-  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:(now-t0)/1000,K);c.restore();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:Math.max(0,(now-t0)/1000),K);c.restore();
   if(!still)requestAnimationFrame(frame);
 }
-fit();addEventListener('resize',fit);requestAnimationFrame(frame);
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
 })();</script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>

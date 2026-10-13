@@ -30,9 +30,9 @@ var T=function (c, w, h, p, A, B, k) {
 };
 var cv=document.querySelector('canvas.st'),c=cv.getContext('2d'),K={acc:'#2BA8E0',deep:'#216687',paper:'#F4F1EA',ink:'#14161B',n:0};
 var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
-function fit(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
 function frame(now){
-  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1.2:((now-t0)/1000)%4,cyc=Math.floor((now-t0)/4000);
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1.2:(Math.max(0,(now-t0)/1000))%4,cyc=Math.floor((now-t0)/4000);
   var SA=scene(c,w,h,K.ink,K.paper,'A'),SB=scene(c,w,h,K.acc,K.ink,'B');
   K.n=cyc*2+(t<2?0:1);
   c.save();c.beginPath();c.rect(0,0,w,h);c.clip();
@@ -40,7 +40,7 @@ function frame(now){
   c.restore();
   if(!still)requestAnimationFrame(frame);
 }
-fit();addEventListener('resize',fit);requestAnimationFrame(frame);
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
 })();</script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>

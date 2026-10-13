@@ -24,20 +24,20 @@ var night = function (c, w, h, k) { bgc(c, w, h, k.ink); c.fillStyle = k.paper; 
 var day = function (c, w, h, k) { bgc(c, w, h, k.paper); c.fillStyle = k.acc; c.globalAlpha = .25; dot(c, w * .3, h / 2, h * .26); c.globalAlpha = 1; dot(c, w * .3, h / 2, h * .18); say(c, '낮', w * .62, h / 2, h * .5, k.ink); };
 var F=function (c, w, h, t, k) {
   bgc(c, w, h, k.ink);
-  var i = Math.floor(t / 2) % 4, q = io(clamp((frac(t / 2) - .5) / .5)), S = [[1, .24], [1, .5], [1.5, .2], [.8, .08]], a = S[i], b = S[(i + 1) % 4];
+  var i = ((Math.floor(t / 2) % 4) + 4) % 4, q = io(clamp((frac(t / 2) - .5) / .5)), S = [[1, .24], [1, .5], [1.5, .2], [.8, .08]], a = S[i], b = S[(i + 1) % 4];
   var sx = a[0] + (b[0] - a[0]) * q, rr = a[1] + (b[1] - a[1]) * q, H = h * .5, W = H * sx;
   c.save(); c.translate(w / 2, h * .46); c.rotate(q * Math.PI / 2 * (i % 2 ? 1 : 0)); c.fillStyle = k.acc; c.beginPath(); c.roundRect(-W / 2, -H / 2, W, H, Math.min(W, H) * rr); c.fill(); c.restore();
   for (var j = 0; j < 4; j++) { c.fillStyle = j === i ? k.paper : k.deep; dot(c, w / 2 + (j - 1.5) * h * .1, h * .86, h * .025); }
 };
 var cv=document.querySelector('canvas.bs'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
 var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
-function fit(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
 function frame(now){
   var r=cv.getBoundingClientRect();
-  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:(now-t0)/1000,K);c.restore();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:Math.max(0,(now-t0)/1000),K);c.restore();
   if(!still)requestAnimationFrame(frame);
 }
-fit();addEventListener('resize',fit);requestAnimationFrame(frame);
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
 })();</script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>

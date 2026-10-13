@@ -1491,6 +1491,14 @@ for (const it of moMenu.items) { moCode[it.id] = moStandalone(it); writeFileSync
 const moRcode = {};
 for (const r of moMenu.recipes) { moRcode[r.id] = moStandalone({ id: r.id, name: { ko: r.shot, en: r.combo.join('+') } }); writeFileSync(join(MMP, 'components', `${r.id}.html`), moRcode[r.id]); }
 const MO_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components';
+// 「같은 장면, 말 한 줄 차이」 비교 + 「대본 문장마다 장면 하나」 장면표 (2026-10-14). 갤러리 전용, components/ 에는 안 낸다.
+const moCmp = moMenu.compare || { list: [] }, moScn = moMenu.scenes || { list: [] };
+const moExtraMiss = [...moCmp.list, ...moScn.list].filter(x => !moFrags[x.id]).map(x => x.id);
+if (moExtraMiss.length) { console.error('motion-menu 비교·장면 데모 없음:', moExtraMiss.join(', ')); process.exit(1); }
+const moItemName = id => { const it = moMenu.items.find(i => i.id === id); if (!it) { console.error('motion-menu 없는 항목 참조:', id); process.exit(1); } return it.name; };
+const moXcode = {};
+for (const c of moCmp.list) { const n = moItemName(c.item); moXcode[c.id] = moStandalone({ id: c.id, name: { ko: n.ko + ' 비교', en: n.en } }); }
+for (const sc of moScn.list) { sc.uses.forEach(moItemName); moXcode[sc.id] = moStandalone({ id: sc.id, name: { ko: sc.name, en: 'Scene ' + sc.no } }); }
 const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .mogal .mo-formula{background:var(--paper);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:0 0 18px}
 .mogal .mo-fh{padding:11px 16px;background:var(--bg);font-size:13px;font-weight:700;display:flex;gap:9px;flex-wrap:wrap;align-items:baseline}
@@ -1542,6 +1550,24 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-rcpc{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px 0}
 .mogal .mo-rtag{font-family:ui-monospace,monospace;font-size:11px;color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,transparent);border:1px solid color-mix(in srgb,var(--acc) 22%,transparent);border-radius:6px;padding:2px 8px}
 .mogal .mo-rcpsc{margin:9px 14px 12px;font-size:12.5px;color:var(--ink2);line-height:1.55}
+.mogal .mo-box{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:13px 16px;margin:0 0 14px}
+.mogal .mo-box h3{font-size:14.5px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.mogal .mo-box h3 .copy{margin-left:auto}
+.mogal .mo-box p{font-size:12.5px;color:var(--ink2);margin:0 0 8px}
+.mogal .mo-roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 8px}
+@media(max-width:640px){.mogal .mo-roles{grid-template-columns:1fr}}
+.mogal .mo-roles div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12.5px}
+.mogal .mo-roles b{display:block;font-size:13.5px}.mogal .mo-roles code{font-family:ui-monospace,monospace;color:var(--acc);font-size:12px}
+.mogal .mo-pre{white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:12px;line-height:1.6;background:var(--bg);border-radius:9px;padding:10px 12px;margin:0;overflow-wrap:anywhere}
+.mogal .mo-cmp header{flex-wrap:wrap}
+.mogal .mo-cmp .say{display:grid;gap:4px;padding:8px 13px 11px;border-top:1px solid var(--line);font-size:12.5px}
+.mogal .mo-cmp .say span{color:var(--ink3)}.mogal .mo-cmp .say span::before{content:'✕ ';color:#C0392B}
+.mogal .mo-cmp .say strong{font-weight:500;color:var(--ink)}.mogal .mo-cmp .say strong::before{content:'○ ';color:#17B26A}
+.mogal .mo-rules{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.mogal .mo-rules li{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--paper)}
+.mogal .mo-scn .when{font-size:12px;color:var(--acc);font-weight:600}
+.mogal .mo-scn .uses{font-size:11.5px;color:var(--ink3)}
+.mogal .mo-scn .uses a{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink2);margin-right:6px}
 @media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b}}`;
 const moStar = it => it.star ? '<span class="star" title="현장에서 특히 많이 쓰는 것">★</span>' : '';
 const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
@@ -1563,7 +1589,22 @@ const moCore = `<div class="mogal">
     <div class="good"><span class="mk">○ 이렇게</span>「${esc(moF.good)}」</div>
   </div>
 </div>
-<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moMenu.recipes.length}</a></nav>
+<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moMenu.recipes.length}</a>${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}</nav>
+${moMenu.easingRoles ? `<div class="mo-box"><h3>${esc(moMenu.easingRoles.title)}<button class="copy" data-copy="${attr(moMenu.easingRoles.ask)}" title="요청 문장 복사">문장</button></h3>
+  <p>${esc(moMenu.easingRoles.note)}</p>
+  <div class="mo-roles">${moMenu.easingRoles.roles.map(r => `<div><b>${esc(r.use)}</b><code>${esc(r.curve)}</code><br>${esc(r.feel)}</div>`).join('')}</div>
+  <p>${esc(moMenu.easingRoles.avoid)} ${esc(moMenu.easingRoles.tip)}</p></div>` : ''}
+${moMenu.starter ? `<div class="mo-box"><h3>${esc(moMenu.starter.title)}<button class="copy" data-copy="${attr(moMenu.starter.ask)}" title="요청문 복사">복사</button></h3>
+  <p>${esc(moMenu.starter.note)}</p><pre class="mo-pre">${esc(moMenu.starter.ask)}</pre></div>` : ''}
+${moCmp.list.length ? `<section class="mo-cat" id="mc-compare">
+  <h2><span class="no">⇅</span> ${esc(moCmp.title)} <span class="count">${moCmp.list.length}</span></h2>
+  <p class="mo-note">${esc(moCmp.note)}</p>
+  <div class="mo-grid">${moCmp.list.map(c => { const n = moItemName(c.item); return `<article class="mo-card mo-cmp" id="m-${c.id}">
+    <header><h3>${esc(n.ko)}</h3><span class="en">${esc(n.en)}</span><button class="copy" data-copy="${attr(c.named)}" title="이름으로 시키는 문장 복사">문장</button></header>
+    <iframe title="${esc(n.ko)} 비교 데모" loading="lazy" style="height:${moFrags[c.id].h}px" srcdoc="${attr(moXcode[c.id])}"></iframe>
+    <div class="say"><span>${esc(c.plain)}</span><strong>${esc(c.named)}</strong><a href="#m-${c.item}" style="font-size:11.5px;color:var(--ink3)">사전에서 보기 ↓</a></div>
+  </article>`; }).join('\n')}</div>
+</section>` : ''}
 ${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
   <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${moBy(cat.id).length}</span></h2>
   ${catNote[cat.id] ? `<p class="mo-note">${catNote[cat.id]}</p>` : ''}
@@ -1579,6 +1620,18 @@ ${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
     <p class="mo-rcpsc">${esc(r.sc)}</p>
   </article>`).join('\n')}</div>
 </section>
+${moScn.list.length ? `<section class="mo-cat" id="mc-scenes">
+  <h2><span class="no">▦</span> ${esc(moScn.title)} <span class="count">${moScn.list.length}</span></h2>
+  <p class="mo-note">${esc(moScn.note)}</p>
+  <ul class="mo-rules">${moScn.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+  <div class="mo-grid">${moScn.list.map(sc => `<article class="mo-card mo-scn" id="m-${sc.id}">
+    <header><h3>${sc.no}. ${esc(sc.name)}</h3><span class="en"></span></header>
+    <iframe title="${esc(sc.name)} 장면 데모" loading="lazy" style="height:${moFrags[sc.id].h}px" srcdoc="${attr(moXcode[sc.id])}"></iframe>
+    <footer><span class="when">${esc(sc.when)}</span><span class="one">${esc(sc.does)}</span><span class="uses">만드는 항목 ${sc.uses.map(u => `<a href="#m-${u}">${esc(moItemName(u).ko)}</a>`).join('')}</span></footer>
+  </article>`).join('\n')}</div>
+  <div class="mo-box" style="margin-top:14px"><h3>대본을 장면표로 바꾸는 요청문<button class="copy" data-copy="${attr(moScn.ask)}" title="요청문 복사">복사</button></h3>
+    <p>대본을 붙이고 이 문장을 같이 보내면 문장마다 어떤 장면을 넣을지 표로 나옵니다.</p><pre class="mo-pre">${esc(moScn.ask)}</pre></div>
+</section>` : ''}
 <script>(function(){var g=document.querySelector('.mogal');if(!g)return;g.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var o=b.textContent;b.textContent='복사됨';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1100);});})();</script>
 </div>
 `;
@@ -1605,7 +1658,34 @@ ${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : 
 ${moCode[it.id].trim()}
 \`\`\`` : ''}
 `).join('\n')}`).join('\n')}
-## ＋ 조합 레시피 (샷 단위)
+${moMenu.easingRoles ? `## ${moMenu.easingRoles.title}
+${moMenu.easingRoles.note}
+${moMenu.easingRoles.roles.map(r => `- ${r.use}: ${r.curve} (${r.feel})`).join('\n')}
+- ${moMenu.easingRoles.avoid}
+- ${moMenu.easingRoles.tip}
+- 요청 문장: ${moMenu.easingRoles.ask}
+
+` : ''}${moMenu.starter ? `## ${moMenu.starter.title}
+${moMenu.starter.note}
+
+\`\`\`text
+${moMenu.starter.ask}
+\`\`\`
+
+` : ''}${moCmp.list.length ? `## ${moCmp.title}
+${moCmp.note}
+${moCmp.list.map(c => `- ${moItemName(c.item).ko}: ✕ "${c.plain}" → ○ "${c.named}"`).join('\n')}
+
+` : ''}${moScn.list.length ? `## ${moScn.title}
+${moScn.note}
+규칙: ${moScn.rules.join(' · ')}
+${moScn.list.map(sc => `- ${sc.no}. ${sc.name} (${sc.when}): ${sc.does} (만드는 항목: ${sc.uses.map(u => moItemName(u).ko).join(', ')})`).join('\n')}
+
+\`\`\`text
+${moScn.ask}
+\`\`\`
+
+` : ''}## ＋ 조합 레시피 (샷 단위)
 
 ${moMenu.recipes.map(r => `### ${r.shot} — ${r.ko}
 - 조합: ${r.combo.join(' + ')}

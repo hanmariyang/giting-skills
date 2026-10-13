@@ -91,3 +91,10 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - **「프롬프트」**: 요청 문장 + 이름·별칭 + 견본 코드 + 적용 지침 5줄(`PROMPT_TAIL`, 끝은 「바꾼 파일 / 확인한 것 / 확인하지 못한 것」). 코드는 클릭 때 카드의 코드 상자에서 가져온다(페이지에 두 번 싣지 않는다).
 - **「#」**: 그 항목 주소를 복사한다. 항목 id 가 곧 앵커다(`giting.kr/skills/ui-menu#tabs`). giting 페이지의 다른 id 와 겹치지 않는지 확인했다(2026-10-14).
 - ⚠️ `UI_JS` 는 템플릿 문자열 안의 JS 라서 줄바꿈은 `\\n` 으로 두 번 이스케이프한다. 한 번만 쓰면 빌드는 되고 페이지에서 SyntaxError 가 난다(실제로 밟음). 고친 뒤엔 `gallery-core.html` 의 마지막 `<script>` 를 떼어 `node --check`.
+
+## 모션 메뉴판 0.9.0 — 비교·장면표·이징 역할·첫 요청문 (2026-10-14)
+
+- `menu.json` 에 갤러리용 묶음 넷: `compare`(같은 장면을 「느낌으로」 vs 「이름+숫자로」, 8) · `easingRoles`(등장 ease-out · 이동 ease-in-out · 퇴장 ease-in) · `starter`(처음 붙여 넣는 요청문, 끝 줄은 「짧은 판 먼저」) · `scenes`(짧은 정보 영상에서 대본 문장마다 고르는 장면 7과 규칙). 데모는 `demos/m12-compare-scenes.html`(`@cmp-*`·`@scene-*`), **갤러리 전용**이라 `components/` 에는 안 낸다. `compare.item`·`scenes.uses` 가 없는 항목을 가리키면 빌드가 멈춘다.
+- 디즈니 12원칙 중 빠져 있던 셋 추가: 오버래핑 액션 · 홀드 · 세컨더리 액션(⑤ 타이밍, 191항목).
+- ⛔ **⑨ 글자 연출 40 데모가 전부 안 돌았다(10-13 출하 ~ 10-14 수정)**. 엔진 헬퍼 `fit()`(글자 줄이기)이 데모 러너의 `fit()`(캔버스 크기 맞추기)을 덮어써서 첫 줄에서 예외 → `requestAnimationFrame` 까지 못 갔다. 러너 쪽 이름을 `sizeCanvas` 로 바꿨다(네 gen.mjs 전부). **러너가 쓰는 이름을 헬퍼에 쓰지 않는다.** 그리고 첫 프레임에 `now < t0` 라 `t` 가 음수가 되어 `floor(t/2)%4 = -1` 로 배열을 넘던 것(셰이프 모프)도 러너에서 `Math.max(0, …)` 로 막았다.
+- ⭐ 검증 순서: 영상(render.mjs)이 멀쩡해도 갤러리 데모는 다른 러너라 따로 깨진다. 출하 전 **갤러리 `gallery-core.html` 의 iframe 전부를 헤드리스로 열어 예외 0** 을 본다(10-14 실측 213개).

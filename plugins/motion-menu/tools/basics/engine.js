@@ -130,7 +130,7 @@ BS['squash-stretch'] = function (c, w, h, t, k) {
 };
 BS['shape-morph'] = function (c, w, h, t, k) {
   bgc(c, w, h, k.ink);
-  var i = Math.floor(t / 2) % 4, q = io(clamp((frac(t / 2) - .5) / .5)), S = [[1, .24], [1, .5], [1.5, .2], [.8, .08]], a = S[i], b = S[(i + 1) % 4];
+  var i = ((Math.floor(t / 2) % 4) + 4) % 4, q = io(clamp((frac(t / 2) - .5) / .5)), S = [[1, .24], [1, .5], [1.5, .2], [.8, .08]], a = S[i], b = S[(i + 1) % 4];
   var sx = a[0] + (b[0] - a[0]) * q, rr = a[1] + (b[1] - a[1]) * q, H = h * .5, W = H * sx;
   c.save(); c.translate(w / 2, h * .46); c.rotate(q * Math.PI / 2 * (i % 2 ? 1 : 0)); c.fillStyle = k.acc; c.beginPath(); c.roundRect(-W / 2, -H / 2, W, H, Math.min(W, H) * rr); c.fill(); c.restore();
   for (var j = 0; j < 4; j++) { c.fillStyle = j === i ? k.paper : k.deep; dot(c, w / 2 + (j - 1.5) * h * .1, h * .86, h * .025); }

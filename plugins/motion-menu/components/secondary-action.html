@@ -1,0 +1,17 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>세컨더리 액션 Secondary Action — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .sa{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
+  .saw{position:absolute;bottom:30px;animation:saw 4s linear infinite}
+  .sab{position:relative;width:56px;height:50px;border-radius:24px 24px 14px 14px;background:#E7D6BC;animation:sab .5s ease-in-out infinite alternate}
+  .sae{position:absolute;top:-16px;width:12px;height:24px;border-radius:8px 8px 2px 2px;background:#E7D6BC;transform-origin:50% 100%;animation:sae .5s ease-in-out infinite alternate}
+  .sae.l{left:8px}.sae.r{right:8px;animation-delay:.12s}
+  .sa i{position:absolute;top:18px;width:5px;height:5px;border-radius:50%;background:#141821}.sa i.l{left:16px}.sa i.r{right:16px}
+  @keyframes saw{0%{left:-14%}100%{left:104%}}
+  @keyframes sab{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
+  @keyframes sae{0%{transform:rotate(-14deg)}100%{transform:rotate(12deg)}}
+  @media(prefers-reduced-motion:reduce){.saw,.sab,.sae{animation:none}.saw{left:40%}}
+</style>
+<div class="sa"><div class="saw"><div class="sab"><span class="sae l"></span><span class="sae r"></span><i class="l"></i><i class="r"></i></div></div></div>
+<p class="cap">세컨더리 액션 · 걷는 게 주 동작, 흔들리는 귀가 보조 동작</p>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

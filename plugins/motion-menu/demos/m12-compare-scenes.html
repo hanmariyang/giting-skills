@@ -1,0 +1,217 @@
+<!-- 모션 메뉴판 — 「같은 장면, 말 한 줄 차이」 비교 8 + 「대본 문장마다 장면 하나」 장면 7 (2026-10-14)
+     비교: 위 줄 = 느낌으로 시킨 결과(회색), 아래 줄 = 이름과 숫자로 시킨 결과(색). 같은 장면, 같은 길이로 돈다.
+     장면: 짧은 정보 영상에 문장마다 붙이는 화면 일곱 가지. 각 장면은 메뉴판의 기존 항목(uses)으로 만든다. -->
+
+<!-- @cmp-easing h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .ce{position:absolute;top:34px;left:6%;width:64px;height:38px;border-radius:9px;background:#5b6170;animation:cel 2.4s linear infinite}
+  .n .ce{background:#7a5af0;animation:ceo 2.4s cubic-bezier(.16,1,.3,1) infinite}
+  @keyframes cel{0%{transform:translateX(0);opacity:0}8%{opacity:1}55%,100%{transform:translateX(230px);opacity:1}}
+  @keyframes ceo{0%{transform:translateX(0);opacity:0}8%{opacity:1}55%,100%{transform:translateX(230px);opacity:1}}
+  @media(prefers-reduced-motion:reduce){.ce{animation:none;transform:translateX(230px)}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「자연스럽게 움직여줘」</b><div class="ce"></div></div><div class="ln n"><b>이름으로 · 이징 아웃 0.5초</b><div class="ce"></div></div></div>
+<p class="cap">위는 일정한 속도로 와서 뚝 멈추고, 아래는 빠르게 들어와 천천히 멈춘다</p>
+
+<!-- @cmp-anticipation h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .ca{position:absolute;bottom:8px;left:20%;width:40px;height:40px;border-radius:9px;background:#5b6170;transform-origin:50% 100%;animation:cap 2.4s cubic-bezier(.3,0,.3,1) infinite}
+  .n .ca{background:#7a5af0;animation:can 2.4s cubic-bezier(.3,0,.3,1) infinite}
+  @keyframes cap{0%,20%{transform:translate(0,0)}45%{transform:translate(90px,-38px)}70%,100%{transform:translate(180px,0)}}
+  @keyframes can{0%,8%{transform:translate(0,0) scale(1)}20%{transform:translate(-8px,0) scale(1.18,.72)}45%{transform:translate(90px,-38px) scale(.9,1.12)}70%,100%{transform:translate(180px,0) scale(1)}}
+  @media(prefers-reduced-motion:reduce){.ca{animation:none}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「생동감 있게 뛰게」</b><div class="ca"></div></div><div class="ln n"><b>이름으로 · 안티시페이션 0.2초</b><div class="ca"></div></div></div>
+<p class="cap">아래는 뛰기 전에 반대로 웅크려 힘을 모은다</p>
+
+<!-- @cmp-stagger h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821;display:flex;gap:10px;align-items:center;justify-content:center;padding-top:14px}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .cs{width:34px;height:34px;border-radius:8px;background:#5b6170;opacity:0;animation:csa 2.6s cubic-bezier(.16,1,.3,1) infinite}
+  .n .cs{background:#7a5af0}
+  .n .cs:nth-of-type(2){animation-delay:.08s}.n .cs:nth-of-type(3){animation-delay:.16s}.n .cs:nth-of-type(4){animation-delay:.24s}.n .cs:nth-of-type(5){animation-delay:.32s}
+  @keyframes csa{0%{opacity:0;transform:translateY(16px)}20%,82%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.cs{animation:none;opacity:1}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「세련되게 등장」</b><i class="cs"></i><i class="cs"></i><i class="cs"></i><i class="cs"></i><i class="cs"></i></div><div class="ln n"><b>이름으로 · 스태거 0.08초</b><i class="cs"></i><i class="cs"></i><i class="cs"></i><i class="cs"></i><i class="cs"></i></div></div>
+<p class="cap">위는 다섯 개가 한꺼번에, 아래는 왼쪽부터 차례로</p>
+
+<!-- @cmp-squash h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .cq{position:absolute;left:46%;bottom:6px;width:34px;height:34px;border-radius:50%;background:#5b6170;transform-origin:50% 100%;animation:cqp 1.2s infinite}
+  .n .cq{background:#7a5af0;animation:cqn 1.2s infinite}
+  @keyframes cqp{0%,100%{transform:translateY(0);animation-timing-function:cubic-bezier(.3,.6,.5,1)}50%{transform:translateY(-38px);animation-timing-function:cubic-bezier(.5,0,.7,.4)}}
+  @keyframes cqn{0%,100%{transform:translateY(0) scale(1.2,.8);animation-timing-function:cubic-bezier(.3,.6,.5,1)}12%{transform:translateY(-10px) scale(.87,1.15)}50%{transform:translateY(-38px) scale(1);animation-timing-function:cubic-bezier(.5,0,.7,.4)}88%{transform:translateY(-6px) scale(.9,1.12)}}
+  @media(prefers-reduced-motion:reduce){.cq{animation:none}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「통통 튀게」</b><div class="cq"></div></div><div class="ln n"><b>이름으로 · 스쿼시 20% · 스트레치 15%</b><div class="cq"></div></div></div>
+<p class="cap">아래 공은 닿을 때 눌리고 뜰 때 늘어나 무게가 생긴다</p>
+
+<!-- @cmp-arc h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .cx{position:absolute;left:12%;bottom:6px;animation:cxx 2.4s linear infinite}
+  .cy{width:26px;height:26px;border-radius:50%;background:#5b6170;animation:cyl 2.4s linear infinite}
+  .n .cy{background:#7a5af0;animation:cya 2.4s infinite}
+  @keyframes cxx{0%,10%{transform:translateX(0)}70%,100%{transform:translateX(220px)}}
+  @keyframes cyl{0%,10%{transform:translateY(0)}40%{transform:translateY(-42px)}70%,100%{transform:translateY(0)}}
+  @keyframes cya{0%,10%{transform:translateY(0);animation-timing-function:cubic-bezier(.2,.6,.4,1)}40%{transform:translateY(-42px);animation-timing-function:cubic-bezier(.6,0,.8,.4)}70%,100%{transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.cx,.cy{animation:none}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「점프시켜줘」</b><div class="cx"><div class="cy"></div></div></div><div class="ln n"><b>이름으로 · 호(포물선) 경로</b><div class="cx"><div class="cy"></div></div></div></div>
+<p class="cap">위는 꺾인 직선 두 개, 아래는 둥근 포물선</p>
+
+<!-- @cmp-follow h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .cf{position:absolute;top:36px;left:8%;animation:cfm 2.8s cubic-bezier(.5,0,.2,1) infinite}
+  .cfh{width:34px;height:34px;border-radius:50%;background:#5b6170}
+  .cft{position:absolute;right:28px;top:8px;width:40px;height:18px;border-radius:10px 2px 2px 10px;background:#3d4250;transform-origin:right center}
+  .n .cfh{background:#E7D6BC}.n .cft{background:#38BE86;animation:cft 2.8s cubic-bezier(.5,0,.2,1) infinite}
+  @keyframes cfm{0%{transform:translateX(0)}40%,100%{transform:translateX(190px)}}
+  @keyframes cft{0%{transform:rotate(0)}30%{transform:rotate(16deg)}52%{transform:rotate(-12deg)}70%{transform:rotate(5deg)}86%,100%{transform:rotate(0)}}
+  @media(prefers-reduced-motion:reduce){.cf,.cft{animation:none}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「멈출 때 자연스럽게」</b><div class="cf"><div class="cft"></div><div class="cfh"></div></div></div><div class="ln n"><b>이름으로 · 팔로 스루 0.15초</b><div class="cf"><div class="cft"></div><div class="cfh"></div></div></div></div>
+<p class="cap">아래는 몸이 멈춘 뒤에도 꼬리가 조금 더 흔들리다 멈춘다</p>
+
+<!-- @cmp-overlap h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .co{position:absolute;top:42px;border-radius:50%;animation:com 2.8s cubic-bezier(.45,0,.2,1) infinite}
+  .co1{width:28px;height:28px;margin-top:-6px;background:#5b6170}
+  .co2{width:38px;height:26px;border-radius:13px;background:#4a4f5c;margin-left:-30px}
+  .co3{width:22px;height:12px;border-radius:6px;background:#3d4250;margin-left:-52px;margin-top:8px}
+  .n .co1{background:#E7D6BC}.n .co2{background:#7a5af0;animation-delay:.1s}.n .co3{background:#38BE86;animation-delay:.2s}
+  @keyframes com{0%,8%{left:22%}46%,100%{left:72%}}
+  @media(prefers-reduced-motion:reduce){.co{animation:none;left:72%}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「같이 움직여줘」</b><i class="co co3"></i><i class="co co2"></i><i class="co co1"></i></div><div class="ln n"><b>이름으로 · 오버래핑 액션 0.05초씩</b><i class="co co3"></i><i class="co co2"></i><i class="co co1"></i></div></div>
+<p class="cap">위는 한 덩어리로, 아래는 머리 → 몸 → 꼬리가 조금씩 늦게</p>
+
+<!-- @cmp-mask h=236 full -->
+<style>
+  .cp{margin:10px 12px;display:grid;gap:8px}
+  .ln{position:relative;height:84px;border-radius:11px;overflow:hidden;background:#141821;display:flex;flex-direction:column;justify-content:center;padding:14px 0 0 22px}
+  .ln b{position:absolute;left:10px;top:8px;font:600 10.5px ui-monospace,monospace;letter-spacing:.04em;color:#8b93a1}
+  .ln.n b{color:#E07A3F}
+  .cm{display:block;height:24px;overflow:hidden}
+  .cm span{display:block;font:800 19px/24px -apple-system,'Apple SD Gothic Neo',sans-serif;color:#9aa0ab;opacity:0;animation:cmf 3s ease-in-out infinite}
+  .n .cm span{color:#fff;opacity:1;transform:translateY(105%);animation:cmr 3s cubic-bezier(.16,1,.3,1) infinite}
+  .n .cm:nth-of-type(2) span{animation-delay:.15s}
+  @keyframes cmf{0%{opacity:0}25%,80%{opacity:1}100%{opacity:0}}
+  @keyframes cmr{0%{transform:translateY(105%)}25%,80%{transform:translateY(0)}95%,100%{transform:translateY(-105%)}}
+  @media(prefers-reduced-motion:reduce){.cm span{animation:none;opacity:1;transform:none}}
+</style>
+<div class="cp"><div class="ln"><b>그냥 · 「제목 멋지게」</b><span class="cm"><span>말로 하던 그 움직임,</span></span><span class="cm"><span>이름은 따로 있어요</span></span></div><div class="ln n"><b>이름으로 · 마스크 리빌 줄 간격 0.15초</b><span class="cm"><span>말로 하던 그 움직임,</span></span><span class="cm"><span>이름은 따로 있어요</span></span></div></div>
+<p class="cap">위는 통째로 흐려졌다 나타나고, 아래는 줄마다 아래에서 올라온다</p>
+
+<!-- @scene-logo h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#0f1218;display:flex;gap:14px;align-items:center;justify-content:center}
+  .sl{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;font:800 22px -apple-system,sans-serif;color:#fff;opacity:0;transform:scale(.6);animation:slp 3.2s cubic-bezier(.34,1.4,.5,1) infinite}
+  .sl:nth-child(1){background:#D97757}.sl:nth-child(2){background:#10A37F;animation-delay:.12s}.sl:nth-child(3){background:#4285F4;animation-delay:.24s}
+  @keyframes slp{0%{opacity:0;transform:scale(.6)}18%,80%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1)}}
+  @media(prefers-reduced-motion:reduce){.sl{animation:none;opacity:1;transform:none}}
+</style>
+<div class="sc"><span class="sl">A</span><span class="sl">B</span><span class="sl">C</span></div>
+<p class="cap">① 로고 카드 · 툴 이름이 나오면 로고를 나란히 (팝인 + 스태거)</p>
+
+<!-- @scene-site h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#0f1218;perspective:700px;display:grid;place-items:center}
+  .ss{width:230px;height:140px;border-radius:9px;background:#fff;box-shadow:0 18px 40px rgba(0,0,0,.45);transform:rotateY(-24deg) rotateX(8deg);animation:ssz 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:70% 60%;overflow:hidden}
+  .ss i{display:block;height:14px;background:#eef0f4;border-bottom:1px solid #e1e4ea}
+  .ss p{margin:10px 12px 0;height:8px;border-radius:4px;background:#e4e7ec}.ss p.w{width:60%}
+  .ss em{display:block;margin:10px 12px 0;width:96px;height:26px;border-radius:7px;background:#7a5af0;box-shadow:0 0 0 0 rgba(224,122,63,.0);animation:sse 4s infinite}
+  @keyframes ssz{0%,15%{transform:rotateY(-24deg) rotateX(8deg) scale(1)}55%,85%{transform:rotateY(-8deg) rotateX(2deg) scale(1.55)}100%{transform:rotateY(-24deg) rotateX(8deg) scale(1)}}
+  @keyframes sse{0%,50%{box-shadow:0 0 0 0 rgba(224,122,63,0)}60%,82%{box-shadow:0 0 0 4px #E07A3F}100%{box-shadow:0 0 0 0 rgba(224,122,63,0)}}
+  @media(prefers-reduced-motion:reduce){.ss,.ss em{animation:none}}
+</style>
+<div class="sc"><div class="ss"><i></i><p></p><p class="w"></p><em></em><p></p></div></div>
+<p class="cap">② 실제 화면 · 기능을 말할 때 화면을 비스듬히 세우고 짚을 곳으로 다가간다 (달리 + 줌)</p>
+
+<!-- @scene-count h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#0f1218;display:grid;place-items:center;color:#fff}
+  .sn{font:800 76px/1 -apple-system,'Apple SD Gothic Neo',sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .sn small{font-size:26px;color:#E07A3F;margin-left:4px}
+</style>
+<div class="sc"><div class="sn"><span id="scn">0</span><small>초</small></div></div>
+<p class="cap">③ 크게 세기 · 숫자가 나오면 화면 가득 세어 올린다 (카운트업)</p>
+<script>(function(){var el=document.getElementById('scn'),to=35,dur=1200;if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=to;return;}function run(){var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e);if(p<1)requestAnimationFrame(f);else setTimeout(run,1800);})(t0);}run();})();</script>
+
+<!-- @scene-typing h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#0f1218;display:grid;place-items:center}
+  .st{width:86%;border-radius:9px;background:#1b1f28;padding:12px 14px;font:13px/1.5 ui-monospace,Menlo,monospace;color:#d6dae2}
+  .st i{display:block;height:10px;margin:-2px 0 10px;background:radial-gradient(circle,#ff5f57 4px,transparent 4.5px) 0 0/14px 10px no-repeat,radial-gradient(circle,#febc2e 4px,transparent 4.5px) 14px 0/14px 10px no-repeat,radial-gradient(circle,#28c840 4px,transparent 4.5px) 28px 0/14px 10px no-repeat}
+  .st b{color:#38BE86;font-weight:400}
+  .st u{text-decoration:none;display:inline-block;width:7px;height:15px;background:#d6dae2;vertical-align:-3px;animation:stc 1s steps(1) infinite}
+  @keyframes stc{50%{opacity:0}}
+</style>
+<div class="sc"><div class="st"><i></i><b>$</b> <span id="stt"></span><u></u></div></div>
+<p class="cap">④ 타이핑 · 입력·명령·과정을 말할 때 한 글자씩 쳐 넣는다 (타입온)</p>
+<script>(function(){var el=document.getElementById('stt'),s='npx skills add giting/motion-menu';if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=s;return;}var i=0;(function f(){el.textContent=s.slice(0,i++);if(i<=s.length)setTimeout(f,55+Math.random()*50);else setTimeout(function(){i=0;f();},1800);})();})();</script>
+
+<!-- @scene-word h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#E07A3F;display:grid;place-items:center}
+  .sw{font:900 64px/1 -apple-system,'Apple SD Gothic Neo',sans-serif;color:#0f1218;letter-spacing:-.04em;animation:swp 2.6s cubic-bezier(.2,1.4,.4,1) infinite}
+  @keyframes swp{0%{transform:scale(2.4);opacity:0}14%{transform:scale(1);opacity:1}80%{transform:scale(1.04);opacity:1}100%{transform:scale(1.04);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.sw{animation:none}}
+</style>
+<div class="sc"><div class="sw">이름</div></div>
+<p class="cap">⑤ 한 단어 가득 · 박고 싶은 말 하나만 화면 가득 (워드 버스트 · 펀치 줌)</p>
+
+<!-- @scene-split h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#0f1218;display:grid;grid-template-columns:1fr 1fr}
+  .sp{display:grid;place-items:center;font:800 16px -apple-system,'Apple SD Gothic Neo',sans-serif;animation:spl 3.2s cubic-bezier(.16,1,.3,1) infinite}
+  .sp.a{background:#2a2f3b;color:#9aa0ab}.sp.b{background:#7a5af0;color:#fff;animation-name:spr}
+  .sp small{display:block;font:600 11px ui-monospace,monospace;opacity:.7;margin-bottom:4px;text-align:center}
+  @keyframes spl{0%{transform:translateX(-100%)}18%,82%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+  @keyframes spr{0%{transform:translateX(100%)}18%,82%{transform:translateX(0)}100%{transform:translateX(100%)}}
+  @media(prefers-reduced-motion:reduce){.sp{animation:none}}
+</style>
+<div class="sc"><div class="sp a"><div><small>BEFORE</small>「멋지게」</div></div><div class="sp b"><div><small>AFTER</small>「이징 아웃 0.5초」</div></div></div>
+<p class="cap">⑥ 나란히 · A 와 B 를 비교할 때 화면을 둘로 (스플릿 스크린)</p>
+
+<!-- @scene-check h=256 full -->
+<style>
+  .sc{position:relative;height:180px;margin:12px;border-radius:12px;overflow:hidden;background:#f6f3ec;padding:22px 26px;font:600 15px -apple-system,'Apple SD Gothic Neo',sans-serif;color:#17171b}
+  .ck{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  .ck i{width:20px;height:20px;border-radius:6px;border:2px solid #17171b;position:relative;flex:none}
+  .ck i::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #E07A3F;border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);animation:ckv 4s infinite}
+  .ck:nth-child(2) i::after{animation-delay:.45s}.ck:nth-child(3) i::after{animation-delay:.9s}
+  .stp{position:absolute;right:22px;bottom:18px;padding:6px 12px;border:3px solid #D33;border-radius:8px;color:#D33;font:900 20px -apple-system,sans-serif;transform:rotate(-12deg) scale(0);animation:stp 4s infinite}
+  @keyframes ckv{0%,10%{transform:rotate(45deg) scale(0)}18%,88%{transform:rotate(45deg) scale(1)}100%{transform:rotate(45deg) scale(0)}}
+  @keyframes stp{0%,40%{transform:rotate(-12deg) scale(2.2);opacity:0}48%,88%{transform:rotate(-12deg) scale(1);opacity:1}100%{opacity:0}}
+  @media(prefers-reduced-motion:reduce){.ck i::after{animation:none;transform:rotate(45deg) scale(1)}.stp{animation:none;transform:rotate(-12deg)}}
+</style>
+<div class="sc"><div class="ck"><i></i>이름으로 시키기</div><div class="ck"><i></i>숫자 붙이기</div><div class="ck"><i></i>짧은 판 먼저 보기</div><span class="stp">끝</span></div>
+<p class="cap">⑦ 체크리스트 · 정리하며 끝낼 때 줄마다 체크하고 도장 (라인 드로 + 스탬프)</p>
