@@ -35,6 +35,23 @@ var band = function (c, s, y, px, col, dir, n, t, w, wt) {
   c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle';
   for (var x = -L * 2 + ((o % L) + L) % L; x < w + L; x += L) c.fillText(s, x, y);
 };
+// 글자를 한 자씩 놓을 자리(가운데 0 기준 x 들)
+var slots = function (c, s, px, wt) {
+  c.font = FONT(px, wt); var ws = [], L = 0, i;
+  for (i = 0; i < s.length; i++) { ws.push(c.measureText(s[i]).width); L += ws[i]; }
+  var x = -L / 2, out = []; for (i = 0; i < s.length; i++) { out.push(x + ws[i] / 2); x += ws[i]; } return out;
+};
+// 글자 모양을 점 집합으로(가루·모자이크용). 한 번 재고 기억한다
+var DOTS = {};
+var dots = function (s, px, step, wt) {
+  var key = s + '|' + Math.round(px) + '|' + step; if (DOTS[key]) return DOTS[key];
+  var o = document.createElement('canvas'), x = o.getContext('2d'); x.font = FONT(px, wt);
+  var W = Math.ceil(x.measureText(s).width + px * .4), H = Math.ceil(px * 1.5); o.width = W; o.height = H;
+  x.font = FONT(px, wt); x.fillStyle = '#000'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(s, W / 2, H / 2);
+  var d = x.getImageData(0, 0, W, H).data, out = [];
+  for (var y = 0; y < H; y += step) for (var X = 0; X < W; X += step) if (d[(y * W + X) * 4 + 3] > 120) out.push([X - W / 2, y - H / 2]);
+  return (DOTS[key] = out);
+};
 /*@end*/
 
 var TX = {};
@@ -440,6 +457,292 @@ TX['text-echo'] = function (c, w, h, t, k) {
   var pos = function (tt) { var a = W8(tt); return [w / 2 + w * .28 * Math.sin(a), h / 2 + h * .2 * Math.sin(2 * a)]; };
   for (var j = 10; j >= 0; j--) { var P = pos(t - j * .07); c.globalAlpha = j ? .5 * (1 - j / 11) : 1; say(c, '잔상', P[0], P[1], h * .4, j ? k.acc : k.paper); }
   c.globalAlpha = 1;
+};
+
+// ════ 글자 몸짓 24 (⑩) — 글자 자체가 생겨나고 흔들리고 무너진다 ════
+
+// ── VANISH · 사라지고 모여요 ───────────────────────────────
+TX['disintegrate'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '흩어짐', px = fit(c, S, h * .48, w * .8), st = Math.max(2, Math.round(px / 24)), P = dots(S, px, st), p = t % 4;
+  var xs = P.map(function (d) { return d[0]; }), L = Math.max.apply(null, xs) - Math.min.apply(null, xs), x0 = Math.min.apply(null, xs);
+  var front = x0 - px * .2 + (L + px * .6) * io((p - .5) / 1.6), back_in = p > 3.2 ? eo((p - 3.2) / .7) : 0;
+  for (var i = 0; i < P.length; i++) {
+    var d = P[i], X = w / 2 + d[0], Y = h / 2 + d[1];
+    if (p > 3.2) { c.globalAlpha = back_in; c.fillStyle = k.paper; c.fillRect(X, Y, st, st); continue; }
+    if (d[0] > front) { c.globalAlpha = 1; c.fillStyle = k.paper; c.fillRect(X, Y, st, st); continue; }
+    var a = clamp((front - d[0]) / (L * .55)), r = hash(i);
+    c.globalAlpha = 1 - a; c.fillStyle = r > .55 ? k.acc : k.paper;
+    c.fillRect(X + a * h * (.5 + r) , Y - a * h * (.25 + .5 * hash(i + 9)) + Math.sin(a * 6 + r * 9) * h * .03, st * (1 - a * .5), st * (1 - a * .5));
+  }
+  c.globalAlpha = 1;
+};
+TX['ink-bleed'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '번지다', px = fit(c, S, h * .5, w * .78), X = slots(c, S, px), p = t % 4, out = p > 3.3 ? 1 - (p - 3.3) / .7 : 1;
+  for (var i = 0; i < S.length; i++) {
+    var q = clamp((p - .2 - i * .35) / 1.1); if (q <= 0) continue;
+    var cx = w / 2 + X[i], cy = h / 2, r = (1 - eo(q)) * px * .22;
+    c.globalAlpha = .18 * (1 - q) * out; c.fillStyle = k.ink; c.beginPath(); c.arc(cx, cy, px * (.2 + .45 * eo(q * 1.6)), 0, TAU); c.fill();
+    for (var j = 0; j < 9; j++) { var a = hash(i * 9 + j) * TAU; c.globalAlpha = .13 * out; say(c, S[i], cx + Math.cos(a) * r, cy + Math.sin(a) * r, px, k.ink); }
+    c.globalAlpha = eo(q) * out; say(c, S[i], cx, cy, px, i === 1 ? k.deep : k.ink);
+  }
+  c.globalAlpha = 1;
+};
+TX['crumble-down'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '무너진다', px = fit(c, S, h * .42, w * .82), X = slots(c, S, px), p = t % 4;
+  for (var i = 0; i < S.length; i++) {
+    var x = w / 2 + X[i], y = h / 2, r = 0;
+    if (p < 3) { var dt = p - .5 - i * .28; if (dt > 0) { y += h * 2.6 * dt * dt; x += dt * px * (hash(i) - .5); r = dt * (hash(i + 3) - .3) * 3; } }
+    else { var q = (p - 3 - i * .07) / .55; y = h / 2 - (1 - back(q)) * h; if (q <= 0) continue; }
+    c.save(); c.translate(x, y); c.rotate(r); say(c, S[i], 0, 0, px, i % 2 ? k.acc : k.ink); c.restore();
+  }
+};
+TX['letter-assemble'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '모여라', px = fit(c, S, h * .5, w * .7), X = slots(c, S, px), p = t % 4;
+  for (var i = 0; i < S.length; i++) {
+    var q = p < 3 ? eo((p - .1 - i * .12) / 1.1) : 1 - io((p - 3) / .9);
+    var sx = w * (.1 + .8 * hash(i + 11)), sy = h * (.15 + .7 * hash(i + 21)), sr = (hash(i + 31) - .5) * 4;
+    c.save(); c.globalAlpha = .25 + .75 * q; c.translate(sx + (w / 2 + X[i] - sx) * q, sy + (h / 2 - sy) * q); c.rotate(sr * (1 - q));
+    c.scale(.55 + .45 * q, .55 + .45 * q); say(c, S[i], 0, 0, px, q > .98 ? k.paper : k.acc); c.restore();
+  }
+  c.globalAlpha = 1;
+};
+TX['magnet-pull'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '끌려온다', px = fit(c, S, h * .36, w * .42), X = slots(c, S, px), p = t % 4;
+  var pull = p < 1.6 ? Math.pow(clamp((p - .3) / 1.3), 3) : p < 2.9 ? 1 : 1 - io((p - 2.9) / 1), spread = 1 + 1.05 * (1 - pull);
+  var hit = p > 1.6 && p < 1.9 ? Math.sin((p - 1.6) * 60) * px * .03 * (1 - (p - 1.6) / .3) : 0;
+  c.fillStyle = k.acc; c.fillRect(w / 2 - 2, h * .14, 4, h * .1); c.fillRect(w / 2 - 2, h * .76, 4, h * .1);
+  for (var i = 0; i < S.length; i++) {
+    var lean = (X[i] < 0 ? 1 : -1) * .25 * (1 - pull) * (pull > 0 ? 1 : 0);
+    c.save(); c.translate(w / 2 + X[i] * spread + hit, h / 2); c.rotate(lean); say(c, S[i], 0, 0, px, pull > .99 ? k.acc : k.ink); c.restore();
+  }
+};
+TX['shuffle-letters'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '제자리로', px = fit(c, S, h * .44, w * .8), X = slots(c, S, px), n = Math.floor(t / 4) % 2, p = t % 4;
+  var PM = [[2, 0, 3, 1], [3, 2, 1, 0]], from = PM[n], to = PM[(n + 1) % 2];
+  for (var i = 0; i < S.length; i++) {
+    var a, b, q;
+    if (p < 1.2) { a = from[i]; b = i; q = io((p - .3) / .8); }
+    else if (p < 3) { a = i; b = i; q = 0; }
+    else { a = i; b = to[i]; q = io((p - 3) / .8); }
+    var x = X[a] + (X[b] - X[a]) * q, y = (i % 2 ? 1 : -1) * h * .26 * Math.sin(Math.PI * q) * (a === b ? 0 : 1);
+    say(c, S[i], w / 2 + x, h / 2 + y, px, p >= 1.2 && p < 3 ? k.paper : k.acc);
+  }
+};
+
+// ── SWAY · 쉬지 않고 흔들려요 ───────────────────────────────
+TX['wave-letters'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '물결을타요', px = fit(c, S, h * .36, w * .84), X = slots(c, S, px);
+  for (var i = 0; i < S.length; i++) {
+    var a = W8(t, 4) - i * .75, y = h * .14 * Math.sin(a);
+    c.save(); c.translate(w / 2 + X[i], h / 2 + y); c.rotate(Math.cos(a) * .18); say(c, S[i], 0, 0, px, Math.sin(a) < -.6 ? k.acc : k.paper); c.restore();
+  }
+};
+TX['swing-letters'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '대롱대롱', px = fit(c, S, h * .36, w * .8), X = slots(c, S, px), top = h * .14;
+  c.fillStyle = k.ink; c.fillRect(w * .08, top - 2, w * .84, 3);
+  for (var i = 0; i < S.length; i++) {
+    var a = .38 * Math.sin(W8(t, 4) + i * .9), len = h * .42;
+    c.save(); c.translate(w / 2 + X[i], top); c.rotate(a);
+    c.strokeStyle = k.ink; c.lineWidth = 1.5; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, len - px * .5); c.stroke();
+    say(c, S[i], 0, len, px, i % 2 ? k.acc : k.ink); c.restore();
+    c.fillStyle = k.ink; c.beginPath(); c.arc(w / 2 + X[i], top, 3, 0, TAU); c.fill();
+  }
+};
+TX['text-flag'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '펄럭펄럭', fx = w * .16, fw = w * .7, fy = h * .22, fh = h * .5, px = fit(c, S, fh * .62, fw * .86);
+  var off = function (x) { var u = (x - fx) / fw; return h * .07 * u * Math.sin(u * 7 - W8(t, 4)); };
+  c.fillStyle = k.paper; c.fillRect(fx - 4, h * .1, 4, h * .82);
+  for (var x = fx; x < fx + fw; x += 3) {
+    var sh = Math.cos(((x - fx) / fw) * 7 - W8(t, 4)); c.fillStyle = k.acc; c.globalAlpha = .82 + .18 * sh;
+    c.fillRect(x, fy + off(x), 3.5, fh);
+  }
+  c.globalAlpha = 1; var X = slots(c, S, px), cx = fx + fw / 2;
+  for (var i = 0; i < S.length; i++) {
+    var xx = cx + X[i], d = off(xx), sl = (off(xx + 4) - off(xx - 4)) / 8;
+    c.save(); c.translate(xx, fy + fh / 2 + d); c.rotate(Math.atan(sl)); say(c, S[i], 0, 0, px, k.ink); c.restore();
+  }
+};
+TX['float-drift'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  for (var j = 0; j < 9; j++) {
+    var r = h * (.03 + .05 * hash(j)); c.globalAlpha = .12 + .1 * hash(j + 2); c.fillStyle = k.acc; c.beginPath();
+    c.arc(w * hash(j + 5) + w * .04 * Math.sin(W8(t) + j), frac(hash(j + 7) - t / 8) * (h + r * 2) - r, r, 0, TAU); c.fill();
+  }
+  c.globalAlpha = 1;
+  var S = '둥실둥실', px = fit(c, S, h * .36, w * .8), X = slots(c, S, px);
+  for (var i = 0; i < S.length; i++) {
+    var f = 1 + (i % 2), a = W8(t, f) + i * 1.3;
+    c.save(); c.translate(w / 2 + X[i] + h * .03 * Math.cos(a), h / 2 + h * .09 * Math.sin(a)); c.rotate(.12 * Math.sin(a + 1));
+    say(c, S[i], 0, 0, px, i % 2 ? k.acc : k.paper); c.restore();
+  }
+};
+TX['jitter-settle'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.acc);
+  var S = '덜덜덜', px = fit(c, S, h * .5, w * .74), X = slots(c, S, px), p = t % 4, amp = p < 2.4 ? Math.exp(-p * 2.2) : 0, f = Math.floor(t * 30);
+  if (p > 3.4) amp = (p - 3.4) / .6 * .6;
+  for (var i = 0; i < S.length; i++) {
+    var dx = (hash(f * 3 + i) - .5) * px * .5 * amp, dy = (hash(f * 5 + i + 1) - .5) * px * .5 * amp, r = (hash(f * 7 + i) - .5) * .7 * amp;
+    c.save(); c.translate(w / 2 + X[i] + dx, h / 2 + dy); c.rotate(r); say(c, S[i], 0, 0, px, k.ink); c.restore();
+  }
+};
+TX['stop-motion'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '한컷한컷', px = fit(c, S, h * .4, w * .8), X = slots(c, S, px), f = Math.floor(t * 8), p = (f % 32) / 8;
+  for (var i = 0; i < S.length; i++) {
+    var on = p >= .25 + i * .5 && p < 3.6; if (!on) continue;
+    var dx = (hash(f * 3 + i) - .5) * px * .08, dy = (hash(f * 5 + i) - .5) * px * .08, r = (hash(f * 7 + i) - .5) * .16, s = 1 + (hash(f * 11 + i) - .5) * .08;
+    c.save(); c.translate(w / 2 + X[i] + dx, h / 2 + dy); c.rotate(r); c.scale(s, s);
+    say(c, S[i], px * .04, px * .05, px, 'rgba(0,0,0,.18)'); say(c, S[i], 0, 0, px, i % 2 ? k.acc : k.ink); c.restore();
+  }
+};
+
+// ── PLAY · 물리와 소품으로 놀아요 ───────────────────────────
+TX['domino-letters'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '차례차례', px = fit(c, S, h * .42, w * .56), gap = px * 1.12, n = S.length, x0 = w / 2 - gap * (n - 1) / 2 - px * .35, gy = h * .78, p = t % 4;
+  c.fillStyle = k.deep; c.fillRect(0, gy, w, 3);
+  for (var i = 0; i < n; i++) {
+    var max = i === n - 1 ? Math.PI / 2 : Math.atan2(gap, px * .9) * .95, q;
+    if (p < 2.8) q = Math.pow(clamp((p - .4 - i * .24) / .3), 2); else q = 1 - io((p - 2.8 - (n - 1 - i) * .06) / .7);
+    var a = max * q, half = px * .5;
+    c.save(); c.translate(x0 + i * gap + half * .9, gy); c.rotate(a); say(c, S[i], -half * .9, -px * .52, px, q > .01 ? k.acc : k.paper); c.restore();
+  }
+};
+TX['gravity-flip'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var bo = function (x) { x = clamp(x); var n = 7.5625, d = 2.75; if (x < 1 / d) return n * x * x; if (x < 2 / d) return n * (x -= 1.5 / d) * x + .75; if (x < 2.5 / d) return n * (x -= 2.25 / d) * x + .9375; return n * (x -= 2.625 / d) * x + .984375; };
+  var S = '거꾸로', px = fit(c, S, h * .32, w * .6), X = slots(c, S, px), lo = h - px * .72, hi = px * .72, p = t % 4;
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, 3); c.fillRect(0, h - 3, w, 3);
+  for (var i = 0; i < S.length; i++) {
+    var up = bo((p - .3 - i * .08) / .9), down = bo((p - 2.3 - i * .08) / .9), u = up - down;
+    var rot = Math.PI * (io((p - .3 - i * .08) / .5) - io((p - 2.3 - i * .08) / .5));
+    c.save(); c.translate(w / 2 + X[i] * 1.15, lo + (hi - lo) * u); c.rotate(rot); say(c, S[i], 0, 0, px, i === 1 ? k.acc : k.ink); c.restore();
+  }
+};
+TX['letter-rain'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var pool = '비가내리는밤바람소리창가에떨어지는물방울하나둘', px = Math.max(11, h * .11), cols = Math.floor(w / (px * 1.15)), lead = (w - cols * px * 1.15) / 2;
+  c.font = FONT(px, 700); c.textAlign = 'center'; c.textBaseline = 'middle';
+  for (var j = 0; j < cols; j++) {
+    var sp = 1 + (hash(j) > .5 ? 1 : 0), len = 10, colH = len * px * 1.15, off = frac(hash(j + 3) + t * sp / 8) * colH;
+    for (var r = -1; r < Math.ceil(h / (px * 1.15)) + 1; r++) {
+      var y = r * px * 1.15 + (off % (px * 1.15)), idx = Math.floor((r - Math.floor(off / (px * 1.15))) + hash(j + 5) * 40);
+      var ch = pool[((idx % pool.length) + pool.length) % pool.length], hot = (idx + j) % 9 === 0;
+      c.globalAlpha = hot ? 1 : .25 + .4 * hash(j * 7 + ((idx % 13) + 13) % 13);
+      c.fillStyle = hot ? k.acc : k.paper; c.fillText(ch, lead + (j + .5) * px * 1.15, y);
+    }
+  }
+  c.globalAlpha = 1;
+};
+TX['karaoke-ball'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '같이불러요', px = fit(c, S, h * .34, w * .82), X = slots(c, S, px), n = S.length, p = t % 4, L = X[n - 1] - X[0];
+  var hop = 2.8 / n, idx = Math.min(n - 1, Math.floor(clamp((p - .4) / 2.8) * n)), u = clamp((p - .4 - idx * hop) / hop);
+  var bx = w / 2 + X[0] - px * .7 + (L + px * 1.4) * clamp((p - .4) / 2.8), by = h * .58 - px * .62 - Math.sin(Math.PI * u) * h * .22;
+  var cut = p > 3.3 ? -1 : bx;
+  for (var i = 0; i < n; i++) say(c, S[i], w / 2 + X[i], h * .58, px, 'rgba(244,241,234,.35)');
+  if (cut > 0) { c.save(); c.beginPath(); c.rect(0, 0, cut, h); c.clip(); for (i = 0; i < n; i++) say(c, S[i], w / 2 + X[i], h * .58, px, k.acc); c.restore(); }
+  if (p > .2 && p < 3.3) { c.fillStyle = k.paper; c.beginPath(); c.arc(bx, by, px * .13, 0, TAU); c.fill(); }
+};
+TX['magnifier-lens'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '작은 글씨를 크게 본다', px = fit(c, S, h * .17, w * .86, 700), lx = w / 2 + w * .3 * Math.sin(W8(t)), ly = h / 2, R = h * .3;
+  say(c, S, w / 2, h / 2, px, 'rgba(20,22,27,.55)', 'center', 700);
+  c.save(); c.beginPath(); c.arc(lx, ly, R, 0, TAU); c.clip(); bgc(c, w, h, '#FFFFFF');
+  c.translate(lx, ly); c.scale(2.2, 2.2); c.translate(-lx, -ly); say(c, S, w / 2, h / 2, px, k.acc, 'center', 900); c.restore();
+  c.strokeStyle = k.ink; c.lineWidth = h * .035; c.beginPath(); c.arc(lx, ly, R, 0, TAU); c.stroke();
+  c.lineCap = 'round'; c.lineWidth = h * .06; c.beginPath(); c.moveTo(lx + R * .74, ly + R * .74); c.lineTo(lx + R * 1.3, ly + R * 1.3); c.stroke(); c.lineCap = 'butt';
+};
+TX['water-reflection'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '물 위의 말', px = fit(c, S, h * .3, w * .8), wl = h * .55, ty = wl - px * .52;
+  say(c, S, w / 2, ty, px, k.paper);
+  c.fillStyle = k.deep; c.globalAlpha = .5; c.fillRect(0, wl, w, h - wl); c.globalAlpha = 1;
+  for (var y = wl; y < h; y += 2) {
+    var u = (y - wl) / (h - wl), dx = Math.sin(y * .32 - W8(t, 6)) * (1 + u * 5);
+    c.save(); c.beginPath(); c.rect(0, y, w, 2.2); c.clip(); c.globalAlpha = .55 * (1 - u);
+    c.translate(dx, 2 * wl); c.scale(1, -1); say(c, S, w / 2, ty, px, k.acc); c.restore();
+  }
+  c.globalAlpha = 1; c.fillStyle = k.paper; c.fillRect(w * .1, wl, w * .8, 1);
+};
+
+// ── INSIDE · 글자 안과 배치를 바꿔요 ────────────────────────
+TX['weight-grow'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '굵어진다', p = t % 4, px = fit(c, S, h * .44, w * .8, 900), X = slots(c, S, px, 900);
+  for (var i = 0; i < S.length; i++) {
+    var q = p < 3 ? io((p - .3 - i * .25) / 1) : 1 - io((p - 3) / .8), wt = 100 + Math.round(q * 8) * 100;
+    say(c, S[i], w / 2 + X[i], h / 2, px, q > .99 ? k.acc : k.ink, 'center', wt);
+  }
+};
+TX['gradient-flow'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '흐르는 색', px = fit(c, S, h * .5, w * .84);
+  layer(c, w, h, function (x) {
+    var G = w * .9, o = frac(t / 4) * G;
+    for (var s = -1; s < 3; s++) {
+      var x0 = o + (s - 1) * G, g = x.createLinearGradient(x0, 0, x0 + G, 0);
+      g.addColorStop(0, k.acc); g.addColorStop(.33, k.paper); g.addColorStop(.66, k.deep); g.addColorStop(1, k.acc);
+      x.fillStyle = g; x.fillRect(x0, 0, G + 1, h);
+    }
+    x.globalCompositeOperation = 'destination-in'; say(x, S, w / 2, h / 2, px, '#000');
+  });
+};
+TX['text-mosaic'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var cols = 4, rows = 2, gp = h * .05, cw = (w - gp * (cols + 1)) / cols, ch = (h - gp * (rows + 1)) / rows, on = Math.floor(t) % 8, u = frac(t);
+  var ST = [[100, 0], [300, 0], [500, 0], [700, 0], [900, 0], [900, 1], [400, 2], [900, 3]];
+  for (var i = 0; i < 8; i++) {
+    var x = gp + (i % cols) * (cw + gp), y = gp + Math.floor(i / cols) * (ch + gp), lit = i === on ? 1 : i === (on + 7) % 8 ? clamp(1 - u / .5) : 0;
+    c.fillStyle = lit > 0 ? k.acc : k.deep; c.globalAlpha = lit > 0 ? .35 + .65 * lit : .45; c.beginPath(); c.roundRect(x, y, cw, ch, 8); c.fill(); c.globalAlpha = 1;
+    var px = Math.min(ch * .66, cw * .66), col = lit > .5 ? k.ink : k.paper, s = ST[i];
+    if (s[1] === 0) say(c, '글', x + cw / 2, y + ch / 2, px, col, 'center', s[0]);
+    else if (s[1] === 1) { c.font = FONT(px, 900); c.lineWidth = Math.max(1.5, px * .05); c.strokeStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.strokeText('글', x + cw / 2, y + ch / 2); }
+    else if (s[1] === 2) { c.font = s[0] + ' ' + Math.round(px) + 'px "SF Mono",Menlo,monospace'; c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('글', x + cw / 2, y + ch / 2); }
+    else { c.save(); c.translate(x + cw / 2, y + ch / 2); c.transform(1, 0, -.25, 1, 0, 0); say(c, '글', 0, 0, px, col); c.restore(); }
+  }
+};
+TX['scramble-decode'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '정답공개', pool = '갉낡닭랄맑밝삵앎잚찰칼탈팔할#%&?@$', px = fit(c, S, h * .42, w * .8), X = slots(c, S, px), p = t % 4, f = Math.floor(t * 20);
+  for (var i = 0; i < S.length; i++) {
+    var lock = p > .6 + i * .4 && p < 3.4, ch = lock ? S[i] : pool[Math.floor(hash(f * 13 + i * 7) * pool.length)];
+    say(c, ch, w / 2 + X[i], h / 2, px, lock ? k.paper : k.acc, 'center', lock ? 900 : 500);
+    if (!lock) { c.fillStyle = k.acc; c.globalAlpha = .5; c.fillRect(w / 2 + X[i] - px * .45, h / 2 + px * .55, px * .9, 3); c.globalAlpha = 1; }
+  }
+};
+TX['text-kaleido'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var R = h * .44, px = h * .12, n = 12;
+  c.save(); c.translate(w / 2, h / 2);
+  for (var ring = 0; ring < 2; ring++) {
+    var rot = (ring ? -1 : 1) * (Math.PI / 6) * (t / 8) * 2, rr = ring ? R * .42 : R * .78;
+    for (var i = 0; i < n; i++) {
+      c.save(); c.rotate(rot + i * TAU / n); if (i % 2) c.scale(-1, 1);
+      c.translate(0, -rr); say(c, ring ? '빙' : '빙글', 0, 0, ring ? px * .9 : px, (i + ring) % 2 ? k.acc : k.ink); c.restore();
+    }
+  }
+  c.fillStyle = k.acc; c.beginPath(); c.arc(0, 0, h * .05, 0, TAU); c.fill(); c.restore();
+};
+TX['text-fan'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '펼쳐', px = Math.min(h * .2, w * .1), n = 7, p = t % 4, o = p < 2.6 ? back((p - .3) / .9) : 1 - io((p - 2.6) / 1.1), spread = 1.05;
+  c.save(); c.translate(w / 2, h * .92);
+  for (var i = n - 1; i >= 0; i--) {
+    var a = (i - (n - 1) / 2) / ((n - 1) / 2) * spread * o;
+    c.save(); c.rotate(a); c.fillStyle = i % 2 ? k.deep : k.acc; c.fillRect(-px * .75, -h * .78, px * 1.5, h * .62);
+    say(c, S, 0, -h * .62, px, i === (n - 1) / 2 ? k.paper : k.ink); c.restore();
+  }
+  c.fillStyle = k.paper; c.beginPath(); c.arc(0, 0, h * .04, 0, TAU); c.fill(); c.restore();
 };
 
 if (typeof module !== 'undefined') module.exports = { TX: TX };

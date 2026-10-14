@@ -99,3 +99,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - ⛔ **⑨ 글자 연출 40 데모가 전부 안 돌았다(10-13 출하 ~ 10-14 수정)**. 엔진 헬퍼 `fit()`(글자 줄이기)이 데모 러너의 `fit()`(캔버스 크기 맞추기)을 덮어써서 첫 줄에서 예외 → `requestAnimationFrame` 까지 못 갔다. 러너 쪽 이름을 `sizeCanvas` 로 바꿨다(네 gen.mjs 전부). **러너가 쓰는 이름을 헬퍼에 쓰지 않는다.** 그리고 첫 프레임에 `now < t0` 라 `t` 가 음수가 되어 `floor(t/2)%4 = -1` 로 배열을 넘던 것(셰이프 모프)도 러너에서 `Math.max(0, …)` 로 막았다.
 - ⭐ 검증 순서: 영상(render.mjs)이 멀쩡해도 갤러리 데모는 다른 러너라 따로 깨진다. 출하 전 **갤러리 `gallery-core.html` 의 iframe 전부를 헤드리스로 열어 예외 0** 을 본다(10-14 실측 213개).
 - ⚠️ (0.7.1) 운영에서 자동 시연이 안 돌았다. 갤러리 페이지가 커서 iframe 이 `UI_JS` 보다 먼저 떠 `ready` 메시지를 놓쳤다. 스크립트가 시작할 때 이미 뜬 iframe 을 준비로 치고 `load` 도 듣는다. ⭐ 로컬 file:// 시험은 경쟁 조건을 우연히 통과할 수 있다 → **배포 뒤 운영 주소에서 한 번 더** 본다.
+
+## 모션 메뉴판 0.10.0 — ⑩ 글자 몸짓 24 (2026-10-14)
+
+- ⑨가 단어의 배치와 공간을 다룬다면 ⑩은 글자 하나하나의 몸을 움직인다. `group` VANISH(사라지고 모이기) · SWAY(흔들리기) · PLAY(물리와 소품) · INSIDE(글자 안과 배치), 6개씩. 215항목.
+- 정본은 ⑨와 같은 `tools/text/engine.js`(`TX`)다. `gen.mjs` 가 `m10-text-motion.html` 과 `m13-text-body.html` 을 같이 만든다. 색은 `PALETTE_BODY`.
+- 영상·확인 시트는 `TEXT_CAT=text-body node plugins/motion-menu/tools/text/render.mjs <폴더> sheet|video`.
+- helpers 에 `slots`(한 자씩 놓을 자리)와 `dots`(글자 모양을 점 집합으로, 가루 소멸용)를 더했다. 그래서 ⑨ components 40개도 같이 다시 생성된다(동작은 그대로).
+- 아이디어는 외부 글자 연출 모음에서 가져왔고 문구·글자·색·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.

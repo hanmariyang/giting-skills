@@ -1,4 +1,4 @@
-// engine.js + menu.json → demos/m10-text-motion.html (갤러리 데모 프래그먼트 40개)
+// engine.js + menu.json → demos/m10-text-motion.html(⑨ 글자 연출 40) · demos/m13-text-body.html(⑩ 글자 몸짓 24)
 // 실행: node plugins/motion-menu/tools/text/gen.mjs   그다음 루트에서 node build.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -18,13 +18,20 @@ export const PALETTE = {
   SWAP: { acc: '#6B5AE0', label: '말을 바꿔 끼워요' },
   STYLE: { acc: '#F05032', label: '보여 주는 방식으로 끌어올려요' },
 };
+export const PALETTE_BODY = {
+  VANISH: { acc: '#2BA8E0', label: '사라지고 모여요' },
+  SWAY: { acc: '#E8930C', label: '쉬지 않고 흔들려요' },
+  PLAY: { acc: '#E8506E', label: '물리와 소품으로 놀아요' },
+  INSIDE: { acc: '#6B5AE0', label: '글자 안과 배치를 바꿔요' },
+};
 export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
 const items = menu.items.filter(i => i.category === 'text-motion');
-const missing = items.filter(i => !TX[i.id]).map(i => i.id);
+const body = menu.items.filter(i => i.category === 'text-body');
+const missing = items.concat(body).filter(i => !TX[i.id]).map(i => i.id);
 if (missing.length) { console.error('engine.js 에 없는 글자 연출:', missing.join(', ')); process.exit(1); }
 
 const frag = it => {
-  const acc = PALETTE[it.group].acc;
+  const acc = (PALETTE[it.group] || PALETTE_BODY[it.group]).acc;
   return `<!-- @${it.id} h=220 full -->
 <style>
   .tx{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
@@ -52,4 +59,9 @@ ${items.map(frag).join('\n\n')}
 `;
 writeFileSync(join(MM, 'demos', 'm10-text-motion.html'), out);
 console.log(`demos/m10-text-motion.html: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+const out2 = `<!-- 생성물: tools/text/gen.mjs 가 engine.js 에서 만든다. 여기를 직접 고치지 않는다 -->
+${body.map(frag).join('\n\n')}
+`;
+writeFileSync(join(MM, 'demos', 'm13-text-body.html'), out2);
+console.log(`demos/m13-text-body.html: ${body.length}개 · ${(out2.length / 1024).toFixed(0)}KB`);
 }

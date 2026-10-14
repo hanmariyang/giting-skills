@@ -1,4 +1,5 @@
 // 글자 연출 40 홍보 영상 — 묶음마다 1080×1920 영상 하나 (8개씩 5편, 8초, 끝과 처음이 이어진다)
+// ⑩ 글자 몸짓 24 는 TEXT_CAT=text-body 를 붙인다(6개씩 4편)
 // node plugins/motion-menu/tools/text/render.mjs <출력폴더> [video|sheet|covers] [묶음…]
 //   covers: 묶음마다 1.1초 지점 한 장(still-<묶음>.png) — 레이아웃 확인용
 //   sheet: 글자 연출 40개를 0 · 2 · 4 · 6초에서 멈춘 확인용 한 장(sheet.png)
@@ -9,14 +10,16 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { PALETTE, mix } from './gen.mjs';
+import { PALETTE as P1, PALETTE_BODY, mix } from './gen.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const [, , outArg, mode = 'video', ...only] = process.argv;
 if (!outArg) { console.error('출력 폴더를 주세요'); process.exit(1); }
 const OUT = resolve(outArg); mkdirSync(OUT, { recursive: true });
 const menu = JSON.parse(readFileSync(join(HERE, '..', '..', 'menu.json'), 'utf8'));
-const items = menu.items.filter(i => i.category === 'text-motion');
+// TEXT_CAT=text-body 면 ⑩ 글자 몸짓 24 로 굽는다(기본 ⑨ 글자 연출 40)
+const CAT = process.env.TEXT_CAT || 'text-motion', PALETTE = CAT === 'text-body' ? PALETTE_BODY : P1;
+const items = menu.items.filter(i => i.category === CAT);
 const groups = Object.keys(PALETTE).filter(g => !only.length || only.includes(g));
 const FPS = 30, SECS = 8, DRAW = 'draw';
 
@@ -66,10 +69,10 @@ window.draw=function(g,t){
   });
   c.fillStyle=INK;c.fillRect(56,1660,968,3);
   txt('GITING',56,1712,'800 26px '+MONO,INK);
-  txt('40개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
+  txt('${items.length}개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
 };
 window.sheet=function(){
-  cv.width=1080;cv.height=40*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
+  cv.width=1080;cv.height=${items.length}*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
   var k=0;Object.keys(D).forEach(function(g){var G=D[g];G.items.forEach(function(it){
     var y=20+k*120;txt(String(it.no).padStart(2,'0')+' '+it.id,20,y+60,'600 20px '+MONO,'#ccc');
     [0,2,4,6].forEach(function(t,j){cell(it,260+j*205,y,195,100,t,G,18,j===0);});k++;});});

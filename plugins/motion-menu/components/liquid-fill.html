@@ -32,6 +32,23 @@ var band = function (c, s, y, px, col, dir, n, t, w, wt) {
   c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle';
   for (var x = -L * 2 + ((o % L) + L) % L; x < w + L; x += L) c.fillText(s, x, y);
 };
+// 글자를 한 자씩 놓을 자리(가운데 0 기준 x 들)
+var slots = function (c, s, px, wt) {
+  c.font = FONT(px, wt); var ws = [], L = 0, i;
+  for (i = 0; i < s.length; i++) { ws.push(c.measureText(s[i]).width); L += ws[i]; }
+  var x = -L / 2, out = []; for (i = 0; i < s.length; i++) { out.push(x + ws[i] / 2); x += ws[i]; } return out;
+};
+// 글자 모양을 점 집합으로(가루·모자이크용). 한 번 재고 기억한다
+var DOTS = {};
+var dots = function (s, px, step, wt) {
+  var key = s + '|' + Math.round(px) + '|' + step; if (DOTS[key]) return DOTS[key];
+  var o = document.createElement('canvas'), x = o.getContext('2d'); x.font = FONT(px, wt);
+  var W = Math.ceil(x.measureText(s).width + px * .4), H = Math.ceil(px * 1.5); o.width = W; o.height = H;
+  x.font = FONT(px, wt); x.fillStyle = '#000'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(s, W / 2, H / 2);
+  var d = x.getImageData(0, 0, W, H).data, out = [];
+  for (var y = 0; y < H; y += step) for (var X = 0; X < W; X += step) if (d[(y * W + X) * 4 + 3] > 120) out.push([X - W / 2, y - H / 2]);
+  return (DOTS[key] = out);
+};
 var F=function (c, w, h, t, k) {
   bgc(c, w, h, k.ink);
   var px = h * .7, lv = h * .85 - (h * .7) * io(clamp((t % 4) / 3)) + (t % 4 > 3.6 ? (t % 4 - 3.6) / .4 * h : 0);
