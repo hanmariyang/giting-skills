@@ -107,3 +107,9 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 영상·확인 시트는 `TEXT_CAT=text-body node plugins/motion-menu/tools/text/render.mjs <폴더> sheet|video`.
 - helpers 에 `slots`(한 자씩 놓을 자리)와 `dots`(글자 모양을 점 집합으로, 가루 소멸용)를 더했다. 그래서 ⑨ components 40개도 같이 다시 생성된다(동작은 그대로).
 - 아이디어는 외부 글자 연출 모음에서 가져왔고 문구·글자·색·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
+
+## 모션 메뉴판 0.11.0 — 글자 조합 레시피 10 · 쓰임 태그 · ⑩ 홍보 영상 (2026-10-14)
+
+- `recipes` 에 `kind:"text"` 10개. 데모는 ⑨⑩과 같은 `tools/text/engine.js` 의 `TX['rcp-tx-*']` 이고 `gen.mjs` 가 `m13-text-body.html` 끝에 붙인다. 갤러리는 「조합 레시피(샷 단위)」와 「글자 조합 레시피」 두 섹션으로 나눈다. `combo` 는 menu.json 에 있는 영어 이름만 쓴다.
+- 215항목 전부 `mood`(쓰임 두 낱말). 카드 footer 에 「쓰임」으로, llms 에 `- 쓰임:` 으로 나간다.
+- `render.mjs` 는 묶음 항목 수가 8 미만이면 줄 높이를 늘려 1080×1920 을 채운다(8이면 예전 그대로).

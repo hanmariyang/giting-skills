@@ -1529,9 +1529,9 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-card header h3{font-size:14.5px;font-weight:700;margin:0}
 .mogal .mo-card .star{color:var(--acc2);font-size:12px}
 .mogal .mo-card .en{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink3);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mogal .mo-card .copy{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink2)}
-.mogal .mo-card .copy:hover{border-color:var(--ink3);color:var(--ink)}
-.mogal .mo-card .copy.ok{border-color:var(--acc2);color:var(--acc)}
+.mogal .mo-card .copy,.mogal .mo-rcpi .copy{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink2)}
+.mogal .mo-card .copy:hover,.mogal .mo-rcpi .copy:hover{border-color:var(--ink3);color:var(--ink)}
+.mogal .mo-card .copy.ok,.mogal .mo-rcpi .copy.ok{border-color:var(--acc2);color:var(--acc)}
 .mogal .mo-card iframe{display:block;width:100%;border:0;background:#fff}
 .mogal .mo-card footer{padding:9px 13px 11px;border-top:1px solid var(--bg);display:flex;flex-wrap:wrap;gap:4px 9px;align-items:baseline;margin-top:auto}
 .mogal .mo-card .al{font-size:12px;color:var(--acc)}
@@ -1544,6 +1544,7 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mk-ai{color:#1c6fb0;background:color-mix(in srgb,#2BA8E0 10%,transparent);border-color:color-mix(in srgb,#2BA8E0 28%,transparent)}
 .mogal .mk-mg{color:var(--acc);background:color-mix(in srgb,var(--acc) 9%,transparent);border-color:color-mix(in srgb,var(--acc) 26%,transparent)}
 .mogal .mk-css{color:#0F766E;background:color-mix(in srgb,#0F766E 9%,transparent);border-color:color-mix(in srgb,#0F766E 26%,transparent)}
+.mogal .mo-card .mood{flex-basis:100%;font-size:11px;color:var(--ink2)}
 .mogal .mo-card .vs{flex-basis:100%;font-size:11.5px;color:var(--ink3)}
 .mogal .mo-rcp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:720px){.mogal .mo-rcp{grid-template-columns:1fr}}
@@ -1578,10 +1579,11 @@ const moStar = it => it.star ? '<span class="star" title="현장에서 특히 �
 const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
 const moMake = it => (it.make || []).map(k => `<span class="mk mk-${k}">${MAKE_LBL[k] || k}</span>`).join('');
 const moCoined = it => it.coined ? '<span class="coined" title="표준 용어가 아닌 애칭/지어낸 이름. 정식명은 영문·구분 참고">애칭</span>' : '';
+const moShot = moMenu.recipes.filter(r => r.kind !== 'text'), moTxR = moMenu.recipes.filter(r => r.kind === 'text');
 const moCard = it => `<article class="mo-card" id="m-${it.id}">
   <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}${moCoined(it)}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
   <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[it.id].h}px" srcdoc="${attr(moCode[it.id])}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.mood ? `<span class="mood">쓰임 ${esc(it.mood)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
 </article>`;
 const moF = moMenu.formula;
 const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 24가지. 1~6 사라지고 모이기 · 7~12 쉬지 않고 흔들리기 · 13~18 물리와 소품 · 19~24 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.' };
@@ -1594,7 +1596,7 @@ const moCore = `<div class="mogal">
     <div class="good"><span class="mk">○ 이렇게</span>「${esc(moF.good)}」</div>
   </div>
 </div>
-<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moMenu.recipes.length}</a>${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}</nav>
+<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moShot.length}</a>${moTxR.length ? `<a href="#mc-text-recipes"><b>＋</b>글자 조합 ${moTxR.length}</a>` : ''}${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}</nav>
 ${moMenu.easingRoles ? `<div class="mo-box"><h3>${esc(moMenu.easingRoles.title)}<button class="copy" data-copy="${attr(moMenu.easingRoles.ask)}" title="요청 문장 복사">문장</button></h3>
   <p>${esc(moMenu.easingRoles.note)}</p>
   <div class="mo-roles">${moMenu.easingRoles.roles.map(r => `<div><b>${esc(r.use)}</b><code>${esc(r.curve)}</code><br>${esc(r.feel)}</div>`).join('')}</div>
@@ -1616,15 +1618,26 @@ ${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
   <div class="mo-grid">${moBy(cat.id).map(moCard).join('\n')}</div>
 </section>`).join('\n')}
 <section class="mo-cat" id="mc-recipes">
-  <h2><span class="no">＋</span> 조합 레시피 <span class="count">${moMenu.recipes.length} · 샷 단위</span></h2>
+  <h2><span class="no">＋</span> 조합 레시피 <span class="count">${moShot.length} · 샷 단위</span></h2>
   <p class="mo-note">낱개 모션을 아는 다음 단계 — 흔한 샷이 어떤 조합으로 만들어지는지.</p>
-  <div class="mo-rcp">${moMenu.recipes.map(r => `<article class="mo-rcpi" id="m-${r.id}">
+  <div class="mo-rcp">${moShot.map(r => `<article class="mo-rcpi" id="m-${r.id}">
     <header><h3>${esc(r.shot)}</h3><span class="rk">${esc(r.ko)}</span><button class="copy" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
     <iframe title="${esc(r.shot)} 조합 데모" loading="lazy" style="height:${moFrags[r.id].h}px" srcdoc="${attr(moRcode[r.id])}"></iframe>
     <div class="mo-rcpc">${r.combo.map(c => `<span class="mo-rtag">${esc(c)}</span>`).join('')}</div>
     <p class="mo-rcpsc">${esc(r.sc)}</p>
   </article>`).join('\n')}</div>
 </section>
+${moTxR.length ? `<section class="mo-cat" id="mc-text-recipes">
+  <h2><span class="no">＋</span> 글자 조합 레시피 <span class="count">${moTxR.length}</span></h2>
+  <p class="mo-note">이미 있는 글자 연출에 타이밍·효과를 하나 더 얹은 것. 새 이름을 외우지 말고 아는 이름 둘셋을 섞어서 시키세요.</p>
+  <div class="mo-rcp">${moTxR.map(r => `<article class="mo-rcpi" id="m-${r.id}">
+    <header><h3>${esc(r.shot)}</h3><span class="rk">${esc(r.ko)}</span><button class="copy" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
+    <iframe title="${esc(r.shot)} 조합 데모" loading="lazy" style="height:${moFrags[r.id].h}px" srcdoc="${attr(moRcode[r.id])}"></iframe>
+    <div class="mo-rcpc">${r.combo.map(c => `<span class="mo-rtag">${esc(c)}</span>`).join('')}</div>
+    <p class="mo-rcpsc">${esc(r.sc)}</p>
+  </article>`).join('\n')}</div>
+</section>
+` : ''}
 ${moScn.list.length ? `<section class="mo-cat" id="mc-scenes">
   <h2><span class="no">▦</span> ${esc(moScn.title)} <span class="count">${moScn.list.length}</span></h2>
   <p class="mo-note">${esc(moScn.note)}</p>
@@ -1655,7 +1668,8 @@ ${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : 
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
 - 정의: ${it.oneliner}${it.vs ? `
 - 구분: ${it.vs}` : ''}
-- 만드는 법: ${(it.make || []).map(k => MAKE_LBL[k] || k).join(' · ')}
+${it.mood ? `- 쓰임: ${it.mood}
+` : ''}- 만드는 법: ${(it.make || []).map(k => MAKE_LBL[k] || k).join(' · ')}
 - 요청 문장: ${it.ask}
 - 데모: ${MO_RAW}/${it.id}.html${full ? `
 
@@ -1690,7 +1704,7 @@ ${moScn.list.map(sc => `- ${sc.no}. ${sc.name} (${sc.when}): ${sc.does} (만드�
 ${moScn.ask}
 \`\`\`
 
-` : ''}## ＋ 조합 레시피 (샷 단위)
+` : ''}## ＋ 조합 레시피 (샷 단위 · 글자 조합)
 
 ${moMenu.recipes.map(r => `### ${r.shot} — ${r.ko}
 - 조합: ${r.combo.join(' + ')}

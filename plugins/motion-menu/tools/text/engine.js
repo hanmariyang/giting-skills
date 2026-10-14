@@ -745,4 +745,106 @@ TX['text-fan'] = function (c, w, h, t, k) {
   c.fillStyle = k.paper; c.beginPath(); c.arc(0, 0, h * .04, 0, TAU); c.fill(); c.restore();
 };
 
+// ════ 글자 조합 레시피 10 — 이미 있는 항목 둘셋을 섞은 것(menu.json recipes, kind:"text") ════
+TX['rcp-tx-lightning'] = function (c, w, h, t, k) {
+  var p = t % 2, fl = p < .18 ? 1 - p / .18 : 0;
+  bgc(c, w, h, k.ink); if (fl) { c.globalAlpha = fl * .85; bgc(c, w, h, k.paper); c.globalAlpha = 1; }
+  var S = '번쩍', px = fit(c, S, h * .56, w * .7), sc = p < .14 ? 1.8 - .8 * eo(p / .14) : 1;
+  if (p < .25) {
+    c.strokeStyle = k.paper; c.lineWidth = 3; c.globalAlpha = 1 - p / .25; c.beginPath(); var x = w * (.3 + .4 * hash(Math.floor(t / 2))); c.moveTo(x, 0);
+    for (var i = 1; i <= 6; i++) c.lineTo(x + (hash(i + Math.floor(t / 2) * 7) - .5) * w * .12, h * .5 * i / 6); c.stroke(); c.globalAlpha = 1;
+  }
+  c.save(); c.translate(w / 2, h / 2); c.scale(sc, sc); c.shadowColor = k.acc; c.shadowBlur = h * (.08 + .25 * fl);
+  say(c, S, 0, 0, px, k.paper); c.shadowBlur = 0; c.restore();
+};
+TX['rcp-tx-explode'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '팡파레', px = fit(c, S, h * .5, w * .6), X = slots(c, S, px), p = t % 4;
+  var q = p < 1.1 ? 0 : p < 2.6 ? eo((p - 1.1) / 1) : 1 - io((p - 2.6) / 1.1);
+  for (var j = 0; j < 16; j++) {
+    var a = hash(j) * TAU, d = q * h * (.4 + .5 * hash(j + 4)); c.globalAlpha = q * (1 - q * .6); c.fillStyle = j % 2 ? k.acc : k.paper;
+    c.beginPath(); c.arc(w / 2 + Math.cos(a) * d * 1.5, h / 2 + Math.sin(a) * d, h * .015 + h * .015 * hash(j + 8), 0, TAU); c.fill();
+  }
+  c.globalAlpha = 1;
+  for (var i = 0; i < S.length; i++) {
+    var a2 = (i - 1) * .9 - Math.PI / 2 + (i === 1 ? Math.PI : 0), d2 = q * h * .55;
+    c.save(); c.translate(w / 2 + X[i] + Math.cos(a2) * d2 * 1.4, h / 2 + Math.sin(a2) * d2); c.rotate(q * (i - 1) * 2.2);
+    say(c, S[i], 0, 0, px * (1 - q * .3), q > .05 ? k.acc : k.paper); c.restore();
+  }
+};
+TX['rcp-tx-heartbeat'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var p = t % 1, beat = function (u) { return u < 0 ? 0 : Math.exp(-u * 18) * Math.min(1, u * 40); };
+  var b = beat(p) + .7 * beat(p - .22), px = fit(c, '두근', h * .46, w * .6);
+  [0, .22].forEach(function (o) { var u = p - o; if (u < 0) return; c.globalAlpha = clamp(1 - u / .7) * .6; c.strokeStyle = k.acc; c.lineWidth = 3; c.beginPath(); c.arc(w / 2, h / 2, px * .6 + u * h * .9, 0, TAU); c.stroke(); });
+  c.globalAlpha = 1; c.save(); c.translate(w / 2, h / 2); c.scale(1 + .22 * b, 1 + .22 * b); say(c, '두근', 0, 0, px, k.acc); c.restore();
+};
+TX['rcp-tx-countdown'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var p = t % 4, n = Math.floor(p), u = p - n, S = ['3', '2', '1', '시작'][n], sc = u < .12 ? 2.4 - 1.4 * eo(u / .12) : 1;
+  var sh = u > .12 && u < .4 ? Math.sin(u * 80) * h * .03 * (1 - (u - .12) / .28) : 0, px = n < 3 ? h * .74 : fit(c, S, h * .5, w * .7);
+  if (u < .1) { c.globalAlpha = .4 * (1 - u / .1); bgc(c, w, h, k.acc); c.globalAlpha = 1; }
+  c.save(); c.translate(w / 2 + sh, h / 2 + sh * .5); c.scale(sc, sc); say(c, S, 0, 0, px, n < 3 ? k.paper : k.acc); c.restore();
+};
+TX['rcp-tx-coin'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '행운을빌어', px = fit(c, S, h * .36, w * .8), X = slots(c, S, px), p = t % 4;
+  for (var i = 0; i < S.length; i++) {
+    var q = clamp((p - .3 - i * .15) / 1.1), a = q * TAU * 2, cs = Math.cos(a), y = -Math.sin(Math.PI * q) * h * .25;
+    c.save(); c.translate(w / 2 + X[i], h * .58 + y); c.scale(Math.max(.06, Math.abs(cs)), 1);
+    say(c, S[i], 0, 0, px, cs < 0 ? k.acc : k.ink); c.restore();
+  }
+};
+TX['rcp-tx-bounce'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '통통튀어', px = fit(c, S, h * .38, w * .76), X = slots(c, S, px), p = t % 4, gy = h * .78;
+  c.fillStyle = k.deep; c.fillRect(0, gy, w, 3);
+  for (var i = 0; i < S.length; i++) {
+    var u = p - .2 - i * .18, y, sx = 1, sy = 1;
+    if (u < 0) continue;
+    if (p > 3.4) { c.globalAlpha = 1 - (p - 3.4) / .6; }
+    var hops = [[0, .45, 1], [.45, .75, .35], [.75, .95, .12]]; y = 0;
+    if (u < .45) y = (1 - Math.pow(u / .45, 2)) * h * .7;
+    else for (var j = 1; j < 3; j++) { var hp = hops[j]; if (u >= hp[0] && u < hp[1]) { var v = (u - hp[0]) / (hp[1] - hp[0]); y = Math.sin(Math.PI * v) * h * .7 * hp[2]; } }
+    var dist = [.45, .75, .95].map(function (s) { return Math.abs(u - s); }), near = Math.min.apply(null, dist);
+    if (near < .05 && u < 1) { var sq = (1 - near / .05) * .35; sx = 1 + sq; sy = 1 - sq; }
+    c.save(); c.translate(w / 2 + X[i], gy - y); c.scale(sx, sy); say(c, S[i], 0, -px * .52, px, i % 2 ? k.acc : k.paper); c.restore(); c.globalAlpha = 1;
+  }
+};
+TX['rcp-tx-pulse-grid'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.acc);
+  var cols = 8, rows = 4, cw = w / cols, ch = h / rows;
+  for (var j = 0; j < rows; j++) for (var i = 0; i < cols; i++) {
+    var s = .35 + .75 * Math.max(0, Math.sin(W8(t, 4) - (i + j) * .55));
+    say(c, '맥박', (i + .5) * cw, (j + .5) * ch, Math.min(ch * .55, cw * .4) * s, s > .9 ? k.paper : k.ink);
+  }
+};
+TX['rcp-tx-rotating'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var R = h * .4, ring = '매일 다른 계절 · ', px = h * .1, n = 24, rot = (t / 8) * TAU;
+  c.save(); c.translate(w / 2, h / 2);
+  for (var i = 0; i < n; i++) { c.save(); c.rotate(rot + i * TAU / n); c.translate(0, -R); say(c, ring[i % ring.length], 0, 0, px, k.acc, 'center', 700); c.restore(); }
+  var W = ['봄', '여름', '가을', '겨울'], idx = Math.floor(t / 2) % 4, p = frac(t / 2), mv = p > .8 ? io((p - .8) / .2) : 0, big = Math.min(h * .34, R * 1.1);
+  c.beginPath(); c.arc(0, 0, R * .78, 0, TAU); c.clip();
+  say(c, W[idx], 0, -mv * h * .5, big, k.paper); say(c, W[(idx + 1) % 4], 0, (1 - mv) * h * .5, big, k.paper); c.restore();
+};
+TX['rcp-tx-checker'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var cols = 10, rows = 4, s = Math.min(w / cols, h / rows) * .9, ox = (w - cols * s) / 2, oy = (h - rows * s) / 2, n = Math.floor(t / 4), p = t % 4;
+  for (var j = 0; j < rows; j++) for (var i = 0; i < cols; i++) {
+    var q = clamp((p - .3 - (i + j) * .1) / .4), a = q * Math.PI, side = (q > .5 ? n + 1 : n) % 2, base = (i + j) % 2;
+    var on = (base + side) % 2 === 0, cs = Math.abs(Math.cos(a));
+    c.save(); c.translate(ox + (i + .5) * s, oy + (j + .5) * s); c.scale(1, Math.max(.05, cs));
+    c.fillStyle = on ? k.acc : k.deep; c.fillRect(-s * .45, -s * .45, s * .9, s * .9); say(c, '글', 0, 0, s * .58, on ? k.ink : k.paper); c.restore();
+  }
+};
+TX['rcp-tx-elastic'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var S = '늘어나요', px = fit(c, S, h * .32, w * .76), X = slots(c, S, px), gy = h * .82;
+  for (var i = 0; i < S.length; i++) {
+    var a = W8(t, 4) - i * .8, s = 1 + .9 * Math.max(0, Math.sin(a));
+    c.save(); c.translate(w / 2 + X[i], gy); c.scale(1 - .12 * (s - 1), s); say(c, S[i], 0, -px * .5, px, s > 1.6 ? k.acc : k.ink); c.restore();
+  }
+};
+
 if (typeof module !== 'undefined') module.exports = { TX: TX };

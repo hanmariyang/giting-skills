@@ -27,7 +27,10 @@ export const PALETTE_BODY = {
 export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
 const items = menu.items.filter(i => i.category === 'text-motion');
 const body = menu.items.filter(i => i.category === 'text-body');
-const missing = items.concat(body).filter(i => !TX[i.id]).map(i => i.id);
+// 글자 조합 레시피(kind:"text") 도 같은 엔진으로 그린다
+const RG = Object.keys(PALETTE_BODY);
+const rcp = menu.recipes.filter(r => r.kind === 'text').map((r, i) => ({ id: r.id, name: { ko: r.shot }, oneliner: r.ko, group: RG[i % RG.length] }));
+const missing = items.concat(body, rcp).filter(i => !TX[i.id]).map(i => i.id);
 if (missing.length) { console.error('engine.js 에 없는 글자 연출:', missing.join(', ')); process.exit(1); }
 
 const frag = it => {
@@ -61,7 +64,9 @@ writeFileSync(join(MM, 'demos', 'm10-text-motion.html'), out);
 console.log(`demos/m10-text-motion.html: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
 const out2 = `<!-- 생성물: tools/text/gen.mjs 가 engine.js 에서 만든다. 여기를 직접 고치지 않는다 -->
 ${body.map(frag).join('\n\n')}
+
+${rcp.map(frag).join('\n\n')}
 `;
 writeFileSync(join(MM, 'demos', 'm13-text-body.html'), out2);
-console.log(`demos/m13-text-body.html: ${body.length}개 · ${(out2.length / 1024).toFixed(0)}KB`);
+console.log(`demos/m13-text-body.html: ${body.length}개 + 레시피 ${rcp.length}개 · ${(out2.length / 1024).toFixed(0)}KB`);
 }
