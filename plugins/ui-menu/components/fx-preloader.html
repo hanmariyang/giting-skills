@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로딩 화면 Preloader — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pg { height: 100vh; padding: 16px; }
+  .pg h3 { margin: 0 0 10px; font-size: 15px; }
+  .ld { position: fixed; inset: 0; background: #17171b; color: #fff; display: grid; place-items: center; transition: transform .6s cubic-bezier(.7,0,.2,1); }
+  .ld.out { transform: translateY(-100%); }
+  .ld .n { font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; text-align: center; }
+  .ld .ln { width: 120px; height: 2px; background: #33333b; margin-top: 8px; }
+  .ld .ln i { display: block; height: 100%; width: 0; background: #e0733f; }
+  .again { position: fixed; right: 12px; bottom: 12px; border: 1px solid #e0e0e8; background: #fff; border-radius: 8px; padding: 6px 10px; font-size: 11px; cursor: pointer; }
+</style>
+<div class="pg"><h3>산책일기</h3><div class="bar" style="width:84%"></div><div class="bar" style="width:66%;margin-top:8px"></div><p class="cap">다 불러오면 덮개가 위로 걷혀요</p></div>
+<div class="ld" id="ld" role="status" aria-live="polite"><div><div class="n" id="n">0%</div><div class="ln"><i id="lb"></i></div></div></div>
+<button class="again" id="again">다시 보기</button>
+<script>
+  (function () {
+    var ld = document.getElementById('ld'), n = document.getElementById('n'), lb = document.getElementById('lb'), tm;
+    function run() {
+      clearInterval(tm); ld.classList.remove('out'); var p = 0;
+      tm = setInterval(function () {
+        p = Math.min(100, p + 3 + Math.random() * 9); n.textContent = Math.floor(p) + '%'; lb.style.width = p + '%';
+        if (p >= 100) { clearInterval(tm); setTimeout(function () { ld.classList.add('out'); }, 250); }
+      }, 90);
+    }
+    document.getElementById('again').onclick = run; run();
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

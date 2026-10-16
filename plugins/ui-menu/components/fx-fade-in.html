@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스크롤 페이드인 Fade-in on Scroll — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; padding: 14px 16px 120px; }
+  .cd { border: 1px solid #e6e6ec; border-radius: 10px; padding: 14px; margin-bottom: 12px; opacity: 0; transform: translateY(18px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .cd.in { opacity: 1; transform: none; }
+  .cd b { display: block; font-size: 13px; margin-bottom: 6px; }
+  @media (prefers-reduced-motion: reduce) { .cd { opacity: 1; transform: none; transition: none; } }
+</style>
+<div class="sc" id="sc">
+  <p class="mut" style="margin:0 0 12px">아래로 내려 보세요</p>
+  <div class="cd"><b>하나. 계획</b><div class="bar" style="width:80%"></div></div>
+  <div class="cd"><b>둘. 준비물</b><div class="bar" style="width:65%"></div></div>
+  <div class="cd"><b>셋. 출발</b><div class="bar" style="width:72%"></div></div>
+  <div class="cd"><b>넷. 기록</b><div class="bar" style="width:58%"></div></div>
+  <div class="cd"><b>다섯. 돌아보기</b><div class="bar" style="width:76%"></div></div>
+</div>
+<script>
+  (function () {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { root: document.getElementById('sc'), threshold: .25 });
+    document.querySelectorAll('.cd').forEach(function (el) { io.observe(el); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

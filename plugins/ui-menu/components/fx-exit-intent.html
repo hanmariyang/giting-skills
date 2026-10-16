@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>떠날 때 팝업 Exit-intent Popup — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pg { height: 100vh; padding: 14px 16px; }
+  .top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+  .pop { position: fixed; inset: 0; background: rgba(23,23,27,.45); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .pop.on { opacity: 1; pointer-events: auto; }
+  .pop .bx { width: 220px; background: #fff; border-radius: 12px; padding: 16px; text-align: center; transform: translateY(10px); transition: transform .25s ease-out; }
+  .pop.on .bx { transform: none; }
+  .pop b { display: block; font-size: 14px; margin-bottom: 6px; }
+  .pop p { margin: 0 0 12px; font-size: 12px; color: #55555f; }
+  .pop button { border: 0; border-radius: 8px; padding: 8px 14px; font-size: 12px; cursor: pointer; }
+  .pop .ok { background: #17171b; color: #fff; }
+  .pop .no { background: none; color: #9a9aa4; }
+</style>
+<div class="pg"><div class="top" id="top"><span>산책일기</span><span class="mut">처음 오셨나요?</span></div><div class="bar" style="width:80%;margin-top:14px"></div><div class="bar" style="width:62%;margin-top:8px"></div><p class="cap">커서를 위쪽 바깥으로 빼면 한 번만 떠요</p></div>
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="bx"><b id="pt">잠깐만요</b><p>첫 달은 무료로 써 볼 수 있어요</p><button class="ok" id="ok">무료로 써 보기</button> <button class="no" id="no">괜찮아요</button></div></div>
+<script>
+  (function () {
+    var pop = document.getElementById('pop'), shown = false;
+    function show() { if (shown) return; shown = true; pop.classList.add('on'); document.getElementById('ok').focus(); }
+    function hide() { pop.classList.remove('on'); }
+    document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY <= 8) show(); });
+    document.getElementById('no').onclick = hide; document.getElementById('ok').onclick = hide;
+    addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

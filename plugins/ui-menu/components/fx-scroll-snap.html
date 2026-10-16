@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스크롤 스냅 Scroll Snap — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; }
+  .pg { height: 100vh; scroll-snap-align: start; display: grid; place-items: center; text-align: center; }
+  .pg b { display: block; font-size: 26px; letter-spacing: -.02em; }
+  .pg span { font-size: 12px; color: inherit; opacity: .7; }
+</style>
+<div class="sc" id="sc">
+  <section class="pg" style="background:#eef1fb"><div><b>담기</b><span>조금 굴려도 이 칸에 딱 멈춰요</span></div></section>
+  <section class="pg" style="background:#17171b;color:#fff"><div><b>꺼내기</b><span>두 번째 칸</span></div></section>
+  <section class="pg" style="background:#fdeee6"><div><b>나누기</b><span>세 번째 칸</span></div></section>
+</div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>둥실 떠다니기 Floating Animation — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc2 { position: relative; width: 240px; height: 140px; }
+  .ph { position: absolute; left: 80px; top: 6px; width: 72px; height: 128px; border: 3px solid #17171b; border-radius: 14px; background: #fff; }
+  .ph::before { content: ''; position: absolute; left: 8px; right: 8px; top: 12px; height: 40px; border-radius: 6px; background: #c9d3f3; }
+  .fl { position: absolute; border-radius: 10px; background: #fff; box-shadow: 0 6px 16px rgba(23,23,27,.12); font-size: 11px; font-weight: 700; padding: 6px 9px; animation: fl 3.2s ease-in-out infinite; }
+  .fl.a { left: 18px; top: 20px; color: #e0733f; }
+  .fl.b { right: 6px; top: 70px; animation-delay: -1.1s; animation-duration: 3.8s; }
+  .fl.c { left: 30px; bottom: 6px; animation-delay: -2s; color: #3f56c4; }
+  @keyframes fl { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  @media (prefers-reduced-motion: reduce) { .fl { animation: none; } }
+</style>
+<div class="center"><div><div class="sc2" aria-hidden="true"><div class="ph"></div><span class="fl a">♥ 12</span><span class="fl b">★ 4.8</span><span class="fl c">새 기록</span></div><p class="cap">장식이 제각각 박자로 둥실 떠요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

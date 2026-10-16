@@ -203,7 +203,7 @@ const cardHtml = it => `
     <button class="tiny linkbtn" data-id="${it.id}" title="이 항목 주소 복사" aria-label="${it.name.ko} 주소 복사">#</button>
   </header>
   <iframe title="${it.name.ko} 데모" loading="lazy"${demoSteps[it.id] ? ' data-demo' : ''} style="height:${frags[it.id].h}px" srcdoc="${attr(demoDoc(it.id, code[it.id]))}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}</footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}${it.touch ? `<span class="vs touch">폰에서는: ${esc(it.touch)}</span>` : ''}</footer>
   <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
 
@@ -234,7 +234,7 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UI 메뉴판 — Giting Skills</title>
-<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. 8개 코스 ${menu.items.length}개 항목 — 전부 그림이 아니라 실제로 동작하는 HTML. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
+<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. ${menu.categories.length}개 코스 ${menu.items.length}개 항목 — 전부 그림이 아니라 실제로 동작하는 HTML. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
   :root {
@@ -348,7 +348,7 @@ const html = `<!doctype html>
   <div class="wrap">
     <div class="kicker">GITING SKILLS · 01 UI-MENU · ${menu.items.length}개 항목</div>
     <h1><q>접었다 폈다 되는 거</q>에는 이름이 있습니다</h1>
-    <p class="sub">말로 설명하던 UI에 이름을 붙여 주는 사전. 8개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있습니다. AI가 직접 읽도록 Claude Code 스킬로도 배포됩니다.</p>
+    <p class="sub">말로 설명하던 UI에 이름을 붙여 주는 사전. ${menu.categories.length}개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있습니다. AI가 직접 읽도록 Claude Code 스킬로도 배포됩니다.</p>
 
     <div class="formula">
       <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(f.pattern)}</span></div>
@@ -412,7 +412,7 @@ ${menu.categories.map(sectionHtml).join('\n')}
 // ── 4. llms.txt ────────────────────────────────────────────────
 const dict = full => `# UI 메뉴판 (ui-menu) — Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 8개 코스 ${menu.items.length}개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. ${menu.categories.length}개 코스 ${menu.items.length}개 항목.
 > AI한테 시키는 공식: ${f.pattern}
 >   ✕ "${f.bad}" → ○ "${f.good}"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -423,7 +423,8 @@ ${menu.categories.map(cat => `## ${cat.no} ${cat.ko}
 ${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 - 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
 - 정의: ${it.oneliner}${it.vs ? `
-- 구분: ${it.vs}` : ''}${it.sc ? `
+- 구분: ${it.vs}` : ''}${it.touch ? `
+- 폰에서는: ${it.touch}` : ''}${it.sc ? `
 - shadcn: ${it.sc}` : ''}
 - 요청 문장: ${it.ask}
 - 레퍼런스: ${RAW}/${it.id}.html${full ? `
@@ -493,6 +494,7 @@ const CORE_CSS = `
 .uigal .item .one { font-size: 12px; color: var(--ink-2); }
 .uigal .item .vs { flex-basis: 100%; font-size: 11.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 5px; margin-top: 2px; }
 .uigal .item .vs.sc { color: #0F766E; border-top: 0; padding-top: 0; font-family: var(--mono); font-size: 11px; }
+.uigal .item .vs.touch { color: #8A5A12; border-top: 0; padding-top: 0; }
 .uigal .codebox { border-top: 1px solid var(--line); background: var(--gwash); padding: 10px 12px; }
 .uigal .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
 .uigal .codebox code { font-family: var(--mono); }

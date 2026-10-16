@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가로 스크롤 섹션 Horizontal Scroll Section — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; }
+  .tall { height: 760px; }
+  .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; }
+  .row { display: flex; gap: 12px; padding: 0 16px; will-change: transform; }
+  .row div { flex: 0 0 150px; height: 120px; border-radius: 10px; color: #fff; font-weight: 800; font-size: 20px; padding: 10px; display: flex; align-items: flex-end; }
+</style>
+<div class="sc" id="sc">
+  <div class="tall" id="tall"><div class="stage"><div class="row" id="row">
+    <div style="background:#3f56c4">01</div><div style="background:#e0733f">02</div><div style="background:#2f9a6a">03</div><div style="background:#17171b">04</div><div style="background:#8e5bd6">05</div>
+  </div></div></div>
+  <p class="cap" style="padding-bottom:20px">세로로 내렸는데 카드는 옆으로 흘러가요</p>
+</div>
+<script>
+  (function () {
+    var sc = document.getElementById('sc'), tall = document.getElementById('tall'), row = document.getElementById('row');
+    sc.addEventListener('scroll', function () {
+      var p = Math.min(1, Math.max(0, sc.scrollTop / (tall.offsetHeight - sc.clientHeight)));
+      row.style.transform = 'translateX(' + (-p * Math.max(0, row.scrollWidth - innerWidth)) + 'px)';
+    }, { passive: true });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

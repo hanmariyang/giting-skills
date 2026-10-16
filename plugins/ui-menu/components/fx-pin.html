@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고정(핀) Pinning — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; }
+  .track { height: 720px; position: relative; }
+  .pin { position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center; padding: 0 16px; background: #17171b; color: #fff; }
+  .pin .no { font-size: 34px; font-weight: 800; color: #8ea1e6; line-height: 1; }
+  .pin p { margin: 6px 0 0; font-size: 12.5px; color: #c7c7d1; }
+  .pin .pic { height: 120px; border-radius: 10px; background: #3f56c4; transition: background .4s; }
+  .dots { display: flex; gap: 5px; margin-top: 12px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: #55555f; }
+  .dots i.on { background: #fff; }
+  .after { padding: 16px; }
+</style>
+<div class="sc" id="sc">
+  <div class="track" id="tr">
+    <div class="pin"><div><div class="no" id="no">01</div><p id="tx">사진 한 장을 고른다</p><div class="dots"><i class="on"></i><i></i><i></i></div></div><div class="pic" id="pic"></div></div>
+  </div>
+  <div class="after"><p class="cap">세 단계가 끝나야 고정이 풀리고 다음으로 넘어가요</p></div>
+</div>
+<script>
+  (function () {
+    var sc = document.getElementById('sc'), tr = document.getElementById('tr');
+    var S = [['01', '사진 한 장을 고른다', '#3f56c4'], ['02', '글 한 줄을 붙인다', '#e0733f'], ['03', '하루가 한 판이 된다', '#2f9a6a']];
+    var dots = document.querySelectorAll('.dots i'), last = -1;
+    sc.addEventListener('scroll', function () {
+      var p = sc.scrollTop / (tr.offsetHeight - sc.clientHeight), i = Math.min(2, Math.max(0, Math.floor(p * 3)));
+      if (i === last) return; last = i;
+      document.getElementById('no').textContent = S[i][0];
+      document.getElementById('tx').textContent = S[i][1];
+      document.getElementById('pic').style.background = S[i][2];
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+    }, { passive: true });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

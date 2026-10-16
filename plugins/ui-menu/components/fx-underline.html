@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>밑줄 늘어나기 Underline Animation — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .nv { display: flex; gap: 22px; justify-content: center; }
+  .nv a { position: relative; color: #17171b; text-decoration: none; font-size: 14px; font-weight: 600; padding: 4px 0; }
+  .nv a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #e0733f; transform: scaleX(0); transform-origin: left; transition: transform .25s ease-out; }
+  .nv a:hover::after, .nv a:focus-visible::after { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) { .nv a::after { transition: none; } }
+</style>
+<div class="center"><div><nav class="nv"><a href="#">서비스</a><a href="#">만든 것</a><a href="#">회사 소개</a></nav><p class="cap">올린 메뉴 밑줄이 왼쪽부터 그어져요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

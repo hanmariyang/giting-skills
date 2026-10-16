@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>타이핑 효과 Typewriter Effect — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .tw { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+  .tw .w { color: #e0733f; }
+  .tw .c { display: inline-block; width: 2px; height: 1em; background: #17171b; margin-left: 2px; vertical-align: -2px; animation: bl 1s steps(1) infinite; }
+  @keyframes bl { 50% { opacity: 0; } }
+</style>
+<div class="center"><div style="text-align:center"><div class="tw" aria-label="오늘은 걷기, 오늘은 읽기, 오늘은 쓰기">오늘은 <span class="w" id="w" aria-hidden="true"></span><span class="c" aria-hidden="true"></span></div><p class="cap">글자가 한 자씩 써지고 지워지며 바뀌어요</p></div></div>
+<script>
+  (function () {
+    var W = ['걷기', '읽기', '쓰기'], el = document.getElementById('w'), wi = 0, ci = 0, del = false;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = W[0]; return; }
+    (function tick() {
+      var w = W[wi]; ci += del ? -1 : 1; el.textContent = w.slice(0, ci);
+      var d = del ? 70 : 150;
+      if (!del && ci === w.length) { del = true; d = 1300; }
+      else if (del && ci === 0) { del = false; wi = (wi + 1) % W.length; d = 350; }
+      setTimeout(tick, d);
+    })();
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

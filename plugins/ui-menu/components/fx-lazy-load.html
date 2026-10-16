@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지연 로딩 Lazy Loading — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; padding: 14px 16px 30px; }
+  .gr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .im { aspect-ratio: 4 / 3; border-radius: 8px; background: #ececf1; position: relative; overflow: hidden; }
+  .im i { position: absolute; inset: 0; opacity: 0; filter: blur(8px); transform: scale(1.05); transition: opacity .5s, filter .6s, transform .6s; }
+  .im.ok i { opacity: 1; filter: none; transform: none; }
+  .im:not(.ok)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent); animation: sh 1.1s infinite; }
+  @keyframes sh { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) { .im i { transition: none; filter: none; } .im::after { animation: none; } }
+</style>
+<div class="sc" id="sc"><p class="mut" style="margin:0 0 10px">갤러리 · 화면에 들어온 사진만 불러와요</p><div class="gr" id="gr"></div></div>
+<script>
+  (function () {
+    var C = ['#c9d3f3', '#fbd3bf', '#2b2f4a', '#8ea1e6', '#e0733f', '#cfe8dc', '#3f56c4', '#f3c8a8', '#2f9a6a', '#d8d8e0', '#8e5bd6', '#fde2d2', '#17171b', '#aac0f0', '#f0a77f'];
+    var gr = document.getElementById('gr');
+    C.forEach(function (c) { var d = document.createElement('div'); d.className = 'im'; d.innerHTML = '<i data-c="' + c + '"></i>'; gr.appendChild(d); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; io.unobserve(e.target);
+        setTimeout(function () { var i = e.target.firstChild; i.style.background = i.dataset.c; e.target.classList.add('ok'); }, 500 + Math.random() * 500);
+      });
+    }, { root: document.getElementById('sc'), rootMargin: '0px 0px -20px 0px' });
+    gr.querySelectorAll('.im').forEach(function (el) { io.observe(el); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

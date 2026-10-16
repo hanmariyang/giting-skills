@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>흐르는 띠(마키) Marquee — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .wrap { height: 100vh; display: grid; align-content: center; gap: 10px; }
+  .mq { overflow: hidden; background: #17171b; color: #fff; padding: 10px 0; }
+  .mq .tr { display: flex; width: max-content; animation: mq 14s linear infinite; }
+  .mq:hover .tr { animation-play-state: paused; }
+  .mq span { font-size: 18px; font-weight: 900; letter-spacing: .04em; padding-right: 22px; white-space: nowrap; }
+  .mq span::after { content: '•'; color: #e0733f; margin-left: 22px; }
+  @keyframes mq { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .mq .tr { animation: none; } }
+</style>
+<div class="wrap"><div class="mq" aria-label="디자인, 모션, 개발, 기획"><div class="tr" aria-hidden="true">
+  <span>DESIGN</span><span>MOTION</span><span>CODE</span><span>PLAN</span><span>DESIGN</span><span>MOTION</span><span>CODE</span><span>PLAN</span>
+  <span>DESIGN</span><span>MOTION</span><span>CODE</span><span>PLAN</span><span>DESIGN</span><span>MOTION</span><span>CODE</span><span>PLAN</span>
+</div></div><p class="cap">띠가 끝없이 흐르고, 올리면 멈춰요</p></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

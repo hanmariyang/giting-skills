@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커서 따라오기 Cursor Follower — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .stage { position: relative; height: 100vh; display: grid; place-items: center; overflow: hidden; cursor: none; }
+  .stage h2 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: .02em; }
+  .dot { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: #e0733f; mix-blend-mode: multiply; pointer-events: none; will-change: transform; }
+  @media (hover: none) { .stage { cursor: auto; } .dot { display: none; } }
+</style>
+<div class="stage" id="st"><div style="text-align:center"><h2>WALK STUDIO</h2><p class="cap">동그라미가 커서를 한 박자 늦게 따라와요</p></div><div class="dot" id="dot" aria-hidden="true"></div></div>
+<script>
+  (function () {
+    var st = document.getElementById('st'), dot = document.getElementById('dot');
+    var tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, lastMove = -1e9, t0 = performance.now();
+    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    st.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; lastMove = performance.now(); });
+    (function loop(now) {
+      if (now - lastMove > 1500) { var a = (now - t0) / 1100; tx = innerWidth / 2 + Math.sin(a) * innerWidth * .3; ty = innerHeight / 2 + Math.sin(a * 2) * innerHeight * .22; }
+      var k = calm ? 1 : .12; x += (tx - x) * k; y += (ty - y) * k;
+      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      requestAnimationFrame(loop);
+    })(t0);
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

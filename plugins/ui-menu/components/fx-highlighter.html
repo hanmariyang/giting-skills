@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>형광펜 긋기 Highlighter Animation — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sc { height: 100vh; overflow-y: auto; padding: 16px 18px 160px; }
+  .sc p { font-size: 14px; line-height: 1.8; margin: 0 0 14px; color: #33333b; }
+  .mk { background: linear-gradient(transparent 58%, #ffe36b 58%) no-repeat 0 0 / 0% 100%; transition: background-size .8s ease-out; font-weight: 700; color: #17171b; }
+  .mk.in { background-size: 100% 100%; }
+  @media (prefers-reduced-motion: reduce) { .mk { transition: none; background-size: 100% 100%; } }
+</style>
+<div class="sc" id="sc">
+  <p>바쁜 사람을 위한 부엌 도우미예요.</p>
+  <p>레시피를 많이 담는 건 쉽지만, 정작 요리할 때는 잘 안 꺼내 보게 돼요.</p>
+  <p>그래서 이 앱은 <span class="mk">요리하는 순간에 먼저 꺼내 줍니다</span>.</p>
+  <p>손이 젖어 있어도 화면을 만질 필요가 없어요.</p>
+  <p>장 볼 때는 <span class="mk">있는 재료부터 보여 줘요</span>.</p>
+</div>
+<script>
+  (function () {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { root: document.getElementById('sc'), threshold: 1 });
+    document.querySelectorAll('.mk').forEach(function (el) { io.observe(el); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

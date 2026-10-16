@@ -8,9 +8,9 @@ Giting 이 검수한 Claude Code 스킬 모음. repo 자체가 마켓플레이�
 .claude-plugin/marketplace.json      # 마켓 정의 — 스킬 추가 시 plugins 배열에 등록
 plugins/ui-menu/
 ├── .claude-plugin/plugin.json       # 플러그인 메타
-├── menu.json                        # 사전 SSOT (8코스 105항목 — 별칭·정의·요청 문장·formula)
+├── menu.json                        # 사전 SSOT (11코스 129항목 — 별칭·정의·요청 문장·formula)
 ├── demos/*.html                     # 데모 프래그먼트 SSOT (<!-- @id h=NNN [full] --> 마커 구분)
-├── components/*.html                # 생성물 — 스킬용 자가완결 105종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
+├── components/*.html                # 생성물 — 스킬용 자가완결 129종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
 └── skills/ui-menu/SKILL.md          # 스킬 본체
 build.mjs                            # demos+menu.json → components/ + 갤러리 생성 (의존성 0)
 docs/                                # GitHub Pages — 리다이렉트 + llms 미러 + promo (생성물)
@@ -113,3 +113,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - `recipes` 에 `kind:"text"` 10개. 데모는 ⑨⑩과 같은 `tools/text/engine.js` 의 `TX['rcp-tx-*']` 이고 `gen.mjs` 가 `m13-text-body.html` 끝에 붙인다. 갤러리는 「조합 레시피(샷 단위)」와 「글자 조합 레시피」 두 섹션으로 나눈다. `combo` 는 menu.json 에 있는 영어 이름만 쓴다.
 - 215항목 전부 `mood`(쓰임 두 낱말). 카드 footer 에 「쓰임」으로, llms 에 `- 쓰임:` 으로 나간다.
 - `render.mjs` 는 묶음 항목 수가 8 미만이면 줄 높이를 늘려 1080×1920 을 채운다(8이면 예전 그대로).
+
+## UI 메뉴판 0.8.0 — 웹 연출 24 (2026-10-16)
+
+- 코스 셋 추가: ⑨ 스크롤 연출 · ⑩ 마우스 반응 · ⑪ 불러오기·흐름, 8개씩(129항목). 데모 `demos/d4-web-fx.html`, id 는 전부 `fx-` 접두어(기존 항목·giting 페이지 id 와 안 겹치게).
+- 새 필드 `touch`(선택): 폰에서는 그 연출이 어떻게 되는지·무엇으로 대신하는지. 카드 footer 「폰에서는」, llms `- 폰에서는:`. 호버·커서 계열 6개에 있다.
+- 요청 문장(`ask`)은 전부 「몇 초 · 얼마나 · 무엇이」 숫자를 품는다. 웹 연출은 이름만으로는 결과가 매번 달라진다.
+- 스크롤 데모는 iframe 안의 `#sc` 스크롤 상자로 돈다(자동 시연 `scroll` 단계가 그걸 민다). 커서 따라오기·자석 버튼은 마우스가 1.5초 안 움직이면 스스로 원을 그리며 시연한다(시연기는 mousemove 를 못 쏜다).
+- ui-menu 에 이미 있는 무한 스크롤은 겹쳐서 빼고 타이핑 효과를 넣었다. 아이디어는 외부 연출 모음에서 가져왔고 문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.

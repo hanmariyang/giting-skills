@@ -66,5 +66,25 @@
   "rcp-search": [["wait",500],["clear","input"],["type","input","후드"],["wait",1200],["blur"]],
   "rcp-confirm": [["wait",500],["hover",".btn.d",900],["wait",400]],
   "rcp-checkout": [["wait",500],["hover",".btn.p",900],["wait",400]],
-  "rcp-settings": [["wait",500],["type",".field:nth-of-type(1) input"," 님"],["wait",500],["press",".btn",300],["wait",800],["blur"]]
+  "rcp-settings": [["wait",500],["type",".field:nth-of-type(1) input"," 님"],["wait",500],["press",".btn",300],["wait",800],["blur"]],
+
+  "fx-parallax": [["wait", 500], ["scroll", "#sc", 120], ["wait", 500], ["scroll", "#sc", 120], ["wait", 900], ["scroll", "#sc", -240], ["wait", 700]],
+  "fx-fade-in": [["wait", 500], ["scroll", "#sc", 140], ["wait", 700], ["scroll", "#sc", 160], ["wait", 1100]],
+  "fx-sticky-header": [["wait", 500], ["scroll", "#sc", 160], ["wait", 1100], ["scroll", "#sc", -160], ["wait", 800]],
+  "fx-pin": [["wait", 500], ["scroll", "#sc", 180], ["wait", 900], ["scroll", "#sc", 180], ["wait", 900], ["scroll", "#sc", -360], ["wait", 800]],
+  "fx-horizontal-scroll": [["wait", 500], ["scroll", "#sc", 180], ["wait", 700], ["scroll", "#sc", 200], ["wait", 900], ["scroll", "#sc", -380], ["wait", 800]],
+  "fx-scroll-snap": [["wait", 500], ["scroll", "#sc", 90], ["wait", 1200], ["scroll", "#sc", 90], ["wait", 1200]],
+  "fx-scroll-progress": [["wait", 500], ["scroll", "#sc", 140], ["wait", 700], ["scroll", "#sc", 160], ["wait", 1000]],
+  "fx-highlighter": [["wait", 500], ["scroll", "#sc", 80], ["wait", 1300], ["scroll", "#sc", 80], ["wait", 1200]],
+  "fx-hover-lift": [["wait", 500], ["hover", ".cd:nth-child(1)", 800], ["hover", ".cd:nth-child(2)", 800], ["hover", ".cd:nth-child(3)", 800]],
+  "fx-hover-zoom": [["wait", 500], ["hover", ".ph:nth-child(1)", 1100], ["hover", ".ph:nth-child(2)", 1100]],
+  "fx-ripple": [["wait", 500], ["tap", "#rp"], ["wait", 900], ["tap", "#rp"], ["wait", 900]],
+  "fx-underline": [["wait", 500], ["hover", ".nv a:nth-child(1)", 700], ["hover", ".nv a:nth-child(2)", 700], ["hover", ".nv a:nth-child(3)", 700]],
+  "fx-before-after": [["wait", 500], ["set", "#rg", 15], ["wait", 600], ["set", "#rg", 85], ["wait", 700], ["set", "#rg", 50], ["wait", 500]],
+  "fx-exit-intent": [["wait", 600], ["hover", "#top", 400], ["wait", 1500], ["tap", "#no"], ["wait", 500]],
+  "fx-preloader": [["wait", 2600], ["tap", "#again"], ["wait", 2600]],
+  "fx-page-transition": [["wait", 500], ["tap", ".go"], ["wait", 1500], ["tap", "#back"], ["wait", 1100]],
+  "fx-smooth-scroll": [["wait", 500], ["tap", ".to3"], ["wait", 1300], ["tap", "#up"], ["wait", 1100]],
+  "fx-marquee": [["wait", 1500], ["hover", ".mq", 1500], ["wait", 800]],
+  "fx-lazy-load": [["wait", 900], ["scroll", "#sc", 140], ["wait", 1200], ["scroll", "#sc", 160], ["wait", 1200]]
 }

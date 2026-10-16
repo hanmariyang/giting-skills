@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자석 버튼 Magnetic Button — UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .stage { height: 100vh; display: grid; place-items: center; }
+  .mg { padding: 12px 28px; border: 0; border-radius: 999px; background: #17171b; color: #fff; font-size: 13px; cursor: pointer; transition: transform .25s ease-out; will-change: transform; }
+  .gh { position: absolute; left: 0; top: 0; width: 16px; height: 16px; pointer-events: none; opacity: .7; }
+</style>
+<div class="stage" id="st"><div style="text-align:center"><button class="mg" id="mg">문의하기</button><p class="cap">근처에 커서가 오면 버튼이 끌려와요</p></div></div>
+<svg class="gh" id="gh" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1.5l12 7.2-5.3 1.2-2.6 5.1z" fill="#17171b" stroke="#fff" stroke-width="1.4"/></svg>
+<script>
+  (function () {
+    var mg = document.getElementById('mg'), gh = document.getElementById('gh'), R = 110, S = .35, lastMove = -1e9, t0 = performance.now();
+    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function pull(px, py) {
+      var b = mg.getBoundingClientRect(), cx = b.left + b.width / 2 - (mg._dx || 0), cy = b.top + b.height / 2 - (mg._dy || 0);
+      var dx = px - cx, dy = py - cy, d = Math.hypot(dx, dy), on = d < R && !calm;
+      mg._dx = on ? dx * S : 0; mg._dy = on ? dy * S : 0;
+      mg.style.transform = 'translate(' + mg._dx + 'px,' + mg._dy + 'px)';
+    }
+    addEventListener('mousemove', function (e) { lastMove = performance.now(); gh.style.display = 'none'; pull(e.clientX, e.clientY); });
+    addEventListener('mouseleave', function () { mg._dx = mg._dy = 0; mg.style.transform = ''; });
+    (function loop(now) {
+      if (now - lastMove > 1500) {
+        var a = (now - t0) / 900, px = innerWidth / 2 + Math.cos(a) * 130, py = innerHeight / 2 - 12 + Math.sin(a) * 40;
+        gh.style.display = ''; gh.style.transform = 'translate(' + px + 'px,' + py + 'px)'; pull(px, py);
+      }
+      requestAnimationFrame(loop);
+    })(t0);
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

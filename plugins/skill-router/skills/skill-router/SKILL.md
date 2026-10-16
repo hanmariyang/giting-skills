@@ -41,7 +41,7 @@ description: "Front door to the Giting Skills marketplace. Use when the user ask
 
 | 스킬 | 이럴 때 | 주는 것 |
 |---|---|---|
-| `ui-menu` | 「저기 접었다 폈다 되는 거」 「웹 화면 요소 이름을 모르겠어」 | 웹 UI 요소의 정식 이름과 시킬 문장, 실물 HTML |
+| `ui-menu` | 「저기 접었다 폈다 되는 거」 「웹 화면 요소 이름을 모르겠어」 「스크롤하면 스르륵 나오는 거」 | 웹 UI 요소의 정식 이름과 시킬 문장, 실물 HTML |
 | `app-menu` | 「앱 하단에 탭 있는 거」 「SwiftUI 로 뭐라고 하지」 | 모바일 앱 UI 이름과 SwiftUI·Flutter·RN 매핑 |
 | `design-brief` | 「AI 가 만든 화면이 다 비슷해」 「디자인 시스템 잡아줘」 | 팔레트·글꼴·간격을 정한 DESIGN.md |
 | `font-menu` | 「이런 느낌 폰트 뭐 있어」 「폰트를 어떻게 불러와」 | 인상별 웹폰트와 불러오는 코드 |
