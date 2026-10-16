@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"버튼이 멀쩡한데 클릭이 안 돼요" — CSS 증상 사전</title>
+<title>"버튼이 멀쩡한데 클릭이 안 돼요" · CSS 증상 사전</title>
 <!--
   증상: "버튼이 멀쩡한데 클릭이 안 돼요" (click-blocked) · 유형: 즉방형
-  범인: 투명한 요소가 위를 덮고 있음 — 그라디언트 장식, 닫힌 줄 알았던 오버레이 / 쌓임 순서 경쟁에서 밀림
-  처방: 장식용 덮개에는 pointer-events: none — 보이되 클릭은 통과시킨다.
+  범인: 투명한 요소가 위를 덮고 있음. 그라디언트 장식, 닫힌 줄 알았던 오버레이 / 쌓임 순서 경쟁에서 밀림
+  처방: 장식용 덮개에는 pointer-events: none: 보이되 클릭은 통과시킨다.
   AI에게: 이 버튼이 클릭이 안 돼. 위를 덮고 있는 요소를 찾아서 알려주고, 장식용이면 pointer-events none을 줘서 클릭이 통과되게 해줘.
   확인: 버튼 전체 어디를 눌러도 반응하면 성공.
 -->

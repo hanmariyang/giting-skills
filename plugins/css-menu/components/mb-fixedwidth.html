@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"PC는 멀쩡한데 폰에서 옆으로 밀려요" — CSS 증상 사전</title>
+<title>"PC는 멀쩡한데 폰에서 옆으로 밀려요" · CSS 증상 사전</title>
 <!--
   증상: "PC는 멀쩡한데 폰에서 옆으로 밀려요" (fixed-width) · 유형: 즉방형
-  범인: 어떤 요소가 픽셀 고정 폭(예: 600px) — 폰 화면(390px)보다 큼 / 넓은 표가 통째로 밀고 나감
+  범인: 어떤 요소가 픽셀 고정 폭(예: 600px): 폰 화면(390px)보다 큼 / 넓은 표가 통째로 밀고 나감
   처방: 고정 폭은 max-width로 바꾸고, 넓은 표는 자기 상자 안에서만 가로 스크롤.
   AI에게: 폰에서 화면보다 넓어지는 요소를 찾아서 알려주고, 고정 폭은 max-width로 바꾸고 표는 자기 상자 안에서만 스크롤되게 해줘.
   확인: 폰 폭에서 화면이 좌우로 안 움직이면 성공.
@@ -39,14 +39,14 @@
 <div style="overflow-x:auto;height:100%">
   <div class="card" style="width:420px">
     <b>주간 리포트</b>
-    <p class="mut" style="margin:4px 0 0">width: 420px 고정 — 폰 화면(390px)보다 넓어서 화면째 밀림 →</p>
+    <p class="mut" style="margin:4px 0 0">width: 420px 고정: 폰 화면(390px)보다 넓어서 화면째 밀림 →</p>
   </div>
 </div>
   </div></section>
   <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:150px">
 <div class="card" style="max-width:420px">
   <b>주간 리포트</b>
-  <p class="mut" style="margin:4px 0 0">max-width: 420px — 넓은 화면에선 420px, 좁으면 화면에 맞춤</p>
+  <p class="mut" style="margin:4px 0 0">max-width: 420px: 넓은 화면에선 420px, 좁으면 화면에 맞춤</p>
 </div>
   </div></section>
 </div>

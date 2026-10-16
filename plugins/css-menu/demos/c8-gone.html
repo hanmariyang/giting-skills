@@ -16,14 +16,14 @@
   <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 2</span></div>
 </div>
 <div style="clear:both"></div>
-<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘 — 자식이 전부 떠 있어서</p>
+<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘, 자식이 전부 떠 있어서</p>
 
 <!-- @iv-height-good h=160 -->
 <div style="background:#fff;border:2px dashed #1f7a4d;border-radius:10px;padding:8px 10px;display:flex;gap:8px">
   <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 1</span></div>
   <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 2</span></div>
 </div>
-<p class="mut" style="margin:10px 2px 0">flex 흐름으로 — 부모(초록 점선)가 자식을 감쌈</p>
+<p class="mut" style="margin:10px 2px 0">flex 흐름으로: 부모(초록 점선)가 자식을 감쌈</p>
 
 <!-- @iv-where-bad h=160 -->
 <div style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
@@ -43,7 +43,7 @@
 <div style="height:100%;display:flex;align-items:center;justify-content:center">
   <div>
     <button class="btn">장바구니 <button class="btn" style="background:#f05032">+1</button></button>
-    <p class="mut" style="margin:8px 0 0;text-align:center">버튼 안에 버튼 — 브라우저가 구조를 재배치해 스타일이 붕 뜸</p>
+    <p class="mut" style="margin:8px 0 0;text-align:center">버튼 안에 버튼: 브라우저가 구조를 재배치해 스타일이 붕 뜸</p>
   </div>
 </div>
 
@@ -51,20 +51,20 @@
 <div style="height:100%;display:flex;align-items:center;justify-content:center">
   <div>
     <button class="btn">장바구니 <span style="background:#f05032;border-radius:6px;padding:2px 7px;margin-left:4px">+1</span></button>
-    <p class="mut" style="margin:8px 0 0;text-align:center">안쪽은 span으로 — 구조가 맞으면 스타일이 붙는다</p>
+    <p class="mut" style="margin:8px 0 0;text-align:center">안쪽은 span으로: 구조가 맞으면 스타일이 붙는다</p>
   </div>
 </div>
 
 <!-- @iv-flash-bad h=170 -->
 <div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:12px;font-family:'Times New Roman',serif">
-  <div style="font-size:10px;color:#c4372b;font-family:-apple-system,sans-serif;margin-bottom:6px">로드 직후 0.3초 — 스타일 도착 전</div>
+  <div style="font-size:10px;color:#c4372b;font-family:-apple-system,sans-serif;margin-bottom:6px">로드 직후 0.3초: 스타일 도착 전</div>
   <h4 style="margin:0;font-weight:400">Shopping Mall</h4>
   <p style="margin:4px 0"><a href="#" style="color:#0000ee">Home</a> <a href="#" style="color:#0000ee">Products</a> <a href="#" style="color:#0000ee">Cart</a></p>
 </div>
 
 <!-- @iv-flash-good h=170 -->
 <div class="card">
-  <div style="font-size:10px;color:#1f7a4d;margin-bottom:6px">같은 순간 — CSS 선로드 + font-display</div>
+  <div style="font-size:10px;color:#1f7a4d;margin-bottom:6px">같은 순간: CSS 선로드 + font-display</div>
   <b style="font-size:14px">Shopping Mall</b>
   <div style="display:flex;gap:10px;margin-top:6px;font-size:12px"><span style="color:#f05032;font-weight:600">홈</span><span class="mut">상품</span><span class="mut">장바구니</span></div>
 </div>
@@ -72,7 +72,7 @@
 <!-- @iv-image-bad h=150 -->
 <div class="card" style="width:180px">
   <img src="Logo.PNG" alt="로고 이미지" style="max-width:100%;min-height:44px;border:1px dashed #c4372b;border-radius:6px">
-  <p class="mut" style="margin:6px 0 0">src="Logo.PNG" — 실제 파일은 logo.png. 대소문자도 경로다</p>
+  <p class="mut" style="margin:6px 0 0">src="Logo.PNG" 실제 파일은 logo.png. 대소문자도 경로다</p>
 </div>
 
 <!-- @iv-image-good h=150 -->

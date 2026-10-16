@@ -1,4 +1,4 @@
-# UI 메뉴판 (ui-menu) — Giting Skills
+# UI 메뉴판 (ui-menu) · Giting Skills
 
 > 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 129개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
@@ -21,7 +21,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>헤더 Header — UI 메뉴판</title>
+<title>헤더 Header · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -68,7 +68,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>네비게이션 바 Navbar / GNB — UI 메뉴판</title>
+<title>네비게이션 바 Navbar / GNB · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -111,7 +111,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>히어로 Hero — UI 메뉴판</title>
+<title>히어로 Hero · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -154,7 +154,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>사이드바 Sidebar — UI 메뉴판</title>
+<title>사이드바 Sidebar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -196,7 +196,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>푸터 Footer — UI 메뉴판</title>
+<title>푸터 Footer · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -239,7 +239,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>섹션 Section — UI 메뉴판</title>
+<title>섹션 Section · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -282,7 +282,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>컨테이너 Container — UI 메뉴판</title>
+<title>컨테이너 Container · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -321,7 +321,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>그리드 Grid — UI 메뉴판</title>
+<title>그리드 Grid · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -361,7 +361,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>카드 Card — UI 메뉴판</title>
+<title>카드 Card · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -404,7 +404,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>카드 그리드 Card Grid — UI 메뉴판</title>
+<title>카드 그리드 Card Grid · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -451,7 +451,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>테이블 Table — UI 메뉴판</title>
+<title>테이블 Table · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -497,7 +497,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>레이아웃 Layout — UI 메뉴판</title>
+<title>레이아웃 Layout · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -542,7 +542,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>탭 Tabs — UI 메뉴판</title>
+<title>탭 Tabs · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -598,7 +598,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아코디언 Accordion — UI 메뉴판</title>
+<title>아코디언 Accordion · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -647,7 +647,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>브레드크럼 Breadcrumb — UI 메뉴판</title>
+<title>브레드크럼 Breadcrumb · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -690,7 +690,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스텝퍼 Stepper / Progress Steps — UI 메뉴판</title>
+<title>스텝퍼 Stepper / Progress Steps · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -741,7 +741,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>페이지네이션 Pagination — UI 메뉴판</title>
+<title>페이지네이션 Pagination · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -783,7 +783,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>무한 스크롤 Infinite Scroll — UI 메뉴판</title>
+<title>무한 스크롤 Infinite Scroll · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -841,7 +841,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>더보기 버튼 Load More — UI 메뉴판</title>
+<title>더보기 버튼 Load More · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -886,7 +886,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>캐러셀 Carousel / Slider — UI 메뉴판</title>
+<title>캐러셀 Carousel / Slider · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -943,7 +943,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드롭다운 메뉴 Dropdown — UI 메뉴판</title>
+<title>드롭다운 메뉴 Dropdown · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -995,7 +995,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>햄버거 메뉴 Hamburger Menu — UI 메뉴판</title>
+<title>햄버거 메뉴 Hamburger Menu · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1011,7 +1011,7 @@ document.addEventListener('click', function (e) {
   .hb button { border: 0; background: none; font-size: 18px; cursor: pointer; padding: 4px 8px; }
 </style>
 <div class="hb"><button aria-label="메뉴 열기">&#9776;</button><b style="font-size:13px">로고</b><span style="width:34px"></span></div>
-<p class="cap" style="margin-top:14px">&#9776; 아이콘 — 모바일에서 메뉴를 접는 버튼. 누르면 보통 드로어가 열린다</p>
+<p class="cap" style="margin-top:14px">&#9776; 아이콘: 모바일에서 메뉴를 접는 버튼. 누르면 보통 드로어가 열린다</p>
 <script>
 // 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
 document.addEventListener('click', function (e) {
@@ -1037,7 +1037,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드로어 Drawer / Side Panel — UI 메뉴판</title>
+<title>드로어 Drawer / Side Panel · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1083,7 +1083,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>목차 Table of Contents (TOC) — UI 메뉴판</title>
+<title>목차 Table of Contents (TOC) · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1129,7 +1129,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>하단 탭바 Bottom Navigation / Tab Bar — UI 메뉴판</title>
+<title>하단 탭바 Bottom Navigation / Tab Bar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1174,7 +1174,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>앵커 링크 Anchor Link — UI 메뉴판</title>
+<title>앵커 링크 Anchor Link · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1223,7 +1223,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>리스트 List — UI 메뉴판</title>
+<title>리스트 List · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1270,7 +1270,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>가격표 Pricing Table — UI 메뉴판</title>
+<title>가격표 Pricing Table · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1318,7 +1318,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>후기 Testimonial — UI 메뉴판</title>
+<title>후기 Testimonial · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1364,7 +1364,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>통계 Stats — UI 메뉴판</title>
+<title>통계 Stats · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1409,7 +1409,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>통계 카드 Stat Card / Metric Card — UI 메뉴판</title>
+<title>통계 카드 Stat Card / Metric Card · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1455,7 +1455,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>로고 모음 Logo Cloud — UI 메뉴판</title>
+<title>로고 모음 Logo Cloud · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1496,7 +1496,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>타임라인 Timeline — UI 메뉴판</title>
+<title>타임라인 Timeline · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1547,7 +1547,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>갤러리 Gallery — UI 메뉴판</title>
+<title>갤러리 Gallery · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1587,7 +1587,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>라이트박스 Lightbox — UI 메뉴판</title>
+<title>라이트박스 Lightbox · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1633,7 +1633,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>인용문 Blockquote — UI 메뉴판</title>
+<title>인용문 Blockquote · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1672,7 +1672,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>코드 블록 Code Block — UI 메뉴판</title>
+<title>코드 블록 Code Block · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1722,7 +1722,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>프로필 카드 Profile Card — UI 메뉴판</title>
+<title>프로필 카드 Profile Card · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1764,7 +1764,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>알림 목록 Notification List — UI 메뉴판</title>
+<title>알림 목록 Notification List · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1813,7 +1813,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>배너 Banner — UI 메뉴판</title>
+<title>배너 Banner · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1856,7 +1856,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>폼 Form — UI 메뉴판</title>
+<title>폼 Form · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1904,7 +1904,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>인풋 Input / Text Field — UI 메뉴판</title>
+<title>인풋 Input / Text Field · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1946,7 +1946,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>텍스트에어리어 Textarea — UI 메뉴판</title>
+<title>텍스트에어리어 Textarea · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -1989,7 +1989,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>셀렉트 Select — UI 메뉴판</title>
+<title>셀렉트 Select · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2030,7 +2030,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>체크박스 Checkbox — UI 메뉴판</title>
+<title>체크박스 Checkbox · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2076,7 +2076,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>라디오 버튼 Radio Button — UI 메뉴판</title>
+<title>라디오 버튼 Radio Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2122,7 +2122,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>토글 스위치 Toggle / Switch — UI 메뉴판</title>
+<title>토글 스위치 Toggle / Switch · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2171,7 +2171,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>슬라이더 Slider / Range — UI 메뉴판</title>
+<title>슬라이더 Slider / Range · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2218,7 +2218,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>검색바 Search Bar — UI 메뉴판</title>
+<title>검색바 Search Bar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2267,7 +2267,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자동완성 Autocomplete — UI 메뉴판</title>
+<title>자동완성 Autocomplete · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2315,7 +2315,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>파일 업로더 File Upload — UI 메뉴판</title>
+<title>파일 업로더 File Upload · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2356,7 +2356,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드래그 앤 드롭 Drag and Drop — UI 메뉴판</title>
+<title>드래그 앤 드롭 Drag and Drop · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2409,7 +2409,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>데이트피커 Date Picker — UI 메뉴판</title>
+<title>데이트피커 Date Picker · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2460,7 +2460,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>타임피커 Time Picker — UI 메뉴판</title>
+<title>타임피커 Time Picker · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2504,7 +2504,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>수량 조절 Number Stepper / Counter — UI 메뉴판</title>
+<title>수량 조절 Number Stepper / Counter · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2549,7 +2549,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>인증번호 입력 OTP Input — UI 메뉴판</title>
+<title>인증번호 입력 OTP Input · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2596,7 +2596,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>태그 입력 Tag Input / Chips Input — UI 메뉴판</title>
+<title>태그 입력 Tag Input / Chips Input · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2645,7 +2645,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>별점 Rating — UI 메뉴판</title>
+<title>별점 Rating · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2695,7 +2695,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>컬러피커 Color Picker — UI 메뉴판</title>
+<title>컬러피커 Color Picker · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2750,7 +2750,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>라벨 Label — UI 메뉴판</title>
+<title>라벨 Label · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2791,7 +2791,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>플레이스홀더 Placeholder — UI 메뉴판</title>
+<title>플레이스홀더 Placeholder · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2832,7 +2832,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>헬퍼 텍스트 Helper Text — UI 메뉴판</title>
+<title>헬퍼 텍스트 Helper Text · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2873,7 +2873,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>필수 표시 Required — UI 메뉴판</title>
+<title>필수 표시 Required · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2915,7 +2915,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>유효성 검사 Validation — UI 메뉴판</title>
+<title>유효성 검사 Validation · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2957,7 +2957,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>인라인 에러 Field Error / Inline Error — UI 메뉴판</title>
+<title>인라인 에러 Field Error / Inline Error · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -2998,7 +2998,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제출 Submit — UI 메뉴판</title>
+<title>제출 Submit · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3044,7 +3044,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>버튼 Button — UI 메뉴판</title>
+<title>버튼 Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3084,7 +3084,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>프라이머리 버튼 Primary Button — UI 메뉴판</title>
+<title>프라이머리 버튼 Primary Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3124,7 +3124,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>세컨더리 버튼 Secondary Button / Outline — UI 메뉴판</title>
+<title>세컨더리 버튼 Secondary Button / Outline · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3164,7 +3164,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>고스트 버튼 Ghost / Text Button — UI 메뉴판</title>
+<title>고스트 버튼 Ghost / Text Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3204,7 +3204,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아이콘 버튼 Icon Button — UI 메뉴판</title>
+<title>아이콘 버튼 Icon Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3245,7 +3245,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>삭제 버튼 Destructive Button / Danger — UI 메뉴판</title>
+<title>삭제 버튼 Destructive Button / Danger · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3284,7 +3284,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>씨티에이 CTA (Call To Action) — UI 메뉴판</title>
+<title>씨티에이 CTA (Call To Action) · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3324,7 +3324,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>플로팅 버튼 FAB (Floating Action Button) — UI 메뉴판</title>
+<title>플로팅 버튼 FAB (Floating Action Button) · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3366,7 +3366,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>링크 Link — UI 메뉴판</title>
+<title>링크 Link · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3406,7 +3406,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>버튼 그룹 Button Group — UI 메뉴판</title>
+<title>버튼 그룹 Button Group · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3459,7 +3459,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>모달 Modal / Dialog — UI 메뉴판</title>
+<title>모달 Modal / Dialog · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3509,7 +3509,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>오버레이 / 딤 Overlay / Backdrop — UI 메뉴판</title>
+<title>오버레이 / 딤 Overlay / Backdrop · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3552,7 +3552,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>바텀 시트 Bottom Sheet — UI 메뉴판</title>
+<title>바텀 시트 Bottom Sheet · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3598,7 +3598,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>토스트 Toast / Snackbar — UI 메뉴판</title>
+<title>토스트 Toast / Snackbar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3651,7 +3651,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>얼럿 Alert / Callout — UI 메뉴판</title>
+<title>얼럿 Alert / Callout · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3699,7 +3699,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>툴팁 Tooltip — UI 메뉴판</title>
+<title>툴팁 Tooltip · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3743,7 +3743,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>팝오버 Popover — UI 메뉴판</title>
+<title>팝오버 Popover · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3792,7 +3792,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>프로그레스 바 Progress Bar — UI 메뉴판</title>
+<title>프로그레스 바 Progress Bar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3843,7 +3843,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스피너 Spinner / Loader — UI 메뉴판</title>
+<title>스피너 Spinner / Loader · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3885,7 +3885,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스켈레톤 Skeleton — UI 메뉴판</title>
+<title>스켈레톤 Skeleton · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3935,7 +3935,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>엠프티 스테이트 Empty State — UI 메뉴판</title>
+<title>엠프티 스테이트 Empty State · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -3977,7 +3977,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>쿠키 배너 Cookie Banner — UI 메뉴판</title>
+<title>쿠키 배너 Cookie Banner · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4022,7 +4022,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>확인 창 Confirmation Dialog — UI 메뉴판</title>
+<title>확인 창 Confirmation Dialog · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4076,7 +4076,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>배지 Badge — UI 메뉴판</title>
+<title>배지 Badge · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4119,7 +4119,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>칩 / 태그 Chip / Tag / Pill — UI 메뉴판</title>
+<title>칩 / 태그 Chip / Tag / Pill · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4168,7 +4168,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아바타 Avatar — UI 메뉴판</title>
+<title>아바타 Avatar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4209,7 +4209,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아바타 그룹 Avatar Group — UI 메뉴판</title>
+<title>아바타 그룹 Avatar Group · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4253,7 +4253,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>디바이더 Divider / Separator — UI 메뉴판</title>
+<title>디바이더 Divider / Separator · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4294,7 +4294,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아이콘 Icon — UI 메뉴판</title>
+<title>아이콘 Icon · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4332,7 +4332,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>상태 점 Status Dot / Indicator — UI 메뉴판</title>
+<title>상태 점 Status Dot / Indicator · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4380,7 +4380,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>키보드 키 Kbd — UI 메뉴판</title>
+<title>키보드 키 Kbd · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4421,7 +4421,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>기본 Default — UI 메뉴판</title>
+<title>기본 Default · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4459,7 +4459,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>호버 Hover — UI 메뉴판</title>
+<title>호버 Hover · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4498,7 +4498,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>액티브 Active / Pressed — UI 메뉴판</title>
+<title>액티브 Active / Pressed · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4537,7 +4537,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>포커스 Focus — UI 메뉴판</title>
+<title>포커스 Focus · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4576,7 +4576,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>디스에이블드 Disabled — UI 메뉴판</title>
+<title>디스에이블드 Disabled · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4614,7 +4614,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>로딩 Loading — UI 메뉴판</title>
+<title>로딩 Loading · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4654,7 +4654,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>선택됨 Selected — UI 메뉴판</title>
+<title>선택됨 Selected · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4705,7 +4705,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>에러 Error / Invalid — UI 메뉴판</title>
+<title>에러 Error / Invalid · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4748,7 +4748,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>패럴랙스 스크롤 Parallax Scrolling — UI 메뉴판</title>
+<title>패럴랙스 스크롤 Parallax Scrolling · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4808,7 +4808,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스크롤 페이드인 Fade-in on Scroll — UI 메뉴판</title>
+<title>스크롤 페이드인 Fade-in on Scroll · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4866,7 +4866,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>따라오는 헤더 Sticky Header — UI 메뉴판</title>
+<title>따라오는 헤더 Sticky Header · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4920,7 +4920,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>고정(핀) Pinning — UI 메뉴판</title>
+<title>고정(핀) Pinning · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -4988,7 +4988,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>가로 스크롤 섹션 Horizontal Scroll Section — UI 메뉴판</title>
+<title>가로 스크롤 섹션 Horizontal Scroll Section · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5045,7 +5045,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스크롤 스냅 Scroll Snap — UI 메뉴판</title>
+<title>스크롤 스냅 Scroll Snap · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5091,7 +5091,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스크롤 진행 막대 Scroll Progress Bar — UI 메뉴판</title>
+<title>스크롤 진행 막대 Scroll Progress Bar · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5150,7 +5150,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>형광펜 긋기 Highlighter Animation — UI 메뉴판</title>
+<title>형광펜 긋기 Highlighter Animation · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5209,7 +5209,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>호버로 떠오르기 Hover Lift — UI 메뉴판</title>
+<title>호버로 떠오르기 Hover Lift · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5258,7 +5258,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>호버로 사진 확대 Image Zoom on Hover — UI 메뉴판</title>
+<title>호버로 사진 확대 Image Zoom on Hover · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5307,7 +5307,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>커서 따라오기 Cursor Follower — UI 메뉴판</title>
+<title>커서 따라오기 Cursor Follower · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5363,7 +5363,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자석 버튼 Magnetic Button — UI 메뉴판</title>
+<title>자석 버튼 Magnetic Button · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5427,7 +5427,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>물결(리플) Ripple Effect — UI 메뉴판</title>
+<title>물결(리플) Ripple Effect · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5477,7 +5477,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>밑줄 늘어나기 Underline Animation — UI 메뉴판</title>
+<title>밑줄 늘어나기 Underline Animation · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5521,7 +5521,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>전후 비교 슬라이더 Before/After Slider — UI 메뉴판</title>
+<title>전후 비교 슬라이더 Before/After Slider · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5571,7 +5571,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>떠날 때 팝업 Exit-intent Popup — UI 메뉴판</title>
+<title>떠날 때 팝업 Exit-intent Popup · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5633,7 +5633,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>로딩 화면 Preloader — UI 메뉴판</title>
+<title>로딩 화면 Preloader · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5694,7 +5694,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>지연 로딩 Lazy Loading — UI 메뉴판</title>
+<title>지연 로딩 Lazy Loading · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5754,7 +5754,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>타이핑 효과 Typewriter Effect — UI 메뉴판</title>
+<title>타이핑 효과 Typewriter Effect · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5809,7 +5809,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>페이지 전환 Page Transition — UI 메뉴판</title>
+<title>페이지 전환 Page Transition · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5872,7 +5872,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>부드러운 스크롤 Smooth Scroll — UI 메뉴판</title>
+<title>부드러운 스크롤 Smooth Scroll · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5933,7 +5933,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>흐르는 띠(마키) Marquee — UI 메뉴판</title>
+<title>흐르는 띠(마키) Marquee · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -5982,7 +5982,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>움직이는 그라데이션 Animated Gradient — UI 메뉴판</title>
+<title>움직이는 그라데이션 Animated Gradient · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -6025,7 +6025,7 @@ document.addEventListener('click', function (e) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>둥실 떠다니기 Floating Animation — UI 메뉴판</title>
+<title>둥실 떠다니기 Floating Animation · UI 메뉴판</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
@@ -6060,44 +6060,44 @@ document.addEventListener('click', function (e) {
 ```
 
 
-## 화면 조합 레시피 (shadcn — 조립하지 재발명하지 마라)
+## 화면 조합 레시피 (shadcn: 조립하지 재발명하지 마라)
 
-### 설정 페이지 — 프로필·알림·계정 같은 설정 화면
+### 설정 페이지 · 프로필·알림·계정 같은 설정 화면
 - 조합: Tabs + Card + Field + Switch + Button
 - shadcn: Tabs로 섹션 나누고 각 섹션은 Card, 폼은 FieldGroup+Field, 켜고끄기는 Switch
 - 요청 문장: 설정 페이지를 shadcn 으로 만들어줘. 상단 Tabs 로 섹션 나누고, 각 섹션은 Card, 입력은 FieldGroup+Field, 토글은 Switch 로.
 
-### 대시보드 — 지표·차트·목록을 한 화면에
+### 대시보드 · 지표·차트·목록을 한 화면에
 - 조합: Sidebar + Card + Chart + Table + Badge
 - shadcn: 왼쪽 Sidebar 고정, 지표는 Card, 추이는 Chart, 목록은 Table, 상태는 Badge
 - 요청 문장: 대시보드를 shadcn 으로 만들어줘. 왼쪽 Sidebar, 상단 지표 Card 행, 아래 Chart 와 Table, 상태 표시는 Badge 로.
 
-### 로그인·회원가입 — 인증 화면
+### 로그인·회원가입 · 인증 화면
 - 조합: Card + Field + InputGroup + Button + Separator
 - shadcn: 가운데 Card, 입력은 Field, 아이콘 붙은 입력은 InputGroup, 소셜 구분은 Separator
 - 요청 문장: 로그인 화면을 shadcn 으로 만들어줘. 가운데 Card 안에 FieldGroup+Field, 소셜 로그인은 Separator 로 구분, 버튼은 Button.
 
-### 목록 + 상세 — 항목 클릭하면 상세가 뜨는 화면
+### 목록 + 상세 · 항목 클릭하면 상세가 뜨는 화면
 - 조합: Table + Sheet + Badge + Button + DropdownMenu
 - shadcn: 목록은 Table, 행 클릭시 오른쪽 Sheet 로 상세, 행별 액션은 DropdownMenu
 - 요청 문장: 목록-상세 화면을 shadcn 으로. 목록은 Table, 행 클릭하면 오른쪽 Sheet 로 상세, 각 행 우측 액션은 DropdownMenu.
 
-### 결제·주문 — 단계별 진행 화면
+### 결제·주문 · 단계별 진행 화면
 - 조합: Stepper + Card + Field + RadioGroup + Button
 - shadcn: 진행은 상단 단계 표시, 각 단계는 Card, 배송/결제 선택은 RadioGroup
 - 요청 문장: 결제 플로우를 shadcn 으로. 상단에 단계 표시, 각 단계는 Card, 옵션 선택은 RadioGroup, 다음/이전은 Button.
 
-### 확인·경고 — 삭제·탈퇴 같은 되돌릴 수 없는 액션
+### 확인·경고 · 삭제·탈퇴 같은 되돌릴 수 없는 액션
 - 조합: AlertDialog + Button + Alert
 - shadcn: 되돌릴 수 없는 액션은 AlertDialog(제목 필수), 인라인 경고는 Alert
 - 요청 문장: 삭제 확인을 shadcn AlertDialog 로. 제목·설명·취소/삭제 버튼, 삭제는 destructive variant 로.
 
-### 검색·필터 — 검색바 + 필터 결과
+### 검색·필터 · 검색바 + 필터 결과
 - 조합: InputGroup + Combobox + Badge + ToggleGroup
 - shadcn: 검색은 InputGroup(돋보기 아이콘), 자동완성은 Combobox, 필터 칩은 Badge, 정렬 토글은 ToggleGroup
 - 요청 문장: 검색+필터 바를 shadcn 으로. 검색은 InputGroup 에 아이콘, 자동완성은 Combobox, 적용된 필터는 Badge, 정렬은 ToggleGroup.
 
-### 빈 화면·로딩 — 데이터 없거나 불러오는 중
+### 빈 화면·로딩 · 데이터 없거나 불러오는 중
 - 조합: Empty + Skeleton + Spinner
 - shadcn: 데이터 없으면 Empty(아이콘+안내+액션), 불러오는 중은 Skeleton, 짧은 대기는 Spinner
 - 요청 문장: 데이터 없을 때는 shadcn Empty(아이콘+문구+버튼), 로딩 중은 Skeleton 으로 자리 잡아줘.

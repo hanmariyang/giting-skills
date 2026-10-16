@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"첫 번째랑 마지막만 간격이 달라요" — CSS 증상 사전</title>
+<title>"첫 번째랑 마지막만 간격이 달라요" · CSS 증상 사전</title>
 <!--
   증상: "첫 번째랑 마지막만 간격이 달라요" (edge-margin) · 유형: 즉방형
   범인: 모든 항목에 margin-bottom을 줘서 마지막 항목 뒤에도 여백이 남음
-  처방: margin 대신 gap — 사이에만 간격이 생기고 끝엔 안 남는다.
+  처방: margin 대신 gap: 사이에만 간격이 생기고 끝엔 안 남는다.
   AI에게: 항목 '사이'에만 간격이 생기게, 항목별 margin을 부모 gap으로 바꿔줘.
   확인: 목록 맨 끝의 남는 여백이 사라지면 성공.
 -->
@@ -49,7 +49,7 @@
   <div class="card" style="padding:8px 12px;font-size:12px">항목 2</div>
   <div class="card" style="padding:8px 12px;font-size:12px">항목 3</div>
 </div>
-<p class="mut" style="margin:8px 2px 0">gap은 사이에만 — 끝이 깔끔</p>
+<p class="mut" style="margin:8px 2px 0">gap은 사이에만: 끝이 깔끔</p>
   </div></section>
 </div>
 <div class="chk"><b>고쳐졌는지 확인:</b> 목록 맨 끝의 남는 여백이 사라지면 성공.</div>

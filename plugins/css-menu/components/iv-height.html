@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"분명 넣었는데 높이가 0이에요" — CSS 증상 사전</title>
+<title>"분명 넣었는데 높이가 0이에요" · CSS 증상 사전</title>
 <!--
   증상: "분명 넣었는데 높이가 0이에요" (collapsed-parent) · 유형: 즉방형
-  범인: 자식들이 전부 '떠 있음'(absolute·float) — 부모가 자기 높이를 계산할 재료가 없음
+  범인: 자식들이 전부 '떠 있음'(absolute·float): 부모가 자기 높이를 계산할 재료가 없음
   처방: 띄울 필요 없는 자식은 흐름으로 되돌려 부모가 높이를 갖게 한다.
   AI에게: 이 상자 높이가 0으로 접혀 있어. 자식이 전부 떠 있어서(absolute·float) 그런지 확인해서 알려주고, 높이가 잡히게 고쳐줘.
   확인: 상자의 배경과 테두리가 내용을 감싸면 성공.
@@ -41,14 +41,14 @@
   <div style="float:left;width:46%;margin:8px 2%" class="card"><span style="font-size:11px">떠 있는 자식 2</span></div>
 </div>
 <div style="clear:both"></div>
-<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘 — 자식이 전부 떠 있어서</p>
+<p class="mut" style="margin:10px 2px 0">부모(빨간 점선)가 높이 0으로 접힘, 자식이 전부 떠 있어서</p>
   </div></section>
   <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:160px">
 <div style="background:#fff;border:2px dashed #1f7a4d;border-radius:10px;padding:8px 10px;display:flex;gap:8px">
   <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 1</span></div>
   <div class="card" style="flex:1"><span style="font-size:11px">흐름 속 자식 2</span></div>
 </div>
-<p class="mut" style="margin:10px 2px 0">flex 흐름으로 — 부모(초록 점선)가 자식을 감쌈</p>
+<p class="mut" style="margin:10px 2px 0">flex 흐름으로: 부모(초록 점선)가 자식을 감쌈</p>
   </div></section>
 </div>
 <div class="chk"><b>고쳐졌는지 확인:</b> 상자의 배경과 테두리가 내용을 감싸면 성공.</div>

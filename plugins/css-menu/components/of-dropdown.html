@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"펼친 메뉴가 잘려서 반만 보여요" — CSS 증상 사전</title>
+<title>"펼친 메뉴가 잘려서 반만 보여요" · CSS 증상 사전</title>
 <!--
   증상: "펼친 메뉴가 잘려서 반만 보여요" (clipped-popover) · 유형: 분기형
-  범인: 어떤 조상이 넘치는 것을 자르고 있음 — 누가 자르는지에 따라 처방이 다름
+  범인: 어떤 조상이 넘치는 것을 자르고 있음. 누가 자르는지에 따라 처방이 다름
   갈림길: [부모 카드에 overflow hidden이 있음] → 그 카드만 hidden을 풀 수 있는지 확인. 못 풀면 메뉴를 카드 밖 레이어로 · [조상에 transform이나 블러(backdrop-filter) 효과가 있음] → 떠 있는 요소의 기준이 그 조상으로 바뀌는 함정. 효과를 다른 요소로 옮기거나 메뉴를 밖으로
   AI에게: 펼침 메뉴가 잘려. 바로 고치지 말고 어느 조상이 자르는지(overflow인지, transform·블러 효과인지) 찾아서 알려주고, 메뉴를 밖으로 뺄지 그 속성을 풀지 확인받고 고쳐줘.
   확인: 메뉴가 카드 경계를 넘어 전부 보이면 성공.

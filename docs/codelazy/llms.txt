@@ -1,4 +1,4 @@
-# 안 만들어도 되는 것 사전 (codelazy) — Giting Skills
+# 안 만들어도 되는 것 사전 (codelazy) · Giting Skills
 
 > AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준으로 되돌리는 사전. 증상 → 범인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → before/after 코드. 5개 코스 15개 항목.
 > 유형: [즉방형] 표준에 정답 있음, 바로 되돌림 · [분기형] 추상화가 때로 정당함, 진단 먼저.
@@ -289,7 +289,7 @@ class DB:
 ```
 - 표준으로:
 ```python
-# db.py — 모듈이 이미 싱글톤
+# db.py: 모듈이 이미 싱글톤
 connection = connect()  # import 하면 하나만 존재
 ```
 

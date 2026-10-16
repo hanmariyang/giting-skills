@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"간격이 어떨 땐 크고 어떨 땐 작아요" — CSS 증상 사전</title>
+<title>"간격이 어떨 땐 크고 어떨 땐 작아요" · CSS 증상 사전</title>
 <!--
   증상: "간격이 어떨 땐 크고 어떨 땐 작아요" (margin-collapse) · 유형: 즉방형
-  범인: 항목마다 제각각 margin을 줌 — 이웃한 margin끼리 겹치고 접혀서 예측이 안 됨
+  범인: 항목마다 제각각 margin을 줌, 이웃한 margin끼리 겹치고 접혀서 예측이 안 됨
   처방: 개별 margin 대신 부모의 gap 하나로 통일한다.
   AI에게: 이 목록의 위아래 간격을 항목별 margin 대신 부모의 gap으로 통일해줘.
   확인: 어느 두 항목 사이든 간격이 똑같으면 성공.
@@ -41,7 +41,7 @@
   <div class="card" style="margin-top:4px;margin-bottom:9px;padding:8px 12px;font-size:12px">계정 관리</div>
   <div class="card" style="margin-top:16px;padding:8px 12px;font-size:12px">로그아웃</div>
 </div>
-<p class="mut" style="margin:8px 2px 0">항목마다 제각각 margin — 18px, 13px, 16px…</p>
+<p class="mut" style="margin:8px 2px 0">항목마다 제각각 margin, 18px, 13px, 16px…</p>
   </div></section>
   <section class="pane good"><div class="tag">✓ 고친 그대로</div><div class="stage" style="height:180px">
 <div style="background:#fff;border:1px solid #e4e4ea;border-radius:10px;padding:10px;display:grid;gap:12px">
@@ -49,7 +49,7 @@
   <div class="card" style="padding:8px 12px;font-size:12px">계정 관리</div>
   <div class="card" style="padding:8px 12px;font-size:12px">로그아웃</div>
 </div>
-<p class="mut" style="margin:8px 2px 0">부모 gap 하나 — 어디든 12px</p>
+<p class="mut" style="margin:8px 2px 0">부모 gap 하나: 어디든 12px</p>
   </div></section>
 </div>
 <div class="chk"><b>고쳐졌는지 확인:</b> 어느 두 항목 사이든 간격이 똑같으면 성공.</div>

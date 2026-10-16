@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"세로 가운데가 안 맞아요" — CSS 증상 사전</title>
+<title>"세로 가운데가 안 맞아요" · CSS 증상 사전</title>
 <!--
   증상: "세로 가운데가 안 맞아요" (vertical-center) · 유형: 즉방형
-  범인: 감싸는 상자에 높이가 없다 — 내용만큼만 커서 '가운데'랄 공간 자체가 없음 / 가로만 가운데 정렬했다 (세로축 지시가 빠짐) / margin auto를 줬는데 부모가 flex/grid가 아님
+  범인: 감싸는 상자에 높이가 없다. 내용만큼만 커서 '가운데'랄 공간 자체가 없음 / 가로만 가운데 정렬했다 (세로축 지시가 빠짐) / margin auto를 줬는데 부모가 flex/grid가 아님
   처방: 부모 상자에 높이부터 주고, flex의 세로축으로 가운데를 잡는다.
   AI에게: 이 요소를 감싸는 부모에 높이를 주고, flex로 가로세로 다 가운데 정렬해줘. 부모 높이가 왜 없었는지도 한 줄로 알려줘.
   확인: 창 높이를 바꿔도 항상 정가운데면 성공.

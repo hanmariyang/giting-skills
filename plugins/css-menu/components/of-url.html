@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"긴 영어·링크가 상자를 뚫어요" — CSS 증상 사전</title>
+<title>"긴 영어·링크가 상자를 뚫어요" · CSS 증상 사전</title>
 <!--
   증상: "긴 영어·링크가 상자를 뚫어요" (long-string) · 유형: 즉방형
-  범인: 공백 없는 긴 문자열은 브라우저가 끊을 자리를 못 찾음 — 한 덩어리로 밀고 나감
-  처방: 긴 문자열엔 overflow-wrap — 상자 안에서 강제로 줄바꿈.
+  범인: 공백 없는 긴 문자열은 브라우저가 끊을 자리를 못 찾음. 한 덩어리로 밀고 나감
+  처방: 긴 문자열엔 overflow-wrap, 상자 안에서 강제로 줄바꿈.
   AI에게: URL 같은 긴 문자열이 상자 안에서 줄바꿈되게 overflow-wrap을 적용해줘.
   확인: 아주 긴 링크를 넣어도 상자 폭이 변하지 않으면 성공.
 -->
@@ -47,7 +47,7 @@
   안내 문서:
   <span style="overflow-wrap:anywhere;font-size:11.5px;color:#f05032">https://docs.example.com/payments/webhooks-guide</span>
 </div>
-<p class="mut" style="margin:8px 2px 0">overflow-wrap — 상자 안에서 줄바꿈</p>
+<p class="mut" style="margin:8px 2px 0">overflow-wrap: 상자 안에서 줄바꿈</p>
   </div></section>
 </div>
 <div class="chk"><b>고쳐졌는지 확인:</b> 아주 긴 링크를 넣어도 상자 폭이 변하지 않으면 성공.</div>

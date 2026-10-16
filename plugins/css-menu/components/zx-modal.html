@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"팝업이 다른 것 뒤에 깔려요" — CSS 증상 사전</title>
+<title>"팝업이 다른 것 뒤에 깔려요" · CSS 증상 사전</title>
 <!--
   증상: "팝업이 다른 것 뒤에 깔려요" (stacking-context) · 유형: 분기형
-  범인: 쌓임 순서(z-index) 문제는 두 종류 — 단순 숫자 경쟁이거나, 조상이 만든 '층' 안에 갇혔거나
+  범인: 쌓임 순서(z-index) 문제는 두 종류, 단순 숫자 경쟁이거나, 조상이 만든 '층' 안에 갇혔거나
   갈림길: [숫자 경쟁 (같은 층에서 밀림)] → 화면 전체의 층 규칙을 정리 (헤더 10, 드롭다운 100, 모달 1000처럼) · [조상에 transform·filter·opacity가 있어서 그 안에 갇힘] → 숫자를 올려도 소용없음. 팝업을 문서 최상위로 이동(portal)
   AI에게: 팝업이 헤더 뒤에 깔려. z-index 숫자만 올리지 말고, 조상 때문에 층 안에 갇힌 건지 먼저 확인해서 알려주고, 갇혔으면 팝업을 문서 최상위로 옮겨줘.
   확인: 팝업이 항상 모든 것 위에 뜨면 성공.
@@ -41,7 +41,7 @@
   <div style="position:absolute;inset:0;transform:translateZ(0)">
     <div style="position:absolute;left:50%;top:38%;transform:translateX(-50%);z-index:9999;width:160px" class="card">
       <b>팝업 (z-index 9999)</b>
-      <p class="mut" style="margin:4px 0 0">그래도 헤더 뒤에 깔림 — 조상 transform이 만든 층 안</p>
+      <p class="mut" style="margin:4px 0 0">그래도 헤더 뒤에 깔림: 조상 transform이 만든 층 안</p>
     </div>
   </div>
 </div>

@@ -48,7 +48,7 @@ const standalone = it => `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${it.name.ko} ${it.name.en} — UI 메뉴판</title>
+<title>${it.name.ko} ${it.name.en} · UI 메뉴판</title>
 <style>
 ${BASE}
 </style>
@@ -233,8 +233,8 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UI 메뉴판 — Giting Skills</title>
-<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. ${menu.categories.length}개 코스 ${menu.items.length}개 항목 — 전부 그림이 아니라 실제로 동작하는 HTML. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
+<title>UI 메뉴판 · Giting Skills</title>
+<meta name="description" content="'접었다 폈다 되는 거'에는 이름이 있습니다. ${menu.categories.length}개 코스 ${menu.items.length}개 항목: 전부 그림이 아니라 실제로 동작하는 HTML. AI가 쓸 수 있는 Claude Code 스킬로 배포됩니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
   :root {
@@ -382,7 +382,7 @@ ${menu.categories.map(sectionHtml).join('\n')}
   <div class="wrap">
     <span>MIT License</span>
     <a href="https://github.com/hanmariyang/giting-skills">hanmariyang/giting-skills</a>
-    <a href="https://giting.kr">giting.kr — 오픈소스를 별점이 아니라 실측으로</a>
+    <a href="https://giting.kr">giting.kr: 오픈소스를 별점이 아니라 실측으로</a>
   </div>
 </footer>
 
@@ -410,7 +410,7 @@ ${menu.categories.map(sectionHtml).join('\n')}
 </html>`;
 
 // ── 4. llms.txt ────────────────────────────────────────────────
-const dict = full => `# UI 메뉴판 (ui-menu) — Giting Skills
+const dict = full => `# UI 메뉴판 (ui-menu) · Giting Skills
 
 > 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. ${menu.categories.length}개 코스 ${menu.items.length}개 항목.
 > AI한테 시키는 공식: ${f.pattern}
@@ -434,9 +434,9 @@ ${code[it.id].trim()}
 \`\`\`` : ''}
 `).join('\n')}`).join('\n')}
 ${menu.recipes ? `
-## 화면 조합 레시피 (shadcn — 조립하지 재발명하지 마라)
+## 화면 조합 레시피 (shadcn: 조립하지 재발명하지 마라)
 
-${menu.recipes.map(r => `### ${r.screen} — ${r.ko}
+${menu.recipes.map(r => `### ${r.screen} · ${r.ko}
 - 조합: ${r.combo.join(' + ')}
 - shadcn: ${r.sc}
 - 요청 문장: ${r.ask}`).join('\n\n')}` : ''}`;
@@ -450,7 +450,7 @@ const redirect = `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta http-equiv="refresh" content="0; url=https://giting.kr/skills/">
 <link rel="canonical" href="https://giting.kr/skills/">
-<title>UI 메뉴판 — giting.kr/skills 로 이동</title>
+<title>UI 메뉴판 · giting.kr/skills 로 이동</title>
 <script>location.replace('https://giting.kr/skills/' + location.hash);</script>
 </head><body style="font-family:sans-serif;padding:40px">갤러리가 <a href="https://giting.kr/skills/">giting.kr/skills</a> 로 이사했습니다.</body></html>
 `;
@@ -638,7 +638,7 @@ ${menu.categories.map(cat => `
 ${menu.recipes ? `
 <section class="cat" id="c-recipes">
   <h2><span class="no">＋</span> 화면 조합 레시피 <span class="count">${menu.recipes.length} · shadcn</span></h2>
-  <p style="font-size:13px;color:var(--ink-2);margin:-6px 0 14px">낱개 컴포넌트를 아는 다음 단계 — 흔한 화면이 어떤 조합으로 만들어지는지. "조립하지 재발명하지 마라"(shadcn 공식 원칙).</p>
+  <p style="font-size:13px;color:var(--ink-2);margin:-6px 0 14px">낱개 컴포넌트를 아는 다음 단계, 흔한 화면이 어떤 조합으로 만들어지는지. "조립하지 재발명하지 마라"(shadcn 공식 원칙).</p>
   <div class="rcp">${menu.recipes.map(r => `<article class="rcpi" id="${r.id}">
     <header><h3>${esc(r.screen)}</h3><span class="rcpk">${esc(r.ko)}</span>
       <button class="copy tiny" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
@@ -667,7 +667,7 @@ if (SITE_DIR) {
   }
   siteMsg = ` · site→${SITE_DIR}`;
 } else {
-  siteMsg = ' · (GITING_SITE_DIR 미설정 — giting.kr 갤러리 미갱신)';
+  siteMsg = ' · (GITING_SITE_DIR 미설정, giting.kr 갤러리 미갱신)';
 }
 console.log(`built: components ${menu.items.length} · gallery ${(html.length / 1024).toFixed(0)}KB · docs=redirect+llms${siteMsg}`);
 
@@ -721,7 +721,7 @@ const cStandalone = it => `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"${it.name.ko}" — CSS 증상 사전</title>
+<title>"${it.name.ko}" · CSS 증상 사전</title>
 <!--
   증상: "${it.name.ko}" (${it.name.dx}) · 유형: ${cKindLabel(it)}
   범인: ${it.culprits.join(' / ')}
@@ -772,7 +772,7 @@ const cCardHtml = it => `
     <button class="copy tiny" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button>
     <button class="tiny codebtn" title="코드 보기">코드</button>
   </header>
-  <iframe title="${it.name.ko} — 깨진/고친 실물" loading="lazy" style="height:${cIframeH(it)}px" srcdoc="${attr(ccode[it.id])}"></iframe>
+  <iframe title="${it.name.ko} · 깨진/고친 실물" loading="lazy" style="height:${cIframeH(it)}px" srcdoc="${attr(ccode[it.id])}"></iframe>
   <footer>
     ${it.kind === 'branch'
       ? `<span class="one"><b>갈림길:</b> ${it.branches.map(b => esc(b.q)).join(' / ')}</span>`
@@ -850,10 +850,10 @@ ${cmenu.categories.map(cat => `
 </div>
 `;
 
-const cdict = full => `# CSS 증상 사전 (css-menu) — Giting Skills
+const cdict = full => `# CSS 증상 사전 (css-menu) · Giting Skills
 
 > 깨진 화면을 CSS 용어가 아니라 증상으로 찾는 사전. 증상(사람 말) → 범인 후보 → 처방 또는 갈림길 진단 → AI에게 시키는 문장 → 깨진/고친 실물. 8개 코스 ${cmenu.items.length}개 항목.
-> 항목 유형 2가지 — [즉방형]: 상황 불문 같은 처방, 문장을 그대로 쓴다. [분기형]: 상황 의존 — 바로 고치라고 하지 말고 진단부터 시킨다.
+> 항목 유형 2가지: [즉방형]: 상황 불문 같은 처방, 문장을 그대로 쓴다. [분기형]: 상황 의존: 바로 고치라고 하지 말고 진단부터 시킨다.
 > AI한테 시키는 공식: ${cf.pattern}
 >   ✕ "${cf.bad}" → ○ "${cf.good}"
 > 갤러리: https://giting.kr/skills/css-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -969,7 +969,7 @@ ${lmenu.categories.map(cat => `
 </div>
 `;
 
-const ldict = () => `# 안 만들어도 되는 것 사전 (codelazy) — Giting Skills
+const ldict = () => `# 안 만들어도 되는 것 사전 (codelazy) · Giting Skills
 
 > AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준으로 되돌리는 사전. 증상 → 범인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → before/after 코드. 5개 코스 ${lmenu.items.length}개 항목.
 > 유형: [즉방형] 표준에 정답 있음, 바로 되돌림 · [분기형] 추상화가 때로 정당함, 진단 먼저.
@@ -1094,7 +1094,7 @@ ${tmenu.categories.map(cat => `
 </div>
 `;
 
-const tdict = () => `# 타입스크립트 에러 사전 (type-menu) — Giting Skills
+const tdict = () => `# 타입스크립트 에러 사전 (type-menu) · Giting Skills
 
 > 영어에 코드번호로 뜨는 TS 에러를 사람 말로 옮기고 제대로 고치는 사전. 증상 → 코드번호 → 원인 → 처방(즉방형) 또는 갈림길 진단(분기형) → 요청 문장 → 실제 tsc 원문 + before/after. 6개 코스 ${tmenu.items.length}개 항목.
 > 대원칙: any·! 로 덮지 않는다. 좁히기(가드·옵셔널·기본값·타입 정정)로 제대로 고친다.
@@ -1219,7 +1219,7 @@ const fpCore = `<div class="fmgal">
     <div class="good"><span class="mark">○ 이렇게</span>「${esc(ff.good)}」</div>
   </div>
 </div>
-<div class="floaders"><b>로더가 폰트마다 다르다 — 이름만 안다고 안 뜬다</b>
+<div class="floaders"><b>로더가 폰트마다 다르다. 이름만 안다고 안 뜬다</b>
   ${Object.entries(fmenu.loaders).map(([k, v]) => `<div class="lrow"><span class="fsrc ${srcClass(k)}">${esc(k)}</span> ${esc(v)}</div>`).join('\n  ')}
 </div>
 <nav class="gnav" aria-label="맥락">
@@ -1235,10 +1235,10 @@ ${fmenu.categories.map(cat => `
 </div>
 `;
 
-const fdict = () => `# 웹폰트 사전 (font-menu) — Giting Skills
+const fdict = () => `# 웹폰트 사전 (font-menu) · Giting Skills
 
 > 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 6개 맥락 ${fmenu.items.length}종.
-> 대원칙: 로더가 폰트마다 다르다 — ${Object.entries(fmenu.loaders).map(([k, v]) => `[${k}] ${v}`).join(' ')}
+> 대원칙: 로더가 폰트마다 다르다. ${Object.entries(fmenu.loaders).map(([k, v]) => `[${k}] ${v}`).join(' ')}
 > 가장 흔한 사고: Google에 없는 폰트(Satoshi·Clash Display·General Sans)를 Google <link>에 박아 조용히 시스템 폰트로 폴백. 반드시 각 폰트의 출처 로더로.
 > 공식: ${ff.pattern}
 > 갤러리(폰트 실물 렌더): https://giting.kr/skills/font-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -1246,7 +1246,7 @@ const fdict = () => `# 웹폰트 사전 (font-menu) — Giting Skills
 
 ${fmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
-${fby(cat.id).map(it => `### ${it.family} — ${it.role} [${it.source}]
+${fby(cat.id).map(it => `### ${it.family} · ${it.role} [${it.source}]
 - 인상: ${it.vibe}
 - 라이선스: ${it.license.name} (${it.license.blurb})
 - 두께: ${it.weights}
@@ -1327,7 +1327,7 @@ const apCore = `<div class="apgal">
     <div class="good"><span class="mark">○ 이렇게</span>「${esc(af.good)}」</div>
   </div>
 </div>
-<div class="note"><b>모바일 앱 UI 전용.</b> 웹 UI 는 <b>ui-menu</b> 를 쓴다. 같은 단어라도 앱과 웹의 관례가 다르다 — 모달은 앱에선 아래서 올라오는 풀스크린, 셀렉트는 드롭다운이 아니라 시트로 연다. 네이티브 열은 SwiftUI · Flutter · React Native 의 실제 컴포넌트명.</div>
+<div class="note"><b>모바일 앱 UI 전용.</b> 웹 UI 는 <b>ui-menu</b> 를 쓴다. 같은 단어라도 앱과 웹의 관례가 다르다. 모달은 앱에선 아래서 올라오는 풀스크린, 셀렉트는 드롭다운이 아니라 시트로 연다. 네이티브 열은 SwiftUI · Flutter · React Native 의 실제 컴포넌트명.</div>
 <nav class="gnav" aria-label="분류">
   ${amenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${aby(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1341,7 +1341,7 @@ ${amenu.categories.map(cat => `
 </div>
 `;
 
-const adict = () => `# 앱 UI 메뉴판 (app-menu) — Giting Skills
+const adict = () => `# 앱 UI 메뉴판 (app-menu) · Giting Skills
 
 > 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 ${amenu.items.length}항목.
 > 웹 UI 는 ui-menu. 같은 단어라도 관례가 다르다(모달=앱은 풀스크린, 셀렉트=앱은 시트).
@@ -1351,7 +1351,7 @@ const adict = () => `# 앱 UI 메뉴판 (app-menu) — Giting Skills
 
 ${amenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
-${aby(cat.id).map(it => `### ${it.name.ko} — ${it.name.en}
+${aby(cat.id).map(it => `### ${it.name.ko} · ${it.name.en}
 - 별칭: ${it.aliases.join(' · ')}
 - 정의: ${it.oneliner}
 - 요청: ${it.ask}${it.vs ? `
@@ -1385,7 +1385,7 @@ for (const fn of readdirSync(join(LMP, 'demos')).filter(f => f.endsWith('.html')
 }
 const lmMiss = lmMenu.items.filter(it => !lmFrags[it.id]).map(it => it.id);
 if (lmMiss.length) { console.error('landing-menu 데모 없는 항목:', lmMiss.join(', ')); process.exit(1); }
-const lmStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${it.name.ko} ${it.name.en} — 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+const lmStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${it.name.ko} ${it.name.en} · 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
 ${lmFrags[it.id].body}
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>`;
@@ -1436,7 +1436,7 @@ ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
 <script>document.querySelectorAll('.lmgal .copy').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.getAttribute('data-copy'));var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
 </div>
 `;
-const lmDict = full => `# 랜딩 메뉴판 (landing-menu) — Giting Skills
+const lmDict = full => `# 랜딩 메뉴판 (landing-menu) · Giting Skills
 
 > 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML. 6개 코스 ${lmMenu.items.length}개 항목.
 > 룩(색·폰트)은 design-brief에서, 이 사전은 구조·순서만.
@@ -1487,7 +1487,7 @@ for (const fn of readdirSync(join(MMP, 'demos')).filter(f => f.endsWith('.html')
 }
 const moMiss = [...moMenu.items, ...moMenu.recipes].filter(it => !moFrags[it.id]).map(it => it.id);
 if (moMiss.length) { console.error('motion-menu 데모 없는 항목:', moMiss.join(', ')); process.exit(1); }
-const moStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} — 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+const moStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
 ${moFrags[it.id].body}
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>`;
@@ -1621,7 +1621,7 @@ ${moMenu.categories.map(cat => `<section class="mo-cat" id="mc-${cat.id}">
 </section>`).join('\n')}
 <section class="mo-cat" id="mc-recipes">
   <h2><span class="no">＋</span> 조합 레시피 <span class="count">${moShot.length} · 샷 단위</span></h2>
-  <p class="mo-note">낱개 모션을 아는 다음 단계 — 흔한 샷이 어떤 조합으로 만들어지는지.</p>
+  <p class="mo-note">낱개 모션을 아는 다음 단계, 흔한 샷이 어떤 조합으로 만들어지는지.</p>
   <div class="mo-rcp">${moShot.map(r => `<article class="mo-rcpi" id="m-${r.id}">
     <header><h3>${esc(r.shot)}</h3><span class="rk">${esc(r.ko)}</span><button class="copy" data-copy="${attr(r.ask)}" title="요청 문장 복사">문장</button></header>
     <iframe title="${esc(r.shot)} 조합 데모" loading="lazy" style="height:${moFrags[r.id].h}px" srcdoc="${attr(moRcode[r.id])}"></iframe>
@@ -1655,10 +1655,10 @@ ${moScn.list.length ? `<section class="mo-cat" id="mc-scenes">
 <script>(function(){var g=document.querySelector('.mogal');if(!g)return;g.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var o=b.textContent;b.textContent='복사됨';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1100);});})();</script>
 </div>
 `;
-const moDict = full => `# 모션 메뉴판 (motion-menu) — Giting Skills
+const moDict = full => `# 모션 메뉴판 (motion-menu) · Giting Skills
 
 > '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 ${moMenu.items.length}개 항목.
-> 각 항목엔 '만드는 법'이 붙습니다 — AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
+> 각 항목엔 '만드는 법'이 붙습니다. AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: ${moF.pattern}  (✕ "${moF.bad}" → ○ "${moF.good}")
 > 갤러리: https://giting.kr/skills/motion-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -1708,7 +1708,7 @@ ${moScn.ask}
 
 ` : ''}## ＋ 조합 레시피 (샷 단위 · 글자 조합)
 
-${moMenu.recipes.map(r => `### ${r.shot} — ${r.ko}
+${moMenu.recipes.map(r => `### ${r.shot} · ${r.ko}
 - 조합: ${r.combo.join(' + ')}
 - 설명: ${r.sc}
 - 요청 문장: ${r.ask}`).join('\n\n')}`;

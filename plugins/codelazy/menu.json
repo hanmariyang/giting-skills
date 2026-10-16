@@ -148,7 +148,7 @@
       "ask": "이걸 하나만 존재하게 하고 싶어. 싱글톤 패턴 구현하지 말고, 모듈 전역이나 lru_cache 로 될지 먼저 판단해줘.",
       "check": "모듈 전역·lru_cache 로 됐고 __new__/메타클래스 싱글톤이 없으면 성공.",
       "before": "class DB:\n    _instance = None\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance",
-      "after": "# db.py — 모듈이 이미 싱글톤\nconnection = connect()  # import 하면 하나만 존재" },
+      "after": "# db.py: 모듈이 이미 싱글톤\nconnection = connect()  # import 하면 하나만 존재" },
 
     { "id": "cl-middleware", "category": "extension", "kind": "branch",
       "name": "안 시킨 미들웨어·훅 시스템을 판다",
