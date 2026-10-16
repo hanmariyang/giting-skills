@@ -1723,3 +1723,49 @@ mkdirSync(join(ROOT, 'docs', 'motion-menu'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'motion-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/motion-menu'));
 writeFileSync(join(ROOT, 'docs', 'motion-menu', 'llms.txt'), moDict(false));
 console.log(`built motion-menu: items ${moMenu.items.length} · recipes ${moMenu.recipes.length} · core ${(moCore.length / 1024).toFixed(0)}KB`);
+
+// ── 메뉴판 스토어용 내보내기 (giting.kr/menu) ─────────────────────────────
+// 여덟 사전의 항목을 한 모양으로 모아 menu-index.json 하나로, 실물 데모가 있는 항목은
+// skills/c/<사전>/<id>.html 로 낸다. giting 사이트 빌드가 이걸 읽어 스토어 · 상세 · 영상 묶음 페이지를 만든다.
+// ui-menu 데모에는 자동 시연기를 붙여 낸다(상세 페이지가 play 를 보낸다).
+if (SITE_DIR) {
+  const MENUS = [
+    ['ui-menu', 'UI 메뉴판', menu, PLUGIN],
+    ['motion-menu', '모션 메뉴판', moMenu, MMP],
+    ['app-menu', '앱 UI 메뉴판', amenu, AP],
+    ['css-menu', 'CSS 증상 사전', cmenu, CP],
+    ['landing-menu', '랜딩 메뉴판', lmMenu, LMP],
+    ['font-menu', '웹폰트 사전', fmenu, FP],
+    ['type-menu', '타입스크립트 에러 사전', tmenu, TP],
+    ['codelazy', '안 만들어도 되는 것 사전', lmenu, LP],
+  ];
+  const OUT = join(SITE_DIR, 'c');
+  rmSync(OUT, { recursive: true, force: true });
+  const index = { built: new Date().toISOString().slice(0, 10), menus: [], items: [] };
+  for (const [slug, title, m, dir] of MENUS) {
+    const cats = Object.fromEntries((m.categories || []).map((c) => [c.id, c.ko || c.title || c.id]));
+    index.menus.push({ slug, title, cats: (m.categories || []).map((c) => ({ id: c.id, ko: cats[c.id], no: c.no || '' })) });
+    const compDir = join(dir, 'components');
+    const have = new Set((() => { try { return readdirSync(compDir).map((f) => f.replace(/\.html$/, '')); } catch { return []; } })());
+    if (have.size) mkdirSync(join(OUT, slug), { recursive: true });
+    for (const it of m.items) {
+      const nm = it.name;
+      const ko = typeof nm === 'string' ? nm : nm?.ko || it.family || it.id;
+      const en = typeof nm === 'object' ? (nm.en || nm.dx || '') : (it.code || '');
+      const ask = it.ask || (it.family ? `「${it.family}」 글꼴을 ${it.role} 자리에 써줘. ${it.source} 에서 불러오고, 대체 글꼴까지 ${it.css} 로.` : '');
+      const demo = have.has(it.id);
+      if (demo) {
+        const src = slug === 'ui-menu' && code[it.id] ? demoDoc(it.id, code[it.id]) : readFileSync(join(compDir, `${it.id}.html`), 'utf8');
+        writeFileSync(join(OUT, slug, `${it.id}.html`), src);
+      }
+      const row = { m: slug, id: it.id, c: it.category, g: it.group || '', ko, en, al: (it.aliases || (it.vibe ? [it.vibe] : [])).slice(0, 4),
+        one: it.oneliner || it.rx || it.vibe || '', ask, demo };
+      for (const k of ['mood', 'vs', 'touch', 'native', 'rx', 'check', 'err', 'before', 'after', 'use', 'whenNot', 'pairsWith', 'load', 'css']) if (it[k]) row[k] = it[k];
+      if (it.culprit || it.culprits) row.why = it.culprit ? [it.culprit] : it.culprits;
+      if (it.license?.blurb) row.lic = `${it.license.name} · ${it.license.blurb}`;
+      index.items.push(row);
+    }
+  }
+  writeFileSync(join(SITE_DIR, 'menu-index.json'), JSON.stringify(index));
+  console.log(`built menu-index: ${index.items.length} items · demos ${index.items.filter((x) => x.demo).length}`);
+}
