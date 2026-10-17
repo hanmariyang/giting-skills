@@ -25,6 +25,50 @@ var scene = function (c, w, h, bg, fg, ch) {
     c.fillText(ch, w / 2, h / 2 + h * .03);
   };
 };
+// ── 화면 전환 2 에서 쓰는 도구 ──
+// snap: 장면을 지금 칸에 그린 뒤 그 픽셀을 떼어 둔다(입체·조각에 쓰려고). slot 0·1 을 돌려 쓴다.
+var _snaps = [];
+var snap = function (c, w, h, draw, slot) {
+  slot = slot || 0;
+  var T = c.getTransform(), d = T.a, W = Math.max(1, Math.round(w * d)), H = Math.max(1, Math.round(h * d));
+  var L = _snaps[slot] || (_snaps[slot] = document.createElement('canvas'));
+  if (L.width !== W || L.height !== H) { L.width = W; L.height = H; }
+  draw();
+  var x = L.getContext('2d'); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, W, H);
+  x.drawImage(c.canvas, Math.round(T.e), Math.round(T.f), W, H, 0, 0, W, H);
+  return L;
+};
+var put = function (c, L, x, y, w, h) { c.drawImage(L, x, y, w, h); };
+// face: 떼어 둔 장면을 3D 판으로 돌려 그린다. axis 'y' = 세로축으로 돈다(좌우), 'x' = 가로축(위아래).
+// 판의 한 점 = O + u·Dir (u 는 판 폭 방향, -half~half). ang 만큼 돌린 뒤 zoff 만큼 뒤로 민다.
+var face = function (c, L, w, h, axis, ang, O, Dir, zoff) {
+  var horiz = axis === 'y', len = horiz ? w : h, other = horiz ? h : w, D = len * 2.4, N = 56;
+  var cs = Math.cos(ang), sn = Math.sin(ang), prev = null;
+  var proj = function (u) {
+    var px = O[0] + u * Dir[0], pz = O[1] + u * Dir[1];
+    var X = px * cs + pz * sn, Z = -px * sn + pz * cs + zoff, f = D / (D + Z);
+    return { s: len / 2 + X * f, f: f };
+  };
+  for (var i = 0; i <= N; i++) {
+    var u = -len / 2 + len * i / N, q = proj(u);
+    if (prev && q.s > prev.s + .01) {
+      var f = (q.f + prev.f) / 2, ext = other * f, src = (i - 1) / N;
+      if (horiz) c.drawImage(L, src * L.width, 0, L.width / N + 1, L.height, prev.s, (h - ext) / 2, q.s - prev.s + .6, ext);
+      else c.drawImage(L, 0, src * L.height, L.width, L.height / N + 1, (w - ext) / 2, prev.s, ext, q.s - prev.s + .6);
+    }
+    prev = q;
+  }
+};
+// 반평면으로 다각형 자르기: dot(P,n) < s 쪽을 남긴다(keep=-1) 또는 반대쪽(keep=1)
+var clipHalf = function (pts, n, s, keep) {
+  var out = [], side = function (P) { return (P[0] * n[0] + P[1] * n[1] - s) * keep; };
+  for (var i = 0; i < pts.length; i++) {
+    var P = pts[i], Q = pts[(i + 1) % pts.length], a = side(P), b = side(Q);
+    if (a >= 0) out.push(P);
+    if ((a >= 0) !== (b >= 0)) { var t = a / (a - b); out.push([P[0] + (Q[0] - P[0]) * t, P[1] + (Q[1] - P[1]) * t]); }
+  }
+  return out;
+};
 /*@end*/
 
 var TR = {};
@@ -404,6 +448,251 @@ TR['strip-shuffle'] = function (c, w, h, p, A, B, k) {
     if (q <= 0) continue;
     (function (i, off) { fillWith(c, function () { c.rect(i * sw - .5, off, sw + 1, h); }, function () { c.save(); c.translate(0, off); B(); c.restore(); }); })(i, off);
   }
+};
+
+// ════ 화면 전환 2 · 기본기와 실물 23 (screen-transition-2) ════
+
+// ── BASIC · 밀고 덮기 ────────────────────────────────────
+TR['push'] = function (c, w, h, p, A, B, k) {
+  var x = -w * io(p);
+  c.save(); c.translate(x, 0); A(); c.restore();
+  c.save(); c.translate(x + w, 0); B(); c.restore();
+};
+TR['slide-over'] = function (c, w, h, p, A, B, k) {
+  var q = eo(p), y = -h + h * q;
+  A(); c.fillStyle = 'rgba(0,0,0,' + (.35 * q) + ')'; c.fillRect(0, 0, w, h);
+  c.save(); c.translate(0, y); B(); c.restore();
+  c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(0, y + h, w, Math.max(0, h * .03 * (1 - q)));
+};
+TR['slide-reveal'] = function (c, w, h, p, A, B, k) {
+  var q = io(p);
+  B(); c.fillStyle = 'rgba(0,0,0,' + (.35 * (1 - q)) + ')'; c.fillRect(0, 0, w, h);
+  c.save(); c.translate(-w * q, 0); A(); c.restore();
+  c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(w - w * q, 0, h * .05, h);
+};
+TR['elastic-slide'] = function (c, w, h, p, A, B, k) {
+  var q = back(p * 1.05), x = w - w * q;
+  A();
+  c.save(); c.translate(x, 0); B(); c.restore();
+};
+TR['stack-cards'] = function (c, w, h, p, A, B, k) {
+  var q = io(p), s = 1 - .12 * q;
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  c.save(); c.translate(w / 2, h / 2 - h * .06 * q); c.scale(s, s); c.translate(-w / 2, -h / 2);
+  c.beginPath(); c.rect(0, 0, w, h); c.clip(); A(); c.fillStyle = 'rgba(0,0,0,' + (.45 * q) + ')'; c.fillRect(0, 0, w, h); c.restore();
+  var y = h - h * eo(p * 1.1);
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, y - h * .025, w, h * .025);
+  c.save(); c.translate(0, y); B(); c.restore();
+};
+
+// ── FADE · 빛과 어둠 ──────────────────────────────────────
+// 딥: 색 하나를 한 번 거쳐 넘어간다(데모 파일에는 함수 하나만 실리니 공용 함수를 쓰지 않는다)
+TR['dip-to-black'] = function (c, w, h, p, A, B, k) {
+  (p < .5 ? A : B)();
+  var a = p < .5 ? io(p / .45) : 1 - io((p - .55) / .45);
+  c.fillStyle = '#000'; c.globalAlpha = clamp(a); c.fillRect(0, 0, w, h); c.globalAlpha = 1;
+};
+TR['dip-to-white'] = function (c, w, h, p, A, B, k) {
+  (p < .5 ? A : B)();
+  var a = p < .5 ? io(p / .45) : 1 - io((p - .55) / .45);
+  c.fillStyle = '#FFFFFF'; c.globalAlpha = clamp(a); c.fillRect(0, 0, w, h); c.globalAlpha = 1;
+};
+TR['film-burn'] = function (c, w, h, p, A, B, k) {
+  (p < .5 ? A : B)();
+  var e = Math.sin(Math.PI * clamp(p)), r = Math.max(w, h);
+  c.save(); c.globalCompositeOperation = 'lighter';
+  [[.18, .3, '255,120,40'], [.7, .65, '255,190,90'], [.45, .1, '255,80,30']].forEach(function (b, i) {
+    var cx = w * (b[0] + .08 * Math.sin(p * 6 + i)), cy = h * b[1], R = r * (.25 + 1.1 * e) * (1 + .2 * i);
+    var g = c.createRadialGradient(cx, cy, 0, cx, cy, R);
+    g.addColorStop(0, 'rgba(' + b[2] + ',' + (.95 * e) + ')'); g.addColorStop(.5, 'rgba(' + b[2] + ',' + (.45 * e) + ')'); g.addColorStop(1, 'rgba(' + b[2] + ',0)');
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+  });
+  c.restore();
+  var white = clamp((e - .82) / .18);
+  if (white > 0) { c.fillStyle = 'rgba(255,248,236,' + white + ')'; c.fillRect(0, 0, w, h); }
+};
+TR['vhs-rewind'] = function (c, w, h, p, A, B, k) {
+  var src = p < .5 ? A : B, e = Math.sin(Math.PI * clamp(p)), L = snap(c, w, h, src);
+  c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+  var rows = 26, rh = h / rows, d = L.height / rows, fr = Math.floor(p * 40);
+  for (var i = 0; i < rows; i++) {
+    var off = (hash(i * 7 + fr * 13) - .5) * w * .22 * e + Math.sin(i * .7 + p * 30) * w * .02 * e;
+    c.drawImage(L, 0, i * d, L.width, d + 1, off, i * rh, w, rh + .5);
+  }
+  var by = ((1 - p) * 1.4 - .2) * h;
+  c.fillStyle = 'rgba(255,255,255,' + (.5 * e) + ')';
+  for (var j = 0; j < 40; j++) c.fillRect(hash(j + fr) * w, by + hash(j * 3 + fr) * h * .1, w * .08 * hash(j * 5), 1.5);
+  c.fillStyle = 'rgba(0,0,0,' + (.18 * e) + ')';
+  for (var y = 0; y < h; y += 3) c.fillRect(0, y, w, 1);
+  if (e > .15) {
+    c.globalAlpha = e; c.fillStyle = '#FFFFFF'; c.font = '700 ' + Math.round(h * .13) + 'px ui-monospace,Menlo,monospace';
+    c.textAlign = 'left'; c.textBaseline = 'top'; c.fillText('◀◀', w * .05, h * .07); c.globalAlpha = 1;
+  }
+};
+
+// ── SPIN · 돌고 빨려 들기 ─────────────────────────────────
+TR['spin-zoom'] = function (c, w, h, p, A, B, k) {
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var first = p < .5, q = first ? ei(p / .5) : 1 - eo((p - .5) / .5), L = snap(c, w, h, first ? A : B);
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var s = 1 - q, ang = (first ? 1 : -1) * q * Math.PI * 1.2;
+  if (s > .002) { c.save(); c.translate(w / 2, h / 2); c.rotate(ang); c.scale(s, s); put(c, L, -w / 2, -h / 2, w, h); c.restore(); }
+};
+TR['drop-zoom'] = function (c, w, h, p, A, B, k) {
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var a = io(p * 1.3), sA = 1 - .55 * a;
+  if (a < 1) { c.save(); c.globalAlpha = 1 - a; c.translate(w / 2, h / 2 + h * .25 * a); c.scale(sA, sA); c.translate(-w / 2, -h / 2); A(); c.restore(); }
+  var b = clamp((p - .3) / .7);
+  if (b > 0) {
+    var bb = back(b), sB = 1.35 - .35 * bb, yB = -h * .5 * (1 - bb);
+    c.save(); c.globalAlpha = clamp(b * 3); c.translate(w / 2, h / 2 + yB); c.scale(sB, sB); c.translate(-w / 2, -h / 2); B(); c.restore();
+  }
+};
+TR['spin-blur'] = function (c, w, h, p, A, B, k) {
+  var src = p < .5 ? A : B, L = snap(c, w, h, src), e = Math.sin(Math.PI * clamp(p));
+  var base = (p < .5 ? -1 : 1) * (1 - Math.abs(p - .5) * 2) * Math.PI * .5;
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var n = 1 + Math.round(9 * e), sc = 1 + .5 * e;
+  for (var i = 0; i < n; i++) {
+    c.save(); c.globalAlpha = n === 1 ? 1 : 1.6 / n; c.translate(w / 2, h / 2); c.rotate(base + (i - n / 2) * .045 * e); c.scale(sc, sc);
+    put(c, L, -w / 2, -h / 2, w, h); c.restore();
+  }
+};
+TR['distort-warp'] = function (c, w, h, p, A, B, k) {
+  var e = Math.sin(Math.PI * clamp(p)), LA = snap(c, w, h, A, 0), LB = snap(c, w, h, B, 1);
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var rows = 48, rh = h / rows, mix_ = io(clamp((p - .3) / .4));
+  [[LA, 1 - mix_], [LB, mix_]].forEach(function (pr) {
+    if (pr[1] <= 0) return;
+    var L = pr[0], d = L.height / rows; c.globalAlpha = pr[1];
+    for (var i = 0; i < rows; i++) {
+      var off = Math.sin(i * .38 + p * 14) * w * .09 * e + Math.sin(i * .13 - p * 9) * w * .05 * e;
+      c.drawImage(L, 0, i * d, L.width, d + 1, off, i * rh, w, rh + .6);
+    }
+  });
+  c.globalAlpha = 1;
+};
+
+// ── SOLID · 입체로 넘기기 ─────────────────────────────────
+TR['cube-rotate'] = function (c, w, h, p, A, B, k) {
+  var LA = snap(c, w, h, A, 0), LB = snap(c, w, h, B, 1), a = io(p) * Math.PI / 2;
+  c.fillStyle = '#0B0C10'; c.fillRect(0, 0, w, h);
+  var hw = w / 2, z = hw * Math.sin(2 * a) * .6;
+  face(c, LA, w, h, 'y', a, [0, -hw], [1, 0], hw + z);
+  face(c, LB, w, h, 'y', a, [hw, 0], [0, 1], hw + z);
+};
+TR['card-flip'] = function (c, w, h, p, A, B, k) {
+  var LA = snap(c, w, h, A, 0), LB = snap(c, w, h, B, 1), a = io(p) * Math.PI;
+  c.fillStyle = '#0B0C10'; c.fillRect(0, 0, w, h);
+  var lift = Math.sin(a) * w * .35;
+  if (a < Math.PI / 2) face(c, LA, w, h, 'y', a, [0, 0], [1, 0], lift);
+  else face(c, LB, w, h, 'y', a - Math.PI, [0, 0], [1, 0], lift);
+};
+TR['roll-over'] = function (c, w, h, p, A, B, k) {
+  var LA = snap(c, w, h, A, 0), LB = snap(c, w, h, B, 1), a = io(p) * Math.PI / 2;
+  c.fillStyle = '#0B0C10'; c.fillRect(0, 0, w, h);
+  var hh = h / 2, z = hh * Math.sin(2 * a) * .6;
+  face(c, LA, w, h, 'x', a, [0, -hh], [1, 0], hh + z);
+  face(c, LB, w, h, 'x', a, [hh, 0], [0, 1], hh + z);
+};
+TR['domino-flip'] = function (c, w, h, p, A, B, k) {
+  var n = 6, bw = w / n;
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  for (var i = 0; i < n; i++) {
+    var q = io(p * 1.8 - i * .16), ang = q * Math.PI, sy = Math.abs(Math.cos(ang)), back_ = ang > Math.PI / 2;
+    (function (i, sy, back_, q) {
+      c.save(); c.translate(0, h); c.scale(1, Math.max(sy, .001)); c.translate(0, -h);
+      c.beginPath(); c.rect(i * bw + .5, 0, bw - 1, h); c.clip();
+      (back_ ? B : A)();
+      c.fillStyle = 'rgba(0,0,0,' + (.5 * Math.sin(q * Math.PI)) + ')'; c.fillRect(i * bw, 0, bw, h);
+      c.restore();
+    })(i, sy, back_, q);
+  }
+};
+TR['page-curl'] = function (c, w, h, p, A, B, k) {
+  B();
+  var q = io(p), n = [Math.SQRT1_2, Math.SQRT1_2], far = (w + h) * Math.SQRT1_2, s = far - (far + 2) * q;
+  var rect = [[0, 0], [w, 0], [w, h], [0, h]];
+  var keep = clipHalf(rect, n, s, -1);
+  if (keep.length > 2) fillWith(c, function () { poly(c, keep); }, A);
+  var gone = clipHalf(rect, n, s, 1);
+  if (gone.length > 2) {
+    var flap = gone.map(function (P) { var dd = P[0] * n[0] + P[1] * n[1] - s; return [P[0] - 2 * dd * n[0], P[1] - 2 * dd * n[1]]; });
+    c.save(); c.shadowColor = 'rgba(0,0,0,.35)'; c.shadowBlur = h * .08; c.shadowOffsetX = -h * .02;
+    c.beginPath(); poly(c, flap);
+    var gx = s * n[0], g = c.createLinearGradient(gx, gx, gx - h * .5 * n[0], gx - h * .5 * n[1]);
+    g.addColorStop(0, '#CFCAC0'); g.addColorStop(.35, '#F4F1EA'); g.addColorStop(1, '#E2DED5');
+    c.fillStyle = g; c.fill(); c.restore();
+  }
+};
+
+// ── OBJECT · 물건처럼 부서지기 ───────────────────────────
+TR['glass-shatter'] = function (c, w, h, p, A, B, k) {
+  var L = snap(c, w, h, A); B();
+  var cols = 5, rows = 3, gx = w / cols, gy = h / rows, pts = [];
+  for (var j = 0; j <= rows; j++) for (var i = 0; i <= cols; i++) {
+    var edge = i === 0 || j === 0 || i === cols || j === rows;
+    pts.push([i * gx + (edge ? 0 : (hash(i * 9 + j) - .5) * gx * .7), j * gy + (edge ? 0 : (hash(i * 3 + j * 11) - .5) * gy * .7)]);
+  }
+  var crack = clamp(p / .18), fall = clamp((p - .18) / .82), idx = 0;
+  for (var j2 = 0; j2 < rows; j2++) for (var i2 = 0; i2 < cols; i2++) {
+    var a = pts[j2 * (cols + 1) + i2], b = pts[j2 * (cols + 1) + i2 + 1], cc = pts[(j2 + 1) * (cols + 1) + i2 + 1], d = pts[(j2 + 1) * (cols + 1) + i2];
+    [[a, b, cc], [a, cc, d]].forEach(function (tri) {
+      var r = hash(idx++ * 17.3), del = r * .35, f = clamp((fall - del) / (1 - del)), cx = (tri[0][0] + tri[1][0] + tri[2][0]) / 3, cy = (tri[0][1] + tri[1][1] + tri[2][1]) / 3;
+      var dy = f * f * h * 1.6, dx = (cx - w / 2) * .5 * f, rot = (r - .5) * 2.4 * f;
+      if (dy > h * 1.5) return;
+      c.save(); c.translate(cx + dx, cy + dy); c.rotate(rot); c.translate(-cx, -cy);
+      c.beginPath(); poly(c, tri); c.clip(); put(c, L, 0, 0, w, h);
+      if (crack > 0) { c.strokeStyle = 'rgba(255,255,255,' + (.75 * crack) + ')'; c.lineWidth = 1.2; c.beginPath(); poly(c, tri); c.stroke(); }
+      c.restore();
+    });
+  }
+};
+TR['paper-tear'] = function (c, w, h, p, A, B, k) {
+  var L = snap(c, w, h, A); B();
+  var q = io(p), n = 9, edge = [];
+  for (var i = 0; i <= n; i++) edge.push([w / 2 + (i % 2 ? 1 : -1) * w * .045 * (.6 + hash(i * 5)), h * i / n]);
+  var shift = q * w * .62, rot = q * .12;
+  [[-1, [[-w, 0]].concat(edge).concat([[-w, h]])], [1, [[w * 2, 0]].concat(edge).concat([[w * 2, h]])]].forEach(function (side) {
+    var sg = side[0], shape = side[1];
+    c.save(); c.translate(sg * shift, h * .04 * q); c.translate(w / 2, h); c.rotate(sg * rot); c.translate(-w / 2, -h);
+    c.beginPath(); poly(c, shape); c.save(); c.clip(); put(c, L, 0, 0, w, h); c.restore();
+    c.strokeStyle = '#F4F1EA'; c.lineWidth = Math.max(2, h * .025); c.beginPath(); c.moveTo(edge[0][0], edge[0][1]);
+    for (var e = 1; e < edge.length; e++) c.lineTo(edge[e][0], edge[e][1]); c.stroke();
+    c.restore();
+  });
+};
+TR['tv-off'] = function (c, w, h, p, A, B, k) {
+  c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+  var off = p < .5, t = off ? p / .5 : 1 - (p - .5) / .5, L = snap(c, w, h, off ? A : B);
+  c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+  var sy = 1 - ei(clamp(t / .6)), sx = 1 - ei(clamp((t - .6) / .35)), lineA = clamp((t - .35) / .25);
+  if (sy > .01) { c.save(); c.translate(w / 2, h / 2); c.scale(1, sy); put(c, L, -w / 2, -h / 2, w, h); c.restore(); }
+  if (lineA > 0 && sx > .005) {
+    var lh = Math.max(2, h * .02);
+    c.save(); c.shadowColor = '#FFFFFF'; c.shadowBlur = h * .12; c.fillStyle = 'rgba(255,255,255,' + lineA + ')';
+    c.fillRect(w / 2 - w / 2 * sx, h / 2 - lh / 2, w * sx, lh); c.restore();
+  }
+  if (t > .9 && t < 1) { c.fillStyle = 'rgba(255,255,255,' + (1 - (t - .9) / .1) + ')'; c.beginPath(); c.arc(w / 2, h / 2, h * .025, 0, 7); c.fill(); }
+};
+TR['roll-up'] = function (c, w, h, p, A, B, k) {
+  B();
+  var y = h - (h + h * .12) * io(p), r = h * .07;
+  if (y > 0) fillWith(c, function () { c.rect(0, 0, w, y); }, A);
+  if (y > -r * 2) {
+    var g = c.createLinearGradient(0, y - r, 0, y + r);
+    g.addColorStop(0, '#9A958C'); g.addColorStop(.45, '#F4F1EA'); g.addColorStop(1, '#6E6A63');
+    c.fillStyle = g; c.fillRect(0, y - r, w, r * 2);
+    c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(0, y + r, w, r * .5);
+  }
+};
+TR['squeeze-line'] = function (c, w, h, p, A, B, k) {
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var first = p < .5, t = first ? p / .5 : 1 - (p - .5) / .5, L = snap(c, w, h, first ? A : B);
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h);
+  var sx = 1 - ei(t), lw = Math.max(3, w * .012);
+  if (sx > .01) { c.save(); c.translate(w / 2, h / 2); c.scale(sx, 1 - .1 * t); put(c, L, -w / 2, -h / 2, w, h); c.restore(); }
+  if (t > .55) { c.fillStyle = k.acc; c.globalAlpha = clamp((t - .55) / .25); c.fillRect(w / 2 - lw / 2, h * .05, lw, h * .9); c.globalAlpha = 1; }
 };
 
 if (typeof module !== 'undefined') module.exports = { TR: TR };

@@ -128,3 +128,13 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - ui-menu 데모는 자동 시연기(`RUNNER`)를 붙여 낸다. 상세 페이지가 `{uim:'play'}` 를 보내고 `done` 이 오면 다시 튼다.
 - 웹폰트 사전은 요청 문장(`ask`)이 없어 「글꼴을 ○○ 자리에 써줘 …」를 만들어 넣는다.
 
+
+## 모션 메뉴판 0.12.0 · ⑪ 화면 전환 2 · 23 (2026-10-17)
+
+- ⑦이 색면·도형·패널 같은 평면 그래픽이라 기본 전환(푸시·슬라이드·딥 투 블랙)과 실물 같은 전환(큐브·페이지 컬·유리·종이·TV)이 비어 있었다. 그 23개. `group` BASIC 5 · FADE 4 · SPIN 4 · SOLID 5 · OBJECT 5. 238항목.
+- 정본은 ⑦과 같은 `tools/transitions/engine.js`(`TR`)다. `gen.mjs` 가 `m8-screen-transition.html` 과 `m14-screen-transition-2.html` 을 같이 만든다. 색은 `PALETTE2`, 코스 표는 `COURSES`.
+- 영상·확인 시트는 `TR_CAT=screen-transition-2 node plugins/motion-menu/tools/transitions/render.mjs <폴더> sheet|video`.
+- helpers 에 `snap`(장면을 그려 픽셀로 떼어 두기) · `face`(떼어 둔 장면을 세로/가로축 3D 판으로, 세로줄 56개로 원근) · `clipHalf`(반평면 자르기, 페이지 컬 접힌 면)를 더했다. 그래서 ⑦ components 40개도 같이 다시 생성된다(동작은 그대로).
+- `face` 는 화면에서 왼쪽에서 오른쪽으로 늘어나는 줄만 그린다(뒷면 숨김). 판 방향(`Dir`)을 거꾸로 주면 통째로 안 보인다. 큐브 옆면은 `[0, 1]`.
+- 캔버스 `filter: blur()` 는 사파리에서 안 먹어서 쓰지 않는다. 스핀 블러는 같은 판을 조금씩 돌려 여러 번 겹쳐 흐림을 낸다.
+- 아이디어는 외부 화면 전환 모음에서 가져왔고 문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.

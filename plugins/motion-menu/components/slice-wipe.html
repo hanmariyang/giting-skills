@@ -22,6 +22,50 @@ var scene = function (c, w, h, bg, fg, ch) {
     c.fillText(ch, w / 2, h / 2 + h * .03);
   };
 };
+// ── 화면 전환 2 에서 쓰는 도구 ──
+// snap: 장면을 지금 칸에 그린 뒤 그 픽셀을 떼어 둔다(입체·조각에 쓰려고). slot 0·1 을 돌려 쓴다.
+var _snaps = [];
+var snap = function (c, w, h, draw, slot) {
+  slot = slot || 0;
+  var T = c.getTransform(), d = T.a, W = Math.max(1, Math.round(w * d)), H = Math.max(1, Math.round(h * d));
+  var L = _snaps[slot] || (_snaps[slot] = document.createElement('canvas'));
+  if (L.width !== W || L.height !== H) { L.width = W; L.height = H; }
+  draw();
+  var x = L.getContext('2d'); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, W, H);
+  x.drawImage(c.canvas, Math.round(T.e), Math.round(T.f), W, H, 0, 0, W, H);
+  return L;
+};
+var put = function (c, L, x, y, w, h) { c.drawImage(L, x, y, w, h); };
+// face: 떼어 둔 장면을 3D 판으로 돌려 그린다. axis 'y' = 세로축으로 돈다(좌우), 'x' = 가로축(위아래).
+// 판의 한 점 = O + u·Dir (u 는 판 폭 방향, -half~half). ang 만큼 돌린 뒤 zoff 만큼 뒤로 민다.
+var face = function (c, L, w, h, axis, ang, O, Dir, zoff) {
+  var horiz = axis === 'y', len = horiz ? w : h, other = horiz ? h : w, D = len * 2.4, N = 56;
+  var cs = Math.cos(ang), sn = Math.sin(ang), prev = null;
+  var proj = function (u) {
+    var px = O[0] + u * Dir[0], pz = O[1] + u * Dir[1];
+    var X = px * cs + pz * sn, Z = -px * sn + pz * cs + zoff, f = D / (D + Z);
+    return { s: len / 2 + X * f, f: f };
+  };
+  for (var i = 0; i <= N; i++) {
+    var u = -len / 2 + len * i / N, q = proj(u);
+    if (prev && q.s > prev.s + .01) {
+      var f = (q.f + prev.f) / 2, ext = other * f, src = (i - 1) / N;
+      if (horiz) c.drawImage(L, src * L.width, 0, L.width / N + 1, L.height, prev.s, (h - ext) / 2, q.s - prev.s + .6, ext);
+      else c.drawImage(L, 0, src * L.height, L.width, L.height / N + 1, (w - ext) / 2, prev.s, ext, q.s - prev.s + .6);
+    }
+    prev = q;
+  }
+};
+// 반평면으로 다각형 자르기: dot(P,n) < s 쪽을 남긴다(keep=-1) 또는 반대쪽(keep=1)
+var clipHalf = function (pts, n, s, keep) {
+  var out = [], side = function (P) { return (P[0] * n[0] + P[1] * n[1] - s) * keep; };
+  for (var i = 0; i < pts.length; i++) {
+    var P = pts[i], Q = pts[(i + 1) % pts.length], a = side(P), b = side(Q);
+    if (a >= 0) out.push(P);
+    if ((a >= 0) !== (b >= 0)) { var t = a / (a - b); out.push([P[0] + (Q[0] - P[0]) * t, P[1] + (Q[1] - P[1]) * t]); }
+  }
+  return out;
+};
 var T=function (c, w, h, p, A, B, k) {
   A();
   var sk = .45, n = 5, U = w + sk * h, bw = U / n;

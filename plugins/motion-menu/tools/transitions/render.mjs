@@ -1,5 +1,5 @@
-// 화면 전환 40 홍보 영상 — 묶음마다 1080×1920 영상 하나 (8개씩 5편)
-// node plugins/motion-menu/tools/transitions/render.mjs <출력폴더> [sheet|video] [묶음…]
+// 화면 전환 홍보 영상 — 묶음마다 1080×1920 영상 하나 (⑦ 8개씩 5편 · ⑪ 4~5개씩 5편)
+// [TR_CAT=screen-transition-2] node plugins/motion-menu/tools/transitions/render.mjs <출력폴더> [sheet|video] [묶음…]
 //   covers: 묶음마다 전환 한가운데 멈춘 한 장(still-<묶음>.png) — 레이아웃 확인용
 //   sheet: 전환 40개를 진행 0.3 · 0.6 에서 멈춘 확인용 한 장(sheet.png)
 //   video: 프레임을 PNG 로 떠서 FFMPEG(환경변수, 기본 ffmpeg)로 mp4 를 굽는다. 무음
@@ -9,14 +9,15 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { PALETTE, mix } from './gen.mjs';
+import { COURSES, mix } from './gen.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const [, , outArg, mode = 'video', ...only] = process.argv;
 if (!outArg) { console.error('출력 폴더를 주세요'); process.exit(1); }
 const OUT = resolve(outArg); mkdirSync(OUT, { recursive: true });
 const menu = JSON.parse(readFileSync(join(HERE, '..', '..', 'menu.json'), 'utf8'));
-const items = menu.items.filter(i => i.category === 'screen-transition');
+const CAT = process.env.TR_CAT || 'screen-transition', PALETTE = COURSES[CAT].palette;
+const items = menu.items.filter(i => i.category === CAT);
 const groups = Object.keys(PALETTE).filter(g => !only.length || only.includes(g));
 const FPS = 30, SECS = 8;
 
@@ -29,7 +30,7 @@ const page = `<!doctype html><meta charset="utf-8"><body style="margin:0;backgro
 <canvas id="v" width="1080" height="1920"></canvas>
 <script>${readFileSync(join(HERE, 'engine.js'), 'utf8')}</script>
 <script>
-var D=${JSON.stringify(data)}, cv=document.getElementById('v'), c=cv.getContext('2d');
+var D=${JSON.stringify(data)}, TOTAL=${items.length}, cv=document.getElementById('v'), c=cv.getContext('2d');
 var SANS='-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif', MONO='"SF Mono",Menlo,monospace';
 function txt(s,x,y,font,col,al){c.font=font;c.fillStyle=col;c.textAlign=al||'left';c.textBaseline='alphabetic';c.fillText(s,x,y);}
 function pill(s,x,y,font,bg,fg,padX,hh,right){c.font=font;var tw=c.measureText(s).width,w=tw+padX*2,x0=right?x-w:x;c.fillStyle=bg;c.beginPath();c.roundRect(x0,y,w,hh,hh/2);c.fill();c.fillStyle=fg;c.textAlign='center';c.textBaseline='middle';c.fillText(s,x0+w/2,y+hh/2+1);}
@@ -69,10 +70,10 @@ window.draw=function(g,t){
   });
   c.fillStyle=INK;c.fillRect(56,1660,968,3);
   txt('GITING',56,1712,'800 26px '+MONO,INK);
-  txt('40개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
+  txt(TOTAL+'개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
 };
 window.sheet=function(){
-  cv.width=1080;cv.height=40*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
+  cv.width=1080;cv.height=TOTAL*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
   var k=0;Object.keys(D).forEach(function(g){var G=D[g];G.items.forEach(function(it){
     var y=20+k*120;txt(String(it.no).padStart(2,'0')+' '+it.id,20,y+60,'600 22px '+MONO,'#ccc');
     [.15,.35,.55,.8].forEach(function(p,j){cell(it,260+j*205,y,195,100,p,0,G,1,18,true);});k++;});});

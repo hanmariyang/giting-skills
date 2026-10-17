@@ -1,0 +1,90 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>슬라이드 오버 Slide Over · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .st{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="st" role="img" aria-label="슬라이드 오버 데모: 화면 A 에서 B 로 넘어갔다가 돌아온다"></canvas>
+<p class="cap">슬라이드 오버 · 앞 화면은 제자리에서 어두워지고 다음 화면이 위에서 내려와 덮는다.</p>
+<script>(function(){
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var ei = function (t) { t = clamp(t); return t * t * t; };
+var back = function (t) { t = clamp(t); var s = 1.9; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var fillWith = function (c, path, draw) { c.save(); c.beginPath(); path(); c.clip(); draw(); c.restore(); };
+var solid = function (c, w, h, col) { return function () { c.fillStyle = col; c.fillRect(0, 0, w, h); }; };
+var poly = function (c, pts) { c.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) c.lineTo(pts[i][0], pts[i][1]); c.closePath(); };
+var scene = function (c, w, h, bg, fg, ch) {
+  return function () {
+    c.fillStyle = bg; c.fillRect(0, 0, w, h);
+    c.fillStyle = fg; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = '800 ' + Math.round(h * .42) + 'px -apple-system,system-ui,sans-serif';
+    c.fillText(ch, w / 2, h / 2 + h * .03);
+  };
+};
+// ── 화면 전환 2 에서 쓰는 도구 ──
+// snap: 장면을 지금 칸에 그린 뒤 그 픽셀을 떼어 둔다(입체·조각에 쓰려고). slot 0·1 을 돌려 쓴다.
+var _snaps = [];
+var snap = function (c, w, h, draw, slot) {
+  slot = slot || 0;
+  var T = c.getTransform(), d = T.a, W = Math.max(1, Math.round(w * d)), H = Math.max(1, Math.round(h * d));
+  var L = _snaps[slot] || (_snaps[slot] = document.createElement('canvas'));
+  if (L.width !== W || L.height !== H) { L.width = W; L.height = H; }
+  draw();
+  var x = L.getContext('2d'); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, W, H);
+  x.drawImage(c.canvas, Math.round(T.e), Math.round(T.f), W, H, 0, 0, W, H);
+  return L;
+};
+var put = function (c, L, x, y, w, h) { c.drawImage(L, x, y, w, h); };
+// face: 떼어 둔 장면을 3D 판으로 돌려 그린다. axis 'y' = 세로축으로 돈다(좌우), 'x' = 가로축(위아래).
+// 판의 한 점 = O + u·Dir (u 는 판 폭 방향, -half~half). ang 만큼 돌린 뒤 zoff 만큼 뒤로 민다.
+var face = function (c, L, w, h, axis, ang, O, Dir, zoff) {
+  var horiz = axis === 'y', len = horiz ? w : h, other = horiz ? h : w, D = len * 2.4, N = 56;
+  var cs = Math.cos(ang), sn = Math.sin(ang), prev = null;
+  var proj = function (u) {
+    var px = O[0] + u * Dir[0], pz = O[1] + u * Dir[1];
+    var X = px * cs + pz * sn, Z = -px * sn + pz * cs + zoff, f = D / (D + Z);
+    return { s: len / 2 + X * f, f: f };
+  };
+  for (var i = 0; i <= N; i++) {
+    var u = -len / 2 + len * i / N, q = proj(u);
+    if (prev && q.s > prev.s + .01) {
+      var f = (q.f + prev.f) / 2, ext = other * f, src = (i - 1) / N;
+      if (horiz) c.drawImage(L, src * L.width, 0, L.width / N + 1, L.height, prev.s, (h - ext) / 2, q.s - prev.s + .6, ext);
+      else c.drawImage(L, 0, src * L.height, L.width, L.height / N + 1, (w - ext) / 2, prev.s, ext, q.s - prev.s + .6);
+    }
+    prev = q;
+  }
+};
+// 반평면으로 다각형 자르기: dot(P,n) < s 쪽을 남긴다(keep=-1) 또는 반대쪽(keep=1)
+var clipHalf = function (pts, n, s, keep) {
+  var out = [], side = function (P) { return (P[0] * n[0] + P[1] * n[1] - s) * keep; };
+  for (var i = 0; i < pts.length; i++) {
+    var P = pts[i], Q = pts[(i + 1) % pts.length], a = side(P), b = side(Q);
+    if (a >= 0) out.push(P);
+    if ((a >= 0) !== (b >= 0)) { var t = a / (a - b); out.push([P[0] + (Q[0] - P[0]) * t, P[1] + (Q[1] - P[1]) * t]); }
+  }
+  return out;
+};
+var T=function (c, w, h, p, A, B, k) {
+  var q = eo(p), y = -h + h * q;
+  A(); c.fillStyle = 'rgba(0,0,0,' + (.35 * q) + ')'; c.fillRect(0, 0, w, h);
+  c.save(); c.translate(0, y); B(); c.restore();
+  c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(0, y + h, w, Math.max(0, h * .03 * (1 - q)));
+};
+var cv=document.querySelector('canvas.st'),c=cv.getContext('2d'),K={acc:'#2BA8E0',deep:'#216687',paper:'#F4F1EA',ink:'#14161B',n:0};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1.2:(Math.max(0,(now-t0)/1000))%4,cyc=Math.floor((now-t0)/4000);
+  var SA=scene(c,w,h,K.ink,K.paper,'A'),SB=scene(c,w,h,K.acc,K.ink,'B');
+  K.n=cyc*2+(t<2?0:1);
+  c.save();c.beginPath();c.rect(0,0,w,h);c.clip();
+  if(t<.4)SA();else if(t<1.8)T(c,w,h,(t-.4)/1.4,SA,SB,K);else if(t<2.4)SB();else if(t<3.8)T(c,w,h,(t-2.4)/1.4,SB,SA,K);else SA();
+  c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

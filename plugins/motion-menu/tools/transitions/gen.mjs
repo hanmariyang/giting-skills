@@ -1,4 +1,4 @@
-// engine.js + menu.json → demos/m8-screen-transition.html (갤러리 데모 프래그먼트 40개)
+// engine.js + menu.json → demos/m8-screen-transition.html(⑦ 40개) + demos/m14-screen-transition-2.html(⑪ 23개)
 // 실행: node plugins/motion-menu/tools/transitions/gen.mjs   그다음 루트에서 node build.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -18,13 +18,25 @@ export const PALETTE = {
   PANEL: { acc: '#6B5AE0', label: '판을 갈아 끼워요' },
   MOSAIC: { acc: '#2BA8E0', label: '나누고 섞어서 보여요' },
 };
-const items = menu.items.filter(i => i.category === 'screen-transition');
-const missing = items.filter(i => !TR[i.id]).map(i => i.id);
+export const PALETTE2 = {
+  BASIC: { acc: '#2BA8E0', label: '밀고 덮어요' },
+  FADE: { acc: '#F05032', label: '빛과 어둠을 지나요' },
+  SPIN: { acc: '#6B5AE0', label: '돌고 빨려 들어요' },
+  SOLID: { acc: '#21B795', label: '입체로 넘어가요' },
+  OBJECT: { acc: '#E8B520', label: '물건처럼 부서져요' },
+};
+// 코스별 설정: 범주 · 색 · 데모 파일
+export const COURSES = {
+  'screen-transition': { palette: PALETTE, demo: 'm8-screen-transition.html' },
+  'screen-transition-2': { palette: PALETTE2, demo: 'm14-screen-transition-2.html' },
+};
+const all = menu.items.filter(i => COURSES[i.category]);
+const missing = all.filter(i => !TR[i.id]).map(i => i.id);
 if (missing.length) { console.error('engine.js 에 없는 전환:', missing.join(', ')); process.exit(1); }
 
 export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
 const frag = it => {
-  const acc = PALETTE[it.group].acc;
+  const acc = COURSES[it.category].palette[it.group].acc;
   return `<!-- @${it.id} h=220 full -->
 <style>
   .st{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
@@ -51,9 +63,12 @@ sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
 };
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-const out = `<!-- 생성물: tools/transitions/gen.mjs 가 engine.js 에서 만든다. 여기를 직접 고치지 않는다 -->
+for (const [cat, C] of Object.entries(COURSES)) {
+  const items = all.filter(i => i.category === cat);
+  const out = `<!-- 생성물: tools/transitions/gen.mjs 가 engine.js 에서 만든다. 여기를 직접 고치지 않는다 -->
 ${items.map(frag).join('\n\n')}
 `;
-writeFileSync(join(MM, 'demos', 'm8-screen-transition.html'), out);
-console.log(`demos/m8-screen-transition.html: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+  writeFileSync(join(MM, 'demos', C.demo), out);
+  console.log(`demos/${C.demo}: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+}
 }
