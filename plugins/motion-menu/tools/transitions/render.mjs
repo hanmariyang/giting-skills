@@ -58,15 +58,17 @@ window.draw=function(g,t){
   txt(G.label,84+gw+18,497,'500 26px '+SANS,SUB);
   txt((GROUPS.indexOf(g)+1)+' / '+GROUPS.length,1024,497,'600 26px '+MONO,SUB,'right');
   c.fillStyle=INK;c.fillRect(56,526,968,3);
-  var TW=272,TH=130,RY=546,RH=138;
+  // 8개면 ⑦ 그대로, 적으면 칸을 키워 1650 위까지 채운다(⑪ 은 4~5개)
+  var few=G.items.length<8,RY=546,RH=few?Math.floor((1640-RY)/G.items.length):138,TH=few?RH-16:130,TW=few?340:272,X=56+TW+30,MID=RH/2;
   G.items.forEach(function(it,i){
     var y=RY+i*RH,ph=phase(t-i*.11),n=Math.floor((t-i*.11+8)/2);
-    cell(it,56,y+4,TW,TH,ph[0],ph[1],G,n,12,false);
-    txt('「'+it.say+'」',358,y+54,'500 28px '+SANS,SUB);
-    txt('→',358,y+108,'700 38px '+SANS,G.acc);
-    txt(it.en,410,y+108,'800 42px '+SANS,INK);
-    txt(String(it.no).padStart(2,'0'),1024,y+108,'600 24px '+MONO,'#A4A8B1','right');
-    if(i<G.items.length-1){c.fillStyle=LINE;c.fillRect(358,y+RH-1,666,2);}
+    cell(it,56,y+(few?8:4),TW,TH,ph[0],ph[1],G,n,12,false);
+    var sz=few?30:28,say='「'+it.say+'」';c.font='500 '+sz+'px '+SANS;while(sz>22&&c.measureText(say).width>1024-X){sz--;c.font='500 '+sz+'px '+SANS;}
+    txt(say,X,y+(few?MID-14:54),'500 '+sz+'px '+SANS,SUB);
+    txt('→',X,y+(few?MID+44:108),'700 '+(few?42:38)+'px '+SANS,G.acc);
+    txt(it.en,X+(few?56:52),y+(few?MID+44:108),'800 '+(few?46:42)+'px '+SANS,INK);
+    txt(String(it.no).padStart(2,'0'),1024,y+(few?MID+44:108),'600 24px '+MONO,'#A4A8B1','right');
+    if(i<G.items.length-1){c.fillStyle=LINE;c.fillRect(X,y+RH-1,1024-X,2);}
   });
   c.fillStyle=INK;c.fillRect(56,1660,968,3);
   txt('GITING',56,1712,'800 26px '+MONO,INK);
@@ -105,7 +107,7 @@ else {
     await ev(`draw(${JSON.stringify(g)}, 0.2)`); await png(join(OUT, `cover-${g}.png`));
     const name = `${String(groups.indexOf(g) + 1).padStart(2, '0')}-${g.toLowerCase()}.mp4`;
     const r = spawnSync(FF, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(dir, '%04d.png'), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-preset', 'slow', '-movflags', '+faststart', join(OUT, name)]);
-    if (r.status) { console.error(r.stderr.toString()); process.exit(1); }
+    if (r.status !== 0) { console.error('ffmpeg 실패:', r.error?.message || r.stderr?.toString()); process.exit(1); }  // status null(실행 자체 실패)도 잡는다
     rmSync(dir, { recursive: true, force: true });
     console.log('video', name);
   }
