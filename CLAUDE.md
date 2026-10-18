@@ -161,3 +161,10 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - LOOP 묶음은 8초 안에서 나눠떨어지는 주기만 쓴다(1 · 1.6 · 2 · 4 · 8/3초). 나머지 셋은 ⑫처럼 들어와 머물고 7.2초부터 사라진다.
 - ⭐ 공용 값·도우미는 반드시 `/*@helpers*/` 안에 둔다. ⑫에서 바깥에 두었다가 데모 10개가 갤러리에서 ReferenceError 로 멈췄다(영상은 엔진 파일을 통째로 실어 멀쩡했다).
 - `back()` 이징은 0 근처에서 아주 작은 음수가 나온다. `arc` 반지름에 쓰면 IndexSizeError 로 멈추니 `Math.max(0, …)` 로 감싼다.
+
+## 모션 메뉴판 0.15.0 · ⑭ 소셜 오버레이 24 (2026-10-19)
+
+- 시리즈 세 번째(마지막). `group` FOLLOW · CHAT · ALERT · FRAME, 6개씩. 310항목.
+- 정본 `plugins/motion-menu/tools/social/engine.js`(`SO`). `gen.mjs` → `demos/m17-social-overlay.html`, `render.mjs` 영상 4편.
+- 영상 위에 얹는 요소라 바탕을 흐린 「영상 자리」(`scene`: 그라디언트 + 빛 원 둘)로 칠한다. 사진을 쓰지 않는다. 계정 이름·숫자는 지어낸 예시다.
+- ⛔ **엔진 도우미 이름이 render 페이지 함수와 겹치면 영상에서 조용히 덮어써진다.** render 페이지는 `txt` · `pill` · `cell` · `draw` · `sheet` 를 전역에 둔다. ⑭에서 `txt`·`pill` 을 써서 영상 시트의 글자가 전부 사라졌다(갤러리 데모는 멀쩡). 엔진 쪽을 `say` · `sayW` · `chip` 으로 바꿨다. 갤러리 러너의 `sizeCanvas` · `frame` · `F` · `cv` · `c` · `K` 도 같은 이유로 피한다.
