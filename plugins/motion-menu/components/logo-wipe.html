@@ -1,0 +1,64 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>쓸어 드러내기 Logo Wipe · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="쓸어 드러내기 데모: 아이콘·로고 몸짓 장면"></canvas>
+<p class="cap">쓸어 드러내기 · 세로 빛 막대가 왼쪽에서 오른쪽으로 지나가며 그 뒤로 로고가 드러난다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var elastic = function (t) { t = clamp(t); return t === 0 || t === 1 ? t : Math.pow(2, -10 * t) * Math.sin((t * 10 - .75) * TAU / 3) + 1; };
+var lerp = function (a, b, t) { return a + (b - a) * t; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var lerpC = function (a, b, t) { return '#' + [1, 3, 5].map(function (i) { return Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0'); }).join(''); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var SANS = '-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif';
+var rrect = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, Math.max(0, w), Math.max(0, h), Math.max(0, Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2))); };
+var disc = function (c, x, y, r) { if (r > .2) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+// 점 배열(정규 좌표 -1~1)을 칸 가운데 크기 s 로 옮긴다
+var place = function (pts, cx, cy, s) { return pts.map(function (p) { return [cx + p[0] * s, cy + p[1] * s]; }); };
+var plen = function (pts) { var L = 0; for (var i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); return L; };
+var poly = function (c, pts, close) { c.beginPath(); pts.forEach(function (p, i) { if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); if (close) c.closePath(); };
+// 선을 e(0~1)만큼만 그린다
+var strokePart = function (c, pts, e) { var L = plen(pts); c.setLineDash([L * clamp(e), L + 1]); poly(c, pts, false); c.stroke(); c.setLineDash([]); };
+// 마크: 둥근 사각 안에 꺾인 번개 모양 하나 (이 엔진에서 만든 추상 도형)
+var MARK_OUT = (function () { var r = .78, n = 40, pts = []; for (var i = 0; i <= n; i++) { var a = -Math.PI / 2 + TAU * i / n; var sx = Math.cos(a), sy = Math.sin(a); var q = Math.pow(Math.abs(sx), .55) * Math.sign(sx), u = Math.pow(Math.abs(sy), .55) * Math.sign(sy); pts.push([q * r, u * r]); } return pts; })();
+var MARK_IN = [[.12, -.5], [-.24, .06], [.06, .06], [-.12, .5], [.26, -.08], [-.04, -.08], [.12, -.5]];
+var markFill = function (c, cx, cy, s, k, a) {
+  c.fillStyle = k.acc; poly(c, place(MARK_OUT, cx, cy, s), true); c.fill();
+  c.fillStyle = k.paper; poly(c, place(MARK_IN, cx, cy, s), true); c.fill();
+};
+var CHECK = [[-.5, .02], [-.14, .38], [.52, -.36]];
+var HEART = (function () { var p = []; for (var i = 0; i <= 60; i++) { var a = TAU * i / 60, x = 16 * Math.pow(Math.sin(a), 3), y = -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)); p.push([x / 17, y / 17 - .05]); } return p; })();
+var STAR = (function () { var p = []; for (var i = 0; i <= 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? .4 : .9; p.push([Math.cos(a) * r, Math.sin(a) * r + .05]); } return p; })();
+var bell = function (c, cx, cy, s) {
+  c.beginPath(); c.moveTo(cx - s * .55, cy + s * .35); c.quadraticCurveTo(cx - s * .45, cy + s * .2, cx - s * .42, cy - s * .1);
+  c.bezierCurveTo(cx - s * .4, cy - s * .55, cx + s * .4, cy - s * .55, cx + s * .42, cy - s * .1);
+  c.quadraticCurveTo(cx + s * .45, cy + s * .2, cx + s * .55, cy + s * .35); c.closePath(); c.fill();
+  disc(c, cx, cy + s * .48, s * .11); disc(c, cx, cy - s * .52, s * .07);
+};
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t);
+  var s = h * .36, cx = w / 2, cy = h / 2, e = io(seg(t, .4, 1.4)), x = cx - s * 1.1 + s * 2.2 * e;
+  c.save(); c.beginPath(); c.rect(0, 0, x, h); c.clip(); markFill(c, cx, cy, s, k); c.restore();
+  if (e > 0 && e < 1) { c.fillStyle = k.paper; c.fillRect(x - h * .008, cy - s, h * .016, s * 2); }
+  c.globalAlpha = 1;
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#F05032',deep:'#8d3628',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

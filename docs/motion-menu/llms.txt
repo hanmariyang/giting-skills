@@ -1,6 +1,6 @@
 # 모션 메뉴판 (motion-menu) · Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 262개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 286개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다. AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
@@ -2306,6 +2306,206 @@
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: Scale Compare 로 2020 대비 2026 을 보여줘. 작은 원이 먼저 0.5초 튀어나오고, 1.2초부터 큰 원이 1.4초 동안 부풀어 지름 3배(넓이 9배)가 되고, 안에 「×9」.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/scale-compare.html
+
+## ⑬ 아이콘·로고 몸짓 24
+로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.
+
+### 로고 선 따라 그리기 (Logo Trace)
+- 별칭: "로고 테두리가 펜으로 그리듯 나타나게" · "선이 따라가면서 로고가 그려지게" · "로고를 한 획씩 그려줘"
+- 정의: 로고 바깥선이 한 바퀴 그려지고 이어서 안쪽 모양이 그려진다.
+- 구분: 선만 그려지고 끝나면 로고 트레이스, 그린 뒤 면이 차면 스트로크 덴 필
+- 쓰임: 오프닝 · 브랜드
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Logo Trace 로 로고를 나타내줘. 바깥선을 2.2초 인아웃 이징으로 한 바퀴 그리고, 이어서 안쪽 모양을 1초에. 선 두께는 로고 높이의 4%, 끝은 둥글게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/logo-trace.html
+
+### 선 그린 뒤 채우기 (Stroke Then Fill)
+- 별칭: "선으로 그린 다음에 색이 채워지게" · "윤곽이 먼저 나오고 안이 칠해지게" · "라인 아트가 컬러로 바뀌게"
+- 정의: 검은 윤곽선이 먼저 그려지고 그 안이 색으로 채워지며 선이 물러난다.
+- 쓰임: 브랜드 · 오프닝
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Stroke Then Fill 로 로고를 보여줘. 검은 윤곽을 1.6초 동안 그리고, 2.1초부터 0.7초 동안 면 색이 차오르면서 윤곽선은 흐려지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stroke-then-fill.html
+
+### 쓸어 드러내기 (Logo Wipe)
+- 별칭: "로고가 왼쪽부터 쓱 드러나게" · "빛 막대가 지나가면서 로고가 보이게" · "가려졌던 로고가 걷히게"
+- 정의: 세로 빛 막대가 왼쪽에서 오른쪽으로 지나가며 그 뒤로 로고가 드러난다.
+- 쓰임: 깔끔 · 브랜드
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Logo Wipe 로 로고를 드러내줘. 얇은 흰 막대가 1.4초 인아웃 이징으로 왼쪽에서 오른쪽으로 지나가고, 막대가 지나간 자리만 로고가 보이게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/logo-wipe.html
+
+### 점이 모여 로고 (Dot Assemble)
+- 별칭: "흩어진 점들이 모여서 로고가 되게" · "입자가 날아와 로고 모양으로" · "가루가 뭉쳐서 로고"
+- 정의: 사방에서 날아온 점들이 로고 테두리 자리에 모이고 그 순간 로고가 채워진다.
+- 쓰임: 테크 · 오프닝
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Dot Assemble 로 로고를 만들어줘. 점 40개가 0.4~1.2초 사이 제각각 출발해 1.2초 동안 로고 테두리 자리로 모이고, 2.4초에 0.5초 동안 로고 면이 채워지며 점은 사라지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dot-assemble.html
+
+### 도장 쾅 (Stamp In)
+- 별칭: "도장 찍듯이 로고가 쾅" · "위에서 크게 내려와서 박히게" · "찍히는 순간 화면이 살짝 흔들리게"
+- 정의: 크게 기울어진 로고가 0.35초 만에 내려앉고 찍히는 순간 살짝 흔들리며 고리가 퍼진다.
+- 구분: 로고나 아이콘이 찍히면 스탬프 인, 글자가 찍히면 스탬프(글자 연출)
+- 쓰임: 강조 · 숏폼
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Stamp In 으로 로고를 박아줘. 2.2배 크기에서 0.35초 동안 1배로 내려앉고(-7도 기울기가 펴지게), 닿는 순간 0.3초 흔들림과 퍼지는 고리 하나.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stamp-in.html
+
+### 두 조각 맞물리기 (Split Join)
+- 별칭: "로고가 반으로 갈라져 있다가 붙게" · "양쪽에서 날아와 합쳐지게" · "두 쪽이 맞물리면서 완성"
+- 정의: 로고의 왼쪽 반과 오른쪽 반이 양쪽에서 미끄러져 와 가운데서 맞물린다.
+- 쓰임: 브랜드 · 전환
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Split Join 으로 로고를 합쳐줘. 왼쪽 반과 오른쪽 반이 화면 양끝에서 0.9초 백 이징으로 들어와 가운데서 맞물리고, 붙는 순간 이음매에 흰 빛 0.15초.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/split-join.html
+
+### 튕겨 등장 (Icon Bounce)
+- 별칭: "아이콘이 위에서 떨어져서 통통 튀게" · "공처럼 바닥에 튕기면서 나오게" · "떨어지면서 그림자도 같이"
+- 정의: 위에서 떨어진 아이콘이 바닥에서 두 번 튕기다 멈추고 그림자가 따라 줄었다 커진다.
+- 구분: 떨어져서 튕기면 아이콘 바운스, 제자리에서 커지며 나오면 팝인
+- 쓰임: 친근 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Icon Bounce 로 아이콘을 등장시켜줘. 위에서 0.5초 만에 떨어져 두 번 튕기며(높이 20% → 줄어들게) 1.4초 안에 멈추고, 바닥 그림자가 높이에 따라 커졌다 작아지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/icon-bounce.html
+
+### 찌그러졌다 펴기 (Squash Pop)
+- 별칭: "말랑하게 찌그러졌다가 펴지게" · "젤리처럼 출렁이며 나오게" · "눌렸다가 튀어 오르게"
+- 정의: 아이콘이 바닥에서 납작하게 눌렸다 길쭉하게 늘어나기를 반복하며 탄성 있게 선다.
+- 쓰임: 귀여움 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Squash Pop 으로 아이콘을 등장시켜줘. 바닥 기준으로 가로 1.35배·세로 0.65배로 눌렸다가 반대로 늘어나기를 1.1초 동안 세 번, 점점 줄어들며 일래스틱 이징.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/squash-pop.html
+
+### 궤도 돌며 들어오기 (Orbit In)
+- 별칭: "빙글 돌면서 가운데로 들어오게" · "소용돌이 치면서 모이게" · "궤도를 그리며 날아와 멈추게"
+- 정의: 아이콘이 가운데를 한 바퀴 반 돌며 반지름을 줄여 들어오고 꼬리 잔상이 따라온다.
+- 쓰임: 몽환 · 오프닝
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Orbit In 으로 아이콘을 들여보내줘. 가운데를 1.25바퀴 돌며 반지름이 0이 되도록 1.8초 인아웃 이징, 크기는 40%에서 100%로, 뒤로 흐린 잔상 3개.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/orbit-in.html
+
+### 돌다 멈추기 (Spin Settle)
+- 별칭: "빙글빙글 돌다가 딱 멈추게" · "회전하면서 나타나서 자리 잡게" · "돌다가 흔들리며 서게"
+- 정의: 아이콘이 두 바퀴 돌며 커지다 멈추고, 멈출 때 좌우로 작게 흔들린다.
+- 쓰임: 역동 · 숏폼
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Spin Settle 로 아이콘을 보여줘. 2바퀴 돌며 60%에서 100%로 1.8초 이즈 아웃, 마지막에 ±15도로 두어 번 흔들리다 멈추게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/spin-settle.html
+
+### 색종이 터짐 (Confetti Pop)
+- 별칭: "아이콘 나오면서 색종이 펑" · "축하하듯 종이가 터지게" · "완료 순간에 꽃가루"
+- 정의: 아이콘이 튀어나오는 순간 색종이 26장이 사방으로 터져 떨어진다.
+- 구분: 아이콘과 함께 한 번 터지면 컨페티 팝, 계속 내리면 꽃가루(배경)
+- 쓰임: 축하 · 이벤트
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Confetti Pop 으로 완료를 축하해줘. 아이콘이 0.5초 백 이징으로 튀어나오고, 동시에 색종이 26장이 사방으로 1.6초 동안 퍼졌다 떨어지며 사라지게. 색은 4가지.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/confetti-pop.html
+
+### 물결 링 (Ripple Ring)
+- 별칭: "아이콘 주변으로 동그란 파동이 퍼지게" · "눌렀을 때 원이 번지게" · "소리 나는 것처럼 링이 퍼져"
+- 정의: 아이콘이 튀어나온 뒤 둘레로 고리 세 개가 차례로 퍼지며 옅어진다.
+- 쓰임: 알림 · 강조
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Ripple Ring 으로 아이콘을 강조해줘. 아이콘이 0.5초 튀어나오고, 0.35초 간격으로 고리 3개가 아이콘 크기의 2.4배까지 1.4초 동안 퍼지며 사라지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/ripple-ring.html
+
+### 체크 그리기 (Check Draw)
+- 별칭: "완료되면 체크 표시가 그려지게" · "동그라미 나오고 체크가 쓱" · "성공 표시 애니메이션"
+- 정의: 초록 원이 튀어나오고 그 안에 체크 표시가 한 획으로 그려진다.
+- 쓰임: 완료 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Check Draw 로 완료를 보여줘. 원이 0.45초 백 이징으로 튀어나오고, 0.45초 뒤 체크가 0.55초 동안 한 획으로 그려지게. 선 두께는 원 지름의 9%, 끝 둥글게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/check-draw.html
+
+### 하트 터짐 (Heart Burst)
+- 별칭: "좋아요 누르면 하트가 퐁 하고" · "하트 주변으로 선이 튀게" · "하트가 커졌다 제자리로"
+- 정의: 하트가 크게 부풀었다 제 크기로 돌아오고 둘레로 짧은 선 여덟 개가 튄다.
+- 쓰임: 좋아요 · SNS
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Heart Burst 로 좋아요를 보여줘. 하트가 0.24초 만에 125%까지 커졌다 0.36초에 100%로, 그 사이 둘레로 짧은 선 8개가 0.7초 동안 바깥으로 튀며 사라지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/heart-burst.html
+
+### 종 흔들기 (Bell Shake)
+- 별칭: "알림 오면 종이 딸랑딸랑" · "종 아이콘이 좌우로 흔들리게" · "새 알림 빨간 점이랑 종"
+- 정의: 종이 꼭지를 축으로 좌우로 흔들리다 잦아들고 오른쪽 위에 빨간 점이 붙는다.
+- 쓰임: 알림 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Bell Shake 로 알림을 보여줘. 종이 꼭지를 축으로 ±25도에서 시작해 1.2초 동안 3.5번 흔들리며 잦아들고, 오른쪽 위에 빨간 점이 0.4초 백 이징으로 붙게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/bell-shake.html
+
+### 별 채우기 (Star Fill)
+- 별칭: "별이 아래부터 색으로 차오르게" · "즐겨찾기 누르면 별이 칠해지게" · "별 주변에 반짝이"
+- 정의: 별 윤곽 안이 아래부터 차오르고 다 차면 둘레에 반짝이 네 개가 떴다 사라진다.
+- 쓰임: 평점 · 즐겨찾기
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Star Fill 로 즐겨찾기를 보여줘. 별 안이 아래에서 위로 0.9초 동안 차오르고, 다 차면 둘레 대각선 4곳에 작은 반짝이가 0.5초 튀어나왔다 0.6초에 사라지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/star-fill.html
+
+### 스위치 켜기 (Toggle On)
+- 별칭: "스위치가 딸깍 켜지게" · "동그라미가 옆으로 미끄러지며 켜짐" · "회색에서 색으로 바뀌는 토글"
+- 정의: 토글의 동그라미가 오른쪽으로 미끄러지며 살짝 넘쳤다 서고 바탕이 회색에서 색으로 바뀐다.
+- 쓰임: 설정 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Toggle On 으로 켜짐을 보여줘. 손잡이가 0.45초 백 이징으로 오른쪽 끝까지 미끄러지고, 바탕색은 0.3초 동안 회색에서 강조색으로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/toggle-on.html
+
+### 알림 숫자 배지 (Badge Count)
+- 별칭: "알림 숫자가 아이콘 위에 톡" · "숫자가 하나 늘면서 뿅" · "빨간 동그라미에 개수"
+- 정의: 종 아이콘 위에 빨간 숫자 배지가 튀어나오고 숫자가 하나 늘 때 한 번 더 부푼다.
+- 쓰임: 알림 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Badge Count 로 알림 개수를 보여줘. 아이콘 오른쪽 위에 빨간 배지가 0.45초 백 이징으로 나오고, 숫자가 3에서 4로 바뀔 때 0.35초 동안 130%에서 100%로 다시 튕기게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/badge-count.html
+
+### 호 로딩 (Spinner Arc)
+- 별칭: "동그랗게 도는 로딩" · "호가 늘었다 줄었다 하며 도는 스피너" · "기다리는 동안 빙글빙글"
+- 정의: 흐린 원 위를 강조색 호가 돌며 길이가 늘었다 줄었다 한다.
+- 쓰임: 로딩 · 앱
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Spinner Arc 로 로딩을 보여줘. 호가 1초에 한 바퀴 돌고, 길이는 1.6초 주기로 원 둘레의 20%~75% 사이를 오가게. 뒤에 같은 크기 흐린 원.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/spinner-arc.html
+
+### 점 물결 (Dots Wave)
+- 별칭: "점 세 개가 차례로 통통" · "입력 중 표시 점점점" · "물결처럼 점이 오르내리게"
+- 정의: 점 세 개가 차례로 올라갔다 내려오며 색이 진해졌다 옅어진다.
+- 쓰임: 로딩 · 대화
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Dots Wave 로 입력 중을 보여줘. 점 3개가 1초 주기로 차례대로(0.15초씩 늦게) 점 지름의 1.8배만큼 올라갔다 내려오고, 올라갈 때 진해지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dots-wave.html
+
+### 숨쉬기 (Breathe Pulse)
+- 별칭: "아이콘이 숨 쉬듯 커졌다 작아지게" · "은은하게 두근거리게" · "뒤에 빛이 번졌다 줄었다"
+- 정의: 아이콘이 2초에 한 번 6% 커졌다 작아지고 뒤의 빛 원이 같이 번진다.
+- 구분: 계속 은은하게 커졌다 작아지면 브리드, 한 번 퍼지는 고리면 리플 링
+- 쓰임: 대기 · 차분
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Breathe Pulse 로 아이콘을 살아 있게 해줘. 2초 주기로 100%↔106%, 뒤에 강조색 원이 아이콘의 1.3~1.7배로 번졌다 줄어들며 투명도 0~18%.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/breathe-pulse.html
+
+### 둥둥 떠다니기 (Float Bob)
+- 별칭: "공중에 둥둥 떠 있게" · "살짝 위아래로 떠다니게" · "그림자랑 같이 떠 있는 느낌"
+- 정의: 아이콘이 위아래로 천천히 떠오르내리며 살짝 기울고 아래 그림자가 같이 커졌다 줄어든다.
+- 쓰임: 몽환 · 배경
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Float Bob 으로 아이콘을 띄워줘. 2초 주기로 높이의 ±6% 위아래, 4초 주기로 ±3.5도 기울기, 바닥 그림자는 올라갈 때 작아지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/float-bob.html
+
+### 가끔 흔들기 (Wiggle Hint)
+- 별칭: "가만히 있다가 가끔 흔들어서 눈길 끌게" · "여기 누르라고 살짝 흔들어" · "몇 초마다 꿈틀"
+- 정의: 4초에 한 번 아이콘이 빠르게 좌우로 흔들렸다 멈추고 나머지 시간은 가만히 있다.
+- 쓰임: 눈길 · 버튼
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Wiggle Hint 로 버튼을 알려줘. 4초 주기 중 2.4초에 시작해 1초 동안 ±12도로 세 번 흔들리며 잦아들고, 나머지 시간은 멈춰 있게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/wiggle-hint.html
+
+### 빛 지나가기 (Shine Sweep)
+- 별칭: "로고 위로 반짝 빛이 지나가게" · "금속처럼 광택이 쓱" · "유리에 빛 반사 지나가는 느낌"
+- 정의: 비스듬한 흰 빛 띠가 로고 모양 안에서만 왼쪽에서 오른쪽으로 지나간다.
+- 쓰임: 고급 · 브랜드
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Shine Sweep 으로 로고에 광택을 줘. 20도 기운 흰 띠(투명 → 55% → 투명)가 2.67초 주기 중 1.2초 동안 왼쪽에서 오른쪽으로 지나가고, 로고 모양 밖으로는 안 보이게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/shine-sweep.html
 
 ## 이징은 역할별로 셋만
 움직임마다 곡선을 새로 고르지 말고, 역할마다 하나씩 정해 두고 돌려 써요. 영상 전체의 결이 맞습니다.

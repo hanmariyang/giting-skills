@@ -152,3 +152,12 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 숫자는 전부 지어낸 예시 값이다. 요청 문장(`ask`)에는 실제 값과 초를 넣는다.
 - 칸 비율이 약 2:1(갤러리 170px·영상 칸)이라 가로로 늘어놓는 것(증감 배지 · 아이콘 줄 · 크기 비교)은 `measureText` 와 `w` 로 맞춘다. 처음엔 숫자 앞이 잘리고 아이콘이 칸을 넘었다.
 - 기본기의 카운트업 · 라인 드로와 겹치지 않게 오도미터 · 라인 차트 드로로 이름과 `vs` 를 갈랐다.
+
+## 모션 메뉴판 0.14.0 · ⑬ 아이콘·로고 몸짓 24 (2026-10-19)
+
+- 시리즈 두 번째. `group` DRAW · POP · REACT · LOOP, 6개씩. 286항목.
+- 정본 `plugins/motion-menu/tools/icons/engine.js`(`IC`). `gen.mjs` → `demos/m16-icon-motion.html`, `render.mjs` 영상 4편. gen·render 는 ⑫ 것을 그대로 복제했다(머리말·코스 이름만 다르다).
+- 로고는 엔진 안에서 만든 추상 도형(`MARK_OUT` 둥근 사각 + `MARK_IN` 번개)이다. 남의 로고를 쓰지 않는다.
+- LOOP 묶음은 8초 안에서 나눠떨어지는 주기만 쓴다(1 · 1.6 · 2 · 4 · 8/3초). 나머지 셋은 ⑫처럼 들어와 머물고 7.2초부터 사라진다.
+- ⭐ 공용 값·도우미는 반드시 `/*@helpers*/` 안에 둔다. ⑫에서 바깥에 두었다가 데모 10개가 갤러리에서 ReferenceError 로 멈췄다(영상은 엔진 파일을 통째로 실어 멀쩡했다).
+- `back()` 이징은 0 근처에서 아주 작은 음수가 나온다. `arc` 반지름에 쓰면 IndexSizeError 로 멈추니 `Math.max(0, …)` 로 감싼다.
