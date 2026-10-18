@@ -144,3 +144,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 도구(`scripts/`)가 있는 스킬 다섯(design-brief · hangul-wrap · pixel-run · product-shot · sheet-io)은 도구가 **플러그인 폴더**에 있는데 SKILL.md 는 `scripts/…` 로만 적어, 스킬 폴더 기준으로 찾다가 못 찾았다. Haiku 는 못 찾으면 알리지 않고 손으로 대신했다(sheet-io 에서 `cat >>`). 정본 `shared/tools/<이름>.md` 끝에 「도구 위치」 한 줄을 넣었다. 계산식(`../../`)보다 **예시 경로**가 잘 먹었다(계산식 5/6 → 예시 9/9).
 - `sheet.py append` 가 늘 UTF-8 로 붙여 cp949 엑셀 CSV 에 깨진 줄을 남겼다. 이제 원본 인코딩·줄바꿈에 맞추고, 그 인코딩에 없는 글자는 거절한다.
 - 남은 것: 스킬을 켜 둬도 Haiku·Sonnet 이 「members.csv 에 회원 추가」를 스킬 일로 알아보지 못했다(자동 호출 0/9). 이름으로 부르면 된다.
+
+## 모션 메뉴판 0.13.0 · ⑫ 데이터 모션 24 (2026-10-19)
+
+- 숫자와 차트가 움직이는 연출. `group` NUMBER · BAR · LINE · SHARE, 6개씩. 262항목. 시리즈 ⑫⑬⑭(데이터 · 아이콘·로고 · 소셜 오버레이)의 첫 번째.
+- 정본 `plugins/motion-menu/tools/data/engine.js`(`DM[id](c,w,h,t,k)`, 8초 주기: 0.4초 비고 → 들어와 머물고 → 7.2~8초 사라짐). `gen.mjs` 가 `demos/m15-data-motion.html`, `render.mjs` 가 영상 4편(6줄)·확인 시트를 만든다. 명령은 ⑧의 `backgrounds` 를 `data` 로.
+- 숫자는 전부 지어낸 예시 값이다. 요청 문장(`ask`)에는 실제 값과 초를 넣는다.
+- 칸 비율이 약 2:1(갤러리 170px·영상 칸)이라 가로로 늘어놓는 것(증감 배지 · 아이콘 줄 · 크기 비교)은 `measureText` 와 `w` 로 맞춘다. 처음엔 숫자 앞이 잘리고 아이콘이 칸을 넘었다.
+- 기본기의 카운트업 · 라인 드로와 겹치지 않게 오도미터 · 라인 차트 드로로 이름과 `vs` 를 갈랐다.
