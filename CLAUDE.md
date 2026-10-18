@@ -138,3 +138,9 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - `face` 는 화면에서 왼쪽에서 오른쪽으로 늘어나는 줄만 그린다(뒷면 숨김). 판 방향(`Dir`)을 거꾸로 주면 통째로 안 보인다. 큐브 옆면은 `[0, 1]`.
 - 캔버스 `filter: blur()` 는 사파리에서 안 먹어서 쓰지 않는다. 스핀 블러는 같은 판을 조금씩 돌려 여러 번 겹쳐 흐림을 낸다.
 - 아이디어는 외부 화면 전환 모음에서 가져왔고 문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
+
+## 도구 경로 · sheet-io 인코딩 (2026-10-18)
+
+- 도구(`scripts/`)가 있는 스킬 다섯(design-brief · hangul-wrap · pixel-run · product-shot · sheet-io)은 도구가 **플러그인 폴더**에 있는데 SKILL.md 는 `scripts/…` 로만 적어, 스킬 폴더 기준으로 찾다가 못 찾았다. Haiku 는 못 찾으면 알리지 않고 손으로 대신했다(sheet-io 에서 `cat >>`). 정본 `shared/tools/<이름>.md` 끝에 「도구 위치」 한 줄을 넣었다. 계산식(`../../`)보다 **예시 경로**가 잘 먹었다(계산식 5/6 → 예시 9/9).
+- `sheet.py append` 가 늘 UTF-8 로 붙여 cp949 엑셀 CSV 에 깨진 줄을 남겼다. 이제 원본 인코딩·줄바꿈에 맞추고, 그 인코딩에 없는 글자는 거절한다.
+- 남은 것: 스킬을 켜 둬도 Haiku·Sonnet 이 「members.csv 에 회원 추가」를 스킬 일로 알아보지 못했다(자동 호출 0/9). 이름으로 부르면 된다.

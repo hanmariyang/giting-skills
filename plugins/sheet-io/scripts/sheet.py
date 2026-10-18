@@ -44,13 +44,18 @@ def resolve(src):
     return src, src.startswith("http://") or src.startswith("https://")
 
 
-def decode(b):
+def sniff(b):
+    """Return (text, encoding). The encoding is what the file really uses, so writes can match it."""
     for enc in ("utf-8-sig", "utf-8", "cp949", "euc-kr"):  # cp949/euc-kr = 한글 시트
         try:
-            return b.decode(enc)
+            return b.decode(enc), enc
         except UnicodeDecodeError:
             continue
-    return b.decode("utf-8", "replace")
+    return b.decode("utf-8", "replace"), None
+
+
+def decode(b):
+    return sniff(b)[0]
 
 
 def load(src):
@@ -153,7 +158,13 @@ def append(src, row):
                          "(see SKILL.md). Export the sheet to CSV, append, and re-upload, or use the auth path.\n")
         sys.exit(1)
     with open(url, "rb") as f:
-        header = next(csv.reader(io.StringIO(decode(f.read()))))
+        raw = f.read()
+    text, enc = sniff(raw)
+    if enc is None:
+        sys.stderr.write("[FAIL] could not tell this file's encoding (not utf-8, cp949 or euc-kr). "
+                         "Not appending, so the file is not mixed. Re-save it as utf-8 first.\n")
+        sys.exit(1)
+    header = next(csv.reader(io.StringIO(text)))
     data = {}
     for pair in row.split(","):
         k, _, v = pair.partition("=")
@@ -164,9 +175,24 @@ def append(src, row):
         sys.exit(1)
     # write as text: csv.writer quotes as needed, so leading zeros / commas survive intact.
     line = [data.get(h, "") for h in header]
-    with open(url, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow(line)
-    print(f"appended 1 row to {url}: {json.dumps(dict(zip(header, line)), ensure_ascii=False)}")
+    # match the file: same encoding (a utf-8 line inside a cp949 file breaks Korean in Excel),
+    # same line ending, and start on a fresh line if the last row has no newline.
+    eol = "\r\n" if b"\r\n" in raw[:4096] else "\n"
+    buf = io.StringIO()
+    csv.writer(buf, lineterminator=eol).writerow(line)
+    out = buf.getvalue()
+    if raw and not raw.endswith(b"\n"):
+        out = eol + out
+    wenc = "utf-8" if enc == "utf-8-sig" else enc  # the BOM is already at the top
+    try:
+        data_bytes = out.encode(wenc)
+    except UnicodeEncodeError as e:
+        sys.stderr.write(f"[FAIL] this row has a character {enc} cannot store ({e.object[e.start:e.end]!r}). "
+                         "Not appending. Re-save the sheet as utf-8 first, or change that character.\n")
+        sys.exit(1)
+    with open(url, "ab") as f:
+        f.write(data_bytes)
+    print(f"appended 1 row to {url} ({wenc}): {json.dumps(dict(zip(header, line)), ensure_ascii=False)}")
 
 
 def main():

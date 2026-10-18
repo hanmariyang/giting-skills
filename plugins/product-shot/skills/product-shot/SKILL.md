@@ -23,6 +23,8 @@ description: "Make commercial-grade product photos with an image model: liquid/t
 | 이미지 생성 도구 | 장면 · 광고컷 만들기 | 예 | 프롬프트와 합성 계획까지만 넘긴다 |
 | 제품 원본 사진 (배경 지운 것) | 로고를 건드리지 않는 합성 | 로고가 중요하면 예 | 한 번에 생성하되, 로고가 바뀔 수 있다고 먼저 말한다 |
 | Python 3 + Pillow | `scripts/extract_palette.py` 로 제품색 뽑기 | 아니오 | 제품의 정확한 색(hex)을 하나만 묻는다 |
+
+**도구 위치.** 위 `scripts/…` 는 사용자 작업 폴더가 아니라 이 플러그인 폴더에 있다. 이 스킬의 기본 폴더 경로 끝에서 `skills/product-shot` 를 떼고 `scripts/` 를 붙이면 된다. 예: 기본 폴더가 `…/product-shot/skills/product-shot` 이면 도구는 `…/product-shot/scripts/` 안에 있다. 이 절대 경로로 부른다. 그래도 못 찾으면 다른 방법으로 넘어가기 전에 「도구를 못 찾았다」고 결과 맨 위에 적는다.
 <!-- /giting:tools -->
 
 Three jobs, one rule underneath all of them: **describe physical reality, and never let the model reinvent what already exists.** Image generation itself runs on whatever image tool this environment has; this skill supplies the grammar, the preservation discipline, the recipes, and one deterministic tool (`scripts/extract_palette.py`).

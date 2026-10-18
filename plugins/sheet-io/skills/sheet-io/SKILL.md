@@ -20,10 +20,12 @@ description: "Use a spreadsheet as a data source or sink from Claude Code withou
 
 | 도구 | 쓰는 곳 | 꼭 필요? | 없으면 |
 |---|---|---|---|
-| Python 3 (표준 라이브러리) | `scripts/sheet.py` inspect · get · append | 예 | 파일을 직접 열어 앞부분만 읽고, 타입 보존 검사는 못 했다고 적는다 |
+| Python 3 (표준 라이브러리) | `scripts/sheet.py` inspect · get · append | 예 | 파일을 직접 열어 앞부분만 읽고, 타입 보존 검사는 못 했다고 적는다. 직접 붙일 때도 파일의 원래 인코딩(cp949 · euc-kr · utf-8)으로 쓰고, 파일 전체를 다시 쓰지 않는다 |
 | 공개 Google Sheet 링크 | 구글 시트 읽기 | 아니오 | 로컬 CSV 로 진행한다. 비공개면 CSV 로 내려받아 달라고 한다 |
 | openpyxl | `.xlsx` 읽기 | 아니오 | CSV 로 다시 저장해 달라고 한다 |
 | gspread + 서비스계정 | 비공개 시트에 쓰기 | 아니오 | CSV 로 내려 append 한 뒤 다시 올리는 길을 안내한다 |
+
+**도구 위치.** 위 `scripts/…` 는 사용자 작업 폴더가 아니라 이 플러그인 폴더에 있다. 이 스킬의 기본 폴더 경로 끝에서 `skills/sheet-io` 를 떼고 `scripts/` 를 붙이면 된다. 예: 기본 폴더가 `…/sheet-io/skills/sheet-io` 이면 도구는 `…/sheet-io/scripts/` 안에 있다. 이 절대 경로로 부른다. 그래도 못 찾으면 다른 방법으로 넘어가기 전에 「도구를 못 찾았다」고 결과 맨 위에 적는다.
 <!-- /giting:tools -->
 
 A spreadsheet plus an AI fails in three specific ways. This skill is the discipline
