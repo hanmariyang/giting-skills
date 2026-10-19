@@ -1426,7 +1426,7 @@ const lmCore = `<div class="lmgal">
 <div class="lm-formula">
   <div class="fp">AI한테 시키는 공식<span>${esc(lmF.pattern)}</span></div>
   <div class="fx">✕ 「${esc(lmF.bad)}」 → ○ 「${esc(lmF.good)}」</div>
-  <div class="lm-anti">⛔ ${esc(lmMenu.antiGeneric[0])}</div>
+  <div class="lm-anti">★ ${esc(lmMenu.antiGeneric[0])}</div>
 </div>
 <nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}</nav>
 ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
@@ -1444,7 +1444,7 @@ const lmDict = full => `# 랜딩 메뉴판 (landing-menu) · Giting Skills
 > 갤러리: https://giting.kr/skills/landing-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code: /plugin install landing-menu@giting
 
-## ⛔ 제너릭 회피
+## 요청은 원하는 쪽만 적는다
 ${lmMenu.antiGeneric.map(a => `- ${a}`).join('\n')}
 
 ${lmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
