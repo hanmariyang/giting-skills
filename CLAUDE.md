@@ -168,3 +168,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 정본 `plugins/motion-menu/tools/social/engine.js`(`SO`). `gen.mjs` → `demos/m17-social-overlay.html`, `render.mjs` 영상 4편.
 - 영상 위에 얹는 요소라 바탕을 흐린 「영상 자리」(`scene`: 그라디언트 + 빛 원 둘)로 칠한다. 사진을 쓰지 않는다. 계정 이름·숫자는 지어낸 예시다.
 - ⛔ **엔진 도우미 이름이 render 페이지 함수와 겹치면 영상에서 조용히 덮어써진다.** render 페이지는 `txt` · `pill` · `cell` · `draw` · `sheet` 를 전역에 둔다. ⑭에서 `txt`·`pill` 을 써서 영상 시트의 글자가 전부 사라졌다(갤러리 데모는 멀쩡). 엔진 쪽을 `say` · `sayW` · `chip` 으로 바꿨다. 갤러리 러너의 `sizeCanvas` · `frame` · `F` · `cv` · `c` · `K` 도 같은 이유로 피한다.
+
+## 모션 메뉴판 0.16.0 · ⑮ 그래픽 기법 24 (2026-10-19)
+
+- 오너가 가져온 남의 치트시트(모션 그래픽 기법 24) 이미지에서 출발했다. 24개 중 17개는 이미 있었고(같은 이름이거나 거의 같은 동작), 빠진 7개(모션 패스·핑퐁 루프·리피터·라인 보일·블라인드·픽셀레이트·분해도)를 중심으로 같은 결의 기법을 우리가 더 골라 24개로 만들었다. ⛔ 그쪽 묶음·설명·그림은 베끼지 않는다. 기법 이름만 일반 용어다.
+- `group` PATH · REPEAT · SWITCH · SHOW, 6개씩. 334항목.
+- 정본 `plugins/motion-menu/tools/craft/engine.js`(`GC`). `gen.mjs` → `demos/m18-graphic-craft.html`, `render.mjs` 영상 4편.
+- SWITCH 는 낮(`sceneDay`)에서 밤(`sceneNight`)으로 2.2~3.6초에 넘어간다. 전환이 끝나면 밤 장면을 통째로 다시 그린다. 띠·조각 clip 을 남겨 두면 이음매에 가는 줄이 보인다(블라인드·스캔·퍼즐에서 실제로 보였다).
+- SHOW 의 물건은 엔진에서 만든 버거·상자·카드·블록이다. 아이소 블록은 x+y, 그다음 z 순서로 그린다.

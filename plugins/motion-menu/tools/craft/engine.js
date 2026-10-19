@@ -1,0 +1,316 @@
+// 그래픽 기법 24 — 캔버스 그리기 함수 묶음 (의존성 0)
+// 갤러리 데모(demos/m18-graphic-craft.html)와 홍보 영상(render.mjs)이 같은 함수를 쓴다.
+// 정본은 이 파일 하나. 데모를 고치려면 여기를 고치고 `node tools/craft/gen.mjs` → `node build.mjs`.
+//
+// GC[id](c, w, h, t, k)
+//   c: 2D 컨텍스트 (0,0 ~ w,h 가 칸)   t: 초. 8초에 한 바퀴. 들어오는 것은 0.4초 비고 → 움직이고 → 7.2~8초 사라짐,
+//   반복하는 것(핑퐁·꼬리·라인 보일·점선·트림·굵기)은 처음부터 끝까지 이어진다.
+//   k: { acc, deep, paper, ink }
+// 장면·물건은 전부 이 파일에서 만든 단순 도형이다. 남의 그림을 쓰지 않는다.
+
+/*@helpers*/
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var lerp = function (a, b, t) { return a + (b - a) * t; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var inA = function (t) { return clamp((P8(t) - .1) / .3); };
+var FONT = '-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif';
+var disc = function (c, x, y, r) { if (r > .2) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+var rrect = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, Math.max(0, w), Math.max(0, h), Math.max(0, Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2))); };
+var lbl = function (c, s, x, y, size, col, al, wt) { c.font = (wt || 700) + ' ' + size + 'px ' + FONT; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+// 0→1→0 으로 오가는 값 (주기 p초)
+var tri = function (t, p) { var u = (t / p) % 1; if (u < 0) u += 1; return u < .5 ? u * 2 : 2 - u * 2; };
+// 3차 베지어 위의 점과 접선
+var bz = function (p, u) { var v = 1 - u; return [v * v * v * p[0][0] + 3 * v * v * u * p[1][0] + 3 * v * u * u * p[2][0] + u * u * u * p[3][0], v * v * v * p[0][1] + 3 * v * v * u * p[1][1] + 3 * v * u * u * p[2][1] + u * u * u * p[3][1]]; };
+// 아이소 좌표 → 화면 (x 오른쪽 아래, y 왼쪽 아래, z 위)
+var isoP = function (cx, cy, s, x, y, z) { return [cx + (x - y) * s * .866, cy + (x + y) * s * .5 - z * s]; };
+var face = function (c, pts, col) { c.fillStyle = col; c.beginPath(); pts.forEach(function (p, i) { if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); };
+var shade = function (hex, f) { return '#' + [1, 3, 5].map(function (i) { var v = parseInt(hex.slice(i, i + 2), 16); v = f < 0 ? v * (1 + f) : v + (255 - v) * f; return Math.round(v).toString(16).padStart(2, '0'); }).join(''); };
+// 아이소 상자 하나: 바닥 모서리(x,y,z) · 크기(dx,dy,dz)
+var isoBox = function (c, cx, cy, s, x, y, z, dx, dy, dz, col) {
+  var P = function (a, b, d) { return isoP(cx, cy, s, a, b, d); };
+  face(c, [P(x, y + dy, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], shade(col, -.28));
+  face(c, [P(x + dx, y, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x + dx, y, z + dz)], shade(col, -.12));
+  face(c, [P(x, y, z + dz), P(x + dx, y, z + dz), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], col);
+};
+// 장면 둘: 낮(종이 · 해 · 언덕)과 밤(먹 · 달 · 건물)
+var sceneDay = function (c, w, h, k) {
+  bgc(c, w, h, k.paper);
+  c.fillStyle = k.acc; disc(c, w * .72, h * .34, h * .14);
+  c.fillStyle = shade(k.deep, .35); c.beginPath(); c.ellipse(w * .25, h * 1.02, w * .42, h * .42, 0, 0, TAU); c.fill();
+  c.fillStyle = k.deep; c.beginPath(); c.ellipse(w * .78, h * 1.08, w * .48, h * .38, 0, 0, TAU); c.fill();
+};
+var sceneNight = function (c, w, h, k) {
+  bgc(c, w, h, k.ink);
+  for (var i = 0; i < 18; i++) { c.fillStyle = 'rgba(244,241,234,' + (.35 + hash(i) * .5) + ')'; disc(c, hash(i + 3) * w, hash(i + 7) * h * .5, h * .008 + hash(i + 1) * h * .006); }
+  c.fillStyle = k.paper; disc(c, w * .24, h * .3, h * .12); c.fillStyle = k.ink; disc(c, w * .24 + h * .06, h * .3 - h * .035, h * .11);
+  var bx = w * .42; for (var j = 0; j < 7; j++) { var bw = w * .07, bh = h * (.28 + hash(j + 11) * .3); c.fillStyle = j % 2 ? k.deep : shade(k.deep, .2); c.fillRect(bx + j * bw * 1.12, h - bh, bw, bh);
+    c.fillStyle = k.acc; for (var r = 0; r < 4; r++) if (hash(j * 9 + r) > .45) c.fillRect(bx + j * bw * 1.12 + bw * .3, h - bh + h * .05 + r * h * .07, bw * .4, h * .03); }
+};
+// 장면 바꾸기 공통 진행: 낮을 보여 주고 2.2~3.6초에 밤으로
+var swP = function (t) { return io(seg(t, 2.2, 1.4)); };
+// 버거 켜 (위에서부터): 이름 · 두께 · 색 가중
+var BURGER = [['윗빵', .5, '#E0A04A'], ['채소', .16, '#5DBB63'], ['치즈', .12, '#F2C53D'], ['패티', .34, '#7A4A2E'], ['아랫빵', .32, '#D8913F']];
+/*@end*/
+
+var GC = {};
+
+// ── PATH · 길 따라 움직이기 ───────────────────────────────────
+GC['motion-path'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t) * inA(t);
+  var p = [[w * .06, h * .78], [w * .38, h * .02], [w * .55, h * 1.1], [w * .94, h * .2]], e = io(seg(t, .5, 4.6)), N = 60;
+  for (var i = 0; i <= N; i++) { var q = bz(p, i / N), on = i / N <= e; c.fillStyle = on ? k.acc : 'rgba(244,241,234,.35)'; disc(c, q[0], q[1], h * (on ? .014 : .009)); }
+  var a = bz(p, e), b = bz(p, Math.min(1, e + .01)), a2 = e >= 1 ? Math.atan2(a[1] - bz(p, .99)[1], a[0] - bz(p, .99)[0]) : Math.atan2(b[1] - a[1], b[0] - a[0]);
+  c.save(); c.translate(a[0], a[1]); c.rotate(a2); var s = h * .1;
+  c.fillStyle = k.paper; c.beginPath(); c.moveTo(s, 0); c.lineTo(-s * .8, -s * .55); c.lineTo(-s * .45, 0); c.lineTo(-s * .8, s * .55); c.closePath(); c.fill();
+  c.fillStyle = shade(k.paper, -.25); c.beginPath(); c.moveTo(s, 0); c.lineTo(-s * .45, 0); c.lineTo(-s * .8, s * .55); c.closePath(); c.fill();
+  c.restore(); c.globalAlpha = 1;
+};
+GC['ping-pong'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var L = w * .22, R = w * .78, base = h * .7, u = io(tri(t, 4)), x = lerp(L, R, u), y = base - Math.sin(u * Math.PI) * h * .38;
+  c.fillStyle = shade(k.ink, .25); c.fillRect(L - h * .03, h * .3, h * .02, base - h * .3 + h * .05); c.fillRect(R + h * .01, h * .3, h * .02, base - h * .3 + h * .05); c.fillRect(L, base + h * .05, R - L, h * .012);
+  c.setLineDash([h * .015, h * .03]); c.strokeStyle = 'rgba(244,241,234,.35)'; c.lineWidth = h * .01; c.beginPath();
+  for (var i = 0; i <= 40; i++) { var v = i / 40; c.lineTo(lerp(L, R, v), base - Math.sin(v * Math.PI) * h * .38); } c.stroke(); c.setLineDash([]);
+  c.save(); c.translate(x, y); c.rotate(u * Math.PI * 2); c.fillStyle = k.acc; rrect(c, -h * .07, -h * .07, h * .14, h * .14, h * .03); c.fill(); c.restore();
+  var by = h * .9, bw = w * .5, bx = w * .25; c.fillStyle = 'rgba(244,241,234,.2)'; rrect(c, bx, by - h * .012, bw, h * .024, h * .012); c.fill();
+  c.fillStyle = k.acc; rrect(c, bx, by - h * .012, bw * u, h * .024, h * .012); c.fill(); c.fillStyle = k.paper; disc(c, bx + bw * u, by, h * .03);
+  lbl(c, tri(t, 4) === 0 ? '▶' : (P8(t) % 4 < 2 ? '▶' : '◀'), bx - h * .07, by, h * .07, k.paper);
+};
+GC['pendulum'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper); c.globalAlpha = outA(t) * inA(t);
+  var px = w / 2, py = h * .1, L = h * .66, s = P8(t) - .5, a = s < 0 ? .9 * clamp((P8(t) - .1) / .4) : .9 * Math.exp(-s * .32) * Math.cos(s * TAU / 1.5);
+  var bx = px + Math.sin(a) * L, by = py + Math.cos(a) * L;
+  c.strokeStyle = 'rgba(20,22,27,.12)'; c.lineWidth = h * .008; c.beginPath(); c.arc(px, py, L, Math.PI / 2 - .95, Math.PI / 2 + .95); c.stroke();
+  c.strokeStyle = k.ink; c.lineWidth = h * .014; c.lineCap = 'round'; c.beginPath(); c.moveTo(px, py); c.lineTo(bx, by); c.stroke();
+  c.fillStyle = k.ink; disc(c, px, py, h * .025); c.fillStyle = k.acc; disc(c, bx, by, h * .09);
+  c.fillStyle = 'rgba(244,241,234,.6)'; disc(c, bx - h * .03, by - h * .03, h * .022);
+  c.globalAlpha = 1;
+};
+GC['chain-follow'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var path = function (tt) { var u = tt / 4 * TAU; return [w / 2 + Math.sin(u) * w * .32, h / 2 + Math.sin(u * 2) * h * .28]; };
+  for (var i = 11; i >= 0; i--) { var q = path(t - i * .07), r = h * (.075 - i * .0048); c.fillStyle = i ? (i % 2 ? k.deep : shade(k.acc, .15 * (i / 11))) : k.acc; disc(c, q[0], q[1], r); }
+  var hd = path(t), nx = path(t + .02), an = Math.atan2(nx[1] - hd[1], nx[0] - hd[0]);
+  c.fillStyle = k.paper; disc(c, hd[0] + Math.cos(an - .6) * h * .04, hd[1] + Math.sin(an - .6) * h * .04, h * .016); disc(c, hd[0] + Math.cos(an + .6) * h * .04, hd[1] + Math.sin(an + .6) * h * .04, h * .016);
+};
+GC['spring-follow'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper); c.globalAlpha = outA(t) * inA(t);
+  var T = [[.2, .5], [.72, .3], [.4, .72], [.78, .66]], at = [0, .6, 2.6, 4.8], p = P8(t), j = 0;
+  for (var i = 1; i < at.length; i++) if (p >= at[i]) j = i;
+  var spring = function (from, to, dt) { var z = Math.exp(-dt * 4.2) * Math.cos(dt * 10); return from + (to - from) * (1 - z); };
+  var prev = j ? T[j - 1] : T[0], tg = T[j], dt = p - at[j];
+  var x = spring(prev[0], tg[0], dt) * w, y = spring(prev[1], tg[1], dt) * h;
+  T.forEach(function (q, i) { c.strokeStyle = i === j ? k.ink : 'rgba(20,22,27,.15)'; c.lineWidth = h * .012; c.strokeRect(q[0] * w - h * .07, q[1] * h - h * .07, h * .14, h * .14); });
+  if (j) { c.strokeStyle = 'rgba(20,22,27,.25)'; c.setLineDash([h * .02, h * .02]); c.lineWidth = h * .008; c.beginPath(); c.moveTo(x, y); c.lineTo(tg[0] * w, tg[1] * h); c.stroke(); c.setLineDash([]); }
+  c.fillStyle = k.acc; disc(c, x, y, h * .06);
+  c.globalAlpha = 1;
+};
+GC['gravity-throw'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t) * inA(t);
+  var g = h * .9, x0 = w * .12, x1 = w * .74, top = h * .14, dur = 1.5, s = P8(t) - .6, e = clamp(s / dur);
+  c.fillStyle = shade(k.ink, .2); c.fillRect(0, g, w, h - g);
+  c.setLineDash([h * .012, h * .028]); c.strokeStyle = 'rgba(244,241,234,.3)'; c.lineWidth = h * .009; c.beginPath();
+  for (var i = 0; i <= 40; i++) { var v = i / 40 * Math.max(e, .001); c.lineTo(lerp(x0, x1, v), g - h * .09 - 4 * (g - h * .09 - top) * v * (1 - v)); } c.stroke(); c.setLineDash([]);
+  var x = lerp(x0, x1, e), y = g - h * .09 - 4 * (g - h * .09 - top) * e * (1 - e), rot = e * TAU * 1.25, sq = 1;
+  if (s > dur) { var d = s - dur; x += Math.min(d, .9) * w * .08 * (1 - Math.min(d, .9) / 1.8); y -= Math.abs(Math.sin(Math.min(d, 1.2) * Math.PI * 2.5)) * h * .12 * Math.exp(-d * 3); rot = TAU * 1.25 + Math.min(d, .9) * 1.1;
+    sq = 1 - .3 * Math.exp(-d * 9) * Math.max(0, Math.cos(d * 25)); }
+  c.save(); c.translate(x, g - (g - y)); c.translate(0, h * .09 * (1 - sq)); c.scale(1 / sq, sq); c.rotate(rot);
+  c.fillStyle = k.acc; rrect(c, -h * .09, -h * .09, h * .18, h * .18, h * .035); c.fill(); c.fillStyle = k.paper; disc(c, h * .03, -h * .03, h * .025); c.restore();
+  c.globalAlpha = 1;
+};
+
+// ── REPEAT · 복제와 선 ────────────────────────────────────────
+GC['repeater'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t) * inA(t);
+  var n = Math.floor(lerp(1, 12.99, io(seg(t, .5, 2.6)))), cx = w / 2, cy = h / 2, rot = P8(t) * .35, cols = [k.acc, k.paper, shade(k.acc, .35), k.deep];
+  for (var i = 0; i < n; i++) { var a = rot + i / 12 * TAU, born = clamp((P8(t) - .5 - i * 2.6 / 12) / .25);
+    c.save(); c.translate(cx, cy); c.rotate(a); c.globalAlpha = outA(t) * born; c.fillStyle = cols[i % 4]; rrect(c, h * .12, -h * .04, h * .24 * back(born), h * .08, h * .04); c.fill(); c.restore(); }
+  c.globalAlpha = outA(t) * inA(t); lbl(c, '×' + n, w - h * .2, h * .18, h * .13, k.acc, 'center', 800);
+  c.globalAlpha = 1;
+};
+GC['grid-repeater'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper); c.globalAlpha = outA(t) * inA(t);
+  var C = 9, R = 4, gs = Math.min(w * .9 / C, h * .86 / R), x0 = w / 2 - gs * (C - 1) / 2, y0 = h / 2 - gs * (R - 1) / 2;
+  for (var r = 0; r < R; r++) for (var q = 0; q < C; q++) {
+    var d = Math.hypot(q - (C - 1) / 2, (r - (R - 1) / 2) * 1.3), born = back(seg(t, .5 + d * .18, .4)); if (born <= 0) continue;
+    var a = Math.max(0, P8(t) - 2.8) * 2 - d * .45, spin = P8(t) > 2.8 ? io(clamp(a % 2)) * Math.PI / 2 + Math.floor(Math.max(0, a) / 2) * Math.PI / 2 : 0;
+    c.save(); c.translate(x0 + q * gs, y0 + r * gs); c.rotate(spin); c.scale(born, born); c.fillStyle = (q + r) % 3 ? k.acc : k.ink; rrect(c, -gs * .3, -gs * .3, gs * .6, gs * .6, gs * .12); c.fill(); c.restore(); }
+  c.globalAlpha = 1;
+};
+GC['line-boil'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var fr = Math.floor(P8(t) * 8), jit = function (i, a) { return (hash(fr * 131 + i * 7 + a) - .5) * h * .022; };
+  c.lineWidth = h * .022; c.lineJoin = 'round'; c.lineCap = 'round';
+  var cx = w * .3, cy = h * .52, s = h * .34; c.strokeStyle = k.acc; c.beginPath();
+  for (var i = 0; i <= 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? s * .45 : s; c.lineTo(cx + Math.cos(a) * r + jit(i, 1), cy + Math.sin(a) * r + jit(i, 2)); } c.closePath(); c.stroke();
+  c.strokeStyle = k.paper; c.beginPath(); var bx = w * .68, by = h * .55, N = 36;
+  for (var j = 0; j <= N; j++) { var u = j / N * TAU, rr = h * (.2 + .06 * Math.max(0, Math.sin(u * 5))); c.lineTo(bx + Math.cos(u) * rr * 1.6 + jit(j, 5), by + Math.sin(u) * rr * .8 + jit(j, 6)); } c.closePath(); c.stroke();
+  for (var m = 0; m < 3; m++) { c.strokeStyle = 'rgba(244,241,234,.5)'; c.lineWidth = h * .014; c.beginPath(); c.moveTo(bx - h * .2 + jit(m, 9), h * .86 + m * h * .0 + jit(m, 8)); c.lineTo(bx + h * .2 + jit(m, 10), h * .86 + jit(m, 11)); c.stroke(); }
+};
+GC['marching-ants'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var cx = w / 2, cy = h / 2; c.fillStyle = k.acc; rrect(c, cx - h * .36, cy - h * .2, h * .3, h * .4, h * .05); c.fill();
+  c.fillStyle = k.deep; disc(c, cx + h * .2, cy, h * .2);
+  var x = cx - h * .5, y = cy - h * .32, W = h * 1.0, H = h * .64;
+  c.lineWidth = h * .012; c.setLineDash([h * .045, h * .045]); c.lineDashOffset = -P8(t) * h * .18;
+  c.strokeStyle = k.ink; c.strokeRect(x, y, W, H); c.lineDashOffset = -P8(t) * h * .18 + h * .045; c.strokeStyle = '#FFFFFF'; c.strokeRect(x, y, W, H); c.setLineDash([]); c.lineDashOffset = 0;
+  [[x, y], [x + W, y], [x, y + H], [x + W, y + H], [x + W / 2, y], [x + W / 2, y + H]].forEach(function (p) { c.fillStyle = '#FFFFFF'; c.fillRect(p[0] - h * .025, p[1] - h * .025, h * .05, h * .05); c.strokeStyle = k.ink; c.lineWidth = h * .008; c.strokeRect(p[0] - h * .025, p[1] - h * .025, h * .05, h * .05); });
+};
+GC['trim-path'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var pts = []; for (var i = 0; i <= 120; i++) { var u = i / 120; pts.push([w * (.06 + u * .88), h * (.5 + Math.sin(u * TAU * 1.5) * .28)]); }
+  var L = 0, acc = [0]; for (var j = 1; j < pts.length; j++) { L += Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]); acc.push(L); }
+  c.strokeStyle = 'rgba(244,241,234,.12)'; c.lineWidth = h * .03; c.lineCap = 'round'; c.beginPath(); pts.forEach(function (p, i) { if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.stroke();
+  [[0, k.acc], [.33, k.paper], [.66, shade(k.acc, .4)]].forEach(function (o) {
+    var head = ((P8(t) / 2 + o[0]) % 1) * 1.3, a = Math.max(0, head - .3) * L, b = Math.min(1, head) * L; if (b <= a) return;
+    c.strokeStyle = o[1]; c.lineWidth = h * .045; c.beginPath(); var st = false;
+    for (var m = 0; m < pts.length; m++) if (acc[m] >= a && acc[m] <= b) { if (st) c.lineTo(pts[m][0], pts[m][1]); else { c.moveTo(pts[m][0], pts[m][1]); st = true; } } c.stroke(); });
+};
+GC['variable-weight'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var u = io(tri(t, 4)), wt = Math.round(lerp(100, 900, u) / 10) * 10, size = h * .42;
+  c.font = '300 ' + size + 'px ' + FONT; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineJoin = 'round';
+  c.fillStyle = k.paper; c.strokeStyle = k.paper; c.lineWidth = lerp(0, size * .1, u); c.strokeText('모션 굵기', w / 2, h * .42); c.fillText('모션 굵기', w / 2, h * .42);
+  var bx = w * .22, bw = w * .56, by = h * .82; c.fillStyle = 'rgba(244,241,234,.2)'; rrect(c, bx, by - h * .012, bw, h * .024, h * .012); c.fill();
+  c.fillStyle = k.acc; rrect(c, bx, by - h * .012, bw * u, h * .024, h * .012); c.fill(); disc(c, bx + bw * u, by, h * .035);
+  lbl(c, String(wt), bx + bw * u, by - h * .09, h * .07, k.acc, 'center', 800);
+  lbl(c, '가늘게', bx - h * .14, by, h * .055, 'rgba(244,241,234,.6)', 'center', 500); lbl(c, '굵게', bx + bw + h * .12, by, h * .055, 'rgba(244,241,234,.6)', 'center', 800);
+};
+
+// ── SWITCH · 장면 바꾸기 ──────────────────────────────────────
+GC['blinds'] = function (c, w, h, t, k) {
+  var e = swP(t), N = 8, bh = h / N; c.globalAlpha = inA(t) * outA(t); if (e >= 1) { sceneNight(c, w, h, k); c.globalAlpha = 1; return; } sceneDay(c, w, h, k);
+  for (var i = 0; i < N; i++) { var v = clamp(e * 1.6 - i * .6 / N); if (v <= 0) continue;
+    c.save(); c.beginPath(); c.rect(0, i * bh + bh / 2 - bh / 2 * v - .5, w, bh * v + 1); c.clip(); sceneNight(c, w, h, k); c.restore();
+    if (v < 1) { c.fillStyle = 'rgba(0,0,0,' + (.25 * (1 - v)) + ')'; c.fillRect(0, i * bh + bh / 2 - bh / 2 * v, w, bh * v); } }
+  c.globalAlpha = 1;
+};
+GC['pixelate'] = function (c, w, h, t, k) {
+  var e = seg(t, 2.0, 2.0), night = e >= .5, amt = night ? 1 - (e - .5) * 2 : e * 2, bs = Math.max(1, Math.round(lerp(1, h * .22, io(amt))));
+  c.globalAlpha = inA(t) * outA(t);
+  if (bs <= 1) { if (night) sceneNight(c, w, h, k); else sceneDay(c, w, h, k); c.globalAlpha = 1; return; }
+  var ow = Math.max(1, Math.ceil(w / bs)), oh = Math.max(1, Math.ceil(h / bs)), off = document.createElement('canvas'); off.width = Math.max(1, Math.round(w)); off.height = Math.max(1, Math.round(h));
+  var o = off.getContext('2d'); if (night) sceneNight(o, w, h, k); else sceneDay(o, w, h, k);
+  var sm = document.createElement('canvas'); sm.width = ow; sm.height = oh; var s2 = sm.getContext('2d'); s2.imageSmoothingEnabled = true; s2.drawImage(off, 0, 0, ow, oh);
+  c.imageSmoothingEnabled = false; c.drawImage(sm, 0, 0, ow * bs, oh * bs); c.imageSmoothingEnabled = true;
+  c.globalAlpha = 1;
+};
+GC['accordion-fold'] = function (c, w, h, t, k) {
+  var e = swP(t), N = 6, pw = w / N; c.globalAlpha = inA(t) * outA(t); sceneNight(c, w, h, k);
+  if (e < 1) { var sw = pw * (1 - e);
+    for (var i = 0; i < N; i++) { var x = i * sw;
+      c.save(); c.beginPath(); c.rect(x, 0, sw + .5, h); c.clip(); c.translate(x, 0); c.scale(Math.max(.001, 1 - e), 1); c.translate(-i * pw, 0); sceneDay(c, w, h, k); c.restore();
+      c.fillStyle = 'rgba(0,0,0,' + (i % 2 ? .35 * e : .08 * e) + ')'; c.fillRect(x, 0, sw + .5, h); } }
+  c.globalAlpha = 1;
+};
+GC['halftone-wipe'] = function (c, w, h, t, k) {
+  var e = swP(t); c.globalAlpha = inA(t) * outA(t); sceneDay(c, w, h, k);
+  if (e > 0) { var g = h * .1, C = Math.ceil(w / g) + 1, R = Math.ceil(h / g) + 1;
+    c.save(); c.beginPath();
+    for (var r = 0; r < R; r++) for (var q = 0; q < C; q++) { var d = (q * g / w + r * g / h) / 2, v = clamp(e * 2.2 - d * 1.2), rad = g * .75 * v; if (rad > .3) { c.moveTo(q * g + rad, r * g); c.arc(q * g, r * g, rad, 0, TAU); } }
+    c.clip(); sceneNight(c, w, h, k); c.restore(); }
+  c.globalAlpha = 1;
+};
+GC['scan-print'] = function (c, w, h, t, k) {
+  var e = swP(t), y = e * h; c.globalAlpha = inA(t) * outA(t); if (e >= 1) { sceneNight(c, w, h, k); c.globalAlpha = 1; return; } sceneDay(c, w, h, k);
+  if (e > 0) { c.save(); c.beginPath(); c.rect(0, 0, w, y); c.clip(); sceneNight(c, w, h, k);
+    for (var i = 0; i < 6; i++) { c.fillStyle = 'rgba(244,241,234,' + (.1 * (6 - i) / 6) + ')'; c.fillRect(0, y - i * h * .03 - h * .01, w, h * .006); } c.restore();
+    if (e < 1) { c.fillStyle = k.acc; c.fillRect(0, y - h * .008, w, h * .016); c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(0, y - h * .003, w, h * .006); } }
+  c.globalAlpha = 1;
+};
+GC['puzzle-in'] = function (c, w, h, t, k) {
+  c.globalAlpha = inA(t) * outA(t); if (P8(t) >= 3.95) { sceneNight(c, w, h, k); c.globalAlpha = 1; return; } sceneDay(c, w, h, k);
+  var C = 4, R = 2, pw = w / C, ph = h / R;
+  for (var r = 0; r < R; r++) for (var q = 0; q < C; q++) { var i = r * C + q, e = back(seg(t, 1.8 + hash(i) * 1.4, .7)); if (e <= 0) continue;
+    var dx = (hash(i + 4) - .5) * w * 1.2 * (1 - e), dy = (hash(i + 8) - .5) * h * 1.6 * (1 - e) - h * (1 - e) * .6, rot = (hash(i + 2) - .5) * 1.4 * (1 - e);
+    c.save(); c.translate(q * pw + pw / 2 + dx, r * ph + ph / 2 + dy); c.rotate(rot); c.translate(-(q * pw + pw / 2), -(r * ph + ph / 2));
+    c.beginPath(); c.rect(q * pw, r * ph, pw, ph); if (q < C - 1) { c.moveTo(q * pw + pw + ph * .12, r * ph + ph / 2); c.arc(q * pw + pw, r * ph + ph / 2, ph * .12, 0, TAU); } c.clip();
+    sceneNight(c, w, h, k); c.restore();
+    if (e < 1) { c.strokeStyle = 'rgba(244,241,234,.6)'; c.lineWidth = 1.5; c.save(); c.translate(q * pw + pw / 2 + dx, r * ph + ph / 2 + dy); c.rotate(rot); c.strokeRect(-pw / 2, -ph / 2, pw, ph); c.restore(); } }
+  c.globalAlpha = 1;
+};
+
+// ── SHOW · 구조 보여주기 ──────────────────────────────────────
+GC['exploded-view'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = inA(t) * outA(t);
+  var e = io(seg(t, .9, 1.6)) - io(seg(t, 6.0, 1.0)), cx = w * .36, s = h * .17, gap = e * h * .09, z = 0, tot = 0;
+  BURGER.forEach(function (b) { tot += b[1]; }); var base = h * .5 + (tot * s + gap * 4) / 2 - s * .1;
+  var ys = []; for (var i = BURGER.length - 1; i >= 0; i--) { var b = BURGER[i]; ys[i] = base - z; z += b[1] * s + gap; }
+  for (var j = BURGER.length - 1; j >= 0; j--) { var bb = BURGER[j], y = ys[j], th = bb[1] * s, rx = s * 1.25, ry = s * .42;
+    c.fillStyle = shade(bb[2], -.25); c.beginPath(); c.ellipse(cx, y, rx, ry, 0, 0, Math.PI); c.lineTo(cx - rx, y - th); c.ellipse(cx, y - th, rx, ry, 0, Math.PI, 0, true); c.closePath(); c.fill();
+    c.fillStyle = bb[2]; c.beginPath(); c.ellipse(cx, y - th, rx, ry, 0, 0, TAU); c.fill();
+    var la = clamp((e - .5) * 2); if (la > 0) { var lx = cx + rx + h * .05, ly = y - th / 2; c.globalAlpha = inA(t) * outA(t) * la;
+      c.strokeStyle = 'rgba(244,241,234,.6)'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(cx + rx * .7, ly); c.lineTo(lx + h * .12, ly); c.stroke();
+      c.fillStyle = k.paper; disc(c, cx + rx * .7, ly, h * .012); lbl(c, bb[0], lx + h * .16, ly, h * .065, k.paper, 'left', 700); c.globalAlpha = inA(t) * outA(t); } }
+  c.globalAlpha = 1;
+};
+GC['cutaway'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper); c.globalAlpha = inA(t) * outA(t);
+  var cx = w / 2, cy = h * .74, s = h * .21, e = io(seg(t, 1.0, 1.4)) - io(seg(t, 6.0, .9));
+  var lay = [[0, .25, k.deep], [.25, .3, k.acc], [.55, .25, shade(k.acc, .45)], [.8, .2, k.ink]];
+  isoBox(c, cx, cy, s, -1, -1, 0, 2, 1, .001, '#B9BDC6');
+  lay.forEach(function (l) { isoBox(c, cx, cy, s, -1, -1, l[0] * 1.6, 2, 1, l[1] * 1.6 - .02, l[2]); });
+  var P = function (a, b, d) { return isoP(cx, cy, s, a, b, d); };
+  // 겉면: 오른쪽 앞면(x=1)과 왼쪽 앞면(y=0)이 위에서부터 걷힌다
+  var H = 1.6, keep = H * (1 - e * .72);
+  face(c, [P(-1, 0, 0), P(1, 0, 0), P(1, 0, keep), P(-1, 0, keep)], shade('#B9BDC6', -.28));
+  face(c, [P(1, -1, 0), P(1, 0, 0), P(1, 0, keep), P(1, -1, keep)], shade('#B9BDC6', -.12));
+  if (e < .02) face(c, [P(-1, -1, H), P(1, -1, H), P(1, 0, H), P(-1, 0, H)], '#B9BDC6');
+  if (e > 0 && e < 1) { c.strokeStyle = k.ink; c.lineWidth = h * .012; c.beginPath(); var a = P(-1, 0, keep), b = P(1, 0, keep), d = P(1, -1, keep); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.stroke(); }
+  c.globalAlpha = 1;
+};
+GC['turntable'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = inA(t) * outA(t);
+  var cx = w / 2, cy = h * .66, s = h * .24, a = P8(t) / 8 * TAU * 2, tilt = .45;
+  c.fillStyle = shade(k.ink, .18); c.beginPath(); c.ellipse(cx, cy + s * .1, s * 1.9, s * 1.9 * tilt, 0, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(244,241,234,.25)'; c.lineWidth = 2; for (var m = 0; m < 12; m++) { var mm = a + m / 12 * TAU; c.beginPath(); c.moveTo(cx + Math.cos(mm) * s * 1.7, cy + s * .1 + Math.sin(mm) * s * 1.7 * tilt); c.lineTo(cx + Math.cos(mm) * s * 1.85, cy + s * .1 + Math.sin(mm) * s * 1.85 * tilt); c.stroke(); }
+  var V = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(function (p) { var x = p[0] * Math.cos(a) - p[1] * Math.sin(a), y = p[0] * Math.sin(a) + p[1] * Math.cos(a); return [cx + x * s * .9, cy + y * s * .9 * tilt, y]; });
+  var H = s * 1.3, cols = [k.acc, k.deep, shade(k.acc, .3), shade(k.deep, .2)];
+  var faces = [0, 1, 2, 3].map(function (i) { var A = V[i], B = V[(i + 1) % 4]; return { i: i, d: (A[2] + B[2]) / 2, A: A, B: B }; }).sort(function (p, q) { return p.d - q.d; });
+  faces.forEach(function (f) { if (f.d < -.05) return; face(c, [[f.A[0], f.A[1]], [f.B[0], f.B[1]], [f.B[0], f.B[1] - H], [f.A[0], f.A[1] - H]], cols[f.i]);
+    if (f.i === 0) { var mx = (f.A[0] + f.B[0]) / 2, my = (f.A[1] + f.B[1]) / 2 - H / 2; c.fillStyle = k.paper; disc(c, mx, my, Math.abs(f.A[0] - f.B[0]) * .18); } });
+  face(c, V.map(function (p) { return [p[0], p[1] - H]; }), shade(k.paper, -.05));
+  c.globalAlpha = 1;
+};
+GC['layer-peel'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper); c.globalAlpha = inA(t) * outA(t);
+  var cw = h * .9, ch = h * .62, cx = w / 2, cy = h / 2, cols = [k.ink, k.deep, k.acc, shade(k.acc, .45)], N = 4;
+  for (var i = N - 1; i >= 0; i--) { var e = i === N - 1 ? 0 : io(seg(t, 1.0 + i * 1.3, 1.0)); if (e >= 1) continue;
+    var ox = (i - (N - 1) / 2) * h * .02, oy = (i - (N - 1) / 2) * h * .02;
+    c.save(); c.translate(cx + ox + e * w * .7, cy + oy - e * h * .25); c.rotate(e * .5);
+    c.fillStyle = 'rgba(20,22,27,' + (.12 + e * .1) + ')'; rrect(c, -cw / 2 + h * .02, -ch / 2 + h * .03 + e * h * .04, cw, ch, h * .05); c.fill();
+    c.fillStyle = cols[i]; rrect(c, -cw / 2, -ch / 2, cw, ch, h * .05); c.fill();
+    lbl(c, (i + 1) + ' / ' + N, 0, 0, h * .12, i === 3 ? k.ink : k.paper, 'center', 800); c.restore(); }
+  c.globalAlpha = 1;
+};
+GC['detail-inset'] = function (c, w, h, t, k) {
+  var art = function (o) { o.fillStyle = k.paper; o.fillRect(0, 0, w, h); for (var i = 0; i < 40; i++) { o.fillStyle = i % 5 ? 'rgba(20,22,27,.18)' : k.acc; disc(o, w * .05 + hash(i) * w * .5, h * .1 + hash(i + 9) * h * .8, h * (.01 + hash(i + 4) * .03)); }
+    o.fillStyle = k.ink; o.font = '700 ' + (h * .03) + 'px ' + FONT; o.textAlign = 'left'; o.textBaseline = 'middle'; o.fillText('여기가 핵심', w * .3, h * .53); o.fillStyle = k.acc; disc(o, w * .28, h * .53, h * .012); };
+  c.globalAlpha = inA(t) * outA(t); art(c);
+  var e = io(seg(t, .8, 1.0)), f = io(seg(t, 1.6, 1.0)), sx = w * .27, sy = h * .43, ss = h * .2, ix = w * .6, iy = h * .12, is = h * .76;
+  c.fillStyle = 'rgba(20,22,27,' + .25 * f + ')'; c.fillRect(0, 0, w * .58, h); art;
+  c.strokeStyle = k.acc; c.lineWidth = h * .012; c.strokeRect(sx, sy, ss * e, ss * e);
+  if (f > 0) { c.strokeStyle = 'rgba(20,22,27,.4)'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(sx + ss, sy); c.lineTo(lerp(sx + ss, ix, f), lerp(sy, iy, f)); c.moveTo(sx + ss, sy + ss); c.lineTo(lerp(sx + ss, ix, f), lerp(sy + ss, iy + is, f)); c.stroke();
+    var cs = lerp(ss, is, f), cxp = lerp(sx, ix, f), cyp = lerp(sy, iy, f);
+    c.save(); c.beginPath(); c.rect(cxp, cyp, cs, cs); c.clip(); c.translate(cxp, cyp); c.scale(cs / ss, cs / ss); c.translate(-sx, -sy); art(c); c.restore();
+    c.strokeStyle = k.acc; c.lineWidth = h * .014; c.strokeRect(cxp, cyp, cs, cs); }
+  c.globalAlpha = 1;
+};
+GC['iso-build'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = inA(t) * outA(t);
+  var cx = w / 2, cy = h * .4, s = h * .13, B = [[0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0], [1, 1, 0], [0, 0, 1], [1, 0, 1], [0, 1, 1], [0, 0, 2]], cols = [k.acc, k.deep, shade(k.acc, .35)];
+  c.fillStyle = shade(k.ink, .15); face(c, [isoP(cx, cy, s, -.3, -.3, 0), isoP(cx, cy, s, 3.3, -.3, 0), isoP(cx, cy, s, 3.3, 2.3, 0), isoP(cx, cy, s, -.3, 2.3, 0)], shade(k.ink, .15));
+  B.map(function (b, i) { return [b, i]; }).sort(function (p, q) { return (p[0][0] + p[0][1]) - (q[0][0] + q[0][1]) || p[0][2] - q[0][2]; }).forEach(function (bi) { var b = bi[0], i = bi[1], e = seg(t, .5 + i * .45, .45); if (e <= 0) return; var z = b[2] + (1 - e * e) * 4, sq = e >= 1 ? 1 - .15 * Math.exp(-(P8(t) - .95 - i * .45) * 12) : 1;
+    isoBox(c, cx, cy, s, b[0], b[1], z, 1, 1, sq, cols[(b[0] + b[1] + b[2]) % 3]); });
+  c.globalAlpha = 1;
+};
+
+if (typeof module !== 'undefined') module.exports = { GC: GC };

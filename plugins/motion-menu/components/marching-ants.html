@@ -1,0 +1,77 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>개미 행렬 점선 Marching Ants · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="개미 행렬 점선 데모: 그래픽 기법 장면"></canvas>
+<p class="cap">개미 행렬 점선 · 고른 물건을 둘러싼 검은·흰 점선이 테두리를 따라 계속 흐르고, 모서리에 손잡이가 붙어 있다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var lerp = function (a, b, t) { return a + (b - a) * t; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var inA = function (t) { return clamp((P8(t) - .1) / .3); };
+var FONT = '-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif';
+var disc = function (c, x, y, r) { if (r > .2) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+var rrect = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, Math.max(0, w), Math.max(0, h), Math.max(0, Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2))); };
+var lbl = function (c, s, x, y, size, col, al, wt) { c.font = (wt || 700) + ' ' + size + 'px ' + FONT; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+// 0→1→0 으로 오가는 값 (주기 p초)
+var tri = function (t, p) { var u = (t / p) % 1; if (u < 0) u += 1; return u < .5 ? u * 2 : 2 - u * 2; };
+// 3차 베지어 위의 점과 접선
+var bz = function (p, u) { var v = 1 - u; return [v * v * v * p[0][0] + 3 * v * v * u * p[1][0] + 3 * v * u * u * p[2][0] + u * u * u * p[3][0], v * v * v * p[0][1] + 3 * v * v * u * p[1][1] + 3 * v * u * u * p[2][1] + u * u * u * p[3][1]]; };
+// 아이소 좌표 → 화면 (x 오른쪽 아래, y 왼쪽 아래, z 위)
+var isoP = function (cx, cy, s, x, y, z) { return [cx + (x - y) * s * .866, cy + (x + y) * s * .5 - z * s]; };
+var face = function (c, pts, col) { c.fillStyle = col; c.beginPath(); pts.forEach(function (p, i) { if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); };
+var shade = function (hex, f) { return '#' + [1, 3, 5].map(function (i) { var v = parseInt(hex.slice(i, i + 2), 16); v = f < 0 ? v * (1 + f) : v + (255 - v) * f; return Math.round(v).toString(16).padStart(2, '0'); }).join(''); };
+// 아이소 상자 하나: 바닥 모서리(x,y,z) · 크기(dx,dy,dz)
+var isoBox = function (c, cx, cy, s, x, y, z, dx, dy, dz, col) {
+  var P = function (a, b, d) { return isoP(cx, cy, s, a, b, d); };
+  face(c, [P(x, y + dy, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], shade(col, -.28));
+  face(c, [P(x + dx, y, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x + dx, y, z + dz)], shade(col, -.12));
+  face(c, [P(x, y, z + dz), P(x + dx, y, z + dz), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], col);
+};
+// 장면 둘: 낮(종이 · 해 · 언덕)과 밤(먹 · 달 · 건물)
+var sceneDay = function (c, w, h, k) {
+  bgc(c, w, h, k.paper);
+  c.fillStyle = k.acc; disc(c, w * .72, h * .34, h * .14);
+  c.fillStyle = shade(k.deep, .35); c.beginPath(); c.ellipse(w * .25, h * 1.02, w * .42, h * .42, 0, 0, TAU); c.fill();
+  c.fillStyle = k.deep; c.beginPath(); c.ellipse(w * .78, h * 1.08, w * .48, h * .38, 0, 0, TAU); c.fill();
+};
+var sceneNight = function (c, w, h, k) {
+  bgc(c, w, h, k.ink);
+  for (var i = 0; i < 18; i++) { c.fillStyle = 'rgba(244,241,234,' + (.35 + hash(i) * .5) + ')'; disc(c, hash(i + 3) * w, hash(i + 7) * h * .5, h * .008 + hash(i + 1) * h * .006); }
+  c.fillStyle = k.paper; disc(c, w * .24, h * .3, h * .12); c.fillStyle = k.ink; disc(c, w * .24 + h * .06, h * .3 - h * .035, h * .11);
+  var bx = w * .42; for (var j = 0; j < 7; j++) { var bw = w * .07, bh = h * (.28 + hash(j + 11) * .3); c.fillStyle = j % 2 ? k.deep : shade(k.deep, .2); c.fillRect(bx + j * bw * 1.12, h - bh, bw, bh);
+    c.fillStyle = k.acc; for (var r = 0; r < 4; r++) if (hash(j * 9 + r) > .45) c.fillRect(bx + j * bw * 1.12 + bw * .3, h - bh + h * .05 + r * h * .07, bw * .4, h * .03); }
+};
+// 장면 바꾸기 공통 진행: 낮을 보여 주고 2.2~3.6초에 밤으로
+var swP = function (t) { return io(seg(t, 2.2, 1.4)); };
+// 버거 켜 (위에서부터): 이름 · 두께 · 색 가중
+var BURGER = [['윗빵', .5, '#E0A04A'], ['채소', .16, '#5DBB63'], ['치즈', .12, '#F2C53D'], ['패티', .34, '#7A4A2E'], ['아랫빵', .32, '#D8913F']];
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var cx = w / 2, cy = h / 2; c.fillStyle = k.acc; rrect(c, cx - h * .36, cy - h * .2, h * .3, h * .4, h * .05); c.fill();
+  c.fillStyle = k.deep; disc(c, cx + h * .2, cy, h * .2);
+  var x = cx - h * .5, y = cy - h * .32, W = h * 1.0, H = h * .64;
+  c.lineWidth = h * .012; c.setLineDash([h * .045, h * .045]); c.lineDashOffset = -P8(t) * h * .18;
+  c.strokeStyle = k.ink; c.strokeRect(x, y, W, H); c.lineDashOffset = -P8(t) * h * .18 + h * .045; c.strokeStyle = '#FFFFFF'; c.strokeRect(x, y, W, H); c.setLineDash([]); c.lineDashOffset = 0;
+  [[x, y], [x + W, y], [x, y + H], [x + W, y + H], [x + W / 2, y], [x + W / 2, y + H]].forEach(function (p) { c.fillStyle = '#FFFFFF'; c.fillRect(p[0] - h * .025, p[1] - h * .025, h * .05, h * .05); c.strokeStyle = k.ink; c.lineWidth = h * .008; c.strokeRect(p[0] - h * .025, p[1] - h * .025, h * .05, h * .05); });
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
