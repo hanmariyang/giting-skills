@@ -176,3 +176,9 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 정본 `plugins/motion-menu/tools/craft/engine.js`(`GC`). `gen.mjs` → `demos/m18-graphic-craft.html`, `render.mjs` 영상 4편.
 - SWITCH 는 낮(`sceneDay`)에서 밤(`sceneNight`)으로 2.2~3.6초에 넘어간다. 전환이 끝나면 밤 장면을 통째로 다시 그린다. 띠·조각 clip 을 남겨 두면 이음매에 가는 줄이 보인다(블라인드·스캔·퍼즐에서 실제로 보였다).
 - SHOW 의 물건은 엔진에서 만든 버거·상자·카드·블록이다. 아이소 블록은 x+y, 그다음 z 순서로 그린다.
+
+## 랜딩 메뉴판 0.2.2 · 요청은 원하는 쪽만 (2026-10-19)
+
+- 「제너릭 회피」 규칙이 「⛔ 다크 배경 … 쓰지 않는다」 부정문이었다. 실측(같은 앱 랜딩, Haiku·Sonnet 3번씩): 「…다크 배경 쓰지 말고 흰 지면에」 6/6 다크, 「바탕은 흰색 #FFFFFF, 글자는 먹색」 0/6, 그냥 「랜딩 만들어줘」 0/6. 지금 모델의 기본값은 다크가 아니었다.
+- 규칙(SKILL.md·`antiGeneric`)과 부정문 요청 4개(hero-text·hero-shot·stat-strip·footer)를 원하는 쪽을 값으로 적는 문장으로 바꿨다. 갤러리의 ⛔ 표시도 ★ 로.
+- ⭐ 요청 문장(`ask`)에 「~말고」「금지」를 쓰지 않는다. 피할 것은 원하는 값으로 바꿔 적는다. 예시 숫자도 넣지 않는다(AI 가 지어낸 값으로 베낀다).
