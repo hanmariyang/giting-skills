@@ -24,12 +24,19 @@ Both save through one engine (`assets/save-engine.js`): the File System Access A
 
 ## Make a new HTML document
 
-1. Copy `skeleton.html` to the requested path.
-2. Put the document's design in `<style id="doc-style">` and its body inside `<main id="doc-content">`. Preserve the user's content, language, and any design they gave you; do not impose the example's look.
-3. Leave the editor untouched: keep `<style id="ed-editor-style">`, `<script id="ed-editor-script">`, the `#ed-*` UI blocks, and `<script id="doc-meta">`. Give `doc-meta` a fresh unique `id` (replace `REPLACE-WITH-UNIQUE-ID`) so autosave and the saved-file link track this document.
-4. Open the result in a browser tool if one is available and verify (see Verification). If no browser tool is available, say which interactive checks you could not run.
+The editor is a built file you copy. You never write it. A document whose editor you typed yourself saves wrong (a copy per save, or nothing at all), even when it looks right.
 
-Do NOT re-type or summarize the engine by hand. Copy the built file.
+1. **Copy first, with a shell command, before writing anything.** This skill's folder is the base directory shown when the skill loaded; `skeleton.html` sits two levels up from it:
+
+   ```sh
+   cp "<base directory>/../../skeleton.html" doc.html
+   ```
+
+   Use the requested file name instead of `doc.html`. If you have no shell, Read `<base directory>/../../skeleton.html` and Write it out unchanged. Do not start from a blank file.
+2. Then Edit the copy in two places only. Put the document's design in `<style id="doc-style">` and its body inside `<main id="doc-content">`. Preserve the user's content, language, and any design they gave you; do not impose the example's look.
+3. In `<script id="doc-meta">`, replace `REPLACE-WITH-UNIQUE-ID` with a fresh unique id so autosave and the saved-file link track this document. Leave everything else as copied: `<style id="ed-editor-style">`, `<script id="ed-editor-script">`, and the `#ed-*` UI blocks.
+4. Check the copy took: `grep -c 'id="ed-editor-script"' doc.html` prints `1`. If it prints `0`, you rewrote the file; start over from step 1.
+5. Open the result in a browser tool if one is available and verify (see Verification). If no browser tool is available, say which interactive checks you could not run.
 
 ## Make an editable Markdown workflow
 
