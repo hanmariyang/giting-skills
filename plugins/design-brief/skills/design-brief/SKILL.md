@@ -22,6 +22,7 @@ description: "Produce a project DESIGN.md so an AI coding agent builds consisten
 |---|---|---|---|
 | Node 22 이상 + 크롬 계열 브라우저 | `scripts/site_tokens.mjs` 로 좋아하는 사이트를 재서 DESIGN.md 초안 만들기 | 아니오 | 캡처를 받아 `extract_palette.py` 로 색만 뽑고, 글꼴 · 둥글기 · 간격은 「재지 않았다」고 적는다 |
 | Python 3 + Pillow | `scripts/extract_palette.py` 로 이미지에서 색 뽑기 | 아니오 | 사용자가 준 hex 나 스타일 카탈로그로 팔레트를 정하고, 「이미지에서 뽑지 않았다」고 적는다 |
+| Node 18 이상 | `scripts/slop_check.mjs` 로 지은 페이지에 AI 기본 룩이 남았는지 검사 | 페이지까지 지었으면 예 | 아래 Anti-slop 목록을 페이지 소스와 한 줄씩 대조하고, 「검사기를 돌리지 못했다」고 적는다 |
 | 레퍼런스(사이트 주소나 이미지) | 팔레트와 글자의 씨앗 | 아니오 | 스타일 카탈로그에서 방향을 고른다 |
 
 **도구 위치.** 위 `scripts/…` 는 사용자 작업 폴더가 아니라 이 플러그인 폴더에 있다. 이 스킬의 기본 폴더 경로 끝에서 `skills/design-brief` 를 떼고 `scripts/` 를 붙이면 된다. 예: 기본 폴더가 `…/design-brief/skills/design-brief` 이면 도구는 `…/design-brief/scripts/` 안에 있다. 이 절대 경로로 부른다. 그래도 못 찾으면 다른 방법으로 넘어가기 전에 「도구를 못 찾았다」고 결과 맨 위에 적는다.
@@ -32,6 +33,8 @@ A DESIGN.md fixes that: one file at the repo root that captures colors, type, sp
 components, and the reasoning, so every page an agent builds is consistent and specific.
 This skill builds that file, chooses a real visual direction, and seeds it with actual
 colors instead of the model's defaults.
+
+**If you also build the page, you are not done until the checker passes on it** (Procedure step 7): `node "<this skill's base directory>/../../scripts/slop_check.mjs" index.html` must print 「걸린 것 없음」. Writing the rules into DESIGN.md is not enough; in tests the page broke them anyway.
 
 ## What a DESIGN.md must contain
 
@@ -67,11 +70,12 @@ one accent, generous whitespace, no gradients" is.
 AI-generated design currently clusters on a few tells. If the user has not chosen one of
 these, do not spend the brief's originality on them:
 
-- warm cream (#F4F1EA) + serif display + terracotta accent
+- warm cream (#F4F1EA) + serif display + terracotta accent (cream + terracotta alone already reads as this cluster)
 - near-black + a lone acid-green or vermilion pop
-- a purple-to-blue gradient hero on white
+- a purple-to-blue gradient hero on white (the exact pair #667eea → #764ba2 is the most common one)
+- a framework's default palette as the accent: Tailwind indigo/blue/violet/emerald/pink 500·600·700 (#4F46E5, #2563EB, #059669, #10B981, #EC4899 ...). A default hex is not a choice; shift it so it belongs to this product
 - Inter or Space Grotesk as the "safe" default face
-- emoji as section markers · everything centered · `rounded-lg` on everything · an accent bar on every card
+- emoji as section markers or feature icons (a box holding only 💰 or 📊) · everything centered · `rounded-lg` on everything · an accent bar on every card
 - broadsheet hairline rules with dense columns as a reflex
 
 State in DESIGN.md which of these the project rejects, so the agent has an explicit floor.
@@ -137,6 +141,13 @@ Rules for using it:
 4. Fill the DESIGN.md sections, each token with a role and a one-line WHY.
 5. Add the anti-slop floor (which defaults this project rejects).
 6. Save as `DESIGN.md` at the repo root so any agent reads it before building UI.
+7. **If you also build the page, check it.** Writing "no emoji, no gradient" in DESIGN.md does not stop the page from having them; in tests the brief said so and the page still did. Run the checker on every page you built:
+
+   ```sh
+   node "<this skill's base directory>/../../scripts/slop_check.mjs" index.html
+   ```
+
+   It prints G1 to G5 (purple-blue gradient · emoji as markers or icons · framework default palette · Inter/Space Grotesk · cream + terracotta) and exits 1 if any is hit. Replace each hit with a value from DESIGN.md (an emoji icon becomes an inline SVG or a plain number/label) and run it again until it prints 「걸린 것 없음」. If DESIGN.md deliberately chose one of the flagged hexes with a WHY, pass it with `--allow '#hex'`. It cannot judge centering; look at that yourself. If the checker cannot run, say so at the top of your answer instead of claiming the page is clean.
 
 ## QA checklist
 
@@ -144,6 +155,7 @@ Rules for using it:
 - A named direction is chosen; the "what it is NOT" line rules out the slop cluster.
 - Palette HEX came from the extractor or a deliberate choice, not a default.
 - Semantic colors (good/warn/critical) are separate from the accent.
+- If a page was built, `slop_check.mjs` printed 「걸린 것 없음」 on it (or you said why it could not run).
 - The brief is specific enough that two agents building different pages would match.
 
 ## Notes and honest limits

@@ -15,12 +15,15 @@ skill builds it, picks a real visual direction, and seeds it with actual colors.
 - **Color extractor** — `scripts/extract_palette.py` (Pillow) pulls real HEX from a reference so the palette is chosen, not invented.
 - **Site measurer** — `scripts/site_tokens.mjs` (Node 22+, Chrome, no dependencies) opens a site you like in a real browser and measures the rendered colors, fonts, type scale, radius and spacing, then writes a DESIGN.md draft with roles. No logo, name or image is carried over; it is a starting point, not a copy.
 
+- **Slop checker** — `scripts/slop_check.mjs` (Node, no browser, no dependencies) reads a built page and flags what DESIGN.md said to avoid: purple-blue gradient, emoji used as icons, a framework's default palette as the accent, Inter/Space Grotesk, cream + terracotta. Exit 1 on any hit. In tests, Haiku wrote "no emoji" into DESIGN.md and still put emoji icons on the page; running the checker is the last step.
+
 ## Use
 
 ```sh
 node scripts/site_tokens.mjs https://example.com --out DESIGN.md   # measure a live site
 pip install pillow
 python3 scripts/extract_palette.py reference.png --n 6             # colors from an image
+node scripts/slop_check.mjs index.html                             # check the built page
 ```
 
 Checked against two sites with known tokens (giting.kr, aiplab.kr): ground, ink, line, accent, fonts, card radius and spacing unit matched the source values.
