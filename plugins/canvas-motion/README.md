@@ -6,15 +6,17 @@
 
 ```
 engine/
-  canvas-motion.js       코어 — 고정 timestep 루프+보간·이징·아이소 투영·깊이 정렬·시드 rng
+  canvas-motion.js       코어 — 고정 timestep 루프+보간·이징·아이소 투영·깊이 정렬·시드 rng·화면 따라가는 캔버스(fitCanvas)
   canvas-motion-plus.js  고급 — 노이즈/플로우필드·보이드·공간해시·카메라·A*·파티클·큐레이션 스킴·스프라이트 글로우·팔레트
 recipes/
   flagship-iso-hub.html  시뮬(아이소) — 물류 허브: A* 로봇 + 보이드 드론 + 데이터 스트림 + 발광 타워
   aurora-flow.html       제너러티브(추상) — 노이즈 플로우필드 × 2,400 입자 × 잔광 리본
-  constellation-net.html 네트워크(추상) — 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우
+  constellation-net.html 네트워크(추상) — 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우 · 화면을 채우는 배경(fitCanvas)
   book-shelf-timeline.html 타임라인(서사) — 책장 꽂힘 → 한 권 뽑기 → 페이지 펼침 → 바코드 수렴
 lint/
-  motion-lint.mjs        규율 점검 — reduced-motion·라이브러리금지·rAF·DPR·고정timestep·깊이정렬·시드
+  motion-lint.mjs        규율 점검 — reduced-motion·라이브러리금지·rAF·DPR·고정timestep·깊이정렬·시드·엔진 옮겨 적기·화면 크기
+tools/
+  inline-engine.mjs      한 파일로 낼 때 엔진 <script src> 를 엔진 파일 그대로로 바꾼다
 skills/canvas-motion/SKILL.md
 ```
 
@@ -25,7 +27,7 @@ skills/canvas-motion/SKILL.md
 
 ## 핵심 규율 (motion-lint 강제)
 
-- prefers-reduced-motion 필수(CM.loop 자동) · 고정 timestep(프레임레이트 독립) · DPR 대응 · 아이소는 깊이 정렬 · 창발 시뮬은 시드 고정 · 60fps 예산 · **라이브러리 0**.
+- prefers-reduced-motion 필수(CM.loop 자동) · 고정 timestep(프레임레이트 독립) · DPR 대응 · 화면 크기 따라가기 · 엔진은 복사(옮겨 적기 금지) · 아이소는 깊이 정렬 · 창발 시뮬은 시드 고정 · 60fps 예산 · **라이브러리 0**.
 
 ## 설치
 
@@ -37,8 +39,9 @@ skills/canvas-motion/SKILL.md
 ## 쓰는 법
 
 1. 모드를 고른다(살아 있어야 하면 시뮬).
-2. 가장 가까운 `recipes/` 를 복제해 시작한다(밑바닥부터 X).
-3. 모델→렌더→`CM.loop` 순으로 얹는다.
-4. `node lint/motion-lint.mjs <file.html>` 로 자가 점검.
+2. 가장 가까운 `recipes/` 를 복사해 시작한다(밑바닥부터 X). 엔진은 옮겨 적지 않는다.
+3. 모델→렌더→`CM.loop` 순으로 얹는다. 화면을 채우는 배경이면 `CM.fitCanvas`.
+4. 한 파일로 내야 하면 `node tools/inline-engine.mjs <file.html>`.
+5. `node lint/motion-lint.mjs <file.html>` 로 자가 점검.
 
 라이선스 MIT. 자세한 API·절차는 `skills/canvas-motion/SKILL.md`.

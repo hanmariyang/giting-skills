@@ -37,6 +37,7 @@ description: "웹 랜딩·히어로·데모에 창발적(살아 있는) 모션 �
 
 **코어 `CM`**
 - `setupCanvas(canvas,{width,height,maxDpr})` → `{ctx,w,h,dpr}`. DPR 대응(선명함), 논리 좌표는 CSS 픽셀.
+- `fitCanvas(canvas,{maxDpr,onResize})` → `S={ctx,w,h,dpr}`. **배경·히어로처럼 화면을 채우는 캔버스는 이걸 쓴다.** 크기는 CSS 가 정하고(`position:fixed;inset:0;width:100%;height:100%`), 창 크기·회전·모니터가 바뀌면 다시 맞춘다. `S.w`/`S.h` 는 늘 최신이니 `W=S.w` 로 한 번 복사하지 말고 그릴 때마다 읽는다. 크기가 바뀔 때 `onResize` 에서 점·입자 위치를 새 크기 비율로 옮긴다(가장자리에 clamp 하면 한 줄로 쌓인다). reduced 정지 프레임도 크기가 바뀌면 다시 그린다.
 - `loop({tick,update,render,settle,reduced})` → `{stop}`. **고정 timestep**: `update(dt)` 는 tick 초마다 정확히, `render(now,alpha)` 는 매 프레임. ⚠️ **첫 인자가 `now`(밀리초 타임스탬프)**, 둘째가 `alpha`(다음 tick까지 0~1, 보간용). 타임라인(t 기반)이면 `render(now){ var t=(now/1000)%DUR }`. `reduced`(reduced-motion)면 `settle` 번만 밟고 정지 프레임 1장(`staticAt` 로 그 시각 지정). 탭 숨으면 자동 일시정지.
 - `ease.{linear,inOutSine,outCubic,inOutCubic,outBack,outElastic}` · `lerp(a,b,t)` · `clamp` · `seg(t,a,b)`(구간 진행률, 타임라인용).
 - `iso(tw,ox,oy)` → `P(x,y,h)`: 격자→아이소 화면. **h 는 픽셀 높이**(격자 단위 아님 — 타워는 40~150px).
@@ -54,12 +55,26 @@ description: "웹 랜딩·히어로·데모에 창발적(살아 있는) 모션 �
 
 ## 새 모션 만들기 — 절차
 
+엔진과 레시피는 **복사하는 파일**이다. 옮겨 적지 않는다. 옮겨 적은 엔진은 겉은 같아도 reduced-motion 처리 같은 곳이 틀어진다(실측: 옮겨 적은 Haiku 페이지가 멀미 줄이기 설정에서도 계속 움직였다). 이 스킬 폴더는 스킬을 불러올 때 보인 base directory 이고, 엔진·레시피·도구는 거기서 두 단계 위에 있다.
+
 1. **모드 결정**(시뮬 vs 타임라인). 살아 있어야 하면 시뮬.
-2. **가장 가까운 레시피를 복제**해 시작한다(`recipes/`). 밑바닥부터 쓰지 않는다.
-3. **모델**을 짠다 — 시뮬이면 상태(에이전트/격자)+규칙(스티어링/A*/노이즈), 타임라인이면 구간표.
-4. **렌더**를 짠다 — `setupCanvas` → 아이소면 `iso`+`drawList`, 파티클이면 이미터, 글로우는 `glow`/`lighter`.
-5. **루프**에 얹는다 — `CM.loop`. 시뮬은 `update` 에서 상태 갱신, `render` 에서 보간해 그림.
-6. **규율 통과**(아래). `node lint/motion-lint.mjs <file.html>` 로 자가 점검.
+2. **가장 가까운 레시피를 셸로 복사해 시작한다.** 화면을 채우는 배경·히어로면 `constellation-net.html`(fitCanvas 로 화면을 따라간다).
+
+   ```sh
+   cp "<base directory>/../../recipes/constellation-net.html" index.html
+   ```
+
+   셸이 없으면 레시피를 Read 해서 그대로 Write 한다. 빈 파일에서 시작하지 않는다.
+3. **엔진은 `<script src>` 로 둔 채 내용을 고친다.** 복사한 파일의 `<script src="../engine/canvas-motion.js">` 는 그대로 두고(경로만 엔진 폴더로 맞춰도 된다), 모델·렌더·글자만 Edit 한다. 시뮬이면 상태(에이전트/격자)+규칙(스티어링/A*/노이즈), 타임라인이면 구간표.
+4. **렌더** — 화면을 채우면 `CM.fitCanvas`, 고정 무대면 `setupCanvas`. 아이소면 `iso`+`drawList`, 파티클이면 이미터, 글로우는 `makeGlow`.
+5. **루프**에 얹는다 — `CM.loop`. 시뮬은 `update` 에서 상태 갱신, `render` 에서 보간해 그림. reduced-motion 은 `CM.loop` 가 처리하니 직접 rAF 를 따로 돌리지 않는다.
+6. **한 파일로 내야 하면 엔진을 도구로 넣는다.** 손으로 붙여 넣지 않는다.
+
+   ```sh
+   node "<base directory>/../../tools/inline-engine.mjs" index.html
+   ```
+
+7. **규율 통과** — `node "<base directory>/../../lint/motion-lint.mjs" index.html`. 필수 위반이 0 이어야 끝난다. R8(엔진을 옮겨 적음)이 뜨면 2단계부터 다시 한다.
 
 ## 타임라인 뼈대 (결정적 연출)
 
@@ -79,7 +94,8 @@ CM.loop({tick:1/60, render:function(){ draw((performance.now()/1000)%DUR); }, se
 
 - **reduced-motion 필수** — `CM.loop` 는 자동 처리하나, 직접 rAF 를 쓰면 `prefers-reduced-motion`에서 정지 프레임을 그린다.
 - **고정 timestep** — 시뮬은 프레임레이트에 독립(`while(acc>=tick)`). dt 를 그대로 위치에 곱하지 마라(느린 기기에서 폭주).
-- **DPR 대응** — `setupCanvas` 사용(레티나 선명함).
+- **DPR 대응** — `setupCanvas`/`fitCanvas` 사용(레티나 선명함).
+- **화면 크기 따라가기** — 배경·히어로는 `fitCanvas`. 창을 줄이거나 폰을 돌려도 늘어나거나 흐려지지 않게.
 - **아이소는 깊이 정렬 필수** — `drawList`(depth=x+y) 없이는 가림이 깨진다.
 - **시드 고정** — 창발 시뮬은 `rng(seed)` 로 결정적이게(재현·검증).
 - **성능 예산** — 60fps 목표. ⚠️ **매 프레임 `ctx.shadowBlur`/`glow()`가 가장 흔한 병목이다** — `makeGlow` 스프라이트로 대체하라(색별 1회 생성 후 blit). 입자 수천 개면 dpr 상한을 낮추고 배열(Float32)로 관리. 정적 요소(바닥 격자)는 오프스크린에 1회 굽고 blit. `lighter` 합성은 아끼기.
@@ -90,5 +106,6 @@ CM.loop({tick:1/60, render:function(){ draw((performance.now()/1000)%DUR); }, se
 
 - GSAP·Lottie·Framer·anime.js 등 애니 라이브러리 도입.
 - reduced-motion 무시(접근성·멀미).
+- 엔진을 옮겨 적거나 요약해 다시 쓰기(복사하고, 한 파일은 inline-engine 으로).
 - 키프레임을 손으로 나열해 "살아 있는 척"(그건 시뮬이 아니다 — 정말 살아 있게 하려면 규칙으로).
 - 없는 성능 주장(fps 는 실제로 재고 말한다).

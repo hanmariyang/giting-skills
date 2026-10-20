@@ -6,14 +6,13 @@
 <title>canvas-motion · 별자리 네트워크</title>
 <style>
   html,body{margin:0;height:100%;background:#070a12;overflow:hidden}
-  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-  canvas{max-width:100%;max-height:100%;border-radius:12px}
+  canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
   .cap{position:fixed;left:16px;bottom:14px;font:600 12px/1.5 ui-monospace,Menlo,monospace;color:#3c4a68}
   .cap b{color:#7ea6e0}
 </style>
 </head>
 <body>
-<div id="stage"><canvas id="c" width="1280" height="720"></canvas></div>
+<canvas id="c"></canvas>
 <div class="cap"><b>canvas-motion</b> · 표류 노드 + 근접 연결선(거리 페이드) + 허브 글로우 · 공간해시 · 의존성 0</div>
 
 <script src="../engine/canvas-motion.js"></script>
@@ -22,21 +21,25 @@
 (function(){
 'use strict';
 var canvas=document.getElementById('c');
-var S=CM.setupCanvas(canvas,{width:1280,height:720,maxDpr:2});
-var ctx=S.ctx, W=S.w, H=S.h, V=CMX.V, TAU=CMX.TAU;
+// 배경은 화면을 채운다: CSS 가 크기를 정하고 fitCanvas 가 따라간다. W/H 를 한 번 복사하지 않고 S.w/S.h 를 매번 읽는다
+var pw=0, ph=0;   // 직전 크기 — 크기가 바뀌면 점을 비율로 옮긴다(가장자리에 고정하면 한 줄로 쌓인다)
+var S=CM.fitCanvas(canvas,{maxDpr:2, onResize:function(S){ for(var i=0;i<nodes.length;i++){ nodes[i].p[0]*=S.w/pw; nodes[i].p[1]*=S.h/ph; } pw=S.w; ph=S.h; }});
+pw=S.w; ph=S.h;
+var ctx=S.ctx, V=CMX.V, TAU=CMX.TAU;
 
 var SEED=14, rnd=CM.rng(SEED);
 var sc=CMX.scheme('cyber');                  // 절제된 시안/블루 + 마젠타 액센트
 var D=155;                                    // 연결 거리
 var hash=CMX.spatialHash(D);
 var nodes=[];
-for(var i=0;i<108;i++){ var hub=rnd()<0.14; nodes.push({ p:[rnd()*W, rnd()*H], v:V.fromAngle(rnd()*TAU, 6+rnd()*10), hub:hub, r:hub?2.6:1.4, col: hub?(rnd()<0.4?sc.accent:sc.cols[0]) : sc.cols[1+((rnd()*3)|0)] }); }
+var N=Math.round(CM.clamp(S.w*S.h/8500,40,140));   // 화면 넓이에 맞춘 점 수
+for(var i=0;i<N;i++){ var hub=rnd()<0.14; nodes.push({ p:[rnd()*S.w, rnd()*S.h], v:V.fromAngle(rnd()*TAU, 6+rnd()*10), hub:hub, r:hub?2.6:1.4, col: hub?(rnd()<0.4?sc.accent:sc.cols[0]) : sc.cols[1+((rnd()*3)|0)] }); }
 // 허브용 글로우 스프라이트 (색별 1회 생성 — 재사용)
 var glows={}; nodes.forEach(function(n){ if(n.hub&&!glows[n.col]) glows[n.col]=CMX.makeGlow(n.col,22,0.8); });
 
 var T=0;
 function update(dt){
-  T+=dt;
+  T+=dt; var W=S.w, H=S.h;
   for(var i=0;i<nodes.length;i++){ var n=nodes[i];
     // 아주 느린 유기적 표류 (노이즈 없이 사인 흔들림)
     n.v[0]+=Math.sin(T*0.4+i)*2*dt; n.v[1]+=Math.cos(T*0.33+i*1.7)*2*dt;
@@ -47,6 +50,7 @@ function update(dt){
   }
 }
 function render(){
+  var W=S.w, H=S.h;
   var g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,sc.bg[0]); g.addColorStop(1,sc.bg[1]); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
   // 연결선 (근접만, 거리 페이드) — 공간해시로 이웃만
   hash.clear(); for(var i=0;i<nodes.length;i++)hash.insert(nodes[i]);
