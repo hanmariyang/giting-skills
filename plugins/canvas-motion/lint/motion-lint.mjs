@@ -3,6 +3,7 @@
  * 사용: node motion-lint.mjs <file.html> [<file2.html> ...]
  * R1 reduced-motion 처리(필수) · R2 애니 라이브러리 금지(필수) · R3 rAF 존재(필수)
  * R4 DPR 대응(권고) · R5 고정 timestep(권고) · R6 아이소면 깊이 정렬(조건부 권고) · R7 시드 고정(권고)
+ * R8 엔진을 옮겨 적음(필수) · R9 화면 크기 따라가기(권고)
  */
 import fs from 'node:fs';
 
@@ -35,7 +36,7 @@ function lint(file) {
   if (usesCanvas && !has(/requestAnimationFrame|CM\.loop/)) R('R3', 'critical', 'canvas 는 있는데 requestAnimationFrame(또는 CM.loop) 이 없음 — 모션 루프가 없다.');
 
   // R4 DPR (권고)
-  if (usesCanvas && !has(/devicePixelRatio|setupCanvas/)) R('R4', 'advisory', 'DPR 대응 없음 — 레티나에서 흐릿. CM.setupCanvas 또는 devicePixelRatio 스케일 권장.');
+  if (usesCanvas && !has(/devicePixelRatio|setupCanvas|fitCanvas/)) R('R4', 'advisory', 'DPR 대응 없음 — 레티나에서 흐릿. CM.setupCanvas 또는 devicePixelRatio 스케일 권장.');
 
   // R5 고정 timestep (권고)
   if (has(/requestAnimationFrame/) && !has(/CM\.loop/) && !has(/while\s*\([^)]*(acc|accumulator)[^)]*(>=|>)/i)) R('R5', 'advisory', '고정 timestep(누산기) 흔적 없음 — 시뮬은 프레임레이트에 독립적이어야 폭주 안 함. CM.loop 권장.');
@@ -47,6 +48,14 @@ function lint(file) {
   // R7 시드 (권고, 시뮬)
   const sim = has(/steer|boid|spatialHash|astar|makeNoise|flowField/i);
   if (sim && !has(/CM\.rng|rng\(|mulberry|seed/i)) R('R7', 'advisory', '창발 시뮬 흔적이 있는데 시드 고정 없음 — rng(seed) 로 결정적이게(재현·검증).');
+
+  // R8 엔진을 손으로 옮겨 적음 (필수) — CM 을 쓰는데 엔진 파일을 불러오지도, inline-engine 으로 넣지도 않았다
+  const usesCM = has(/\bCM\.(loop|setupCanvas|fitCanvas)\b/);
+  const realEngine = has(/<script[^>]*src=["'][^"']*canvas-motion\.js/) || has(/canvas-motion\.js · inline-engine/) || (has(/\/\/ ── reduced-motion 게이트/) && has(/root\.CM = CM;/));
+  if (usesCM && !realEngine) R('R8', 'critical', '엔진을 손으로 옮겨 적은 흔적 — 페이지에 <script src="canvas-motion.js"> 를 적고 tools/inline-engine.mjs 로 넣어라. 옮겨 적은 엔진은 reduced-motion 같은 곳이 틀어진다.');
+
+  // R9 화면 크기 따라가기 (권고) — 창을 줄이거나 폰을 돌리면 늘어나거나 흐려진다
+  if (usesCanvas && !has(/fitCanvas|ResizeObserver|addEventListener\(\s*['"]resize/)) R('R9', 'advisory', '화면 크기가 바뀌어도 캔버스를 다시 맞추지 않음 — 배경·히어로면 CM.fitCanvas 를 쓰고 그릴 때마다 S.w/S.h 를 읽어라.');
 
   return findings;
 }

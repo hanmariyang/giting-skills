@@ -31,6 +31,31 @@
     return { ctx: ctx, w: w, h: h, dpr: dpr };
   }
 
+  // ── 화면 크기를 따라가는 캔버스 (히어로·전체 배경) ──────
+  // 크기는 CSS 가 정한다(예: position:fixed;inset:0;width:100%;height:100%). fitCanvas 는 그 상자를 재서
+  // 백킹 픽셀을 dpr 배로 맞추고, 상자가 바뀌면(창 크기·회전·다른 모니터) 다시 맞춘 뒤 onResize(S) 를 부른다.
+  // S.w / S.h 는 늘 최신이다 — 그리는 코드는 W=S.w 로 한 번 복사하지 말고 매번 S.w 를 읽는다.
+  function fitCanvas(canvas, opts) {
+    opts = opts || {};
+    var S = { ctx: canvas.getContext('2d'), w: 0, h: 0, dpr: 1 };
+    function fit() {
+      var dpr = Math.min(opts.maxDpr || 2, root.devicePixelRatio || 1);
+      var w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h || (w === S.w && h === S.h && dpr === S.dpr)) return;
+      var first = !S.w;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      S.ctx.setTransform(dpr, 0, 0, dpr, 0, 0); S.w = w; S.h = h; S.dpr = dpr;
+      if (!first) {
+        if (opts.onResize) opts.onResize(S);
+        root.dispatchEvent(new Event('cm-resize'));   // reduced 정지 프레임을 다시 그리게
+      }
+    }
+    fit();
+    if (root.ResizeObserver) new ResizeObserver(fit).observe(canvas);
+    root.addEventListener('resize', fit);
+    return S;
+  }
+
   // ── 고정 timestep 루프 (누산기) + 보간 alpha ───────────
   // update(dt) 는 tick 초마다 정확히, render(alpha, now) 는 매 프레임.
   // reduced=true 면 시뮬을 한 번만 밟고 정지 프레임을 그린다(모션 없음).
@@ -45,8 +70,10 @@
 
     if (reduced) {                          // 정지 프레임 1장(접근성)
       if (o.settle) for (var i = 0; i < o.settle; i++) update(tick);
-      render(o.staticAt || 0, 1);           // (now, alpha)
-      return { stop: function () {}, reduced: true };
+      var still = function () { render(o.staticAt || 0, 1); };   // (now, alpha)
+      still();
+      root.addEventListener('cm-resize', still);              // fitCanvas 가 크기를 바꾸면 한 장 다시
+      return { stop: function () { root.removeEventListener('cm-resize', still); }, reduced: true };
     }
     function frame(now) {
       if (!running) return;
@@ -117,10 +144,11 @@
   var CM = {
     prefersReducedMotion: prefersReducedMotion,
     setupCanvas: setupCanvas,
+    fitCanvas: fitCanvas,
     loop: loop,
     ease: ease, lerp: lerp, clamp: clamp, seg: seg,
     iso: iso, drawList: drawList, rng: rng, alongPath: alongPath,
-    version: '0.1.0'
+    version: '0.2.0'
   };
   root.CM = CM;
   if (typeof module !== 'undefined' && module.exports) module.exports = CM; // ES/CJS 도 지원
