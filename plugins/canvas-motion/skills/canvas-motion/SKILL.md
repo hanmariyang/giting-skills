@@ -65,16 +65,18 @@ description: "웹 랜딩·히어로·데모에 창발적(살아 있는) 모션 �
    ```
 
    셸이 없으면 레시피를 Read 해서 그대로 Write 한다. 빈 파일에서 시작하지 않는다.
-3. **엔진은 `<script src>` 로 둔 채 내용을 고친다.** 복사한 파일의 `<script src="../engine/canvas-motion.js">` 는 그대로 두고(경로만 엔진 폴더로 맞춰도 된다), 모델·렌더·글자만 Edit 한다. 시뮬이면 상태(에이전트/격자)+규칙(스티어링/A*/노이즈), 타임라인이면 구간표.
-4. **렌더** — 화면을 채우면 `CM.fitCanvas`, 고정 무대면 `setupCanvas`. 아이소면 `iso`+`drawList`, 파티클이면 이미터, 글로우는 `makeGlow`.
-5. **루프**에 얹는다 — `CM.loop`. 시뮬은 `update` 에서 상태 갱신, `render` 에서 보간해 그림. reduced-motion 은 `CM.loop` 가 처리하니 직접 rAF 를 따로 돌리지 않는다.
-6. **한 파일로 내야 하면 엔진을 도구로 넣는다.** 손으로 붙여 넣지 않는다.
+3. **값부터 바꾼다.** 레시피 맨 위 `// ── 여기만 고친다` 블록(`P`)의 값(팔레트·밀도·거리·속도)으로 원하는 느낌에 가깝게 만든다. 장면 코드를 새로 쓰는 것은 값으로 안 될 때만, 그리고 한 함수씩 고친다. 처음부터 다시 쓴 장면은 입자가 화면 밖에서만 생기거나 render 안에서 없는 변수를 써서 빈 화면이 되기 쉽다(실측: Haiku 3개 중 2개).
+4. **엔진은 `<script src>` 로 둔 채 내용을 고친다.** 복사한 파일의 `<script src="../engine/canvas-motion.js">` 는 그대로 두고(경로만 엔진 폴더로 맞춰도 된다), 모델·렌더·글자만 Edit 한다. 시뮬이면 상태(에이전트/격자)+규칙(스티어링/A*/노이즈), 타임라인이면 구간표.
+5. **렌더** — 화면을 채우면 `CM.fitCanvas`, 고정 무대면 `setupCanvas`. 아이소면 `iso`+`drawList`, 파티클이면 이미터, 글로우는 `makeGlow`.
+6. **루프**에 얹는다 — `CM.loop`. 시뮬은 `update` 에서 상태 갱신, `render` 에서 보간해 그림. reduced-motion 은 `CM.loop` 가 처리하니 직접 rAF 를 따로 돌리지 않는다.
+7. **한 파일로 내야 하면 엔진을 도구로 넣는다.** 손으로 붙여 넣지 않는다.
 
    ```sh
    node "<base directory>/../../tools/inline-engine.mjs" index.html
    ```
 
-7. **규율 통과** — `node "<base directory>/../../lint/motion-lint.mjs" index.html`. 필수 위반이 0 이어야 끝난다. R8(엔진을 옮겨 적음)이 뜨면 2단계부터 다시 한다.
+8. **규율 통과** — `node "<base directory>/../../lint/motion-lint.mjs" index.html`. 필수 위반이 0 이어야 끝난다. R8(엔진을 옮겨 적음)이 뜨면 2단계부터 다시 한다.
+9. **돌려 본다** — `node "<base directory>/../../tools/smoke.mjs" index.html`. 브라우저 없이 3초를 돌려 오류 없이 돌고(S1), 화면 안에 보이는 것이 그려지고(S2), 움직이는지(S3) 본다. 하나라도 실패면 끝난 것이 아니다. 고치고 다시 돌린다. 브라우저 도구가 있으면 실제로 열어서도 본다.
 
 ## 타임라인 뼈대 (결정적 연출)
 

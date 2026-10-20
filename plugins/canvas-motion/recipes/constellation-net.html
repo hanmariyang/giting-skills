@@ -21,19 +21,30 @@
 (function(){
 'use strict';
 var canvas=document.getElementById('c');
+
+// ── 여기만 고친다 (장면은 그대로 두고 값으로 바꾼다) ──────────
+var P={
+  seed:14,          // 같은 값이면 같은 전개
+  scheme:'cyber',   // aurora · cyber · ember · mono
+  density:8500,     // 점 하나가 차지하는 화면 넓이(px²). 작을수록 촘촘
+  link:155,         // 이 거리 안의 점끼리 선으로 잇는다
+  speed:3,          // 표류 속도
+  hubRate:0.14      // 빛나는 허브 점의 비율
+};
+// ───────────────────────────────────────────────────────
 // 배경은 화면을 채운다: CSS 가 크기를 정하고 fitCanvas 가 따라간다. W/H 를 한 번 복사하지 않고 S.w/S.h 를 매번 읽는다
 var pw=0, ph=0;   // 직전 크기 — 크기가 바뀌면 점을 비율로 옮긴다(가장자리에 고정하면 한 줄로 쌓인다)
 var S=CM.fitCanvas(canvas,{maxDpr:2, onResize:function(S){ for(var i=0;i<nodes.length;i++){ nodes[i].p[0]*=S.w/pw; nodes[i].p[1]*=S.h/ph; } pw=S.w; ph=S.h; }});
 pw=S.w; ph=S.h;
 var ctx=S.ctx, V=CMX.V, TAU=CMX.TAU;
 
-var SEED=14, rnd=CM.rng(SEED);
-var sc=CMX.scheme('cyber');                  // 절제된 시안/블루 + 마젠타 액센트
-var D=155;                                    // 연결 거리
+var rnd=CM.rng(P.seed);
+var sc=CMX.scheme(P.scheme);                  // 절제된 시안/블루 + 마젠타 액센트
+var D=P.link;                                    // 연결 거리
 var hash=CMX.spatialHash(D);
 var nodes=[];
-var N=Math.round(CM.clamp(S.w*S.h/8500,40,140));   // 화면 넓이에 맞춘 점 수
-for(var i=0;i<N;i++){ var hub=rnd()<0.14; nodes.push({ p:[rnd()*S.w, rnd()*S.h], v:V.fromAngle(rnd()*TAU, 6+rnd()*10), hub:hub, r:hub?2.6:1.4, col: hub?(rnd()<0.4?sc.accent:sc.cols[0]) : sc.cols[1+((rnd()*3)|0)] }); }
+var N=Math.round(CM.clamp(S.w*S.h/P.density,40,140));   // 화면 넓이에 맞춘 점 수
+for(var i=0;i<N;i++){ var hub=rnd()<P.hubRate; nodes.push({ p:[rnd()*S.w, rnd()*S.h], v:V.fromAngle(rnd()*TAU, 6+rnd()*10), hub:hub, r:hub?2.6:1.4, col: hub?(rnd()<0.4?sc.accent:sc.cols[0]) : sc.cols[1+((rnd()*3)|0)] }); }
 // 허브용 글로우 스프라이트 (색별 1회 생성 — 재사용)
 var glows={}; nodes.forEach(function(n){ if(n.hub&&!glows[n.col]) glows[n.col]=CMX.makeGlow(n.col,22,0.8); });
 
@@ -44,7 +55,7 @@ function update(dt){
     // 아주 느린 유기적 표류 (노이즈 없이 사인 흔들림)
     n.v[0]+=Math.sin(T*0.4+i)*2*dt; n.v[1]+=Math.cos(T*0.33+i*1.7)*2*dt;
     n.v=V.limit(n.v,16);
-    n.p[0]+=n.v[0]*dt*3; n.p[1]+=n.v[1]*dt*3;
+    n.p[0]+=n.v[0]*dt*P.speed; n.p[1]+=n.v[1]*dt*P.speed;
     if(n.p[0]<0||n.p[0]>W)n.v[0]*=-1; if(n.p[1]<0||n.p[1]>H)n.v[1]*=-1;   // 소프트 바운스
     n.p[0]=CM.clamp(n.p[0],0,W); n.p[1]=CM.clamp(n.p[1],0,H);
   }

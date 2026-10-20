@@ -17,6 +17,7 @@ lint/
   motion-lint.mjs        규율 점검 — reduced-motion·라이브러리금지·rAF·DPR·고정timestep·깊이정렬·시드·엔진 옮겨 적기·화면 크기
 tools/
   inline-engine.mjs      한 파일로 낼 때 엔진 <script src> 를 엔진 파일 그대로로 바꾼다
+  smoke.mjs              브라우저 없이 3초 돌려 본다 — 오류·빈 화면·안 움직임을 잡는다
 skills/canvas-motion/SKILL.md
 ```
 
@@ -43,5 +44,6 @@ skills/canvas-motion/SKILL.md
 3. 모델→렌더→`CM.loop` 순으로 얹는다. 화면을 채우는 배경이면 `CM.fitCanvas`.
 4. 한 파일로 내야 하면 `node tools/inline-engine.mjs <file.html>`.
 5. `node lint/motion-lint.mjs <file.html>` 로 자가 점검.
+6. `node tools/smoke.mjs <file.html>` 로 돌려 본다(오류·빈 화면·안 움직임).
 
 라이선스 MIT. 자세한 API·절차는 `skills/canvas-motion/SKILL.md`.
