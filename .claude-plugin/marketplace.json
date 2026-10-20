@@ -22,7 +22,7 @@
     {
       "name": "app-menu",
       "source": "./plugins/app-menu",
-      "description": "앱 UI 메뉴판 — 모바일 앱 UI를 말이 아니라 이름으로 시키는 사전. 8코스 72항목, 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 웹은 ui-menu"
+      "description": "앱 UI 메뉴판 — 모바일 앱 UI를 말이 아니라 이름으로 시키는 사전. 8코스 73항목, 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 웹은 ui-menu"
     },
     {
       "name": "css-menu",

@@ -1,6 +1,6 @@
 # 앱 UI 메뉴판 (app-menu) · Giting Skills
 
-> 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 72항목.
+> 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 73항목.
 > 웹 UI 는 ui-menu. 같은 단어라도 관례가 다르다(모달=앱은 풀스크린, 셀렉트=앱은 시트).
 > 공식: [어느 화면] + [컴포넌트 이름] + [개수·상태] + [플랫폼 관례]
 > 갤러리: https://giting.kr/skills/app-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -176,6 +176,13 @@
 - 요청: 후기 입력을 여러 줄 입력으로. 최대 500자, 아래에 글자 수 카운터까지.
 - 네이티브: SwiftUI: TextField(axis:.vertical) / TextEditor · Flutter: TextField(maxLines) · RN: TextInput(multiline)
 
+### 키보드 피하기 · Keyboard Avoidance
+- 별칭: 키보드가 입력칸을 가려 · 키보드 올라오면 같이 올라가게 · 입력칸이 키보드에 묻혀
+- 정의: 키보드가 올라오면 입력칸과 저장 버튼이 그 위로 밀려 올라가야 한다. 시트·모달 안 입력칸이 가장 자주 가려진다.
+- 요청: 입력칸이 키보드에 가리지 않게 해줘. 키보드가 올라오면 시트째 그 위로 올라가고, 바깥을 누르면 키보드가 내려가게.
+- 구분: 웹은 브라우저가 알아서 밀어 주지만 앱은 직접 처리해야 한다
+- 네이티브: SwiftUI: 기본으로 피함(.ignoresSafeArea(.keyboard) 를 쓰지 말 것) · Flutter: Scaffold(resizeToAvoidBottomInset) · RN: KeyboardAvoidingView(behavior: iOS 는 "padding")
+
 ### OTP 입력 · OTP Input
 - 별칭: 인증번호 칸 · 한 칸에 숫자 하나
 - 정의: 인증번호를 한 칸에 한 자리씩 넣는 입력. 자동으로 다음 칸으로 넘어간다.
@@ -343,7 +350,7 @@
 ### 바텀시트 · Bottom Sheet
 - 별칭: 아래에서 반쯤 올라오는 판 · 손잡이 있는 시트
 - 정의: 화면 아래에서 올라오는 판. 위에 손잡이가 있고, 높이를 단계로 조절하기도 한다.
-- 요청: 필터를 바텀시트로. 반높이·전체높이 두 단계, 위 손잡이로 끌어 조절, 바깥 탭하면 닫힘.
+- 요청: 필터를 바텀시트로. 반높이·전체높이 두 단계, 위 손잡이로 끌어 조절, 바깥 탭하면 닫힘. 안에 입력칸이 있으면 키보드가 올라올 때 시트째 그 위로.
 - 네이티브: SwiftUI: .presentationDetents · Flutter: showModalBottomSheet · RN: BottomSheet
 
 ### 액션시트 · Action Sheet
