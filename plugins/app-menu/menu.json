@@ -1,6 +1,6 @@
 {
   "name": "앱 UI 메뉴판",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "모바일 앱 UI를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브 프레임워크명(SwiftUI·Flutter·React Native) 매핑. 웹의 ui-menu, 앱의 app-menu.",
   "formula": {
     "pattern": "[어느 화면] + [컴포넌트 이름] + [개수·상태] + [플랫폼 관례]",
@@ -49,6 +49,7 @@
     { "id": "textfield", "category": "input", "name": { "ko": "텍스트 필드", "en": "Text Field" }, "aliases": ["한 줄 입력칸", "글자 넣는 칸"], "oneliner": "한 줄 글자를 넣는 입력칸. 키보드가 올라온다.", "ask": "이메일 텍스트 필드를 만들어줘. 키보드는 이메일 타입, 자동 대문자 끄고, 지우기 ✕ 버튼까지.", "native": "SwiftUI: TextField · Flutter: TextField · RN: TextInput" },
     { "id": "placeholder", "category": "input", "name": { "ko": "플레이스홀더", "en": "Placeholder" }, "aliases": ["흐리게 미리 쓰인 예시", "회색 안내 글자"], "oneliner": "입력 전 흐리게 보이는 예시 글자. 입력하면 사라진다.", "ask": "이메일 칸에 플레이스홀더로 'you@example.com'을 흐리게 넣어줘.", "vs": "칸 안 흐린 예시면 플레이스홀더, 칸 위 이름표면 라벨" },
     { "id": "textarea", "category": "input", "name": { "ko": "여러 줄 입력", "en": "Textarea · Multiline" }, "aliases": ["긴 글 입력칸", "여러 줄 쓰는 칸"], "oneliner": "여러 줄을 넣는 큰 입력칸. 내용이 길어지면 늘어난다.", "ask": "후기 입력을 여러 줄 입력으로. 최대 500자, 아래에 글자 수 카운터까지.", "native": "SwiftUI: TextField(axis:.vertical) / TextEditor · Flutter: TextField(maxLines) · RN: TextInput(multiline)" },
+    { "id": "keyboardavoid", "category": "input", "name": { "ko": "키보드 피하기", "en": "Keyboard Avoidance" }, "aliases": ["키보드가 입력칸을 가려", "키보드 올라오면 같이 올라가게", "입력칸이 키보드에 묻혀"], "oneliner": "키보드가 올라오면 입력칸과 저장 버튼이 그 위로 밀려 올라가야 한다. 시트·모달 안 입력칸이 가장 자주 가려진다.", "ask": "입력칸이 키보드에 가리지 않게 해줘. 키보드가 올라오면 시트째 그 위로 올라가고, 바깥을 누르면 키보드가 내려가게.", "vs": "웹은 브라우저가 알아서 밀어 주지만 앱은 직접 처리해야 한다", "native": "SwiftUI: 기본으로 피함(.ignoresSafeArea(.keyboard) 를 쓰지 말 것) · Flutter: Scaffold(resizeToAvoidBottomInset) · RN: KeyboardAvoidingView(behavior: iOS 는 \"padding\")" },
     { "id": "otp", "category": "input", "name": { "ko": "OTP 입력", "en": "OTP Input" }, "aliases": ["인증번호 칸", "한 칸에 숫자 하나"], "oneliner": "인증번호를 한 칸에 한 자리씩 넣는 입력. 자동으로 다음 칸으로 넘어간다.", "ask": "6자리 OTP 입력을 만들어줘. 문자 자동완성 연동, 다 채우면 자동 제출.", "native": "iOS: textContentType(.oneTimeCode) 로 자동완성 · 칸 UI는 커스텀" },
     { "id": "passwordtoggle", "category": "input", "name": { "ko": "비밀번호 토글", "en": "Password Toggle" }, "aliases": ["눈 아이콘으로 보기", "비번 가렸다 보기"], "oneliner": "비밀번호를 가렸다 보였다 하는 눈 아이콘 버튼.", "ask": "비밀번호 칸 오른쪽에 눈 아이콘을 넣어 눌러서 보이기/가리기 토글되게 해줘." },
     { "id": "searchbar", "category": "input", "name": { "ko": "검색바", "en": "Search Bar" }, "aliases": ["돋보기 검색창", "위에 검색"], "oneliner": "돋보기가 달린 검색 입력줄. 스크롤 상단에 두거나 앱바에 붙인다.", "ask": "목록 위에 검색바를 넣고, 입력하면 실시간으로 목록이 걸러지게(디바운스) 해줘.", "native": "SwiftUI: .searchable · Flutter: SearchBar · RN: 커스텀 TextInput" },
@@ -80,7 +81,7 @@
     { "id": "haptic", "category": "button", "name": { "ko": "햅틱", "en": "Haptic" }, "aliases": ["누를 때 진동", "톡 하는 진동"], "oneliner": "중요한 행동에 주는 짧은 진동 피드백. 성공·경고·선택마다 세기가 다르다.", "ask": "결제 성공에 성공 햅틱, 유효성 실패에 경고 햅틱을 넣어줘.", "native": "iOS: UIFeedbackGenerator · Flutter: HapticFeedback · RN: Haptics" },
 
     { "id": "modal", "category": "overlay", "name": { "ko": "모달 (풀스크린)", "en": "Modal (fullscreen)" }, "aliases": ["전체를 덮는 창", "위로 올라오는 화면"], "oneliner": "화면 전체를 덮으며 올라오는 창. 모바일에서 '모달'은 보통 이 풀스크린을 뜻한다.", "ask": "이미지 뷰어를 풀스크린 모달로. 위에서 아래로 쓸어내리면 닫히게.", "vs": "웹 모달은 가운데 작은 창, 앱 모달은 아래서 올라오는 전체 화면" },
-    { "id": "bottomsheet", "category": "overlay", "name": { "ko": "바텀시트", "en": "Bottom Sheet" }, "aliases": ["아래에서 반쯤 올라오는 판", "손잡이 있는 시트"], "oneliner": "화면 아래에서 올라오는 판. 위에 손잡이가 있고, 높이를 단계로 조절하기도 한다.", "ask": "필터를 바텀시트로. 반높이·전체높이 두 단계, 위 손잡이로 끌어 조절, 바깥 탭하면 닫힘.", "native": "SwiftUI: .presentationDetents · Flutter: showModalBottomSheet · RN: BottomSheet" },
+    { "id": "bottomsheet", "category": "overlay", "name": { "ko": "바텀시트", "en": "Bottom Sheet" }, "aliases": ["아래에서 반쯤 올라오는 판", "손잡이 있는 시트"], "oneliner": "화면 아래에서 올라오는 판. 위에 손잡이가 있고, 높이를 단계로 조절하기도 한다.", "ask": "필터를 바텀시트로. 반높이·전체높이 두 단계, 위 손잡이로 끌어 조절, 바깥 탭하면 닫힘. 안에 입력칸이 있으면 키보드가 올라올 때 시트째 그 위로.", "native": "SwiftUI: .presentationDetents · Flutter: showModalBottomSheet · RN: BottomSheet" },
     { "id": "actionsheet", "category": "overlay", "name": { "ko": "액션시트", "en": "Action Sheet" }, "aliases": ["아래에서 뜨는 선택지 목록", "삭제할까요 같은 목록"], "oneliner": "화면 아래에서 뜨는 선택지 목록. 위험한 행동 확인에 자주 쓴다.", "ask": "삭제를 누르면 액션시트로 '삭제(빨강)'와 '취소'를 띄워줘.", "native": "SwiftUI: confirmationDialog · Flutter: showModalBottomSheet · iOS UIAlertController(.actionSheet)" },
     { "id": "alert", "category": "overlay", "name": { "ko": "알럿", "en": "Alert Dialog" }, "aliases": ["가운데 뜨는 확인창", "예/아니오 창"], "oneliner": "화면 가운데 뜨는 작은 확인창. 제목·설명·버튼 1~2개.", "ask": "저장하지 않고 나갈 때 알럿으로 '변경사항을 버릴까요?' 확인을 받아줘.", "native": "SwiftUI: .alert · Flutter: showDialog(AlertDialog) · RN: Alert" },
     { "id": "popover", "category": "overlay", "name": { "ko": "팝오버", "en": "Popover" }, "aliases": ["눌러서 여는 작은 판", "말풍선 판"], "oneliner": "누른 요소 옆에 붙어 뜨는 작은 판. 아이패드·큰 화면에서 특히.", "ask": "정보 아이콘을 누르면 팝오버로 짧은 설명 판이 그 옆에 뜨게 해줘." },
