@@ -303,4 +303,22 @@ SO['before-after-label'] = function (c, w, h, t, k) {
   c.globalAlpha = 1;
 };
 
+// ── 더한 것 (2026-10-21) ─────────────────────────────────────
+// 아일랜드 알림: 위 검은 알약이 스프링으로 늘어나 알림을 보이고 다시 줄어든다
+SO['island-alert'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var g = back(seg(t, .5, .55)), sh = io(seg(t, 3.1, .4)), e = g * (1 - sh), W0 = h * .36, H0 = h * .11, W1 = w * .8, H1 = h * .3;
+  var bw = lerp(W0, W1, e), bh = lerp(H0, H1, clamp(e)), x = w / 2 - bw / 2, y = h * .06;
+  rrect(c, x, y, bw, bh, Math.min(bh / 2, h * .1)); c.fillStyle = '#000'; c.fill();
+  var a = clamp((e - .75) / .25);
+  if (a > 0) {
+    c.globalAlpha = outA(t) * a;
+    c.fillStyle = k.acc; rrect(c, x + h * .05, y + bh / 2 - h * .07, h * .14, h * .14, h * .04); c.fill();
+    say(c, '택배가 도착했어요', x + h * .24, y + bh * .38, h * .068, '#FFFFFF', 'left', 700);
+    say(c, '문 앞 · 방금', x + h * .24, y + bh * .68, h * .056, '#9A9FAA', 'left', 500);
+    c.fillStyle = '#30D158'; disc(c, x + bw - h * .09, y + bh / 2, h * .03);
+  }
+  c.globalAlpha = 1;
+};
+
 if (typeof module !== 'undefined') module.exports = { SO: SO };

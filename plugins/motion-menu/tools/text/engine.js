@@ -847,4 +847,30 @@ TX['rcp-tx-elastic'] = function (c, w, h, t, k) {
   }
 };
 
+// ── ⑩ 더한 것 (2026-10-21) ──────────────────────────────────
+// 흐림은 shadowBlur 로 낸다(캔버스 filter 는 사파리에서 안 먹는 판이 있다). 글자는 칸 밖에 그리고 그림자만 칸 안으로 보낸다
+TX['blur-focus'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var S = '또렷하게', px = fit(c, S, h * .4, w * .8), X = slots(c, S, px), p = t % 4, sc = (c.getTransform ? c.getTransform().a : 1) || 1, FAR = 4000;
+  for (var i = 0; i < S.length; i++) {
+    var q = eo((p - .3 - i * .12) / .9), out = io((p - 3.2) / .6), a = clamp(q * 1.4) * (1 - out), b = (1 - q) * h * .09 + out * h * .05, z = 1.08 - .08 * q;
+    if (a <= 0) continue;
+    c.save(); c.translate(w / 2 + X[i], h / 2); c.scale(z, z); c.globalAlpha = a;
+    if (b > .4) { c.shadowColor = k.paper; c.shadowBlur = b * sc; c.shadowOffsetX = FAR * sc * z; say(c, S[i], -FAR, 0, px, '#000'); }
+    else say(c, S[i], 0, 0, px, k.paper);
+    c.restore();
+  }
+};
+TX['underwater-warp'] = function (c, w, h, t, k) {
+  var g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#1C5A78'); g.addColorStop(1, '#0A1F2C'); c.fillStyle = g; c.fillRect(0, 0, w, h);
+  c.fillStyle = k.paper;
+  for (var b = 0; b < 5; b++) { c.globalAlpha = .06; c.beginPath(); var x0 = frac(t / 8 + b / 5) * (w + h) - h * .5; c.moveTo(x0, 0); c.lineTo(x0 + h * .18, 0); c.lineTo(x0 - h * .3, h); c.lineTo(x0 - h * .42, h); c.fill(); }
+  c.globalAlpha = 1;
+  var S = '물속에서', px = fit(c, S, h * .4, w * .8), top = h / 2 - px * .62, bot = h / 2 + px * .62;
+  for (var y = top; y < bot; y += 2) {
+    var dx = Math.sin(y / h * 9 - W8(t, 4)) * h * .03 + Math.sin(y / h * 23 + W8(t, 8)) * h * .01;
+    c.save(); c.beginPath(); c.rect(0, y, w, 2.2); c.clip(); say(c, S, w / 2 + dx, h / 2, px, k.paper); c.restore();
+  }
+};
+
 if (typeof module !== 'undefined') module.exports = { TX: TX };

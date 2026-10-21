@@ -1,0 +1,27 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>필름 그레인 Film Grain · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .fg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#2a2622}
+</style>
+<canvas class="fg" role="img" aria-label="필름 그레인 데모: 장면 위에 필름 알갱이와 긁힘이 얹힌다"></canvas>
+<p class="cap">필름 그레인 · 매 프레임 바뀌는 알갱이와 가끔 스치는 긁힘으로 필름 질감을 낸다.</p>
+<script>(function(){
+var cv=document.querySelector('canvas.fg'),c=cv.getContext('2d'),g=document.createElement('canvas'),gx=g.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now(),last=-1,seed=1;
+function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+function size(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);g.width=Math.ceil(r.width/2);g.height=Math.ceil(r.height/2);}
+function frame(now){
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1:(now-t0)/1000,f=Math.floor(t*24);
+  var bg=c.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#c9a27a');bg.addColorStop(1,'#5b4636');c.fillStyle=bg;c.fillRect(0,0,w,h);
+  c.fillStyle='#3a2c22';c.beginPath();c.arc(w*.3,h*.62,h*.34,0,7);c.fill();c.fillStyle='#f1dcc0';c.beginPath();c.arc(w*.72,h*.36,h*.16,0,7);c.fill();
+  c.fillStyle='#2a2018';c.fillRect(0,h*.82,w,h*.18);
+  if(f!==last){last=f;seed=f*7919+13;var img=gx.createImageData(g.width,g.height),d=img.data;for(var i=0;i<d.length;i+=4){var v=rnd()*255;d[i]=d[i+1]=d[i+2]=v;d[i+3]=46;}gx.putImageData(img,0,0);}
+  c.globalCompositeOperation='overlay';c.drawImage(g,0,0,w,h);c.globalCompositeOperation='source-over';
+  c.globalAlpha=.05+.04*((f*37)%5)/5;c.fillStyle='#fff';c.fillRect(0,0,w,h);c.globalAlpha=1;
+  if(f%72<5){var x=w*((f*0.37)%1);c.fillStyle='rgba(255,255,255,.55)';c.fillRect(x,0,1,h);}
+  var vg=c.createRadialGradient(w/2,h/2,h*.3,w/2,h/2,w*.62);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.55)');c.fillStyle=vg;c.fillRect(0,0,w,h);
+  if(!still)requestAnimationFrame(frame);
+}
+size();addEventListener('resize',size);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

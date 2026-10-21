@@ -1,9 +1,9 @@
 # 모션 메뉴판 (motion-menu) · Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 334개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 350개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다. AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
-> 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
+> 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임] + [세기]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
 > 갤러리: https://giting.kr/skills/motion-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting
 
@@ -660,6 +660,24 @@
 - 만드는 법: AI 영상 · 모션 그래픽
 - 요청 문장: Particles 로 터뜨려줘. 조각 40개, 아래 가운데서 위로 솟았다 중력으로 떨어지게, 1.2초.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/particles.html
+
+### 필름 그레인 (Film Grain)
+- 별칭: "옛날 필름처럼 자글자글하게" · "화면에 필름 알갱이 얹어줘" · "아날로그 질감 내줘"
+- 정의: 화면 위에 매 프레임 바뀌는 고운 알갱이와 가끔 스치는 긁힘을 얹어 필름 질감을 낸다.
+- 구분: 알갱이가 화면 전체에 얹히면 필름 그레인, 빛이 새어 들면 라이트 릭
+- 쓰임: 레트로 · 감성
+- 만드는 법: AI 영상 · 모션 그래픽 · CSS
+- 요청 문장: 영상 전체에 Film Grain 얹어줘. 알갱이 세기 18%, 초당 24번 바뀌고, 가장자리는 살짝 어둡게. 긁힘은 3초에 한 번만.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/film-grain.html
+
+### 벡터 CRT (Vector CRT)
+- 별칭: "옛날 오실로스코프 화면처럼 초록 선으로" · "레트로 레이더 화면 느낌" · "빛나는 선만으로 그린 화면"
+- 정의: 검은 화면에 빛나는 초록 선만으로 도형을 그리고, 주사선과 잔광이 남는다.
+- 구분: 빛나는 선만으로 그리면 벡터 CRT, 화면이 가운데로 접히며 꺼지면 TV 오프(⑪)
+- 쓰임: 레트로 · 테크
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Vector CRT 화면으로 회전하는 정육면체를 보여줘. 초록 선에 빛 번짐 8px, 가로 주사선 3px 간격, 지나간 선은 잔광으로 세 겹 남게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/vector-crt.html
 
 ## ⑦ 화면 전환 40
 장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.
@@ -1690,8 +1708,8 @@
 - 요청 문장: Text Echo 로 「잔상」 넣어줘. 8 자 궤도, 잔상 10겹 점점 흐리게.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/text-echo.html
 
-## ⑩ 글자 몸짓 24
-글자 하나하나의 몸이 움직이는 연출 24가지. 1~6 사라지고 모이기 · 7~12 쉬지 않고 흔들리기 · 13~18 물리와 소품 · 19~24 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.
+## ⑩ 글자 몸짓 26
+글자 하나하나의 몸이 움직이는 연출 26가지. 1~7 사라지고 모이기 · 8~14 쉬지 않고 흔들리기 · 15~20 물리와 소품 · 21~26 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.
 
 ### 가루 소멸 (Disintegrate)
 - 별칭: "글자가 모래처럼 부서져 날아가게" · "단어가 가루가 돼서 사라지게" · "글자가 바람에 흩날리며 없어지게"
@@ -1743,6 +1761,15 @@
 - 요청 문장: Shuffle Letters 로 「제자리로」 정렬해줘. 섞인 순서에서 0.8초 동안 호를 그리며 자리 바꾸고, 짝수는 위로 홀수는 아래로.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/shuffle-letters.html
 
+### 흐림에서 선명하게 (Blur Focus In)
+- 별칭: "글자가 흐릿하다가 또렷해지게" · "초점이 맞듯이 글자가 선명해지게" · "뿌옇게 시작해서 또렷하게 나오게"
+- 정의: 글자가 한 자씩 뿌옇게 번진 채로 나타났다가 초점이 맞듯 또렷해진다.
+- 구분: 흐림이 걷히며 나타나면 블러 포커스 인, 빠른 움직임 때문에 번지면 모션 블러(⑤)
+- 쓰임: 감성 · 오프닝
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Blur Focus In 으로 「또렷하게」 띄워줘. 글자마다 흐림 12px에서 0으로 0.9초, 앞 글자부터 0.12초씩 늦게, 크기는 1.08배에서 1배로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/blur-focus.html
+
 ### 글자 물결 (Wave Letters)
 - 별칭: "글자가 파도 타듯 오르내리게" · "한 자씩 물결처럼 출렁이게" · "글자가 웨이브 하게"
 - 정의: 글자 하나하나가 시간차를 두고 오르내려 단어 위로 물결이 지나간다.
@@ -1791,6 +1818,15 @@
 - 만드는 법: 모션 그래픽
 - 요청 문장: Stop Motion Text 로 「한컷한컷」 넣어줘. 초당 8프레임, 컷마다 위치·각도·크기를 조금씩 흔들고 글자는 반 초 간격으로 하나씩.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stop-motion.html
+
+### 물속 일렁임 (Underwater Warp)
+- 별칭: "글자가 물속에 잠긴 것처럼 일렁이게" · "아지랑이처럼 글자 모양이 흔들리게" · "물 아래 글자가 굴절돼 보이게"
+- 정의: 글자의 가로줄마다 조금씩 엇갈리게 밀리며 물속에서 보는 것처럼 일렁인다.
+- 구분: 글자 모양이 일렁이면 물속 일렁임, 아래에 거꾸로 비치면 물에 비친 글자, 글자가 통째로 오르내리면 글자 물결
+- 쓰임: 힐링 · 여름
+- 만드는 법: 모션 그래픽
+- 요청 문장: Underwater Warp 로 「물속에서」 보여줘. 글자 가로줄마다 좌우로 최대 4px씩 물결 따라 밀리고, 물결은 2초에 한 번 위로 지나가게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/underwater-warp.html
 
 ### 도미노 글자 (Domino Letters)
 - 별칭: "글자가 도미노처럼 차례로 넘어가게" · "하나 넘어지면 다음 거 넘어지게" · "줄줄이 쓰러지는 글자"
@@ -2100,8 +2136,8 @@
 - 요청 문장: Squeeze Line 으로 넘겨줘. 좌우로 눌려 강조색 세로 선이 됐다가 다음 화면으로 펼쳐지게, 0.7초.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/squeeze-line.html
 
-## ⑫ 데이터 모션 24
-숫자와 차트가 움직이는 연출 24가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~18 선으로 흐름 · 19~24 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.
+## ⑫ 데이터 모션 26
+숫자와 차트가 움직이는 연출 26가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~19 선으로 흐름 · 20~26 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.
 
 ### 숫자 굴러가기 (Odometer Roll)
 - 별칭: "숫자가 주행 거리계처럼 굴러 올라가게" · "자릿수가 도르르 돌다가 멈추게" · "숫자가 위로 감기면서 맞춰지게"
@@ -2256,6 +2292,14 @@
 - 요청 문장: Line Cross 로 두 추이를 보여줘. 두 선을 2.6초 동안 같이 그리고, 만나는 지점에 3.2초에 점이 튀어나오고 위에 「역전」 라벨. 올라가는 선만 강조색.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/line-cross.html
 
+### 점 지구본 (Dot Globe Arcs)
+- 별칭: "점으로 된 지구가 돌면서 도시끼리 선이 이어지게" · "지구본 위로 연결 호가 그려지게" · "전 세계로 연결되는 장면"
+- 정의: 점으로 된 지구가 천천히 돌고, 그 위로 한 곳에서 여러 곳으로 가는 호가 차례로 그려진다.
+- 쓰임: 글로벌 · 소개
+- 만드는 법: 모션 그래픽
+- 요청 문장: Dot Globe Arcs 로 서울에서 도쿄·방콕·싱가포르·시드니·호놀룰루로 이어지는 장면 만들어줘. 점 지구본이 서울을 앞에 두고 천천히 돌고, 호 다섯 개가 0.5초 간격으로 1.2초씩 그려지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dot-globe.html
+
 ### 원 쓸기 (Pie Sweep)
 - 별칭: "원그래프가 시계처럼 쓸면서 채워지게" · "파이 차트가 한 바퀴 돌며 나타나게" · "비율 원이 빙 돌아 그려지게"
 - 정의: 원그래프가 12시에서 시계 방향으로 쓸며 조각을 차례로 채운다.
@@ -2306,6 +2350,15 @@
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: Scale Compare 로 2020 대비 2026 을 보여줘. 작은 원이 먼저 0.5초 튀어나오고, 1.2초부터 큰 원이 1.4초 동안 부풀어 지름 3배(넓이 9배)가 되고, 안에 「×9」.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/scale-compare.html
+
+### 물 게이지 (Liquid Gauge)
+- 별칭: "원 안에 물이 차오르면서 퍼센트가 올라가게" · "물결치는 진행률" · "물통 채워지듯 숫자 보여 주기"
+- 정의: 원 안의 물이 출렁이며 차오르고, 물에 잠긴 숫자 부분만 색이 바뀐다.
+- 구분: 원 안이 물처럼 차오르면 물 게이지, 원 테두리가 돌며 차면 퍼센트 링
+- 쓰임: 진행 · 목표
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Liquid Gauge 로 72% 보여줘. 원 안의 물이 2.6초 동안 ease-out 으로 차오르고, 수면은 두 겹 물결로 계속 출렁이게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/liquid-gauge.html
 
 ## ⑬ 아이콘·로고 몸짓 24
 로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.
@@ -2507,8 +2560,8 @@
 - 요청 문장: Shine Sweep 으로 로고에 광택을 줘. 20도 기운 흰 띠(투명 → 55% → 투명)가 2.67초 주기 중 1.2초 동안 왼쪽에서 오른쪽으로 지나가고, 로고 모양 밖으로는 안 보이게.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/shine-sweep.html
 
-## ⑭ 소셜 오버레이 24
-영상 위에 얹는 SNS 화면 요소 24가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~18 알림과 표시 · 19~24 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.
+## ⑭ 소셜 오버레이 25
+영상 위에 얹는 SNS 화면 요소 25가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~19 알림과 표시 · 20~25 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.
 
 ### 구독 버튼 (Subscribe Button)
 - 별칭: "구독 버튼 누르는 장면 넣어줘" · "구독 누르면 알림 종까지 나오게" · "영상 끝에 구독 유도"
@@ -2655,6 +2708,15 @@
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: Story Progress 를 위에 넣어줘. 칸 4개가 각 2초씩 왼쪽부터 차례로 흰색으로 차고, 아래 프로필과 계정 이름, 가운데에 「2 / 4」처럼 지금 장.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/story-progress.html
+
+### 아일랜드 알림 (Dynamic Island Alert)
+- 별칭: "아이폰 위 까만 알약이 늘어나면서 알림 뜨게" · "다이내믹 아일랜드처럼 커졌다 줄어들게" · "화면 위 검은 캡슐 알림"
+- 정의: 화면 위 작은 검은 알약이 옆으로 늘어나 알림을 보여 주고 다시 작아진다.
+- 구분: 위의 검은 알약이 늘어나면 아일랜드 알림, 흰 카드가 내려오면 토스트
+- 쓰임: 아이폰 · 알림
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Dynamic Island Alert 로 「택배가 도착했어요」 띄워줘. 위 검은 알약이 0.55초 스프링으로 화면 폭 80%까지 늘어나 2초 머물고, 0.4초에 원래 크기로 줄어들게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/island-alert.html
 
 ### 장소 핀 (Location Pin)
 - 별칭: "위치 핀이 톡 떨어지고 장소 이름" · "어디인지 지도 핀처럼" · "장소 태그 붙여줘"
@@ -2920,6 +2982,87 @@
 - 요청 문장: Iso Build 로 블록을 쌓아줘. 아이소메트릭 바닥 위로 정육면체 9개가 0.45초 간격으로 위에서 떨어져 계단 모양으로 쌓이고, 닿는 순간 높이가 15% 눌렸다 0.2초에 편다. 색은 세 가지를 번갈아.
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/iso-build.html
 
+## ⑯ 배경 2 · 9
+⑧에 없던 배경 9가지. 1~6 흐르고 번지기(유체 그라디언트 · 흐름장 · 반응-확산 · 등고선 · 연결망 · 조리개) · 7~9 멀리까지 펼쳐지기(점 바다 · 와이어프레임 지형 · 구름). ⑧보다 결이 깊어서 글자를 올릴 땐 어둡게 눌러 쓰세요.
+
+### 유체 그라디언트 (Fluid Gradient)
+- 별칭: "색이 물감처럼 섞이면서 흐르는 배경" · "그라데이션이 살아서 천천히 움직이게" · "색이 경계 없이 번지면서 돌게"
+- 정의: 색 덩어리 넷이 서로 다른 궤도로 돌며 경계 없이 섞였다 풀린다.
+- 구분: 색이 경계 없이 섞이면 유체 그라디언트, 가장자리가 있는 덩어리가 떠다니면 블롭 모프(⑧)
+- 쓰임: 차분 · 브랜드
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Fluid Gradient 배경으로 깔아줘. 색 넷(청록·민트·보라·짙은 남색)이 경계 없이 섞이며 천천히 돌고, 한 바퀴 8초, 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/fluid-gradient.html
+
+### 흐름장 입자 (Flow Field)
+- 별칭: "먹물이 물길 따라 흐르는 것처럼" · "가는 선들이 바람길을 따라 흘러가게" · "입자가 보이지 않는 물살을 타고 움직이게"
+- 정의: 가는 선 수백 개가 보이지 않는 물길을 따라 흘러가며 꼬리를 남겼다 사라진다.
+- 구분: 선이 보이지 않는 물길을 따라 흐르면 흐름장, 나란한 선이 넘실대면 물결선(⑧)
+- 쓰임: 사색 · 오프닝
+- 만드는 법: 모션 그래픽
+- 요청 문장: Flow Field 배경으로 깔아줘. 가는 선 200개가 곡선 물길을 따라 흐르고, 선 하나는 4초 동안 나타났다 사라지게. 한 바퀴 8초, 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/flow-field.html
+
+### 반응-확산 무늬 (Reaction-Diffusion)
+- 별칭: "산호처럼 무늬가 번지며 자라게" · "얼룩말 무늬가 꿈틀대며 번지게" · "세포가 퍼지는 것 같은 무늬"
+- 정의: 얼룩과 미로 같은 무늬가 번졌다 줄며 서로 붙었다 갈라진다.
+- 구분: 무늬가 번지며 붙었다 갈라지면 반응-확산, 두 점의 파문이 겹쳐 무늬가 생기면 물결 간섭(⑧)
+- 쓰임: 실험 · 과학
+- 만드는 법: 모션 그래픽
+- 요청 문장: Reaction-Diffusion 무늬를 배경으로 깔아줘. 얼룩 무늬가 4초에 걸쳐 번졌다 줄어들며 이웃과 붙었다 갈라지고, 무늬 전체가 천천히 흐르게. 한 바퀴 8초, 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/reaction-diffusion.html
+
+### 네온 등고선 (Neon Contour Lines)
+- 별칭: "지도 등고선이 네온처럼 빛나며 꿈틀대게" · "높낮이 선이 물결치듯 움직이게" · "토포 라인 배경 깔아줘"
+- 정의: 등고선 같은 빛나는 고리들이 부풀었다 오그라들며 붙었다 떨어진다.
+- 구분: 선이 닫힌 고리로 높낮이를 그리면 등고선, 나란한 선이 넘실대면 물결선(⑧)
+- 쓰임: 테크 · 밤
+- 만드는 법: 모션 그래픽
+- 요청 문장: Neon Contour Lines 배경으로 깔아줘. 등고선 7단이 네온처럼 빛나고, 지형이 8초에 한 번 부풀었다 가라앉게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/neon-contour.html
+
+### 연결선 위 빛 (Network Pulse)
+- 별칭: "점들이 선으로 이어져 있고 빛이 지나가게" · "데이터가 오가는 것처럼 선 위로 불빛이 흐르게" · "노드 연결망 배경"
+- 정의: 점을 잇는 선 위로 빛 알갱이가 오가고, 닿은 점이 잠깐 밝아진다.
+- 쓰임: 테크 · 데이터
+- 만드는 법: 모션 그래픽
+- 요청 문장: Network Pulse 배경으로 깔아줘. 점 20여 개를 가는 선으로 잇고, 선 위로 빛 알갱이가 2초에 한 번씩 지나가며 닿은 점이 반짝이게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/network-pulse.html
+
+### 조리개 격자 (Aperture Grid)
+- 별칭: "카메라 조리개들이 줄지어 열렸다 닫히게" · "칸마다 구멍이 물결처럼 열리게" · "렌즈 조리개 무늬 배경"
+- 정의: 칸마다 놓인 조리개가 대각선 물결을 따라 차례로 열렸다 닫힌다.
+- 쓰임: 카메라 · 기계
+- 만드는 법: 모션 그래픽
+- 요청 문장: Aperture Grid 배경으로 깔아줘. 칸마다 6날 조리개, 왼쪽 위에서 오른쪽 아래로 물결처럼 4초에 한 번 열렸다 닫히게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/aperture-grid.html
+
+### 점 바다 (Dot Ocean)
+- 별칭: "점으로 된 바다가 출렁이게" · "멀리까지 점이 깔린 물결 바닥" · "점들이 파도처럼 넘실대는 바닥"
+- 정의: 수평선까지 깔린 점들이 멀수록 작아지며 파도처럼 오르내린다.
+- 구분: 점이 원근으로 바닥에 깔리면 점 바다, 평면에서 점 크기만 바뀌면 도트 웨이브(⑧)
+- 쓰임: 몽환 · 오프닝
+- 만드는 법: 모션 그래픽
+- 요청 문장: Dot Ocean 배경으로 깔아줘. 수평선을 화면 위 30%에 두고 점 바닥이 두 겹 파도로 출렁이게. 한 바퀴 8초, 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/dot-ocean.html
+
+### 와이어프레임 지형 (Wireframe Terrain)
+- 별칭: "선으로 된 산 사이를 날아가게" · "레트로 게임처럼 격자 산맥 위를 비행" · "신스웨이브 지형 배경"
+- 정의: 선 격자로 된 산골짜기가 앞으로 끝없이 다가오며 그 사이를 날아간다.
+- 구분: 격자에 산 높낮이가 있으면 와이어프레임 지형, 평평한 바닥이 다가오면 원근 격자(⑧)
+- 쓰임: 레트로 · 게임
+- 만드는 법: 모션 그래픽
+- 요청 문장: Wireframe Terrain 배경으로 깔아줘. 가운데는 낮은 골짜기, 양옆은 높은 산, 선 격자가 8초에 한 구간씩 앞으로 다가오게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/wireframe-terrain.html
+
+### 구름 하늘 (Cloud Drift Sky)
+- 별칭: "파란 하늘에 구름이 흘러가게" · "뭉게구름이 천천히 지나가는 배경" · "하늘 배경에 구름 깔아줘"
+- 정의: 세 겹 구름이 서로 다른 빠르기로 흘러가며 깊이를 만든다.
+- 쓰임: 맑음 · 여행
+- 만드는 법: AI 영상 · 모션 그래픽
+- 요청 문장: Cloud Drift Sky 배경으로 깔아줘. 구름을 세 겹으로 나눠 가까운 것일수록 빠르게, 가장 느린 겹이 8초에 한 번 지나가게. 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/cloud-sky.html
+
 ## 이징은 역할별로 셋만
 움직임마다 곡선을 새로 고르지 말고, 역할마다 하나씩 정해 두고 돌려 써요. 영상 전체의 결이 맞습니다.
 - 등장: ease-out (빠르게 들어와서 천천히 멈춤)
@@ -2928,6 +3071,17 @@
 - 바운스·엘라스틱·오버슈트를 습관처럼 붙이면 AI 티가 납니다. 강조할 한 곳에만 씁니다.
 - 원하는 곡선은 cubic-bezier.com 에서 손잡이를 끌어 찾고, 나온 숫자 넷을 「등장은 cubic-bezier(0.16, 1, 0.3, 1)」처럼 요청에 그대로 적으세요. 한 번 정하면 영상마다 움직임 결이 같아집니다.
 - 요청 문장: 모든 움직임은 이징 셋만 써줘. 등장은 ease-out, 이동은 ease-in-out, 퇴장은 ease-in. 기본값보다 출발은 더 빠르게, 끝은 더 길게 감속. 바운스·엘라스틱은 쓰지 마.
+
+## 세기는 셋만: 약 · 보통 · 강
+「세게」「살짝」은 매번 다르게 나와요. 이징처럼 세기도 셋만 정해 두고 고르세요. 아래 숫자는 이 메뉴판이 정한 기준값이고, 거리는 화면 폭에 대한 비율이라 판형이 달라도 같은 결로 나옵니다.
+- 움직이는 거리: 약 화면 폭 4% / 보통 12% / 강 30% (푸시 · 슬라이드 · 패럴랙스)
+- 커지는 정도: 약 1.05배 / 보통 1.2배 / 강 1.6배 (줌 · 펀치 인 · 팝인)
+- 흔들림: 약 4px 2번 / 보통 12px 4번 / 강 28px 6번 (임팩트 셰이크 · 떨다 멈추기)
+- 흐림: 약 4px / 보통 12px / 강 32px (모션 블러 · 흐림에서 선명하게 · 스핀 블러)
+- 부서짐: 약 8조각 · 10% 날아감 / 보통 24조각 · 30% / 강 60조각 · 70% (글라스 셰터 · 가루 소멸 · 버스트)
+- 빛: 약 밝기 20% · 번짐 8px / 보통 50% · 20px / 강 90% · 48px (블룸 · 라이트 스윕 · 임팩트 플래시)
+- 빠르기는 세기에 넣지 않고 시간(초)으로 따로 말해요. 세기를 올리면 시간도 조금 늘려야 덜 급해 보입니다. 한 영상에서 「강」은 한두 곳에만.
+- 요청 문장: [항목 이름] 을 「보통」 세기로 해줘. 움직이는 거리는 화면 폭의 12%, 커지는 정도는 1.2배, 흔들림은 12px 4번, 0.6초. 「강」(30% · 1.6배 · 28px 6번)은 마지막 장면 한 곳에만.
 
 ## 처음 한 번에 붙여 넣는 요청문
 [만들 것]만 바꿔 쓰세요. 마지막 줄이 중요합니다. 다 만들기 전에 짧은 판을 먼저 보면 고칠 곳이 일찍 보입니다.

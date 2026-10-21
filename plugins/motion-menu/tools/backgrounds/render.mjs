@@ -9,19 +9,22 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { PALETTE, mix } from './gen.mjs';
+import { PALETTE as P1, PALETTE2, mix } from './gen.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const [, , outArg, mode = 'video', ...only] = process.argv;
 if (!outArg) { console.error('출력 폴더를 주세요'); process.exit(1); }
 const OUT = resolve(outArg); mkdirSync(OUT, { recursive: true });
 const menu = JSON.parse(readFileSync(join(HERE, '..', '..', 'menu.json'), 'utf8'));
-const items = menu.items.filter(i => i.category === 'background');
+// BG_CAT=background-2 면 ⑯ 배경 2 로 굽는다(기본 ⑧ 배경 40)
+const CAT = process.env.BG_CAT || 'background', PALETTE = CAT === 'background-2' ? PALETTE2 : P1;
+const items = menu.items.filter(i => i.category === CAT);
 const groups = Object.keys(PALETTE).filter(g => !only.length || only.includes(g));
 const FPS = 30, SECS = 8, DRAW = 'draw';
 
 const data = Object.fromEntries(Object.keys(PALETTE).map(g => [g, {
   acc: PALETTE[g].acc, deep: mix(PALETTE[g].acc, '#14161B', .55), label: PALETTE[g].label,
+  total: items.length,
   items: items.filter(i => i.group === g).map(i => ({ id: i.id, no: items.indexOf(i) + 1, en: i.name.en, say: i.aliases[0], mood: i.mood })),
 }]));
 
@@ -66,10 +69,10 @@ window.draw=function(g,t){
   });
   c.fillStyle=INK;c.fillRect(56,1660,968,3);
   txt('GITING',56,1712,'800 26px '+MONO,INK);
-  txt('40개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
+  txt(D[GROUPS[0]].total+'개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
 };
 window.sheet=function(){
-  cv.width=1080;cv.height=40*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
+  var NN=0;Object.keys(D).forEach(function(g){NN+=D[g].items.length;});cv.width=1080;cv.height=NN*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
   var k=0;Object.keys(D).forEach(function(g){var G=D[g];G.items.forEach(function(it){
     var y=20+k*120;txt(String(it.no).padStart(2,'0')+' '+it.id,20,y+60,'600 20px '+MONO,'#ccc');
     [0,2,4,6].forEach(function(t,j){cell(it,260+j*205,y,195,100,t,G,18,j===0);});k++;});});

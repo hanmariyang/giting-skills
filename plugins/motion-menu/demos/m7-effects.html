@@ -123,3 +123,56 @@
 <div class="dm" id="dmgrid"></div>
 <p class="cap">데이터모시 · 영상 압축의 번짐을 의도로 써 픽셀이 밀려 흐물흐물 섞인다(근사 재현). ≠ 또렷이 깨지는 글리치</p>
 <script>(function(){var g=document.getElementById('dmgrid');if(!g)return;for(var i=0;i<50;i++){var s=document.createElement('i');s.style.animationDelay=(Math.random()*0.5).toFixed(2)+'s';g.appendChild(s);}})();</script>
+
+<!-- @film-grain h=220 full -->
+<style>
+  .fg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#2a2622}
+</style>
+<canvas class="fg" role="img" aria-label="필름 그레인 데모: 장면 위에 필름 알갱이와 긁힘이 얹힌다"></canvas>
+<p class="cap">필름 그레인 · 매 프레임 바뀌는 알갱이와 가끔 스치는 긁힘으로 필름 질감을 낸다.</p>
+<script>(function(){
+var cv=document.querySelector('canvas.fg'),c=cv.getContext('2d'),g=document.createElement('canvas'),gx=g.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now(),last=-1,seed=1;
+function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+function size(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);g.width=Math.ceil(r.width/2);g.height=Math.ceil(r.height/2);}
+function frame(now){
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1:(now-t0)/1000,f=Math.floor(t*24);
+  var bg=c.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#c9a27a');bg.addColorStop(1,'#5b4636');c.fillStyle=bg;c.fillRect(0,0,w,h);
+  c.fillStyle='#3a2c22';c.beginPath();c.arc(w*.3,h*.62,h*.34,0,7);c.fill();c.fillStyle='#f1dcc0';c.beginPath();c.arc(w*.72,h*.36,h*.16,0,7);c.fill();
+  c.fillStyle='#2a2018';c.fillRect(0,h*.82,w,h*.18);
+  if(f!==last){last=f;seed=f*7919+13;var img=gx.createImageData(g.width,g.height),d=img.data;for(var i=0;i<d.length;i+=4){var v=rnd()*255;d[i]=d[i+1]=d[i+2]=v;d[i+3]=46;}gx.putImageData(img,0,0);}
+  c.globalCompositeOperation='overlay';c.drawImage(g,0,0,w,h);c.globalCompositeOperation='source-over';
+  c.globalAlpha=.05+.04*((f*37)%5)/5;c.fillStyle='#fff';c.fillRect(0,0,w,h);c.globalAlpha=1;
+  if(f%72<5){var x=w*((f*0.37)%1);c.fillStyle='rgba(255,255,255,.55)';c.fillRect(x,0,1,h);}
+  var vg=c.createRadialGradient(w/2,h/2,h*.3,w/2,h/2,w*.62);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.55)');c.fillStyle=vg;c.fillRect(0,0,w,h);
+  if(!still)requestAnimationFrame(frame);
+}
+size();addEventListener('resize',size);requestAnimationFrame(frame);
+})();</script>
+
+<!-- @vector-crt h=220 full -->
+<style>
+  .vc{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#030805}
+</style>
+<canvas class="vc" role="img" aria-label="벡터 CRT 데모: 빛나는 초록 선으로 그린 정육면체가 돈다"></canvas>
+<p class="cap">벡터 CRT · 빛나는 초록 선만으로 도형을 그리고 주사선과 잔광이 남는다.</p>
+<script>(function(){
+var cv=document.querySelector('canvas.vc'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function size(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+var V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+function cube(w,h,a,col,lw,blur){var s=(c.getTransform().a)||1,R=h*.26;c.strokeStyle=col;c.lineWidth=lw;c.shadowColor='#3cff8a';c.shadowBlur=blur*s;c.beginPath();
+  E.forEach(function(e){var p=e.map(function(i){var v=V[i],x=v[0]*Math.cos(a)-v[2]*Math.sin(a),z=v[0]*Math.sin(a)+v[2]*Math.cos(a),y=v[1]*Math.cos(.5)-z*Math.sin(.5),z2=v[1]*Math.sin(.5)+z*Math.cos(.5),k=3/(4+z2);return [w*.36+x*R*k,h/2+y*R*k];});c.moveTo(p[0][0],p[0][1]);c.lineTo(p[1][0],p[1][1]);});c.stroke();c.shadowBlur=0;}
+function frame(now){
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1.2:(now-t0)/1000,a=t*Math.PI*2/8;
+  c.fillStyle='#030805';c.fillRect(0,0,w,h);
+  for(var q=3;q>=1;q--){c.globalAlpha=.12*(4-q)/3;cube(w,h,a-q*.06,'#2fd47a',1.4,4);}
+  c.globalAlpha=.9+.1*Math.sin(t*60);cube(w,h,a,'#8affb8',1.6,8);
+  c.font='700 '+Math.round(h*.13)+'px ui-monospace,monospace';c.fillStyle='#8affb8';c.shadowColor='#3cff8a';c.shadowBlur=8*((c.getTransform().a)||1);c.textAlign='left';c.textBaseline='middle';
+  c.fillText('VECTOR',w*.6,h*.42);c.globalAlpha*=.6;c.fillText('SCAN '+String(Math.floor(t*12)%100).padStart(2,'0'),w*.6,h*.6);c.shadowBlur=0;c.globalAlpha=1;
+  c.fillStyle='rgba(0,0,0,.35)';for(var y=0;y<h;y+=3)c.fillRect(0,y,w,1);
+  var vg=c.createRadialGradient(w/2,h/2,h*.35,w/2,h/2,w*.6);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.7)');c.fillStyle=vg;c.fillRect(0,0,w,h);
+  if(!still)requestAnimationFrame(frame);
+}
+size();addEventListener('resize',size);requestAnimationFrame(frame);
+})();</script>
