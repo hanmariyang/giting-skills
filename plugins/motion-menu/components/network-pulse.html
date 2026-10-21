@@ -1,0 +1,60 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>연결선 위 빛 Network Pulse · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="연결선 위 빛 데모: 반복해서 움직이는 배경"></canvas>
+<p class="cap">연결선 위 빛 · 점을 잇는 선 위로 빛 알갱이가 오가고, 닿은 점이 잠깐 밝아진다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = clamp(t); var s = 1.9; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var frac = function (v) { return v - Math.floor(v); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var W8 = function (t, n) { return TAU * (n || 1) * t / 8; };
+var fill = function (c, col) { c.fillStyle = col; };
+var dot = function (c, x, y, r) { if (r > .3) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var lerpC = function (a, b, t) { return '#' + [1, 3, 5].map(function (i) { return Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0'); }).join(''); };
+var ngon = function (c, x, y, r, n, rot) { c.beginPath(); for (var i = 0; i < n; i++) { var a = rot + i * TAU / n; if (i) c.lineTo(x + r * Math.cos(a), y + r * Math.sin(a)); else c.moveTo(x + r * Math.cos(a), y + r * Math.sin(a)); } c.closePath(); };
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var g = h * .3, cols = Math.ceil(w / g) + 1, rows = 4, N = [], E = [], i, j;
+  for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) {
+    var n = j * cols + i, a = W8(t) + hash(n) * TAU, r = g * .12;
+    N.push([i * g + (j % 2) * g * .5 - g * .25 + (hash(n + 3) - .5) * g * .5 + r * Math.cos(a), h * .14 + j * h * .24 + (hash(n + 5) - .5) * h * .1 + r * Math.sin(a)]);
+  }
+  for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) {
+    var n0 = j * cols + i;
+    if (i < cols - 1) E.push([n0, n0 + 1]);
+    if (j < rows - 1 && hash(n0 + 11) < .7) E.push([n0, n0 + cols]);
+    if (j < rows - 1 && i < cols - 1 && hash(n0 + 17) < .35) E.push([n0, n0 + cols + 1]);
+  }
+  c.strokeStyle = k.deep; c.lineWidth = Math.max(1, h * .008); c.beginPath();
+  E.forEach(function (e) { c.moveTo(N[e[0]][0], N[e[0]][1]); c.lineTo(N[e[1]][0], N[e[1]][1]); }); c.stroke();
+  var glow = N.map(function () { return 0; });
+  E.forEach(function (e, m) {
+    if (hash(m * 3 + 1) > .5) return;
+    var p = frac(t / 2 + hash(m)), A = N[e[0]], B = N[e[1]];
+    for (var q = 0; q < 6; q++) {
+      var u = p - q * .035; if (u < 0) break;
+      c.globalAlpha = (1 - q / 6) * .9; c.fillStyle = q ? k.acc : k.paper; dot(c, A[0] + (B[0] - A[0]) * u, A[1] + (B[1] - A[1]) * u, h * (.02 - q * .002));
+    }
+    var arrive = clamp(1 - Math.abs(p - .97) / .12); glow[e[1]] = Math.max(glow[e[1]], arrive);
+  });
+  c.globalAlpha = 1;
+  N.forEach(function (P, n) { fill(c, glow[n] > .05 ? lerpC(k.deep, k.paper, glow[n]) : k.deep); dot(c, P[0], P[1], h * (.022 + .02 * glow[n])); });
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?1.1:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

@@ -457,4 +457,166 @@ BG['nested-squares'] = function (c, w, h, t, k) {
   }
 };
 
+// ══ 배경 2 (⑯): 같은 BG 묶음에 둔다. 갤러리는 demos/m19-background-2.html ══
+// ── FLOW · 흐르고 번져요 ───────────────────────────────────
+BG['fluid-gradient'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.deep);
+  var cols = [k.acc, lerpC(k.acc, k.paper, .55), lerpC(k.acc, '#6B5AE0', .65), lerpC(k.deep, k.ink, .5)];
+  for (var i = 0; i < 4; i++) {
+    var a = W8(t, i % 2 ? 1 : -1) + i * 1.7, x = w * (.5 + .36 * Math.cos(a)), y = h * (.5 + .4 * Math.sin(a * (i % 2 ? 2 : 1) + i));
+    var r = h * (.8 + .18 * Math.sin(W8(t, 2) + i)), g = c.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, cols[i]); g.addColorStop(1, cols[i] + '00'); c.fillStyle = g; c.fillRect(0, 0, w, h);
+  }
+};
+BG['flow-field'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.paper);
+  var N = Math.round(90 * w / h) + 40, st = h * .024, S = 40;
+  var ang = function (x, y) { return Math.sin(x / h * 1.7) * 1.6 + Math.cos(y / h * 2.3 + x / h * .6) * 1.4; };
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  for (var i = 0; i < N; i++) {
+    var age = frac(t / 4 + hash(i + 7)), head = Math.floor(age * S), x = hash(i) * (w + h) - h * .5, y = hash(i + 99) * h, pts = [];
+    for (var s = 0; s <= head; s++) { pts.push(x, y); var a = ang(x, y); x += Math.cos(a) * st; y += Math.sin(a) * st; }
+    var from = Math.max(0, head - 12); if (head - from < 1) continue;
+    c.globalAlpha = Math.sin(Math.PI * age) * .8; c.strokeStyle = i % 6 ? k.ink : k.acc; c.lineWidth = i % 6 ? h * .007 : h * .013;
+    c.beginPath(); c.moveTo(pts[from * 2], pts[from * 2 + 1]); for (var j = from + 1; j <= head; j++) c.lineTo(pts[j * 2], pts[j * 2 + 1]); c.stroke();
+  }
+  c.globalAlpha = 1;
+};
+BG['reaction-diffusion'] = function (c, w, h, t, k) {
+  var s = (c.getTransform ? c.getTransform().a : 1) || 1, W = Math.max(2, Math.ceil(w * s / 2)), H = Math.max(2, Math.ceil(h * s / 2)), key = '_rd' + W + 'x' + H;
+  var o = c[key]; if (!o) { o = document.createElement('canvas'); o.width = W; o.height = H; c[key] = o; }
+  var x2 = o.getContext('2d'), img = x2.createImageData(W, H), d = img.data;
+  var rgb = function (hx) { return [parseInt(hx.slice(1, 3), 16), parseInt(hx.slice(3, 5), 16), parseInt(hx.slice(5, 7), 16)]; };
+  var A = rgb(k.acc), B = rgb(k.ink), kf = TAU * 4.2 / H, thr = .32 * Math.sin(W8(t)), ph = [], cs = [], sn = [], NW = 9;
+  for (var j = 0; j < NW; j++) { var th = j * Math.PI / NW + hash(j) * .25, kk = kf * (.9 + .2 * hash(j + 5)); cs.push(Math.cos(th) * kk); sn.push(Math.sin(th) * kk); ph.push(W8(t, 1 + j % 2) * (j % 3 ? 1 : -1) + hash(j + 9) * TAU); }
+  var wa = W8(t), wv = H * .05;
+  for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+    var xx = x + wv * Math.sin(y * kf * .45 + wa), yy = y + wv * Math.cos(x * kf * .45 - wa), v = 0;
+    for (j = 0; j < NW; j++) v += Math.cos(xx * cs[j] + yy * sn[j] + ph[j]);
+    var q = clamp((v / 3 - thr) / .12 + .5), n = (y * W + x) * 4;
+    d[n] = B[0] + (A[0] - B[0]) * q; d[n + 1] = B[1] + (A[1] - B[1]) * q; d[n + 2] = B[2] + (A[2] - B[2]) * q; d[n + 3] = 255;
+  }
+  x2.putImageData(img, 0, 0); c.imageSmoothingEnabled = true; c.drawImage(o, 0, 0, w, h);
+};
+BG['neon-contour'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var cs = h / 22, nx = Math.ceil(w / cs) + 1, ny = Math.ceil(h / cs) + 1, F = [], i, j;
+  for (j = 0; j < ny; j++) for (i = 0; i < nx; i++) {
+    var x = i * cs / h, y = j * cs / h;
+    F.push(Math.sin(x * 2.1 + W8(t)) + Math.sin(y * 2.7 - W8(t)) + .8 * Math.sin((x + y) * 1.6 + W8(t, 2)) + .5 * Math.cos(x * 3.3 - y * 1.1 - W8(t)));
+  }
+  var at = function (i, j) { return F[j * nx + i]; };
+  for (var L = 0; L < 7; L++) {
+    var lv = -1.8 + L * .6; c.beginPath();
+    for (j = 0; j < ny - 1; j++) for (i = 0; i < nx - 1; i++) {
+      var a = at(i, j) - lv, b = at(i + 1, j) - lv, e = at(i + 1, j + 1) - lv, f = at(i, j + 1) - lv, P = [], x0 = i * cs, y0 = j * cs;
+      if ((a > 0) !== (b > 0)) P.push([x0 + cs * a / (a - b), y0]);
+      if ((b > 0) !== (e > 0)) P.push([x0 + cs, y0 + cs * b / (b - e)]);
+      if ((e > 0) !== (f > 0)) P.push([x0 + cs * (1 - e / (e - f)), y0 + cs]);
+      if ((f > 0) !== (a > 0)) P.push([x0, y0 + cs * (1 - f / (f - a))]);
+      for (var m = 0; m + 1 < P.length; m += 2) { c.moveTo(P[m][0], P[m][1]); c.lineTo(P[m + 1][0], P[m + 1][1]); }
+    }
+    var col = L % 2 ? lerpC(k.acc, k.paper, .45) : k.acc;
+    c.lineCap = 'round'; c.strokeStyle = col; c.globalAlpha = .22; c.lineWidth = h * .03; c.stroke();
+    c.globalAlpha = 1; c.lineWidth = Math.max(1, h * .008); c.stroke();
+  }
+};
+BG['network-pulse'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var g = h * .3, cols = Math.ceil(w / g) + 1, rows = 4, N = [], E = [], i, j;
+  for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) {
+    var n = j * cols + i, a = W8(t) + hash(n) * TAU, r = g * .12;
+    N.push([i * g + (j % 2) * g * .5 - g * .25 + (hash(n + 3) - .5) * g * .5 + r * Math.cos(a), h * .14 + j * h * .24 + (hash(n + 5) - .5) * h * .1 + r * Math.sin(a)]);
+  }
+  for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) {
+    var n0 = j * cols + i;
+    if (i < cols - 1) E.push([n0, n0 + 1]);
+    if (j < rows - 1 && hash(n0 + 11) < .7) E.push([n0, n0 + cols]);
+    if (j < rows - 1 && i < cols - 1 && hash(n0 + 17) < .35) E.push([n0, n0 + cols + 1]);
+  }
+  c.strokeStyle = k.deep; c.lineWidth = Math.max(1, h * .008); c.beginPath();
+  E.forEach(function (e) { c.moveTo(N[e[0]][0], N[e[0]][1]); c.lineTo(N[e[1]][0], N[e[1]][1]); }); c.stroke();
+  var glow = N.map(function () { return 0; });
+  E.forEach(function (e, m) {
+    if (hash(m * 3 + 1) > .5) return;
+    var p = frac(t / 2 + hash(m)), A = N[e[0]], B = N[e[1]];
+    for (var q = 0; q < 6; q++) {
+      var u = p - q * .035; if (u < 0) break;
+      c.globalAlpha = (1 - q / 6) * .9; c.fillStyle = q ? k.acc : k.paper; dot(c, A[0] + (B[0] - A[0]) * u, A[1] + (B[1] - A[1]) * u, h * (.02 - q * .002));
+    }
+    var arrive = clamp(1 - Math.abs(p - .97) / .12); glow[e[1]] = Math.max(glow[e[1]], arrive);
+  });
+  c.globalAlpha = 1;
+  N.forEach(function (P, n) { fill(c, glow[n] > .05 ? lerpC(k.deep, k.paper, glow[n]) : k.deep); dot(c, P[0], P[1], h * (.022 + .02 * glow[n])); });
+};
+BG['aperture-grid'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var s = h / 2.6, R = s * .42;
+  for (var y = s / 2; y < h + s / 2; y += s) for (var x = s / 2; x < w + s / 2; x += s) {
+    var o = .5 + .5 * Math.sin(W8(t, 2) - (x + y) / h * 2.2), hole = R * (.12 + .78 * o), rot = o * Math.PI / 3;
+    fill(c, k.deep); dot(c, x, y, R);
+    c.fillStyle = k.acc; ngon(c, x, y, hole, 6, rot); c.fill();
+    c.strokeStyle = lerpC(k.deep, k.ink, .5); c.lineWidth = Math.max(1, h * .008); c.beginPath();
+    for (var b = 0; b < 6; b++) {
+      var a = rot + b * TAU / 6, px = x + hole * Math.cos(a), py = y + hole * Math.sin(a), a2 = a + Math.PI / 2 + .35;
+      c.moveTo(px, py); c.lineTo(x + R * Math.cos(a2 - .9), y + R * Math.sin(a2 - .9));
+    }
+    c.stroke();
+    c.strokeStyle = k.paper; c.lineWidth = Math.max(1.2, h * .014); c.beginPath(); c.arc(x, y, R, 0, TAU); c.stroke();
+  }
+};
+
+// ── DEPTH · 멀리까지 펼쳐져요 ──────────────────────────────
+BG['dot-ocean'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink);
+  var hz = h * .3, f = h * .5, cam = 1.1;
+  for (var zi = 0; zi < 26; zi++) {
+    var z = 1 + zi * .45, sp = .28, X = w / 2 / (f / z) + 1;
+    for (var x = -X; x <= X; x += sp) {
+      var yv = .22 * Math.sin(x * 1.1 + z * .7 - W8(t, 2)) + .14 * Math.sin(x * .45 - z * 1.3 + W8(t));
+      var sx = w / 2 + x * f / z, sy = hz + (cam - yv) * f / z * .55;
+      if (sx < -4 || sx > w + 4) continue;
+      c.globalAlpha = clamp(1.25 - zi / 22); fill(c, yv > .18 ? k.paper : k.acc); dot(c, sx, sy, Math.max(.6, h * .028 / z));
+    }
+  }
+  c.globalAlpha = 1;
+};
+BG['wireframe-terrain'] = function (c, w, h, t, k) {
+  var g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, k.ink); g.addColorStop(.36, k.deep); g.addColorStop(.37, k.ink); g.addColorStop(1, k.ink);
+  c.fillStyle = g; c.fillRect(0, 0, w, h);
+  var hz = h * .36, f = h * .9, Zp = 8, scr = frac(t / 8) * Zp, dz = .5, zn = .6, cols = 22, rows = 18, P = [];
+  var HT = function (x, Z) { var v = Math.abs(x); return Math.pow(v, 1.4) * .32 * (.7 + .3 * Math.sin(Z * TAU / Zp * 2 + x)) + .12 * Math.sin(Z * TAU / Zp * 3 + x * 1.7); };
+  var off = scr % dz;
+  for (var r = 0; r < rows; r++) {
+    var zc = zn + r * dz - off, Z = zc + scr, row = [];
+    for (var q = 0; q <= cols; q++) {
+      var x = (q / cols - .5) * 9, y = HT(x, Z);
+      row.push([w / 2 + x * f / zc * .35, hz + (1 - y) * f / zc * .22, zc]);
+    }
+    P.push(row);
+  }
+  c.strokeStyle = k.acc; c.lineWidth = Math.max(1, h * .007);
+  for (r = 0; r < rows; r++) { c.globalAlpha = clamp(1.4 - r / rows * 1.6) * clamp((P[r][0][2] - .25) * 3); c.beginPath(); P[r].forEach(function (p, i) { if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.stroke(); }
+  for (q = 0; q <= cols; q++) for (r = 0; r < rows - 1; r++) {
+    c.globalAlpha = clamp(1.4 - r / rows * 1.6) * clamp((P[r][q][2] - .25) * 3);
+    c.beginPath(); c.moveTo(P[r][q][0], P[r][q][1]); c.lineTo(P[r + 1][q][0], P[r + 1][q][1]); c.stroke();
+  }
+  c.globalAlpha = 1; c.fillStyle = k.paper; c.fillRect(0, hz - 1, w, Math.max(1, h * .006));
+};
+BG['cloud-sky'] = function (c, w, h, t, k) {
+  var g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, lerpC(k.acc, k.ink, .35)); g.addColorStop(1, lerpC(k.acc, k.paper, .55));
+  c.fillStyle = g; c.fillRect(0, 0, w, h);
+  [[1, .5, .26, .55], [2, .75, .5, .78], [3, 1, .78, .95]].forEach(function (L, li) {
+    var cw = h * .9 * L[1], span = w + cw * 2, n = Math.max(2, Math.ceil(w / (cw * 1.4))), o = frac(t * L[0] / 8) * span;
+    for (var i = 0; i < n; i++) {
+      var cx = ((i * span / n + o + hash(i + li * 9) * cw) % span) - cw, cy = h * L[2] + (hash(i + li * 5) - .5) * h * .12;
+      c.globalAlpha = L[3];
+      fill(c, lerpC(k.paper, k.acc, .1 * (2 - li)));
+      for (var b = 0; b < 5; b++) { var u = (b + .5) / 5; dot(c, cx + (u - .5) * cw * .8, cy - Math.sin(u * Math.PI) * cw * .16 * (.7 + .6 * hash(b + i * 7 + li)), cw * (.13 + .07 * Math.sin(u * Math.PI))); }
+      for (b = 0; b < 4; b++) dot(c, cx + ((b + .5) / 4 - .5) * cw * .78, cy + cw * .05, cw * .1);
+    }
+  });
+  c.globalAlpha = 1;
+};
+
 if (typeof module !== 'undefined') module.exports = { BG: BG };

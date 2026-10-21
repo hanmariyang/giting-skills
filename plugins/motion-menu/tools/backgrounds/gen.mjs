@@ -1,4 +1,4 @@
-// engine.js + menu.json → demos/m9-background.html (갤러리 데모 프래그먼트 40개)
+// engine.js + menu.json → demos/m9-background.html(⑧ 배경 40) · demos/m19-background-2.html(⑯ 배경 2)
 // 실행: node plugins/motion-menu/tools/backgrounds/gen.mjs   그다음 루트에서 node build.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -18,13 +18,18 @@ export const PALETTE = {
   SHAPES: { acc: '#6B5AE0', label: '도형으로 북적여요' },
   MINIMAL: { acc: '#F05032', label: '여백으로 차분해요' },
 };
+export const PALETTE2 = {
+  FLOW: { acc: '#17A88A', label: '흐르고 번져요' },
+  DEPTH: { acc: '#2BA8E0', label: '멀리까지 펼쳐져요' },
+};
 export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
 const items = menu.items.filter(i => i.category === 'background');
-const missing = items.filter(i => !BG[i.id]).map(i => i.id);
+const items2 = menu.items.filter(i => i.category === 'background-2');
+const missing = items.concat(items2).filter(i => !BG[i.id]).map(i => i.id);
 if (missing.length) { console.error('engine.js 에 없는 배경:', missing.join(', ')); process.exit(1); }
 
 const frag = it => {
-  const acc = PALETTE[it.group].acc;
+  const acc = (PALETTE[it.group] || PALETTE2[it.group]).acc;
   return `<!-- @${it.id} h=220 full -->
 <style>
   .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
@@ -52,4 +57,9 @@ ${items.map(frag).join('\n\n')}
 `;
 writeFileSync(join(MM, 'demos', 'm9-background.html'), out);
 console.log(`demos/m9-background.html: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+const out2 = `<!-- 생성물: tools/backgrounds/gen.mjs 가 engine.js 에서 만든다. 여기를 직접 고치지 않는다 -->
+${items2.map(frag).join('\n\n')}
+`;
+writeFileSync(join(MM, 'demos', 'm19-background-2.html'), out2);
+console.log(`demos/m19-background-2.html: ${items2.length}개 · ${(out2.length / 1024).toFixed(0)}KB`);
 }

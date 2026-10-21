@@ -1,0 +1,28 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>벡터 CRT Vector CRT · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .vc{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#030805}
+</style>
+<canvas class="vc" role="img" aria-label="벡터 CRT 데모: 빛나는 초록 선으로 그린 정육면체가 돈다"></canvas>
+<p class="cap">벡터 CRT · 빛나는 초록 선만으로 도형을 그리고 주사선과 잔광이 남는다.</p>
+<script>(function(){
+var cv=document.querySelector('canvas.vc'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function size(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+var V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+function cube(w,h,a,col,lw,blur){var s=(c.getTransform().a)||1,R=h*.26;c.strokeStyle=col;c.lineWidth=lw;c.shadowColor='#3cff8a';c.shadowBlur=blur*s;c.beginPath();
+  E.forEach(function(e){var p=e.map(function(i){var v=V[i],x=v[0]*Math.cos(a)-v[2]*Math.sin(a),z=v[0]*Math.sin(a)+v[2]*Math.cos(a),y=v[1]*Math.cos(.5)-z*Math.sin(.5),z2=v[1]*Math.sin(.5)+z*Math.cos(.5),k=3/(4+z2);return [w*.36+x*R*k,h/2+y*R*k];});c.moveTo(p[0][0],p[0][1]);c.lineTo(p[1][0],p[1][1]);});c.stroke();c.shadowBlur=0;}
+function frame(now){
+  var r=cv.getBoundingClientRect(),w=r.width,h=r.height,t=still?1.2:(now-t0)/1000,a=t*Math.PI*2/8;
+  c.fillStyle='#030805';c.fillRect(0,0,w,h);
+  for(var q=3;q>=1;q--){c.globalAlpha=.12*(4-q)/3;cube(w,h,a-q*.06,'#2fd47a',1.4,4);}
+  c.globalAlpha=.9+.1*Math.sin(t*60);cube(w,h,a,'#8affb8',1.6,8);
+  c.font='700 '+Math.round(h*.13)+'px ui-monospace,monospace';c.fillStyle='#8affb8';c.shadowColor='#3cff8a';c.shadowBlur=8*((c.getTransform().a)||1);c.textAlign='left';c.textBaseline='middle';
+  c.fillText('VECTOR',w*.6,h*.42);c.globalAlpha*=.6;c.fillText('SCAN '+String(Math.floor(t*12)%100).padStart(2,'0'),w*.6,h*.6);c.shadowBlur=0;c.globalAlpha=1;
+  c.fillStyle='rgba(0,0,0,.35)';for(var y=0;y<h;y+=3)c.fillRect(0,y,w,1);
+  var vg=c.createRadialGradient(w/2,h/2,h*.35,w/2,h/2,w*.6);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.7)');c.fillStyle=vg;c.fillRect(0,0,w,h);
+  if(!still)requestAnimationFrame(frame);
+}
+size();addEventListener('resize',size);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

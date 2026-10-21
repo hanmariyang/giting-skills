@@ -1178,6 +1178,88 @@ function frame(now){
 sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
 })();</script>
 
+<!-- @dot-globe h=220 full -->
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="점 지구본 데모: 숫자와 차트가 움직이는 장면"></canvas>
+<p class="cap">점 지구본 · 점으로 된 지구가 천천히 돌고, 그 위로 한 곳에서 여러 곳으로 가는 호가 차례로 그려진다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var lerp = function (a, b, t) { return a + (b - a) * t; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var lerpC = function (a, b, t) { return '#' + [1, 3, 5].map(function (i) { return Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0'); }).join(''); };
+// 8초 한 바퀴의 위치(0~8)와 들어가는 정도: p 가 a 에서 시작해 d 초 동안 0→1
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+// 끝에서 사라짐: 7.2 초부터 0.8 초 동안 1→0
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var SANS = '-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif';
+var MONO = '"SF Mono",Menlo,Consolas,monospace';
+var label = function (c, s, x, y, px, col, al, wt) { c.font = (wt || 600) + ' ' + px + 'px ' + SANS; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var num = function (c, s, x, y, px, col, al, wt) { c.font = (wt || 800) + ' ' + px + 'px ' + SANS; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var rrect = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, Math.max(0, w), Math.max(0, h), Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2)); };
+var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+// 차트 칸: 왼쪽·오른쪽·위·아래 여백
+var box = function (w, h) { var m = h * .14; return { x: m * 1.4, y: m, w: w - m * 2.8, h: h - m * 2.2 }; };
+// 차트 공용 값과 도우미 (데모 파일에도 같이 들어가야 해서 helpers 안에 둔다)
+var BARS = [62, 88, 45, 97, 71];
+var SERIES = [20, 34, 28, 46, 41, 58, 52, 70, 64, 82];
+var linePts = function (b, arr, max) { return arr.map(function (v, i) { return [b.x + b.w * i / (arr.length - 1), b.y + b.h - b.h * v / max]; }); };
+var pathTo = function (c, pts, e) {
+  var n = pts.length - 1, upto = e * n, full = Math.floor(upto);
+  c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+  for (var i = 1; i <= full; i++) c.lineTo(pts[i][0], pts[i][1]);
+  if (full < n) { var f = upto - full, a = pts[full], b = pts[full + 1]; c.lineTo(lerp(a[0], b[0], f), lerp(a[1], b[1], f)); return [lerp(a[0], b[0], f), lerp(a[1], b[1], f)]; }
+  return pts[n];
+};
+var grid = function (c, b, col) { c.fillStyle = col; for (var i = 0; i <= 3; i++) c.fillRect(b.x, b.y + b.h * i / 3, b.w, 1); };
+var PIE = [.42, .27, .18, .13];
+var pieCols = function (k) { return [k.acc, lerpC(k.acc, k.paper, .45), k.deep, '#8FA3B8']; };
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t);
+  var R = h * .4, cx = w / 2, cy = h * .52, rot = -142 * Math.PI / 180 + .4 * Math.sin(TAU * P8(t) / 8), tl = .35, D = Math.PI / 180;
+  var vec = function (la, lo) { return [Math.cos(la) * Math.sin(lo), Math.sin(la), Math.cos(la) * Math.cos(lo)]; };
+  var pr = function (v, lift) {
+    var x = v[0] * Math.cos(rot) + v[2] * Math.sin(rot), z = -v[0] * Math.sin(rot) + v[2] * Math.cos(rot), y = v[1];
+    var y2 = y * Math.cos(tl) - z * Math.sin(tl), z2 = y * Math.sin(tl) + z * Math.cos(tl), L = lift || 1; return [cx + x * R * L, cy - y2 * R * L, z2];
+  };
+  c.fillStyle = lerpC(k.ink, k.deep, .5); c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.fill();
+  var N = 520, ga = Math.PI * (3 - Math.sqrt(5));
+  for (var i = 0; i < N; i++) {
+    var yy = 1 - 2 * (i + .5) / N, P = pr(vec(Math.asin(yy), i * ga));
+    if (P[2] < 0) continue; c.fillStyle = k.paper; c.globalAlpha = outA(t) * (.25 + .6 * P[2]); c.beginPath(); c.arc(P[0], P[1], h * .007 * (.6 + .5 * P[2]), 0, TAU); c.fill();
+  }
+  var home = vec(37.6 * D, 127 * D), to = [[35.7, 139.7], [13.75, 100.5], [1.35, 103.8], [-33.9, 151.2], [21.3, -157.9]];
+  to.forEach(function (q, n) {
+    var e = io(seg(t, .5 + n * .5, 1.2)); if (e <= 0) return;
+    var B = vec(q[0] * D, q[1] * D), om = Math.acos(Math.max(-1, Math.min(1, home[0] * B[0] + home[1] * B[1] + home[2] * B[2]))), M = 32, pts = [];
+    for (var m = 0; m <= M * e; m++) {
+      var u = m / M, s1 = Math.sin((1 - u) * om) / Math.sin(om), s2 = Math.sin(u * om) / Math.sin(om);
+      pts.push(pr([home[0] * s1 + B[0] * s2, home[1] * s1 + B[1] * s2, home[2] * s1 + B[2] * s2], 1 + .18 * Math.sin(Math.PI * u) * om));
+    }
+    c.strokeStyle = k.acc; c.lineWidth = h * .012; c.lineCap = 'round';
+    for (m = 1; m < pts.length; m++) { c.globalAlpha = outA(t) * (pts[m][2] > -.1 ? 1 : .12); c.beginPath(); c.moveTo(pts[m - 1][0], pts[m - 1][1]); c.lineTo(pts[m][0], pts[m][1]); c.stroke(); }
+    var L = pts[pts.length - 1]; if (e >= 1 && L[2] > -.1) { c.globalAlpha = outA(t); c.fillStyle = k.acc; c.beginPath(); c.arc(L[0], L[1], h * .02, 0, TAU); c.fill(); }
+  });
+  var H0 = pr(home); if (H0[2] > 0) { c.globalAlpha = outA(t); c.fillStyle = k.paper; c.beginPath(); c.arc(H0[0], H0[1], h * .024, 0, TAU); c.fill(); }
+  c.globalAlpha = 1;
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#17A88A',deep:'#166658',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+
 <!-- @pie-sweep h=220 full -->
 <style>
   .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
@@ -1569,6 +1651,74 @@ var F=function (c, w, h, t, k) {
   num(c, '×9', xB, cy, h * .2, k.paper, 'center');
   label(c, '2020', xA, yA - rA - h * .09, h * .09, k.ink, 'center', 700);
   label(c, '2026', xB + rB + h * .06, cy, h * .09, k.ink, 'left', 700);
+  c.globalAlpha = 1;
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#6B5AE0',deep:'#443b87',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+
+<!-- @liquid-gauge h=220 full -->
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="물 게이지 데모: 숫자와 차트가 움직이는 장면"></canvas>
+<p class="cap">물 게이지 · 원 안의 물이 출렁이며 차오르고, 물에 잠긴 숫자 부분만 색이 바뀐다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var lerp = function (a, b, t) { return a + (b - a) * t; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var lerpC = function (a, b, t) { return '#' + [1, 3, 5].map(function (i) { return Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0'); }).join(''); };
+// 8초 한 바퀴의 위치(0~8)와 들어가는 정도: p 가 a 에서 시작해 d 초 동안 0→1
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+// 끝에서 사라짐: 7.2 초부터 0.8 초 동안 1→0
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var SANS = '-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif';
+var MONO = '"SF Mono",Menlo,Consolas,monospace';
+var label = function (c, s, x, y, px, col, al, wt) { c.font = (wt || 600) + ' ' + px + 'px ' + SANS; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var num = function (c, s, x, y, px, col, al, wt) { c.font = (wt || 800) + ' ' + px + 'px ' + SANS; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var rrect = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, Math.max(0, w), Math.max(0, h), Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2)); };
+var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+// 차트 칸: 왼쪽·오른쪽·위·아래 여백
+var box = function (w, h) { var m = h * .14; return { x: m * 1.4, y: m, w: w - m * 2.8, h: h - m * 2.2 }; };
+// 차트 공용 값과 도우미 (데모 파일에도 같이 들어가야 해서 helpers 안에 둔다)
+var BARS = [62, 88, 45, 97, 71];
+var SERIES = [20, 34, 28, 46, 41, 58, 52, 70, 64, 82];
+var linePts = function (b, arr, max) { return arr.map(function (v, i) { return [b.x + b.w * i / (arr.length - 1), b.y + b.h - b.h * v / max]; }); };
+var pathTo = function (c, pts, e) {
+  var n = pts.length - 1, upto = e * n, full = Math.floor(upto);
+  c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+  for (var i = 1; i <= full; i++) c.lineTo(pts[i][0], pts[i][1]);
+  if (full < n) { var f = upto - full, a = pts[full], b = pts[full + 1]; c.lineTo(lerp(a[0], b[0], f), lerp(a[1], b[1], f)); return [lerp(a[0], b[0], f), lerp(a[1], b[1], f)]; }
+  return pts[n];
+};
+var grid = function (c, b, col) { c.fillStyle = col; for (var i = 0; i <= 3; i++) c.fillRect(b.x, b.y + b.h * i / 3, b.w, 1); };
+var PIE = [.42, .27, .18, .13];
+var pieCols = function (k) { return [k.acc, lerpC(k.acc, k.paper, .45), k.deep, '#8FA3B8']; };
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t);
+  var R = h * .38, cx = w / 2, cy = h / 2, e = eo(seg(t, .4, 2.6)), v = 72 * e, lv = cy + R - 2 * R * v / 100;
+  c.fillStyle = k.deep; c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.fill();
+  var wave = function (amp, ph, n) { c.beginPath(); c.moveTo(cx - R, cy + R); for (var x = -R; x <= R; x += 2) c.lineTo(cx + x, lv + amp * Math.sin(x / R * Math.PI * n + ph)); c.lineTo(cx + R, cy + R); c.closePath(); };
+  c.save(); c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.clip();
+  c.fillStyle = lerpC(k.acc, k.ink, .35); wave(h * .03, -TAU * P8(t) / 2 + 1, 1.5); c.fill();
+  c.fillStyle = k.acc; wave(h * .024, TAU * P8(t) / 4, 2); c.fill();
+  var s = Math.round(v) + '%';
+  num(c, s, cx, cy, h * .2, k.paper, 'center');
+  wave(h * .024, TAU * P8(t) / 4, 2); c.clip(); num(c, s, cx, cy, h * .2, k.ink, 'center');
+  c.restore();
+  c.strokeStyle = k.paper; c.lineWidth = h * .014; c.beginPath(); c.arc(cx, cy, R + h * .025, 0, TAU); c.stroke();
   c.globalAlpha = 1;
 };
 var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#6B5AE0',deep:'#443b87',paper:'#F4F1EA',ink:'#14161B'};

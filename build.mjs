@@ -1500,12 +1500,14 @@ for (const r of moMenu.recipes) { moRcode[r.id] = moStandalone({ id: r.id, name:
 const MO_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components';
 // 「같은 장면, 말 한 줄 차이」 비교 + 「대본 문장마다 장면 하나」 장면표 (2026-10-14). 갤러리 전용, components/ 에는 안 낸다.
 const moCmp = moMenu.compare || { list: [] }, moScn = moMenu.scenes || { list: [] };
-const moExtraMiss = [...moCmp.list, ...moScn.list].filter(x => !moFrags[x.id]).map(x => x.id);
+const moInt = moMenu.intensity || { demos: [] };
+const moExtraMiss = [...moCmp.list, ...moScn.list, ...moInt.demos].filter(x => !moFrags[x.id]).map(x => x.id);
 if (moExtraMiss.length) { console.error('motion-menu 비교·장면 데모 없음:', moExtraMiss.join(', ')); process.exit(1); }
 const moItemName = id => { const it = moMenu.items.find(i => i.id === id); if (!it) { console.error('motion-menu 없는 항목 참조:', id); process.exit(1); } return it.name; };
 const moXcode = {};
 for (const c of moCmp.list) { const n = moItemName(c.item); moXcode[c.id] = moStandalone({ id: c.id, name: { ko: n.ko + ' 비교', en: n.en } }); }
 for (const sc of moScn.list) { sc.uses.forEach(moItemName); moXcode[sc.id] = moStandalone({ id: sc.id, name: { ko: sc.name, en: 'Scene ' + sc.no } }); }
+for (const d of moInt.demos) { const n = moItemName(d.item); moXcode[d.id] = moStandalone({ id: d.id, name: { ko: n.ko + ' 세기', en: n.en } }); }
 const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .mogal .mo-formula{background:var(--paper);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:0 0 18px}
 .mogal .mo-fh{padding:11px 16px;background:var(--bg);font-size:13px;font-weight:700;display:flex;gap:9px;flex-wrap:wrap;align-items:baseline}
@@ -1566,6 +1568,7 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 @media(max-width:640px){.mogal .mo-roles{grid-template-columns:1fr}}
 .mogal .mo-roles div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12.5px}
 .mogal .mo-roles b{display:block;font-size:13.5px}.mogal .mo-roles code{font-family:ui-monospace,monospace;color:var(--acc);font-size:12px}
+.mogal .mo-ints{overflow-x:auto;margin:0 0 8px}.mogal .mo-ints table{border-collapse:collapse;font-size:12.5px;min-width:520px;width:100%}.mogal .mo-ints th,.mogal .mo-ints td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;font-variant-numeric:tabular-nums}.mogal .mo-ints thead th{color:var(--acc);font-size:12px}.mogal .mo-ints td.for{color:var(--ink3);font-size:11.5px}
 .mogal .mo-pre{white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:12px;line-height:1.6;background:var(--bg);border-radius:9px;padding:10px 12px;margin:0;overflow-wrap:anywhere}
 .mogal .mo-cmp header{flex-wrap:wrap}
 .mogal .mo-cmp .say{display:grid;gap:4px;padding:8px 13px 11px;border-top:1px solid var(--line);font-size:12.5px}
@@ -1588,7 +1591,7 @@ const moCard = it => `<article class="mo-card" id="m-${it.id}">
   <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.mood ? `<span class="mood">쓰임 ${esc(it.mood)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
 </article>`;
 const moF = moMenu.formula;
-const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 24가지. 1~6 사라지고 모이기 · 7~12 쉬지 않고 흔들리기 · 13~18 물리와 소품 · 19~24 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.', 'screen-transition-2': '⑦에 없던 기본 전환과 실물 같은 전환 23가지. 1~5 밀고 덮기 · 6~9 빛과 어둠 · 10~13 돌고 빨려 들기 · 14~18 입체로 넘기기 · 19~23 물건처럼 부서지기. 푸시·딥 투 블랙처럼 제일 자주 쓰는 전환이 여기 있어요.', 'data-motion': '숫자와 차트가 움직이는 연출 24가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~18 선으로 흐름 · 19~24 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.', 'icon-motion': '로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.', 'social-overlay': '영상 위에 얹는 SNS 화면 요소 24가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~18 알림과 표시 · 19~24 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.', 'graphic-craft': '모션 그래픽을 만들 때 쓰는 기법 24가지. 1~6 길 따라 움직이기 · 7~12 복제와 선 · 13~18 장면 바꾸기 · 19~24 구조 보여 주기. 요청 문장에 초와 개수를 같이 적으세요.' };
+const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 26가지. 1~7 사라지고 모이기 · 8~14 쉬지 않고 흔들리기 · 15~20 물리와 소품 · 21~26 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.', 'screen-transition-2': '⑦에 없던 기본 전환과 실물 같은 전환 23가지. 1~5 밀고 덮기 · 6~9 빛과 어둠 · 10~13 돌고 빨려 들기 · 14~18 입체로 넘기기 · 19~23 물건처럼 부서지기. 푸시·딥 투 블랙처럼 제일 자주 쓰는 전환이 여기 있어요.', 'data-motion': '숫자와 차트가 움직이는 연출 26가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~19 선으로 흐름 · 20~26 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.', 'icon-motion': '로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.', 'social-overlay': '영상 위에 얹는 SNS 화면 요소 25가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~19 알림과 표시 · 20~25 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.', 'graphic-craft': '모션 그래픽을 만들 때 쓰는 기법 24가지. 1~6 길 따라 움직이기 · 7~12 복제와 선 · 13~18 장면 바꾸기 · 19~24 구조 보여 주기. 요청 문장에 초와 개수를 같이 적으세요.', 'background-2': '⑧에 없던 배경 9가지. 1~6 흐르고 번지기(유체 그라디언트 · 흐름장 · 반응-확산 · 등고선 · 연결망 · 조리개) · 7~9 멀리까지 펼쳐지기(점 바다 · 와이어프레임 지형 · 구름). ⑧보다 결이 깊어서 글자를 올릴 땐 어둡게 눌러 쓰세요.' };
 const moCore = `<div class="mogal">
 <style>${MO_CSS}</style>
 <div class="mo-formula">
@@ -1598,11 +1601,16 @@ const moCore = `<div class="mogal">
     <div class="good"><span class="mk">○ 이렇게</span>「${esc(moF.good)}」</div>
   </div>
 </div>
-<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moShot.length}</a>${moTxR.length ? `<a href="#mc-text-recipes"><b>＋</b>글자 조합 ${moTxR.length}</a>` : ''}${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}</nav>
+<nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moShot.length}</a>${moTxR.length ? `<a href="#mc-text-recipes"><b>＋</b>글자 조합 ${moTxR.length}</a>` : ''}${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}${moInt.knobs ? `<a href="#mc-intensity"><b>◐</b>세기 셋</a>` : ''}</nav>
 ${moMenu.easingRoles ? `<div class="mo-box"><h3>${esc(moMenu.easingRoles.title)}<button class="copy" data-copy="${attr(moMenu.easingRoles.ask)}" title="요청 문장 복사">문장</button></h3>
   <p>${esc(moMenu.easingRoles.note)}</p>
   <div class="mo-roles">${moMenu.easingRoles.roles.map(r => `<div><b>${esc(r.use)}</b><code>${esc(r.curve)}</code><br>${esc(r.feel)}</div>`).join('')}</div>
   <p>${esc(moMenu.easingRoles.avoid)} ${esc(moMenu.easingRoles.tip)}</p></div>` : ''}
+${moInt.knobs ? `<div class="mo-box" id="mc-intensity"><h3>${esc(moInt.title)}<button class="copy" data-copy="${attr(moInt.ask)}" title="요청 문장 복사">문장</button></h3>
+  <p>${esc(moInt.note)}</p>
+  <div class="mo-ints"><table><thead><tr><th></th>${moInt.levels.map(l => `<th>${esc(l)}</th>`).join('')}<th>쓰는 곳</th></tr></thead><tbody>${moInt.knobs.map(kn => `<tr><th>${esc(kn.what)}</th>${kn.values.map(v => `<td>${esc(v)}</td>`).join('')}<td class="for">${esc(kn.for)}</td></tr>`).join('')}</tbody></table></div>
+  <p>${esc(moInt.rule)}</p>
+  <div class="mo-grid">${moInt.demos.map(d => { const n = moItemName(d.item); return `<article class="mo-card" id="m-${d.id}"><header><h3>${esc(n.ko)} 세기</h3><span class="en">${esc(n.en)}</span></header><iframe title="${esc(n.ko)} 세기 비교 데모" loading="lazy" style="height:${moFrags[d.id].h}px" srcdoc="${attr(moXcode[d.id])}"></iframe><footer><a href="#m-${d.item}" style="font-size:11.5px;color:var(--ink3)">사전에서 보기 ↓</a></footer></article>`; }).join('')}</div></div>` : ''}
 ${moMenu.starter ? `<div class="mo-box"><h3>${esc(moMenu.starter.title)}<button class="copy" data-copy="${attr(moMenu.starter.ask)}" title="요청문 복사">복사</button></h3>
   <p>${esc(moMenu.starter.note)}</p><pre class="mo-pre">${esc(moMenu.starter.ask)}</pre></div>` : ''}
 ${moCmp.list.length ? `<section class="mo-cat" id="mc-compare">
@@ -1685,6 +1693,12 @@ ${moMenu.easingRoles.roles.map(r => `- ${r.use}: ${r.curve} (${r.feel})`).join('
 - ${moMenu.easingRoles.avoid}
 - ${moMenu.easingRoles.tip}
 - 요청 문장: ${moMenu.easingRoles.ask}
+
+` : ''}${moInt.knobs ? `## ${moInt.title}
+${moInt.note}
+${moInt.knobs.map(kn => `- ${kn.what}: ${moInt.levels.map((l, i) => `${l} ${kn.values[i]}`).join(' / ')} (${kn.for})`).join('\n')}
+- ${moInt.rule}
+- 요청 문장: ${moInt.ask}
 
 ` : ''}${moMenu.starter ? `## ${moMenu.starter.title}
 ${moMenu.starter.note}

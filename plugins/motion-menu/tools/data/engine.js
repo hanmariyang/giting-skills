@@ -366,4 +366,52 @@ DM['scale-compare'] = function (c, w, h, t, k) {
   c.globalAlpha = 1;
 };
 
+// ── 더한 것 (2026-10-21) ─────────────────────────────────────
+// 점 지구본: 구 위에 고르게 깐 점(피보나치)과 서울에서 다섯 곳으로 가는 호. 지구는 8초에 한 바퀴
+DM['dot-globe'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t);
+  var R = h * .4, cx = w / 2, cy = h * .52, rot = -142 * Math.PI / 180 + .4 * Math.sin(TAU * P8(t) / 8), tl = .35, D = Math.PI / 180;
+  var vec = function (la, lo) { return [Math.cos(la) * Math.sin(lo), Math.sin(la), Math.cos(la) * Math.cos(lo)]; };
+  var pr = function (v, lift) {
+    var x = v[0] * Math.cos(rot) + v[2] * Math.sin(rot), z = -v[0] * Math.sin(rot) + v[2] * Math.cos(rot), y = v[1];
+    var y2 = y * Math.cos(tl) - z * Math.sin(tl), z2 = y * Math.sin(tl) + z * Math.cos(tl), L = lift || 1; return [cx + x * R * L, cy - y2 * R * L, z2];
+  };
+  c.fillStyle = lerpC(k.ink, k.deep, .5); c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.fill();
+  var N = 520, ga = Math.PI * (3 - Math.sqrt(5));
+  for (var i = 0; i < N; i++) {
+    var yy = 1 - 2 * (i + .5) / N, P = pr(vec(Math.asin(yy), i * ga));
+    if (P[2] < 0) continue; c.fillStyle = k.paper; c.globalAlpha = outA(t) * (.25 + .6 * P[2]); c.beginPath(); c.arc(P[0], P[1], h * .007 * (.6 + .5 * P[2]), 0, TAU); c.fill();
+  }
+  var home = vec(37.6 * D, 127 * D), to = [[35.7, 139.7], [13.75, 100.5], [1.35, 103.8], [-33.9, 151.2], [21.3, -157.9]];
+  to.forEach(function (q, n) {
+    var e = io(seg(t, .5 + n * .5, 1.2)); if (e <= 0) return;
+    var B = vec(q[0] * D, q[1] * D), om = Math.acos(Math.max(-1, Math.min(1, home[0] * B[0] + home[1] * B[1] + home[2] * B[2]))), M = 32, pts = [];
+    for (var m = 0; m <= M * e; m++) {
+      var u = m / M, s1 = Math.sin((1 - u) * om) / Math.sin(om), s2 = Math.sin(u * om) / Math.sin(om);
+      pts.push(pr([home[0] * s1 + B[0] * s2, home[1] * s1 + B[1] * s2, home[2] * s1 + B[2] * s2], 1 + .18 * Math.sin(Math.PI * u) * om));
+    }
+    c.strokeStyle = k.acc; c.lineWidth = h * .012; c.lineCap = 'round';
+    for (m = 1; m < pts.length; m++) { c.globalAlpha = outA(t) * (pts[m][2] > -.1 ? 1 : .12); c.beginPath(); c.moveTo(pts[m - 1][0], pts[m - 1][1]); c.lineTo(pts[m][0], pts[m][1]); c.stroke(); }
+    var L = pts[pts.length - 1]; if (e >= 1 && L[2] > -.1) { c.globalAlpha = outA(t); c.fillStyle = k.acc; c.beginPath(); c.arc(L[0], L[1], h * .02, 0, TAU); c.fill(); }
+  });
+  var H0 = pr(home); if (H0[2] > 0) { c.globalAlpha = outA(t); c.fillStyle = k.paper; c.beginPath(); c.arc(H0[0], H0[1], h * .024, 0, TAU); c.fill(); }
+  c.globalAlpha = 1;
+};
+// 물 게이지: 원 안 수면이 72% 까지 차오르고 두 겹 물결로 출렁인다. 물에 잠긴 숫자만 색이 바뀐다
+DM['liquid-gauge'] = function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); c.globalAlpha = outA(t);
+  var R = h * .38, cx = w / 2, cy = h / 2, e = eo(seg(t, .4, 2.6)), v = 72 * e, lv = cy + R - 2 * R * v / 100;
+  c.fillStyle = k.deep; c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.fill();
+  var wave = function (amp, ph, n) { c.beginPath(); c.moveTo(cx - R, cy + R); for (var x = -R; x <= R; x += 2) c.lineTo(cx + x, lv + amp * Math.sin(x / R * Math.PI * n + ph)); c.lineTo(cx + R, cy + R); c.closePath(); };
+  c.save(); c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.clip();
+  c.fillStyle = lerpC(k.acc, k.ink, .35); wave(h * .03, -TAU * P8(t) / 2 + 1, 1.5); c.fill();
+  c.fillStyle = k.acc; wave(h * .024, TAU * P8(t) / 4, 2); c.fill();
+  var s = Math.round(v) + '%';
+  num(c, s, cx, cy, h * .2, k.paper, 'center');
+  wave(h * .024, TAU * P8(t) / 4, 2); c.clip(); num(c, s, cx, cy, h * .2, k.ink, 'center');
+  c.restore();
+  c.strokeStyle = k.paper; c.lineWidth = h * .014; c.beginPath(); c.arc(cx, cy, R + h * .025, 0, TAU); c.stroke();
+  c.globalAlpha = 1;
+};
+
 if (typeof module !== 'undefined') module.exports = { DM: DM };
