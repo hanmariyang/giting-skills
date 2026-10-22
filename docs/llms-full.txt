@@ -1,6 +1,6 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 129개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -351,6 +351,7 @@ document.addEventListener('click', function (e) {
 ### 카드 (Card)
 - 별칭: "네모 박스 하나하나" · "박스형" · "테두리 있는 덩어리"
 - 정의: 이미지·제목·설명을 한 덩어리로 묶은 네모 상자.
+- 구분: 상자로 감싸 나누면 카드, 상자 없이 간격으로 나누면 여백으로 묶기
 - shadcn: Card (Header·Content·Footer 완전 조립)
 - 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
@@ -427,6 +428,101 @@ document.addEventListener('click', function (e) {
   <article><div class="th"></div><div class="bd"><h3>카드 2</h3><div class="bar" style="width:55%"></div></div></article>
   <article><div class="th"></div><div class="bd"><h3>카드 3</h3><div class="bar" style="width:63%"></div></div></article>
 </div><p class="cap">카드를 격자로 반복</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 여백으로 묶기 (Grouping by Whitespace)
+- 별칭: "카드 말고 깔끔하게 묶어줘" · "박스 좀 빼줘" · "테두리 없이 정리해줘"
+- 정의: 상자를 씌우지 않고 간격 차이(묶음 안은 좁게, 묶음 사이는 넓게)와 글자 크기만으로 묶음을 나누는 방식.
+- 구분: 상자로 감싸 나누면 카드, 간격과 글자로만 나누면 여백으로 묶기
+- 요청 문장: 목록을 카드로 감싸지 말고 여백으로 묶어줘. 같은 묶음 안 행 간격은 12px, 묶음 사이는 40px, 묶음 제목은 15px 굵게. 테두리·그림자·배경색은 쓰지 말고 행 사이에만 1px 구분선.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/whitespace-group.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>여백으로 묶기 Grouping by Whitespace · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .wg { width: 240px; font-size: 12px; color: #1d1d24; }
+  .wg h4 { margin: 0 0 6px; font-size: 13px; font-weight: 800; }
+  .wg .grp + .grp { margin-top: 22px; }
+  .wg .row { display: flex; justify-content: space-between; padding: 7px 0; }
+  .wg .row + .row { border-top: 1px solid #ececf1; }
+  .wg .row span:last-child { color: #8a8a96; font-size: 11px; }
+</style>
+<div class="center"><div class="wg">
+  <div class="grp"><h4>업무</h4><div class="row"><span>견적서 보내기</span><span>오늘</span></div><div class="row"><span>회의록 정리</span><span>내일</span></div></div>
+  <div class="grp"><h4>집</h4><div class="row"><span>장보기</span><span>오늘</span></div><div class="row"><span>택배 반품</span><span>금요일</span></div></div>
+</div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 피처 카드 (Featured Card)
+- 별칭: "제일 중요한 것만 박스로" · "맨 위 하나만 눈에 띄게" · "카드는 하나만 써줘"
+- 정의: 화면에서 가장 중요한 하나만 카드로 세우고 나머지는 카드 없는 목록으로 둬서, 눈이 먼저 갈 곳을 정한다.
+- 구분: 카드를 여러 장 늘어놓으면 카드 그리드, 한 장만 세워 시선을 모으면 피처 카드
+- 요청 문장: 맨 위 「지금 할 일」 하나만 카드로 만들어줘. 연한 바탕색과 둥근 모서리 16px, 안쪽 여백 20px. 그 아래 목록은 카드 없이 행과 1px 구분선만 쓰고, 카드는 이 화면에 하나만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/featured-card.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>피처 카드 Featured Card · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fc { width: 240px; font-size: 12px; color: #1d1d24; }
+  .fc .hero { background: #eef1f8; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
+  .fc .hero small { color: #6b6b76; font-size: 10.5px; }
+  .fc .hero b { display: block; font-size: 15px; margin: 4px 0 10px; }
+  .fc .hero button { width: 100%; border: 0; border-radius: 10px; background: #1d1d24; color: #fff; font: 700 12px/1 inherit; padding: 9px 0; }
+  .fc .row { padding: 7px 0; }
+  .fc .row + .row { border-top: 1px solid #ececf1; }
+</style>
+<div class="center"><div class="fc">
+  <div class="hero"><small>지금 할 일</small><b>견적서 보내기</b><button type="button">끝냈어요</button></div>
+  <div class="row">회의록 정리</div><div class="row">장보기</div><div class="row">택배 반품</div>
+</div></div>
 <script>
 // 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
 document.addEventListener('click', function (e) {

@@ -1,6 +1,6 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 129개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -65,6 +65,7 @@
 ### 카드 (Card)
 - 별칭: "네모 박스 하나하나" · "박스형" · "테두리 있는 덩어리"
 - 정의: 이미지·제목·설명을 한 덩어리로 묶은 네모 상자.
+- 구분: 상자로 감싸 나누면 카드, 상자 없이 간격으로 나누면 여백으로 묶기
 - shadcn: Card (Header·Content·Footer 완전 조립)
 - 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
@@ -74,6 +75,20 @@
 - 정의: 카드를 격자로 반복 배치한 것. 목록 화면의 단골.
 - 요청 문장: 리포트 목록을 3열 카드 그리드로 보여줘. 카드는 썸네일·제목·요약 구성.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card-grid.html
+
+### 여백으로 묶기 (Grouping by Whitespace)
+- 별칭: "카드 말고 깔끔하게 묶어줘" · "박스 좀 빼줘" · "테두리 없이 정리해줘"
+- 정의: 상자를 씌우지 않고 간격 차이(묶음 안은 좁게, 묶음 사이는 넓게)와 글자 크기만으로 묶음을 나누는 방식.
+- 구분: 상자로 감싸 나누면 카드, 간격과 글자로만 나누면 여백으로 묶기
+- 요청 문장: 목록을 카드로 감싸지 말고 여백으로 묶어줘. 같은 묶음 안 행 간격은 12px, 묶음 사이는 40px, 묶음 제목은 15px 굵게. 테두리·그림자·배경색은 쓰지 말고 행 사이에만 1px 구분선.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/whitespace-group.html
+
+### 피처 카드 (Featured Card)
+- 별칭: "제일 중요한 것만 박스로" · "맨 위 하나만 눈에 띄게" · "카드는 하나만 써줘"
+- 정의: 화면에서 가장 중요한 하나만 카드로 세우고 나머지는 카드 없는 목록으로 둬서, 눈이 먼저 갈 곳을 정한다.
+- 구분: 카드를 여러 장 늘어놓으면 카드 그리드, 한 장만 세워 시선을 모으면 피처 카드
+- 요청 문장: 맨 위 「지금 할 일」 하나만 카드로 만들어줘. 연한 바탕색과 둥근 모서리 16px, 안쪽 여백 20px. 그 아래 목록은 카드 없이 행과 1px 구분선만 쓰고, 카드는 이 화면에 하나만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/featured-card.html
 
 ### 테이블 (Table)
 - 별칭: "표" · "엑셀처럼 줄 맞춘 거" · "행렬로 정리"
