@@ -1,0 +1,100 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>픽셀 리졸브 Pixel Resolve · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="픽셀 리졸브 데모: 오프닝 타이틀 장면"></canvas>
+<p class="cap">픽셀 리졸브 · 제목이 굵은 네모 덩어리로 시작해 네모가 여섯 단계로 작아지며 또렷한 글자가 된다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = clamp(t); var s = 1.9; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var frac = function (v) { return v - Math.floor(v); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var W8 = function (t, n) { return TAU * (n || 1) * t / 8; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 900) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var say = function (c, s, x, y, px, col, al, wt) { c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var tw = function (c, s, px, wt) { c.font = FONT(px, wt); return c.measureText(s).width; };
+// 칸이 좁으면 글자를 줄인다(폭 mw 안에 들게)
+var fit = function (c, s, px, mw, wt) { var L = tw(c, s, px, wt); return L > mw ? px * mw / L : px; };
+// 글자 모양으로 오려 내기 같은 합성은 따로 그린 판에서 한다(본 칸의 바탕을 건드리지 않으려고)
+var OFF = {}, LED = {};
+var layer = function (c, w, h, draw) {
+  var s = (c.getTransform ? c.getTransform().a : 1) || 1, W = Math.ceil(w * s), H = Math.ceil(h * s), key = W + 'x' + H;
+  var o = OFF[key] || (OFF[key] = document.createElement('canvas')); o.width = W; o.height = H;
+  var x = o.getContext('2d'); x.setTransform(s, 0, 0, s, 0, 0); draw(x); c.drawImage(o, 0, 0, w, h);
+};
+// 줄글을 한 바퀴 이어지는 띠로: 문구 폭 L 을 8초에 n 번 미끄러진다
+var band = function (c, s, y, px, col, dir, n, t, w, wt) {
+  var L = tw(c, s, px, wt), o = frac(t * (n || 1) / 8) * L * (dir || 1);
+  c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle';
+  for (var x = -L * 2 + ((o % L) + L) % L; x < w + L; x += L) c.fillText(s, x, y);
+};
+// 글자를 한 자씩 놓을 자리(가운데 0 기준 x 들)
+var slots = function (c, s, px, wt) {
+  c.font = FONT(px, wt); var ws = [], L = 0, i;
+  for (i = 0; i < s.length; i++) { ws.push(c.measureText(s[i]).width); L += ws[i]; }
+  var x = -L / 2, out = []; for (i = 0; i < s.length; i++) { out.push(x + ws[i] / 2); x += ws[i]; } return out;
+};
+// 글자 모양을 점 집합으로(가루·모자이크용). 한 번 재고 기억한다
+var DOTS = {};
+var dots = function (s, px, step, wt) {
+  var key = s + '|' + Math.round(px) + '|' + step; if (DOTS[key]) return DOTS[key];
+  var o = document.createElement('canvas'), x = o.getContext('2d'); x.font = FONT(px, wt);
+  var W = Math.ceil(x.measureText(s).width + px * .4), H = Math.ceil(px * 1.5); o.width = W; o.height = H;
+  x.font = FONT(px, wt); x.fillStyle = '#000'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(s, W / 2, H / 2);
+  var d = x.getImageData(0, 0, W, H).data, out = [];
+  for (var y = 0; y < H; y += step) for (var X = 0; X < W; X += step) if (d[(y * W + X) * 4 + 3] > 120) out.push([X - W / 2, y - H / 2]);
+  return (DOTS[key] = out);
+};
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var disc = function (c, x, y, r) { if (r > .2) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+var MFONT = function (px, wt) { return (wt || 600) + ' ' + Math.round(px) + 'px "SF Mono",Menlo,Consolas,monospace'; };
+var mono = function (c, s, x, y, px, col, al) { c.font = MFONT(px); c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+// 제목 글자 크기: 칸 높이의 r 배, 폭 mw 를 넘지 않게
+var TS = function (c, s, w, h, r, mw, wt) { return fit(c, s, h * (r || .34), w * (mw || .74), wt); };
+// 한 장면 전체에 쓰는 투명도(끝에서 사라짐)
+var fade = function (c, t) { c.globalAlpha = outA(t); };
+// 따로 그린 판(오프닝은 판이 둘 필요한 것이 있어 이름을 나눈다)
+var OFF2 = {}, PIX = {}, SIG = {};
+var layer2 = function (c, w, h, draw) {
+  var s = (c.getTransform ? c.getTransform().a : 1) || 1, W = Math.ceil(w * s), H = Math.ceil(h * s), key = W + 'x' + H;
+  var o = OFF2[key] || (OFF2[key] = document.createElement('canvas')); o.width = W; o.height = H;
+  var x = o.getContext('2d'); x.setTransform(s, 0, 0, s, 0, 0); draw(x); c.drawImage(o, 0, 0, w, h);
+};
+// 들쭉날쭉한 종이 가장자리 다각형 (가운데 cx,cy · 반폭 rw · 반높이 rh · 씨앗 sd)
+var torn = function (c, cx, cy, rw, rh, sd) {
+  var n = 22; c.beginPath();
+  for (var i = 0; i < n; i++) { var u = i / n, x, y, j = (hash(sd * 31 + i) - .5) * rh * .28;
+    if (u < .25) { x = cx - rw + u * 8 * rw; y = cy - rh + j; } else if (u < .5) { x = cx + rw + j; y = cy - rh + (u - .25) * 8 * rh; }
+    else if (u < .75) { x = cx + rw - (u - .5) * 8 * rw; y = cy + rh + j; } else { x = cx - rw + j; y = cy + rh - (u - .75) * 8 * rh; }
+    if (i) c.lineTo(x, y); else c.moveTo(x, y); }
+  c.closePath();
+};
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); fade(c, t);
+  var steps = [28, 16, 9, 5, 3, 1], st = Math.min(5, Math.floor(seg(t, .6, 2.4) * 6)), bs = Math.max(1, h * steps[st] / 170);
+  var s = '선명', px = TS(c, s, w, h, .5, .8), sw = Math.max(1, Math.ceil(w / bs)), sh = Math.max(1, Math.ceil(h / bs));
+  if (seg(t, .4, .2) > 0) {
+    var o = PIX.o || (PIX.o = document.createElement('canvas')); o.width = sw; o.height = sh;
+    var x = o.getContext('2d'); x.clearRect(0, 0, sw, sh); x.setTransform(sw / w, 0, 0, sh / h, 0, 0); say(x, s, w / 2, h / 2, px, k.paper);
+    c.imageSmoothingEnabled = false; c.drawImage(o, 0, 0, sw * bs, sh * bs); c.imageSmoothingEnabled = true; }
+  mono(c, 'RES ' + steps[st] + 'px', w - h * .07, h * .1, h * .055, st === 5 ? k.acc : 'rgba(244,241,234,.6)', 'right');
+  c.globalAlpha = 1;
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#22B8CF',deep:'#1c6f7e',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
