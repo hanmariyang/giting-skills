@@ -5,6 +5,7 @@
  * 걸린 것이 하나라도 있으면 exit 1. 「통과 = 좋은 디자인」은 아니다. 「걸림 = 기본값이 남았다」다.
  *   G1 보라·파랑 그라데이션   G2 이모지를 표시·아이콘으로 씀   G3 프레임워크 기본 팔레트 색
  *   G4 Inter·Space Grotesk 기본 글꼴   G5 크림 바탕 + 테라코타 강조
+ *   G6 카드 남용(테두리·그림자 + 둥근 모서리 상자가 화면 곳곳에. HTML 에 적힌 것만 센다. 일부러 카드 격자면 --allow 'g6')
  * 가운데 정렬 남용은 정적 분석으로 믿을 만하게 못 재서 검사하지 않는다(눈으로 본다).
  */
 import fs from 'node:fs';
@@ -86,8 +87,29 @@ const cream = bgs.find(({ c }) => { const [h, s, l] = hsl(c); return h >= 20 && 
 const terra = colorsIn(css).find(({ c }) => { const [h, s, l] = hsl(c); return h >= 8 && h <= 28 && s >= 0.45 && l >= 0.35 && l <= 0.7; });
 if (cream && terra) hits.push(['G5', '크림 바탕 + 테라코타 강조', `${hex(cream.c)} + ${hex(terra.c)}`]);
 
+// G6 카드 남용: 둥근 모서리에 테두리나 그림자를 두른 상자 클래스를 찾아, HTML 에 그 클래스를 단 요소를 센다.
+// 버튼·입력·칩·배지·아바타처럼 원래 작은 상자인 것과 알약 모양(999px·50%)은 뺀다. 스크립트가 만드는 요소는 못 센다.
+const SMALL = /btn|button|input|chip|tag|badge|pill|avatar|toggle|switch|dot|icon|fab|kbd|code/i;
+const boxCls = new Set();
+for (const m of css.matchAll(/([^{}@]+)\{([^{}]*)\}/g)) {
+  const sel = m[1].trim(), d = m[2];
+  const rad = /border-radius\s*:\s*([^;]+)/i.exec(d);
+  if (!rad || /999|50%|100%/.test(rad[1]) || parseFloat(rad[1]) < 6) continue;
+  const line = /(?:^|;)\s*border(?:-(?:top|bottom|left|right))?\s*:\s*[^;]*\d(?:\.\d+)?px[^;]*(?:solid|dashed)/i.test(d);
+  const shadow = /box-shadow\s*:\s*(?!\s*none)[^;]*\d/i.test(d);
+  if (!line && !shadow) continue;
+  for (const part of sel.split(',')) {
+    if (/:hover|:focus|:active/.test(part)) continue;
+    const last = part.trim().split(/[\s>+~]+/).pop() || '';
+    for (const c of last.match(/\.[\w-]+/g) || []) if (!SMALL.test(c)) boxCls.add(c.slice(1));
+  }
+}
+let boxEls = 0;
+for (const m of text.matchAll(/class=["']([^"']+)["']/gi)) if (m[1].split(/\s+/).some((c) => boxCls.has(c))) boxEls++;
+if (!allow.has('g6') && (boxEls >= 8 || (boxCls.size >= 4 && boxEls >= 5))) hits.push(['G6', '카드 남용', `상자 클래스 ${boxCls.size}종(${[...boxCls].slice(0, 5).join(', ')}) · 상자 ${boxEls}개. 가장 중요한 하나만 카드로 두고 나머지는 여백·구분선으로 묶는다`]);
+
 console.log(`■ ${file}`);
-for (const [id, name] of [['G1', '보라·파랑 그라데이션'], ['G2', '이모지를 표시·아이콘으로 씀'], ['G3', '프레임워크 기본 팔레트 색'], ['G4', '기본으로 고른 글꼴'], ['G5', '크림 바탕 + 테라코타 강조']]) {
+for (const [id, name] of [['G1', '보라·파랑 그라데이션'], ['G2', '이모지를 표시·아이콘으로 씀'], ['G3', '프레임워크 기본 팔레트 색'], ['G4', '기본으로 고른 글꼴'], ['G5', '크림 바탕 + 테라코타 강조'], ['G6', '카드 남용']]) {
   const h = hits.find((x) => x[0] === id);
   console.log(`  [${id} ${name}] ${h ? '걸림 — ' + h[2] : '없음'}`);
 }

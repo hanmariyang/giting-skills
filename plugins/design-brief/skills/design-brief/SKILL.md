@@ -147,7 +147,7 @@ Rules for using it:
    node "<this skill's base directory>/../../scripts/slop_check.mjs" index.html
    ```
 
-   It prints G1 to G5 (purple-blue gradient · emoji as markers or icons · framework default palette · Inter/Space Grotesk · cream + terracotta) and exits 1 if any is hit. Replace each hit with a value from DESIGN.md (an emoji icon becomes an inline SVG or a plain number/label) and run it again until it prints 「걸린 것 없음」. If DESIGN.md deliberately chose one of the flagged hexes with a WHY, pass it with `--allow '#hex'`. It cannot judge centering; look at that yourself. If the checker cannot run, say so at the top of your answer instead of claiming the page is clean.
+   It prints G1 to G6 (purple-blue gradient · emoji as markers or icons · framework default palette · Inter/Space Grotesk · cream + terracotta · card overuse) and exits 1 if any is hit. For G6, keep a card only on the one thing that must be seen first and group the rest with spacing and 1px dividers; if the page is deliberately a card grid (a product list, a bento), pass `--allow 'g6'` and say why. Replace each hit with a value from DESIGN.md (an emoji icon becomes an inline SVG or a plain number/label) and run it again until it prints 「걸린 것 없음」. If DESIGN.md deliberately chose one of the flagged hexes with a WHY, pass it with `--allow '#hex'`. It cannot judge centering; look at that yourself. If the checker cannot run, say so at the top of your answer instead of claiming the page is clean.
 
 ## QA checklist
 

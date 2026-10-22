@@ -338,3 +338,32 @@
   <span class="target" id="price">가격 섹션</span>
   <p class="cap">같은 페이지 안 특정 위치로 이동 (href="#id")</p>
 </div></div>
+
+<!-- @whitespace-group h=250 -->
+<style>
+  .wg { width: 240px; font-size: 12px; color: #1d1d24; }
+  .wg h4 { margin: 0 0 6px; font-size: 13px; font-weight: 800; }
+  .wg .grp + .grp { margin-top: 22px; }
+  .wg .row { display: flex; justify-content: space-between; padding: 7px 0; }
+  .wg .row + .row { border-top: 1px solid #ececf1; }
+  .wg .row span:last-child { color: #8a8a96; font-size: 11px; }
+</style>
+<div class="center"><div class="wg">
+  <div class="grp"><h4>업무</h4><div class="row"><span>견적서 보내기</span><span>오늘</span></div><div class="row"><span>회의록 정리</span><span>내일</span></div></div>
+  <div class="grp"><h4>집</h4><div class="row"><span>장보기</span><span>오늘</span></div><div class="row"><span>택배 반품</span><span>금요일</span></div></div>
+</div></div>
+
+<!-- @featured-card h=260 -->
+<style>
+  .fc { width: 240px; font-size: 12px; color: #1d1d24; }
+  .fc .hero { background: #eef1f8; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
+  .fc .hero small { color: #6b6b76; font-size: 10.5px; }
+  .fc .hero b { display: block; font-size: 15px; margin: 4px 0 10px; }
+  .fc .hero button { width: 100%; border: 0; border-radius: 10px; background: #1d1d24; color: #fff; font: 700 12px/1 inherit; padding: 9px 0; }
+  .fc .row { padding: 7px 0; }
+  .fc .row + .row { border-top: 1px solid #ececf1; }
+</style>
+<div class="center"><div class="fc">
+  <div class="hero"><small>지금 할 일</small><b>견적서 보내기</b><button type="button">끝냈어요</button></div>
+  <div class="row">회의록 정리</div><div class="row">장보기</div><div class="row">택배 반품</div>
+</div></div>
