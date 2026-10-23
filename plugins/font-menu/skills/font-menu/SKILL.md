@@ -1,6 +1,6 @@
 ---
 name: font-menu
-description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 사용자가 '폰트 추천', '이 랜딩에 어울리는 폰트', 'AI 스타트업 느낌 폰트', '고급스러운 제목 폰트', '한글 폰트 뭐 쓰지', 'Pretendard 대안', 'Satoshi/Inter/Space Grotesk 넣어줘', '폰트가 안 바뀌어요/기본 폰트로 나와요'라고 할 때 사용한다. Google Fonts·Fontshare·jsDelivr는 로딩법이 다르고, 틀리면 조용히 시스템 폰트로 폴백된다. 맥락별 폰트·짝·라이선스·정확한 <link>를 준다."
+description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 사용자가 '폰트 추천', '이 랜딩에 어울리는 폰트', 'AI 스타트업 느낌 폰트', '고급스러운 제목 폰트', '한글 폰트 뭐 쓰지', 'Pretendard 대안', '한글 제목 폰트', '손글씨 폰트', '제목·본문 폰트 짝', 'Satoshi/Inter/Space Grotesk 넣어줘', '폰트가 안 바뀌어요/기본 폰트로 나와요'라고 할 때 사용한다. Google Fonts·Fontshare·jsDelivr는 로딩법이 다르고, 틀리면 조용히 시스템 폰트로 폴백된다. 맥락별 폰트·제목과 본문 짝·라이선스·정확한 <link>를 준다."
 ---
 
 # 웹폰트 사전 (font-menu)
@@ -23,7 +23,7 @@ description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰
 
 - **Google Fonts** — Google에 있는 폰트. `<link>`로 부르고 CSS 폴백 스택 필수. 파일 번들·상용 자유.
 - **Fontshare** — Indian Type Foundry 배포(Satoshi·Clash Display·General Sans). **Google에 없다.** `api.fontshare.com`에서만 로드한다. 무료·상용은 되지만 **파일을 프로젝트에 넣어 재배포하면 라이선스 위반** — CDN `<link>`로만 쓴다.
-- **jsDelivr** — Google에 없는 오픈 폰트(Pretendard·Wanted Sans)를 GitHub 저장소째 서빙. OFL이라 번들도 가능하지만 CDN `<link>`가 간편.
+- **jsDelivr**: Google에 없는 오픈 폰트(Pretendard·Wanted Sans·Paperlogy)를 GitHub 저장소째 서빙. OFL이라 번들도 가능하지만 CDN `<link>`가 간편. Paperlogy는 CSS 파일 대신 `<style>` 안의 `@font-face`로 준다(커밋을 고정한 주소).
 
 ⚠️ 가장 흔한 사고: `family=Satoshi`를 Google `<link>`에 박기. Google엔 Satoshi가 없어 아무 일도 안 일어나고 시스템 폰트로 폴백된다. **Fontshare 폰트는 반드시 Fontshare `<link>`로.**
 
@@ -32,7 +32,7 @@ description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰
 `menu.json`이 SSOT다. 항목마다:
 
 - `family` — 폰트 이름
-- `category` — 맥락(본문·테크·랜딩·세리프·모노·한글)
+- `category`: 맥락(본문·테크·랜딩·세리프·모노·한글·한글 제목/손글씨)
 - `source` — **Google Fonts / Fontshare / jsDelivr** (로더가 여기서 갈린다)
 - `license` — OFL(번들 가능) vs Fontshare(CDN 로드만)
 - `load` — **복사해서 `<head>`에 넣는 정확한 스니펫**
@@ -40,7 +40,10 @@ description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰
 - `vibe` — 어떤 인상인가
 - `use` / `whenNot` — 언제 쓰고 언제 피하나
 - `pairsWith` — 어떤 폰트와 짝지을까
-- `weights` — 사용 가능한 두께
+- `weights`: 사용 가능한 두께. `weightNums`가 있으면 그 숫자만 쓴다(두께가 하나뿐인 글꼴에 700을 주면 브라우저가 가짜 굵기를 만든다)
+- `familyKo` · `licenseUrl` · `checked`: 한글 이름, 라이선스 원문 주소, 라이선스를 확인한 날(07 한글 제목·손글씨에만 있다)
+
+짝은 `pairs`에 따로 있다. 항목마다 `title`·`sub`(글꼴 id와 두께) · `rule`(둘의 차이를 어떻게 두는지) · `head`·`subText`(견본 문장) · `ask`(AI에게 할 말). 묶음은 `pairGroups`(한글+한글 · 한글+영문 · 영문+영문), 공통 규칙은 `pairRule`.
 
 ## AI한테 시키는 공식
 
@@ -51,7 +54,18 @@ description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰
 - ✕ 이렇게 말고: 「폰트 예쁘게 넣어줘」
 - ○ 이렇게: 「히어로 제목은 Instrument Serif, 본문은 Inter로. 둘 다 Google Fonts `<link>`로 불러오고 CSS 폴백 스택도 넣어줘」
 
-## 짝 레시피 (자주 쓰는 조합)
+## 짝 고르기
+
+규칙 하나: **한 화면에 한글 글꼴은 두 개까지, 나머지 차이는 굵기와 크기로.** 세 번째 한글 글꼴을 넣고 싶어지면 이미 있는 둘의 두께와 크기를 먼저 벌린다.
+
+1. `pairs`에서 화면의 말(한글만인지, 영문 제목이 있는지)에 맞는 묶음을 고른다.
+2. 짝의 `rule`대로 제목과 보조의 두께·크기 차이를 둔다. 두께는 짝에 적힌 숫자 그대로 쓴다.
+3. 두 글꼴을 **각자의 `load`로** 불러온다. 출처가 다르면 스니펫도 둘이다(예: Black Han Sans는 Google Fonts `<link>`, Pretendard는 jsDelivr `<link>`).
+4. `font-family`에는 각 글꼴의 `css` 값을 그대로 넣는다.
+
+한글 제목 글꼴(07)은 거의 다 두께가 하나뿐이다. 제목은 `font-weight: 400` 그대로 두고, 본문 쪽 두께와 글자 크기로 차이를 만든다. 손글씨(나눔손글씨 펜·붓)는 같은 크기에서 작게 보이니 1.3배쯤 크게 잡는다.
+
+### 자주 쓰는 조합 (짝 항목에 없는 것도 포함)
 
 - **AI 스타트업** — 제목 Space Grotesk + 본문 Inter (+ 라벨 Space Mono)
 - **프리미엄 랜딩** — 제목 Instrument Serif 또는 Fraunces + 본문 Satoshi/Inter
@@ -61,6 +75,8 @@ description: "웹폰트를 '어떤 인상을 원하는지'로 고르고, 그 폰
 - **개발자 도구** — 본문 Geist + 코드 Geist Mono
 - **국문 기본** — Pretendard 단독(한/영/숫자 다 받음)
 - **국문 감성** — 제목 Gowun Batang + 본문 Pretendard
+- **국문 행사·포스터**: 제목 Black Han Sans + 본문 Pretendard 400
+- **국문 에세이**: 제목 Nanum Pen Script + 본문 Gowun Batang
 
 ## "AI가 만든 티" 주의
 

@@ -206,3 +206,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - `intensity`(세기 셋): 거리·배율·흔들림·흐림·부서짐·빛마다 약·보통·강 숫자. 메뉴판이 정한 기준값이다(업계 표준이라고 쓰지 않는다). 갤러리 「이징」 상자 아래에 표와 비교 데모 3개(`@int-*`, m12, 갤러리 전용), llms 에 한 절. 공식(`formula.pattern`) 끝에 `+ [세기]`.
 - ⚠️ 텍스트 엔진 helpers 에는 `lerpC` 가 없다(배경 엔진에만 있다). 다른 엔진에서 함수를 옮겨 쓰면 갤러리에서만 ReferenceError 가 난다.
 - ⚠️ 흐림은 캔버스 `filter` 대신 `shadowBlur` 로 낸다(칸 밖에 글자를 그리고 그림자만 보낸다). `shadowOffsetX` 는 변환을 안 받으니 `scale(z)` 아래에서는 `FAR * 화면배율 * z` 로 맞춘다. 안 맞추면 흐린 글자가 옆으로 밀려 겹친다(실제로 밟음).
+
+## 웹폰트 사전 0.2.0 · 한글 제목·손글씨 10 · 짝 12 (2026-10-23)
+
+- 07 한글 제목·손글씨 10종(Black Han Sans · Do Hyeon · Jua · Paperlogy · Bagel Fat One · Song Myung · Hahmlet · Nanum Brush Script · Nanum Pen Script · Gaegu). 새 칸 `familyKo` · `weightNums`(실제로 있는 두께, 카드 두께 줄과 짝 검사가 쓴다) · `licenseUrl` · `checked`(라이선스 확인한 날).
+- 짝은 `pairs`(title·sub 의 font id 와 weight · rule · head · subText · ask), 묶음 `pairGroups`, 공통 규칙 `pairRule`. **없는 글꼴 id 나 그 글꼴에 없는 두께를 가리키면 빌드가 멈춘다.** menu-index 에는 `c:'pairs'` 로 나간다.
+- Paperlogy 는 Google Fonts 에 없고 저장소에 태그가 없어 커밋을 고정한 jsDelivr 주소로 `<style>@font-face</style>` 를 준다. 갤러리는 `@import` 를 앞에, 이런 `@font-face` 를 뒤에 모은다(`@import` 는 스타일 맨 앞에만 올 수 있다).
+- 로드 확인은 스니펫만 넣은 페이지(iframe srcdoc)에서 `document.fonts.load()` 가 실제 face 를 돌려주는지로 봤다. `document.fonts.check()` 는 없는 글꼴 이름에도 true 를 줄 수 있어 그것만으로는 못 믿는다.
+- 넣지 않은 것: 여기어때 잘난체 2(배포처 요약은 OFL 인데 같은 곳에 「수정·재배포 금지」, 임베딩 「조건부」라 앞뒤가 안 맞고, 웹폰트 주소가 제작사가 아닌 곳이었다). G마켓 산스(Paperlogy 가 그 한글을 쓴다).

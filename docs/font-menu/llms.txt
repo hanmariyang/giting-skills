@@ -1,6 +1,6 @@
 # 웹폰트 사전 (font-menu) · Giting Skills
 
-> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 6개 맥락 24종.
+> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 7개 맥락 34종, 짝 12개.
 > 대원칙: 로더가 폰트마다 다르다. [Google Fonts] Google에 있는 폰트. <link>로 불러오고 폴백 스택 필수. 파일 번들·상용 자유. [Fontshare] Indian Type Foundry 배포. Google에 없음. api.fontshare.com 에서만 로드. 무료·상용은 되지만 파일 재배포·번들은 라이선스 위반. CDN <link>로만 쓴다. [jsDelivr] Google에 없는 오픈 폰트(Pretendard 등)를 GitHub 저장소째 CDN으로 서빙. OFL이라 번들도 가능하지만 CDN <link>가 가장 간편.
 > 가장 흔한 사고: Google에 없는 폰트(Satoshi·Clash Display·General Sans)를 Google <link>에 박아 조용히 시스템 폰트로 폴백. 반드시 각 폰트의 출처 로더로.
 > 공식: 어떤 인상을 원하는지 말하기 → 사전에서 짝 고르기 → 로딩 스니펫째 시키기
@@ -330,3 +330,185 @@
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 ```
+
+## 07 한글 제목 · 손글씨
+
+### Black Han Sans (검은고딕) · 한글 제목 · 굵은 고딕 [Google Fonts]
+- 인상: 획이 아주 두꺼운 한글 고딕. 한 줄만 써도 포스터처럼 보인다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/blackhansans/OFL.txt
+- 두께: 400 한 가지
+- 언제: 행사·이벤트 배너, 히어로 한 줄, 숫자 강조. 제목 전용으로 쓴다.
+- 안 쓸 때: 두께가 하나뿐이라 font-weight를 700으로 줘도 더 두꺼워지지 않고 브라우저가 가짜 굵기를 만든다. 본문·긴 문장엔 숨이 막힌다.
+- 짝: 제목 Black Han Sans + 본문 Pretendard 400. 굵기 차이가 커서 둘이 안 부딪힌다.
+- font-family: 'Black Han Sans', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+```
+
+### Do Hyeon (도현) · 한글 제목 · 좁은 고딕 [Google Fonts]
+- 인상: 배달의민족이 만든 좁고 각진 제목 고딕. 손으로 쓴 간판 같은 맛이 조금 있다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/dohyeon/OFL.txt
+- 두께: 400 한 가지
+- 언제: 앱 화면 제목, 메뉴판, 가격표처럼 좁은 칸에 큰 글자를 넣을 때.
+- 안 쓸 때: 두께가 하나뿐이다. 본문으로 쓰면 글자가 좁아 빽빽해 보인다.
+- 짝: 제목 Do Hyeon + 본문 Noto Sans KR 또는 Pretendard.
+- font-family: 'Do Hyeon', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+```
+
+### Jua (주아) · 한글 제목 · 둥근 고딕 [Google Fonts]
+- 인상: 모서리가 둥글고 통통한 고딕. 친근하고 귀엽다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/jua/OFL.txt
+- 두께: 400 한 가지
+- 언제: 생활 서비스·어린이·음식 앱의 제목과 큰 버튼 글씨.
+- 안 쓸 때: 금융·의료처럼 믿음이 먼저인 화면. 두께가 하나라 굵기로 위계를 못 만든다.
+- 짝: 제목 Jua + 본문 Pretendard. 본문까지 둥글게 하지 않는다.
+- font-family: 'Jua', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+```
+
+### Paperlogy (페이퍼로지) · 한글 제목 · 발표 고딕 [jsDelivr]
+- 인상: G마켓 산스의 한글에 Montserrat 영문을 붙여 발표용으로 다듬은 고딕. 두께가 아홉 단계라 제목과 본문을 한 가족으로 나눌 수 있다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능 · 한글 2,780자(KS X 1001 범위)만 들어 있다), 2026-10-23 확인: https://github.com/Freesentation/paperlogy/blob/main/OFL%20license.txt
+- 두께: 100~900 (9단계, 스니펫은 400 · 700 · 800)
+- 언제: 발표 자료풍 랜딩, 숫자가 많은 소개 페이지, 굵은 제목과 보통 본문을 한 글꼴로 맞추고 싶을 때.
+- 안 쓸 때: Google Fonts에 없다. family=Paperlogy를 Google 링크에 넣으면 조용히 기본 글꼴로 나온다. 한글이 2,780자뿐이라 드문 글자(예: 똠, 햏)는 대체 글꼴로 빠진다.
+- 짝: 제목 Paperlogy 800 + 본문 Paperlogy 400, 또는 본문만 Pretendard.
+- font-family: 'Paperlogy', 'Pretendard Variable', sans-serif
+- 로드:
+```html
+<style>@font-face{font-family:'Paperlogy';src:url('https://cdn.jsdelivr.net/gh/Freesentation/paperlogy@8ef35f53b318c7ca914c52b1b382b9a8bad07a61/woff2/Paperlogy-4Regular.woff2') format('woff2');font-weight:400;font-display:swap}@font-face{font-family:'Paperlogy';src:url('https://cdn.jsdelivr.net/gh/Freesentation/paperlogy@8ef35f53b318c7ca914c52b1b382b9a8bad07a61/woff2/Paperlogy-7Bold.woff2') format('woff2');font-weight:700;font-display:swap}@font-face{font-family:'Paperlogy';src:url('https://cdn.jsdelivr.net/gh/Freesentation/paperlogy@8ef35f53b318c7ca914c52b1b382b9a8bad07a61/woff2/Paperlogy-8ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}</style>
+```
+
+### Bagel Fat One · 한글 제목 · 장난스러운 굵은 글씨 [Google Fonts]
+- 인상: 빵처럼 부풀린 아주 굵은 글씨. 한 단어만 써도 눈에 띈다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/bagelfatone/OFL.txt
+- 두께: 400 한 가지
+- 언제: 이벤트 페이지, 스티커 같은 로고타입, SNS 카드의 큰 한 단어.
+- 안 쓸 때: 두께가 하나뿐이다. 두 줄 넘는 제목은 무거워진다. 진지한 서비스엔 안 맞는다.
+- 짝: 제목 Bagel Fat One + 본문 Pretendard 또는 영문 Plus Jakarta Sans.
+- font-family: 'Bagel Fat One', sans-serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+```
+
+### Song Myung (송명) · 한글 제목 · 날카로운 명조 [Google Fonts]
+- 인상: 붓끝이 날카롭게 살아 있는 명조. 책 표지나 영화 포스터 같은 인상.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/songmyung/OFL.txt
+- 두께: 400 한 가지
+- 언제: 에세이·문화·전시 페이지의 제목, 큰 인용문.
+- 안 쓸 때: 두께가 하나뿐이다. 작은 글씨에선 가는 획이 사라진다. 버튼·라벨엔 쓰지 않는다.
+- 짝: 제목 Song Myung + 본문 Pretendard. 명조 대 고딕으로 대비를 준다.
+- font-family: 'Song Myung', serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+```
+
+### Hahmlet (함렛) · 한글 제목 · 현대 명조 [Google Fonts]
+- 인상: 획 끝을 각지게 정리한 요즘 명조. 두께 폭이 넓어 굵게 쓰면 잡지 제목처럼 된다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/hahmlet/OFL.txt
+- 두께: 100~900 (Variable, 스니펫은 400 · 600 · 800)
+- 언제: 브랜드 소개, 매거진형 글, 고급스러운 상품 페이지의 제목.
+- 안 쓸 때: 긴 본문은 Gowun Batang이나 고딕이 더 편하다. 가는 두께는 작은 글씨에서 흐려진다.
+- 짝: 제목 Hahmlet 800 + 본문 Noto Sans KR 400.
+- font-family: 'Hahmlet', serif
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&display=swap" rel="stylesheet">
+```
+
+### Nanum Brush Script (나눔손글씨 붓) · 한글 손글씨 · 붓 [Google Fonts]
+- 인상: 붓으로 빠르게 쓴 손글씨. 거칠고 힘이 있다.
+- 라이선스: SIL OFL 1.1 (상용 · 번들 가능 · 고쳐서 다시 낼 때는 Nanum 이름을 쓸 수 없다(예약 이름)), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/nanumbrushscript/OFL.txt
+- 두께: 400 한 가지
+- 언제: 전통 음식, 시장, 축제 포스터의 한두 단어 제목.
+- 안 쓸 때: 본문이나 두 줄 넘는 문장. 글자 크기가 작게 나오니 다른 글꼴보다 크게(1.3배쯤) 잡는다.
+- 짝: 제목 Nanum Brush Script + 본문 Gowun Batang 또는 Pretendard.
+- font-family: 'Nanum Brush Script', cursive
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+```
+
+### Nanum Pen Script (나눔손글씨 펜) · 한글 손글씨 · 펜 [Google Fonts]
+- 인상: 볼펜으로 쓴 메모 같은 손글씨. 가볍고 사적이다.
+- 라이선스: SIL OFL 1.1 (상용 · 번들 가능 · 고쳐서 다시 낼 때는 Nanum 이름을 쓸 수 없다(예약 이름)), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/nanumpenscript/OFL.txt
+- 두께: 400 한 가지
+- 언제: 손으로 남긴 한 줄, 다이어리·일기 화면, 사진 위 짧은 메모.
+- 안 쓸 때: 안내문·설명처럼 정확히 읽혀야 하는 글. 글자가 작게 나오니 크게(1.3배쯤) 잡는다.
+- 짝: 제목 Nanum Pen Script + 본문 Gowun Batang. 둘 다 손맛이라 결이 맞는다.
+- font-family: 'Nanum Pen Script', cursive
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+```
+
+### Gaegu (개구) · 한글 손글씨 · 둥근 펜 [Google Fonts]
+- 인상: 또박또박 쓴 둥근 손글씨. 손글씨 중에선 잘 읽히는 편이다.
+- 라이선스: SIL OFL 1.1 (완전 자유 · 상용 · 번들 가능), 2026-10-23 확인: https://github.com/google/fonts/blob/main/ofl/gaegu/OFL.txt
+- 두께: 300 · 400 · 700
+- 언제: 아이 대상 화면, 체크리스트, 말풍선, 손글씨 느낌의 짧은 설명.
+- 안 쓸 때: 긴 글과 업무 도구. 손글씨라 금방 피로해진다.
+- 짝: 제목 Gaegu 700 + 본문 Pretendard.
+- font-family: 'Gaegu', cursive
+- 로드:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet">
+```
+
+## 짝 12
+
+규칙: 한 화면에 한글 글꼴은 두 개까지, 나머지 차이는 굵기와 크기로.
+짝을 고른 뒤 두 글꼴을 각자의 로드 스니펫으로 불러온다(출처가 다르면 스니펫도 둘).
+
+### 한글 + 한글
+
+- Black Han Sans 400 + Pretendard 400 (제목 + 보조): 아주 굵은 제목 하나에 보통 굵기 본문. 굵기 차이로만 나눈다.
+  - 예: 「이번 주말, 마당 장터」 / 「토요일 오전 10시부터 오후 4시까지 열립니다」
+  - 요청 문장: 제목은 Black Han Sans, 본문은 Pretendard 400으로. Black Han Sans는 Google Fonts <link>, Pretendard는 jsDelivr <link>로 불러오고 제목의 font-weight는 400 그대로 둬.
+- Song Myung 400 + Pretendard 400 (제목 + 보조): 명조 제목에 고딕 본문. 제목은 본문의 2.5배 이상 크게 써야 가는 획이 산다.
+  - 예: 「오래 머무는 방」 / 「작은 책방이 문을 연 지 열 해가 되었습니다」
+  - 요청 문장: 제목은 Song Myung, 본문은 Pretendard로. 제목은 본문보다 2.5배 넘게 크게 하고, Song Myung은 Google Fonts, Pretendard는 jsDelivr에서 불러와줘.
+- Paperlogy 800 + Wanted Sans 400 (제목 + 보조): 둘 다 고딕이니 제목은 800, 본문은 400으로 두께를 확실히 벌린다.
+  - 예: 「3분 만에 끝나는 정산」 / 「영수증을 찍으면 금액과 날짜가 바로 채워집니다」
+  - 요청 문장: 제목은 Paperlogy 800, 본문은 Wanted Sans 400으로. Paperlogy는 jsDelivr의 @font-face로 불러오고(Google Fonts에 없다), Wanted Sans도 jsDelivr <link>로.
+- Hahmlet 800 + Noto Sans KR 400 (제목 + 보조): 굵은 명조 제목에 담백한 고딕 본문. 제목만 굵기를 올린다.
+  - 예: 「손으로 짓는 집」 / 「목수 세 사람이 한 채를 짓는 데 넉 달이 걸립니다」
+  - 요청 문장: 제목은 Hahmlet 800, 본문은 Noto Sans KR 400으로. 둘 다 Google Fonts에서 쓰는 두께만 불러와줘.
+- Nanum Pen Script 400 + Gowun Batang 400 (제목 + 보조): 손글씨 제목에 명조 본문. 손글씨는 본문보다 1.3배쯤 더 크게 잡는다.
+  - 예: 「오늘 걸은 길」 / 「비가 그친 뒤 강가를 따라 한 시간쯤 걸었다」
+  - 요청 문장: 제목은 Nanum Pen Script, 본문은 Gowun Batang 400으로. 손글씨는 작게 나오니 제목을 크게 잡고, 둘 다 Google Fonts에서 불러와줘.
+- Jua 400 + Pretendard 400 (제목 + 보조): 둥근 제목에 반듯한 본문. 친근함은 제목에만 둔다.
+  - 예: 「우리 동네 간식 지도」 / 「걸어서 10분 안에 있는 가게만 모았어요」
+  - 요청 문장: 제목은 Jua, 본문은 Pretendard 400으로. Jua는 Google Fonts, Pretendard는 jsDelivr에서 불러오고 Jua는 제목에만 써.
+
+### 한글 + 영문
+
+- Instrument Serif 400 + Pretendard 400 (제목 + 보조): 영문 세리프 제목에 한글 고딕 본문. 영문은 크게, 한글은 작게 나눠 둘이 섞이지 않게 한다.
+  - 예: 「Slow Mornings」 / 「천천히 내린 커피 한 잔과 함께 하루를 엽니다」
+  - 요청 문장: 영문 제목은 Instrument Serif, 한글 본문은 Pretendard로. Instrument Serif는 Google Fonts, Pretendard는 jsDelivr에서 불러와줘.
+- Space Grotesk 700 + Wanted Sans 400 (제목 + 보조): 영문 테크 제목에 한글 본문. 영문 제목에는 한글을 넣지 않는다.
+  - 예: 「Ship faster」 / 「배포 기록을 한 화면에서 확인하세요」
+  - 요청 문장: 영문 제목은 Space Grotesk 700, 한글 본문은 Wanted Sans 400으로. Space Grotesk는 Google Fonts, Wanted Sans는 jsDelivr <link>로 불러와줘.
+- Bagel Fat One 400 + Plus Jakarta Sans 500 (제목 + 보조): 굵은 한글 한 단어에 영문 보조 줄. 한글 제목을 짧게 두고 영문은 작게 받친다.
+  - 예: 「빵지순례」 / 「Weekend bakery route in Seoul」
+  - 요청 문장: 한글 제목은 Bagel Fat One, 영문 보조 줄은 Plus Jakarta Sans 500으로. 둘 다 Google Fonts에서 불러오고 제목은 한두 단어로 짧게.
+
+### 영문 + 영문
+
+- Instrument Serif 400 + Inter 400 (제목 + 보조): 세리프 제목에 산세리프 본문. 가장 흔하게 통하는 대비다.
+  - 예: 「Quiet tools for loud days」 / 「A calendar that only shows what matters today」
+  - 요청 문장: 제목은 Instrument Serif, 본문은 Inter 400으로. 둘 다 Google Fonts <link>로 불러오고 폴백 스택도 넣어줘.
+- Clash Display 600 + Satoshi 400 (제목 + 보조): 같은 제작사의 두 글꼴. 제목은 좁고 굵게, 본문은 넓고 보통으로.
+  - 예: 「Make it loud」 / 「Bold launches for small teams」
+  - 요청 문장: 제목은 Clash Display 600, 본문은 Satoshi 400으로. 둘 다 Fontshare <link>로 불러와줘(Google Fonts에 없다).
+- Bricolage Grotesque 800 + Manrope 400 (제목 + 보조): 개성 있는 굵은 제목에 고른 본문. 제목에만 특이한 모양을 둔다.
+  - 예: 「Odd by design」 / 「Products with a little personality」
+  - 요청 문장: 제목은 Bricolage Grotesque 800, 본문은 Manrope 400으로. 둘 다 Google Fonts에서 쓰는 두께만 불러와줘.
