@@ -213,3 +213,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 실물은 사전 데모를 그대로 쓴다(`MO_HERO` 셋 · `compare.list[0]` · `scenes`). 판 전용 데모를 따로 그리지 않는다. `MO_HERO` 가 없는 id 를 가리키면 빌드가 멈춘다.
 - 옛 맨 위 「AI한테 시키는 공식」 상자와 「처음 한 번에 붙여 넣는 요청문」 상자는 판으로 옮겨서 지웠다. `menu.json` 은 그대로.
 - 갤러리 전용이라 `components/`·플러그인 버전은 안 바뀐다.
+
+## 웹폰트 사전 0.2.0 · 한글 제목·손글씨 10 · 짝 12 (2026-10-23)
+
+- 07 한글 제목·손글씨 10종(Black Han Sans · Do Hyeon · Jua · Paperlogy · Bagel Fat One · Song Myung · Hahmlet · Nanum Brush Script · Nanum Pen Script · Gaegu). 새 칸 `familyKo` · `weightNums`(실제로 있는 두께, 카드 두께 줄과 짝 검사가 쓴다) · `licenseUrl` · `checked`(라이선스 확인한 날).
+- 짝은 `pairs`(title·sub 의 font id 와 weight · rule · head · subText · ask), 묶음 `pairGroups`, 공통 규칙 `pairRule`. **없는 글꼴 id 나 그 글꼴에 없는 두께를 가리키면 빌드가 멈춘다.** menu-index 에는 `c:'pairs'` 로 나간다.
+- Paperlogy 는 Google Fonts 에 없고 저장소에 태그가 없어 커밋을 고정한 jsDelivr 주소로 `<style>@font-face</style>` 를 준다. 갤러리는 `@import` 를 앞에, 이런 `@font-face` 를 뒤에 모은다(`@import` 는 스타일 맨 앞에만 올 수 있다).
+- 로드 확인은 스니펫만 넣은 페이지(iframe srcdoc)에서 `document.fonts.load()` 가 실제 face 를 돌려주는지로 봤다. `document.fonts.check()` 는 없는 글꼴 이름에도 true 를 줄 수 있어 그것만으로는 못 믿는다.
+- 넣지 않은 것: 여기어때 잘난체 2(배포처 요약은 OFL 인데 같은 곳에 「수정·재배포 금지」, 임베딩 「조건부」라 앞뒤가 안 맞고, 웹폰트 주소가 제작사가 아닌 곳이었다). G마켓 산스(Paperlogy 가 그 한글을 쓴다).

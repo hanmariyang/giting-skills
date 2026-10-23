@@ -1142,14 +1142,30 @@ const FP = join(ROOT, 'plugins', 'font-menu');
 const fmenu = JSON.parse(readFileSync(join(FP, 'menu.json'), 'utf8'));
 const fby = id => fmenu.items.filter(i => i.category === id);
 const srcClass = s => s === 'Google Fonts' ? 'google' : s === 'Fontshare' ? 'fontshare' : 'jsdelivr';
+const fById = Object.fromEntries(fmenu.items.map(i => [i.id, i]));
+const fPairs = fmenu.pairs || [];
+const fPairGroups = fmenu.pairGroups || [];
+// 짝은 사전에 있는 글꼴만 가리킨다. 없는 id 나 그 글꼴에 없는 두께를 쓰면 빌드를 멈춘다.
+for (const p of fPairs) {
+  if (!fPairGroups.some(g => g.id === p.group)) throw new Error(`font-menu pair ${p.id}: 없는 묶음 ${p.group}`);
+  for (const side of ['title', 'sub']) {
+    const f = fById[p[side].font];
+    if (!f) throw new Error(`font-menu pair ${p.id}: ${side} 글꼴 ${p[side].font} 이 items 에 없다`);
+    if (f.weightNums && !f.weightNums.includes(p[side].weight)) throw new Error(`font-menu pair ${p.id}: ${f.family} 에 ${p[side].weight} 두께가 없다 (${f.weightNums.join(', ')})`);
+  }
+  if (/—/.test(JSON.stringify(p))) throw new Error(`font-menu pair ${p.id}: 엠대시`);
+}
+const fWts = it => it.weightNums
+  ? it.weightNums.map(w => `<span style="font-weight:${w}">${w}</span>`).join('')
+  : '<span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:700">Bold</span>';
 
 const fCardHtml = it => `
 <article class="fitem" id="${it.id}">
   <div class="spec" style="font-family:${attr(it.css)}">
-    <div class="fbig">${esc(it.family)}</div>
+    <div class="fbig">${esc(it.family)}${it.familyKo ? ` <span class="fko">${esc(it.familyKo)}</span>` : ''}</div>
     <div class="fpan">${esc(it.pan)}</div>
     ${it.panKo ? `<div class="fpan ko">${esc(it.panKo)}</div>` : ''}
-    <div class="fwts"><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:700">Bold</span></div>
+    <div class="fwts">${fWts(it)}</div>
   </div>
   <div class="fmeta">
     <span class="frole">${esc(it.role)}</span>
@@ -1161,7 +1177,7 @@ const fCardHtml = it => `
     <p><b>언제</b>${esc(it.use)}</p>
     <p><b>안 쓸 때</b>${esc(it.whenNot)}</p>
     <p><b>짝</b>${esc(it.pairsWith)}</p>
-    <p class="flic">${esc(it.license.blurb)} · 두께 ${esc(it.weights)}</p>
+    <p class="flic">${esc(it.license.blurb)} · 두께 ${esc(it.weights)}${it.checked ? ` · 라이선스 확인 ${esc(it.checked)}${it.licenseUrl ? ` (<a href="${attr(it.licenseUrl)}" rel="noopener" target="_blank">원문</a>)` : ''}` : ''}</p>
   </div>
 </article>`;
 
@@ -1179,7 +1195,31 @@ ${fby(cat.id).map(it => `<tr>
 </tbody></table></div>`;
 
 const ff = fmenu.formula;
-const fImports = [...new Set(fmenu.items.map(i => i.import))].join('\n');
+// @import 는 스타일 맨 앞에만 올 수 있다. @font-face 로 주는 글꼴(Paperlogy)은 그 뒤에 둔다.
+const fImpAll = [...new Set(fmenu.items.map(i => i.import))];
+const fImports = [...fImpAll.filter(x => x.startsWith('@import')), ...fImpAll.filter(x => !x.startsWith('@import'))].join('\n');
+const fPairCard = p => {
+  const t = fById[p.title.font], u = fById[p.sub.font];
+  const loads = [...new Set([t.load, u.load])].join('\n');
+  return `
+<article class="fpair" id="${p.id}">
+  <div class="fpspec">
+    <div class="fphead" style="font-family:${attr(t.css)};font-weight:${p.title.weight}">${esc(p.head)}</div>
+    <div class="fpsub" style="font-family:${attr(u.css)};font-weight:${p.sub.weight}">${esc(p.subText)}</div>
+  </div>
+  <div class="fpnames"><a href="#${t.id}">${esc(t.family)} ${p.title.weight}</a><span>+</span><a href="#${u.id}">${esc(u.family)} ${p.sub.weight}</a></div>
+  <p class="fprule">${esc(p.rule)}</p>
+  <div class="askline"><code>${esc(p.ask)}</code><button class="copy tiny" data-copy="${attr(p.ask)}" title="요청 문장 복사">복사</button></div>
+  <div class="floadrow"><code>${esc(loads)}</code><button class="copy tiny" data-copy="${attr(loads)}" title="두 글꼴 로드 스니펫 복사">로드 복사</button></div>
+</article>`;
+};
+const fPairsHtml = fPairs.length ? `
+<section class="cat" id="c-pairs">
+  <h2><span class="no">${String(fmenu.categories.length + 1).padStart(2, '0')}</span> 짝 <span class="count">${fPairs.length}</span></h2>
+  <div class="fprulebox"><b>짝의 규칙</b>${esc(fmenu.pairRule)}</div>
+  ${fPairGroups.map(g => `<h3 class="fpg">${esc(g.ko)}</h3>
+  <div class="ggrid">${fPairs.filter(p => p.group === g.id).map(fPairCard).join('\n')}</div>`).join('\n  ')}
+</section>` : '';
 const FGAL_CSS = fImports + '\n' + CORE_CSS.replace(/\.uigal/g, '.fmgal') + `
 .fmgal .ggrid { grid-template-columns: 1fr 1fr; }
 @media (max-width: 860px) { .fmgal .ggrid { grid-template-columns: 1fr; } }
@@ -1208,7 +1248,24 @@ const FGAL_CSS = fImports + '\n' + CORE_CSS.replace(/\.uigal/g, '.fmgal') + `
 .fmgal .fnotes p { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
 .fmgal .fnotes b { color: var(--ink); font-weight: 700; margin-right: 6px; }
 .fmgal .fnotes .flic { font-size: 11px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 6px; margin-top: 2px; }
-.fmgal td a { letter-spacing: -.01em; }`;
+.fmgal td a { letter-spacing: -.01em; }
+.fmgal .fko { font-size: 20px; color: var(--ink-3); letter-spacing: 0; margin-left: 4px; white-space: nowrap; display: inline-block; }
+.fmgal .fpnames a { color: var(--ink); text-decoration: none; }
+.fmgal .fpnames a:hover { text-decoration: underline; }
+.fmgal .fwts span { font-synthesis: none; }
+.fmgal .fprulebox { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--gwash); font-size: 14px; color: var(--ink); line-height: 1.5; margin-bottom: 6px; word-break: keep-all; }
+.fmgal .fprulebox b { display: block; font-size: 12px; color: var(--ink-3); margin-bottom: 2px; }
+.fmgal .fpg { font-size: 14px; margin: 18px 0 8px; color: var(--ink-2); }
+.fmgal .fpair { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; background: var(--paper, #fff); min-width: 0; }
+.fmgal .fpspec { padding: 20px 16px 16px; border-bottom: 1px solid var(--line); }
+.fmgal .fphead { font-size: 32px; line-height: 1.2; color: var(--ink); word-break: keep-all; overflow-wrap: anywhere; font-synthesis: none; }
+.fmgal .fpsub { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin-top: 8px; word-break: keep-all; overflow-wrap: anywhere; font-synthesis: none; }
+.fmgal .fpnames { display: flex; flex-wrap: wrap; gap: 4px 8px; padding: 10px 14px 0; font-size: 12.5px; font-weight: 700; align-items: baseline; }
+.fmgal .fpnames span { color: var(--ink-3); font-weight: 400; }
+.fmgal .fprule { margin: 6px 14px 10px; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; word-break: keep-all; }
+.fmgal .fpair .askline { display: flex; gap: 8px; align-items: flex-start; padding: 0 14px 10px; }
+.fmgal .fpair .askline code { font-size: 12px; line-height: 1.5; flex: 1; min-width: 0; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+.fmgal .fpair .floadrow { margin-top: auto; border-top: 1px solid var(--line); border-bottom: 0; }`;
 
 const fpCore = `<div class="fmgal">
 <style>${FGAL_CSS}</style>
@@ -1224,6 +1281,7 @@ const fpCore = `<div class="fmgal">
 </div>
 <nav class="gnav" aria-label="맥락">
   ${fmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${fby(c.id).length}</a>`).join('\n  ')}
+  ${fPairs.length ? `<a href="#c-pairs"><b>${String(fmenu.categories.length + 1).padStart(2, '0')}</b>짝 ${fPairs.length}</a>` : ''}
 </nav>
 ${fmenu.categories.map(cat => `
 <section class="cat" id="c-${cat.id}">
@@ -1231,13 +1289,14 @@ ${fmenu.categories.map(cat => `
   <div class="ggrid">${fby(cat.id).map(fCardHtml).join('\n')}</div>
   ${fTableHtml(cat)}
 </section>`).join('\n')}
+${fPairsHtml}
 <script>${CORE_JS.replace(/\.uigal/g, '.fmgal')}</script>
 </div>
 `;
 
 const fdict = () => `# 웹폰트 사전 (font-menu) · Giting Skills
 
-> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. 6개 맥락 ${fmenu.items.length}종.
+> 어떤 인상을 원하는지로 폰트를 고르고, 그 폰트를 어디서 어떻게 불러오는지 로딩 스니펫째 주는 사전. ${fmenu.categories.length}개 맥락 ${fmenu.items.length}종, 짝 ${fPairs.length}개.
 > 대원칙: 로더가 폰트마다 다르다. ${Object.entries(fmenu.loaders).map(([k, v]) => `[${k}] ${v}`).join(' ')}
 > 가장 흔한 사고: Google에 없는 폰트(Satoshi·Clash Display·General Sans)를 Google <link>에 박아 조용히 시스템 폰트로 폴백. 반드시 각 폰트의 출처 로더로.
 > 공식: ${ff.pattern}
@@ -1246,9 +1305,9 @@ const fdict = () => `# 웹폰트 사전 (font-menu) · Giting Skills
 
 ${fmenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
-${fby(cat.id).map(it => `### ${it.family} · ${it.role} [${it.source}]
+${fby(cat.id).map(it => `### ${it.family}${it.familyKo ? ` (${it.familyKo})` : ''} · ${it.role} [${it.source}]
 - 인상: ${it.vibe}
-- 라이선스: ${it.license.name} (${it.license.blurb})
+- 라이선스: ${it.license.name} (${it.license.blurb})${it.checked ? `, ${it.checked} 확인${it.licenseUrl ? `: ${it.licenseUrl}` : ''}` : ''}
 - 두께: ${it.weights}
 - 언제: ${it.use}
 - 안 쓸 때: ${it.whenNot}
@@ -1258,7 +1317,18 @@ ${fby(cat.id).map(it => `### ${it.family} · ${it.role} [${it.source}]
 \`\`\`html
 ${it.load}
 \`\`\`
-`).join('\n')}`).join('\n')}`;
+`).join('\n')}`).join('\n')}${fPairs.length ? `
+## 짝 ${fPairs.length}
+
+규칙: ${fmenu.pairRule}.
+짝을 고른 뒤 두 글꼴을 각자의 로드 스니펫으로 불러온다(출처가 다르면 스니펫도 둘).
+
+${fPairGroups.map(g => `### ${g.ko}
+
+${fPairs.filter(p => p.group === g.id).map(p => `- ${fById[p.title.font].family} ${p.title.weight} + ${fById[p.sub.font].family} ${p.sub.weight} (제목 + 보조): ${p.rule}
+  - 예: 「${p.head}」 / 「${p.subText}」
+  - 요청 문장: ${p.ask}`).join('\n')}`).join('\n\n')}
+` : ''}`;
 
 if (SITE_DIR) {
   const FS = join(SITE_DIR, 'font-menu');
@@ -1839,6 +1909,15 @@ if (SITE_DIR) {
       if (it.culprit || it.culprits) row.why = it.culprit ? [it.culprit] : it.culprits;
       if (it.license?.blurb) row.lic = `${it.license.name} · ${it.license.blurb}`;
       index.items.push(row);
+    }
+    if (slug === 'font-menu' && fPairs.length) {
+      index.menus[index.menus.length - 1].cats.push({ id: 'pairs', ko: '짝', no: String(m.categories.length + 1).padStart(2, '0') });
+      for (const p of fPairs) {
+        const t = fById[p.title.font], u = fById[p.sub.font];
+        const g = fPairGroups.find(x => x.id === p.group);
+        index.items.push({ m: slug, id: p.id, c: 'pairs', g: g.ko, ko: `${t.family} + ${u.family}`, en: `${p.title.weight} / ${p.sub.weight}`,
+          al: [g.ko, p.head], one: p.rule, ask: p.ask, demo: false, pairsWith: `제목 ${t.family} ${p.title.weight} + 보조 ${u.family} ${p.sub.weight}. ${fmenu.pairRule}.` });
+      }
     }
   }
   writeFileSync(join(SITE_DIR, 'menu-index.json'), JSON.stringify(index));
