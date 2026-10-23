@@ -221,3 +221,4 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - Paperlogy 는 Google Fonts 에 없고 저장소에 태그가 없어 커밋을 고정한 jsDelivr 주소로 `<style>@font-face</style>` 를 준다. 갤러리는 `@import` 를 앞에, 이런 `@font-face` 를 뒤에 모은다(`@import` 는 스타일 맨 앞에만 올 수 있다).
 - 로드 확인은 스니펫만 넣은 페이지(iframe srcdoc)에서 `document.fonts.load()` 가 실제 face 를 돌려주는지로 봤다. `document.fonts.check()` 는 없는 글꼴 이름에도 true 를 줄 수 있어 그것만으로는 못 믿는다.
 - 넣지 않은 것: 여기어때 잘난체 2(배포처 요약은 OFL 인데 같은 곳에 「수정·재배포 금지」, 임베딩 「조건부」라 앞뒤가 안 맞고, 웹폰트 주소가 제작사가 아닌 곳이었다). G마켓 산스(Paperlogy 가 그 한글을 쓴다).
+- (같은 날) **UI 메뉴판 갤러리도 같은 결**: 판 다섯(소개 · 시키는 공식 · 이런 말엔 이런 이름 · 화면 조합 레시피 · 스킬 설치). ⭐ 의뢰자 조건 = **원래 있던 요소는 하나도 빼지 않는다** — 옛 단독 갤러리 히어로 문장 · 공식 넷(pattern·bad·good·note) · 별칭→이름·shadcn·구분(vs) · 레시피 · 설치·GitHub·llms 를 판으로 올렸고, 코스 내비 · 자동 시연 · 카드 버튼 넷 · 코스별 표 · 레시피 섹션은 그대로. 옛 공식 상자만 판 2 와 같은 내용이라 뺐다. 인트로 데모에도 `data-demo` 가 붙어 자동 시연이 돈다. 모션 판 공식 설명도 note 전문으로 바꿨다(첫 문장만 잘라 쓰던 것).
