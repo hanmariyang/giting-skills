@@ -1,0 +1,97 @@
+<!-- @chip-headline h=260 full -->
+<style>
+  .ch { --ink:#1a1b1f; --mut:#6b6c74; --acc:#3a5bd9; --pn:#f3f6ff; --hl:#ffd84d; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:var(--pn); color:var(--ink); text-align:center; padding:44px 22px 40px; }
+  .ch .chip { display:inline-block; font-size:13px; font-weight:700; color:var(--acc); background:#fff; border-radius:999px; padding:6px 15px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .ch h2 { margin:16px auto 12px; font-size:clamp(26px,6vw,40px); line-height:1.22; letter-spacing:-.035em; font-weight:800; word-break:keep-all; max-width:16em; }
+  .ch h2 em { font-style:normal; background:linear-gradient(transparent 58%,var(--hl) 58%); }
+  .ch h2 i { font-style:normal; color:var(--acc); }
+  .ch p { margin:0 auto; max-width:30em; font-size:15px; line-height:1.65; color:var(--mut); word-break:keep-all; }
+  .ch p b { color:var(--ink); }
+</style>
+<section class="ch">
+  <span class="chip">자동 정리</span>
+  <h2>사진만 넣으면<br>달력이 <em>저절로</em> <i>채워져요</i></h2>
+  <p>찍은 날짜를 읽어 그날 칸에 넣어요.<br><b>고를 것도, 옮길 것도 없어요.</b></p>
+</section>
+
+<!-- @prompt-bubble h=250 full -->
+<style>
+  .pb { --ink:#1a1b1f; --mut:#9a9ba2; --acc:#3a5bd9; --pn:#f3f6ff; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:var(--pn); padding:32px 20px; }
+  .pb .row { display:flex; align-items:center; gap:10px; max-width:640px; margin:0 auto 12px; background:#fff; border-radius:18px; padding:12px; box-shadow:0 8px 24px rgba(23,23,27,.08); }
+  .pb .mk { flex:none; width:22px; text-align:center; font-weight:800; color:#17b26a; }
+  .pb .row.no .mk { color:#c0392b; }
+  .pb .say { flex:1; min-width:0; margin:0; background:var(--acc); color:#fff; border-radius:12px; padding:13px 16px; font-size:15px; font-weight:700; line-height:1.5; word-break:keep-all; }
+  .pb .row.no .say { background:#f4f5f7; color:var(--mut); font-weight:500; }
+  .pb button { flex:none; border:1px solid #e3e4e8; background:#fff; border-radius:9px; padding:8px 12px; font-size:12.5px; font-weight:600; color:#55565e; cursor:pointer; }
+  .pb .cap { max-width:640px; margin:6px auto 0; font-size:12.5px; color:var(--mut); text-align:center; }
+</style>
+<section class="pb">
+  <div class="row no"><span class="mk">✕</span><p class="say">알아서 예쁘게 정리해줘</p></div>
+  <div class="row"><span class="mk">○</span><p class="say">이 사진 마흔 장을 찍은 날짜별로 달력 칸에 넣고, 같은 날이 여럿이면 제일 밝은 한 장만 표지로 해줘</p><button type="button" onclick="var b=this;try{navigator.clipboard.writeText(b.previousElementSibling.textContent)}catch(e){}b.textContent='복사됨';setTimeout(function(){b.textContent='복사'},1100)">복사</button></div>
+  <p class="cap">위는 느낌으로 한 말, 아래는 그대로 쳐서 쓰는 말. 복사 단추는 아래 말풍선에만.</p>
+</section>
+
+<!-- @use-table h=330 full -->
+<style>
+  .ut { --ink:#1a1b1f; --mut:#9a9ba2; --acc:#3a5bd9; --pn:#f3f6ff; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; padding:30px 20px; }
+  .ut h3 { text-align:center; font-size:24px; letter-spacing:-.03em; margin:0 0 18px; }
+  .ut a { display:flex; align-items:center; gap:12px; flex-wrap:wrap; max-width:720px; margin:0 auto 8px; background:#fff; border:1px solid #eceef3; border-radius:14px; padding:13px 16px; color:var(--ink); text-decoration:none; }
+  .ut a:hover { border-color:var(--acc); }
+  .ut .w { flex:1 1 200px; font-size:15px; font-weight:700; }
+  .ut .u { display:flex; gap:6px; flex-wrap:wrap; }
+  .ut .u span { font-size:13px; font-weight:700; color:var(--acc); background:var(--pn); border-radius:999px; padding:5px 12px; }
+</style>
+<section class="ut">
+  <h3>이런 글엔 이런 견본을 골라요</h3>
+  <a href="#"><span class="w">새 기능 알릴 때</span><span class="u"><span>03</span><span>04</span><span>09</span></span></a>
+  <a href="#"><span class="w">할인 · 마감 안내</span><span class="u"><span>05 D-3</span><span>11 SALE</span></span></a>
+  <a href="#"><span class="w">쓰는 법 단계</span><span class="u"><span>06</span><span>12</span></span></a>
+  <a href="#"><span class="w">후기 모음</span><span class="u"><span>02</span><span>08</span><span>10</span></span></a>
+</section>
+
+<!-- @result-trio h=340 full -->
+<style>
+  .rt { --ink:#1a1b1f; --mut:#6b6c74; --acc:#3a5bd9; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; padding:30px 20px; }
+  .rt .g { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; max-width:820px; margin:0 auto; }
+  @media (max-width:600px){ .rt .g { grid-template-columns:1fr; max-width:320px; } }
+  .rt figure { margin:0; text-align:center; }
+  .rt .ph { height:200px; border-radius:16px; background:#16171b; color:#ff6a2b; display:flex; align-items:center; justify-content:center; padding:16px; font-weight:900; letter-spacing:-.04em; line-height:1.05; box-shadow:0 8px 24px rgba(23,23,27,.12); word-break:keep-all; }
+  .rt figcaption { margin-top:10px; font-size:14px; font-weight:700; }
+  .rt figcaption b { color:var(--acc); }
+  .rt .cap { text-align:center; font-size:13px; color:var(--mut); margin:16px 0 0; }
+</style>
+<section class="rt">
+  <div class="g">
+    <figure><div class="ph" style="font-size:34px">새 학기</div><figcaption><b>짧게</b> 두 어절</figcaption></figure>
+    <figure><div class="ph" style="font-size:28px">새 학기<br>준비물 정리</div><figcaption><b>원래</b> 글</figcaption></figure>
+    <figure><div class="ph" style="font-size:19px">새 학기 준비물을<br>과목별로 나눠<br>한 장에 정리했어요</div><figcaption><b>길게</b> 크기 70%</figcaption></figure>
+  </div>
+  <p class="cap">같은 것을 조건 하나만 바꿔 세 번. 설명 대신 결과가 말한다.</p>
+</section>
+
+<!-- @swatch-grid h=430 full -->
+<style>
+  .sg { --ink:#1a1b1f; --mut:#9a9ba2; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; padding:28px 20px; }
+  .sg .g { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; max-width:720px; margin:0 auto; }
+  @media (max-width:600px){ .sg .g { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+  .sg .c { aspect-ratio:3/4; border-radius:10px; position:relative; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; letter-spacing:-.03em; overflow:hidden; }
+  .sg .c b { position:absolute; left:7px; top:6px; font-size:10px; font-weight:700; opacity:.7; font-family:ui-monospace,monospace; }
+  .sg .cap { text-align:center; font-size:13px; color:var(--mut); margin:14px 0 0; }
+</style>
+<section class="sg">
+  <div class="g">
+    <div class="c" style="background:#16171b;color:#7CFF8A"><b>01</b>봄</div>
+    <div class="c" style="background:#ffd84d;color:#1a1b1f"><b>02</b>Hi</div>
+    <div class="c" style="background:#f2efe8;color:#1a1b1f"><b>03</b>NEW</div>
+    <div class="c" style="background:#ff6a2b;color:#fff"><b>04</b>+1</div>
+    <div class="c" style="background:#1a1b1f;color:#ff6a2b"><b>05</b>D-3</div>
+    <div class="c" style="background:#6a3ef0;color:#fff"><b>06</b>1·2·3</div>
+    <div class="c" style="background:#2b5cff;color:#fff"><b>07</b>오픈</div>
+    <div class="c" style="background:#f2efe8;color:#e0392b"><b>08</b>후기</div>
+    <div class="c" style="background:#1e5b3a;color:#fff"><b>09</b>링크</div>
+    <div class="c" style="background:#111;color:#ddd"><b>10</b>Q&amp;A</div>
+    <div class="c" style="background:#e0392b;color:#fff"><b>11</b>SALE</div>
+    <div class="c" style="background:#eceae4;color:#1a1b1f"><b>12</b>끝</div>
+  </div>
+  <p class="cap">번호가 곧 이름. 「03이랑 11 섞어줘」처럼 번호로 고르고 조합한다.</p>
+</section>

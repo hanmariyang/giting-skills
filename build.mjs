@@ -1568,6 +1568,14 @@ const LM_CSS = `.lmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e5e1;--acc:#0E7B62
 .lmgal .lm-card footer{padding:12px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink2);display:grid;gap:5px}
 .lmgal .lm-card footer .al{color:var(--ink);font-weight:600}
 .lmgal .lm-card footer .vs{color:#8A6A1F}
+.lmgal .lm-rhythm{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 16px}
+.lmgal .lm-rhythm>b{font-size:14.5px}.lmgal .lm-rhythm p{font-size:12.5px;color:var(--ink2);margin:6px 0 10px}
+.lmgal .lm-rhythm ul{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}.lmgal .lm-rhythm li{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.lmgal .lm-lays{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 12px}
+.lmgal .lm-lays span{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;font-weight:700;display:grid;gap:3px}
+.lmgal .lm-lays i{font-style:normal;color:var(--acc);font-family:ui-monospace,monospace;font-size:11px}.lmgal .lm-lays small{font-weight:500;font-size:11.5px;color:var(--ink2)}
+.lmgal .lm-rask{display:flex;gap:8px;align-items:flex-start}.lmgal .lm-rask code{flex:1;min-width:0;font-size:12px;line-height:1.6;background:var(--bg);border-radius:8px;padding:9px 11px;font-family:ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.lmgal .lm-rask .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 10px;cursor:pointer;color:var(--ink)}
 @media(prefers-color-scheme:dark){.lmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.lmgal .lm-formula,.lmgal .lm-card{background:#1d1d20}.lmgal .lm-nav a{background:#1d1d20}}`;
 const lmCard = it => `<article class="lm-card" id="l-${it.id}">
   <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장 복사</button></header>
@@ -1585,6 +1593,10 @@ const lmCore = `<div class="lmgal">
 <nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}</nav>
 ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
   <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${lmBy(cat.id).length}</span></h2>
+  ${cat.id === 'detail' && lmMenu.rhythm ? `<div class="lm-rhythm"><b>${esc(lmMenu.rhythm.title)}</b><p>${esc(lmMenu.rhythm.note)}</p>
+    <ul>${lmMenu.rhythm.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+    <div class="lm-lays">${lmMenu.rhythm.layouts.map((l, i) => `<span><i>${i + 1}</i>${esc(l.ko)}<small>${esc(l.use)}</small></span>`).join('')}</div>
+    <div class="lm-rask"><code>${esc(lmMenu.rhythm.ask)}</code><button class="copy" data-copy="${attr(lmMenu.rhythm.ask)}" title="요청 문장 복사">문장 복사</button></div></div>` : ''}
   <div class="lm-grid">${lmBy(cat.id).map(lmCard).join('\n')}</div>
 </section>`).join('\n')}
 <script>document.querySelectorAll('.lmgal .copy').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.getAttribute('data-copy'));var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
@@ -1592,7 +1604,7 @@ ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
 `;
 const lmDict = full => `# 랜딩 메뉴판 (landing-menu) · Giting Skills
 
-> 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML. 6개 코스 ${lmMenu.items.length}개 항목.
+> 랜딩 페이지를 '무슨 섹션을 어떤 순서로'로 짓게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 실물 HTML. ${lmMenu.categories.length}개 코스 ${lmMenu.items.length}개 항목.
 > 룩(색·폰트)은 design-brief에서, 이 사전은 구조·순서만.
 > 공식: ${lmF.pattern}  (✕ "${lmF.bad}" → ○ "${lmF.good}")
 > 갤러리: https://giting.kr/skills/landing-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -1600,7 +1612,13 @@ const lmDict = full => `# 랜딩 메뉴판 (landing-menu) · Giting Skills
 
 ## 요청은 원하는 쪽만 적는다
 ${lmMenu.antiGeneric.map(a => `- ${a}`).join('\n')}
-
+${lmMenu.rhythm ? `
+## ${lmMenu.rhythm.title}
+${lmMenu.rhythm.note}
+${lmMenu.rhythm.rules.map(r => `- ${r}`).join('\n')}
+- 판 꼴: ${lmMenu.rhythm.layouts.map(l => `${l.ko}(${l.use})`).join(' · ')}
+- 요청 문장: ${lmMenu.rhythm.ask}
+` : ''}
 ${lmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
 ${lmBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
