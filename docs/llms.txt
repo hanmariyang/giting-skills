@@ -1,6 +1,6 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 12개 코스 147개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -932,6 +932,121 @@
 - 구분: 영상 속 도형 떠다니기는 motion-menu 「떠다니는 도형」
 - 요청 문장: 폰 목업 옆 배지 셋에 둥실 효과를 넣어줘. 위아래 9px, 3.2초·3.8초·3.2초로 박자를 다르게, 시작점(animation-delay)도 어긋나게. 본문이 아니라 장식에만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-floating.html
+
+## ⑫ 누를 때 반응
+
+### 눌리면 찌그러지는 버튼 (Squish Button)
+- 별칭: "누르면 쫀득하게 눌리는 버튼" · "눌렀다 떼면 통 튀는 버튼" · "젤리처럼 눌리는 버튼"
+- 정의: 누르는 동안 살짝 작아졌다가, 떼면 조금 넘쳐 커졌다 제자리로 오는 버튼.
+- 구분: 누른 자리에서 물결이 퍼지면 물결(리플), 버튼 자체가 눌렸다 튀면 이것
+- 요청 문장: 「장바구니 담기」 버튼을 눌리면 찌그러지는 버튼으로 만들어줘. 누르는 동안 0.08초에 92%로 줄고, 떼면 0.35초 동안 104%까지 넘쳤다가 100%로 (스프링 곡선). 키보드 스페이스에도 같은 모양. 동작 줄이기면 색만 진해지게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-squish.html
+
+### 로딩 버튼 (Morphing Loading Button)
+- 별칭: "누르면 동그랗게 줄면서 도는 버튼" · "보내기 누르면 원으로 변했다 체크 뜨는 거" · "버튼이 로딩으로 바뀌는 거"
+- 정의: 누르면 버튼이 동그라미로 줄어 돌다가, 끝나면 체크로 바뀌고 다시 버튼으로 돌아오는 흐름.
+- 구분: 버튼 모양은 그대로 두고 안에 스피너만 넣으면 ⑧ 로딩 상태
+- 요청 문장: 「보내기」 버튼을 로딩 버튼으로 만들어줘. 누르면 0.3초에 폭이 높이와 같은 원으로 줄고 테두리가 돌며 기다리다, 끝나면 초록 체크로 0.25초, 1.5초 뒤 원래 버튼으로. 도는 동안 다시 못 누르게 막고 aria-busy=true, 끝나면 「보냈어요」를 읽어 주게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-loading-button.html
+
+### 길게 눌러 확인 (Hold to Confirm)
+- 별칭: "꾹 누르고 있어야 되는 버튼" · "누르고 있으면 차오르는 삭제 버튼" · "실수로 안 눌리게 길게 누르기"
+- 정의: 누르고 있는 동안 버튼 안이 차오르고, 끝까지 차야 실행되는 버튼. 떼면 도로 빠진다.
+- 구분: 한 번 더 묻는 창을 띄우면 확인 창, 버튼 하나로 끝내면 이것
+- 요청 문장: 「계정 삭제」 버튼을 길게 눌러 확인으로 만들어줘. 누르는 동안 빨간 채움이 왼쪽부터 1.2초에 걸쳐 차오르고, 다 차면 실행. 중간에 떼면 0.2초에 빠지기. 스페이스·엔터를 누르고 있어도 같게, 버튼 이름에 「1초 넘게 누르세요」를 넣어.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-hold.html
+
+### 맥박 버튼 (Pulse Button)
+- 별칭: "두근두근 퍼지는 버튼" · "원이 계속 퍼져 나가는 버튼" · "눈길 끄는 라이브 버튼"
+- 정의: 버튼 둘레로 고리가 일정한 박자로 퍼져 나가 눈길을 끄는 버튼.
+- 구분: 계속 움직이면 맥박, 한 번 누를 때만 퍼지면 물결(리플)
+- 요청 문장: 「라이브 보기」 버튼에 맥박을 넣어줘. 1.6초마다 버튼 테두리에서 고리가 1.6배까지 퍼지며 사라지고, 두 고리는 0.8초 차이로. 한 화면에 하나만. 동작 줄이기면 고리 없이 테두리만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-pulse.html
+
+### 출렁 토글 (Jelly Switch)
+- 별칭: "손잡이가 늘어나며 넘어가는 스위치" · "말랑하게 켜지는 토글" · "끈적하게 미끄러지는 스위치"
+- 정의: 켜고 끌 때 동그란 손잡이가 옆으로 늘어났다가 반대편에 닿으며 둥글게 돌아오는 스위치.
+- 구분: 모양 그대로 미끄러지면 토글 스위치, 손잡이가 늘어나면 이것
+- 요청 문장: 알림 설정 스위치를 출렁 토글로 만들어줘. 누르면 손잡이가 0.15초 동안 가로 1.5배로 늘어나며 반대편으로 가고, 닿으면 0.2초에 다시 동그랗게. 바탕은 회색에서 초록으로 0.3초. role=switch, aria-checked.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-jelly-toggle.html
+
+### 통 튀는 체크박스 (Bouncy Checkbox)
+- 별칭: "체크하면 통 튀는 네모" · "체크 표시가 그려지는 체크박스" · "할 일 지울 때 쫀득한 체크"
+- 정의: 체크하면 칸이 살짝 눌렸다 커지고 그 안에 체크 표시가 그어지는 체크박스.
+- 요청 문장: 할 일 목록 체크박스를 통 튀는 체크박스로 만들어줘. 누르면 칸이 0.1초에 85%로 줄었다 0.25초에 110%를 거쳐 100%, 체크 표시는 0.25초 동안 왼쪽 아래에서 그어지고, 글자에는 취소선. 진짜 input type=checkbox 를 그대로 쓰고 모양만 덮어.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-check-pop.html
+
+### 미끄러지는 탭 표시 (Sliding Tab Indicator)
+- 별칭: "고른 탭으로 배경이 미끄러져 가는 거" · "탭 밑줄이 따라 움직이는 것" · "알약이 옆 탭으로 슥 옮겨 가는 탭"
+- 정의: 탭을 바꾸면 고른 표시(알약이나 밑줄)가 새 탭 쪽으로 늘어나며 미끄러져 가는 반응.
+- 구분: 탭 자체는 ② 탭, 고른 표시가 움직이는 것이 이것
+- 요청 문장: 일·주·월 탭에 미끄러지는 탭 표시를 넣어줘. 고른 탭 뒤 알약이 0.3초 동안 새 탭 자리로 미끄러지고, 가는 동안 폭이 두 탭을 덮을 만큼 늘었다 줄어들게. role=tablist, 화살표 키로도 이동.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-tab-slider.html
+
+### 떠오르는 라벨 (Floating Label)
+- 별칭: "입력하면 이름이 위로 올라가는 칸" · "칸 안에 있던 글자가 위로 작아지는 거" · "머티리얼 입력칸"
+- 정의: 입력칸 안에 있던 이름이 누르거나 글을 쓰면 테두리 위로 작아지며 올라가는 라벨.
+- 구분: 늘 칸 위에 붙어 있으면 라벨, 칸 안에서 올라가면 이것
+- 요청 문장: 이메일 입력칸에 떠오르는 라벨을 넣어줘. 비어 있을 때는 칸 안에 14px, 포커스하거나 글이 있으면 0.2초 동안 테두리 위로 11px 로 올라가고 색은 주황. 진짜 label for 로 연결하고 placeholder 에 같은 말을 또 쓰지 마.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-float-label.html
+
+### 비밀번호 강도 막대 (Password Strength Meter)
+- 별칭: "비번 치면 약함·보통·강함 나오는 막대" · "비밀번호 안전도 표시" · "칸이 하나씩 차는 비번 게이지"
+- 정의: 비밀번호를 칠 때마다 네 칸 막대가 차고, 약함·보통·강함을 글로도 알려 주는 표시.
+- 구분: 얼마나 끝났는지는 프로그레스 바, 얼마나 안전한지는 이것
+- 요청 문장: 가입 화면 비밀번호 칸 밑에 강도 막대를 넣어줘. 네 칸, 길이 8자·대문자·숫자·특수문자마다 한 칸씩 0.2초에 차고, 1~2칸 빨강 「약함」, 3칸 주황 「보통」, 4칸 초록 「강함」. 글은 aria-live=polite 로 읽어 주게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-strength.html
+
+### 틀리면 흔들기 (Error Shake)
+- 별칭: "비번 틀리면 칸이 도리도리" · "틀렸을 때 좌우로 떨리는 입력칸" · "아니라고 고개 젓는 칸"
+- 정의: 잘못 넣고 보내면 입력칸이 좌우로 짧게 흔들리고 빨간 안내가 붙는 반응.
+- 구분: 무엇이 틀렸는지 글로 알려 주는 것은 인라인 에러, 흔들림은 그 위에 얹는 신호
+- 요청 문장: 로그인 비밀번호가 틀리면 칸을 흔들어줘. 0.4초 동안 좌우 8px·6px·4px 로 세 번 줄어들며 흔들리고, 테두리 빨강, 칸 밑에 「비밀번호가 맞지 않아요」를 aria-live 로. 동작 줄이기면 흔들림 없이 색과 글만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-shake.html
+
+### 커서 따라 테두리 빛 (Spotlight Border)
+- 별칭: "마우스 따라 카드 테두리가 빛나는 거" · "커서 쪽 모서리만 밝아지는 카드" · "손전등 비추는 듯한 카드 테두리"
+- 정의: 커서가 있는 쪽 테두리만 은은하게 밝아지고, 커서를 옮기면 빛도 따라 움직이는 카드.
+- 구분: 카드 전체가 떠오르면 호버로 떠오르기, 테두리 한쪽만 빛나면 이것
+- 폰에서는: 폰에는 커서가 없다. 누른 자리에서 빛이 한 번 번졌다 0.4초에 사라지게 하거나 그냥 뺀다.
+- 요청 문장: 요금제 카드 셋에 커서 따라 테두리 빛을 넣어줘. 커서 위치를 중심으로 반지름 160px 원형 그라데이션을 1px 테두리에만 칠하고, 카드 밖으로 나가면 0.3초에 꺼지기. 동작 줄이기면 끄기.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-glow-border.html
+
+### 부채처럼 펼치는 카드 (Fan-out Card Stack)
+- 별칭: "겹친 카드가 촤라락 펼쳐지는 거" · "누르면 부채꼴로 퍼지는 카드 더미" · "포개진 카드 펼치기"
+- 정의: 겹쳐 놓은 카드 더미를 누르면 부채꼴로 펼쳐져 한 장씩 보이고, 다시 누르면 포개지는 묶음.
+- 구분: 옆으로 넘겨 보면 캐러셀, 한자리에서 펼쳐 보면 이것
+- 요청 문장: 추천 카드 넷을 부채처럼 펼치는 묶음으로 만들어줘. 처음엔 4px 씩 어긋나 겹쳐 있고, 누르면 0.45초 동안 -18°·-6°·6°·18° 로 돌며 옆으로 70px 씩 퍼지기, 한 장에 0.05초 차이. 다시 누르면 포개기. 버튼에 aria-expanded.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-fan-cards.html
+
+### 밀어서 버튼 꺼내기 (Swipe Actions)
+- 별칭: "옆으로 밀면 삭제 버튼 나오는 목록" · "메일 앱처럼 밀어서 지우기" · "카톡방 밀면 나오는 버튼"
+- 정의: 목록 한 줄을 옆으로 밀면 그 밑에 숨어 있던 삭제·보관 같은 버튼이 드러나는 목록.
+- 구분: 밀면 바로 지워지는 것은 삭제, 버튼을 꺼내서 고르게 하면 이것
+- 폰에서는: 폰에서 원래 쓰는 손짓이다. 웹에서는 세로 스크롤과 다투지 않게 가로로 10px 이상 먼저 움직였을 때만 민다고 본다.
+- 요청 문장: 메시지 목록 줄마다 밀어서 버튼 꺼내기를 넣어줘. 왼쪽으로 60px 넘게 밀면 줄이 -132px 에 멈추며 「보관」「삭제」 두 버튼이 드러나고, 덜 밀면 0.25초에 제자리. 미는 것 말고도 줄 끝 「더보기」 버튼이나 키보드로 같은 버튼을 열 수 있게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-swipe-actions.html
+
+### 뒤집는 카드 (Flip Card)
+- 별칭: "누르면 뒤집혀서 뒷면 나오는 카드" · "앞뒤가 있는 카드" · "단어장처럼 뒤집는 카드"
+- 정의: 누르면 카드가 세로축으로 반 바퀴 돌아 뒷면의 내용을 보여 주는 카드.
+- 구분: 여러 장을 넘기면 캐러셀, 한 장의 앞뒤를 바꾸면 이것
+- 요청 문장: 단어 카드를 뒤집는 카드로 만들어줘. 누르면 0.5초 동안 세로축으로 180° 돌아 뒷면(뜻)이 보이고, 다시 누르면 앞면. perspective 800px, 뒷면은 backface-visibility hidden. 버튼으로 만들고 aria-pressed. 동작 줄이기면 돌지 않고 바로 바뀌게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-flip-card.html
+
+### 숫자 굴러가는 표시 (Rolling Counter)
+- 별칭: "좋아요 누르면 숫자가 위로 굴러가는 거" · "자리마다 따로 돌아가는 숫자" · "슬롯머신처럼 바뀌는 숫자"
+- 정의: 숫자가 바뀔 때 자릿수마다 위아래로 굴러 새 숫자로 넘어가는 표시. 바뀐 자리만 움직인다.
+- 구분: 0부터 목표까지 세어 올라가는 연출은 motion-menu 「숫자 굴러가기」, 누를 때 한 자리만 바뀌면 이것
+- 요청 문장: 좋아요 수를 숫자 굴러가는 표시로 만들어줘. 누를 때마다 +1, 바뀐 자리만 0.35초 동안 아래 숫자가 위로 올라오고 그 전 숫자는 위로 빠지기. 숫자는 tabular-nums, 화면 읽기용으로는 전체 숫자를 aria-live 로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-count-roll.html
+
+### 완료 체크 그리기 (Success Checkmark)
+- 별칭: "결제 끝나면 동그라미 그려지고 체크 뜨는 거" · "완료 화면 체크 애니메이션" · "끝났다고 체크가 쓱 그어지는 것"
+- 정의: 일이 끝나면 원이 그려지고 그 안에 체크가 그어지며 작은 점들이 한 번 튀는 완료 표시.
+- 구분: 잠깐 떴다 사라지는 알림은 토스트, 화면 한가운데서 끝났다고 보여 주면 이것
+- 요청 문장: 결제 완료 화면에 완료 체크 그리기를 넣어줘. 초록 원 테두리가 0.4초에 한 바퀴 그려지고, 이어서 체크가 0.3초에 그어지고, 작은 점 여덟 개가 원 밖으로 0.5초 튀었다 사라지게. 아래 「결제가 끝났어요」는 role=status. 동작 줄이기면 그려지지 않고 바로 보이게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-success-check.html
 
 
 ## 화면 조합 레시피 (shadcn: 조립하지 재발명하지 마라)

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>완료 체크 그리기 Success Checkmark · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .ok2 { display: grid; justify-items: center; gap: 10px; }
+  .ok2 .art { position: relative; width: 84px; height: 84px; }
+  .ok2 svg { width: 84px; height: 84px; }
+  .ok2 .ci { stroke-dasharray: 227; stroke-dashoffset: 227; transform: rotate(-90deg); transform-origin: 42px 42px; }
+  .ok2 .ck { stroke-dasharray: 48; stroke-dashoffset: 48; }
+  .ok2.go .ci { stroke-dashoffset: 0; transition: stroke-dashoffset .4s ease-out; }
+  .ok2.go .ck { stroke-dashoffset: 0; transition: stroke-dashoffset .3s .4s ease-out; }
+  .ok2 .p { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #2e9e6a; opacity: 0; }
+  .ok2.go .p { animation: okp .5s .65s ease-out forwards; }
+  @keyframes okp { 0% { opacity: 1; transform: rotate(var(--a)) translateY(-40px); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-60px) scale(.4); } }
+  .ok2 .tx { font-size: 14px; font-weight: 700; opacity: 0; transition: opacity .3s .6s; } .ok2.go .tx { opacity: 1; }
+  .ok2 button { padding: 10px 22px; border: 0; border-radius: 10px; background: #17171b; color: #fff; font-weight: 700; cursor: pointer; }
+  .ok2 button:focus-visible { outline: 3px solid #e0733f; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .ok2.go .ci, .ok2.go .ck, .ok2 .tx { transition: none; } .ok2.go .p { animation: none; } }
+</style>
+<div class="center"><div class="ok2" id="ok2">
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 84 84"><circle class="ci" cx="42" cy="42" r="36" fill="none" stroke="#2e9e6a" stroke-width="5"/><path class="ck" d="M27 43l10 10 20-21" fill="none" stroke="#2e9e6a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <i class="p" style="--a:0deg"></i><i class="p" style="--a:45deg"></i><i class="p" style="--a:90deg"></i><i class="p" style="--a:135deg"></i><i class="p" style="--a:180deg"></i><i class="p" style="--a:225deg"></i><i class="p" style="--a:270deg"></i><i class="p" style="--a:315deg"></i>
+  </div>
+  <div class="tx" role="status" id="okt"></div>
+  <button id="okb">결제하기</button>
+</div></div>
+<script>
+  (function () {
+    var w = document.getElementById('ok2'), t = document.getElementById('okt');
+    document.getElementById('okb').addEventListener('click', function () {
+      w.classList.remove('go'); t.textContent = ''; void w.offsetWidth;
+      w.classList.add('go'); t.textContent = '결제가 끝났어요';
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

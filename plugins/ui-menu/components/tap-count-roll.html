@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>숫자 굴러가는 표시 Rolling Counter · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cr { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border: 1.5px solid #e0e0e8; border-radius: 999px; background: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .cr:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .cr .hrt { color: #d64224; }
+  .cr .num { display: inline-flex; font-variant-numeric: tabular-nums; }
+  .cr .d { position: relative; display: inline-block; width: .62em; height: 1.2em; overflow: hidden; }
+  .cr .d span { position: absolute; left: 0; right: 0; text-align: center; line-height: 1.2em; transition: transform .35s cubic-bezier(.3,.9,.3,1); }
+  .cr .d .old { transform: translateY(0); } .cr .d.go .old { transform: translateY(-100%); }
+  .cr .d .new { transform: translateY(100%); } .cr .d.go .new { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .cr .d span { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="cr" id="cr" aria-describedby="crl"><span class="hrt" aria-hidden="true">♥</span><span class="num" id="crn" aria-hidden="true"></span></button>
+  <p class="cap" id="crl" aria-live="polite">좋아요 1,298</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('cr'), box = document.getElementById('crn'), l = document.getElementById('crl'), n = 1298;
+    function fmt(v) { return v.toLocaleString('en-US'); }
+    function draw(prev, next) {
+      var a = fmt(prev), c = fmt(next); while (a.length < c.length) a = ' ' + a;
+      box.innerHTML = '';
+      for (var i = 0; i < c.length; i++) {
+        var d = document.createElement('span'); d.className = 'd'; if (c[i] === ',') d.style.width = '.3em';
+        d.innerHTML = '<span class="old">' + a[i] + '</span><span class="new">' + c[i] + '</span>';
+        box.appendChild(d);
+        if (a[i] !== c[i]) (function (d) { requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('go'); }); }); })(d);
+        else d.classList.add('go');
+      }
+    }
+    draw(n, n);
+    b.addEventListener('click', function () { draw(n, n + 1); n++; l.textContent = '좋아요 ' + fmt(n); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

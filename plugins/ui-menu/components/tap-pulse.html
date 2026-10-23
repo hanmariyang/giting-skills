@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>맥박 버튼 Pulse Button · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pl { position: relative; padding: 12px 26px; border: 0; border-radius: 999px; background: #2e9e6a; color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+  .pl:focus-visible { outline: 3px solid #17171b; outline-offset: 4px; }
+  .pl::before, .pl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid #2e9e6a; animation: plr 1.6s ease-out infinite; pointer-events: none; }
+  .pl::after { animation-delay: .8s; }
+  .pl .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #fff; margin-right: 7px; vertical-align: 1px; }
+  @keyframes plr { from { transform: scale(1); opacity: .8; } to { transform: scale(1.6); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .pl::before, .pl::after { animation: none; opacity: .5; transform: scale(1.15); } .pl::after { display: none; } }
+</style>
+<div class="center"><div style="text-align:center"><button class="pl"><span class="dot" aria-hidden="true"></span>라이브 보기</button><p class="cap" style="margin-top:22px">1.6초마다 고리가 퍼져요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

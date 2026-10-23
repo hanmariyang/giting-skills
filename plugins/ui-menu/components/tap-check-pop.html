@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통 튀는 체크박스 Bouncy Checkbox · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cl { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .cl label { display: flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer; }
+  .cl input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .cl .bx { flex: none; width: 22px; height: 22px; border-radius: 6px; border: 2px solid #c9c9d4; display: grid; place-items: center; transition: background .15s, border-color .15s; }
+  .cl .bx svg { width: 14px; height: 14px; }
+  .cl .bx path { stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset .25s ease-out .05s; }
+  .cl input:checked + .bx { background: #e0733f; border-color: #e0733f; animation: cp .35s cubic-bezier(.34,1.6,.5,1); }
+  .cl input:checked + .bx path { stroke-dashoffset: 0; }
+  .cl input:checked ~ span { text-decoration: line-through; color: #9a9aa4; }
+  .cl input:focus-visible + .bx { outline: 3px solid #17171b; outline-offset: 2px; }
+  .cl span { transition: color .2s; }
+  @keyframes cp { 0% { transform: scale(1); } 30% { transform: scale(.85); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .cl input:checked + .bx { animation: none; } .cl .bx path { transition: none; } }
+</style>
+<div class="center"><ul class="cl">
+  <li><label><input type="checkbox" id="c1"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>우유 사기</span></label></li>
+  <li><label><input type="checkbox" id="c2"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>택배 부치기</span></label></li>
+  <li><label><input type="checkbox" id="c3"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>운동 30분</span></label></li>
+</ul></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

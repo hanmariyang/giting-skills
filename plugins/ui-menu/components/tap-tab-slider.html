@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미끄러지는 탭 표시 Sliding Tab Indicator · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .ts { position: relative; display: inline-flex; padding: 4px; border-radius: 999px; background: #f0f0f4; }
+  .ts button { position: relative; z-index: 1; width: 72px; padding: 8px 0; border: 0; background: none; font-size: 13px; font-weight: 600; color: #6b6b76; cursor: pointer; border-radius: 999px; transition: color .25s; }
+  .ts button[aria-selected="true"] { color: #fff; }
+  .ts button:focus-visible { outline: 3px solid #17171b; outline-offset: 1px; }
+  .ts .pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: 72px; border-radius: 999px; background: #e0733f; transition: left .3s cubic-bezier(.5,0,.2,1), width .3s cubic-bezier(.5,0,.2,1); }
+  @media (prefers-reduced-motion: reduce) { .ts .pill { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="ts" role="tablist" aria-label="기간" id="ts"><span class="pill" id="tsp" aria-hidden="true"></span><button role="tab" aria-selected="true">일</button><button role="tab" aria-selected="false" tabindex="-1">주</button><button role="tab" aria-selected="false" tabindex="-1">월</button></div>
+  <p class="cap">고른 표시가 늘어나며 미끄러져요</p>
+</div></div>
+<script>
+  (function () {
+    var tl = document.getElementById('ts'), p = document.getElementById('tsp'), tabs = [].slice.call(tl.querySelectorAll('[role=tab]')), cur = 0, calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function pick(i, f) {
+      if (i === cur) return;
+      var a = tabs[cur].offsetLeft, b = tabs[i].offsetLeft, w = tabs[i].offsetWidth;
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
+      if (!calm) { p.style.left = Math.min(a, b) + 'px'; p.style.width = (Math.abs(b - a) + w) + 'px'; }
+      setTimeout(function () { p.style.left = b + 'px'; p.style.width = w + 'px'; }, calm ? 0 : 150);
+      cur = i; if (f) tabs[i].focus();
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { pick(i); }); });
+    tl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') pick((cur + 1) % tabs.length, true);
+      if (e.key === 'ArrowLeft') pick((cur + tabs.length - 1) % tabs.length, true);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

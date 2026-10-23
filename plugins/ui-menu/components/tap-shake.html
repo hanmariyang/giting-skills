@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>틀리면 흔들기 Error Shake · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sk { width: 250px; display: grid; gap: 8px; }
+  .sk input { width: 100%; padding: 11px 13px; border: 1.5px solid #c9c9d4; border-radius: 10px; font-size: 14px; transition: border-color .2s; }
+  .sk input:focus-visible { outline: none; border-color: #17171b; }
+  .sk.bad input { border-color: #d64224; }
+  .sk.go input { animation: sh .4s ease-in-out; }
+  .sk .msg { font-size: 12px; color: #d64224; min-height: 16px; }
+  .sk button { padding: 10px; border: 0; border-radius: 10px; background: #17171b; color: #fff; font-weight: 700; cursor: pointer; }
+  .sk button:focus-visible { outline: 3px solid #e0733f; outline-offset: 2px; }
+  @keyframes sh { 0%,100% { transform: none; } 15% { transform: translateX(-8px); } 35% { transform: translateX(8px); } 55% { transform: translateX(-6px); } 70% { transform: translateX(6px); } 85% { transform: translateX(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .sk.go input { animation: none; } }
+</style>
+<div class="center"><form class="sk" id="sk" novalidate>
+  <input id="ski" type="password" value="1234" aria-label="비밀번호" aria-describedby="skm">
+  <div class="msg" id="skm" aria-live="polite"></div>
+  <button type="submit" id="skb">로그인</button>
+</form></div>
+<script>
+  (function () {
+    var f = document.getElementById('sk'), m = document.getElementById('skm');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      f.classList.remove('go'); void f.offsetWidth; f.classList.add('go', 'bad');
+      m.textContent = '비밀번호가 맞지 않아요';
+      setTimeout(function () { f.classList.remove('go'); }, 420);
+    });
+    f.querySelector('input').addEventListener('input', function () { f.classList.remove('bad'); m.textContent = ''; });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

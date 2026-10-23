@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>길게 눌러 확인 Hold to Confirm · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .hd { position: relative; overflow: hidden; padding: 13px 26px; border: 1.5px solid #d64224; border-radius: 12px; background: #fff; color: #d64224; font-size: 13.5px; font-weight: 700; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }
+  .hd:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .hd .fill { position: absolute; inset: 0; background: #d64224; transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out; }
+  .hd:active .fill { transform: scaleX(1); transition: transform 1.2s linear; }
+  .hd .tx { position: relative; mix-blend-mode: normal; }
+  .hd:active .tx, .hd.done .tx { color: #fff; }
+  .hd.done { background: #d64224; }
+  .hd .tx { transition: color .3s .5s; }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="hd" id="hd" aria-label="계정 삭제, 1초 넘게 누르세요"><span class="fill" aria-hidden="true"></span><span class="tx" id="hdt">꾹 눌러 계정 삭제</span></button>
+  <p class="cap" id="hdm" role="status">누르고 있어야 차올라요, 떼면 빠져요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('hd'), t = document.getElementById('hdt'), m = document.getElementById('hdm');
+    b.querySelector('.fill').addEventListener('transitionend', function (e) {
+      if (getComputedStyle(e.target).transform === 'none' || b.classList.contains('done')) return;
+      var mx = new DOMMatrix(getComputedStyle(e.target).transform);
+      if (mx.a < .99) return;
+      b.classList.add('done'); t.textContent = '삭제했어요'; m.textContent = '실행됐어요';
+      setTimeout(function () { b.classList.remove('done'); t.textContent = '꾹 눌러 계정 삭제'; m.textContent = '누르고 있어야 차올라요, 떼면 빠져요'; }, 1600);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

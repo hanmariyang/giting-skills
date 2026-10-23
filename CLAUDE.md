@@ -8,9 +8,9 @@ Giting 이 검수한 Claude Code 스킬 모음. repo 자체가 마켓플레이�
 .claude-plugin/marketplace.json      # 마켓 정의 — 스킬 추가 시 plugins 배열에 등록
 plugins/ui-menu/
 ├── .claude-plugin/plugin.json       # 플러그인 메타
-├── menu.json                        # 사전 SSOT (11코스 129항목 — 별칭·정의·요청 문장·formula)
+├── menu.json                        # 사전 SSOT (12코스 147항목 — 별칭·정의·요청 문장·formula)
 ├── demos/*.html                     # 데모 프래그먼트 SSOT (<!-- @id h=NNN [full] --> 마커 구분)
-├── components/*.html                # 생성물 — 스킬용 자가완결 129종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
+├── components/*.html                # 생성물 — 스킬용 자가완결 147종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
 └── skills/ui-menu/SKILL.md          # 스킬 본체
 build.mjs                            # demos+menu.json → components/ + 갤러리 생성 (의존성 0)
 docs/                                # GitHub Pages — 리다이렉트 + llms 미러 + promo (생성물)
@@ -121,6 +121,13 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 요청 문장(`ask`)은 전부 「몇 초 · 얼마나 · 무엇이」 숫자를 품는다. 웹 연출은 이름만으로는 결과가 매번 달라진다.
 - 스크롤 데모는 iframe 안의 `#sc` 스크롤 상자로 돈다(자동 시연 `scroll` 단계가 그걸 민다). 커서 따라오기·자석 버튼은 마우스가 1.5초 안 움직이면 스스로 원을 그리며 시연한다(시연기는 mousemove 를 못 쏜다).
 - ui-menu 에 이미 있는 무한 스크롤은 겹쳐서 빼고 타이핑 효과를 넣었다. 아이디어는 외부 연출 모음에서 가져왔고 문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
+
+## UI 메뉴판 0.10.0 — ⑫ 누를 때 반응 16 (2026-10-23)
+
+- 코스 ⑫ `tap-fx` 「누를 때 반응」 16항목(147). 데모 `demos/d5-tap-fx.html`, id 는 전부 `tap-` 접두어. ⑤ 누르는 것(`press`)이 버튼 종류라면 ⑫는 눌렀을 때의 손맛이다.
+- 길게 눌러 확인은 JS 타이머 대신 `:active` 에 1.2초 transition 을 걸고 `transitionend` 로 실행한다. 그래야 자동 시연 `press` 단계(.uim-active 복제)로도 끝까지 돈다.
+- 커서 따라 테두리 빛은 자석 버튼처럼 마우스가 1.5초 안 움직이면 스스로 돈다. 맥박 버튼은 늘 돌아 시연 단계가 없다.
+- 아이디어는 외부 UI 애니메이션 모음에서 가져왔고 이름·문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
 
 ## 메뉴판 스토어 내보내기 (2026-10-16)
 

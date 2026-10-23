@@ -86,5 +86,20 @@
   "fx-page-transition": [["wait", 500], ["tap", ".go"], ["wait", 1500], ["tap", "#back"], ["wait", 1100]],
   "fx-smooth-scroll": [["wait", 500], ["tap", ".to3"], ["wait", 1300], ["tap", "#up"], ["wait", 1100]],
   "fx-marquee": [["wait", 1500], ["hover", ".mq", 1500], ["wait", 800]],
-  "fx-lazy-load": [["wait", 900], ["scroll", "#sc", 140], ["wait", 1200], ["scroll", "#sc", 160], ["wait", 1200]]
+  "fx-lazy-load": [["wait", 900], ["scroll", "#sc", 140], ["wait", 1200], ["scroll", "#sc", 160], ["wait", 1200]],
+
+  "tap-squish": [["wait", 500], ["tap", "#sq"], ["wait", 700], ["tap", "#sq"], ["wait", 700]],
+  "tap-loading-button": [["wait", 500], ["tap", "#lb"], ["wait", 3000]],
+  "tap-hold": [["wait", 500], ["press", "#hd", 600], ["wait", 600], ["press", "#hd", 1500], ["wait", 1900]],
+  "tap-jelly-toggle": [["wait", 500], ["tap", "#jt"], ["wait", 900], ["tap", "#jt"], ["wait", 700]],
+  "tap-check-pop": [["wait", 500], ["tap", "li:nth-child(1) label"], ["wait", 500], ["tap", "li:nth-child(3) label"], ["wait", 1100], ["tap", "li:nth-child(1) label"], ["tap", "li:nth-child(3) label"], ["wait", 500]],
+  "tap-tab-slider": [["wait", 500], ["tap", "#ts button:nth-of-type(3)"], ["wait", 900], ["tap", "#ts button:nth-of-type(2)"], ["wait", 900], ["tap", "#ts button:nth-of-type(1)"], ["wait", 700]],
+  "tap-float-label": [["wait", 500], ["focus", "#fle"], ["wait", 500], ["type", "#fle", "me@giting.kr"], ["wait", 900], ["clear", "#fle"], ["blur"], ["wait", 700]],
+  "tap-strength": [["wait", 500], ["type", "#pwi", "abc"], ["wait", 500], ["type", "#pwi", "Defg1"], ["wait", 600], ["type", "#pwi", "!"], ["wait", 1100], ["clear", "#pwi"], ["blur"], ["wait", 400]],
+  "tap-shake": [["wait", 500], ["tap", "#skb"], ["wait", 1300]],
+  "tap-fan-cards": [["wait", 500], ["tap", "#fan"], ["wait", 1400], ["tap", "#fan"], ["wait", 800]],
+  "tap-swipe-actions": [["wait", 500], ["tap", "#sw li:nth-child(1) .more"], ["wait", 1300], ["tap", "#sw li:nth-child(1) .more"], ["wait", 700]],
+  "tap-flip-card": [["wait", 500], ["tap", "#fc"], ["wait", 1400], ["tap", "#fc"], ["wait", 900]],
+  "tap-count-roll": [["wait", 500], ["tap", "#cr"], ["wait", 600], ["tap", "#cr"], ["wait", 600], ["tap", "#cr"], ["wait", 900]],
+  "tap-success-check": [["wait", 500], ["tap", "#okb"], ["wait", 1900]]
 }

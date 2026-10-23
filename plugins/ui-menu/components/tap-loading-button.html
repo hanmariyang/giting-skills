@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로딩 버튼 Morphing Loading Button · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .lb { position: relative; width: 150px; height: 44px; border: 0; border-radius: 22px; background: #e0733f; color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: width .3s ease, background .25s; }
+  .lb:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .lb .ring, .lb .ok { position: absolute; inset: 0; margin: auto; opacity: 0; }
+  .lb .ring { width: 22px; height: 22px; border-radius: 50%; border: 3px solid rgba(255,255,255,.35); border-top-color: #fff; }
+  .lb .ok { width: 22px; height: 22px; }
+  .lb.busy { width: 44px; } .lb.busy .tx { opacity: 0; } .lb.busy .ring { opacity: 1; animation: lbs .8s linear infinite; }
+  .lb.done { width: 44px; background: #2e9e6a; } .lb.done .tx { opacity: 0; } .lb.done .ok { opacity: 1; }
+  .lb .ok path { stroke-dasharray: 24; stroke-dashoffset: 24; } .lb.done .ok path { stroke-dashoffset: 0; transition: stroke-dashoffset .25s .05s ease-out; }
+  .lb .tx { transition: opacity .12s; white-space: nowrap; }
+  @keyframes lbs { to { transform: rotate(1turn); } }
+  @media (prefers-reduced-motion: reduce) { .lb { transition: none; } .lb.busy .ring { animation-duration: 2.4s; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="lb" id="lb"><span class="tx">보내기</span><span class="ring" aria-hidden="true"></span><svg class="ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <p class="cap" id="lbm" role="status">원으로 줄어 돌다가 체크로 바뀌어요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('lb'), m = document.getElementById('lbm');
+    b.addEventListener('click', function () {
+      if (b.classList.contains('busy') || b.classList.contains('done')) return;
+      b.classList.add('busy'); b.setAttribute('aria-busy', 'true');
+      setTimeout(function () { b.classList.remove('busy'); b.classList.add('done'); b.removeAttribute('aria-busy'); m.textContent = '보냈어요'; }, 1300);
+      setTimeout(function () { b.classList.remove('done'); m.textContent = '원으로 줄어 돌다가 체크로 바뀌어요'; }, 2800);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

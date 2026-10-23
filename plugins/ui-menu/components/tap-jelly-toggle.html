@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>출렁 토글 Jelly Switch · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .jt { display: flex; align-items: center; gap: 12px; font-size: 13.5px; cursor: pointer; }
+  .jt button { position: relative; width: 56px; height: 32px; border: 0; border-radius: 16px; background: #d4d4dc; cursor: pointer; transition: background .3s; padding: 0; }
+  .jt button:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .jt .k { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 12px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: left .3s cubic-bezier(.5,0,.3,1.3), width .15s ease-out; }
+  .jt [aria-checked="true"] { background: #2e9e6a; }
+  .jt [aria-checked="true"] .k { left: 28px; }
+  .jt .go .k { width: 36px; }
+  .jt .go[aria-checked="true"] .k { left: 16px; }
+  .jt .go[aria-checked="false"] .k { left: 4px; }
+  @media (prefers-reduced-motion: reduce) { .jt .k { transition: none; } .jt .go .k { width: 24px; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="jt"><button role="switch" aria-checked="false" aria-labelledby="jtl" id="jt"><span class="k"></span></button><span id="jtl">새 댓글 알림</span></div>
+  <p class="cap">손잡이가 늘어나며 넘어가요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('jt');
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-checked') !== 'true';
+      b.classList.add('go'); b.setAttribute('aria-checked', on);
+      setTimeout(function () { b.classList.remove('go'); }, 160);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
