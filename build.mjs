@@ -18,6 +18,79 @@ const RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/pl
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
+// ── 판 리듬 인트로 (2026-10-23) ─────────────────────────────────
+// landing-menu ⑦ 상세페이지의 rhythm 을 갤러리 여덟에 그대로 쓴다. 판 꼴 다섯: center(첫 판만) · split · wide · stack · band.
+// 규칙은 빌드가 지킨다: 같은 꼴 연달아 금지 · 가운데는 첫 판만 · 바탕(pale/white/dark) 연달아 금지. 어기면 빌드가 멈춘다.
+// 원래 갤러리에 있던 요소(공식·안내·로더·설치 등)는 판으로 옮기고 지우지 않는다(의뢰자 10/23).
+const IP_VARS_THEME = '--ip-acc:var(--accent-deep);--ip-ink:var(--ink);--ip-ink2:var(--ink-2);--ip-ink3:var(--ink-3);--ip-paper:var(--paper);--ip-line:var(--line);--ip-wash:var(--wash)';
+const ipCss = (sc, vars) => `${sc}{${vars};--ip-pn:color-mix(in srgb,var(--ip-acc) 6%,var(--ip-paper));--ip-hl:color-mix(in srgb,#FFC840 55%,transparent)}
+${sc} .ip{border-radius:22px;padding:40px 28px 34px;margin:0 0 16px;color:var(--ip-ink)}
+${sc} .ip.bg-pale{background:var(--ip-pn)}${sc} .ip.bg-white{background:var(--ip-paper);border:1px solid var(--ip-line)}${sc} .ip.bg-dark{background:#141416;color:#F2F2F4}
+${sc} .ip-chip{display:inline-block;font-size:13px;font-weight:700;color:var(--ip-acc);background:var(--ip-paper);border-radius:999px;padding:6px 15px;margin:0 0 14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+${sc} .bg-pale .ip-chip{background:var(--ip-paper)}${sc} .bg-white .ip-chip{background:var(--ip-pn)}${sc} .bg-dark .ip-chip{background:rgba(255,255,255,.1);color:#fff;box-shadow:none}
+${sc} .ip h2{font-size:clamp(24px,4.8vw,36px);line-height:1.24;letter-spacing:-.035em;font-weight:800;margin:0 0 12px;word-break:keep-all}
+${sc} .ip h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--ip-hl) 58%)}${sc} .ip h2 i{font-style:normal;color:var(--ip-acc)}
+${sc} .bg-dark h2 em{background:linear-gradient(transparent 58%,rgba(255,200,64,.45) 58%)}${sc} .bg-dark h2 i{color:#FFC840}
+${sc} .ip-sub{font-size:15px;line-height:1.65;color:var(--ip-ink2);margin:0 0 22px;max-width:620px;word-break:keep-all}${sc} .ip-sub b{color:var(--ip-ink)}
+${sc} .bg-dark .ip-sub{color:#B9BAC0}${sc} .bg-dark .ip-sub b{color:#fff}
+${sc} .ip.lay-center{text-align:center}${sc} .lay-center .ip-sub{margin-left:auto;margin-right:auto}
+${sc} .ip.lay-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:center}
+@media(max-width:760px){${sc} .ip.lay-split{grid-template-columns:1fr}}
+${sc} .ip-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:900px;margin:0 auto}
+@media(max-width:720px){${sc} .ip-three{grid-template-columns:1fr;max-width:420px}}
+${sc} .ip figure{margin:0}${sc} .ip figure iframe{display:block;width:100%;border:0;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(23,23,27,.10)}
+${sc} .ip figcaption{font-size:14px;font-weight:700;margin-top:10px}${sc} .ip figcaption b{color:var(--ip-acc);margin-right:4px}${sc} .ip figcaption span{display:block;font-size:12.5px;font-weight:500;color:var(--ip-ink3);margin-top:2px}
+${sc} .ip-bub{display:flex;align-items:center;gap:10px;max-width:660px;margin:12px 0 0;text-align:left;background:var(--ip-paper);border-radius:18px;padding:12px;box-shadow:0 8px 24px rgba(23,23,27,.08)}
+${sc} .lay-center .ip-bub{margin-left:auto;margin-right:auto}
+${sc} .ip-bub p{flex:1;min-width:0;margin:0;background:var(--ip-acc);color:#fff;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:700;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere;white-space:pre-wrap}
+${sc} .ip-bub.plain p{background:var(--ip-wash);color:var(--ip-ink3);font-weight:500}
+${sc} .ip-bub.code p{font-family:ui-monospace,'JetBrains Mono',monospace;font-size:13px;font-weight:600}
+${sc} .bg-dark .ip-bub{background:#22232a;box-shadow:none}${sc} .bg-dark .ip-bub p{background:#FFC840;color:#141416}
+${sc} .ip-bub .mk{flex:none;width:22px;text-align:center;font-weight:800;color:#17B26A}${sc} .ip-bub.plain .mk{color:#C0392B}
+${sc} .ip-bub .copy{flex:none;border:1px solid var(--ip-line);background:var(--ip-paper);border-radius:9px;padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ip-ink2)}
+${sc} .bg-dark .ip-bub .copy{background:#2c2d35;border-color:#3a3b44;color:#ddd}
+${sc} .ip-blocks{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+${sc} .ip-blocks span{border-radius:12px;padding:12px 14px;font-size:14.5px;font-weight:800;background:var(--ip-paper);box-shadow:0 2px 8px rgba(23,23,27,.06)}
+${sc} .ip-blocks span:nth-child(2){background:var(--ip-acc);color:#fff}${sc} .ip-blocks span:nth-child(3){background:var(--ip-hl)}${sc} .ip-blocks span:nth-child(4){background:var(--ip-ink);color:var(--ip-paper)}
+${sc} .ip-rows{display:grid;gap:8px}
+${sc} .ip-rows a.r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:center;background:var(--ip-paper);border:1px solid var(--ip-line);border-radius:14px;padding:12px 16px;text-decoration:none;color:var(--ip-ink)}
+${sc} .ip-rows a.r:hover{border-color:var(--ip-acc)}
+${sc} .ip-rows .w{font-size:14.5px;font-weight:700;color:var(--ip-ink2);word-break:keep-all}
+${sc} .ip-rows .n{display:flex;gap:6px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+${sc} .ip-rows .n b{font-size:13px;font-weight:800;color:var(--ip-acc);background:var(--ip-pn);border-radius:999px;padding:5px 12px}
+${sc} .ip-rows .n code{font-family:ui-monospace,monospace;font-size:11px;color:#0F766E}
+${sc} .ip-rows .v{grid-column:1/-1;font-size:12.5px;color:var(--ip-ink3);word-break:keep-all}
+@media(max-width:560px){${sc} .ip-rows a.r{grid-template-columns:1fr}${sc} .ip-rows .n{justify-content:flex-start}}
+${sc} .ip-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}${sc} .ip-tags span{font-family:ui-monospace,monospace;font-size:12.5px;font-weight:600;color:#0F766E;background:var(--ip-paper);border:1px solid var(--ip-line);border-radius:8px;padding:4px 9px}
+${sc} .ip-list{margin:0;padding:0;list-style:none;display:grid;gap:8px}${sc} .ip-list li{background:var(--ip-paper);border:1px solid var(--ip-line);border-radius:12px;padding:10px 13px;font-size:13.5px;line-height:1.55;word-break:keep-all}${sc} .ip-list li b{color:var(--ip-acc);margin-right:6px}
+${sc} .ip-code{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:640px){${sc} .ip-code{grid-template-columns:1fr}}
+${sc} .ip-code div{background:#16171b;color:#e6e6ea;border-radius:12px;padding:12px 14px;min-width:0}${sc} .ip-code .dt{font-size:11.5px;font-weight:700;margin-bottom:6px}${sc} .ip-code .bad .dt{color:#ff8a7a}${sc} .ip-code .good .dt{color:#7CFF8A}
+${sc} .ip-code pre{margin:0;font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto}
+${sc} .ip-term{background:#16171b;color:#ff8a7a;font-family:ui-monospace,monospace;font-size:12.5px;border-radius:12px;padding:12px 14px;text-align:left;overflow-wrap:anywhere;line-height:1.5}${sc} .ip-term b{color:#9aa0aa;font-weight:500;margin-right:6px}
+${sc} .ip-card{background:var(--ip-paper);border:1px solid var(--ip-line);border-radius:16px;padding:16px;text-align:left;box-shadow:0 8px 24px rgba(23,23,27,.06)}
+${sc} .ip-card h4{margin:0 0 4px;font-size:16px}${sc} .ip-card .al{font-size:12.5px;color:var(--ip-acc);font-weight:600}${sc} .ip-card p{font-size:12.5px;color:var(--ip-ink2);margin:6px 0 0;line-height:1.55}${sc} .ip-card code{display:block;font-family:ui-monospace,monospace;font-size:11px;color:#0F766E;margin-top:8px;white-space:normal}
+${sc} .ip-big{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.1}${sc} .ip-big small{display:block;font-size:12.5px;font-weight:600;color:var(--ip-ink3);margin-top:6px;letter-spacing:0}
+${sc} .ip-foot{font-size:13px;color:var(--ip-ink3);margin:16px 0 0;line-height:1.7}${sc} .ip-foot a{color:inherit}${sc} .bg-dark .ip-foot{color:#8d8e96}
+${sc} .ip-gh{display:inline-flex;margin:14px 0 0;padding:10px 16px;border-radius:11px;background:#2c2d35;color:#fff;text-decoration:none;font-size:13.5px;font-weight:600}`;
+const ipBub = (text, kind = '', mark = '') => `<div class="ip-bub ${kind}">${mark ? `<span class="mk">${mark}</span>` : ''}<p>${esc(text)}</p>${kind === 'plain' ? '' : `<button class="copy" data-copy="${attr(text)}" title="문장 복사">복사</button>`}</div>`;
+const ipFormula = f => `<div class="ip-blocks">${f.pattern.split(/\s*(?:\+|→)\s*/).map(p => `<span>${esc(p)}</span>`).join('')}</div>${ipBub(f.bad, 'plain', '✕')}${ipBub(f.good, '', '○')}`;
+const ipInstall = slug => `${ipBub('/plugin marketplace add hanmariyang/giting-skills', 'code')}${ipBub(`/plugin install ${slug}@giting`, 'code')}
+  <a class="ip-gh" href="https://github.com/hanmariyang/giting-skills" target="_blank" rel="noopener">GitHub에서 오픈소스 보기 &#8599;</a>`;
+const ipPanels = (name, sc, vars, panels) => {
+  const P = panels.filter(Boolean);
+  P.forEach((p, i) => {
+    const prev = P[i - 1];
+    if (p.lay === 'center' && i > 0) { console.error(`${name} 인트로: 가운데 판은 첫 판만 (${i + 1}번째)`); process.exit(1); }
+    if (prev && prev.lay === p.lay) { console.error(`${name} 인트로: 같은 판 꼴 연달아 (${p.lay}, ${i}·${i + 1}번째)`); process.exit(1); }
+    if (prev && prev.bg === p.bg) { console.error(`${name} 인트로: 같은 바탕 연달아 (${p.bg}, ${i}·${i + 1}번째)`); process.exit(1); }
+  });
+  const head = p => `<span class="ip-chip">${esc(p.chip)}</span><h2>${p.h}</h2>${p.sub ? `<p class="ip-sub">${p.sub}</p>` : ''}`;
+  return `<style>${ipCss(sc, vars)}</style>
+${P.map(p => p.lay === 'split'
+    ? `<section class="ip lay-split bg-${p.bg}"><div>${head(p)}${p.body || ''}</div><div>${p.aside || ''}</div></section>`
+    : `<section class="ip lay-${p.lay} bg-${p.bg}">${head(p)}${p.body || ''}</section>`).join('\n')}`;
+};
+
 // ── 1. 프래그먼트 파싱 ─────────────────────────────────────────
 const frags = {}; // id → { h, full, body }
 for (const f of readdirSync(join(PLUGIN, 'demos')).filter(f => f.endsWith('.html'))) {
@@ -625,89 +698,23 @@ const uiCatNo = it => (menu.categories.find(c => c.id === it.category) || {}).no
 const uiBub = (text, cls = '', mark = '') => `<div class="ui-bub ${cls}">${mark ? `<span class="mk2">${mark}</span>` : ''}<p>${esc(text)}</p>${cls === 'plain' ? '' : `<button class="copy tiny" data-copy="${attr(text)}" title="문장 복사">복사</button>`}</div>`;
 const uiPairs = menu.categories.map(c => bycat(c.id).find(i => i.vs)).filter(Boolean);
 const uiR0 = (menu.recipes || [])[0];
-const UI_INTRO_CSS = `
-.uigal { --pn: color-mix(in srgb, var(--accent) 6%, var(--paper)); --hl: color-mix(in srgb, #FFC840 55%, transparent); }
-.uigal .ui-pn { background: var(--pn); border-radius: 22px; padding: 44px 22px 36px; margin: 0 0 16px; text-align: center; }
-.uigal .ui-chip { display: inline-block; font-size: 13px; font-weight: 700; color: var(--accent-deep); background: var(--paper); border-radius: 999px; padding: 6px 15px; margin: 0 0 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.uigal .ui-pn h2 { font-size: clamp(26px, 5.4vw, 40px); line-height: 1.22; letter-spacing: -.035em; font-weight: 800; margin: 0 0 14px; word-break: keep-all; }
-.uigal .ui-pn h2 em { font-style: normal; background: linear-gradient(transparent 58%, var(--hl) 58%); }
-.uigal .ui-pn h2 i { font-style: normal; color: var(--accent-deep); }
-.uigal .ui-sub { font-size: 15px; line-height: 1.65; color: var(--ink-2); margin: 0 auto 26px; max-width: 600px; word-break: keep-all; }
-.uigal .ui-sub b { color: var(--ink); }
-.uigal .ui-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 900px; margin: 0 auto; }
-@media (max-width: 720px) { .uigal .ui-three { grid-template-columns: 1fr; max-width: 420px; } }
-.uigal .ui-three figure { margin: 0; }
-.uigal .ui-three iframe { display: block; width: 100%; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 8px 24px rgba(23,23,27,.10); }
-.uigal .ui-three figcaption { font-size: 14px; font-weight: 700; margin-top: 10px; }
-.uigal .ui-three figcaption b { color: var(--accent-deep); margin-right: 4px; }
-.uigal .ui-three figcaption span { display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-3); margin-top: 2px; }
-.uigal .ui-bub { display: flex; align-items: center; gap: 10px; max-width: 660px; margin: 14px auto 0; text-align: left; background: var(--paper); border-radius: 18px; padding: 12px; box-shadow: 0 8px 24px rgba(23,23,27,.08); }
-.uigal .ui-bub p { flex: 1; min-width: 0; margin: 0; background: var(--accent-deep); color: #fff; border-radius: 12px; padding: 13px 16px; font-size: 15px; font-weight: 700; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
-.uigal .ui-bub.plain p { background: var(--wash); color: var(--ink-3); font-weight: 500; }
-.uigal .ui-bub .mk2 { flex: none; width: 22px; text-align: center; font-weight: 800; color: #17B26A; }
-.uigal .ui-bub.plain .mk2 { color: #C0392B; }
-.uigal .ui-bub .tiny { padding: 7px 11px; font-size: 12px; }
-.uigal .ui-bub.code p { font-family: var(--mono); font-size: 13px; font-weight: 600; }
-.uigal .ui-blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 680px; margin: 0 auto 8px; }
-.uigal .ui-blocks span { border-radius: 12px; padding: 14px 16px; font-size: 15px; font-weight: 800; background: var(--paper); box-shadow: 0 2px 8px rgba(23,23,27,.06); }
-.uigal .ui-blocks span:nth-child(2) { background: var(--accent-deep); color: #fff; }
-.uigal .ui-blocks span:nth-child(3) { background: var(--hl); }
-.uigal .ui-blocks span:nth-child(4) { background: var(--ink); color: var(--paper); }
-.uigal .ui-use { max-width: 760px; margin: 0 auto; display: grid; gap: 8px; text-align: left; }
-.uigal .ui-use a.r { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; background: var(--paper); border-radius: 14px; padding: 13px 16px; text-decoration: none; color: var(--ink); box-shadow: 0 2px 8px rgba(23,23,27,.05); }
-.uigal .ui-use .w { font-size: 14.5px; font-weight: 700; color: var(--ink-2); }
-.uigal .ui-use .n { display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
-.uigal .ui-use .n b { font-size: 13px; font-weight: 800; color: var(--accent-deep); background: var(--pn); border-radius: 999px; padding: 5px 12px; }
-.uigal .ui-use .n code { font-family: var(--mono); font-size: 11px; color: #0F766E; }
-.uigal .ui-use .v { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); }
-@media (max-width: 560px) { .uigal .ui-use a.r { grid-template-columns: 1fr; } .uigal .ui-use .n { justify-content: flex-start; } }
-.uigal .ui-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 14px 0 0; }
-.uigal .ui-tags span { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: #0F766E; background: var(--paper); border-radius: 8px; padding: 5px 10px; }
-.uigal .ui-foot { font-size: 13px; color: var(--ink-3); margin: 18px 0 0; line-height: 1.7; }
-.uigal .ui-foot a { color: var(--ink-2); }
-.uigal .ui-gh { display: inline-flex; margin: 16px 0 0; padding: 10px 16px; border-radius: 11px; background: var(--paper); color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 600; box-shadow: 0 2px 8px rgba(23,23,27,.06); }`;
 const uiFig = id => { const it = uiItem(id); return `<figure><iframe title="${esc(it.name.ko)} 데모" loading="lazy"${demoSteps[id] ? ' data-demo' : ''} style="height:${frags[id].h}px" srcdoc="${attr(demoDoc(id, code[id]))}"></iframe><figcaption><b>${uiCatNo(it)}</b>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
-const uiIntro = `<section class="ui-pn">
-  <span class="ui-chip">UI 메뉴판 · ${menu.items.length}가지</span>
-  <h2>「접었다 폈다 되는 거」에는<br><em>이름</em>이 <i>있어요</i></h2>
-  <p class="ui-sub">말로 설명하던 UI에 이름을 붙여 주는 사전이에요. ${menu.categories.length}개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있어요.</p>
-  <div class="ui-three">${UI_HERO.map(uiFig).join('')}</div>
-  ${uiBub(uiItem(UI_HERO[0]).ask)}
-  <p class="ui-foot">카드의 「문장」은 이 요청 문장을, 「프롬프트」는 문장 · 견본 코드 · 적용 지침을 한 번에, 「코드」는 HTML 을, 「#」은 그 항목 주소를 복사해요.</p>
-</section>
-<section class="ui-pn">
-  <span class="ui-chip">AI한테 시키는 공식</span>
-  <h2>이 순서로만 말하면<br><em>한 번에</em> 통해요</h2>
-  <p class="ui-sub">${esc(f.note)} 아래 사전에서 이름을 찾고, 문장을 복사해 쓰세요.</p>
-  <div class="ui-blocks">${f.pattern.split(' + ').map(p => `<span>${esc(p)}</span>`).join('')}</div>
-  ${uiBub(f.bad, 'plain', '✕')}${uiBub(f.good, '', '○')}
-</section>
-<section class="ui-pn">
-  <span class="ui-chip">이름 찾기</span>
-  <h2>이런 말엔<br><em>이런 이름</em>을 써요</h2>
-  <p class="ui-sub">왼쪽이 사람들이 실제로 하는 말, 오른쪽이 AI가 알아듣는 이름이에요. 헷갈리는 짝은 <b>구분 기준</b>까지 붙어 있어요.</p>
-  <div class="ui-use">${uiPairs.map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name.ko)}</b><code>${esc(it.sc || it.name.en)}</code></span><span class="v">↔ ${esc(it.vs)}</span></a>`).join('')}</div>
-</section>
-${uiR0 ? `<section class="ui-pn">
-  <span class="ui-chip">화면 조합 레시피</span>
-  <h2>화면 하나는<br><em>이름 몇 개</em>의 조합이에요</h2>
-  <p class="ui-sub">낱개 컴포넌트를 아는 다음 단계예요. <b>조립하지 재발명하지 않는다</b>(shadcn 공식 원칙). 흔한 화면 ${menu.recipes.length}가지가 어떤 조합인지 보여 줘요.</p>
-  <div class="ui-three" style="grid-template-columns:minmax(0,1fr);max-width:600px"><figure><iframe title="${esc(uiR0.screen)} 조합 데모" loading="lazy"${demoSteps[uiR0.id] ? ' data-demo' : ''} style="height:${frags[uiR0.id].h}px" srcdoc="${attr(demoDoc(uiR0.id, rcode[uiR0.id]))}"></iframe><figcaption>${esc(uiR0.screen)}<span>${esc(uiR0.ko)}</span></figcaption></figure></div>
-  <div class="ui-tags">${uiR0.combo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
-  ${uiBub(uiR0.ask)}
-  <p class="ui-foot"><a href="#c-recipes">레시피 ${menu.recipes.length}가지 전부 보기 ↓</a></p>
-</section>` : ''}
-<section class="ui-pn">
-  <span class="ui-chip">Claude Code 스킬</span>
-  <h2>AI가 이 사전을<br><em>직접</em> 읽어요</h2>
-  <p class="ui-sub">스킬로 깔아 두면 「접었다 폈다 되는 거」라고만 말해도 AI가 이름을 찾아 만들어요.</p>
-  ${uiBub('/plugin marketplace add hanmariyang/giting-skills', 'code')}${uiBub('/plugin install ui-menu@giting', 'code')}
-  <a class="ui-gh" href="https://github.com/hanmariyang/giting-skills" target="_blank" rel="noopener">GitHub에서 오픈소스 보기 &#8599;</a>
-  <p class="ui-foot">에이전트용 사전: <a href="/skills/llms.txt">llms.txt</a> / <a href="/skills/llms-full.txt">llms-full.txt</a> (코드 포함)</p>
-</section>`;
+const uiIntro = ipPanels('ui-menu', '.uigal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `UI 메뉴판 · ${menu.items.length}가지`, h: '「접었다 폈다 되는 거」에는<br><em>이름</em>이 <i>있어요</i>',
+    sub: `말로 설명하던 UI에 이름을 붙여 주는 사전이에요. ${menu.categories.length}개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있어요.`,
+    body: `<div class="ip-three">${UI_HERO.map(uiFig).join('')}</div>${ipBub(uiItem(UI_HERO[0]).ask)}<p class="ip-foot">카드의 「문장」은 요청 문장을, 「프롬프트」는 문장 · 견본 코드 · 적용 지침을 한 번에, 「코드」는 HTML 을, 「#」은 그 항목 주소를 복사해요.</p>` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '이 순서로만 말하면<br><em>한 번에</em> 통해요', sub: `${esc(f.note)} 아래 사전에서 이름을 찾고, 문장을 복사해 쓰세요.`, body: ipFormula(f) },
+  { lay: 'wide', bg: 'pale', chip: '이름 찾기', h: '이런 말엔<br><em>이런 이름</em>을 써요', sub: '왼쪽이 사람들이 실제로 하는 말, 오른쪽이 AI가 알아듣는 이름이에요. 헷갈리는 짝은 <b>구분 기준</b>까지 붙어 있어요.',
+    body: `<div class="ip-rows">${uiPairs.map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name.ko)}</b><code>${esc(it.sc || it.name.en)}</code></span><span class="v">↔ ${esc(it.vs)}</span></a>`).join('')}</div>` },
+  uiR0 && { lay: 'split', bg: 'white', chip: '화면 조합 레시피', h: '화면 하나는<br><em>이름 몇 개</em>의 조합이에요', sub: `낱개 컴포넌트를 아는 다음 단계예요. <b>조립하지 재발명하지 않는다</b>(shadcn 공식 원칙). 흔한 화면 ${menu.recipes.length}가지가 어떤 조합인지 보여 줘요.`,
+    body: `<div class="ip-tags">${uiR0.combo.map(c => `<span>${esc(c)}</span>`).join('')}</div>${ipBub(uiR0.ask)}<p class="ip-foot"><a href="#c-recipes">레시피 ${menu.recipes.length}가지 전부 보기 ↓</a></p>`,
+    aside: `<figure><iframe title="${esc(uiR0.screen)} 조합 데모" loading="lazy"${demoSteps[uiR0.id] ? ' data-demo' : ''} style="height:${frags[uiR0.id].h}px" srcdoc="${attr(demoDoc(uiR0.id, rcode[uiR0.id]))}"></iframe><figcaption>${esc(uiR0.screen)}<span>${esc(uiR0.ko)}</span></figcaption></figure>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: 'AI가 이 사전을<br><em>직접</em> 읽어요', sub: '스킬로 깔아 두면 「접었다 폈다 되는 거」라고만 말해도 AI가 이름을 찾아 만들어요.',
+    body: `${ipInstall('ui-menu')}<p class="ip-foot">에이전트용 사전: <a href="/skills/llms.txt">llms.txt</a> / <a href="/skills/llms-full.txt">llms-full.txt</a> (코드 포함)</p>` },
+]);
 
 const core = `<div class="uigal">
-<style>${CORE_CSS}${UI_CSS}${UI_INTRO_CSS}</style>
+<style>${CORE_CSS}${UI_CSS}</style>
 ${uiIntro}
 <nav class="gnav" aria-label="코스">
   ${menu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${bycat(c.id).length}</a>`).join('\n  ')}
@@ -889,15 +896,24 @@ const CSSGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.cssgal') + `
 .cssgal .item .one b { color: var(--ink); font-weight: 700; }
 .cssgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
 
+// 판 리듬 인트로 — CSS 증상 사전
+const cHero = cmenu.categories.slice(0, 3).map(c => cby(c.id).find(i => i.kind === 'direct')).filter(Boolean);
+const cBranch = cmenu.items.find(i => i.kind === 'branch');
+const cFig = it => `<figure><iframe title="${esc(it.name.ko)} · 깨진/고친 실물" loading="lazy" style="height:${cIframeH(it)}px" srcdoc="${attr(ccode[it.id])}"></iframe><figcaption>"${esc(it.name.ko)}"<span>범인 1순위 · ${esc(it.culprits[0])}</span></figcaption></figure>`;
+const cssIntro = ipPanels('css-menu', '.cssgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `CSS 증상 사전 · ${cmenu.items.length}가지`, h: '「화면이 깨졌어요」 대신<br><em>증상</em>으로 말하면 <i>고쳐져요</i>', sub: '보이는 증상 그대로 찾으면 <b>범인 후보와 고치는 문장</b>이 나와요. 카드마다 깨진 화면과 고친 화면이 실제로 나란히 있어요.',
+    body: `<div class="ip-three">${cHero.map(cFig).join('')}</div>${cHero[0] ? ipBub(cHero[0].ask) : ''}` },
+  cBranch && { lay: 'split', bg: 'white', chip: '분기형', h: '이럴 땐 고치기 전에<br><em>진단</em>부터 시켜요', sub: `「${esc(cBranch.name.ko)}」처럼 원인이 여럿인 증상은 바로 고치면 엉뚱한 데를 고쳐요. 갈림길부터 묻는 문장이 붙어 있어요.`,
+    body: `<ul class="ip-list">${cBranch.branches.map(b => `<li><b>${esc(b.q)}</b>${esc(b.a)}</li>`).join('')}</ul>${ipBub(cBranch.ask)}`,
+    aside: `<figure><iframe title="${esc(cBranch.name.ko)} · 실물" loading="lazy" style="height:${cIframeH(cBranch)}px" srcdoc="${attr(ccode[cBranch.id])}"></iframe><figcaption>"${esc(cBranch.name.ko)}"</figcaption></figure>` },
+  { lay: 'stack', bg: 'pale', chip: 'AI한테 시키는 공식', h: '증상을 그대로 말하면<br><em>엉뚱한 데</em>를 안 고쳐요', sub: esc(cf.note), body: ipFormula(cf) },
+  { lay: 'wide', bg: 'white', chip: '증상 찾기', h: '이런 말엔<br><em>이런 증상</em>을 찾아요', sub: '왼쪽이 흔히 하는 말, 오른쪽이 사전의 증상 이름이에요. 누르면 그 카드로 가요.',
+    body: `<div class="ip-rows">${cmenu.categories.map(c => cby(c.id)[0]).filter(Boolean).map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name.ko)}</b><code>${cKindLabel(it)}</code></span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: 'AI가 이 사전으로<br><em>범인</em>부터 찾아요', sub: '스킬로 깔아 두면 「팝업 뒤가 스크롤돼요」라고만 말해도 증상을 찾아 고쳐요.', body: ipInstall('css-menu') },
+]);
 const cssCore = `<div class="cssgal">
 <style>${CSSGAL_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(cf.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(cf.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(cf.good)}」</div>
-  </div>
-</div>
+${cssIntro}
 <nav class="gnav" aria-label="코스">
   ${cmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${cby(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1031,15 +1047,23 @@ const LGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.lzgal') + `
 .lzgal .item .one b { color: var(--ink); font-weight: 700; }
 .lzgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
 
+// 판 리듬 인트로 — 안 만들어도 되는 것 사전
+const lzM = lmenu.items.filter(i => i.measured);
+const lzCode = it => `<div class="ip-code"><div class="bad"><div class="dt">✗ 부풀린 코드</div><pre>${esc(it.before)}</pre></div><div class="good"><div class="dt">✓ 표준으로</div><pre>${esc(it.after)}</pre></div></div>`;
+const lzA = lzM[0] || lmenu.items[0], lzB = lzM[1] || lmenu.items[1];
+const lzIntro = ipPanels('codelazy', '.lzgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `안 만들어도 되는 것 · ${lmenu.items.length}가지`, h: 'AI는 시키면 다 만들어요<br><em>안 만들어도 되는 것</em>까지', sub: esc(lf.note),
+    body: `<div class="ip-big">${esc(lzA.name)}<small>${esc(lzA.measured || lzA.rx)}</small></div><div style="max-width:760px;margin:18px auto 0">${lzCode(lzA)}</div>${ipBub(lzA.ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '만들라고 하기 전에<br><em>한 번</em> 묻게 해요', body: ipFormula(lf) },
+  { lay: 'wide', bg: 'pale', chip: '증상 찾기', h: '이런 말이 나오면<br><em>표준</em>부터 봐요', sub: '왼쪽이 AI에게 흔히 하는 말, 오른쪽이 이미 있는 해법이에요.',
+    body: `<div class="ip-rows">${lmenu.categories.map(c => lby(c.id)[0]).filter(Boolean).map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name)}</b></span><span class="v">→ ${esc(it.rx || it.culprit || "")}</span></a>`).join('')}</div>` },
+  lzB && { lay: 'split', bg: 'white', chip: lzB.measured ? '실측' : '한 줄', h: `${esc(lzB.name)}`, sub: `<b>${esc(lzB.rx)}</b> ${esc(lzB.check)}`,
+    body: ipBub(lzB.ask), aside: lzCode(lzB) },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '만들기 전에<br><em>AI가 먼저</em> 멈춰요', sub: '스킬로 깔아 두면 부풀기 쉬운 지점에서 「이거 표준으로 돼요」를 먼저 말해요.', body: ipInstall('codelazy') },
+]);
 const lzCore = `<div class="lzgal">
 <style>${LGAL_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(lf.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(lf.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(lf.good)}」</div>
-  </div>
-</div>
+${lzIntro}
 <nav class="gnav" aria-label="코스">
   ${lmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${lby(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1156,15 +1180,22 @@ const TGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.tpgal') + `
 .tpgal .item .one b { color: var(--ink); font-weight: 700; }
 .tpgal .item .ck { font-size: 11.5px; color: var(--ink-3); }`;
 
+// 판 리듬 인트로 — 타입스크립트 에러 사전
+const tpHero = tmenu.categories.slice(0, 3).map(c => tby(c.id)[0]).filter(Boolean);
+const tpA = tmenu.items[0];
+const tpIntro = ipPanels('type-menu', '.tpgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `타입스크립트 에러 사전 · ${tmenu.items.length}가지`, h: '빨간 줄 영어 메시지를<br><em>사람 말</em>로 옮겨요', sub: esc(tf.note),
+    body: `<div class="ip-three">${tpHero.map(it => `<figure><div class="ip-term"><b>${esc(it.code)}</b>${esc(it.err.replace(/^error TS\d+:\s*/, ''))}</div><figcaption>"${esc(it.name)}"<span>${esc(it.rx || it.culprit || "")}</span></figcaption></figure>`).join('')}</div>${tpHero[0] ? ipBub(tpHero[0].ask) : ''}` },
+  { lay: 'split', bg: 'white', chip: '덮지 않고 고치기', h: '<em>any</em>로 막지 말고<br>좁혀서 고쳐요', sub: `<b>${esc(tpA.rx)}</b> ${esc(tpA.check)}`, body: ipBub(tpA.ask),
+    aside: `<div class="ip-term" style="margin-bottom:10px"><b>$ tsc</b>${esc(tpA.err)}</div><div class="ip-code"><div class="bad"><div class="dt">✗ 에러 나는 코드</div><pre>${esc(tpA.before)}</pre></div><div class="good"><div class="dt">✓ 제대로 고침</div><pre>${esc(tpA.after)}</pre></div></div>` },
+  { lay: 'stack', bg: 'pale', chip: 'AI한테 시키는 공식', h: '원문 그대로 붙이면<br><em>코드번호</em>로 찾아요', body: ipFormula(tf) },
+  { lay: 'wide', bg: 'white', chip: '코드번호 찾기', h: '이 번호가 뜨면<br><em>이 뜻</em>이에요', sub: '왼쪽이 터미널에 뜨는 번호, 오른쪽이 사람 말이에요.',
+    body: `<div class="ip-rows">${tmenu.categories.map(c => tby(c.id)[0]).filter(Boolean).map(it => `<a class="r" href="#${it.id}"><span class="w">${esc(it.code)}</span><span class="n"><b>${esc(it.name)}</b></span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '에러를 붙이면<br><em>AI가 사전</em>을 펴요', sub: '스킬로 깔아 두면 빨간 줄 원문만 붙여도 any 없이 고치는 문장으로 바꿔요.', body: ipInstall('type-menu') },
+]);
 const tpCore = `<div class="tpgal">
 <style>${TGAL_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(tf.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(tf.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(tf.good)}」</div>
-  </div>
-</div>
+${tpIntro}
 <nav class="gnav" aria-label="코스">
   ${tmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${tby(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1351,18 +1382,23 @@ const FGAL_CSS = fImports + '\n' + CORE_CSS.replace(/\.uigal/g, '.fmgal') + `
 .fmgal .fpair .askline code { font-size: 12px; line-height: 1.5; flex: 1; min-width: 0; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
 .fmgal .fpair .floadrow { margin-top: auto; border-top: 1px solid var(--line); border-bottom: 0; }`;
 
+// 판 리듬 인트로 — 웹폰트 사전 (로더 상자는 판 2 로 옮겼다)
+const fmHero = ['pair-black-han-pretendard', 'pair-pen-gowun', 'pair-jua-pretendard'].map(id => fPairs.find(p => p.id === id)).filter(Boolean);
+const fmSpec = p => { const t = fById[p.title.font], u = fById[p.sub.font]; return `<figure><div class="ip-card" style="min-height:150px"><div style="font-family:${attr(t.css)};font-weight:${p.title.weight};font-size:28px;line-height:1.2">${esc(p.head)}</div><div style="font-family:${attr(u.css)};font-weight:${p.sub.weight};font-size:14px;margin-top:10px;color:var(--ip-ink2)">${esc(p.subText)}</div></div><figcaption>${esc(t.family)} + ${esc(u.family)}<span>${esc(p.rule)}</span></figcaption></figure>`; };
+const fmPairX = fPairs.find(p => p.group === 'ko-en') || fPairs[0];
+const fmIntro = ipPanels('font-menu', '.fmgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `웹폰트 사전 · ${fmenu.items.length}가지 · 짝 ${fPairs.length}`, h: '「폰트 예쁘게」 대신<br><em>짝</em>으로 시켜요', sub: esc(ff.note),
+    body: `<div class="ip-three">${fmHero.map(fmSpec).join('')}</div>${fmHero[0] ? ipBub(fmHero[0].ask) : ''}` },
+  { lay: 'wide', bg: 'white', chip: '로더', h: '로더가 폰트마다 달라요<br>이름만 안다고 <em>안 떠요</em>', sub: '같은 「무료 폰트」라도 불러오는 곳과 쓸 수 있는 범위가 달라요.',
+    body: `<div class="ip-rows">${Object.entries(fmenu.loaders).map(([k, v]) => `<a class="r" href="#c-${fmenu.categories[0].id}"><span class="w"><b style="color:var(--ip-ink)">${esc(k)}</b></span><span class="v">${esc(v)}</span></a>`).join('')}</div>` },
+  fmPairX && { lay: 'split', bg: 'pale', chip: '짝의 규칙', h: '한 화면에 한글 글꼴은<br><em>두 개까지</em>', sub: `${esc(fmenu.pairRule)}. 짝마다 요청 문장과 두 글꼴 로드 스니펫이 붙어 있어요.`,
+    body: `<p class="ip-foot"><a href="#c-pairs">짝 ${fPairs.length}가지 전부 보기 ↓</a></p>`, aside: fPairCard(fmPairX).replace(` id="${fmPairX.id}"`, '') },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '인상을 말하고<br><em>로딩 스니펫째</em> 시켜요', body: ipFormula(ff) },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: 'AI가 라이선스까지<br><em>보고</em> 골라요', sub: '스킬로 깔아 두면 「제목은 굵게, 본문은 편하게」만 말해도 짝과 로더·라이선스를 같이 맞춰요.', body: ipInstall('font-menu') },
+]);
 const fpCore = `<div class="fmgal">
 <style>${FGAL_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(ff.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(ff.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(ff.good)}」</div>
-  </div>
-</div>
-<div class="floaders"><b>로더가 폰트마다 다르다. 이름만 안다고 안 뜬다</b>
-  ${Object.entries(fmenu.loaders).map(([k, v]) => `<div class="lrow"><span class="fsrc ${srcClass(k)}">${esc(k)}</span> ${esc(v)}</div>`).join('\n  ')}
-</div>
+${fmIntro}
 <nav class="gnav" aria-label="맥락">
   ${fmenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${fby(c.id).length}</a>`).join('\n  ')}
   ${fPairs.length ? `<a href="#c-pairs"><b>${String(fmenu.categories.length + 1).padStart(2, '0')}</b>짝 ${fPairs.length}</a>` : ''}
@@ -1472,16 +1508,23 @@ const AGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.apgal') + `
 .apgal .item .vs { display: block; margin-top: 6px; font-size: 11.5px; color: var(--ink-3); }
 .apgal td.nat2 { white-space: normal; min-width: 150px; color: #0F766E; }`;
 
+// 판 리듬 인트로 — 앱 UI 사전 (모바일 전용 안내는 판 1 설명으로 옮겼다)
+const apHero = ['skeleton', 'nav', 'overlay'].map(c => aby(c)[0]).filter(Boolean);
+const apX = amenu.items.find(i => i.vs && i.native);
+const apCard = it => `<div class="ip-card"><h4>${esc(it.name.ko)} <span style="font-family:ui-monospace,monospace;font-size:11px;color:var(--ip-ink3)">${esc(it.name.en)}</span></h4><span class="al">"${esc(it.aliases[0])}"</span><p>${esc(it.oneliner)}</p>${it.native ? `<code>${esc(it.native)}</code>` : ''}</div>`;
+const apIntro = ipPanels('app-menu', '.apgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `앱 UI 사전 · ${amenu.items.length}가지`, h: '모바일은 이름만 대면<br><em>관례</em>가 따라와요',
+    sub: '<b>모바일 앱 UI 전용.</b> 웹 UI 는 <b>ui-menu</b> 를 쓴다. 같은 단어라도 앱과 웹의 관례가 다르다. 모달은 앱에선 아래서 올라오는 풀스크린, 셀렉트는 드롭다운이 아니라 시트로 연다. 네이티브 열은 SwiftUI · Flutter · React Native 의 실제 컴포넌트명.',
+    body: `<div class="ip-three">${apHero.map(it => `<figure>${apCard(it)}</figure>`).join('')}</div>${apHero[0] ? ipBub(apHero[0].ask) : ''}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '플랫폼 관례까지<br><em>한 문장</em>에 넣어요', sub: esc(af.note), body: ipFormula(af) },
+  { lay: 'wide', bg: 'pale', chip: '이름 찾기', h: '이런 말엔<br><em>이런 이름</em>을 써요', sub: '오른쪽에 SwiftUI · Flutter · React Native 의 실제 이름까지 붙어 있어요.',
+    body: `<div class="ip-rows">${amenu.categories.map(c => aby(c.id)[0]).filter(Boolean).map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name.ko)}</b></span>${it.native ? `<span class="v">${esc(it.native)}</span>` : ''}</a>`).join('')}</div>` },
+  apX && { lay: 'split', bg: 'white', chip: '헷갈리는 짝', h: `<em>${esc(apX.name.ko)}</em>, 이럴 때 써요`, sub: `↔ ${esc(apX.vs)}`, body: ipBub(apX.ask), aside: apCard(apX) },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: 'AI가 앱 관례를<br><em>먼저</em> 챙겨요', sub: '스킬로 깔아 두면 세이프에어리어 · 44pt · 시트 같은 관례를 말하지 않아도 넣어요.', body: ipInstall('app-menu') },
+]);
 const apCore = `<div class="apgal">
 <style>${AGAL_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(af.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(af.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(af.good)}」</div>
-  </div>
-</div>
-<div class="note"><b>모바일 앱 UI 전용.</b> 웹 UI 는 <b>ui-menu</b> 를 쓴다. 같은 단어라도 앱과 웹의 관례가 다르다. 모달은 앱에선 아래서 올라오는 풀스크린, 셀렉트는 드롭다운이 아니라 시트로 연다. 네이티브 열은 SwiftUI · Flutter · React Native 의 실제 컴포넌트명.</div>
+${apIntro}
 <nav class="gnav" aria-label="분류">
   ${amenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${aby(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1622,13 +1665,23 @@ const lmIndHtml = lmInd.length ? `<section class="lm-cat" id="lc-industries">
   </article>`).join('\n')}</div>
 </section>` : '';
 const lmF = lmMenu.formula;
+// 판 리듬 인트로 — 랜딩 메뉴판 (공식 상자는 판 2 로 옮겼다)
+const LM_HERO = ['hero-device', 'feature-alt', 'cta-band'];
+const lmItem = id => { const it = lmMenu.items.find(i => i.id === id); if (!it) { console.error('landing-menu 인트로가 없는 항목을 가리킴:', id); process.exit(1); } return it; };
+const lmFig = id => { const it = lmItem(id); return `<figure><iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${Math.min(lmFrags[id].h, 320)}px" srcdoc="${attr(lmCode[id])}"></iframe><figcaption>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
+const lmIntro = ipPanels('landing-menu', '.lmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `랜딩 메뉴판 · ${lmMenu.items.length}섹션 · 업종 ${lmInd.length}`, h: '랜딩은 컴포넌트가 아니라<br><em>섹션의 순서</em>예요', sub: '섹션마다 이름 · 별칭 · 요청 문장 · 실물 HTML 이 있어요. <b>룩(색·글꼴)은 design-brief 에서</b>, 이 사전은 구조와 순서만 줘요.',
+    body: `<div class="ip-three">${LM_HERO.map(lmFig).join('')}</div>${ipBub(lmItem(LM_HERO[0]).ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '섹션 이름과 순서로<br><em>값</em>을 적어요', sub: esc(lmF.note || ''), body: `${ipFormula(lmF)}<p class="ip-foot">★ ${esc(lmMenu.antiGeneric[0])}</p>` },
+  lmInd.length && { lay: 'wide', bg: 'pale', chip: '업종별 레시피', h: '업종마다 달라지는 건<br><em>순서와 증거</em>예요', sub: '누르면 그 업종의 섹션 순서 · 증거 · 첫 줄 공식 · 룩 견본으로 가요.',
+    body: `<div class="ip-rows">${lmInd.map(x => `<a class="r" href="#li-${x.id}"><span class="w"><b style="color:var(--ip-ink)">${esc(x.ko)}</b> · ${esc(x.who)}</span><span class="n">${x.order.slice(0, 3).map(st => `<b>${esc(lmItemKo(st.id))}</b>`).join('')}</span></a>`).join('')}</div>` },
+  lmMenu.rhythm && { lay: 'split', bg: 'white', chip: '⑦ 상세페이지', h: '판으로 설명할 땐<br><em>리듬</em>을 지켜요', sub: esc(lmMenu.rhythm.note),
+    body: `<ul class="ip-list">${lmMenu.rhythm.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>${ipBub(lmMenu.rhythm.ask)}`, aside: lmFig('chip-headline') },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「랜딩 만들어줘」가<br><em>섹션 목록</em>으로 바뀌어요', sub: '스킬로 깔아 두면 업종과 증거를 먼저 묻고, 섹션 순서를 보여 준 뒤에 만들어요.', body: ipInstall('landing-menu') },
+]);
 const lmCore = `<div class="lmgal">
 <style>${LM_CSS}</style>
-<div class="lm-formula">
-  <div class="fp">AI한테 시키는 공식<span>${esc(lmF.pattern)}</span></div>
-  <div class="fx">✕ 「${esc(lmF.bad)}」 → ○ 「${esc(lmF.good)}」</div>
-  <div class="lm-anti">★ ${esc(lmMenu.antiGeneric[0])}</div>
-</div>
+${lmIntro}
 <nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}${lmInd.length ? `<a href="#lc-industries"><b>＋</b>업종별 레시피 ${lmInd.length}</a>` : ''}</nav>
 ${lmIndHtml}
 ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
@@ -1729,7 +1782,7 @@ const moXcode = {};
 for (const c of moCmp.list) { const n = moItemName(c.item); moXcode[c.id] = moStandalone({ id: c.id, name: { ko: n.ko + ' 비교', en: n.en } }); }
 for (const sc of moScn.list) { sc.uses.forEach(moItemName); moXcode[sc.id] = moStandalone({ id: sc.id, name: { ko: sc.name, en: 'Scene ' + sc.no } }); }
 for (const d of moInt.demos) { const n = moItemName(d.item); moXcode[d.id] = moStandalone({ id: d.id, name: { ko: n.ko + ' 세기', en: n.en } }); }
-const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;--pn:#F5F0E8;--hl:rgba(255,200,64,.55);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .mogal .mo-formula{background:var(--paper);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:0 0 18px}
 .mogal .mo-fh{padding:11px 16px;background:var(--bg);font-size:13px;font-weight:700;display:flex;gap:9px;flex-wrap:wrap;align-items:baseline}
 .mogal .mo-fh span{font-weight:500;color:var(--ink2);font-family:ui-monospace,monospace;font-size:12px}
@@ -1800,32 +1853,7 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-scn .when{font-size:12px;color:var(--acc);font-weight:600}
 .mogal .mo-scn .uses{font-size:11.5px;color:var(--ink3)}
 .mogal .mo-scn .uses a{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink2);margin-right:6px}
-/* 상세페이지 결 인트로 (2026-10-23) — 칩 라벨 · 가운데 두 줄 제목 + 형광 한 단어 · 실물 셋 · 말풍선 = 사람이 칠 문장 · 「이런 말엔 이런 장면」 표 */
-.mogal .mo-pn{background:var(--pn);border-radius:22px;padding:44px 22px 36px;margin:0 0 16px;text-align:center}
-.mogal .mo-chip{display:inline-block;font-size:13px;font-weight:700;color:var(--acc);background:var(--paper);border-radius:999px;padding:6px 15px;margin:0 0 16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.mogal .mo-pn h2{font-size:clamp(26px,5.4vw,40px);line-height:1.22;letter-spacing:-.035em;font-weight:800;margin:0 0 14px;word-break:keep-all}
-.mogal .mo-pn h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--hl) 58%)}
-.mogal .mo-pn h2 i{font-style:normal;color:var(--acc)}
-.mogal .mo-sub{font-size:15px;line-height:1.65;color:var(--ink2);margin:0 auto 26px;max-width:560px;word-break:keep-all}.mogal .mo-sub b{color:var(--ink)}
-.mogal .mo-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:820px;margin:0 auto}
-@media(max-width:640px){.mogal .mo-three{grid-template-columns:1fr;max-width:360px}}
-.mogal .mo-three figure{margin:0}.mogal .mo-three iframe{display:block;width:100%;border:0;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(23,23,27,.10)}
-.mogal .mo-three figcaption{font-size:14px;font-weight:700;margin-top:10px}.mogal .mo-three figcaption b{color:var(--acc);margin-right:4px}
-.mogal .mo-bub{display:flex;align-items:center;gap:10px;max-width:640px;margin:22px auto 0;text-align:left;background:var(--paper);border-radius:18px;padding:12px;box-shadow:0 8px 24px rgba(23,23,27,.08)}
-.mogal .mo-bub p{flex:1;margin:0;background:var(--acc);color:#fff;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:700;line-height:1.5;word-break:keep-all}
-.mogal .mo-bub.plain p{background:var(--bg);color:var(--ink3);font-weight:500}
-.mogal .mo-bub .copy{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink2)}.mogal .mo-bub .copy.ok{border-color:var(--acc2);color:var(--acc)}
-.mogal .mo-bub .mk2{flex:none;width:22px;text-align:center;font-weight:800}.mogal .mo-bub.plain .mk2{color:#C0392B}.mogal .mo-bub .mk2{color:#17B26A}
-.mogal .mo-pre2{white-space:pre-wrap;text-align:left}
-.mogal .mo-blocks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:680px;margin:0 auto}
-.mogal .mo-blocks span{border-radius:12px;padding:14px 16px;font-size:15px;font-weight:800;background:var(--paper);box-shadow:0 2px 8px rgba(23,23,27,.06)}
-.mogal .mo-blocks span:nth-child(2){background:var(--acc);color:#fff}.mogal .mo-blocks span:nth-child(3){background:var(--hl)}.mogal .mo-blocks span:nth-child(4){background:var(--ink);color:var(--paper)}
-.mogal .mo-use{max-width:720px;margin:0 auto;display:grid;gap:8px;text-align:left}
-.mogal .mo-use a.r{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border-radius:14px;padding:13px 16px;text-decoration:none;color:var(--ink);box-shadow:0 2px 8px rgba(23,23,27,.05)}
-.mogal .mo-use .w{flex:1 1 220px;font-size:14.5px;font-weight:700}.mogal .mo-use .n{font-size:12px;color:var(--ink3);font-weight:600;display:block}
-.mogal .mo-use .u{display:flex;gap:6px;flex-wrap:wrap}.mogal .mo-use .u span{font-size:13px;font-weight:700;color:var(--acc);background:var(--pn);border-radius:999px;padding:5px 12px}
-.mogal .mo-foot{font-size:13px;color:var(--ink3);margin:18px 0 0}
-@media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b;--pn:#232226;--hl:rgba(224,122,63,.38)}}`;
+@media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b}}`;
 const moStar = it => it.star ? '<span class="star" title="현장에서 특히 많이 쓰는 것">★</span>' : '';
 const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
 const moMake = it => (it.make || []).map(k => `<span class="mk mk-${k}">${MAKE_LBL[k] || k}</span>`).join('');
@@ -1846,42 +1874,19 @@ const moCatNo = it => (moMenu.categories.find(c => c.id === it.category) || {}).
 const moFig = (id, src) => { const it = moItem(id); return `<figure><iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[id].h}px" srcdoc="${attr(src || moCode[id])}"></iframe><figcaption><b>${moCatNo(it)}</b>${esc(it.name.ko)}</figcaption></figure>`; };
 const moBub = (text, cls = '', mark = '') => `<div class="mo-bub ${cls}">${mark ? `<span class="mk2">${mark}</span>` : ''}<p>${esc(text)}</p>${cls === 'plain' ? '' : `<button class="copy" data-copy="${attr(text)}" title="문장 복사">복사</button>`}</div>`;
 const moCmp0 = moCmp.list[0];
-const moIntro = `<section class="mo-pn">
-  <span class="mo-chip">모션 메뉴판 · ${moMenu.items.length}가지</span>
-  <h2>움직임은 <em>이름</em>으로 시키면<br>한 번에 <i>통해요</i></h2>
-  <p class="mo-sub">「멋지게 해줘」는 매번 다르게 나와요.<br><b>이름과 초를 붙여서</b> 말하면 AI 영상 · 모션 그래픽 · CSS 어디서든 같은 움직임이 나와요.</p>
-  <div class="mo-three">${MO_HERO.map(id => moFig(id)).join('')}</div>
-  ${moBub(moItem(MO_HERO[0]).ask, '', '')}
-  <p class="mo-foot">카드마다 「문장」을 누르면 이 요청문이 복사돼요.</p>
-</section>
-${moCmp0 ? `<section class="mo-pn">
-  <span class="mo-chip">말 한 줄 차이</span>
-  <h2>같은 장면인데<br><em>말 한 줄</em>이 움직임을 바꿔요</h2>
-  <p class="mo-sub">위는 느낌으로 시킨 결과, 아래는 <b>이름과 숫자로</b> 시킨 결과예요.</p>
-  <div class="mo-three" style="grid-template-columns:minmax(0,1fr);max-width:520px"><figure><iframe title="${esc(moItemName(moCmp0.item).ko)} 비교 데모" loading="lazy" style="height:${moFrags[moCmp0.id].h}px" srcdoc="${attr(moXcode[moCmp0.id])}"></iframe><figcaption>${esc(moItemName(moCmp0.item).ko)}</figcaption></figure></div>
-  ${moBub(moCmp0.plain, 'plain', '✕')}${moBub(moCmp0.named, '', '○')}
-  <p class="mo-foot"><a href="#mc-compare" style="color:inherit">비교 ${moCmp.list.length}가지 전부 보기 ↓</a></p>
-</section>` : ''}
-<section class="mo-pn">
-  <span class="mo-chip">시키는 공식</span>
-  <h2>이 순서로만 말하면<br><em>고칠 일</em>이 줄어요</h2>
-  <p class="mo-sub">${esc(moF.note)}</p>
-  <div class="mo-blocks">${moF.pattern.split(' + ').map(p => `<span>${esc(p)}</span>`).join('')}</div>
-  ${moBub(moF.bad, 'plain', '✕')}${moBub(moF.good, '', '○')}
-</section>
-${moScn.list.length ? `<section class="mo-pn">
-  <span class="mo-chip">장면표</span>
-  <h2>이런 말엔<br><em>이런 장면</em>을 골라요</h2>
-  <p class="mo-sub">짧은 정보 영상은 <b>대본 문장마다 장면 하나</b>. 같은 장면을 연달아 쓰지 않아요.</p>
-  <div class="mo-use">${moScn.list.map(sc => `<a class="r" href="#m-${sc.id}"><span class="w"><span class="n">${sc.no}. ${esc(sc.name)}</span>${esc(sc.when)}</span><span class="u">${sc.uses.map(u => `<span>${esc(moItemName(u).ko)}</span>`).join('')}</span></a>`).join('')}</div>
-</section>` : ''}
-${moMenu.starter ? `<section class="mo-pn">
-  <span class="mo-chip">처음 한 번</span>
-  <h2>이 요청문 하나로<br><em>시작</em>하세요</h2>
-  <p class="mo-sub">${esc(moMenu.starter.note)}</p>
-  <div class="mo-bub"><p class="mo-pre2">${esc(moMenu.starter.ask)}</p><button class="copy" data-copy="${attr(moMenu.starter.ask)}" title="요청문 복사">복사</button></div>
-  <p class="mo-foot">설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting</p>
-</section>` : ''}`;
+const moIntro = ipPanels('motion-menu', '.mogal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink3);--ip-paper:var(--paper);--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `모션 메뉴판 · ${moMenu.items.length}가지`, h: '움직임은 <em>이름</em>으로 시키면<br>한 번에 <i>통해요</i>',
+    sub: '「멋지게 해줘」는 매번 다르게 나와요.<br><b>이름과 초를 붙여서</b> 말하면 AI 영상 · 모션 그래픽 · CSS 어디서든 같은 움직임이 나와요.',
+    body: `<div class="ip-three">${MO_HERO.map(id => moFig(id)).join('')}</div>${ipBub(moItem(MO_HERO[0]).ask)}<p class="ip-foot">카드마다 「문장」을 누르면 이 요청문이 복사돼요.</p>` },
+  moCmp0 && { lay: 'split', bg: 'white', chip: '말 한 줄 차이', h: '같은 장면인데<br><em>말 한 줄</em>이 움직임을 바꿔요', sub: '위는 느낌으로 시킨 결과, 아래는 <b>이름과 숫자로</b> 시킨 결과예요.',
+    body: `${ipBub(moCmp0.plain, 'plain', '✕')}${ipBub(moCmp0.named, '', '○')}<p class="ip-foot"><a href="#mc-compare">비교 ${moCmp.list.length}가지 전부 보기 ↓</a></p>`,
+    aside: `<figure><iframe title="${esc(moItemName(moCmp0.item).ko)} 비교 데모" loading="lazy" style="height:${moFrags[moCmp0.id].h}px" srcdoc="${attr(moXcode[moCmp0.id])}"></iframe><figcaption>${esc(moItemName(moCmp0.item).ko)}</figcaption></figure>` },
+  { lay: 'stack', bg: 'pale', chip: '시키는 공식', h: '이 순서로만 말하면<br><em>고칠 일</em>이 줄어요', sub: esc(moF.note), body: ipFormula(moF) },
+  moScn.list.length && { lay: 'wide', bg: 'white', chip: '장면표', h: '이런 말엔<br><em>이런 장면</em>을 골라요', sub: '짧은 정보 영상은 <b>대본 문장마다 장면 하나</b>. 같은 장면을 연달아 쓰지 않아요.',
+    body: `<div class="ip-rows">${moScn.list.map(sc => `<a class="r" href="#m-${sc.id}"><span class="w">${sc.no}. ${esc(sc.name)} · ${esc(sc.when)}</span><span class="n">${sc.uses.map(u => `<b>${esc(moItemName(u).ko)}</b>`).join('')}</span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: '처음 한 번', h: '이 요청문 하나로<br><em>시작</em>하세요', sub: esc(moMenu.starter ? moMenu.starter.note : ''),
+    body: `${moMenu.starter ? ipBub(moMenu.starter.ask) : ''}${ipInstall('motion-menu')}` },
+]);
 const moCore = `<div class="mogal">
 <style>${MO_CSS}</style>
 ${moIntro}
