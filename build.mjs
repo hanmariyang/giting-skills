@@ -616,15 +616,99 @@ const UI_JS = `
   }
 })();`;
 
+// 상세페이지 결 인트로(2026-10-23, 모션 메뉴판과 같은 문법). 원래 있던 것은 하나도 빼지 않는다(의뢰자):
+// 소개 문장(옛 단독 갤러리 히어로) · 공식(pattern·bad·good·note) · 별칭→이름·구분(vs)·shadcn · 화면 조합 레시피 · 설치·GitHub·llms 를 판으로 올리고,
+// 아래 코스 내비 · 자동 시연 · 카드(문장·프롬프트·코드·#) · 코스별 표 · 레시피 섹션은 그대로 둔다.
+const UI_HERO = ['accordion', 'tabs', 'modal'];
+const uiItem = id => { const it = menu.items.find(i => i.id === id); if (!it) { console.error('ui-menu 인트로가 없는 항목을 가리킴:', id); process.exit(1); } return it; };
+const uiCatNo = it => (menu.categories.find(c => c.id === it.category) || {}).no || '';
+const uiBub = (text, cls = '', mark = '') => `<div class="ui-bub ${cls}">${mark ? `<span class="mk2">${mark}</span>` : ''}<p>${esc(text)}</p>${cls === 'plain' ? '' : `<button class="copy tiny" data-copy="${attr(text)}" title="문장 복사">복사</button>`}</div>`;
+const uiPairs = menu.categories.map(c => bycat(c.id).find(i => i.vs)).filter(Boolean);
+const uiR0 = (menu.recipes || [])[0];
+const UI_INTRO_CSS = `
+.uigal { --pn: color-mix(in srgb, var(--accent) 6%, var(--paper)); --hl: color-mix(in srgb, #FFC840 55%, transparent); }
+.uigal .ui-pn { background: var(--pn); border-radius: 22px; padding: 44px 22px 36px; margin: 0 0 16px; text-align: center; }
+.uigal .ui-chip { display: inline-block; font-size: 13px; font-weight: 700; color: var(--accent-deep); background: var(--paper); border-radius: 999px; padding: 6px 15px; margin: 0 0 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.uigal .ui-pn h2 { font-size: clamp(26px, 5.4vw, 40px); line-height: 1.22; letter-spacing: -.035em; font-weight: 800; margin: 0 0 14px; word-break: keep-all; }
+.uigal .ui-pn h2 em { font-style: normal; background: linear-gradient(transparent 58%, var(--hl) 58%); }
+.uigal .ui-pn h2 i { font-style: normal; color: var(--accent-deep); }
+.uigal .ui-sub { font-size: 15px; line-height: 1.65; color: var(--ink-2); margin: 0 auto 26px; max-width: 600px; word-break: keep-all; }
+.uigal .ui-sub b { color: var(--ink); }
+.uigal .ui-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 900px; margin: 0 auto; }
+@media (max-width: 720px) { .uigal .ui-three { grid-template-columns: 1fr; max-width: 420px; } }
+.uigal .ui-three figure { margin: 0; }
+.uigal .ui-three iframe { display: block; width: 100%; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 8px 24px rgba(23,23,27,.10); }
+.uigal .ui-three figcaption { font-size: 14px; font-weight: 700; margin-top: 10px; }
+.uigal .ui-three figcaption b { color: var(--accent-deep); margin-right: 4px; }
+.uigal .ui-three figcaption span { display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-3); margin-top: 2px; }
+.uigal .ui-bub { display: flex; align-items: center; gap: 10px; max-width: 660px; margin: 14px auto 0; text-align: left; background: var(--paper); border-radius: 18px; padding: 12px; box-shadow: 0 8px 24px rgba(23,23,27,.08); }
+.uigal .ui-bub p { flex: 1; min-width: 0; margin: 0; background: var(--accent-deep); color: #fff; border-radius: 12px; padding: 13px 16px; font-size: 15px; font-weight: 700; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.uigal .ui-bub.plain p { background: var(--wash); color: var(--ink-3); font-weight: 500; }
+.uigal .ui-bub .mk2 { flex: none; width: 22px; text-align: center; font-weight: 800; color: #17B26A; }
+.uigal .ui-bub.plain .mk2 { color: #C0392B; }
+.uigal .ui-bub .tiny { padding: 7px 11px; font-size: 12px; }
+.uigal .ui-bub.code p { font-family: var(--mono); font-size: 13px; font-weight: 600; }
+.uigal .ui-blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 680px; margin: 0 auto 8px; }
+.uigal .ui-blocks span { border-radius: 12px; padding: 14px 16px; font-size: 15px; font-weight: 800; background: var(--paper); box-shadow: 0 2px 8px rgba(23,23,27,.06); }
+.uigal .ui-blocks span:nth-child(2) { background: var(--accent-deep); color: #fff; }
+.uigal .ui-blocks span:nth-child(3) { background: var(--hl); }
+.uigal .ui-blocks span:nth-child(4) { background: var(--ink); color: var(--paper); }
+.uigal .ui-use { max-width: 760px; margin: 0 auto; display: grid; gap: 8px; text-align: left; }
+.uigal .ui-use a.r { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; background: var(--paper); border-radius: 14px; padding: 13px 16px; text-decoration: none; color: var(--ink); box-shadow: 0 2px 8px rgba(23,23,27,.05); }
+.uigal .ui-use .w { font-size: 14.5px; font-weight: 700; color: var(--ink-2); }
+.uigal .ui-use .n { display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.uigal .ui-use .n b { font-size: 13px; font-weight: 800; color: var(--accent-deep); background: var(--pn); border-radius: 999px; padding: 5px 12px; }
+.uigal .ui-use .n code { font-family: var(--mono); font-size: 11px; color: #0F766E; }
+.uigal .ui-use .v { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); }
+@media (max-width: 560px) { .uigal .ui-use a.r { grid-template-columns: 1fr; } .uigal .ui-use .n { justify-content: flex-start; } }
+.uigal .ui-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 14px 0 0; }
+.uigal .ui-tags span { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: #0F766E; background: var(--paper); border-radius: 8px; padding: 5px 10px; }
+.uigal .ui-foot { font-size: 13px; color: var(--ink-3); margin: 18px 0 0; line-height: 1.7; }
+.uigal .ui-foot a { color: var(--ink-2); }
+.uigal .ui-gh { display: inline-flex; margin: 16px 0 0; padding: 10px 16px; border-radius: 11px; background: var(--paper); color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 600; box-shadow: 0 2px 8px rgba(23,23,27,.06); }`;
+const uiFig = id => { const it = uiItem(id); return `<figure><iframe title="${esc(it.name.ko)} 데모" loading="lazy"${demoSteps[id] ? ' data-demo' : ''} style="height:${frags[id].h}px" srcdoc="${attr(demoDoc(id, code[id]))}"></iframe><figcaption><b>${uiCatNo(it)}</b>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
+const uiIntro = `<section class="ui-pn">
+  <span class="ui-chip">UI 메뉴판 · ${menu.items.length}가지</span>
+  <h2>「접었다 폈다 되는 거」에는<br><em>이름</em>이 <i>있어요</i></h2>
+  <p class="ui-sub">말로 설명하던 UI에 이름을 붙여 주는 사전이에요. ${menu.categories.length}개 코스 <b>${menu.items.length}개 항목</b>이 전부 그림이 아니라 <b>실제로 동작하는 HTML</b>이고, 항목마다 AI에게 그대로 쓰는 요청 문장이 붙어 있어요.</p>
+  <div class="ui-three">${UI_HERO.map(uiFig).join('')}</div>
+  ${uiBub(uiItem(UI_HERO[0]).ask)}
+  <p class="ui-foot">카드의 「문장」은 이 요청 문장을, 「프롬프트」는 문장 · 견본 코드 · 적용 지침을 한 번에, 「코드」는 HTML 을, 「#」은 그 항목 주소를 복사해요.</p>
+</section>
+<section class="ui-pn">
+  <span class="ui-chip">AI한테 시키는 공식</span>
+  <h2>이 순서로만 말하면<br><em>한 번에</em> 통해요</h2>
+  <p class="ui-sub">${esc(f.note)} 아래 사전에서 이름을 찾고, 문장을 복사해 쓰세요.</p>
+  <div class="ui-blocks">${f.pattern.split(' + ').map(p => `<span>${esc(p)}</span>`).join('')}</div>
+  ${uiBub(f.bad, 'plain', '✕')}${uiBub(f.good, '', '○')}
+</section>
+<section class="ui-pn">
+  <span class="ui-chip">이름 찾기</span>
+  <h2>이런 말엔<br><em>이런 이름</em>을 써요</h2>
+  <p class="ui-sub">왼쪽이 사람들이 실제로 하는 말, 오른쪽이 AI가 알아듣는 이름이에요. 헷갈리는 짝은 <b>구분 기준</b>까지 붙어 있어요.</p>
+  <div class="ui-use">${uiPairs.map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.aliases[0])}"</span><span class="n"><b>${esc(it.name.ko)}</b><code>${esc(it.sc || it.name.en)}</code></span><span class="v">↔ ${esc(it.vs)}</span></a>`).join('')}</div>
+</section>
+${uiR0 ? `<section class="ui-pn">
+  <span class="ui-chip">화면 조합 레시피</span>
+  <h2>화면 하나는<br><em>이름 몇 개</em>의 조합이에요</h2>
+  <p class="ui-sub">낱개 컴포넌트를 아는 다음 단계예요. <b>조립하지 재발명하지 않는다</b>(shadcn 공식 원칙). 흔한 화면 ${menu.recipes.length}가지가 어떤 조합인지 보여 줘요.</p>
+  <div class="ui-three" style="grid-template-columns:minmax(0,1fr);max-width:600px"><figure><iframe title="${esc(uiR0.screen)} 조합 데모" loading="lazy"${demoSteps[uiR0.id] ? ' data-demo' : ''} style="height:${frags[uiR0.id].h}px" srcdoc="${attr(demoDoc(uiR0.id, rcode[uiR0.id]))}"></iframe><figcaption>${esc(uiR0.screen)}<span>${esc(uiR0.ko)}</span></figcaption></figure></div>
+  <div class="ui-tags">${uiR0.combo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+  ${uiBub(uiR0.ask)}
+  <p class="ui-foot"><a href="#c-recipes">레시피 ${menu.recipes.length}가지 전부 보기 ↓</a></p>
+</section>` : ''}
+<section class="ui-pn">
+  <span class="ui-chip">Claude Code 스킬</span>
+  <h2>AI가 이 사전을<br><em>직접</em> 읽어요</h2>
+  <p class="ui-sub">스킬로 깔아 두면 「접었다 폈다 되는 거」라고만 말해도 AI가 이름을 찾아 만들어요.</p>
+  ${uiBub('/plugin marketplace add hanmariyang/giting-skills', 'code')}${uiBub('/plugin install ui-menu@giting', 'code')}
+  <a class="ui-gh" href="https://github.com/hanmariyang/giting-skills" target="_blank" rel="noopener">GitHub에서 오픈소스 보기 &#8599;</a>
+  <p class="ui-foot">에이전트용 사전: <a href="/skills/llms.txt">llms.txt</a> / <a href="/skills/llms-full.txt">llms-full.txt</a> (코드 포함)</p>
+</section>`;
+
 const core = `<div class="uigal">
-<style>${CORE_CSS}${UI_CSS}</style>
-<div class="formula">
-  <div class="fh"><b>AI한테 시키는 공식</b><span>${esc(f.pattern)}</span></div>
-  <div class="fx">
-    <div class="bad"><span class="mark">✕ 이렇게 말고</span>「${esc(f.bad)}」</div>
-    <div class="good"><span class="mark">○ 이렇게</span>「${esc(f.good)}」</div>
-  </div>
-</div>
+<style>${CORE_CSS}${UI_CSS}${UI_INTRO_CSS}</style>
+${uiIntro}
 <nav class="gnav" aria-label="코스">
   ${menu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${bycat(c.id).length}</a>`).join('\n  ')}
 </nav>
@@ -1714,7 +1798,7 @@ ${moCmp0 ? `<section class="mo-pn">
 <section class="mo-pn">
   <span class="mo-chip">시키는 공식</span>
   <h2>이 순서로만 말하면<br><em>고칠 일</em>이 줄어요</h2>
-  <p class="mo-sub">${esc(moF.note.split('. ')[0])}.</p>
+  <p class="mo-sub">${esc(moF.note)}</p>
   <div class="mo-blocks">${moF.pattern.split(' + ').map(p => `<span>${esc(p)}</span>`).join('')}</div>
   ${moBub(moF.bad, 'plain', '✕')}${moBub(moF.good, '', '○')}
 </section>
