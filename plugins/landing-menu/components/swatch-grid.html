@@ -1,0 +1,28 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>번호 견본판 Numbered Swatch Grid · 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .sg { --ink:#1a1b1f; --mut:#9a9ba2; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#fff; padding:28px 20px; }
+  .sg .g { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; max-width:720px; margin:0 auto; }
+  @media (max-width:600px){ .sg .g { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+  .sg .c { aspect-ratio:3/4; border-radius:10px; position:relative; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; letter-spacing:-.03em; overflow:hidden; }
+  .sg .c b { position:absolute; left:7px; top:6px; font-size:10px; font-weight:700; opacity:.7; font-family:ui-monospace,monospace; }
+  .sg .cap { text-align:center; font-size:13px; color:var(--mut); margin:14px 0 0; }
+</style>
+<section class="sg">
+  <div class="g">
+    <div class="c" style="background:#16171b;color:#7CFF8A"><b>01</b>봄</div>
+    <div class="c" style="background:#ffd84d;color:#1a1b1f"><b>02</b>Hi</div>
+    <div class="c" style="background:#f2efe8;color:#1a1b1f"><b>03</b>NEW</div>
+    <div class="c" style="background:#ff6a2b;color:#fff"><b>04</b>+1</div>
+    <div class="c" style="background:#1a1b1f;color:#ff6a2b"><b>05</b>D-3</div>
+    <div class="c" style="background:#6a3ef0;color:#fff"><b>06</b>1·2·3</div>
+    <div class="c" style="background:#2b5cff;color:#fff"><b>07</b>오픈</div>
+    <div class="c" style="background:#f2efe8;color:#e0392b"><b>08</b>후기</div>
+    <div class="c" style="background:#1e5b3a;color:#fff"><b>09</b>링크</div>
+    <div class="c" style="background:#111;color:#ddd"><b>10</b>Q&amp;A</div>
+    <div class="c" style="background:#e0392b;color:#fff"><b>11</b>SALE</div>
+    <div class="c" style="background:#eceae4;color:#1a1b1f"><b>12</b>끝</div>
+  </div>
+  <p class="cap">번호가 곧 이름. 「03이랑 11 섞어줘」처럼 번호로 고르고 조합한다.</p>
+</section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

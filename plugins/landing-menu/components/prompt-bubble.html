@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>말풍선 요청문 Prompt Bubble · 랜딩 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}</style></head><body>
+<style>
+  .pb { --ink:#1a1b1f; --mut:#9a9ba2; --acc:#3a5bd9; --pn:#f3f6ff; font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:var(--pn); padding:32px 20px; }
+  .pb .row { display:flex; align-items:center; gap:10px; max-width:640px; margin:0 auto 12px; background:#fff; border-radius:18px; padding:12px; box-shadow:0 8px 24px rgba(23,23,27,.08); }
+  .pb .mk { flex:none; width:22px; text-align:center; font-weight:800; color:#17b26a; }
+  .pb .row.no .mk { color:#c0392b; }
+  .pb .say { flex:1; min-width:0; margin:0; background:var(--acc); color:#fff; border-radius:12px; padding:13px 16px; font-size:15px; font-weight:700; line-height:1.5; word-break:keep-all; }
+  .pb .row.no .say { background:#f4f5f7; color:var(--mut); font-weight:500; }
+  .pb button { flex:none; border:1px solid #e3e4e8; background:#fff; border-radius:9px; padding:8px 12px; font-size:12.5px; font-weight:600; color:#55565e; cursor:pointer; }
+  .pb .cap { max-width:640px; margin:6px auto 0; font-size:12.5px; color:var(--mut); text-align:center; }
+</style>
+<section class="pb">
+  <div class="row no"><span class="mk">✕</span><p class="say">알아서 예쁘게 정리해줘</p></div>
+  <div class="row"><span class="mk">○</span><p class="say">이 사진 마흔 장을 찍은 날짜별로 달력 칸에 넣고, 같은 날이 여럿이면 제일 밝은 한 장만 표지로 해줘</p><button type="button" onclick="var b=this;try{navigator.clipboard.writeText(b.previousElementSibling.textContent)}catch(e){}b.textContent='복사됨';setTimeout(function(){b.textContent='복사'},1100)">복사</button></div>
+  <p class="cap">위는 느낌으로 한 말, 아래는 그대로 쳐서 쓰는 말. 복사 단추는 아래 말풍선에만.</p>
+</section>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
