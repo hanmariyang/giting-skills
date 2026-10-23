@@ -1548,7 +1548,9 @@ rmSync(join(LMP, 'components'), { recursive: true, force: true });
 mkdirSync(join(LMP, 'components'), { recursive: true });
 for (const it of lmMenu.items) { lmCode[it.id] = lmStandalone(it); writeFileSync(join(LMP, 'components', `${it.id}.html`), lmCode[it.id]); }
 const LM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/landing-menu/components';
-const LM_CSS = `.lmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e5e1;--acc:#0E7B62;--bg:#faf9f6;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+const LM_CSS = `@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gothic+A1:wght@800&family=IBM+Plex+Sans+KR:wght@400;700&family=Nanum+Pen+Script&display=swap');
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff')}
+.lmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e5e1;--acc:#0E7B62;--bg:#faf9f6;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .lmgal .lm-formula{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px}
 .lmgal .lm-formula .fp{font-size:14px;font-weight:700}.lmgal .lm-formula .fp span{color:var(--acc);font-weight:600;margin-left:8px}
 .lmgal .lm-formula .fx{margin:10px 0 0;font-size:12.5px;color:var(--ink2);line-height:1.7}
@@ -1568,6 +1570,24 @@ const LM_CSS = `.lmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e5e1;--acc:#0E7B62
 .lmgal .lm-card footer{padding:12px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink2);display:grid;gap:5px}
 .lmgal .lm-card footer .al{color:var(--ink);font-weight:600}
 .lmgal .lm-card footer .vs{color:#8A6A1F}
+.lmgal .lm-inote{font-size:12.5px;color:var(--ink2);margin:-4px 0 14px;line-height:1.6}.lmgal .lm-inote b{color:var(--ink)}
+.lmgal .lm-ind{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+.lmgal .lm-ind header{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;padding:13px 16px;border-bottom:1px solid var(--line)}
+.lmgal .lm-ind h3{font-size:15.5px;font-weight:800;margin:0}.lmgal .lm-ind .who{font-size:12px;color:var(--ink2);flex:1;min-width:0}
+.lmgal .lm-ind .copy{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 10px;cursor:pointer;color:var(--ink)}
+.lmgal .lm-order{list-style:none;counter-reset:o;display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:14px 16px 4px}
+.lmgal .lm-order li{counter-increment:o;display:grid;gap:2px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:13px;font-weight:700;max-width:220px}
+.lmgal .lm-order li::before{content:counter(o);color:var(--acc);font-family:ui-monospace,monospace;font-size:10.5px}
+.lmgal .lm-order a{color:var(--ink);text-decoration:none}.lmgal .lm-order small{font-weight:500;font-size:11.5px;color:var(--ink2)}
+.lmgal .lm-kv{display:grid;gap:6px;padding:10px 16px 4px;font-size:12.5px;color:var(--ink2);line-height:1.55}.lmgal .lm-kv b{color:var(--ink);margin-right:8px}
+.lmgal .lm-looks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 16px 16px}
+@media(max-width:720px){.lmgal .lm-looks{grid-template-columns:1fr}}
+.lmgal .lm-look{margin:0}.lmgal .lm-look .pv{border-radius:12px;padding:16px 14px;min-height:150px;display:flex;flex-direction:column;gap:8px;border:1px solid rgba(0,0,0,.06)}
+.lmgal .lm-look .t{font-size:19px;line-height:1.25;letter-spacing:-.02em;word-break:keep-all}.lmgal .lm-look .d{font-size:11.5px;opacity:.72;line-height:1.45;word-break:keep-all}
+.lmgal .lm-look .b{align-self:flex-start;margin-top:auto;font-size:12px;font-weight:700;border-radius:8px;padding:6px 11px}
+.lmgal .lm-look figcaption{display:grid;gap:3px;margin-top:8px;font-size:11.5px;color:var(--ink2)}.lmgal .lm-look figcaption b{font-size:12.5px;color:var(--ink)}
+.lmgal .lm-look .sw{font-family:ui-monospace,monospace;font-size:10.5px}.lmgal .lm-look .sw i{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid rgba(0,0,0,.15);vertical-align:-1px;margin-right:3px}
+.lmgal .lm-look .nt{color:var(--ink2)}
 .lmgal .lm-rhythm{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 16px}
 .lmgal .lm-rhythm>b{font-size:14.5px}.lmgal .lm-rhythm p{font-size:12.5px;color:var(--ink2);margin:6px 0 10px}
 .lmgal .lm-rhythm ul{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}.lmgal .lm-rhythm li{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 11px}
@@ -1582,6 +1602,25 @@ const lmCard = it => `<article class="lm-card" id="l-${it.id}">
   <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${lmFrags[it.id].h}px" srcdoc="${attr(lmCode[it.id])}"></iframe>
   <footer><span class="al">"${esc(it.aliases[0])}"</span><span>${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}</footer>
 </article>`;
+// 업종별 레시피 + 룩 견본 (2026-10-23). 룩은 정하지 않고 design-brief 에 넘길 값으로만 보여 준다.
+const lmInd = lmMenu.industries || [];
+for (const x of lmInd) for (const st of x.order) if (!lmMenu.items.find(i => i.id === st.id)) { console.error('landing-menu 업종 레시피가 없는 항목을 가리킴:', x.id, st.id); process.exit(1); }
+const LM_FONT = { 'Pretendard': "'Pretendard Variable',Pretendard,-apple-system,sans-serif", 'IBM Plex Sans KR': "'IBM Plex Sans KR',sans-serif", 'Gothic A1': "'Gothic A1',sans-serif", 'Black Han Sans': "'Black Han Sans',sans-serif", 'Nanum Pen Script': "'Nanum Pen Script',cursive", 'Gmarket Sans': "'GmarketSans','Gmarket Sans',sans-serif" };
+const lmFont = spec => { const m = spec.match(/^(.*?)(?:\s+(\d{3}))?$/); const fam = m[1].trim(); return `font-family:${LM_FONT[fam] || `'${fam}',sans-serif`};font-weight:${m[2] || 400}`; };
+const lmItemKo = id => lmMenu.items.find(i => i.id === id).name.ko;
+const lmEx = x => (x.hook.match(/\(예: (.*)\)/) || [])[1] || x.ko;
+const lmLook = (x, l) => `<figure class="lm-look"><div class="pv" style="background:${l.bg};color:${l.ink}"><div class="t" style="${lmFont(l.head)}">${esc(lmEx(x))}</div><div class="d" style="${lmFont(l.body)}">${esc(x.who)}</div><span class="b" style="background:${l.accent};color:${l.bg}">시작하기</span></div>
+  <figcaption><b>${esc(l.name)}</b><span class="sw"><i style="background:${l.bg}"></i>${esc(l.bg)} <i style="background:${l.ink}"></i>${esc(l.ink)} <i style="background:${l.accent}"></i>${esc(l.accent)}</span><span class="fn">제목 ${esc(l.head)} · 본문 ${esc(l.body)}</span><span class="nt">${esc(l.note)}</span></figcaption></figure>`;
+const lmIndHtml = lmInd.length ? `<section class="lm-cat" id="lc-industries">
+  <h2><span class="no">＋</span> 업종별 레시피 <span class="count">${lmInd.length}</span></h2>
+  <p class="lm-inote">업종마다 달라지는 것은 룩이 아니라 <b>순서와 증거</b>다. 아래 순서로 섹션을 고르고, 룩 견본은 design-brief 에 넘길 값의 예시로만 본다(사전이 룩을 정하지 않는다).</p>
+  <div class="lm-grid">${lmInd.map(x => `<article class="lm-ind" id="li-${x.id}">
+    <header><h3>${esc(x.ko)}</h3><span class="who">${esc(x.who)}</span><button class="copy" data-copy="${attr(x.ask)}" title="요청 문장 복사">문장 복사</button></header>
+    <ol class="lm-order">${x.order.map(st => `<li><a href="#l-${st.id}">${esc(lmItemKo(st.id))}</a><small>${esc(st.as)}</small></li>`).join('')}</ol>
+    <div class="lm-kv"><span><b>증거</b>${esc(x.proof)}</span><span><b>첫 줄 공식</b>${esc(x.hook)}</span></div>
+    <div class="lm-looks">${x.looks.map(l => lmLook(x, l)).join('')}</div>
+  </article>`).join('\n')}</div>
+</section>` : '';
 const lmF = lmMenu.formula;
 const lmCore = `<div class="lmgal">
 <style>${LM_CSS}</style>
@@ -1590,7 +1629,8 @@ const lmCore = `<div class="lmgal">
   <div class="fx">✕ 「${esc(lmF.bad)}」 → ○ 「${esc(lmF.good)}」</div>
   <div class="lm-anti">★ ${esc(lmMenu.antiGeneric[0])}</div>
 </div>
-<nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}</nav>
+<nav class="lm-nav">${lmMenu.categories.map(c => `<a href="#lc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${lmBy(c.id).length}</a>`).join('')}${lmInd.length ? `<a href="#lc-industries"><b>＋</b>업종별 레시피 ${lmInd.length}</a>` : ''}</nav>
+${lmIndHtml}
 ${lmMenu.categories.map(cat => `<section class="lm-cat" id="lc-${cat.id}">
   <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${lmBy(cat.id).length}</span></h2>
   ${cat.id === 'detail' && lmMenu.rhythm ? `<div class="lm-rhythm"><b>${esc(lmMenu.rhythm.title)}</b><p>${esc(lmMenu.rhythm.note)}</p>
@@ -1618,6 +1658,15 @@ ${lmMenu.rhythm.note}
 ${lmMenu.rhythm.rules.map(r => `- ${r}`).join('\n')}
 - 판 꼴: ${lmMenu.rhythm.layouts.map(l => `${l.ko}(${l.use})`).join(' · ')}
 - 요청 문장: ${lmMenu.rhythm.ask}
+` : ''}${lmInd.length ? `
+## 업종별 레시피 (순서 · 증거 · 첫 줄 공식 · 룩 견본)
+룩 견본은 design-brief 에 넘길 값의 예시다. 사전이 룩을 정하지 않는다.
+${lmInd.map(x => `### ${x.ko} — ${x.who}
+- 순서: ${x.order.map((st, i) => `${i + 1}. ${lmItemKo(st.id)}(${st.as})`).join(' → ')}
+- 증거: ${x.proof}
+- 첫 줄 공식: ${x.hook}
+- 요청 문장: ${x.ask}
+- 룩 견본: ${x.looks.map(l => `${l.name}(바탕 ${l.bg} · 글자 ${l.ink} · 액센트 ${l.accent} · 제목 ${l.head} · 본문 ${l.body}: ${l.note})`).join(' / ')}`).join('\n')}
 ` : ''}
 ${lmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
 
