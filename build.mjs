@@ -1508,7 +1508,7 @@ const moXcode = {};
 for (const c of moCmp.list) { const n = moItemName(c.item); moXcode[c.id] = moStandalone({ id: c.id, name: { ko: n.ko + ' 비교', en: n.en } }); }
 for (const sc of moScn.list) { sc.uses.forEach(moItemName); moXcode[sc.id] = moStandalone({ id: sc.id, name: { ko: sc.name, en: 'Scene ' + sc.no } }); }
 for (const d of moInt.demos) { const n = moItemName(d.item); moXcode[d.id] = moStandalone({ id: d.id, name: { ko: n.ko + ' 세기', en: n.en } }); }
-const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e1;--acc:#C2632B;--acc2:#E07A3F;--paper:#fff;--bg:#faf8f4;--pn:#F5F0E8;--hl:rgba(255,200,64,.55);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .mogal .mo-formula{background:var(--paper);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:0 0 18px}
 .mogal .mo-fh{padding:11px 16px;background:var(--bg);font-size:13px;font-weight:700;display:flex;gap:9px;flex-wrap:wrap;align-items:baseline}
 .mogal .mo-fh span{font-weight:500;color:var(--ink2);font-family:ui-monospace,monospace;font-size:12px}
@@ -1579,7 +1579,32 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-scn .when{font-size:12px;color:var(--acc);font-weight:600}
 .mogal .mo-scn .uses{font-size:11.5px;color:var(--ink3)}
 .mogal .mo-scn .uses a{font-family:ui-monospace,monospace;font-size:11px;color:var(--ink2);margin-right:6px}
-@media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b}}`;
+/* 상세페이지 결 인트로 (2026-10-23) — 칩 라벨 · 가운데 두 줄 제목 + 형광 한 단어 · 실물 셋 · 말풍선 = 사람이 칠 문장 · 「이런 말엔 이런 장면」 표 */
+.mogal .mo-pn{background:var(--pn);border-radius:22px;padding:44px 22px 36px;margin:0 0 16px;text-align:center}
+.mogal .mo-chip{display:inline-block;font-size:13px;font-weight:700;color:var(--acc);background:var(--paper);border-radius:999px;padding:6px 15px;margin:0 0 16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.mogal .mo-pn h2{font-size:clamp(26px,5.4vw,40px);line-height:1.22;letter-spacing:-.035em;font-weight:800;margin:0 0 14px;word-break:keep-all}
+.mogal .mo-pn h2 em{font-style:normal;background:linear-gradient(transparent 58%,var(--hl) 58%)}
+.mogal .mo-pn h2 i{font-style:normal;color:var(--acc)}
+.mogal .mo-sub{font-size:15px;line-height:1.65;color:var(--ink2);margin:0 auto 26px;max-width:560px;word-break:keep-all}.mogal .mo-sub b{color:var(--ink)}
+.mogal .mo-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:820px;margin:0 auto}
+@media(max-width:640px){.mogal .mo-three{grid-template-columns:1fr;max-width:360px}}
+.mogal .mo-three figure{margin:0}.mogal .mo-three iframe{display:block;width:100%;border:0;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(23,23,27,.10)}
+.mogal .mo-three figcaption{font-size:14px;font-weight:700;margin-top:10px}.mogal .mo-three figcaption b{color:var(--acc);margin-right:4px}
+.mogal .mo-bub{display:flex;align-items:center;gap:10px;max-width:640px;margin:22px auto 0;text-align:left;background:var(--paper);border-radius:18px;padding:12px;box-shadow:0 8px 24px rgba(23,23,27,.08)}
+.mogal .mo-bub p{flex:1;margin:0;background:var(--acc);color:#fff;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:700;line-height:1.5;word-break:keep-all}
+.mogal .mo-bub.plain p{background:var(--bg);color:var(--ink3);font-weight:500}
+.mogal .mo-bub .copy{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink2)}.mogal .mo-bub .copy.ok{border-color:var(--acc2);color:var(--acc)}
+.mogal .mo-bub .mk2{flex:none;width:22px;text-align:center;font-weight:800}.mogal .mo-bub.plain .mk2{color:#C0392B}.mogal .mo-bub .mk2{color:#17B26A}
+.mogal .mo-pre2{white-space:pre-wrap;text-align:left}
+.mogal .mo-blocks{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:680px;margin:0 auto}
+.mogal .mo-blocks span{border-radius:12px;padding:14px 16px;font-size:15px;font-weight:800;background:var(--paper);box-shadow:0 2px 8px rgba(23,23,27,.06)}
+.mogal .mo-blocks span:nth-child(2){background:var(--acc);color:#fff}.mogal .mo-blocks span:nth-child(3){background:var(--hl)}.mogal .mo-blocks span:nth-child(4){background:var(--ink);color:var(--paper)}
+.mogal .mo-use{max-width:720px;margin:0 auto;display:grid;gap:8px;text-align:left}
+.mogal .mo-use a.r{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border-radius:14px;padding:13px 16px;text-decoration:none;color:var(--ink);box-shadow:0 2px 8px rgba(23,23,27,.05)}
+.mogal .mo-use .w{flex:1 1 220px;font-size:14.5px;font-weight:700}.mogal .mo-use .n{font-size:12px;color:var(--ink3);font-weight:600;display:block}
+.mogal .mo-use .u{display:flex;gap:6px;flex-wrap:wrap}.mogal .mo-use .u span{font-size:13px;font-weight:700;color:var(--acc);background:var(--pn);border-radius:999px;padding:5px 12px}
+.mogal .mo-foot{font-size:13px;color:var(--ink3);margin:18px 0 0}
+@media(prefers-color-scheme:dark){.mogal{--ink:#ececea;--ink2:#a9aab0;--ink3:#80818a;--line:#2b2a2e;--paper:#1d1d20;--bg:#19181b;--pn:#232226;--hl:rgba(224,122,63,.38)}}`;
 const moStar = it => it.star ? '<span class="star" title="현장에서 특히 많이 쓰는 것">★</span>' : '';
 const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
 const moMake = it => (it.make || []).map(k => `<span class="mk mk-${k}">${MAKE_LBL[k] || k}</span>`).join('');
@@ -1592,15 +1617,53 @@ const moCard = it => `<article class="mo-card" id="m-${it.id}">
 </article>`;
 const moF = moMenu.formula;
 const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 26가지. 1~7 사라지고 모이기 · 8~14 쉬지 않고 흔들리기 · 15~20 물리와 소품 · 21~26 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.', 'screen-transition-2': '⑦에 없던 기본 전환과 실물 같은 전환 23가지. 1~5 밀고 덮기 · 6~9 빛과 어둠 · 10~13 돌고 빨려 들기 · 14~18 입체로 넘기기 · 19~23 물건처럼 부서지기. 푸시·딥 투 블랙처럼 제일 자주 쓰는 전환이 여기 있어요.', 'data-motion': '숫자와 차트가 움직이는 연출 26가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~19 선으로 흐름 · 20~26 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.', 'icon-motion': '로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.', 'social-overlay': '영상 위에 얹는 SNS 화면 요소 25가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~19 알림과 표시 · 20~25 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.', 'graphic-craft': '모션 그래픽을 만들 때 쓰는 기법 24가지. 1~6 길 따라 움직이기 · 7~12 복제와 선 · 13~18 장면 바꾸기 · 19~24 구조 보여 주기. 요청 문장에 초와 개수를 같이 적으세요.', 'background-2': '⑧에 없던 배경 9가지. 1~6 흐르고 번지기(유체 그라디언트 · 흐름장 · 반응-확산 · 등고선 · 연결망 · 조리개) · 7~9 멀리까지 펼쳐지기(점 바다 · 와이어프레임 지형 · 구름). ⑧보다 결이 깊어서 글자를 올릴 땐 어둡게 눌러 쓰세요.', 'opening-title': '영상·발표·랜딩의 첫 제목이 등장하는 완성 장면 24가지. 1~6 기계가 읽고 띄우기 · 7~12 영화처럼 열기 · 13~18 손으로 붙이고 뿌리기 · 19~24 부딪치고 맞추기. 요청 문장에 들어갈 제목과 서는 초를 같이 적으세요.' };
+// 상세페이지 결 인트로(2026-10-23, 의뢰자 「이 형식으로」 — @sequence_ai 상세페이지 참고). 판 다섯: 소개 · 말 한 줄 차이 · 공식 · 이런 말엔 이런 장면 · 처음 요청문.
+// 실물은 사전의 데모를 그대로 iframe 으로 쓴다(따로 그리지 않는다). 아래 사전 섹션과 같은 id 로 이어진다.
+const MO_HERO = ['scan-reveal', 'word-burst', 'odometer-roll'];
+const moItem = id => { const it = moMenu.items.find(i => i.id === id); if (!it) { console.error('motion-menu 인트로가 없는 항목을 가리킴:', id); process.exit(1); } return it; };
+const moCatNo = it => (moMenu.categories.find(c => c.id === it.category) || {}).no || '';
+const moFig = (id, src) => { const it = moItem(id); return `<figure><iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[id].h}px" srcdoc="${attr(src || moCode[id])}"></iframe><figcaption><b>${moCatNo(it)}</b>${esc(it.name.ko)}</figcaption></figure>`; };
+const moBub = (text, cls = '', mark = '') => `<div class="mo-bub ${cls}">${mark ? `<span class="mk2">${mark}</span>` : ''}<p>${esc(text)}</p>${cls === 'plain' ? '' : `<button class="copy" data-copy="${attr(text)}" title="문장 복사">복사</button>`}</div>`;
+const moCmp0 = moCmp.list[0];
+const moIntro = `<section class="mo-pn">
+  <span class="mo-chip">모션 메뉴판 · ${moMenu.items.length}가지</span>
+  <h2>움직임은 <em>이름</em>으로 시키면<br>한 번에 <i>통해요</i></h2>
+  <p class="mo-sub">「멋지게 해줘」는 매번 다르게 나와요.<br><b>이름과 초를 붙여서</b> 말하면 AI 영상 · 모션 그래픽 · CSS 어디서든 같은 움직임이 나와요.</p>
+  <div class="mo-three">${MO_HERO.map(id => moFig(id)).join('')}</div>
+  ${moBub(moItem(MO_HERO[0]).ask, '', '')}
+  <p class="mo-foot">카드마다 「문장」을 누르면 이 요청문이 복사돼요.</p>
+</section>
+${moCmp0 ? `<section class="mo-pn">
+  <span class="mo-chip">말 한 줄 차이</span>
+  <h2>같은 장면인데<br><em>말 한 줄</em>이 움직임을 바꿔요</h2>
+  <p class="mo-sub">위는 느낌으로 시킨 결과, 아래는 <b>이름과 숫자로</b> 시킨 결과예요.</p>
+  <div class="mo-three" style="grid-template-columns:minmax(0,1fr);max-width:520px"><figure><iframe title="${esc(moItemName(moCmp0.item).ko)} 비교 데모" loading="lazy" style="height:${moFrags[moCmp0.id].h}px" srcdoc="${attr(moXcode[moCmp0.id])}"></iframe><figcaption>${esc(moItemName(moCmp0.item).ko)}</figcaption></figure></div>
+  ${moBub(moCmp0.plain, 'plain', '✕')}${moBub(moCmp0.named, '', '○')}
+  <p class="mo-foot"><a href="#mc-compare" style="color:inherit">비교 ${moCmp.list.length}가지 전부 보기 ↓</a></p>
+</section>` : ''}
+<section class="mo-pn">
+  <span class="mo-chip">시키는 공식</span>
+  <h2>이 순서로만 말하면<br><em>고칠 일</em>이 줄어요</h2>
+  <p class="mo-sub">${esc(moF.note.split('. ')[0])}.</p>
+  <div class="mo-blocks">${moF.pattern.split(' + ').map(p => `<span>${esc(p)}</span>`).join('')}</div>
+  ${moBub(moF.bad, 'plain', '✕')}${moBub(moF.good, '', '○')}
+</section>
+${moScn.list.length ? `<section class="mo-pn">
+  <span class="mo-chip">장면표</span>
+  <h2>이런 말엔<br><em>이런 장면</em>을 골라요</h2>
+  <p class="mo-sub">짧은 정보 영상은 <b>대본 문장마다 장면 하나</b>. 같은 장면을 연달아 쓰지 않아요.</p>
+  <div class="mo-use">${moScn.list.map(sc => `<a class="r" href="#m-${sc.id}"><span class="w"><span class="n">${sc.no}. ${esc(sc.name)}</span>${esc(sc.when)}</span><span class="u">${sc.uses.map(u => `<span>${esc(moItemName(u).ko)}</span>`).join('')}</span></a>`).join('')}</div>
+</section>` : ''}
+${moMenu.starter ? `<section class="mo-pn">
+  <span class="mo-chip">처음 한 번</span>
+  <h2>이 요청문 하나로<br><em>시작</em>하세요</h2>
+  <p class="mo-sub">${esc(moMenu.starter.note)}</p>
+  <div class="mo-bub"><p class="mo-pre2">${esc(moMenu.starter.ask)}</p><button class="copy" data-copy="${attr(moMenu.starter.ask)}" title="요청문 복사">복사</button></div>
+  <p class="mo-foot">설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install motion-menu@giting</p>
+</section>` : ''}`;
 const moCore = `<div class="mogal">
 <style>${MO_CSS}</style>
-<div class="mo-formula">
-  <div class="mo-fh">AI한테 시키는 공식<span>${esc(moF.pattern)}</span></div>
-  <div class="mo-fx">
-    <div class="bad"><span class="mk">✕ 이렇게 말고</span>「${esc(moF.bad)}」</div>
-    <div class="good"><span class="mk">○ 이렇게</span>「${esc(moF.good)}」</div>
-  </div>
-</div>
+${moIntro}
 <nav class="mo-nav">${moMenu.categories.map(c => `<a href="#mc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${moBy(c.id).length}</a>`).join('')}<a href="#mc-recipes"><b>＋</b>조합 레시피 ${moShot.length}</a>${moTxR.length ? `<a href="#mc-text-recipes"><b>＋</b>글자 조합 ${moTxR.length}</a>` : ''}${moCmp.list.length ? `<a href="#mc-compare"><b>⇅</b>말 한 줄 차이 ${moCmp.list.length}</a>` : ''}${moScn.list.length ? `<a href="#mc-scenes"><b>▦</b>장면표 ${moScn.list.length}</a>` : ''}${moInt.knobs ? `<a href="#mc-intensity"><b>◐</b>세기 셋</a>` : ''}</nav>
 ${moMenu.easingRoles ? `<div class="mo-box"><h3>${esc(moMenu.easingRoles.title)}<button class="copy" data-copy="${attr(moMenu.easingRoles.ask)}" title="요청 문장 복사">문장</button></h3>
   <p>${esc(moMenu.easingRoles.note)}</p>
@@ -1611,8 +1674,6 @@ ${moInt.knobs ? `<div class="mo-box" id="mc-intensity"><h3>${esc(moInt.title)}<b
   <div class="mo-ints"><table><thead><tr><th></th>${moInt.levels.map(l => `<th>${esc(l)}</th>`).join('')}<th>쓰는 곳</th></tr></thead><tbody>${moInt.knobs.map(kn => `<tr><th>${esc(kn.what)}</th>${kn.values.map(v => `<td>${esc(v)}</td>`).join('')}<td class="for">${esc(kn.for)}</td></tr>`).join('')}</tbody></table></div>
   <p>${esc(moInt.rule)}</p>
   <div class="mo-grid">${moInt.demos.map(d => { const n = moItemName(d.item); return `<article class="mo-card" id="m-${d.id}"><header><h3>${esc(n.ko)} 세기</h3><span class="en">${esc(n.en)}</span></header><iframe title="${esc(n.ko)} 세기 비교 데모" loading="lazy" style="height:${moFrags[d.id].h}px" srcdoc="${attr(moXcode[d.id])}"></iframe><footer><a href="#m-${d.item}" style="font-size:11.5px;color:var(--ink3)">사전에서 보기 ↓</a></footer></article>`; }).join('')}</div></div>` : ''}
-${moMenu.starter ? `<div class="mo-box"><h3>${esc(moMenu.starter.title)}<button class="copy" data-copy="${attr(moMenu.starter.ask)}" title="요청문 복사">복사</button></h3>
-  <p>${esc(moMenu.starter.note)}</p><pre class="mo-pre">${esc(moMenu.starter.ask)}</pre></div>` : ''}
 ${moCmp.list.length ? `<section class="mo-cat" id="mc-compare">
   <h2><span class="no">⇅</span> ${esc(moCmp.title)} <span class="count">${moCmp.list.length}</span></h2>
   <p class="mo-note">${esc(moCmp.note)}</p>
