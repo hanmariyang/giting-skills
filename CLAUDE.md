@@ -207,6 +207,13 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - ⚠️ 텍스트 엔진 helpers 에는 `lerpC` 가 없다(배경 엔진에만 있다). 다른 엔진에서 함수를 옮겨 쓰면 갤러리에서만 ReferenceError 가 난다.
 - ⚠️ 흐림은 캔버스 `filter` 대신 `shadowBlur` 로 낸다(칸 밖에 글자를 그리고 그림자만 보낸다). `shadowOffsetX` 는 변환을 안 받으니 `scale(z)` 아래에서는 `FAR * 화면배율 * z` 로 맞춘다. 안 맞추면 흐린 글자가 옆으로 밀려 겹친다(실제로 밟음).
 
+## 모션 메뉴판 갤러리 — 상세페이지 결 인트로 (2026-10-23)
+
+- 갤러리 맨 위에 판 다섯(소개 · 말 한 줄 차이 · 시키는 공식 · 이런 말엔 이런 장면 · 처음 요청문). 문법은 @sequence_ai 자막 모션 팩 상세페이지에서 가져왔다: 칩 라벨 → 가운데 두 줄 제목(형광 한 단어) → 회색 설명 한두 줄 → 실물 → **말풍선 = 사람이 칠 문장(복사 단추)**.
+- 실물은 사전 데모를 그대로 쓴다(`MO_HERO` 셋 · `compare.list[0]` · `scenes`). 판 전용 데모를 따로 그리지 않는다. `MO_HERO` 가 없는 id 를 가리키면 빌드가 멈춘다.
+- 옛 맨 위 「AI한테 시키는 공식」 상자와 「처음 한 번에 붙여 넣는 요청문」 상자는 판으로 옮겨서 지웠다. `menu.json` 은 그대로.
+- 갤러리 전용이라 `components/`·플러그인 버전은 안 바뀐다.
+
 ## 웹폰트 사전 0.2.0 · 한글 제목·손글씨 10 · 짝 12 (2026-10-23)
 
 - 07 한글 제목·손글씨 10종(Black Han Sans · Do Hyeon · Jua · Paperlogy · Bagel Fat One · Song Myung · Hahmlet · Nanum Brush Script · Nanum Pen Script · Gaegu). 새 칸 `familyKo` · `weightNums`(실제로 있는 두께, 카드 두께 줄과 짝 검사가 쓴다) · `licenseUrl` · `checked`(라이선스 확인한 날).
