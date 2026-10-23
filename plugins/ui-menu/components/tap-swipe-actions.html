@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>밀어서 버튼 꺼내기 Swipe Actions · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sw { list-style: none; margin: 0; padding: 0; width: 300px; border: 1px solid #e6e6ec; border-radius: 12px; overflow: hidden; }
+  .sw li { position: relative; border-bottom: 1px solid #ececf1; }
+  .sw li:last-child { border-bottom: 0; }
+  .sw .acts { position: absolute; right: 0; top: 0; bottom: 0; display: flex; }
+  .sw .acts button { width: 66px; border: 0; color: #fff; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .sw .acts .ar { background: #6b6b76; } .sw .acts .del { background: #d64224; }
+  .sw .row { position: relative; display: flex; align-items: center; gap: 10px; padding: 12px 12px; background: #fff; touch-action: pan-y; transition: transform .25s ease-out; user-select: none; -webkit-user-select: none; }
+  .sw .row.drag { transition: none; }
+  .sw .row.open { transform: translateX(-132px); }
+  .sw .av { width: 30px; height: 30px; border-radius: 50%; background: #c9d3f3; flex: none; }
+  .sw .t { flex: 1; min-width: 0; } .sw .t b { display: block; font-size: 13px; } .sw .t span { font-size: 11.5px; color: #9a9aa4; }
+  .sw .more { border: 0; background: none; font-size: 18px; color: #9a9aa4; cursor: pointer; padding: 4px 6px; border-radius: 6px; }
+  .sw button:focus-visible { outline: 3px solid #17171b; outline-offset: -3px; }
+  @media (prefers-reduced-motion: reduce) { .sw .row { transition: none; } }
+</style>
+<div class="center"><div><ul class="sw" id="sw">
+  <li><div class="acts"><button class="ar" tabindex="-1">보관</button><button class="del" tabindex="-1">삭제</button></div><div class="row"><span class="av"></span><span class="t"><b>민지</b><span>내일 몇 시에 봐?</span></span><button class="more" aria-label="민지 메시지 버튼 열기" aria-expanded="false">⋯</button></div></li>
+  <li><div class="acts"><button class="ar" tabindex="-1">보관</button><button class="del" tabindex="-1">삭제</button></div><div class="row"><span class="av" style="background:#fde2d2"></span><span class="t"><b>택배 알림</b><span>오늘 도착 예정</span></span><button class="more" aria-label="택배 알림 버튼 열기" aria-expanded="false">⋯</button></div></li>
+</ul><p class="cap">줄을 왼쪽으로 밀어 보세요</p></div></div>
+<script>
+  (function () {
+    document.querySelectorAll('#sw li').forEach(function (li) {
+      var row = li.querySelector('.row'), more = li.querySelector('.more'), acts = li.querySelectorAll('.acts button'), x0 = null, dx = 0, moved = false;
+      function set(open) {
+        row.classList.toggle('open', open); more.setAttribute('aria-expanded', open);
+        acts.forEach(function (b) { b.tabIndex = open ? 0 : -1; });
+      }
+      more.addEventListener('click', function (e) { e.stopPropagation(); set(!row.classList.contains('open')); });
+      row.addEventListener('pointerdown', function (e) { if (e.target === more) return; x0 = e.clientX; dx = 0; moved = false; });
+      addEventListener('pointermove', function (e) {
+        if (x0 === null) return; dx = e.clientX - x0; if (!moved && Math.abs(dx) < 10) return;
+        moved = true; row.classList.add('drag');
+        var base = row.classList.contains('open') ? -132 : 0;
+        row.style.transform = 'translateX(' + Math.max(-150, Math.min(0, base + dx)) + 'px)';
+      });
+      addEventListener('pointerup', function () {
+        if (x0 === null) return; x0 = null; row.classList.remove('drag'); row.style.transform = '';
+        if (moved) set(row.classList.contains('open') ? dx < 60 : dx < -60);
+      });
+      acts.forEach(function (b) { b.addEventListener('click', function () { set(false); }); });
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

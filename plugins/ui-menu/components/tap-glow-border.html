@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커서 따라 테두리 빛 Spotlight Border · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .gw { height: 100vh; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-content: center; padding: 14px; }
+  .gw .c { position: relative; border-radius: 14px; padding: 16px 12px; background: #fff; text-align: center; }
+  .gw .c::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(160px circle at var(--x, -500px) var(--y, -500px), #e0733f, transparent 70%), #e6e6ec;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .gw b { display: block; font-size: 14px; } .gw small { color: #9a9aa4; font-size: 11.5px; }
+  .gh2 { position: fixed; left: 0; top: 0; width: 16px; height: 16px; pointer-events: none; opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { .gw .c::before { background: #e6e6ec; } }
+</style>
+<div class="gw" id="gw">
+  <div class="c"><b>기본</b><small>무료</small></div>
+  <div class="c"><b>플러스</b><small>월 4,900원</small></div>
+  <div class="c"><b>프로</b><small>월 9,900원</small></div>
+</div>
+<svg class="gh2" id="gh2" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1.5l12 7.2-5.3 1.2-2.6 5.1z" fill="#17171b" stroke="#fff" stroke-width="1.4"/></svg>
+<script>
+  (function () {
+    var cs = document.querySelectorAll('#gw .c'), gh = document.getElementById('gh2'), last = -1e9, t0 = performance.now();
+    function at(x, y) { cs.forEach(function (c) { var b = c.getBoundingClientRect(); c.style.setProperty('--x', (x - b.left) + 'px'); c.style.setProperty('--y', (y - b.top) + 'px'); }); }
+    addEventListener('mousemove', function (e) { last = performance.now(); gh.style.display = 'none'; at(e.clientX, e.clientY); });
+    addEventListener('mouseleave', function () { at(-500, -500); });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    (function loop(now) {
+      if (now - last > 1500) {
+        var a = (now - t0) / 1400, x = innerWidth / 2 + Math.sin(a) * innerWidth * .42, y = innerHeight / 2 + Math.cos(a * 1.7) * 40;
+        gh.style.display = ''; gh.style.transform = 'translate(' + x + 'px,' + y + 'px)'; at(x, y);
+      }
+      requestAnimationFrame(loop);
+    })(t0);
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

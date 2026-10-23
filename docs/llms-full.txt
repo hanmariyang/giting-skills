@@ -1,8 +1,9 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 12개 코스 147개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
+> 검수: 항목마다 헤드리스 크롬으로 열기·누르기·폭 390 을 재고 날짜를 남긴다. 검증 = 셋 다 통과 · 부분 = 하나라도 실패 · 옛 자료 = 검사한 지 90일 넘음. 실기기는 아직 not_run.
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
 
@@ -14,6 +15,7 @@
 - 구분: 맨 위 전체 띠가 헤더, 그 안의 메뉴 묶음이 네비게이션 바
 - 요청 문장: 상단에 헤더를 만들어줘. 로고는 왼쪽, 메뉴는 오른쪽, 스크롤해도 위에 고정되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/header.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -61,6 +63,7 @@ document.addEventListener('click', function (e) {
 - shadcn: NavigationMenu
 - 요청 문장: 헤더 안에 홈·소개·가격·문의 네비게이션 바를 넣어줘. 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/navbar.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -104,6 +107,7 @@ document.addEventListener('click', function (e) {
 - 구분: 첫 화면의 큰 구역이면 히어로, 가로로 긴 알림 띠면 배너
 - 요청 문장: 히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hero.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -147,6 +151,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Sidebar
 - 요청 문장: 왼쪽에 고정 사이드바를 두고 오른쪽이 본문인 2단 레이아웃으로 잡아줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/sidebar.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -189,6 +194,7 @@ document.addEventListener('click', function (e) {
 - 정의: 페이지 맨 아래, 저작권·링크·연락처가 모이는 줄.
 - 요청 문장: 푸터에 저작권 문구와 이용약관·개인정보처리방침 링크를 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/footer.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -232,6 +238,7 @@ document.addEventListener('click', function (e) {
 - 정의: 페이지를 가로로 자른 한 덩어리. 소개 섹션, 가격 섹션처럼 부른다.
 - 요청 문장: 소개·기능·가격 세 섹션으로 나누고, 가운데 섹션만 연한 배경으로 구분해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/section.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -275,6 +282,7 @@ document.addEventListener('click', function (e) {
 - 정의: 내용이 넓게 퍼지지 않게 최대 폭을 잡고 가운데 모으는 보이지 않는 틀.
 - 요청 문장: 본문을 최대 1200px 컨테이너로 감싸서 가운데 정렬해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/container.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -314,6 +322,7 @@ document.addEventListener('click', function (e) {
 - 정의: 칸을 격자로 나눠 나란히 배치하는 방식.
 - 요청 문장: 이 목록을 3열 그리드로 배치해줘. 모바일에서는 1열로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/grid.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -355,6 +364,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Card (Header·Content·Footer 완전 조립)
 - 요청 문장: 각 항목을 썸네일·제목·설명 순서의 카드로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -398,6 +408,7 @@ document.addEventListener('click', function (e) {
 - 정의: 카드를 격자로 반복 배치한 것. 목록 화면의 단골.
 - 요청 문장: 리포트 목록을 3열 카드 그리드로 보여줘. 카드는 썸네일·제목·요약 구성.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/card-grid.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -445,6 +456,7 @@ document.addEventListener('click', function (e) {
 - 구분: 상자로 감싸 나누면 카드, 간격과 글자로만 나누면 여백으로 묶기
 - 요청 문장: 목록을 카드로 감싸지 말고 여백으로 묶어줘. 같은 묶음 안 행 간격은 12px, 묶음 사이는 40px, 묶음 제목은 15px 굵게. 테두리·그림자·배경색은 쓰지 말고 행 사이에만 1px 구분선.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/whitespace-group.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -492,6 +504,7 @@ document.addEventListener('click', function (e) {
 - 구분: 카드를 여러 장 늘어놓으면 카드 그리드, 한 장만 세워 시선을 모으면 피처 카드
 - 요청 문장: 맨 위 「지금 할 일」 하나만 카드로 만들어줘. 연한 바탕색과 둥근 모서리 16px, 안쪽 여백 20px. 그 아래 목록은 카드 없이 행과 1px 구분선만 쓰고, 카드는 이 화면에 하나만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/featured-card.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -540,6 +553,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Table
 - 요청 문장: 이름·날짜·상태 3열 테이블로 정리해줘. 상태는 색으로 구분되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/table.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -586,6 +600,7 @@ document.addEventListener('click', function (e) {
 - 정의: 헤더·사이드바·본문·푸터를 어디에 둘지 정하는 전체 배치 방식.
 - 요청 문장: 헤더 고정, 왼쪽 사이드바, 나머지가 본문인 관리자 레이아웃으로 잡아줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/layout.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -631,6 +646,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Tabs
 - 요청 문장: 월간·연간 두 개 탭으로 요금표가 전환되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tabs.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -687,6 +703,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Accordion
 - 요청 문장: FAQ를 아코디언 5개로 만들어줘. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/accordion.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -736,6 +753,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Breadcrumb
 - 요청 문장: 상세 페이지 제목 위에 브레드크럼을 넣어줘. 마지막 항목만 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/breadcrumb.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -779,6 +797,7 @@ document.addEventListener('click', function (e) {
 - 구분: 진행 단계 표시면 스텝퍼, 숫자를 조절하는 칸이면 수량 조절(카운터)
 - 요청 문장: 신청 과정을 정보 입력·확인·완료 3단계 스텝퍼로 보여줘. 지난 단계는 체크로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/stepper.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -830,6 +849,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Pagination
 - 요청 문장: 목록 아래에 페이지네이션을 넣어줘. 10개씩 끊고 현재 페이지는 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pagination.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -872,6 +892,7 @@ document.addEventListener('click', function (e) {
 - 구분: 자동으로 이어지면 무한 스크롤, 버튼을 눌러야 이어지면 더보기
 - 요청 문장: 피드를 무한 스크롤로 만들어줘. 바닥 근처에서 다음 20개를 불러오게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/infinite-scroll.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -930,6 +951,7 @@ document.addEventListener('click', function (e) {
 - 구분: 버튼을 눌러야 이어지면 더보기, 자동이면 무한 스크롤
 - 요청 문장: 목록은 6개만 보여주고, 더보기 버튼을 누르면 6개씩 추가되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/load-more.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -975,6 +997,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Carousel
 - 요청 문장: 후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/carousel.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1032,6 +1055,7 @@ document.addEventListener('click', function (e) {
 - shadcn: DropdownMenu
 - 요청 문장: 프로필을 누르면 설정·로그아웃 드롭다운이 열리게 해줘. 바깥을 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/dropdown.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1084,6 +1108,7 @@ document.addEventListener('click', function (e) {
 - shadcn: 조합: Button(size=icon) + Sheet
 - 요청 문장: 모바일에서는 메뉴를 햄버거 버튼으로 접고, 누르면 드로어가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/hamburger.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1126,6 +1151,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Sheet (하단이면 Drawer)
 - 요청 문장: 햄버거 버튼을 누르면 오른쪽에서 드로어 메뉴가 나오게 해줘. 배경 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drawer.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1172,6 +1198,7 @@ document.addEventListener('click', function (e) {
 - 정의: 긴 글 옆에 붙는 소제목 목록. 지금 읽는 위치가 표시되면 더 좋다.
 - 요청 문장: 글 오른쪽에 목차를 붙여줘. 스크롤하면 지금 읽는 소제목이 진해지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toc.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1218,6 +1245,7 @@ document.addEventListener('click', function (e) {
 - 정의: 모바일 화면 맨 아래 고정되는 메뉴 줄. 앱의 기본 이동 수단.
 - 요청 문장: 모바일에서 홈·검색·알림·내 정보 하단 탭바를 고정으로 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/bottom-nav.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1263,6 +1291,7 @@ document.addEventListener('click', function (e) {
 - 정의: 같은 페이지 안의 특정 위치로 이동하는 링크.
 - 요청 문장: '가격 보기'를 누르면 가격 섹션으로 부드럽게 스크롤되게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/anchor-link.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1312,6 +1341,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Item
 - 요청 문장: 신청 내역을 리스트로 보여줘. 행마다 제목·날짜·상태, 누르면 상세로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/list.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1359,6 +1389,7 @@ document.addEventListener('click', function (e) {
 - 정의: 플랜 여러 개를 나란히 비교하는 표. 추천 플랜은 눈에 띄게.
 - 요청 문장: 무료·프로·팀 3단 가격표를 만들어줘. 프로에 '인기' 배지 달고 테두리 강조.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/pricing-table.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1407,6 +1438,7 @@ document.addEventListener('click', function (e) {
 - 정의: 사용자의 말 한마디를 얼굴·이름과 함께 담은 카드.
 - 요청 문장: 후기 3개를 카드로 보여줘. 인용문·이름·소속 구성으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/testimonial.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1453,6 +1485,7 @@ document.addEventListener('click', function (e) {
 - 정의: 핵심 숫자 여러 개를 가로로 크게 나열한 구역.
 - 요청 문장: 누적 신청·만족도·평균 제작 시간을 큰 숫자 3개로 나란히 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/stats.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1498,6 +1531,7 @@ document.addEventListener('click', function (e) {
 - shadcn: 조합: Card + 숫자 타이포
 - 요청 문장: 이번 주 신청 수와 전환율을 통계 카드 2개로 보여줘. 증감은 색과 화살표로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/stat-card.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1544,6 +1578,7 @@ document.addEventListener('click', function (e) {
 - 정의: 사용 중인 회사·서비스 로고를 나열해 신뢰를 보여주는 구역.
 - 요청 문장: 히어로 아래에 '이런 곳에서 쓰고 있어요' 로고 모음을 회색톤으로 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/logo-cloud.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1585,6 +1620,7 @@ document.addEventListener('click', function (e) {
 - 정의: 점과 선으로 시간 순서를 세로로 보여주는 것.
 - 요청 문장: 프로젝트 진행을 타임라인으로 보여줘. 지난 일은 채운 점, 예정은 빈 점으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/timeline.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1636,6 +1672,7 @@ document.addEventListener('click', function (e) {
 - 정의: 사진을 격자로 모아 보여주는 것.
 - 요청 문장: 작업물 사진을 3열 갤러리로 배치해줘. 누르면 크게 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/gallery.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1676,6 +1713,7 @@ document.addEventListener('click', function (e) {
 - 정의: 사진을 누르면 배경이 어두워지며 크게 뜨는 보기 방식.
 - 요청 문장: 갤러리 사진을 누르면 라이트박스로 크게 보이게 해줘. 배경이나 ESC로 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/lightbox.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1722,6 +1760,7 @@ document.addEventListener('click', function (e) {
 - 정의: 왼쪽에 세로선을 붙여 강조하는 인용 문장.
 - 요청 문장: 이 문장을 세로선 붙은 인용문 스타일로 강조해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/blockquote.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1761,6 +1800,7 @@ document.addEventListener('click', function (e) {
 - 정의: 어두운 배경에 고정폭 글꼴로 코드를 담는 상자. 복사 버튼은 기본.
 - 요청 문장: 설치 명령어를 코드 블록으로 넣어줘. 오른쪽 위에 복사 버튼 달고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/code-block.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1811,6 +1851,7 @@ document.addEventListener('click', function (e) {
 - shadcn: 조합: Card + Avatar
 - 요청 문장: 팀원을 프로필 카드로 보여줘. 사진·이름·역할·팔로우 버튼 구성.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/profile-card.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1853,6 +1894,7 @@ document.addEventListener('click', function (e) {
 - 정의: 알림을 시간순으로 쌓은 목록. 안 읽은 것은 구분되게.
 - 요청 문장: 알림 목록을 만들어줘. 안 읽은 알림은 배경색과 점으로 구분되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/notification-list.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1902,6 +1944,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Alert 응용
 - 요청 문장: 헤더 위에 공지 배너를 넣어줘. 닫기 버튼 누르면 사라지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/banner.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1945,6 +1988,7 @@ document.addEventListener('click', function (e) {
 - shadcn: 조합: Form + FieldGroup + Field
 - 요청 문장: 신청 폼을 만들어줘. 인풋 3개(이름·이메일·연락처), 유효성 검사 넣고, 제출하면 토스트로 완료 알림.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/form.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -1993,6 +2037,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Input
 - 요청 문장: 이름 인풋을 추가해줘. 라벨 위, 플레이스홀더는 예시 이름으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/input.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2035,6 +2080,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Textarea
 - 요청 문장: 문의 내용 텍스트에어리어를 넣어줘. 4줄 높이에 세로로만 늘어나게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/textarea.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2078,6 +2124,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Select
 - 요청 문장: 학년 셀렉트를 넣어줘. 1~4학년 옵션, 기본값은 비워 두고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/select.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2119,6 +2166,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Checkbox
 - 요청 문장: 관심 분야를 체크박스로 만들어줘. 여러 개 선택 가능하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/checkbox.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2165,6 +2213,7 @@ document.addEventListener('click', function (e) {
 - shadcn: RadioGroup
 - 요청 문장: 경험 수준을 라디오 버튼 3개로 만들어줘. 하나만 선택되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/radio.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2211,6 +2260,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Switch
 - 요청 문장: 알림 설정에 토글 스위치를 넣어줘. 켜면 색이 채워지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/switch.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2260,6 +2310,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Slider
 - 요청 문장: 예산 슬라이더를 넣어줘. 0~100만원, 현재 값이 위에 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/slider.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2307,6 +2358,7 @@ document.addEventListener('click', function (e) {
 - shadcn: InputGroup + InputGroupAddon(아이콘)
 - 요청 문장: 헤더에 검색바를 넣어줘. 입력하면 아래에 결과가 미리 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/search-bar.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2356,6 +2408,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Combobox (Command + Popover)
 - 요청 문장: 도시 입력칸에 자동완성을 붙여줘. 입력한 글자는 후보에서 진하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/autocomplete.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2404,6 +2457,7 @@ document.addEventListener('click', function (e) {
 - 정의: 파일을 올리는 칸. 점선 박스에 끌어다 놓는 형태가 단골.
 - 요청 문장: 이미지 업로더를 점선 박스로 만들어줘. 클릭이나 드래그 둘 다 되고 5MB 제한.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/file-upload.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2445,6 +2499,7 @@ document.addEventListener('click', function (e) {
 - 정의: 잡아서 끌어다 놓는 동작. 업로드, 순서 바꾸기에 쓴다.
 - 요청 문장: 할 일 목록을 드래그 앤 드롭으로 순서 바꿀 수 있게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/drag-drop.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2498,6 +2553,7 @@ document.addEventListener('click', function (e) {
 - shadcn: 조합: Calendar + Popover
 - 요청 문장: 예약 날짜를 데이트피커로 받게 해줘. 지난 날짜는 못 고르게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/date-picker.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2549,6 +2605,7 @@ document.addEventListener('click', function (e) {
 - 정의: 시간을 고르는 입력칸.
 - 요청 문장: 예약 시간을 타임피커로 받게 해줘. 30분 단위로만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/time-picker.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2593,6 +2650,7 @@ document.addEventListener('click', function (e) {
 - shadcn: InputGroup 응용 (+/- 애드온)
 - 요청 문장: 수량 조절 스텝퍼를 넣어줘. 최소 1, 최대 10.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/number-stepper.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2638,6 +2696,7 @@ document.addEventListener('click', function (e) {
 - shadcn: InputOTP
 - 요청 문장: 6자리 인증번호 입력을 만들어줘. 입력하면 다음 칸으로 자동 이동.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/otp-input.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2685,6 +2744,7 @@ document.addEventListener('click', function (e) {
 - 정의: 입력하고 엔터를 치면 알약(칩)으로 바뀌는 다중 입력칸.
 - 요청 문장: 관심 키워드를 태그 입력으로 받게 해줘. 엔터로 추가, ×로 삭제.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tag-input.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2734,6 +2794,7 @@ document.addEventListener('click', function (e) {
 - 정의: 별을 눌러 점수를 매기는 입력.
 - 요청 문장: 후기에 별점 5개짜리 입력을 넣어줘. 반 개 단위도 되게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/rating.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2784,6 +2845,7 @@ document.addEventListener('click', function (e) {
 - 정의: 색을 고르는 입력. 고른 색의 코드가 같이 보이면 좋다.
 - 요청 문장: 브랜드 색을 컬러피커로 고르게 해줘. 선택한 hex 코드가 보이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/color-picker.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2839,6 +2901,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Label
 - 요청 문장: 모든 입력칸 위에 라벨을 붙여줘. 필수는 라벨 옆에 * 표시.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/label.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2880,6 +2943,7 @@ document.addEventListener('click', function (e) {
 - 정의: 입력 전 칸 안에 흐리게 보이는 예시 글자. 입력하면 사라진다.
 - 요청 문장: 이메일 칸 플레이스홀더를 example@gmail.com 으로 넣어줘. 라벨 대신 쓰지는 말고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/placeholder.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2921,6 +2985,7 @@ document.addEventListener('click', function (e) {
 - shadcn: FieldDescription
 - 요청 문장: 비밀번호 칸 아래에 '영문·숫자 포함 8자 이상' 헬퍼 텍스트를 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/helper-text.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -2962,6 +3027,7 @@ document.addEventListener('click', function (e) {
 - 정의: 꼭 입력해야 하는 칸이라는 별표(*) 표시.
 - 요청 문장: 이름과 이메일은 필수로 하고 라벨에 빨간 * 를 붙여줘. 빈 채로 제출하면 막고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/required.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3004,6 +3070,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Field (data-invalid) + aria-invalid
 - 요청 문장: 이메일과 전화번호에 유효성 검사를 넣어줘. 틀리면 제출 막고 칸 아래에 이유 표시.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/validation.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3046,6 +3113,7 @@ document.addEventListener('click', function (e) {
 - shadcn: FieldError
 - 요청 문장: 에러는 alert 창 말고 각 칸 아래 인라인 에러로 보여줘. 테두리도 빨갛게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/field-error.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3087,6 +3155,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (type=submit) + Spinner(저장 중)
 - 요청 문장: 제출 버튼은 보내는 동안 '보내는 중'으로 잠기고, 성공하면 완료 표시가 뜨게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/submit.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3133,6 +3202,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button
 - 요청 문장: 이 텍스트를 버튼으로 바꿔줘. 호버하면 살짝 변하게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3173,6 +3243,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (variant=default)
 - 요청 문장: '신청하기'만 프라이머리 버튼으로 하고 나머지는 낮춰줘. 화면에 프라이머리는 하나만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/primary-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3213,6 +3284,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (variant=outline·secondary)
 - 요청 문장: '더 알아보기'는 세컨더리 버튼으로 프라이머리 옆에 놔줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/secondary-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3253,6 +3325,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (variant=ghost)
 - 요청 문장: '취소'는 고스트 버튼으로 해줘. 호버할 때만 연한 배경이 생기게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/ghost-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3293,6 +3366,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (size=icon)
 - 요청 문장: 닫기·공유를 아이콘 버튼으로 바꿔줘. aria-label 넣는 것 잊지 말고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/icon-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3334,6 +3408,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (variant=destructive)
 - 요청 문장: 삭제는 빨간 삭제 버튼으로 하고, 누르면 확인 모달을 먼저 띄워줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/destructive-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3373,6 +3448,7 @@ document.addEventListener('click', function (e) {
 - 정의: 이 페이지에서 시키고 싶은 제일 중요한 행동 버튼.
 - 요청 문장: 페이지 끝에 CTA 섹션을 넣어줘. 한 줄 문구와 '무료로 시작하기' 버튼.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/cta.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3413,6 +3489,7 @@ document.addEventListener('click', function (e) {
 - 정의: 화면 오른쪽 아래에 떠 있는 동그란 버튼. 제일 잦은 행동 하나를 담는다.
 - 요청 문장: 오른쪽 아래에 새 글 쓰기 플로팅 버튼을 띄워줘. 스크롤해도 그 자리에.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fab.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3455,6 +3532,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Button (variant=link)
 - 요청 문장: '자세히 보기'는 버튼 말고 텍스트 링크로 바꿔줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/link.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3495,6 +3573,7 @@ document.addEventListener('click', function (e) {
 - shadcn: ButtonGroup · 선택형은 ToggleGroup
 - 요청 문장: 일간·주간·월간 버튼 그룹을 만들어줘. 선택된 것만 채워지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/button-group.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3548,6 +3627,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Dialog (DialogTitle 필수)
 - 요청 문장: 삭제를 누르면 '정말 삭제할까요?' 모달이 뜨게 해줘. 배경 클릭이나 ESC로 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/modal.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3598,6 +3678,7 @@ document.addEventListener('click', function (e) {
 - 구분: 뒤를 덮는 어두운 막 자체가 오버레이, 그 위에 뜬 창이 모달
 - 요청 문장: 모달이 뜰 때 뒤에 오버레이를 깔아줘. 오버레이를 누르면 닫히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/overlay.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3641,6 +3722,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Drawer
 - 요청 문장: 모바일에서 공유를 누르면 바텀 시트가 올라오게 해줘. 위에 잡는 손잡이 표시도.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/bottom-sheet.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3687,6 +3769,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Sonner
 - 요청 문장: 저장 성공하면 우하단에 '저장됐어요' 토스트가 3초 떴다 사라지게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/toast.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3740,6 +3823,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Alert
 - 요청 문장: 폼 위에 얼럿 영역을 만들어줘. 성공은 초록, 경고는 노랑, 오류는 빨강.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/alert.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3788,6 +3872,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Tooltip
 - 요청 문장: 이 아이콘에 마우스를 올리면 짧은 설명 툴팁이 뜨게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tooltip.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3832,6 +3917,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Popover
 - 요청 문장: 프로필을 누르면 이름과 메뉴가 있는 팝오버가 열리게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/popover.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3881,6 +3967,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Progress
 - 요청 문장: 업로드 진행률을 프로그레스 바로 보여줘. 퍼센트 숫자도 같이.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/progress-bar.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3932,6 +4019,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Spinner
 - 요청 문장: 데이터 불러오는 동안 가운데에 스피너를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/spinner.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -3974,6 +4062,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Skeleton
 - 요청 문장: 목록 로딩 중에는 카드 모양 스켈레톤 3개를 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/skeleton-ui.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4024,6 +4113,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Empty
 - 요청 문장: 목록이 비면 엠프티 스테이트를 보여줘. 안내 문구와 '추가하기' 버튼 포함.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/empty-state.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4066,6 +4156,7 @@ document.addEventListener('click', function (e) {
 - 정의: 쿠키 사용 동의를 받는 하단 안내 창.
 - 요청 문장: 하단에 쿠키 배너를 넣어줘. 동의·거부 버튼, 선택하면 다시 안 뜨게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/cookie-banner.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4111,6 +4202,7 @@ document.addEventListener('click', function (e) {
 - shadcn: AlertDialog
 - 요청 문장: 작성 중에 나가려 하면 '정말 나가시겠어요?' 확인 창을 띄워줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/confirmation.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4165,6 +4257,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Badge
 - 요청 문장: 알림 아이콘에 안 읽은 개수 배지를 붙여줘. 0이면 숨기고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/badge.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4208,6 +4301,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Badge 응용
 - 요청 문장: 태그들을 칩으로 보여주고, 누르면 선택 상태로 색이 바뀌게 해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/chip.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4257,6 +4351,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Avatar (AvatarFallback 필수)
 - 요청 문장: 댓글마다 아바타를 붙여줘. 사진 없으면 이름 첫 글자가 나오게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/avatar.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4298,6 +4393,7 @@ document.addEventListener('click', function (e) {
 - 정의: 아바타 여러 개를 겹쳐 놓고 나머지는 +9로 줄인 것.
 - 요청 문장: 참여자를 아바타 그룹으로 보여줘. 3명까지 겹치고 나머지는 +N으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/avatar-group.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4342,6 +4438,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Separator
 - 요청 문장: 섹션 사이마다 연한 디바이더를 넣어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/divider.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4383,6 +4480,7 @@ document.addEventListener('click', function (e) {
 - shadcn: lucide-react
 - 요청 문장: 아이콘은 Lucide로 통일해줘. 크기는 20px, 선 굵기도 맞추고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/icon.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4421,6 +4519,7 @@ document.addEventListener('click', function (e) {
 - 정의: 온라인·자리 비움 같은 상태를 알리는 작은 색 점.
 - 요청 문장: 멤버 이름 옆에 상태 점을 붙여줘. 온라인 초록, 자리 비움 노랑, 오프라인 회색.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/status-dot.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4469,6 +4568,7 @@ document.addEventListener('click', function (e) {
 - shadcn: Kbd
 - 요청 문장: 검색 안내에 ⌘K를 키보드 키 모양으로 보여줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/kbd.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4510,6 +4610,7 @@ document.addEventListener('click', function (e) {
 - 정의: 아무 일도 없는 평소 상태. 나머지 상태들의 기준점.
 - 요청 문장: 버튼의 기본 상태를 정리해줘. 이걸 기준으로 호버·액티브를 파생하고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-default.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4548,6 +4649,7 @@ document.addEventListener('click', function (e) {
 - 정의: 마우스를 올렸을 때의 변화. 눌러도 된다는 신호다.
 - 요청 문장: 카드에 호버 효과를 넣어줘. 그림자가 살짝 생기고 1px 떠오르게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-hover.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4587,6 +4689,7 @@ document.addEventListener('click', function (e) {
 - 정의: 누르고 있는 그 순간의 변화. 살짝 줄어들면 눌리는 맛이 난다.
 - 요청 문장: 버튼 액티브 상태를 넣어줘. 누르는 동안 살짝 작아지게(scale 0.96).
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-active.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4626,6 +4729,7 @@ document.addEventListener('click', function (e) {
 - 정의: 키보드 Tab으로 선택됐을 때의 표시. 접근성의 기본이라 지우면 안 된다.
 - 요청 문장: 포커스 상태를 focus-visible 링으로 보여줘. outline을 없애지는 말고.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-focus.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4665,6 +4769,7 @@ document.addEventListener('click', function (e) {
 - 정의: 지금은 못 누르는 상태. 회색으로 흐려지고 커서도 바뀐다.
 - 요청 문장: 필수 입력이 다 차기 전엔 제출 버튼을 디스에이블드로 잠가줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-disabled.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4703,6 +4808,7 @@ document.addEventListener('click', function (e) {
 - 정의: 처리 중인 상태. 버튼 안에 스피너를 넣고 두 번 못 누르게 잠근다.
 - 요청 문장: 제출을 누르면 버튼이 '보내는 중' 로딩 상태가 되게 해줘. 중복 클릭 방지도.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-loading.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4743,6 +4849,7 @@ document.addEventListener('click', function (e) {
 - 정의: 여럿 중 지금 고른 것의 표시. 테두리·채움·체크로 구분한다.
 - 요청 문장: 플랜 카드 중 선택된 것은 진한 테두리와 체크 표시로 구분해줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-selected.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4794,6 +4901,7 @@ document.addEventListener('click', function (e) {
 - 정의: 잘못된 상태의 표시. 빨간 테두리와 원인 안내가 세트다.
 - 요청 문장: 입력이 틀리면 에러 상태로 바꿔줘. 빨간 테두리에 칸 아래 이유까지.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/state-error.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4837,6 +4945,7 @@ document.addEventListener('click', function (e) {
 - 구분: 층 하나만 움직이면 그냥 배경 고정이고, 속도가 서로 달라야 패럴랙스
 - 요청 문장: 첫 화면에 패럴랙스 스크롤을 넣어줘. 산 그림 세 겹 중 뒤쪽은 스크롤 속도의 0.55배, 가운데는 0.3배로 움직이고 맨 앞은 그대로. 제목은 0.8배. 동작 줄이기 설정이면 멈춰.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-parallax.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4897,6 +5006,7 @@ document.addEventListener('click', function (e) {
 - 구분: 같은 말로 「스크롤 리빌」. 처음 열 때 한 번 뜨는 건 그냥 진입 애니메이션
 - 요청 문장: 카드들이 화면에 25% 들어오면 아래에서 18px 올라오며 0.6초 동안 페이드인되게 해줘. ease-out, 한 번 나타나면 다시 숨지 않게. IntersectionObserver 로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-fade-in.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -4955,6 +5065,7 @@ document.addEventListener('click', function (e) {
 - 구분: 안 따라오면 고장 → css-menu 「따라와야 할 헤더가 안 따라와요」
 - 요청 문장: 헤더를 position: sticky 로 맨 위에 고정해줘. 스크롤이 4px 넘으면 아래쪽에 옅은 그림자와 1px 선이 0.25초에 걸쳐 생기게. 배경은 92% 불투명 흰색에 살짝 흐림.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-sticky-header.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5009,6 +5120,7 @@ document.addEventListener('click', function (e) {
 - 구분: 고정되는 동안 옆으로 흐르면 가로 스크롤
 - 요청 문장: 「사용법」 섹션을 화면에 고정(sticky)하고, 스크롤 세 구간 동안 번호·문장·그림이 01→02→03 으로 바뀌게 해줘. 셋째가 끝나면 고정이 풀리고 다음 섹션으로. 지금 단계를 점 세 개로 표시.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-pin.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5077,6 +5189,7 @@ document.addEventListener('click', function (e) {
 - 구분: 손가락으로 옆으로 미는 목록은 캐러셀
 - 요청 문장: 작품 카드 다섯 장을 가로 스크롤 섹션으로 만들어줘. 섹션이 화면에 닿으면 고정되고, 세로 스크롤한 만큼 카드 줄이 왼쪽으로 이동해 마지막 카드가 보이면 고정이 풀리게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-horizontal-scroll.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5134,6 +5247,7 @@ document.addEventListener('click', function (e) {
 - 구분: mandatory 는 늘 맞춰 멈추고, proximity 는 가까울 때만
 - 요청 문장: 세 섹션에 스크롤 스냅을 걸어줘. scroll-snap-type: y mandatory, 각 섹션 높이는 화면 전체, 시작 위치에 맞춰 멈추게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-scroll-snap.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5180,6 +5294,7 @@ document.addEventListener('click', function (e) {
 - 구분: 작업이 얼마나 끝났는지 보여 주는 건 프로그레스 바
 - 요청 문장: 글 페이지 맨 위에 3px 짜리 스크롤 진행 막대를 붙여줘. 읽은 비율만큼 왼쪽에서 늘어나게 scaleX 로, 색은 강조색. role=progressbar 와 aria-valuenow 도.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-scroll-progress.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5239,6 +5354,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상 속 형광펜은 motion-menu 「형광펜」
 - 요청 문장: 본문의 핵심 문구 두 곳에 형광펜 애니메이션을 넣어줘. 글자 아래 42% 높이에 노란색, 화면에 다 들어오면 0.8초 동안 왼쪽에서 오른쪽으로 칠해지게. 한 번만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-highlighter.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5298,6 +5414,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 폰에는 호버가 없다. 누르는 순간(:active) 살짝 눌리는 모양으로 대신하고, 떠오른 채로 멈춰 있지 않게 @media (hover: hover) 안에만 둔다.
 - 요청 문장: 숙소 카드에 호버 리프트를 넣어줘. 올리면 위로 5px, 그림자 0 12px 22px, 0.2초 ease-out. 키보드 포커스에도 같은 모양. 동작 줄이기면 그림자만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-hover-lift.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5347,6 +5464,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 폰에서는 확대하지 않는다. 대신 누르면 바로 상세로 넘어가게 하고, 확대는 @media (hover: hover) 안에만.
 - 요청 문장: 사진 카드에 호버 줌을 넣어줘. 틀은 overflow: hidden 으로 고정하고 안의 이미지만 1.1배로 0.45초 동안 확대. 포커스에도 같이.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-hover-zoom.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5396,6 +5514,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 터치 화면에는 커서가 없어 아무 의미가 없다. @media (hover: none) 에서 숨긴다.
 - 요청 문장: 첫 화면에 커서 따라오기를 넣어줘. 지름 30px 주황 원이 커서를 매 프레임 거리의 12%씩 따라가게(lerp). 글자 위에선 multiply 로 겹치게. 터치 기기와 동작 줄이기에선 끄기.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-cursor-follower.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5452,6 +5571,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 터치에서는 끌려올 커서가 없다. 그냥 평범한 버튼으로 두고, 누를 때 눌림 모양만 준다.
 - 요청 문장: 「문의하기」 버튼을 자석 버튼으로 만들어줘. 커서가 버튼 중심 110px 안에 들어오면 거리의 35%만큼 커서 쪽으로 움직이고, 벗어나면 0.25초에 제자리로. 동작 줄이기면 끄기.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-magnetic.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5516,6 +5636,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 폰에서도 잘 맞는 몇 안 되는 반응이다. 손가락이 닿은 자리에서 퍼지게 pointerdown 좌표를 쓴다.
 - 요청 문장: 「보내기」 버튼에 리플 효과를 넣어줘. 누른 좌표에서 버튼 크기 2.2배 원이 0.6초 동안 커지며 투명해지게, 흰색 45%. 키보드로 누르면 가운데서.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-ripple.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5566,6 +5687,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 폰에서는 지금 있는 페이지의 메뉴에만 밑줄을 그어 둔다(호버 대신 현재 위치 표시).
 - 요청 문장: 상단 메뉴 링크에 밑줄 애니메이션을 넣어줘. 2px 강조색 선이 ::after 로 scaleX 0→1, transform-origin left, 0.25초 ease-out. 포커스에도 같이, 지금 페이지 메뉴는 늘 그어져 있게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-underline.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5610,6 +5732,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 손가락으로 끄는 것도 잘 된다. 손잡이 터치 영역을 44px 이상으로.
 - 요청 문장: 전후 비교 슬라이더를 만들어줘. 두 사진을 겹치고 위 사진을 clip-path 로 잘라 보여 주기, 가운데 흰 선과 ↔ 손잡이. 실제 조작은 투명한 input type=range 로 해서 키보드 화살표로도 움직이게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-before-after.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5660,6 +5783,7 @@ document.addEventListener('click', function (e) {
 - 폰에서는: 폰에는 커서가 없어 이 신호가 안 잡힌다. 억지로 뒤로 가기를 막지 말고, 글 끝까지 읽었을 때 아래에서 띠로 한 번 권하는 쪽으로 대신한다.
 - 요청 문장: 떠날 때 팝업을 넣어줘. 커서가 창 위쪽 끝(8px 안)으로 빠져나가면 한 번만 띄우고, 같은 방문에선 다시 안 띄우기. 「괜찮아요」와 Esc 로 닫히고, 열리면 첫 버튼에 포커스.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-exit-intent.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5722,6 +5846,7 @@ document.addEventListener('click', function (e) {
 - 구분: 부분만 기다릴 때는 스피너·스켈레톤. 덮개는 정말 무거운 첫 화면에만
 - 요청 문장: 첫 방문에 로딩 화면을 넣어줘. 검은 덮개에 0~100% 숫자와 주황 진행선, 100% 가 되면 0.25초 쉬고 0.6초 동안 위로 걷히게. 실제 로딩이 끝났을 때만 걷히고, 숫자는 role=status.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-preloader.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5783,6 +5908,7 @@ document.addEventListener('click', function (e) {
 - 구분: 자리만 잡는 회색 칸은 스켈레톤
 - 요청 문장: 갤러리 이미지를 지연 로딩으로 바꿔줘. img 에 loading="lazy" 와 크기(width·height)를 넣어 자리를 먼저 잡고, 오기 전엔 회색 칸에 빛이 지나가는 무늬, 다 오면 흐림에서 0.5초 동안 또렷해지게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-lazy-load.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5843,6 +5969,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상 자막의 타자 효과는 motion-menu 「타입온」
 - 요청 문장: 첫 화면 문구 「오늘은 ○○」의 ○○ 자리에 타이핑 효과를 넣어줘. 걷기·읽기·쓰기를 한 자에 0.15초로 쓰고 1.3초 멈춘 뒤 0.07초씩 지우기, 깜빡이는 커서 막대. 읽기 프로그램용 aria-label 은 전체 문장으로.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-typewriter.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5898,6 +6025,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상의 장면 전환 이름은 motion-menu ⑦ 화면 전환 40 에서 고른다
 - 요청 문장: 목록에서 상세로 넘어갈 때 페이지 전환을 넣어줘. 검은 막이 아래에서 0.35초에 덮고, 덮인 순간 내용을 바꾸고, 위로 0.35초에 걷히게. 지원 브라우저면 View Transitions API 로, 동작 줄이기면 그냥 바꾸기.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-page-transition.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -5961,6 +6089,7 @@ document.addEventListener('click', function (e) {
 - 구분: 휠 자체를 무겁게 만드는 라이브러리(관성 스크롤)와는 다르다
 - 요청 문장: 상단 메뉴 링크와 「맨 위로」 버튼에 부드러운 스크롤을 넣어줘. scroll-behavior: smooth, 고정 헤더에 가리지 않게 scroll-margin-top 40px. 동작 줄이기면 바로 이동.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-smooth-scroll.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -6022,6 +6151,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상 속 겹띠는 motion-menu 「전광판 겹띠」
 - 요청 문장: 「DESIGN · MOTION · CODE · PLAN」을 흐르는 띠로 만들어줘. 같은 내용을 두 번 이어 붙여 14초에 -50% 이동하면 끊김 없이 돌게, 마우스를 올리면 멈추게. 읽기 프로그램엔 한 번만 읽히게.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-marquee.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -6071,6 +6201,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상용 흐르는 그라데이션은 motion-menu 「흐르는 그라데이션」
 - 요청 문장: 첫 화면 배경에 움직이는 그라데이션을 넣어줘. 복숭아·분홍·하늘·파랑 네 색 linear-gradient 를 300% 크기로 두고 background-position 을 12초에 왕복. 글자 대비는 늘 4.5:1 이상, 동작 줄이기면 멈춘 한 장.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-gradient.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -6114,6 +6245,7 @@ document.addEventListener('click', function (e) {
 - 구분: 영상 속 도형 떠다니기는 motion-menu 「떠다니는 도형」
 - 요청 문장: 폰 목업 옆 배지 셋에 둥실 효과를 넣어줘. 위아래 9px, 3.2초·3.8초·3.2초로 박자를 다르게, 시작점(animation-delay)도 어긋나게. 본문이 아니라 장식에만.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/fx-floating.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
 
 ```html
 <!doctype html>
@@ -6144,6 +6276,981 @@ document.addEventListener('click', function (e) {
   @media (prefers-reduced-motion: reduce) { .fl { animation: none; } }
 </style>
 <div class="center"><div><div class="sc2" aria-hidden="true"><div class="ph"></div><span class="fl a">♥ 12</span><span class="fl b">★ 4.8</span><span class="fl c">새 기록</span></div><p class="cap">장식이 제각각 박자로 둥실 떠요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+## ⑫ 누를 때 반응
+
+### 눌리면 찌그러지는 버튼 (Squish Button)
+- 별칭: "누르면 쫀득하게 눌리는 버튼" · "눌렀다 떼면 통 튀는 버튼" · "젤리처럼 눌리는 버튼"
+- 정의: 누르는 동안 살짝 작아졌다가, 떼면 조금 넘쳐 커졌다 제자리로 오는 버튼.
+- 구분: 누른 자리에서 물결이 퍼지면 물결(리플), 버튼 자체가 눌렸다 튀면 이것
+- 요청 문장: 「장바구니 담기」 버튼을 눌리면 찌그러지는 버튼으로 만들어줘. 누르는 동안 0.08초에 92%로 줄고, 떼면 0.35초 동안 104%까지 넘쳤다가 100%로 (스프링 곡선). 키보드 스페이스에도 같은 모양. 동작 줄이기면 색만 진해지게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-squish.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>눌리면 찌그러지는 버튼 Squish Button · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sq { padding: 13px 30px; border: 0; border-radius: 12px; background: #e0733f; color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.8,.5,1), background .15s; }
+  .sq:active { transform: scale(.92); transition-duration: .08s; background: #c95f2d; }
+  .sq:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .sq, .sq:active { transform: none; } }
+</style>
+<div class="center"><div style="text-align:center"><button class="sq" id="sq">장바구니 담기</button><p class="cap">누르면 눌렸다가 떼면 통 튀어요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 로딩 버튼 (Morphing Loading Button)
+- 별칭: "누르면 동그랗게 줄면서 도는 버튼" · "보내기 누르면 원으로 변했다 체크 뜨는 거" · "버튼이 로딩으로 바뀌는 거"
+- 정의: 누르면 버튼이 동그라미로 줄어 돌다가, 끝나면 체크로 바뀌고 다시 버튼으로 돌아오는 흐름.
+- 구분: 버튼 모양은 그대로 두고 안에 스피너만 넣으면 ⑧ 로딩 상태
+- 요청 문장: 「보내기」 버튼을 로딩 버튼으로 만들어줘. 누르면 0.3초에 폭이 높이와 같은 원으로 줄고 테두리가 돌며 기다리다, 끝나면 초록 체크로 0.25초, 1.5초 뒤 원래 버튼으로. 도는 동안 다시 못 누르게 막고 aria-busy=true, 끝나면 「보냈어요」를 읽어 주게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-loading-button.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로딩 버튼 Morphing Loading Button · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .lb { position: relative; width: 150px; height: 44px; border: 0; border-radius: 22px; background: #e0733f; color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: width .3s ease, background .25s; }
+  .lb:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .lb .ring, .lb .ok { position: absolute; inset: 0; margin: auto; opacity: 0; }
+  .lb .ring { width: 22px; height: 22px; border-radius: 50%; border: 3px solid rgba(255,255,255,.35); border-top-color: #fff; }
+  .lb .ok { width: 22px; height: 22px; }
+  .lb.busy { width: 44px; } .lb.busy .tx { opacity: 0; } .lb.busy .ring { opacity: 1; animation: lbs .8s linear infinite; }
+  .lb.done { width: 44px; background: #2e9e6a; } .lb.done .tx { opacity: 0; } .lb.done .ok { opacity: 1; }
+  .lb .ok path { stroke-dasharray: 24; stroke-dashoffset: 24; } .lb.done .ok path { stroke-dashoffset: 0; transition: stroke-dashoffset .25s .05s ease-out; }
+  .lb .tx { transition: opacity .12s; white-space: nowrap; }
+  @keyframes lbs { to { transform: rotate(1turn); } }
+  @media (prefers-reduced-motion: reduce) { .lb { transition: none; } .lb.busy .ring { animation-duration: 2.4s; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="lb" id="lb"><span class="tx">보내기</span><span class="ring" aria-hidden="true"></span><svg class="ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <p class="cap" id="lbm" role="status">원으로 줄어 돌다가 체크로 바뀌어요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('lb'), m = document.getElementById('lbm');
+    b.addEventListener('click', function () {
+      if (b.classList.contains('busy') || b.classList.contains('done')) return;
+      b.classList.add('busy'); b.setAttribute('aria-busy', 'true');
+      setTimeout(function () { b.classList.remove('busy'); b.classList.add('done'); b.removeAttribute('aria-busy'); m.textContent = '보냈어요'; }, 1300);
+      setTimeout(function () { b.classList.remove('done'); m.textContent = '원으로 줄어 돌다가 체크로 바뀌어요'; }, 2800);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 길게 눌러 확인 (Hold to Confirm)
+- 별칭: "꾹 누르고 있어야 되는 버튼" · "누르고 있으면 차오르는 삭제 버튼" · "실수로 안 눌리게 길게 누르기"
+- 정의: 누르고 있는 동안 버튼 안이 차오르고, 끝까지 차야 실행되는 버튼. 떼면 도로 빠진다.
+- 구분: 한 번 더 묻는 창을 띄우면 확인 창, 버튼 하나로 끝내면 이것
+- 요청 문장: 「계정 삭제」 버튼을 길게 눌러 확인으로 만들어줘. 누르는 동안 빨간 채움이 왼쪽부터 1.2초에 걸쳐 차오르고, 다 차면 실행. 중간에 떼면 0.2초에 빠지기. 스페이스·엔터를 누르고 있어도 같게, 버튼 이름에 「1초 넘게 누르세요」를 넣어.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-hold.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>길게 눌러 확인 Hold to Confirm · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .hd { position: relative; overflow: hidden; padding: 13px 26px; border: 1.5px solid #d64224; border-radius: 12px; background: #fff; color: #d64224; font-size: 13.5px; font-weight: 700; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }
+  .hd:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .hd .fill { position: absolute; inset: 0; background: #d64224; transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out; }
+  .hd:active .fill { transform: scaleX(1); transition: transform 1.2s linear; }
+  .hd .tx { position: relative; mix-blend-mode: normal; }
+  .hd:active .tx, .hd.done .tx { color: #fff; }
+  .hd.done { background: #d64224; }
+  .hd .tx { transition: color .3s .5s; }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="hd" id="hd" aria-label="계정 삭제, 1초 넘게 누르세요"><span class="fill" aria-hidden="true"></span><span class="tx" id="hdt">꾹 눌러 계정 삭제</span></button>
+  <p class="cap" id="hdm" role="status">누르고 있어야 차올라요, 떼면 빠져요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('hd'), t = document.getElementById('hdt'), m = document.getElementById('hdm');
+    b.querySelector('.fill').addEventListener('transitionend', function (e) {
+      if (getComputedStyle(e.target).transform === 'none' || b.classList.contains('done')) return;
+      var mx = new DOMMatrix(getComputedStyle(e.target).transform);
+      if (mx.a < .99) return;
+      b.classList.add('done'); t.textContent = '삭제했어요'; m.textContent = '실행됐어요';
+      setTimeout(function () { b.classList.remove('done'); t.textContent = '꾹 눌러 계정 삭제'; m.textContent = '누르고 있어야 차올라요, 떼면 빠져요'; }, 1600);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 맥박 버튼 (Pulse Button)
+- 별칭: "두근두근 퍼지는 버튼" · "원이 계속 퍼져 나가는 버튼" · "눈길 끄는 라이브 버튼"
+- 정의: 버튼 둘레로 고리가 일정한 박자로 퍼져 나가 눈길을 끄는 버튼.
+- 구분: 계속 움직이면 맥박, 한 번 누를 때만 퍼지면 물결(리플)
+- 요청 문장: 「라이브 보기」 버튼에 맥박을 넣어줘. 1.6초마다 버튼 테두리에서 고리가 1.6배까지 퍼지며 사라지고, 두 고리는 0.8초 차이로. 한 화면에 하나만. 동작 줄이기면 고리 없이 테두리만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-pulse.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>맥박 버튼 Pulse Button · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pl { position: relative; padding: 12px 26px; border: 0; border-radius: 999px; background: #2e9e6a; color: #fff; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+  .pl:focus-visible { outline: 3px solid #17171b; outline-offset: 4px; }
+  .pl::before, .pl::after { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid #2e9e6a; animation: plr 1.6s ease-out infinite; pointer-events: none; }
+  .pl::after { animation-delay: .8s; }
+  .pl .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #fff; margin-right: 7px; vertical-align: 1px; }
+  @keyframes plr { from { transform: scale(1); opacity: .8; } to { transform: scale(1.6); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .pl::before, .pl::after { animation: none; opacity: .5; transform: scale(1.15); } .pl::after { display: none; } }
+</style>
+<div class="center"><div style="text-align:center"><button class="pl"><span class="dot" aria-hidden="true"></span>라이브 보기</button><p class="cap" style="margin-top:22px">1.6초마다 고리가 퍼져요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 출렁 토글 (Jelly Switch)
+- 별칭: "손잡이가 늘어나며 넘어가는 스위치" · "말랑하게 켜지는 토글" · "끈적하게 미끄러지는 스위치"
+- 정의: 켜고 끌 때 동그란 손잡이가 옆으로 늘어났다가 반대편에 닿으며 둥글게 돌아오는 스위치.
+- 구분: 모양 그대로 미끄러지면 토글 스위치, 손잡이가 늘어나면 이것
+- 요청 문장: 알림 설정 스위치를 출렁 토글로 만들어줘. 누르면 손잡이가 0.15초 동안 가로 1.5배로 늘어나며 반대편으로 가고, 닿으면 0.2초에 다시 동그랗게. 바탕은 회색에서 초록으로 0.3초. role=switch, aria-checked.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-jelly-toggle.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>출렁 토글 Jelly Switch · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .jt { display: flex; align-items: center; gap: 12px; font-size: 13.5px; cursor: pointer; }
+  .jt button { position: relative; width: 56px; height: 32px; border: 0; border-radius: 16px; background: #d4d4dc; cursor: pointer; transition: background .3s; padding: 0; }
+  .jt button:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .jt .k { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 12px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: left .3s cubic-bezier(.5,0,.3,1.3), width .15s ease-out; }
+  .jt [aria-checked="true"] { background: #2e9e6a; }
+  .jt [aria-checked="true"] .k { left: 28px; }
+  .jt .go .k { width: 36px; }
+  .jt .go[aria-checked="true"] .k { left: 16px; }
+  .jt .go[aria-checked="false"] .k { left: 4px; }
+  @media (prefers-reduced-motion: reduce) { .jt .k { transition: none; } .jt .go .k { width: 24px; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="jt"><button role="switch" aria-checked="false" aria-labelledby="jtl" id="jt"><span class="k"></span></button><span id="jtl">새 댓글 알림</span></div>
+  <p class="cap">손잡이가 늘어나며 넘어가요</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('jt');
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-checked') !== 'true';
+      b.classList.add('go'); b.setAttribute('aria-checked', on);
+      setTimeout(function () { b.classList.remove('go'); }, 160);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 통 튀는 체크박스 (Bouncy Checkbox)
+- 별칭: "체크하면 통 튀는 네모" · "체크 표시가 그려지는 체크박스" · "할 일 지울 때 쫀득한 체크"
+- 정의: 체크하면 칸이 살짝 눌렸다 커지고 그 안에 체크 표시가 그어지는 체크박스.
+- 요청 문장: 할 일 목록 체크박스를 통 튀는 체크박스로 만들어줘. 누르면 칸이 0.1초에 85%로 줄었다 0.25초에 110%를 거쳐 100%, 체크 표시는 0.25초 동안 왼쪽 아래에서 그어지고, 글자에는 취소선. 진짜 input type=checkbox 를 그대로 쓰고 모양만 덮어.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-check-pop.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통 튀는 체크박스 Bouncy Checkbox · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cl { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .cl label { display: flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer; }
+  .cl input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .cl .bx { flex: none; width: 22px; height: 22px; border-radius: 6px; border: 2px solid #c9c9d4; display: grid; place-items: center; transition: background .15s, border-color .15s; }
+  .cl .bx svg { width: 14px; height: 14px; }
+  .cl .bx path { stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset .25s ease-out .05s; }
+  .cl input:checked + .bx { background: #e0733f; border-color: #e0733f; animation: cp .35s cubic-bezier(.34,1.6,.5,1); }
+  .cl input:checked + .bx path { stroke-dashoffset: 0; }
+  .cl input:checked ~ span { text-decoration: line-through; color: #9a9aa4; }
+  .cl input:focus-visible + .bx { outline: 3px solid #17171b; outline-offset: 2px; }
+  .cl span { transition: color .2s; }
+  @keyframes cp { 0% { transform: scale(1); } 30% { transform: scale(.85); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .cl input:checked + .bx { animation: none; } .cl .bx path { transition: none; } }
+</style>
+<div class="center"><ul class="cl">
+  <li><label><input type="checkbox" id="c1"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>우유 사기</span></label></li>
+  <li><label><input type="checkbox" id="c2"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>택배 부치기</span></label></li>
+  <li><label><input type="checkbox" id="c3"><span class="bx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>운동 30분</span></label></li>
+</ul></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 미끄러지는 탭 표시 (Sliding Tab Indicator)
+- 별칭: "고른 탭으로 배경이 미끄러져 가는 거" · "탭 밑줄이 따라 움직이는 것" · "알약이 옆 탭으로 슥 옮겨 가는 탭"
+- 정의: 탭을 바꾸면 고른 표시(알약이나 밑줄)가 새 탭 쪽으로 늘어나며 미끄러져 가는 반응.
+- 구분: 탭 자체는 ② 탭, 고른 표시가 움직이는 것이 이것
+- 요청 문장: 일·주·월 탭에 미끄러지는 탭 표시를 넣어줘. 고른 탭 뒤 알약이 0.3초 동안 새 탭 자리로 미끄러지고, 가는 동안 폭이 두 탭을 덮을 만큼 늘었다 줄어들게. role=tablist, 화살표 키로도 이동.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-tab-slider.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미끄러지는 탭 표시 Sliding Tab Indicator · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .ts { position: relative; display: inline-flex; padding: 4px; border-radius: 999px; background: #f0f0f4; }
+  .ts button { position: relative; z-index: 1; width: 72px; padding: 8px 0; border: 0; background: none; font-size: 13px; font-weight: 600; color: #6b6b76; cursor: pointer; border-radius: 999px; transition: color .25s; }
+  .ts button[aria-selected="true"] { color: #fff; }
+  .ts button:focus-visible { outline: 3px solid #17171b; outline-offset: 1px; }
+  .ts .pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: 72px; border-radius: 999px; background: #e0733f; transition: left .3s cubic-bezier(.5,0,.2,1), width .3s cubic-bezier(.5,0,.2,1); }
+  @media (prefers-reduced-motion: reduce) { .ts .pill { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <div class="ts" role="tablist" aria-label="기간" id="ts"><span class="pill" id="tsp" aria-hidden="true"></span><button role="tab" aria-selected="true">일</button><button role="tab" aria-selected="false" tabindex="-1">주</button><button role="tab" aria-selected="false" tabindex="-1">월</button></div>
+  <p class="cap">고른 표시가 늘어나며 미끄러져요</p>
+</div></div>
+<script>
+  (function () {
+    var tl = document.getElementById('ts'), p = document.getElementById('tsp'), tabs = [].slice.call(tl.querySelectorAll('[role=tab]')), cur = 0, calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function pick(i, f) {
+      if (i === cur) return;
+      var a = tabs[cur].offsetLeft, b = tabs[i].offsetLeft, w = tabs[i].offsetWidth;
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
+      if (!calm) { p.style.left = Math.min(a, b) + 'px'; p.style.width = (Math.abs(b - a) + w) + 'px'; }
+      setTimeout(function () { p.style.left = b + 'px'; p.style.width = w + 'px'; }, calm ? 0 : 150);
+      cur = i; if (f) tabs[i].focus();
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { pick(i); }); });
+    tl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') pick((cur + 1) % tabs.length, true);
+      if (e.key === 'ArrowLeft') pick((cur + tabs.length - 1) % tabs.length, true);
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 떠오르는 라벨 (Floating Label)
+- 별칭: "입력하면 이름이 위로 올라가는 칸" · "칸 안에 있던 글자가 위로 작아지는 거" · "머티리얼 입력칸"
+- 정의: 입력칸 안에 있던 이름이 누르거나 글을 쓰면 테두리 위로 작아지며 올라가는 라벨.
+- 구분: 늘 칸 위에 붙어 있으면 라벨, 칸 안에서 올라가면 이것
+- 요청 문장: 이메일 입력칸에 떠오르는 라벨을 넣어줘. 비어 있을 때는 칸 안에 14px, 포커스하거나 글이 있으면 0.2초 동안 테두리 위로 11px 로 올라가고 색은 주황. 진짜 label for 로 연결하고 placeholder 에 같은 말을 또 쓰지 마.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-float-label.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>떠오르는 라벨 Floating Label · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fl { position: relative; width: 260px; }
+  .fl input { width: 100%; padding: 16px 14px 8px; border: 1.5px solid #c9c9d4; border-radius: 10px; font-size: 14px; outline: none; background: #fff; transition: border-color .2s; }
+  .fl label { position: absolute; left: 12px; top: 13px; padding: 0 4px; font-size: 14px; color: #9a9aa4; background: #fff; pointer-events: none; transform-origin: left top; transition: transform .2s ease-out, color .2s; }
+  .fl input:focus { border-color: #e0733f; }
+  .fl input:focus + label, .fl input:not(:placeholder-shown) + label { transform: translateY(-21px) scale(.79); color: #e0733f; }
+  .fl input:not(:focus):not(:placeholder-shown) + label { color: #6b6b76; }
+  @media (prefers-reduced-motion: reduce) { .fl label { transition: none; } }
+</style>
+<div class="center"><div><div class="fl"><input id="fle" type="email" placeholder=" " autocomplete="off"><label for="fle">이메일</label></div><p class="cap">누르면 이름이 위로 올라가요</p></div></div>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 비밀번호 강도 막대 (Password Strength Meter)
+- 별칭: "비번 치면 약함·보통·강함 나오는 막대" · "비밀번호 안전도 표시" · "칸이 하나씩 차는 비번 게이지"
+- 정의: 비밀번호를 칠 때마다 네 칸 막대가 차고, 약함·보통·강함을 글로도 알려 주는 표시.
+- 구분: 얼마나 끝났는지는 프로그레스 바, 얼마나 안전한지는 이것
+- 요청 문장: 가입 화면 비밀번호 칸 밑에 강도 막대를 넣어줘. 네 칸, 길이 8자·대문자·숫자·특수문자마다 한 칸씩 0.2초에 차고, 1~2칸 빨강 「약함」, 3칸 주황 「보통」, 4칸 초록 「강함」. 글은 aria-live=polite 로 읽어 주게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-strength.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비밀번호 강도 막대 Password Strength Meter · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pw { width: 260px; }
+  .pw input { width: 100%; padding: 11px 13px; border: 1.5px solid #c9c9d4; border-radius: 10px; font-size: 14px; }
+  .pw input:focus-visible { outline: none; border-color: #17171b; }
+  .pw .bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 10px; }
+  .pw .bars i { height: 6px; border-radius: 3px; background: #ececf1; position: relative; overflow: hidden; }
+  .pw .bars i::after { content: ''; position: absolute; inset: 0; background: var(--c, #ececf1); transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out, background .2s; }
+  .pw .bars i.on::after { transform: scaleX(1); }
+  .pw .lv { font-size: 12px; font-weight: 700; margin-top: 6px; min-height: 16px; color: var(--c, #9a9aa4); }
+  @media (prefers-reduced-motion: reduce) { .pw .bars i::after { transition: none; } }
+</style>
+<div class="center"><div class="pw" id="pw">
+  <label for="pwi" class="mut">비밀번호</label>
+  <input id="pwi" type="text" autocomplete="off" spellcheck="false" style="margin-top:6px">
+  <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="lv" id="pwl" aria-live="polite"></div>
+</div></div>
+<script>
+  (function () {
+    var w = document.getElementById('pw'), inp = document.getElementById('pwi'), l = document.getElementById('pwl'), bars = w.querySelectorAll('.bars i');
+    inp.addEventListener('input', function () {
+      var v = inp.value, n = (v.length >= 8) + /[A-Z]/.test(v) + /\d/.test(v) + /[^A-Za-z0-9]/.test(v);
+      var c = n <= 2 ? '#d64224' : n === 3 ? '#e0733f' : '#2e9e6a';
+      w.style.setProperty('--c', v ? c : '#ececf1');
+      bars.forEach(function (b, i) { b.classList.toggle('on', i < n); });
+      l.textContent = !v ? '' : n <= 2 ? '약함' : n === 3 ? '보통' : '강함';
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 틀리면 흔들기 (Error Shake)
+- 별칭: "비번 틀리면 칸이 도리도리" · "틀렸을 때 좌우로 떨리는 입력칸" · "아니라고 고개 젓는 칸"
+- 정의: 잘못 넣고 보내면 입력칸이 좌우로 짧게 흔들리고 빨간 안내가 붙는 반응.
+- 구분: 무엇이 틀렸는지 글로 알려 주는 것은 인라인 에러, 흔들림은 그 위에 얹는 신호
+- 요청 문장: 로그인 비밀번호가 틀리면 칸을 흔들어줘. 0.4초 동안 좌우 8px·6px·4px 로 세 번 줄어들며 흔들리고, 테두리 빨강, 칸 밑에 「비밀번호가 맞지 않아요」를 aria-live 로. 동작 줄이기면 흔들림 없이 색과 글만.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-shake.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>틀리면 흔들기 Error Shake · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sk { width: 250px; display: grid; gap: 8px; }
+  .sk input { width: 100%; padding: 11px 13px; border: 1.5px solid #c9c9d4; border-radius: 10px; font-size: 14px; transition: border-color .2s; }
+  .sk input:focus-visible { outline: none; border-color: #17171b; }
+  .sk.bad input { border-color: #d64224; }
+  .sk.go input { animation: sh .4s ease-in-out; }
+  .sk .msg { font-size: 12px; color: #d64224; min-height: 16px; }
+  .sk button { padding: 10px; border: 0; border-radius: 10px; background: #17171b; color: #fff; font-weight: 700; cursor: pointer; }
+  .sk button:focus-visible { outline: 3px solid #e0733f; outline-offset: 2px; }
+  @keyframes sh { 0%,100% { transform: none; } 15% { transform: translateX(-8px); } 35% { transform: translateX(8px); } 55% { transform: translateX(-6px); } 70% { transform: translateX(6px); } 85% { transform: translateX(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .sk.go input { animation: none; } }
+</style>
+<div class="center"><form class="sk" id="sk" novalidate>
+  <input id="ski" type="password" value="1234" aria-label="비밀번호" aria-describedby="skm">
+  <div class="msg" id="skm" aria-live="polite"></div>
+  <button type="submit" id="skb">로그인</button>
+</form></div>
+<script>
+  (function () {
+    var f = document.getElementById('sk'), m = document.getElementById('skm');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      f.classList.remove('go'); void f.offsetWidth; f.classList.add('go', 'bad');
+      m.textContent = '비밀번호가 맞지 않아요';
+      setTimeout(function () { f.classList.remove('go'); }, 420);
+    });
+    f.querySelector('input').addEventListener('input', function () { f.classList.remove('bad'); m.textContent = ''; });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 커서 따라 테두리 빛 (Spotlight Border)
+- 별칭: "마우스 따라 카드 테두리가 빛나는 거" · "커서 쪽 모서리만 밝아지는 카드" · "손전등 비추는 듯한 카드 테두리"
+- 정의: 커서가 있는 쪽 테두리만 은은하게 밝아지고, 커서를 옮기면 빛도 따라 움직이는 카드.
+- 구분: 카드 전체가 떠오르면 호버로 떠오르기, 테두리 한쪽만 빛나면 이것
+- 폰에서는: 폰에는 커서가 없다. 누른 자리에서 빛이 한 번 번졌다 0.4초에 사라지게 하거나 그냥 뺀다.
+- 요청 문장: 요금제 카드 셋에 커서 따라 테두리 빛을 넣어줘. 커서 위치를 중심으로 반지름 160px 원형 그라데이션을 1px 테두리에만 칠하고, 카드 밖으로 나가면 0.3초에 꺼지기. 동작 줄이기면 끄기.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-glow-border.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커서 따라 테두리 빛 Spotlight Border · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .gw { height: 100vh; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-content: center; padding: 14px; }
+  .gw .c { position: relative; border-radius: 14px; padding: 16px 12px; background: #fff; text-align: center; }
+  .gw .c::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(160px circle at var(--x, -500px) var(--y, -500px), #e0733f, transparent 70%), #e6e6ec;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .gw b { display: block; font-size: 14px; } .gw small { color: #9a9aa4; font-size: 11.5px; }
+  .gh2 { position: fixed; left: 0; top: 0; width: 16px; height: 16px; pointer-events: none; opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { .gw .c::before { background: #e6e6ec; } }
+</style>
+<div class="gw" id="gw">
+  <div class="c"><b>기본</b><small>무료</small></div>
+  <div class="c"><b>플러스</b><small>월 4,900원</small></div>
+  <div class="c"><b>프로</b><small>월 9,900원</small></div>
+</div>
+<svg class="gh2" id="gh2" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1.5l12 7.2-5.3 1.2-2.6 5.1z" fill="#17171b" stroke="#fff" stroke-width="1.4"/></svg>
+<script>
+  (function () {
+    var cs = document.querySelectorAll('#gw .c'), gh = document.getElementById('gh2'), last = -1e9, t0 = performance.now();
+    function at(x, y) { cs.forEach(function (c) { var b = c.getBoundingClientRect(); c.style.setProperty('--x', (x - b.left) + 'px'); c.style.setProperty('--y', (y - b.top) + 'px'); }); }
+    addEventListener('mousemove', function (e) { last = performance.now(); gh.style.display = 'none'; at(e.clientX, e.clientY); });
+    addEventListener('mouseleave', function () { at(-500, -500); });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    (function loop(now) {
+      if (now - last > 1500) {
+        var a = (now - t0) / 1400, x = innerWidth / 2 + Math.sin(a) * innerWidth * .42, y = innerHeight / 2 + Math.cos(a * 1.7) * 40;
+        gh.style.display = ''; gh.style.transform = 'translate(' + x + 'px,' + y + 'px)'; at(x, y);
+      }
+      requestAnimationFrame(loop);
+    })(t0);
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 부채처럼 펼치는 카드 (Fan-out Card Stack)
+- 별칭: "겹친 카드가 촤라락 펼쳐지는 거" · "누르면 부채꼴로 퍼지는 카드 더미" · "포개진 카드 펼치기"
+- 정의: 겹쳐 놓은 카드 더미를 누르면 부채꼴로 펼쳐져 한 장씩 보이고, 다시 누르면 포개지는 묶음.
+- 구분: 옆으로 넘겨 보면 캐러셀, 한자리에서 펼쳐 보면 이것
+- 요청 문장: 추천 카드 넷을 부채처럼 펼치는 묶음으로 만들어줘. 처음엔 4px 씩 어긋나 겹쳐 있고, 누르면 0.45초 동안 -18°·-6°·6°·18° 로 돌며 옆으로 70px 씩 퍼지기, 한 장에 0.05초 차이. 다시 누르면 포개기. 버튼에 aria-expanded.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-fan-cards.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부채처럼 펼치는 카드 Fan-out Card Stack · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fan { position: relative; width: 120px; height: 150px; border: 0; background: none; padding: 0; cursor: pointer; }
+  .fan:focus-visible { outline: 3px solid #17171b; outline-offset: 8px; border-radius: 14px; }
+  .fan i { position: absolute; inset: 0; border-radius: 14px; box-shadow: 0 4px 14px rgba(23,23,27,.12); transform-origin: 50% 120%; transition: transform .45s cubic-bezier(.3,1.3,.5,1); display: grid; place-items: end start; padding: 10px; color: #fff; font-size: 12px; font-weight: 700; font-style: normal; }
+  .fan i:nth-child(1) { background: #3f56c4; transform: translate(-6px, 6px); }
+  .fan i:nth-child(2) { background: #2e9e6a; transform: translate(-2px, 2px); transition-delay: .05s; }
+  .fan i:nth-child(3) { background: #e0733f; transform: translate(2px, -2px); transition-delay: .1s; }
+  .fan i:nth-child(4) { background: #17171b; transform: translate(6px, -6px); transition-delay: .15s; }
+  .fan[aria-expanded="true"] i:nth-child(1) { transform: translateX(-105px) rotate(-18deg); }
+  .fan[aria-expanded="true"] i:nth-child(2) { transform: translateX(-35px) rotate(-6deg); }
+  .fan[aria-expanded="true"] i:nth-child(3) { transform: translateX(35px) rotate(6deg); }
+  .fan[aria-expanded="true"] i:nth-child(4) { transform: translateX(105px) rotate(18deg); }
+  @media (prefers-reduced-motion: reduce) { .fan i { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="fan" id="fan" aria-expanded="false" aria-label="추천 카드 넷 펼치기"><i>산책</i><i>캠핑</i><i>전시</i><i>맛집</i></button>
+  <p class="cap">누르면 부채처럼 펼쳐져요</p>
+</div></div>
+<script>
+  document.getElementById('fan').addEventListener('click', function () { this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') !== 'true'); });
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 밀어서 버튼 꺼내기 (Swipe Actions)
+- 별칭: "옆으로 밀면 삭제 버튼 나오는 목록" · "메일 앱처럼 밀어서 지우기" · "카톡방 밀면 나오는 버튼"
+- 정의: 목록 한 줄을 옆으로 밀면 그 밑에 숨어 있던 삭제·보관 같은 버튼이 드러나는 목록.
+- 구분: 밀면 바로 지워지는 것은 삭제, 버튼을 꺼내서 고르게 하면 이것
+- 폰에서는: 폰에서 원래 쓰는 손짓이다. 웹에서는 세로 스크롤과 다투지 않게 가로로 10px 이상 먼저 움직였을 때만 민다고 본다.
+- 요청 문장: 메시지 목록 줄마다 밀어서 버튼 꺼내기를 넣어줘. 왼쪽으로 60px 넘게 밀면 줄이 -132px 에 멈추며 「보관」「삭제」 두 버튼이 드러나고, 덜 밀면 0.25초에 제자리. 미는 것 말고도 줄 끝 「더보기」 버튼이나 키보드로 같은 버튼을 열 수 있게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-swipe-actions.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>밀어서 버튼 꺼내기 Swipe Actions · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .sw { list-style: none; margin: 0; padding: 0; width: 300px; border: 1px solid #e6e6ec; border-radius: 12px; overflow: hidden; }
+  .sw li { position: relative; border-bottom: 1px solid #ececf1; }
+  .sw li:last-child { border-bottom: 0; }
+  .sw .acts { position: absolute; right: 0; top: 0; bottom: 0; display: flex; }
+  .sw .acts button { width: 66px; border: 0; color: #fff; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .sw .acts .ar { background: #6b6b76; } .sw .acts .del { background: #d64224; }
+  .sw .row { position: relative; display: flex; align-items: center; gap: 10px; padding: 12px 12px; background: #fff; touch-action: pan-y; transition: transform .25s ease-out; user-select: none; -webkit-user-select: none; }
+  .sw .row.drag { transition: none; }
+  .sw .row.open { transform: translateX(-132px); }
+  .sw .av { width: 30px; height: 30px; border-radius: 50%; background: #c9d3f3; flex: none; }
+  .sw .t { flex: 1; min-width: 0; } .sw .t b { display: block; font-size: 13px; } .sw .t span { font-size: 11.5px; color: #9a9aa4; }
+  .sw .more { border: 0; background: none; font-size: 18px; color: #9a9aa4; cursor: pointer; padding: 4px 6px; border-radius: 6px; }
+  .sw button:focus-visible { outline: 3px solid #17171b; outline-offset: -3px; }
+  @media (prefers-reduced-motion: reduce) { .sw .row { transition: none; } }
+</style>
+<div class="center"><div><ul class="sw" id="sw">
+  <li><div class="acts"><button class="ar" tabindex="-1">보관</button><button class="del" tabindex="-1">삭제</button></div><div class="row"><span class="av"></span><span class="t"><b>민지</b><span>내일 몇 시에 봐?</span></span><button class="more" aria-label="민지 메시지 버튼 열기" aria-expanded="false">⋯</button></div></li>
+  <li><div class="acts"><button class="ar" tabindex="-1">보관</button><button class="del" tabindex="-1">삭제</button></div><div class="row"><span class="av" style="background:#fde2d2"></span><span class="t"><b>택배 알림</b><span>오늘 도착 예정</span></span><button class="more" aria-label="택배 알림 버튼 열기" aria-expanded="false">⋯</button></div></li>
+</ul><p class="cap">줄을 왼쪽으로 밀어 보세요</p></div></div>
+<script>
+  (function () {
+    document.querySelectorAll('#sw li').forEach(function (li) {
+      var row = li.querySelector('.row'), more = li.querySelector('.more'), acts = li.querySelectorAll('.acts button'), x0 = null, dx = 0, moved = false;
+      function set(open) {
+        row.classList.toggle('open', open); more.setAttribute('aria-expanded', open);
+        acts.forEach(function (b) { b.tabIndex = open ? 0 : -1; });
+      }
+      more.addEventListener('click', function (e) { e.stopPropagation(); set(!row.classList.contains('open')); });
+      row.addEventListener('pointerdown', function (e) { if (e.target === more) return; x0 = e.clientX; dx = 0; moved = false; });
+      addEventListener('pointermove', function (e) {
+        if (x0 === null) return; dx = e.clientX - x0; if (!moved && Math.abs(dx) < 10) return;
+        moved = true; row.classList.add('drag');
+        var base = row.classList.contains('open') ? -132 : 0;
+        row.style.transform = 'translateX(' + Math.max(-150, Math.min(0, base + dx)) + 'px)';
+      });
+      addEventListener('pointerup', function () {
+        if (x0 === null) return; x0 = null; row.classList.remove('drag'); row.style.transform = '';
+        if (moved) set(row.classList.contains('open') ? dx < 60 : dx < -60);
+      });
+      acts.forEach(function (b) { b.addEventListener('click', function () { set(false); }); });
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 뒤집는 카드 (Flip Card)
+- 별칭: "누르면 뒤집혀서 뒷면 나오는 카드" · "앞뒤가 있는 카드" · "단어장처럼 뒤집는 카드"
+- 정의: 누르면 카드가 세로축으로 반 바퀴 돌아 뒷면의 내용을 보여 주는 카드.
+- 구분: 여러 장을 넘기면 캐러셀, 한 장의 앞뒤를 바꾸면 이것
+- 요청 문장: 단어 카드를 뒤집는 카드로 만들어줘. 누르면 0.5초 동안 세로축으로 180° 돌아 뒷면(뜻)이 보이고, 다시 누르면 앞면. perspective 800px, 뒷면은 backface-visibility hidden. 버튼으로 만들고 aria-pressed. 동작 줄이기면 돌지 않고 바로 바뀌게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-flip-card.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뒤집는 카드 Flip Card · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .fc { width: 190px; height: 130px; perspective: 800px; border: 0; padding: 0; background: none; cursor: pointer; }
+  .fc:focus-visible { outline: 3px solid #17171b; outline-offset: 4px; border-radius: 14px; }
+  .fc .in { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.4,.1,.2,1); }
+  .fc[aria-pressed="true"] .in { transform: rotateY(180deg); }
+  .fc .f, .fc .b { position: absolute; inset: 0; border-radius: 14px; display: grid; place-items: center; align-content: center; gap: 4px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .fc .f { background: #fff; border: 1.5px solid #e0e0e8; font-size: 22px; font-weight: 800; color: #17171b; }
+  .fc .b { background: #17171b; color: #fff; font-size: 14px; transform: rotateY(180deg); }
+  .fc small { font-size: 11px; color: #9a9aa4; font-weight: 500; }
+  @media (prefers-reduced-motion: reduce) { .fc .in { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="fc" id="fc" aria-pressed="false"><span class="in"><span class="f">serendipity<small>눌러서 뜻 보기</small></span><span class="b">뜻밖의 좋은 발견<small style="color:#9a9aa4">다시 누르면 앞면</small></span></span></button>
+  <p class="cap">누르면 반 바퀴 돌아 뒷면이 나와요</p>
+</div></div>
+<script>
+  document.getElementById('fc').addEventListener('click', function () { this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true'); });
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 숫자 굴러가는 표시 (Rolling Counter)
+- 별칭: "좋아요 누르면 숫자가 위로 굴러가는 거" · "자리마다 따로 돌아가는 숫자" · "슬롯머신처럼 바뀌는 숫자"
+- 정의: 숫자가 바뀔 때 자릿수마다 위아래로 굴러 새 숫자로 넘어가는 표시. 바뀐 자리만 움직인다.
+- 구분: 0부터 목표까지 세어 올라가는 연출은 motion-menu 「숫자 굴러가기」, 누를 때 한 자리만 바뀌면 이것
+- 요청 문장: 좋아요 수를 숫자 굴러가는 표시로 만들어줘. 누를 때마다 +1, 바뀐 자리만 0.35초 동안 아래 숫자가 위로 올라오고 그 전 숫자는 위로 빠지기. 숫자는 tabular-nums, 화면 읽기용으로는 전체 숫자를 aria-live 로.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-count-roll.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>숫자 굴러가는 표시 Rolling Counter · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cr { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border: 1.5px solid #e0e0e8; border-radius: 999px; background: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .cr:focus-visible { outline: 3px solid #17171b; outline-offset: 3px; }
+  .cr .hrt { color: #d64224; }
+  .cr .num { display: inline-flex; font-variant-numeric: tabular-nums; }
+  .cr .d { position: relative; display: inline-block; width: .62em; height: 1.2em; overflow: hidden; }
+  .cr .d span { position: absolute; left: 0; right: 0; text-align: center; line-height: 1.2em; transition: transform .35s cubic-bezier(.3,.9,.3,1); }
+  .cr .d .old { transform: translateY(0); } .cr .d.go .old { transform: translateY(-100%); }
+  .cr .d .new { transform: translateY(100%); } .cr .d.go .new { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .cr .d span { transition: none; } }
+</style>
+<div class="center"><div style="text-align:center">
+  <button class="cr" id="cr" aria-describedby="crl"><span class="hrt" aria-hidden="true">♥</span><span class="num" id="crn" aria-hidden="true"></span></button>
+  <p class="cap" id="crl" aria-live="polite">좋아요 1,298</p>
+</div></div>
+<script>
+  (function () {
+    var b = document.getElementById('cr'), box = document.getElementById('crn'), l = document.getElementById('crl'), n = 1298;
+    function fmt(v) { return v.toLocaleString('en-US'); }
+    function draw(prev, next) {
+      var a = fmt(prev), c = fmt(next); while (a.length < c.length) a = ' ' + a;
+      box.innerHTML = '';
+      for (var i = 0; i < c.length; i++) {
+        var d = document.createElement('span'); d.className = 'd'; if (c[i] === ',') d.style.width = '.3em';
+        d.innerHTML = '<span class="old">' + a[i] + '</span><span class="new">' + c[i] + '</span>';
+        box.appendChild(d);
+        if (a[i] !== c[i]) (function (d) { requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('go'); }); }); })(d);
+        else d.classList.add('go');
+      }
+    }
+    draw(n, n);
+    b.addEventListener('click', function () { draw(n, n + 1); n++; l.textContent = '좋아요 ' + fmt(n); });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 완료 체크 그리기 (Success Checkmark)
+- 별칭: "결제 끝나면 동그라미 그려지고 체크 뜨는 거" · "완료 화면 체크 애니메이션" · "끝났다고 체크가 쓱 그어지는 것"
+- 정의: 일이 끝나면 원이 그려지고 그 안에 체크가 그어지며 작은 점들이 한 번 튀는 완료 표시.
+- 구분: 잠깐 떴다 사라지는 알림은 토스트, 화면 한가운데서 끝났다고 보여 주면 이것
+- 요청 문장: 결제 완료 화면에 완료 체크 그리기를 넣어줘. 초록 원 테두리가 0.4초에 한 바퀴 그려지고, 이어서 체크가 0.3초에 그어지고, 작은 점 여덟 개가 원 밖으로 0.5초 튀었다 사라지게. 아래 「결제가 끝났어요」는 role=status. 동작 줄이기면 그려지지 않고 바로 보이게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/tap-success-check.html
+- 검수: 검증 (2026-10-24 검사, 다시 볼 날 2027-01-22) · 열기 passed · 누르기 passed · 폭 390 passed · 실기기 not_run
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>완료 체크 그리기 Success Checkmark · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .ok2 { display: grid; justify-items: center; gap: 10px; }
+  .ok2 .art { position: relative; width: 84px; height: 84px; }
+  .ok2 svg { width: 84px; height: 84px; }
+  .ok2 .ci { stroke-dasharray: 227; stroke-dashoffset: 227; transform: rotate(-90deg); transform-origin: 42px 42px; }
+  .ok2 .ck { stroke-dasharray: 48; stroke-dashoffset: 48; }
+  .ok2.go .ci { stroke-dashoffset: 0; transition: stroke-dashoffset .4s ease-out; }
+  .ok2.go .ck { stroke-dashoffset: 0; transition: stroke-dashoffset .3s .4s ease-out; }
+  .ok2 .p { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #2e9e6a; opacity: 0; }
+  .ok2.go .p { animation: okp .5s .65s ease-out forwards; }
+  @keyframes okp { 0% { opacity: 1; transform: rotate(var(--a)) translateY(-40px); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-60px) scale(.4); } }
+  .ok2 .tx { font-size: 14px; font-weight: 700; opacity: 0; transition: opacity .3s .6s; } .ok2.go .tx { opacity: 1; }
+  .ok2 button { padding: 10px 22px; border: 0; border-radius: 10px; background: #17171b; color: #fff; font-weight: 700; cursor: pointer; }
+  .ok2 button:focus-visible { outline: 3px solid #e0733f; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .ok2.go .ci, .ok2.go .ck, .ok2 .tx { transition: none; } .ok2.go .p { animation: none; } }
+</style>
+<div class="center"><div class="ok2" id="ok2">
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 84 84"><circle class="ci" cx="42" cy="42" r="36" fill="none" stroke="#2e9e6a" stroke-width="5"/><path class="ck" d="M27 43l10 10 20-21" fill="none" stroke="#2e9e6a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <i class="p" style="--a:0deg"></i><i class="p" style="--a:45deg"></i><i class="p" style="--a:90deg"></i><i class="p" style="--a:135deg"></i><i class="p" style="--a:180deg"></i><i class="p" style="--a:225deg"></i><i class="p" style="--a:270deg"></i><i class="p" style="--a:315deg"></i>
+  </div>
+  <div class="tx" role="status" id="okt"></div>
+  <button id="okb">결제하기</button>
+</div></div>
+<script>
+  (function () {
+    var w = document.getElementById('ok2'), t = document.getElementById('okt');
+    document.getElementById('okb').addEventListener('click', function () {
+      w.classList.remove('go'); t.textContent = ''; void w.offsetWidth;
+      w.classList.add('go'); t.textContent = '결제가 끝났어요';
+    });
+  })();
+</script>
 <script>
 // 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
 document.addEventListener('click', function (e) {

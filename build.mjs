@@ -156,6 +156,19 @@ for (const r of (menu.recipes || [])) {
 
 // ── 2-1. 자동 시연 (갤러리 iframe 전용 — 복사 코드·components/ 에는 안 들어간다) ──
 const demoSteps = JSON.parse(readFileSync(join(PLUGIN, 'demo-steps.json'), 'utf8'));
+
+// 항목별 검수 기록 (2026-10-24, oh-my-design 의 verified/partial/stale 를 빌려 옴). 기록은 tools/verify.mjs 가 쓴다.
+// 상태는 날짜로 계산한다: 하나라도 failed → 부분 · 마지막 검사가 STALE_DAYS 넘음 → 옛 자료 · 그 외 → 검증. 다시 볼 날 = 검사일 + STALE_DAYS.
+// 기록 없는 항목은 빌드가 멈춘다(새 항목은 verify.mjs <id> 를 돌려야 실린다).
+const STALE_DAYS = 90;
+const verify = JSON.parse(readFileSync(join(PLUGIN, 'verify.json'), 'utf8'));
+const noVerify = menu.items.filter(it => !verify[it.id]).map(it => it.id);
+if (noVerify.length) { console.error('검수 기록 없는 항목 (node plugins/ui-menu/tools/verify.mjs ' + noVerify.join(' ') + '):', noVerify.join(', ')); process.exit(1); }
+const addDays = (d, n) => { const t = new Date(d + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+const TODAY = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
+const vstat = id => { const r = verify[id], due = addDays(r.checked, STALE_DAYS);
+  const k = ['render', 'interact', 'phone'].some(x => r[x] === 'failed') ? 'part' : due < TODAY ? 'stale' : 'ok';
+  return { ...r, due, k, ko: { ok: '검증', part: '부분', stale: '옛 자료' }[k] }; };
 const stepIds = Object.keys(demoSteps).filter(k => !k.startsWith('_'));
 const strayStep = stepIds.filter(id => !frags[id]);
 if (strayStep.length) { console.error('데모 없는 시연 단계:', strayStep.join(', ')); process.exit(1); }
@@ -267,6 +280,8 @@ const PROMPT_TAIL = [
 // ── 3. 갤러리 ──────────────────────────────────────────────────
 const bycat = id => menu.items.filter(i => i.category === id);
 
+const vbadge = id => { const v = vstat(id);
+  return `<span class="vf ${v.k}" title="헤드리스 크롬 · 열기 ${v.render} · 누르기 ${v.interact} · 폭 390 ${v.phone} · 실기기 ${v.device}${v.note ? ' · ' + attr(v.note) : ''}">${v.ko} ${v.checked.slice(5).replace('-', '/')} · 다시 볼 날 ${v.due.slice(5).replace('-', '/')}</span>`; };
 const cardHtml = it => `
 <article class="item" id="${it.id}">
   <header><h3>${it.name.ko}</h3><span class="en">${it.name.en}</span>
@@ -276,7 +291,7 @@ const cardHtml = it => `
     <button class="tiny linkbtn" data-id="${it.id}" title="이 항목 주소 복사" aria-label="${it.name.ko} 주소 복사">#</button>
   </header>
   <iframe title="${it.name.ko} 데모" loading="lazy"${demoSteps[it.id] ? ' data-demo' : ''} style="height:${frags[it.id].h}px" srcdoc="${attr(demoDoc(it.id, code[it.id]))}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}${it.touch ? `<span class="vs touch">폰에서는: ${esc(it.touch)}</span>` : ''}</footer>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.sc ? `<span class="vs sc">shadcn: ${esc(it.sc)}</span>` : ''}${it.touch ? `<span class="vs touch">폰에서는: ${esc(it.touch)}</span>` : ''}${vbadge(it.id)}</footer>
   <div class="codebox" hidden><pre><code>${esc(code[it.id])}</code></pre><button class="copy tiny">코드 복사</button></div>
 </article>`;
 
@@ -488,6 +503,7 @@ const dict = full => `# UI 메뉴판 (ui-menu) · Giting Skills
 > 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. ${menu.categories.length}개 코스 ${menu.items.length}개 항목.
 > AI한테 시키는 공식: ${f.pattern}
 >   ✕ "${f.bad}" → ○ "${f.good}"
+> 검수: 항목마다 헤드리스 크롬으로 열기·누르기·폭 390 을 재고 날짜를 남긴다. 검증 = 셋 다 통과 · 부분 = 하나라도 실패 · 옛 자료 = 검사한 지 ${STALE_DAYS}일 넘음. 실기기는 아직 not_run.
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
 > Claude Code 설치: /plugin marketplace add hanmariyang/giting-skills → /plugin install ui-menu@giting
 
@@ -500,7 +516,8 @@ ${bycat(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
 - 폰에서는: ${it.touch}` : ''}${it.sc ? `
 - shadcn: ${it.sc}` : ''}
 - 요청 문장: ${it.ask}
-- 레퍼런스: ${RAW}/${it.id}.html${full ? `
+- 레퍼런스: ${RAW}/${it.id}.html
+- 검수: ${(v => `${v.ko} (${v.checked} 검사, 다시 볼 날 ${v.due}) · 열기 ${v.render} · 누르기 ${v.interact} · 폭 390 ${v.phone} · 실기기 ${v.device}${v.note ? ' · ' + v.note : ''}`)(vstat(it.id))}${full ? `
 
 \`\`\`html
 ${code[it.id].trim()}
@@ -568,6 +585,10 @@ const CORE_CSS = `
 .uigal .item .vs { flex-basis: 100%; font-size: 11.5px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 5px; margin-top: 2px; }
 .uigal .item .vs.sc { color: #0F766E; border-top: 0; padding-top: 0; font-family: var(--mono); font-size: 11px; }
 .uigal .item .vs.touch { color: #8A5A12; border-top: 0; padding-top: 0; }
+.uigal .item .vf { flex-basis: 100%; font-size: 11px; font-weight: 600; color: var(--ink-3); }
+.uigal .item .vf::before { content: '◆ '; color: #17B26A; }
+.uigal .item .vf.part::before { content: '◈ '; color: #C0392B; }
+.uigal .item .vf.stale::before { content: '◇ '; color: var(--ink-3); }
 .uigal .codebox { border-top: 1px solid var(--line); background: var(--gwash); padding: 10px 12px; }
 .uigal .codebox pre { margin: 0 0 8px; max-height: 260px; overflow: auto; font-size: 11px; line-height: 1.5; }
 .uigal .codebox code { font-family: var(--mono); }

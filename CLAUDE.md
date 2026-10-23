@@ -8,9 +8,9 @@ Giting 이 검수한 Claude Code 스킬 모음. repo 자체가 마켓플레이�
 .claude-plugin/marketplace.json      # 마켓 정의 — 스킬 추가 시 plugins 배열에 등록
 plugins/ui-menu/
 ├── .claude-plugin/plugin.json       # 플러그인 메타
-├── menu.json                        # 사전 SSOT (11코스 129항목 — 별칭·정의·요청 문장·formula)
+├── menu.json                        # 사전 SSOT (12코스 147항목 — 별칭·정의·요청 문장·formula)
 ├── demos/*.html                     # 데모 프래그먼트 SSOT (<!-- @id h=NNN [full] --> 마커 구분)
-├── components/*.html                # 생성물 — 스킬용 자가완결 129종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
+├── components/*.html                # 생성물 — 스킬용 자가완결 147종 (빌드가 만들지만 커밋한다: 설치 시 빌드 없음)
 └── skills/ui-menu/SKILL.md          # 스킬 본체
 build.mjs                            # demos+menu.json → components/ + 갤러리 생성 (의존성 0)
 docs/                                # GitHub Pages — 리다이렉트 + llms 미러 + promo (생성물)
@@ -122,6 +122,13 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 스크롤 데모는 iframe 안의 `#sc` 스크롤 상자로 돈다(자동 시연 `scroll` 단계가 그걸 민다). 커서 따라오기·자석 버튼은 마우스가 1.5초 안 움직이면 스스로 원을 그리며 시연한다(시연기는 mousemove 를 못 쏜다).
 - ui-menu 에 이미 있는 무한 스크롤은 겹쳐서 빼고 타이핑 효과를 넣었다. 아이디어는 외부 연출 모음에서 가져왔고 문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
 
+## UI 메뉴판 0.10.0 — ⑫ 누를 때 반응 16 (2026-10-23)
+
+- 코스 ⑫ `tap-fx` 「누를 때 반응」 16항목(147). 데모 `demos/d5-tap-fx.html`, id 는 전부 `tap-` 접두어. ⑤ 누르는 것(`press`)이 버튼 종류라면 ⑫는 눌렀을 때의 손맛이다.
+- 길게 눌러 확인은 JS 타이머 대신 `:active` 에 1.2초 transition 을 걸고 `transitionend` 로 실행한다. 그래야 자동 시연 `press` 단계(.uim-active 복제)로도 끝까지 돈다.
+- 커서 따라 테두리 빛은 자석 버튼처럼 마우스가 1.5초 안 움직이면 스스로 돈다. 맥박 버튼은 늘 돌아 시연 단계가 없다.
+- 아이디어는 외부 UI 애니메이션 모음에서 가져왔고 이름·문구·데모는 전부 새로 썼다. 출처는 공개 글에 적지 않는다.
+
 ## 메뉴판 스토어 내보내기 (2026-10-16)
 
 - `GITING_SITE_DIR` 이 있으면 build.mjs 끝에서 여덟 사전을 한 모양으로 모아 `menu-index.json`(538항목: 사전 · 코스 · 이름 · 별칭 · 한 줄 · 요청 문장 · 쓰임 · 구분 · 폰에서는 · 사전별 추가 칸)과 실물 데모 `c/<사전>/<id>.html`(412개)을 낸다. giting 의 `site/menu.mjs` 가 이걸로 giting.kr/menu 를 만든다.
@@ -223,3 +230,16 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 넣지 않은 것: 여기어때 잘난체 2(배포처 요약은 OFL 인데 같은 곳에 「수정·재배포 금지」, 임베딩 「조건부」라 앞뒤가 안 맞고, 웹폰트 주소가 제작사가 아닌 곳이었다). G마켓 산스(Paperlogy 가 그 한글을 쓴다).
 - (같은 날) **UI 메뉴판 갤러리도 같은 결**: 판 다섯(소개 · 시키는 공식 · 이런 말엔 이런 이름 · 화면 조합 레시피 · 스킬 설치). ⭐ 의뢰자 조건 = **원래 있던 요소는 하나도 빼지 않는다** — 옛 단독 갤러리 히어로 문장 · 공식 넷(pattern·bad·good·note) · 별칭→이름·shadcn·구분(vs) · 레시피 · 설치·GitHub·llms 를 판으로 올렸고, 코스 내비 · 자동 시연 · 카드 버튼 넷 · 코스별 표 · 레시피 섹션은 그대로. 옛 공식 상자만 판 2 와 같은 내용이라 뺐다. 인트로 데모에도 `data-demo` 가 붙어 자동 시연이 돈다. 모션 판 공식 설명도 note 전문으로 바꿨다(첫 문장만 잘라 쓰던 것).
 - (같은 날, 2차) **갤러리 여덟 전부 판 리듬 인트로**: 판 다섯이 같은 틀로 반복된다는 지적 → landing-menu ⑦ `rhythm` 을 공용 모듈 `ipPanels(name, scope, vars, panels)` 로 옮겨 여덟 갤러리가 같이 쓴다. 판 꼴 `center`(첫 판만) · `split` · `wide` · `stack` · `band`(어두운 띠), 바탕 `pale`/`white`/`dark`. ⭐ **빌드가 리듬을 지킨다** — 같은 꼴 연달아 · 가운데가 첫 판이 아님 · 같은 바탕 연달아면 `process.exit(1)`. 원래 맨 위에 있던 것(공식 상자 · font 로더 상자 · app 모바일 안내 · landing 공식+antiGeneric)은 판으로 옮겼고 지우지 않았다. 판 전용 데모는 없다 — 사전 데모·카드를 그대로 쓴다. 판 CSS 는 `--ip-*` 변수로 스코프마다 색을 받는다(giting 테마 스코프는 `IP_VARS_THEME`).
+
+## ui-menu 항목별 검수 기록 (2026-10-24)
+
+oh-my-design 의 verified/partial/stale 를 빌려 왔다. 「실측 검수 통과분만 등재」를 데이터로 보이게 하는 장치.
+```bash
+node plugins/ui-menu/tools/verify.mjs            # 147개 전부 (약 9분) → plugins/ui-menu/verify.json
+node plugins/ui-menu/tools/verify.mjs tap-hold   # 고친 항목만
+```
+- 재는 것: 열기(예외 0) · 누르기(버튼·입력 다 건드려도 예외 0) · 폭 390(옆으로 안 넘침). 실기기는 못 재서 늘 `not_run`.
+- 상태는 빌드가 날짜로 계산: 하나라도 failed → 부분(◈) · 검사한 지 90일 넘음 → 옛 자료(◇) · 그 외 검증(◆). 다시 볼 날 = 검사일 + 90.
+- 갤러리 카드 맨 아래 한 줄 + llms 「검수:」 줄 + SKILL.md(부분·옛 자료면 사용자에게 말하라).
+- ⭐ 새 항목은 `verify.mjs <id>` 를 돌려야 빌드가 통과한다(기록 없으면 멈춤).
+- ⚠️ 폭 검사는 `innerWidth` 와 비교하면 안 된다 — mobile 에뮬레이션은 넘친 만큼 축소해 innerWidth 도 커진다. 일부러 넘친 견본으로 확인했다(390 고정값과 비교).

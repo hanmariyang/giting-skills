@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비밀번호 강도 막대 Password Strength Meter · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .pw { width: 260px; }
+  .pw input { width: 100%; padding: 11px 13px; border: 1.5px solid #c9c9d4; border-radius: 10px; font-size: 14px; }
+  .pw input:focus-visible { outline: none; border-color: #17171b; }
+  .pw .bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 10px; }
+  .pw .bars i { height: 6px; border-radius: 3px; background: #ececf1; position: relative; overflow: hidden; }
+  .pw .bars i::after { content: ''; position: absolute; inset: 0; background: var(--c, #ececf1); transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out, background .2s; }
+  .pw .bars i.on::after { transform: scaleX(1); }
+  .pw .lv { font-size: 12px; font-weight: 700; margin-top: 6px; min-height: 16px; color: var(--c, #9a9aa4); }
+  @media (prefers-reduced-motion: reduce) { .pw .bars i::after { transition: none; } }
+</style>
+<div class="center"><div class="pw" id="pw">
+  <label for="pwi" class="mut">비밀번호</label>
+  <input id="pwi" type="text" autocomplete="off" spellcheck="false" style="margin-top:6px">
+  <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="lv" id="pwl" aria-live="polite"></div>
+</div></div>
+<script>
+  (function () {
+    var w = document.getElementById('pw'), inp = document.getElementById('pwi'), l = document.getElementById('pwl'), bars = w.querySelectorAll('.bars i');
+    inp.addEventListener('input', function () {
+      var v = inp.value, n = (v.length >= 8) + /[A-Z]/.test(v) + /\d/.test(v) + /[^A-Za-z0-9]/.test(v);
+      var c = n <= 2 ? '#d64224' : n === 3 ? '#e0733f' : '#2e9e6a';
+      w.style.setProperty('--c', v ? c : '#ececf1');
+      bars.forEach(function (b, i) { b.classList.toggle('on', i < n); });
+      l.textContent = !v ? '' : n <= 2 ? '약함' : n === 3 ? '보통' : '강함';
+    });
+  })();
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>

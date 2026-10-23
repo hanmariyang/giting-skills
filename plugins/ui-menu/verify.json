@@ -1,0 +1,1032 @@
+{
+ "_doc": "tools/verify.mjs 가 쓴다. 손으로 고치는 것은 device(실기기) 칸뿐 — passed 로 바꿀 때 checked 도 그날로. 상태·다시 볼 날은 build.mjs 가 계산한다.",
+ "header": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "navbar": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "hero": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "sidebar": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "footer": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "section": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "container": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "grid": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "card": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "card-grid": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "whitespace-group": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "featured-card": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "table": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "layout": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tabs": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "accordion": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "breadcrumb": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "stepper": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "pagination": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "infinite-scroll": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "load-more": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "carousel": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "dropdown": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "hamburger": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "drawer": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "toc": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "bottom-nav": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "anchor-link": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "list": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "pricing-table": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "testimonial": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "stats": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "stat-card": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "logo-cloud": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "timeline": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "gallery": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "lightbox": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "blockquote": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "code-block": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "profile-card": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "notification-list": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "banner": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "form": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "input": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "textarea": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "select": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "checkbox": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "radio": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "switch": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "slider": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "search-bar": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "autocomplete": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "file-upload": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "drag-drop": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "date-picker": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "time-picker": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "number-stepper": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "otp-input": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tag-input": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "rating": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "color-picker": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "label": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "placeholder": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "helper-text": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "required": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "validation": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "field-error": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "submit": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "primary-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "secondary-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "ghost-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "icon-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "destructive-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "cta": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fab": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "link": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "button-group": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "modal": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "overlay": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "bottom-sheet": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "toast": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "alert": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tooltip": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "popover": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "progress-bar": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "spinner": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "skeleton-ui": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "empty-state": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "cookie-banner": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "confirmation": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "badge": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "chip": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "avatar": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "avatar-group": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "divider": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "icon": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "status-dot": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "kbd": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-default": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-hover": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-active": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-focus": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-disabled": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-loading": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-selected": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "state-error": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-parallax": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-fade-in": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-sticky-header": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-pin": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-horizontal-scroll": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-scroll-snap": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-scroll-progress": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-highlighter": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-hover-lift": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-hover-zoom": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-cursor-follower": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-magnetic": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-ripple": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-underline": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-before-after": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-exit-intent": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-preloader": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-lazy-load": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-typewriter": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-page-transition": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-smooth-scroll": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-marquee": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-gradient": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "fx-floating": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-squish": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-loading-button": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-hold": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-pulse": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-jelly-toggle": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-check-pop": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-tab-slider": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-float-label": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-strength": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-shake": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-glow-border": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-fan-cards": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-swipe-actions": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-flip-card": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-count-roll": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ },
+ "tap-success-check": {
+  "checked": "2026-10-24",
+  "render": "passed",
+  "interact": "passed",
+  "phone": "passed",
+  "device": "not_run"
+ }
+}
