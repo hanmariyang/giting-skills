@@ -21,20 +21,6 @@
 <div class="mt"><i></i><i></i><i></i><i></i></div>
 <p class="cap">모션 트레일 · 빠른 움직임 뒤에 또렷한 잔상 복사본이 따라붙는다(≠블러)</p>
 
-<!-- @beat-sync h=220 full -->
-<style>
-  .bs{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:12px;animation:bsbg .5s steps(1,end) infinite}
-  @keyframes bsbg{0%{background:#141821}50%{background:#191f2b}}
-  .bs i{width:20px;border-radius:6px;background:#38BE86;height:30px;animation:bsp .5s cubic-bezier(.2,.9,.3,1) infinite}
-  .bs i:nth-child(2){animation-delay:.08s;background:#E07A3F}
-  .bs i:nth-child(3){animation-delay:.16s}
-  .bs i:nth-child(4){animation-delay:.24s;background:#E07A3F}
-  @keyframes bsp{0%{transform:scaleY(2.4)}40%,100%{transform:scaleY(1)}}
-  @media(prefers-reduced-motion:reduce){.bs,.bs i{animation:none}}
-</style>
-<div class="bs"><i></i><i></i><i></i><i></i></div>
-<p class="cap">BPM 비트 싱크 · 강조와 컷이 음악 비트에 딱딱 맞아떨어진다 (120 BPM)</p>
-
 <!-- @rcp-intro h=240 full -->
 <style>
   .ri{position:relative;height:200px;margin:12px;border-radius:12px;overflow:hidden;background:#101611;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;animation:ribg 2.4s steps(1,end) infinite}
@@ -71,19 +57,6 @@
 </style>
 <div class="bn"><div class="bnb"></div></div>
 <p class="cap">바운스 · 바닥에 닿아 점점 작게 여러 번 튄다(중력감). ≠ 한 번 지나쳤다 오는 오버슈트</p>
-
-<!-- @follow-through h=220 full -->
-<style>
-  .fl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
-  .flw{position:absolute;top:50%;margin-top:-22px;animation:flw 3s cubic-bezier(.5,0,.2,1) infinite}
-  .flh{width:44px;height:44px;border-radius:50%;background:#E7D6BC}
-  .flt{position:absolute;right:38px;top:8px;width:46px;height:28px;background:#38BE86;border-radius:14px 2px 2px 14px;transform-origin:right center;animation:flt 3s cubic-bezier(.5,0,.2,1) infinite}
-  @keyframes flw{0%{left:4%}40%,100%{left:58%}}
-  @keyframes flt{0%{transform:rotate(0)}30%{transform:rotate(16deg)}55%{transform:rotate(-10deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
-  @media(prefers-reduced-motion:reduce){.flw,.flt{animation:none}.flw{left:58%}}
-</style>
-<div class="fl"><div class="flw"><div class="flt"></div><div class="flh"></div></div></div>
-<p class="cap">팔로 스루 · 본체가 멈춰도 딸린 꼬리·천이 관성으로 늦게 따라 멈춘다</p>
 
 <!-- @smear h=220 full -->
 <style>
@@ -163,32 +136,6 @@
 </style>
 <div class="rx"><div class="st"><div class="n">입력</div><div class="a"></div><div class="n">처리</div><div class="a"></div><div class="n">결과</div></div><div class="lt">1단계 · 입력이 들어온다</div></div>
 <p class="cap">설명 영상 · 도식이 한 조각씩 그려지고, 설명하는 부분으로 줌, 이름표는 로어 서드</p>
-
-<!-- @overlapping-action h=220 full -->
-<style>
-  .ov{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
-  .ovp{position:absolute;top:50%;border-radius:50%;animation:ovm 3.2s cubic-bezier(.45,0,.2,1) infinite}
-  .ov1{width:40px;height:40px;margin-top:-34px;background:#E7D6BC;animation-delay:0s}
-  .ov2{width:52px;height:40px;margin-top:-20px;border-radius:20px;background:#7a5af0;animation-delay:.12s;margin-left:-40px}
-  .ov3{width:30px;height:16px;margin-top:-4px;border-radius:8px;background:#38BE86;animation-delay:.24s;margin-left:-72px}
-  @keyframes ovm{0%,8%{left:22%}45%,100%{left:70%}}
-  @media(prefers-reduced-motion:reduce){.ovp{animation:none;left:70%}}
-</style>
-<div class="ov"><div class="ovp ov3"></div><div class="ovp ov2"></div><div class="ovp ov1"></div></div>
-<p class="cap">오버래핑 액션 · 머리(살구) → 몸(보라) → 꼬리(초록)가 조금씩 늦게 출발하고 늦게 멈춘다</p>
-
-<!-- @hold h=220 full -->
-<style>
-  .hd{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821}
-  .hdb{position:absolute;bottom:34px;width:46px;height:46px;border-radius:10px;background:#7a5af0;animation:hdm 3.4s cubic-bezier(.4,0,.2,1) infinite}
-  .hdl{position:absolute;left:0;right:0;bottom:33px;height:1px;background:#2c3342}
-  .hdt{position:absolute;left:50%;top:18px;transform:translateX(-50%);font:600 11px ui-monospace,monospace;color:#E07A3F;opacity:0;animation:hdt 3.4s infinite}
-  @keyframes hdm{0%{left:6%;transform:translateY(0)}22%{left:30%;transform:translateY(-70px)}36%{left:46%;transform:translateY(0) scale(1.12,.86)}40%,66%{left:46%;transform:translateY(0) scale(1)}100%{left:84%;transform:translateY(0)}}
-  @keyframes hdt{0%,38%{opacity:0}42%,64%{opacity:1}68%,100%{opacity:0}}
-  @media(prefers-reduced-motion:reduce){.hdb,.hdt{animation:none}.hdb{left:46%}}
-</style>
-<div class="hd"><div class="hdl"></div><div class="hdt">HOLD 0.3s</div><div class="hdb"></div></div>
-<p class="cap">홀드 · 착지한 포즈에서 잠깐 멈췄다가 다음 동작으로 간다</p>
 
 <!-- @secondary-action h=220 full -->
 <style>

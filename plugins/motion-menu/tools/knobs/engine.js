@@ -1,0 +1,215 @@
+// 손잡이 데모 — 값을 바꾸면 그림이 그 값 그대로 움직이는 캔버스 함수 묶음 (의존성 0)
+// 손잡이 이름·범위·처음 값·문장 틀의 정본은 menu.json 의 knobs · askT 다. 여기는 그리기만 한다.
+// gen.mjs 가 이걸로 demos/m21-knobs.html 을 만든다.
+//
+// KN[id] = { still: 멈춤 화면에서 보여 줄 초, F(c, w, h, t, V, k) }
+//   t: 마지막으로 값을 바꾼 뒤 흐른 초   V: 손잡이 값   k: 색
+
+/*@helpers*/
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var backS = function (t, s) { t = cl(t); return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+// 이즈 아웃 백의 최고값이 target 이 되는 s. 문장에 적힌 배율이 그림에서도 정말 그 배율이 되게 한다
+var peakOf = function (s) { var m = 1; for (var i = 1; i < 200; i++) { var v = backS(i / 200, s); if (v > m) m = v; } return m; };
+var solveS = function (target) { if (target <= 1.0005) return 0; var a = 0, b = 10; for (var i = 0; i < 40; i++) { var m = (a + b) / 2; if (peakOf(m) < target) a = m; else b = m; } return (a + b) / 2; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 700) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var MONO = function (px) { return '700 ' + Math.round(px) + 'px ui-monospace,Menlo,monospace'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
+var fmt = function (v) { return String(Math.round(v * 100) / 100); };
+/*@end*/
+
+var KN = {};
+
+// 오버슈트 · 0.4배에서 커지며 peak% 를 찍고 100% 로
+KN['overshoot'] = {
+  still: .9,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var P = V.peak / 100, from = .4, s = V._s != null && V._p === P ? V._s : (V._p = P, V._s = solveS((P - from) / (1 - from)));
+    var L = .55 + 1.1 + .35 + .3, p = t % L, sc;
+    if (p < .55) sc = from + (1 - from) * backS(p / .55, s);
+    else if (p < 1.65) sc = 1;
+    else if (p < 2) sc = 1 - (1 - from) * io((p - 1.65) / .35);
+    else sc = from;
+    var bw = Math.min(w * .42, 150), bh = bw * .38;
+    c.setLineDash([4, 4]); c.strokeStyle = 'rgba(244,241,234,.3)'; c.lineWidth = 1.5; rbox(c, w / 2 - bw / 2, h / 2 - bh / 2, bw, bh, bh / 2); c.stroke(); c.setLineDash([]);
+    c.save(); c.translate(w / 2, h / 2); c.scale(sc, sc);
+    c.fillStyle = k.acc; rbox(c, -bw / 2, -bh / 2, bw, bh, bh / 2); c.fill();
+    say(c, '버튼', 0, 1, FONT(bh * .42, 800), k.paper);
+    c.restore();
+    say(c, '점선 = 100%', 12, 14, FONT(11, 600), k.sub, 'left');
+    say(c, Math.round(sc * 100) + '%', w - 12, h - 14, MONO(13), k.paper, 'right');
+  }
+};
+
+// 안티시페이션 · wind 초 동안 뒤로 웅크렸다가 앞으로 튀어 나간다
+KN['anticipation'] = {
+  still: .1,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var A = V.wind, go = .45, L = .35 + A + go + .9 + .4, p = t % L, S = 44, x0 = w * .14, x1 = w * .78, x = x0, sq = 0, y = 0, lbl = '';
+    if (p < .35) { x = x0; }
+    else if (p < .35 + A) { var u = io((p - .35) / A); x = x0 - 14 * u; sq = u; lbl = '웅크림'; }
+    else if (p < .35 + A + go) { var u2 = (p - .35 - A) / go; x = x0 - 14 + (x1 - x0 + 14) * eo(u2); sq = Math.max(0, 1 - u2 * 4) * -.6; y = -Math.sin(Math.PI * cl(u2)) * h * .22; lbl = '점프'; }
+    else if (p < .35 + A + go + .9) { x = x1; }
+    else { x = x1 + (x0 - x1) * io((p - .35 - A - go - .9) / .4); c.globalAlpha = .35; }
+    var gy = h * .72;
+    c.fillStyle = 'rgba(244,241,234,.14)'; c.fillRect(0, gy, w, 1);
+    var sw = S * (1 + .22 * sq), sh = S * (1 - .3 * sq);
+    c.fillStyle = k.acc2; rbox(c, x - sw / 2, gy - sh + y, sw, sh, 10); c.fill(); c.globalAlpha = 1;
+    // 시간 띠: 웅크림 구간의 길이가 손잡이 값 그대로
+    var bx = 12, by = 14, bw = w - 24, tot = .35 + A + go;
+    c.fillStyle = 'rgba(244,241,234,.12)'; c.fillRect(bx, by, bw, 6);
+    c.fillStyle = k.acc; c.fillRect(bx + bw * .35 / tot, by, bw * A / tot, 6);
+    c.fillStyle = k.acc2; c.fillRect(bx + bw * (.35 + A) / tot, by, bw * go / tot, 6);
+    say(c, '웅크림 ' + fmt(A) + '초', bx + bw * (.35 + A / 2) / tot, by + 18, FONT(11, 700), k.acc);
+    if (lbl) say(c, lbl, w - 12, h - 14, FONT(12, 700), k.paper, 'right');
+  }
+};
+
+// 스태거 · n 장이 gap 초 간격으로 차례로
+KN['stagger'] = {
+  still: 3,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var n = Math.round(V.n), g = V.gap, one = .5, L = (n - 1) * g + one + 1.1 + .35 + .3, p = t % L;
+    var cw = Math.min(46, (w - 40 - (n - 1) * 12) / n), ch = cw * 1.6, tot = n * cw + (n - 1) * 12, x0 = (w - tot) / 2, gy = h * .5 - ch / 2;
+    var out = p > L - .65 ? 1 - io((p - (L - .65)) / .35) : 1;
+    for (var i = 0; i < n; i++) {
+      var u = eo((p - i * g) / one), a = cl(u * 1.4) * out;
+      if (a <= 0) continue;
+      c.globalAlpha = a; c.fillStyle = k.card; rbox(c, x0 + i * (cw + 12), gy + 26 * (1 - u), cw, ch, 9); c.fill();
+      c.globalAlpha = a * .9; say(c, String(i + 1), x0 + i * (cw + 12) + cw / 2, gy + 26 * (1 - u) + ch / 2, MONO(13), k.ink);
+    }
+    c.globalAlpha = 1;
+    say(c, n + '장 · ' + fmt(g) + '초 간격', 12, 14, FONT(11, 600), k.sub, 'left');
+  }
+};
+
+// 비트 싱크 · bpm 박자마다 바탕이 바뀌고, 4박의 첫 박(다운비트)에 freeze 초 멈춘다
+KN['beat-sync'] = {
+  still: 0,
+  F: function (c, w, h, t, V, k) {
+    var ib = 60 / V.bpm, fz = Math.min(V.freeze, ib * .9), bar = 4 * ib, kb = Math.floor(t / bar), within = t - kb * bar;
+    var beat = Math.floor(t / ib), b4 = beat % 4, frozen = within < fz;
+    var cols = [k.ink, '#1d2433', '#191f2b', '#232a3a'];
+    bgc(c, w, h, cols[b4]);
+    var mt = t - kb * fz - Math.min(within, fz);
+    var x = w / 2 + Math.sin(mt * Math.PI * 2 / (ib * 2)) * w * .3;
+    c.fillStyle = frozen ? k.paper : k.acc2; rbox(c, x - 20, h * .5 - 20, 40, 40, 10); c.fill();
+    for (var i = 0; i < 4; i++) { c.fillStyle = i === b4 ? (i === 0 ? k.paper : k.acc) : 'rgba(244,241,234,.18)'; c.beginPath(); c.arc(w / 2 - 33 + i * 22, h - 22, i === 0 ? 6 : 5, 0, TAU); c.fill(); }
+    say(c, Math.round(V.bpm) + ' BPM', 12, 14, MONO(12), k.sub, 'left');
+    if (frozen) say(c, '프리즈 ' + fmt(V.freeze) + '초', w - 12, 14, FONT(12, 800), k.paper, 'right');
+  }
+};
+
+// 팔로 스루 · 몸이 멈춘 뒤 망토가 lag 초 더 흔들리다 선다
+KN['follow-through'] = {
+  still: 1.0,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var mv = 1, lag = V.lag, L = mv + lag + .8 + .35 + .3, p = t % L, x0 = w * .14, x1 = w * .64, x, ang;
+    if (p < mv) { var u = p / mv; x = x0 + (x1 - x0) * io(u); var vel = 6 * u * (1 - u); ang = .5 * vel; }
+    else if (p < mv + lag) { x = x1; var q = (p - mv) / lag; ang = -.6 * Math.sin(q * Math.PI * 2) * (1 - q); }
+    else if (p < L - .65) { x = x1; ang = 0; }
+    else { x = x1 + (x0 - x1) * io((p - (L - .65)) / .35); ang = 0; c.globalAlpha = .35; }
+    var y = h * .52;
+    c.save(); c.translate(x - 18, y - 10); c.rotate(ang);
+    c.fillStyle = k.green; rbox(c, -50, -12, 50, 24, 12); c.fill(); c.restore();
+    c.fillStyle = k.card; c.beginPath(); c.arc(x, y, 22, 0, TAU); c.fill(); c.globalAlpha = 1;
+    // 멈춘 순간 두 개: 몸, 그리고 lag 초 뒤 망토
+    var bx = 12, bw = w - 24, by = h - 18, tot = mv + lag + .4;
+    c.fillStyle = 'rgba(244,241,234,.12)'; c.fillRect(bx, by, bw, 4);
+    c.fillStyle = k.card; c.fillRect(bx + bw * mv / tot - 1, by - 6, 3, 16);
+    c.fillStyle = k.green; c.fillRect(bx + bw * (mv + lag) / tot - 1, by - 6, 3, 16);
+    c.fillStyle = 'rgba(56,190,134,.5)'; c.fillRect(bx + bw * mv / tot, by, bw * lag / tot, 4);
+    say(c, '몸 멈춤', bx + bw * mv / tot, by - 14, FONT(10, 600), k.sub, 'right');
+    say(c, '+' + fmt(lag) + '초 망토', bx + bw * (mv + lag) / tot + 4, by - 14, FONT(10, 700), k.green, 'left');
+  }
+};
+
+// 오버래핑 액션 · 머리 → 몸 → 꼬리가 off 초씩 늦게 출발하고 늦게 선다
+KN['overlapping-action'] = {
+  still: .55,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var o = V.off, mv = .9, L = 2 * o + mv + .9 + .35 + .3, p = t % L, x0 = w * .3, x1 = w * .74, y = h * .5;
+    var fade = p > L - .65 ? 1 - io((p - (L - .65)) / .35) : 1;
+    var parts = [{ d: 2 * o, dx: -78, r: [30, 16], col: k.green }, { d: o, dx: -40, r: [52, 40], col: k.purple }, { d: 0, dx: 0, r: [40, 40], col: k.card }];
+    for (var i = 0; i < 3; i++) {
+      var q = parts[i], u = io((p - q.d) / mv), x = x0 + (x1 - x0) * u + q.dx;
+      if (fade < 1) x = x0 + (x1 - x0) * fade + q.dx;
+      c.fillStyle = q.col; rbox(c, x - q.r[0] / 2, y - q.r[1] / 2 + (i === 2 ? -12 : i === 0 ? 10 : 0), q.r[0], q.r[1], q.r[1] / 2); c.fill();
+    }
+    say(c, '머리 → 몸 → 꼬리, ' + fmt(o) + '초씩', 12, 14, FONT(11, 600), k.sub, 'left');
+  }
+};
+
+// 홀드 · 뛰어서 착지하고 hold 초 멈췄다가 다음 동작
+KN['hold'] = {
+  still: .9,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var H = V.hold, jp = .6, land = .12, go = .6, L = jp + land + H + go + .35, p = t % L, gy = h - 34, S = 44, x = w * .06, y = 0, sx = 1, sy = 1, holding = false;
+    var xa = w * .08, xb = w * .46, xc = w * .86;
+    if (p < jp) { var u = p / jp; x = xa + (xb - xa) * u; y = -Math.sin(Math.PI * u) * h * .38; }
+    else if (p < jp + land) { var q = (p - jp) / land; x = xb; sx = 1 + .14 * Math.sin(Math.PI * q); sy = 1 - .16 * Math.sin(Math.PI * q); }
+    else if (p < jp + land + H) { x = xb; holding = true; }
+    else if (p < jp + land + H + go) { x = xb + (xc - xb) * io((p - jp - land - H) / go); }
+    else { x = xc; c.globalAlpha = 1 - (p - jp - land - H - go) / .35; }
+    c.fillStyle = 'rgba(244,241,234,.14)'; c.fillRect(0, gy, w, 1);
+    c.fillStyle = holding ? k.acc : k.purple; rbox(c, x - S * sx / 2, gy - S * sy + y, S * sx, S * sy, 10); c.fill(); c.globalAlpha = 1;
+    if (holding) {
+      var f = (p - jp - land) / H;
+      say(c, 'HOLD ' + fmt(H) + 's', xb, 18, MONO(12), k.acc);
+      c.strokeStyle = k.acc; c.lineWidth = 3; c.beginPath(); c.arc(xb, gy - S - 22, 9, -Math.PI / 2, -Math.PI / 2 + TAU * f); c.stroke();
+    }
+  }
+};
+
+// 팝인 · from 배에서 dur 초 동안 커지며 over 배를 찍고 제자리
+KN['pop-in'] = {
+  still: 1.2,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var s = V._s != null && V._o === V.over ? V._s : (V._o = V.over, V._s = solveS(V.over));
+    var L = V.dur + 1 + .3 + .4, p = t % L, sc;
+    if (p < V.dur) sc = V.from + backS(p / V.dur, s) * (1 - V.from);
+    else if (p < V.dur + 1) sc = 1;
+    else if (p < V.dur + 1.3) sc = 1 - io((p - V.dur - 1) / .3);
+    else sc = 0;
+    var S = h * .5;
+    c.setLineDash([4, 4]); c.strokeStyle = 'rgba(244,241,234,.3)'; c.lineWidth = 1.5; rbox(c, w / 2 - S / 2, h / 2 - S / 2, S, S, S * .24); c.stroke(); c.setLineDash([]);
+    if (sc > .01) {
+      c.save(); c.translate(w / 2, h / 2); c.scale(sc, sc);
+      c.fillStyle = k.pink; rbox(c, -S / 2, -S / 2, S, S, S * .24); c.fill();
+      c.fillStyle = k.paper; c.beginPath(); for (var i = 0; i < 10; i++) { var r = i % 2 ? S * .14 : S * .3, a = -Math.PI / 2 + i * Math.PI / 5; c.lineTo(r * Math.cos(a), r * Math.sin(a)); } c.closePath(); c.fill();
+      c.restore();
+    }
+    say(c, '점선 = 제자리 크기', 12, 14, FONT(11, 600), k.sub, 'left');
+    say(c, Math.max(0, sc).toFixed(2) + '배', w - 12, h - 14, MONO(13), k.paper, 'right');
+  }
+};
+
+// 리퀴드 모션 · 좌우 왕복 period 초 (기본기 24의 그림을 주기만 바꿔서)
+KN['liquid-motion'] = {
+  still: 1,
+  F: function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var ph = TAU * t / V.period, W = function (n) { return ph * (n || 1); };
+    var cx = w / 2 + w * .3 * Math.sin(W()), cy = h / 2 + h * .06 * Math.sin(W(2)), R = h * .26, v = Math.cos(W());
+    c.fillStyle = k.green; c.beginPath();
+    for (var a = 0; a <= TAU + .01; a += TAU / 64) {
+      var r = R * (1 + .12 * Math.sin(3 * a + W(3)) + .08 * Math.sin(5 * a - W(2)) - .18 * v * Math.cos(a));
+      if (a) c.lineTo(cx + r * Math.cos(a) * 1.1, cy + r * Math.sin(a)); else c.moveTo(cx + r * Math.cos(a) * 1.1, cy + r * Math.sin(a));
+    }
+    c.fill(); c.fillStyle = k.paper; c.globalAlpha = .7; c.beginPath(); c.ellipse(cx - R * .35, cy - R * .4, R * .16, R * .1, -.5, 0, TAU); c.fill(); c.globalAlpha = 1;
+    say(c, '왕복 ' + fmt(V.period) + '초', 12, 14, FONT(11, 600), k.sub, 'left');
+  }
+};
+
+if (typeof module !== 'undefined') module.exports = { KN };
