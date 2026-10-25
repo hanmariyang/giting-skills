@@ -1,0 +1,49 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>할인가 드롭 Sale Price Drop · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .kn{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#141821}
+</style>
+<canvas class="kn" role="img" aria-label="할인가 드롭 데모: 요청 문장의 값 그대로 움직인다"></canvas>
+<p class="cap">할인가 드롭 · 원가에 줄이 그어지고 흐려진 뒤, 내린 값이 아래에서 튀어 오르며 할인율 칩이 붙는다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = cl(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var seg = function (t, a, d) { return cl((t - a) / d); };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var NFONT = function (px, wt) { return (wt || 800) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var sw = function (c, s, font) { c.font = font; return c.measureText(s).width; };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
+var comma = function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+var SEG = { 0: 'abcdef', 1: 'bc', 2: 'abged', 3: 'abgcd', 4: 'fgbc', 5: 'afgcd', 6: 'afgedc', 7: 'abc', 8: 'abcdefg', 9: 'abcdfg' };
+var F=function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var L = 3.6, p = t % L, out = 1 - seg(p, 3.1, .35), now = Math.round(V.orig * (1 - V.pct / 100) / 100) * 100;
+    c.globalAlpha = out;
+    var oy = h * .34, ny = h * .66, ofont = NFONT(h * .15, 700), os = '₩' + comma(V.orig), ow = sw(c, os, ofont);
+    var dim = seg(p, .75, .35);
+    say(c, os, w / 2, oy - dim * 4, ofont, dim > 0 ? 'rgba(244,241,234,' + (1 - .55 * dim) + ')' : k.paper);
+    var ln = eo(seg(p, .3, .4));
+    if (ln > 0) { c.strokeStyle = k.pink; c.lineWidth = 3; c.beginPath(); c.moveTo(w / 2 - ow / 2 - 4, oy); c.lineTo(w / 2 - ow / 2 - 4 + (ow + 8) * ln, oy); c.stroke(); }
+    var up = seg(p, 1.05, .45);
+    if (up > 0) {
+      var nfont = NFONT(h * .27, 900), ns = '₩' + comma(now), nw = sw(c, ns, nfont), s = back(up);
+      c.save(); c.translate(w / 2 - 22, ny + (1 - eo(up)) * 30); c.scale(s, s); say(c, ns, 0, 0, nfont, k.paper); c.restore();
+      var cp = back(seg(p, 1.35, .35));
+      if (cp > 0) { var cs = '-' + Math.round(V.pct) + '%', cf = NFONT(h * .1, 800), cwid = sw(c, cs, cf) + 14, cx = w / 2 - 22 + nw / 2 + 10; c.save(); c.translate(cx + cwid / 2, ny - h * .1); c.scale(cp, cp); c.fillStyle = k.pink; rbox(c, -cwid / 2, -h * .07, cwid, h * .14, 6); c.fill(); say(c, cs, 0, 1, cf, k.paper); c.restore(); }
+    }
+    c.globalAlpha = 1;
+  };
+var V={"orig":39000,"pct":30},K={"ink":"#141821","paper":"#F4F1EA","sub":"#8b93a1","acc":"#E07A3F","acc2":"#7a5af0","purple":"#7a5af0","card":"#E7D6BC","green":"#38BE86","pink":"#E8506E"},STILL=2.2;
+var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function draw(now){var r=cv.getBoundingClientRect();c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?STILL:Math.max(0,(now-t0)/1000),V,K);c.restore();}
+function frame(now){draw(now);if(!still)requestAnimationFrame(frame);}
+addEventListener('message',function(e){var d=e.data&&e.data.mok;if(!d)return;for(var k in d)if(k in V&&isFinite(+d[k]))V[k]=+d[k];t0=performance.now();if(still)draw(t0);});
+sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(performance.now());});requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
