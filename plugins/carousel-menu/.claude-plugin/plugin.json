@@ -1,0 +1,9 @@
+{
+  "name": "carousel-menu",
+  "version": "0.1.0",
+  "description": "캐러셀 메뉴판 — 인스타 캐러셀(넘겨 보는 카드 여러 장)을 '장마다 무슨 꼴로, 어떤 순서로'로 시키게 해 주는 사전. 표지·본문 장·끝 장·장치 24항목(질문 표지·숫자 표지·체크리스트·카드 셋·2×2 격자·한 장 크게·전/후 비교·대응표·팁 카드·저장 유도·팔로우 카드·쪽 번호 등)의 별칭 → 정식 명칭 → 요청 문장 → 1080×1350 실물 HTML + 6장 레시피 넷(큐레이션·꿀팁·비교·시리즈). 룩은 design-brief에서, 장의 꼴과 순서는 여기서.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["instagram", "carousel", "card-news", "sns", "korean", "dictionary"]
+}
