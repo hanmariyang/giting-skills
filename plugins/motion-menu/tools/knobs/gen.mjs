@@ -9,13 +9,19 @@ import { createRequire } from 'node:module';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MM = join(HERE, '..', '..');
-const src = readFileSync(join(HERE, 'engine.js'), 'utf8');
-const helpers = src.split('/*@helpers*/')[1].split('/*@end*/')[0].trim();
-const { KN } = createRequire(import.meta.url)(join(HERE, 'engine.js'));
+// 엔진 둘: knobs/engine.js(⑤ 타이밍 손잡이) · numbers/engine.js(⑱ 숫자 연출). 항목은 자기 함수가 있는 엔진의 helpers 를 싣는다.
+const ENGINES = [join(HERE, 'engine.js'), join(HERE, '..', 'numbers', 'engine.js')].map(f => {
+  const src = readFileSync(f, 'utf8');
+  return { helpers: src.split('/*@helpers*/')[1].split('/*@end*/')[0].trim(), KN: createRequire(import.meta.url)(f).KN };
+});
+const engineOf = id => ENGINES.find(e => e.KN[id]);
 const menu = JSON.parse(readFileSync(join(MM, 'menu.json'), 'utf8'));
 const items = menu.items.filter(i => i.knobs);
-const miss = items.filter(i => !KN[i.id]).map(i => i.id), extra = Object.keys(KN).filter(id => !items.some(i => i.id === id));
-if (miss.length || extra.length) { console.error('손잡이 항목과 engine.js 가 어긋남:', 'engine 에 없음', miss, '/ menu.json 에 knobs 없음', extra); process.exit(1); }
+const allKN = ENGINES.flatMap(e => Object.keys(e.KN));
+const miss = items.filter(i => !engineOf(i.id)).map(i => i.id), extra = allKN.filter(id => !items.some(i => i.id === id));
+if (miss.length || extra.length) { console.error('손잡이 항목과 엔진이 어긋남:', '엔진에 없음', miss, '/ menu.json 에 knobs 없음', extra); process.exit(1); }
+// 코스별 출력 파일. 여기 없는 코스의 손잡이 항목은 m21-knobs.html 로 간다
+const OUT = { 'number-motion': 'm22-number-motion.html' };
 const COLORS = { ink: '#141821', paper: '#F4F1EA', sub: '#8b93a1', acc: '#E07A3F', acc2: '#7a5af0', purple: '#7a5af0', card: '#E7D6BC', green: '#38BE86', pink: '#E8506E' };
 
 const frag = it => {
@@ -27,9 +33,9 @@ const frag = it => {
 <canvas class="kn" role="img" aria-label="${it.name.ko} 데모: 요청 문장의 값 그대로 움직인다"></canvas>
 <p class="cap">${it.name.ko} · ${it.oneliner}</p>
 <script>(function(){
-${helpers}
-var F=${KN[it.id].F.toString()};
-var V=${JSON.stringify(V)},K=${JSON.stringify(COLORS)},STILL=${KN[it.id].still};
+${engineOf(it.id).helpers}
+var F=${engineOf(it.id).KN[it.id].F.toString()};
+var V=${JSON.stringify(V)},K=${JSON.stringify(COLORS)},STILL=${engineOf(it.id).KN[it.id].still};
 var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
 var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
 function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
@@ -41,9 +47,13 @@ sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(per
 };
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const out = `<!-- 생성물: tools/knobs/gen.mjs 가 engine.js 와 menu.json 의 knobs 로 만든다. 여기를 직접 고치지 않는다 -->
-${items.map(frag).join('\n\n')}
+  const files = {};
+  for (const it of items) (files[OUT[it.category] || 'm21-knobs.html'] ||= []).push(it);
+  for (const [fn, list] of Object.entries(files)) {
+    const out = `<!-- 생성물: tools/knobs/gen.mjs 가 엔진과 menu.json 의 knobs 로 만든다. 여기를 직접 고치지 않는다 -->
+${list.map(frag).join('\n\n')}
 `;
-  writeFileSync(join(MM, 'demos', 'm21-knobs.html'), out);
-  console.log(`demos/m21-knobs.html: ${items.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+    writeFileSync(join(MM, 'demos', fn), out);
+    console.log(`demos/${fn}: ${list.length}개 · ${(out.length / 1024).toFixed(0)}KB`);
+  }
 }
