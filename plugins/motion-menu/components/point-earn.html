@@ -17,6 +17,7 @@ var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = co
 var sw = function (c, s, font) { c.font = font; return c.measureText(s).width; };
 var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
 var comma = function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+var SEG = { 0: 'abcdef', 1: 'bc', 2: 'abged', 3: 'abgcd', 4: 'fgbc', 5: 'afgcd', 6: 'afgedc', 7: 'abc', 8: 'abcdefg', 9: 'abcdfg' };
 var F=function (c, w, h, t, V, k) {
     bgc(c, w, h, k.ink);
     var L = 3.8, p = t % L, base = 1200, fly = seg(p, .9, .55), land = 1.45, cnt = eo(seg(p, land, .6));
