@@ -46,6 +46,7 @@ description: "Front door to the Giting Skills marketplace. Use when the user ask
 | `design-brief` | 「AI 가 만든 화면이 다 비슷해」 「디자인 시스템 잡아줘」 | 팔레트·글꼴·간격을 정한 DESIGN.md |
 | `font-menu` | 「이런 느낌 폰트 뭐 있어」 「폰트를 어떻게 불러와」 | 인상별 웹폰트와 불러오는 코드 |
 | `landing-menu` | 「랜딩 페이지 뭐부터 넣지」 「섹션 순서가 막혔어」 | 랜딩 섹션 사전과 조립 순서 |
+| `carousel-menu` | 「인스타 카드뉴스 몇 장으로 짜지」 「첫 장 뭐로 하지」 | 캐러셀 장마다 꼴 이름과 6장 순서, 1080×1350 견본 |
 
 ### 고치기
 

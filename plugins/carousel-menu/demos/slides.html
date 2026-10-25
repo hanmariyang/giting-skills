@@ -1,0 +1,504 @@
+<!-- 생성물: tools/gen.mjs 가 menu.json 과 장 그림으로 만든다. 여기를 직접 고치지 않는다 -->
+<!-- @cover-question h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="질문 표지 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:70px"><p class="t" style="font-size:31px">비 오는 주말,<br><span style="color:var(--acc)">어디 가지?</span></p><p class="s" style="margin-top:10px">실내에서 보내는 데이트 네 곳</p></div><div class="in" style="bottom:46px;text-align:center"><span class="s">넘겨 보세요 › › ›</span></div><span class="pc">1 / 6</span></div>
+<p class="cap">질문 표지 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @cover-number h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="숫자 표지 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:64px;display:flex;align-items:flex-end;gap:6px"><span style="font-size:150px;font-weight:900;line-height:.85;letter-spacing:-.06em;color:var(--acc)">7</span><span class="t" style="font-size:30px;padding-bottom:6px">가지</span></div><div class="in" style="top:230px"><p class="t">버튼 상태,<br>이것만 시키세요</p></div><span class="pc">1 / 6</span></div>
+<p class="cap">숫자 표지 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @cover-photo h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="사진 표지 장 견본"><span class="ph" style="position:absolute;inset:0;border-radius:0"></span><span style="position:absolute;inset:0;background:linear-gradient(transparent 52%,rgba(0,0,0,.72))"></span><span class="ex" style="color:#fff">예시 · 사진 자리</span><div class="in" style="bottom:46px;color:#fff"><p class="t" style="font-size:28px">요즘 커플이<br>고르는 곳</p><p class="s" style="color:rgba(255,255,255,.8);margin-top:6px">서울 실내 데이트 네 곳</p></div><span class="pc">1 / 6</span></div>
+<p class="cap">사진 표지 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @cover-versus h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="대비 표지 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:62px"><p class="t">시키는 말<br>한 줄 차이</p></div><div class="in" style="top:190px"><p style="font-size:15px;color:#A3A49C;padding:12px 0"><b style="color:var(--acc)">✕</b> 「맨 위에 그거 넣어줘」</p><p style="height:1px;background:var(--line)"></p><p style="font-size:17px;font-weight:800;padding:12px 0"><b style="color:#17A06B">○</b> 「헤더 넣어줘」</p></div><span class="pc">1 / 6</span></div>
+<p class="cap">대비 표지 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @checklist h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="체크리스트 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:56px;bottom:44px;background:var(--wash);border-radius:14px;padding:16px"><p class="t" style="font-size:19px"><span class="hl">가기 전에 챙길 것</span></p><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);"><i style="width:16px;height:16px;border-radius:50%;flex:none;background:var(--acc)"></i><span style="font-size:12.5px;font-weight:700">우산 대신 장우산</span></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);"><i style="width:16px;height:16px;border-radius:50%;flex:none;background:var(--acc)"></i><span style="font-size:12.5px;font-weight:700">실내 예약 확인</span></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);"><i style="width:16px;height:16px;border-radius:50%;flex:none;background:var(--acc)"></i><span style="font-size:12.5px;font-weight:700">보조 배터리</span></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);"><i style="width:16px;height:16px;border-radius:50%;flex:none;border:2px solid #CFCDC6"></i><span style="font-size:12.5px;font-weight:700">편한 신발</span></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);"><i style="width:16px;height:16px;border-radius:50%;flex:none;border:2px solid #CFCDC6"></i><span style="font-size:12.5px;font-weight:700">사진 찍을 자리</span></div></div><span class="pc">2 / 6</span></div>
+<p class="cap">체크리스트 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @card-trio h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="카드 셋 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:52px"><p class="t" style="font-size:19px">지금 가 볼 곳</p></div><div class="in" style="top:92px;height:96px;background:var(--wash);border-radius:12px;display:flex;gap:12px;align-items:center;padding:10px"><span class="ph b" style="width:72px;height:72px;border-radius:50%;flex:none"></span><div><p style="font-size:14px;font-weight:800"><span class="hl">실내 식물원</span></p><p class="s" style="font-size:11px">한 줄 설명이 들어가는 자리,<br>두 줄까지만.</p></div><span style="position:absolute;right:10px;top:8px;font-size:9px;border:1px solid var(--ink);border-radius:999px;padding:1px 6px">동네</span></div><div class="in" style="top:200px;height:96px;background:var(--wash);border-radius:12px;display:flex;gap:12px;align-items:center;padding:10px"><span class="ph c" style="width:72px;height:72px;border-radius:50%;flex:none"></span><div><p style="font-size:14px;font-weight:800"><span class="hl">작은 미술관</span></p><p class="s" style="font-size:11px">한 줄 설명이 들어가는 자리,<br>두 줄까지만.</p></div><span style="position:absolute;right:10px;top:8px;font-size:9px;border:1px solid var(--ink);border-radius:999px;padding:1px 6px">동네</span></div><div class="in" style="top:308px;height:96px;background:var(--wash);border-radius:12px;display:flex;gap:12px;align-items:center;padding:10px"><span class="ph d" style="width:72px;height:72px;border-radius:50%;flex:none"></span><div><p style="font-size:14px;font-weight:800"><span class="hl">보드게임 카페</span></p><p class="s" style="font-size:11px">한 줄 설명이 들어가는 자리,<br>두 줄까지만.</p></div><span style="position:absolute;right:10px;top:8px;font-size:9px;border:1px solid var(--ink);border-radius:999px;padding:1px 6px">동네</span></div><span class="pc">3 / 6</span></div>
+<p class="cap">카드 셋 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @numbered-list h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="번호 리스트 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:52px"><p class="t" style="font-size:19px">자주 쓰는 순서대로</p><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);padding:11px 0"><b style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none">1</b><div><p style="font-size:13.5px;font-weight:800">항목 이름 1</p><p class="s" style="font-size:11px">설명은 회색으로 두 줄까지.</p></div></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);padding:11px 0"><b style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none">2</b><div><p style="font-size:13.5px;font-weight:800">항목 이름 2</p><p class="s" style="font-size:11px">설명은 회색으로 두 줄까지.</p></div></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);padding:11px 0"><b style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none">3</b><div><p style="font-size:13.5px;font-weight:800">항목 이름 3</p><p class="s" style="font-size:11px">설명은 회색으로 두 줄까지.</p></div></div><div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);padding:11px 0"><b style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none">4</b><div><p style="font-size:13.5px;font-weight:800">항목 이름 4</p><p class="s" style="font-size:11px">설명은 회색으로 두 줄까지.</p></div></div></div><span class="pc">3 / 6</span></div>
+<p class="cap">번호 리스트 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @grid-2x2 h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="2×2 격자 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:52px"><p class="t" style="font-size:19px">이런 곳도 있어요</p></div><div class="in" style="top:90px;display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="background:var(--wash);border-radius:10px;padding:8px"><span class="ph " style="height:82px"></span><p style="font-size:12.5px;font-weight:800;margin-top:6px">전망 카페</p><p class="s" style="font-size:10.5px">한 줄 설명</p></div><div style="background:var(--wash);border-radius:10px;padding:8px"><span class="ph b" style="height:82px"></span><p style="font-size:12.5px;font-weight:800;margin-top:6px">실내 정원</p><p class="s" style="font-size:10.5px">한 줄 설명</p></div><div style="background:var(--wash);border-radius:10px;padding:8px"><span class="ph c" style="height:82px"></span><p style="font-size:12.5px;font-weight:800;margin-top:6px">서점</p><p class="s" style="font-size:10.5px">한 줄 설명</p></div><div style="background:var(--wash);border-radius:10px;padding:8px"><span class="ph d" style="height:82px"></span><p style="font-size:12.5px;font-weight:800;margin-top:6px">공방</p><p class="s" style="font-size:10.5px">한 줄 설명</p></div></div><span class="pc">4 / 6</span></div>
+<p class="cap">2×2 격자 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @spotlight h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="한 장 크게 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:50px"><p class="s" style="font-size:10px;font-weight:700">3번째 이름 · 8개 중</p><p class="t" style="font-size:34px">히어로 <small style="font-size:12px;color:#9A9BA3;font-weight:500;font-family:ui-monospace,monospace">Hero</small></p></div><div class="in" style="top:128px;height:150px;background:var(--wash);border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="width:200px;height:110px;background:#fff;border-radius:8px;box-shadow:0 0 0 2px var(--acc);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px"><b style="font-size:13px">큰 제목 자리</b><span style="width:60px;height:16px;border-radius:5px;background:var(--acc)"></span></div></div><div class="in" style="top:296px;border:2px solid var(--ink);border-radius:6px;padding:10px 12px"><p class="s" style="font-size:9.5px;font-weight:700">이렇게 시키세요</p><p style="font-size:12px;font-weight:700;line-height:1.5;margin-top:4px">히어로 섹션을 만들어줘. 큰 제목, 한 줄 설명, 시작하기 버튼 순서로.</p></div><span class="pc">3 / 6</span></div>
+<p class="cap">한 장 크게 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @before-after h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="전/후 비교 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:54px;height:150px;background:var(--wash);border-radius:12px;padding:12px"><b style="font-size:11px;color:#A3A49C">전</b><div style="display:flex;gap:8px;margin-top:22px;justify-content:center"><span style="height:30px;width:72px;border-radius:7px;background:#BDBBB5;"></span><span style="height:30px;width:72px;border-radius:7px;background:#BDBBB5;"></span><span style="height:30px;width:72px;border-radius:7px;background:#BDBBB5;"></span></div><p class="s" style="text-align:center;margin-top:18px;font-size:11.5px;">버튼이 셋 다 같은 색이에요</p></div><div class="in" style="top:222px;height:150px;background:var(--wash);border-radius:12px;padding:12px"><b style="font-size:11px;color:var(--acc)">후</b><div style="display:flex;gap:8px;margin-top:22px;justify-content:center"><span style="height:30px;width:72px;border-radius:7px;background:var(--acc);"></span><span style="height:30px;width:72px;border-radius:7px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink)"></span><span style="height:30px;width:72px;border-radius:7px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink)"></span></div><p class="s" style="text-align:center;margin-top:18px;font-size:11.5px;color:var(--ink);font-weight:700">신청하기 하나만 진하게</p></div><span class="pc">4 / 6</span></div>
+<p class="cap">전/후 비교 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @memo-quote h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="인용 메모지 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div style="position:absolute;left:46px;right:46px;top:84px;height:250px;background:#FFFDF6;box-shadow:0 8px 18px rgba(0,0,0,.1);transform:rotate(-2deg);padding:30px 22px"><span style="position:absolute;left:50%;top:-10px;width:70px;height:20px;margin-left:-35px;background:rgba(229,72,42,.35);transform:rotate(3deg)"></span><p style="font-size:15px;line-height:1.95;border-bottom:1px solid #F1D9D0">이름을 알면</p><p style="font-size:15px;line-height:1.95;border-bottom:1px solid #F1D9D0">시키는 말이</p><p style="font-size:15px;line-height:1.95;border-bottom:1px solid #F1D9D0"><b>한 줄로</b> 끝나요.</p><p style="font-size:15px;line-height:1.95;border-bottom:1px solid #F1D9D0">짐작은 AI 가</p><p style="font-size:15px;line-height:1.95;border-bottom:1px solid #F1D9D0"><b>매번 다르게</b> 해요.</p><p class="s" style="text-align:right;margin-top:8px;font-size:10.5px">- 에디터 노트 -</p></div><span class="pc">5 / 6</span></div>
+<p class="cap">인용 메모지 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @tip-card h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="팁 카드 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:56px;bottom:44px;border:2px solid var(--ink);border-radius:14px;padding:18px;text-align:center"><span style="position:absolute;right:12px;top:12px;font-size:10px;font-weight:800;background:var(--acc);color:#fff;border-radius:999px;padding:3px 9px">tip</span><p class="t" style="font-size:19px;margin-top:12px">이것만 알면 돼요</p><p style="font-size:12.5px;line-height:1.75;margin-top:14px">버튼은 <span class="hl">상태까지</span> 시켜야 해요.<br>누르는 동안, 보내는 동안,<br>못 누를 때를 같이요.</p><p style="border-top:1px dashed var(--line);margin:16px 0 0"></p><p style="font-size:15px;font-weight:800;line-height:1.45;margin-top:16px">지금 저장해 두고<br>다음에 그대로 쓰세요</p></div><span class="pc">5 / 6</span></div>
+<p class="cap">팁 카드 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @steps h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="단계 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:54px"><p class="t" style="font-size:19px">세 번이면 끝나요</p><div style="display:flex;gap:12px;align-items:center;margin-top:14px"><b style="font-size:34px;font-weight:900;color:var(--acc);width:30px">1</b><div><p style="font-size:14px;font-weight:800">복사하기</p><p class="s" style="font-size:11px">설명 한 줄</p></div></div><p style="margin:2px 0 0 8px;color:#C2C1BC;font-size:16px">↓</p><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><b style="font-size:34px;font-weight:900;color:var(--acc);width:30px">2</b><div><p style="font-size:14px;font-weight:800">빈칸 채우기</p><p class="s" style="font-size:11px">설명 한 줄</p></div></div><p style="margin:2px 0 0 8px;color:#C2C1BC;font-size:16px">↓</p><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><b style="font-size:34px;font-weight:900;color:var(--acc);width:30px">3</b><div><p style="font-size:14px;font-weight:800">붙여 넣기</p><p class="s" style="font-size:11px">설명 한 줄</p></div></div></div><span class="pc">2 / 6</span></div>
+<p class="cap">단계 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @mapping-table h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="대응표 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:52px"><p class="t" style="font-size:19px">말로 하면 → 이름</p><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「맨 위에 로고 있는 줄」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">헤더</b></div><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「첫 화면에 크게」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">히어로</b></div><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「제일 중요한 버튼」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">CTA</b></div><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「맨 아래 정보」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">푸터</b></div><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「내려도 붙어 있는 줄」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">따라오는 헤더</b></div><div style="display:grid;grid-template-columns:1fr 18px 1fr;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span class="s" style="font-size:11px">「누르면 그 위치로」</span><span style="color:#C2C1BC;font-size:11px">→</span><b style="font-size:13px">앵커 링크</b></div></div><span class="pc">2 / 6</span></div>
+<p class="cap">대응표 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @stat-card h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="숫자 한 장 장 견본"><span class="chip">시리즈 · 03</span><span class="ex">예시</span><div class="in" style="top:110px;text-align:center"><p style="font-size:96px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--acc)">9<span style="font-size:40px">/9</span></p><p style="font-size:15px;font-weight:800;margin-top:14px">스킬로 부르니 9번 다 멀쩡</p><p class="s" style="margin-top:6px">같은 모델 · 같은 파일 · 같은 부탁</p></div><div class="in" style="bottom:42px;text-align:center"><p class="s" style="font-size:9.5px">실측 · 날짜와 출처를 작게</p></div><span class="pc">3 / 6</span></div>
+<p class="cap">숫자 한 장 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @save-cta h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="저장 유도 장 견본"><span class="chip">시리즈 · 03</span><span style="position:absolute;right:22px;top:20px;width:22px;height:28px;background:var(--ink);clip-path:polygon(0 0,100% 0,100% 100%,50% 75%,0 100%)"></span><div class="in" style="top:84px"><p class="t" style="font-size:28px">저장해 두고<br>필요할 때<br>꺼내 보세요</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:26px"><span style="font-size:11px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px">헤더</span><span style="font-size:11px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px">히어로</span><span style="font-size:11px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px">CTA</span><span style="font-size:11px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px">푸터</span><span style="font-size:11px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px">앵커 링크</span></div></div><span class="hd">@account</span><span class="pc">6 / 6</span></div>
+<p class="cap">저장 유도 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @follow-card h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="팔로우 카드 장 견본"><span class="ph" style="position:absolute;inset:0;border-radius:0;filter:blur(6px);transform:scale(1.1)"></span><span class="ex">예시</span><div style="position:absolute;left:44px;right:44px;top:92px;background:#fff;border-radius:16px;padding:22px;text-align:center"><span style="display:flex;width:62px;height:62px;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;align-items:center;justify-content:center;margin:0 auto;font-size:14px">계정</span><p style="font-size:16px;font-weight:800;margin-top:10px">계정 이름</p><p class="s">@account</p><p style="font-size:12px;margin-top:10px;line-height:1.5">매주 화면 이름 하나씩<br>시키는 문장째 드려요</p><span style="display:inline-block;margin-top:14px;background:var(--ink);color:#fff;font-size:12px;font-weight:800;border-radius:8px;padding:8px 22px">팔로우</span></div><span class="pc">6 / 6</span></div>
+<p class="cap">팔로우 카드 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @summary h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="한 장 요약 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:52px"><p class="t" style="font-size:19px">한 장 정리</p><p style="font-size:13px;padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--acc);margin-right:8px">1</b>헤더 · 맨 위 띠</p><p style="font-size:13px;padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--acc);margin-right:8px">2</b>히어로 · 첫 화면</p><p style="font-size:13px;padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--acc);margin-right:8px">3</b>CTA · 행동 버튼</p><p style="font-size:13px;padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--acc);margin-right:8px">4</b>푸터 · 맨 아래</p><p style="font-size:13px;padding:10px 0;border-bottom:1px solid var(--line)"><b style="color:var(--acc);margin-right:8px">5</b>앵커 · 같은 페이지 이동</p><p class="s" style="margin-top:14px;font-size:11px">이 장만 저장해도 돼요</p></div><span class="pc">5 / 6</span></div>
+<p class="cap">한 장 요약 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @next-teaser h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="다음 편 예고 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:80px"><span style="font-size:10px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px">다음 편</span><p style="font-size:64px;font-weight:900;letter-spacing:-.05em;margin-top:18px;line-height:1">04</p><p class="t" style="margin-top:8px">버튼 상태</p><p class="s" style="margin-top:8px">누르는 동안 · 보내는 동안 · 못 누를 때</p><p style="font-size:12px;font-weight:700;margin-top:36px">팔로우하면 놓치지 않아요 ›</p></div><span class="pc">6 / 6</span></div>
+<p class="cap">다음 편 예고 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @page-count h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="쪽 번호 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:70px"><p class="t" style="font-size:19px">아무 장</p><p class="s" style="margin-top:8px">모든 장 오른쪽 아래 같은 자리에.</p></div><span style="position:absolute;right:16px;bottom:10px;font-size:15px;font-weight:800;color:var(--acc);border:2px dashed var(--acc);border-radius:6px;padding:4px 8px">3 / 7</span></div>
+<p class="cap">쪽 번호 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @chip-label h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="칩 라벨 장 견본"><span class="chip" style="box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--acc)">시리즈 · 03</span><div class="in" style="top:80px"><p class="t" style="font-size:19px">제목 위 같은 자리</p><p class="s" style="margin-top:8px">장마다 같은 자리에 두면<br>한 묶음으로 읽혀요.</p></div><span class="pc">2 / 6</span></div>
+<p class="cap">칩 라벨 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @highlight h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="형광펜 강조 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:110px"><p style="font-size:22px;font-weight:800;line-height:1.6;letter-spacing:-.03em">이름을 알면 시키는 말이<br><span class="hl">한 줄로</span> 끝나요.<br>짐작은 <span class="hl">매번 달라요</span>.</p><p class="s" style="margin-top:14px">한 장에 두 군데까지.</p></div><span class="pc">3 / 6</span></div>
+<p class="cap">형광펜 강조 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @swipe-hint h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="넘기기 안내 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:80px"><p class="t">표지 아래에</p></div><div class="in" style="bottom:46px;text-align:center"><span style="font-size:13px;font-weight:700">넘겨 보세요 <b style="color:#D8D6D0">›</b> <b style="color:#9A9BA3">›</b> <b style="color:var(--acc)">›</b></span></div><span class="pc">1 / 6</span></div>
+<p class="cap">넘기기 안내 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>
+
+<!-- @handle-tag h=490 full -->
+<style>
+  .cs{--ink:#17171B;--sub:#6B6C74;--line:#E6E4DF;--wash:#F4F2EC;--acc:#E5482A;--hl:#FFD9CF;--card:#FFFFFF;
+    width:360px;height:450px;margin:14px auto;position:relative;overflow:hidden;border-radius:6px;background:var(--card);color:var(--ink);
+    box-shadow:0 1px 0 #E2E0DA,0 14px 30px rgba(23,23,27,.12);font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;box-sizing:border-box}
+  .cs *{box-sizing:border-box;margin:0}
+  .cs .chip{position:absolute;left:22px;top:20px;background:var(--ink);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:4px}
+  .cs .pc{position:absolute;right:22px;bottom:16px;font-size:10px;color:#9A9BA3;font-variant-numeric:tabular-nums}
+  .cs .hd{position:absolute;left:22px;bottom:16px;font-size:10px;font-weight:800;letter-spacing:.12em}
+  .cs .t{font-size:25px;font-weight:800;line-height:1.22;letter-spacing:-.04em}
+  .cs .s{font-size:12px;color:var(--sub);line-height:1.5}
+  .cs .ex{position:absolute;right:22px;top:20px;font-size:9px;color:#A3A49C}
+  .cs .hl{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+  .cs .ph{display:block;border-radius:8px;background:linear-gradient(160deg,#F2C9A0,#C9785A 55%,#5B3A33)}
+  .cs .ph.b{background:linear-gradient(160deg,#B9D3E0,#6F95AB 60%,#2F4552)}.cs .ph.c{background:linear-gradient(160deg,#D9DDB6,#8FA36B 60%,#3E4A2C)}.cs .ph.d{background:linear-gradient(160deg,#E7D3E7,#A07BB0 60%,#43324E)}
+  .cs .in{position:absolute;left:22px;right:22px}
+  .cap{color:#9a9aa4;font-size:11px;text-align:center;margin:0 12px 12px;line-height:1.5}
+</style>
+<div class="cs" role="img" aria-label="계정 표시 장 견본"><span class="chip">시리즈 · 03</span><div class="in" style="top:80px"><p class="t" style="font-size:19px">퍼 가도 출처가 남게</p><p class="s" style="margin-top:8px">모든 장 같은 자리에 작게.</p></div><span class="hd" style="color:var(--acc);border:2px dashed var(--acc);border-radius:6px;padding:4px 8px;bottom:10px;left:16px;font-size:12px">@account</span><span class="pc">4 / 6</span></div>
+<p class="cap">계정 표시 · 1080×1350 장을 줄여 그린 견본. 색·글꼴은 예시예요.</p>

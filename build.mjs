@@ -1746,6 +1746,133 @@ writeFileSync(join(ROOT, 'docs', 'landing-menu', 'index.html'), redirect.replace
 writeFileSync(join(ROOT, 'docs', 'landing-menu', 'llms.txt'), lmDict(false));
 console.log(`built landing-menu: items ${lmMenu.items.length} · core ${(lmCore.length / 1024).toFixed(0)}KB`);
 
+// ── 캐러셀 메뉴판 (carousel-menu) — 09 ─────────────────────────────
+// 인스타 캐러셀 장 사전. 장 견본은 tools/gen.mjs 가 demos/slides.html 로 낸다(1080×1350 을 360×450 으로). 룩은 design-brief, 꼴과 순서는 여기.
+const CMP = join(ROOT, 'plugins', 'carousel-menu');
+const cmMenu = JSON.parse(readFileSync(join(CMP, 'menu.json'), 'utf8'));
+const cmBy = id => cmMenu.items.filter(i => i.category === id);
+const cmFrags = {};
+for (const fn of readdirSync(join(CMP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const parts = readFileSync(join(CMP, 'demos', fn), 'utf8').split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    if (cmFrags[parts[i]]) { console.error(`carousel-menu 데모 마커가 두 번 나옴: @${parts[i]}`); process.exit(1); }
+    cmFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 490), body: parts[i + 2].trim() };
+  }
+}
+const cmMiss = cmMenu.items.filter(it => !cmFrags[it.id]).map(it => it.id);
+if (cmMiss.length) { console.error('carousel-menu 데모 없는 항목:', cmMiss.join(', ')); process.exit(1); }
+for (const r of cmMenu.recipes) {
+  for (const id of r.order) if (!cmMenu.items.find(i => i.id === id)) { console.error('carousel-menu 레시피가 없는 항목을 가리킴:', r.id, id); process.exit(1); }
+  for (let k = 1; k < r.order.length; k++) if (r.order[k] === r.order[k - 1]) { console.error('carousel-menu 레시피에 같은 꼴이 연달아:', r.id, r.order[k]); process.exit(1); }
+}
+const cmStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} · 캐러셀 메뉴판</title><style>body{margin:0;background:#f6f5f2}</style></head><body>
+${cmFrags[it.id].body}
+</body></html>`;
+const cmCode = {};
+rmSync(join(CMP, 'components'), { recursive: true, force: true });
+mkdirSync(join(CMP, 'components'), { recursive: true });
+for (const it of cmMenu.items) { cmCode[it.id] = cmStandalone(it); writeFileSync(join(CMP, 'components', `${it.id}.html`), cmCode[it.id]); }
+const CM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/carousel-menu/components';
+const cmItem = id => cmMenu.items.find(i => i.id === id);
+const CM_CSS = `.cmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e4df;--acc:#E5482A;--bg:#f6f5f2;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.cmgal .cm-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.cmgal .cm-nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff}
+.cmgal .cm-nav a b{color:var(--acc);margin-right:5px}
+.cmgal .cm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
+.cmgal .cm-rules b{font-size:14px}.cmgal .cm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.cmgal .cm-cat{margin:0 0 30px;scroll-margin-top:80px}
+.cmgal .cm-cat h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cmgal .cm-cat h2 .no{color:var(--acc)}.cmgal .cm-cat h2 .count{font-size:12px;color:#9a9aa4;font-weight:600}
+.cmgal .cm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.cmgal .cm-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;display:flex;flex-direction:column;min-width:0}
+.cmgal .cm-card header{display:flex;align-items:baseline;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.cmgal .cm-card h3{font-size:14.5px;font-weight:800;margin:0}.cmgal .cm-card .en{font-family:ui-monospace,monospace;font-size:11px;color:#9a9aa4;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmgal .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--ink2)}
+.cmgal .cm-card iframe{display:block;width:100%;border:0;background:#f6f5f2}
+.cmgal .cm-card footer{padding:10px 14px 12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink2);display:grid;gap:4px;margin-top:auto}
+.cmgal .cm-card footer .al{color:var(--acc)}.cmgal .cm-card footer .vs{color:#9a9aa4}.cmgal .cm-card footer .ask{border-top:1px dashed var(--line);padding-top:6px;color:var(--ink)}
+.cmgal .cm-rcp{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.cmgal .cm-r{border:1px solid var(--line);border-radius:13px;background:#fff;padding:14px 16px;min-width:0}
+.cmgal .cm-r header{display:flex;align-items:center;gap:8px}.cmgal .cm-r h3{font-size:15px;margin:0;flex:1}
+.cmgal .cm-r ol{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:5px;counter-reset:s}
+.cmgal .cm-r li{counter-increment:s;font-size:13px;display:flex;gap:8px}.cmgal .cm-r li::before{content:counter(s);font-weight:800;color:var(--acc);width:14px}
+.cmgal .cm-r li a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.cmgal .cm-r p{font-size:12px;color:var(--ink2);margin:10px 0 0;line-height:1.6}
+@media(prefers-color-scheme:dark){.cmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.cmgal .cm-card,.cmgal .cm-r,.cmgal .cm-rules,.cmgal .cm-nav a,.cmgal .copy{background:#1d1d20}}`;
+const cmCard = it => `<article class="cm-card" id="c-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장 복사</button></header>
+  <iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${cmFrags[it.id].h}px" srcdoc="${attr(cmCode[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span>${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="ask">${esc(it.ask)}</span></footer>
+</article>`;
+const CM_HERO = ['cover-question', 'checklist', 'follow-card'];
+const cmFig = id => { const it = cmItem(id); return `<figure><iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${cmFrags[id].h}px" srcdoc="${attr(cmCode[id])}"></iframe><figcaption>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
+const cmF = cmMenu.formula;
+const cmIntro = ipPanels('carousel-menu', '.cmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `캐러셀 메뉴판 · ${cmMenu.items.length}가지 장 · 레시피 ${cmMenu.recipes.length}`, h: '캐러셀은 예쁜 한 장이 아니라<br><em>넘기게 만드는 순서</em>예요',
+    sub: '장마다 꼴에 이름이 있어요. <b>이름과 순서로</b> 시키면 몇 장째에 무엇을 둘지가 한 번에 통해요. 룩(색·글꼴)은 design-brief 에서 와요.',
+    body: `<div class="ip-three">${CM_HERO.map(cmFig).join('')}</div>${ipBub(cmMenu.recipes[0].ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '장마다 꼴 이름과<br><em>실제 값</em>을 적어요', sub: esc(cmF.note), body: ipFormula(cmF) },
+  { lay: 'wide', bg: 'pale', chip: '6장 레시피', h: '주제에 맞는<br><em>순서</em>부터 골라요', sub: '누르면 그 레시피의 장 순서와 요청문으로 가요.',
+    body: `<div class="ip-rows">${cmMenu.recipes.map(r => `<a class="r" href="#cr-${r.id}"><span class="w"><b style="color:var(--ip-ink)">${esc(r.ko)}</b></span><span class="n">${r.order.slice(0, 3).map(id => `<b>${esc(cmItem(id).name.ko)}</b>`).join('')}</span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「카드뉴스 만들어줘」가<br><em>장 목록</em>으로 바뀌어요', sub: '스킬로 깔아 두면 레시피를 고르고 장 목록을 먼저 보여 준 뒤에 만들어요.', body: ipInstall('carousel-menu') },
+]);
+const cmCore = `<div class="cmgal">
+<style>${CM_CSS}</style>
+${cmIntro}
+<nav class="cm-nav">${cmMenu.categories.map(c => `<a href="#cc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${cmBy(c.id).length}</a>`).join('')}<a href="#cc-recipes"><b>＋</b>6장 레시피 ${cmMenu.recipes.length}</a></nav>
+<div class="cm-rules"><b>공통 규격</b><ul>${cmMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>
+${cmMenu.categories.map(cat => `<section class="cm-cat" id="cc-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${cmBy(cat.id).length}</span></h2>
+  <div class="cm-grid">${cmBy(cat.id).map(cmCard).join('\n')}</div>
+</section>`).join('\n')}
+<section class="cm-cat" id="cc-recipes">
+  <h2><span class="no">＋</span> 6장 레시피 <span class="count">${cmMenu.recipes.length}</span></h2>
+  <div class="cm-rcp">${cmMenu.recipes.map(r => `<article class="cm-r" id="cr-${r.id}"><header><h3>${esc(r.ko)}</h3><button class="copy" data-copy="${attr(r.ask)}" title="요청문 복사">문장 복사</button></header>
+    <ol>${r.order.map(id => `<li><a href="#c-${id}">${esc(cmItem(id).name.ko)}</a></li>`).join('')}</ol><p>${esc(r.ask)}</p></article>`).join('\n')}</div>
+</section>
+<script>document.querySelectorAll('.cmgal .copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
+</div>
+`;
+const cmDict = full => `# 캐러셀 메뉴판 (carousel-menu) · Giting Skills
+
+> ${cmMenu.description}
+> 공식: ${cmF.pattern}  (✕ "${cmF.bad}" → ○ "${cmF.good}")
+> 갤러리: https://giting.kr/skills/carousel-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install carousel-menu@giting
+
+## 공통 규격
+${cmMenu.rules.map(r => `- ${r}`).join('\n')}
+
+${cmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${cmBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}
+- 요청 문장: ${it.ask}
+- 견본: ${CM_RAW}/${it.id}.html${full ? `
+
+\`\`\`html
+${cmCode[it.id].trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}
+## 6장 레시피
+${cmMenu.recipes.map(r => `### ${r.ko}
+- 순서: ${r.order.map(id => cmItem(id).name.ko).join(' → ')}
+- 요청 문장: ${r.ask}`).join('\n\n')}
+`;
+if (SITE_DIR) {
+  const CS = join(SITE_DIR, 'carousel-menu');
+  mkdirSync(CS, { recursive: true });
+  writeFileSync(join(CS, 'gallery-core.html'), cmCore);
+  writeFileSync(join(CS, 'llms.txt'), cmDict(false));
+  writeFileSync(join(CS, 'llms-full.txt'), cmDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'carousel-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/carousel-menu'));
+writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'llms.txt'), cmDict(false));
+console.log(`built carousel-menu: items ${cmMenu.items.length} · recipes ${cmMenu.recipes.length} · core ${(cmCore.length / 1024).toFixed(0)}KB`);
+
 // ── 모션 메뉴판 (motion-menu) — 08 ──────────────────────────────
 // 영상·카메라 모션 사전. 데모는 CSS 로 재현한 움직임(iframe), 원맥락은 AI 영상 생성 프롬프트.
 // 강조·전환 항목엔 ⭐(현장 다빈도) 배지. recipes = 샷 단위 조합. 스코프 .mogal.
@@ -2080,6 +2207,7 @@ if (SITE_DIR) {
     ['font-menu', '웹폰트 사전', fmenu, FP],
     ['type-menu', '타입스크립트 에러 사전', tmenu, TP],
     ['codelazy', '안 만들어도 되는 것 사전', lmenu, LP],
+    ['carousel-menu', '캐러셀 메뉴판', cmMenu, CMP],
   ];
   const OUT = join(SITE_DIR, 'c');
   rmSync(OUT, { recursive: true, force: true });
