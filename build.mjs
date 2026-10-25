@@ -1756,8 +1756,25 @@ const moFrags = {};
 for (const fn of readdirSync(join(MMP, 'demos')).filter(f => f.endsWith('.html'))) {
   const src = readFileSync(join(MMP, 'demos', fn), 'utf8');
   const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
-  for (let i = 1; i < parts.length; i += 3)
+  for (let i = 1; i < parts.length; i += 3) {
+    if (moFrags[parts[i]]) { console.error(`motion-menu 데모 마커가 두 번 나옴: @${parts[i]} (${fn})`); process.exit(1); }
     moFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 220), body: parts[i + 2].trim() };
+  }
+}
+// 손잡이(knobs) — 값을 바꾸면 요청 문장(askT 의 {키})과 데모가 같이 바뀐다 (2026-10-25). 데모는 tools/knobs 가 낸다.
+// MO_FILL 은 빌드 검사와 갤러리 페이지가 같은 함수를 쓴다. {키:ko} 는 한글 수(세 장).
+const MO_FILL = "function(t,V,mk){return t.replace(/\\{(\\w+)(:ko)?\\}/g,function(_,k,ko){var v=V[k],s=ko?(['영','한','두','세','네','다섯','여섯','일곱','여덟','아홉','열'][v]||String(v)):String(Math.round(v*100)/100);return mk?mk(k,s):s;});}";
+const moFill = new Function('return ' + MO_FILL)();
+for (const it of moMenu.items.filter(i => i.knobs)) {
+  const V = Object.fromEntries(it.knobs.map(k => [k.k, k.v])), bad = [];
+  if (!it.askT) bad.push('askT 없음');
+  for (const k of it.knobs) {
+    if (!(k.min <= k.v && k.v <= k.max)) bad.push(`${k.k} 처음 값이 범위 밖`);
+    if (!it.askT.includes('{' + k.k)) bad.push(`문장 틀에 {${k.k}} 없음`);
+  }
+  for (const m of it.askT.matchAll(/\{(\w+)/g)) if (!(m[1] in V)) bad.push(`문장 틀의 {${m[1]}} 에 맞는 손잡이 없음`);
+  if (moFill(it.askT, V) !== it.ask) bad.push(`처음 값으로 채운 문장이 ask 와 다름: 「${moFill(it.askT, V)}」`);
+  if (bad.length) { console.error(`motion-menu 손잡이 오류 ${it.id}:`, bad.join(' · ')); process.exit(1); }
 }
 const moMiss = [...moMenu.items, ...moMenu.recipes].filter(it => !moFrags[it.id]).map(it => it.id);
 if (moMiss.length) { console.error('motion-menu 데모 없는 항목:', moMiss.join(', ')); process.exit(1); }
@@ -1815,6 +1832,15 @@ const MO_CSS = `.mogal{--ink:#17171b;--ink2:#6b6c74;--ink3:#9a9aa4;--line:#e8e6e
 .mogal .mo-card .al{font-size:12px;color:var(--acc)}
 .mogal .mo-card .one{font-size:12px;color:var(--ink2)}
 .mogal .mo-card .ask{flex-basis:100%;font-size:11.5px;color:var(--ink2);border-top:1px dashed var(--line);padding-top:6px;margin-top:3px}
+.mogal .mo-knobs{display:grid;gap:7px;padding:10px 13px;border-top:1px solid var(--line);background:var(--bg)}
+.mogal .mo-knobs .kn{display:grid;grid-template-columns:5.2em minmax(0,1fr) 4.6em;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
+.mogal .mo-knobs input{width:100%;min-width:0;accent-color:var(--acc);margin:0}
+.mogal .mo-knobs output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+.mogal .mo-knobs .knreset{justify-self:start;border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink2)}
+.mogal .mo-card.has-kn .ask{font-size:13px;color:var(--ink)}
+.mogal .mo-card .ask mark{background:color-mix(in srgb,var(--acc2) 18%,transparent);color:inherit;border-radius:4px;padding:0 2px;font-weight:700;transition:background .35s}
+.mogal .mo-card .ask mark.on{background:var(--acc2);color:#fff}
+.mogal .mo-kntag{flex:none;font-size:9.5px;font-weight:700;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 32%,transparent);border-radius:5px;padding:1px 6px}
 .mogal .mo-card .ask b{color:var(--ink3);font-weight:600;font-family:ui-monospace,monospace;font-size:10.5px}
 .mogal .mo-card .coined{flex:none;font-size:9.5px;font-weight:700;color:#8A6A1F;background:color-mix(in srgb,#C79A3A 14%,transparent);border:1px solid color-mix(in srgb,#C79A3A 32%,transparent);border-radius:5px;padding:1px 6px}
 .mogal .mo-card .mks{flex-basis:100%;display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:10.5px;color:var(--ink3)}
@@ -1859,13 +1885,14 @@ const MAKE_LBL = { ai: 'AI 영상', mg: '모션 그래픽', css: 'CSS' };
 const moMake = it => (it.make || []).map(k => `<span class="mk mk-${k}">${MAKE_LBL[k] || k}</span>`).join('');
 const moCoined = it => it.coined ? '<span class="coined" title="표준 용어가 아닌 애칭/지어낸 이름. 정식명은 영문·구분 참고">애칭</span>' : '';
 const moShot = moMenu.recipes.filter(r => r.kind !== 'text'), moTxR = moMenu.recipes.filter(r => r.kind === 'text');
-const moCard = it => `<article class="mo-card" id="m-${it.id}">
-  <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}${moCoined(it)}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+const moKnobs = it => `<div class="mo-knobs" data-def="${attr(JSON.stringify(Object.fromEntries(it.knobs.map(k => [k.k, k.v]))))}">${it.knobs.map(k => `<label class="kn"><span>${esc(k.label)}</span><input type="range" min="${k.min}" max="${k.max}" step="${k.step}" value="${k.v}" data-k="${k.k}" data-unit="${attr(k.unit)}" aria-label="${attr(k.label)}"><output>${k.v}${esc(k.unit === 'BPM' ? ' BPM' : k.unit)}</output></label>`).join('')}<button type="button" class="knreset" hidden>처음 값으로</button></div>`;
+const moCard = it => `<article class="mo-card${it.knobs ? ' has-kn' : ''}" id="m-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3>${moStar(it)}${moCoined(it)}${it.knobs ? '<span class="mo-kntag" title="값을 바꾸면 요청 문장도 같이 바뀌어요">손잡이</span>' : ''}<span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
   <iframe title="${esc(it.name.ko)} 데모" loading="lazy" style="height:${moFrags[it.id].h}px" srcdoc="${attr(moCode[it.id])}"></iframe>
-  <footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.mood ? `<span class="mood">쓰임 ${esc(it.mood)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> ${esc(it.ask)}</span></footer>
+  ${it.knobs ? moKnobs(it) : ''}<footer><span class="al">"${esc(it.aliases[0])}"</span><span class="one">${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}${it.mood ? `<span class="mood">쓰임 ${esc(it.mood)}</span>` : ''}<span class="mks">만드는 법 ${moMake(it)}</span><span class="ask"><b>AI에게 ▸</b> <span class="askt"${it.knobs ? ` data-askt="${attr(it.askT)}"` : ''}>${esc(it.ask)}</span></span></footer>
 </article>`;
 const moF = moMenu.formula;
-const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 26가지. 1~7 사라지고 모이기 · 8~14 쉬지 않고 흔들리기 · 15~20 물리와 소품 · 21~26 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.', 'screen-transition-2': '⑦에 없던 기본 전환과 실물 같은 전환 23가지. 1~5 밀고 덮기 · 6~9 빛과 어둠 · 10~13 돌고 빨려 들기 · 14~18 입체로 넘기기 · 19~23 물건처럼 부서지기. 푸시·딥 투 블랙처럼 제일 자주 쓰는 전환이 여기 있어요.', 'data-motion': '숫자와 차트가 움직이는 연출 26가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~19 선으로 흐름 · 20~26 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.', 'icon-motion': '로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.', 'social-overlay': '영상 위에 얹는 SNS 화면 요소 25가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~19 알림과 표시 · 20~25 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.', 'graphic-craft': '모션 그래픽을 만들 때 쓰는 기법 24가지. 1~6 길 따라 움직이기 · 7~12 복제와 선 · 13~18 장면 바꾸기 · 19~24 구조 보여 주기. 요청 문장에 초와 개수를 같이 적으세요.', 'background-2': '⑧에 없던 배경 9가지. 1~6 흐르고 번지기(유체 그라디언트 · 흐름장 · 반응-확산 · 등고선 · 연결망 · 조리개) · 7~9 멀리까지 펼쳐지기(점 바다 · 와이어프레임 지형 · 구름). ⑧보다 결이 깊어서 글자를 올릴 땐 어둡게 눌러 쓰세요.', 'opening-title': '영상·발표·랜딩의 첫 제목이 등장하는 완성 장면 24가지. 1~6 기계가 읽고 띄우기 · 7~12 영화처럼 열기 · 13~18 손으로 붙이고 뿌리기 · 19~24 부딪치고 맞추기. 요청 문장에 들어갈 제목과 서는 초를 같이 적으세요.' };
+const catNote = { 'cam-emphasis': '대부분 촬영 현장 용어예요. ★는 특히 자주 씁니다.', transition: '장면을 넘기고 드러내는 전환·효과. AI 영상·모션 그래픽(HyperFrames 등)에서 많이 씁니다. 애칭 표시는 표준 용어가 아닌 통용 이름이에요.', kinetic: '글자가 주인공인 모션. 숏폼·자기소개 영상의 핵심이에요.', timing: '같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다. 「손잡이」 표시가 있는 카드는 값을 바꾸면 데모와 요청 문장이 같이 바뀌어요.', 'screen-transition': '장면 A 를 B 로 넘기는 그래픽 전환 40가지. 1~8 색면이 가로지름 · 9~16 모양이 퍼짐 · 17~24 액체·파문·충격 · 25~32 판이 바뀜 · 33~40 나누고 섞음. 요청 문장은 영어 이름으로 시작하세요.', background: '글자·사람 뒤에 까는 반복 배경 40가지. 1~8 점 · 9~16 격자 · 17~24 선 · 25~32 도형 · 33~40 미니멀. 전부 끊김 없이 이어지는 루프예요. 요청 문장에 반복 주기를 같이 적으세요.', 'text-motion': '글자가 주인공인 연출 40가지. 1~8 한 단어 임팩트 · 9~16 흐르는 글자 · 17~24 깊이 · 25~32 말 바꿔 끼우기 · 33~40 꾸밈. 요청 문장에 들어갈 실제 문구를 같이 적으세요.', 'text-body': '글자 하나하나의 몸이 움직이는 연출 26가지. 1~7 사라지고 모이기 · 8~14 쉬지 않고 흔들리기 · 15~20 물리와 소품 · 21~26 글자 안과 배치. 카드의 분위기 태그로 어디에 쓸지 고르세요.', 'screen-transition-2': '⑦에 없던 기본 전환과 실물 같은 전환 23가지. 1~5 밀고 덮기 · 6~9 빛과 어둠 · 10~13 돌고 빨려 들기 · 14~18 입체로 넘기기 · 19~23 물건처럼 부서지기. 푸시·딥 투 블랙처럼 제일 자주 쓰는 전환이 여기 있어요.', 'data-motion': '숫자와 차트가 움직이는 연출 26가지. 1~6 숫자 하나를 세우기 · 7~12 막대로 비교 · 13~19 선으로 흐름 · 20~26 비율 나누기. 요청 문장에 실제 값과 초를 같이 적으세요.', 'icon-motion': '로고·아이콘이 움직이는 작은 연출 24가지. 1~6 그려지며 나타나기 · 7~12 튀어 오르기 · 13~18 눌렀을 때 반응 · 19~24 쉬지 않고 반복. 요청 문장에 초와 크기 비율을 같이 적으세요.', 'social-overlay': '영상 위에 얹는 SNS 화면 요소 25가지. 1~6 구독과 팔로우 · 7~12 말풍선과 댓글 · 13~19 알림과 표시 · 20~25 화면 위에 짚어 주기. 요청 문장에 들어갈 실제 글자와 초를 같이 적으세요.', 'graphic-craft': '모션 그래픽을 만들 때 쓰는 기법 24가지. 1~6 길 따라 움직이기 · 7~12 복제와 선 · 13~18 장면 바꾸기 · 19~24 구조 보여 주기. 요청 문장에 초와 개수를 같이 적으세요.', 'background-2': '⑧에 없던 배경 9가지. 1~6 흐르고 번지기(유체 그라디언트 · 흐름장 · 반응-확산 · 등고선 · 연결망 · 조리개) · 7~9 멀리까지 펼쳐지기(점 바다 · 와이어프레임 지형 · 구름). ⑧보다 결이 깊어서 글자를 올릴 땐 어둡게 눌러 쓰세요.', 'opening-title': '영상·발표·랜딩의 첫 제목이 등장하는 완성 장면 24가지. 1~6 기계가 읽고 띄우기 · 7~12 영화처럼 열기 · 13~18 손으로 붙이고 뿌리기 · 19~24 부딪치고 맞추기. 요청 문장에 들어갈 제목과 서는 초를 같이 적으세요.' };
 // 상세페이지 결 인트로(2026-10-23, 의뢰자 「이 형식으로」 — @sequence_ai 상세페이지 참고). 판 다섯: 소개 · 말 한 줄 차이 · 공식 · 이런 말엔 이런 장면 · 처음 요청문.
 // 실물은 사전의 데모를 그대로 iframe 으로 쓴다(따로 그리지 않는다). 아래 사전 섹션과 같은 id 로 이어진다.
 const MO_HERO = ['scan-reveal', 'word-burst', 'odometer-roll'];
@@ -1947,7 +1974,20 @@ ${moScn.list.length ? `<section class="mo-cat" id="mc-scenes">
   <div class="mo-box" style="margin-top:14px"><h3>대본을 장면표로 바꾸는 요청문<button class="copy" data-copy="${attr(moScn.ask)}" title="요청문 복사">복사</button></h3>
     <p>대본을 붙이고 이 문장을 같이 보내면 문장마다 어떤 장면을 넣을지 표로 나옵니다.</p><pre class="mo-pre">${esc(moScn.ask)}</pre></div>
 </section>` : ''}
-<script>(function(){var g=document.querySelector('.mogal');if(!g)return;g.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var o=b.textContent;b.textContent='복사됨';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1100);});})();</script>
+<script>(function(){var g=document.querySelector('.mogal');if(!g)return;
+var fill=${MO_FILL};
+function knState(card){var V={};card.querySelectorAll('.mo-knobs input').forEach(function(i){V[i.dataset.k]=+i.value;});return V;}
+function knApply(card,changed){var V=knState(card),box=card.querySelector('.mo-knobs'),at=card.querySelector('.askt'),def=JSON.parse(box.dataset.def),same=true;
+  box.querySelectorAll('input').forEach(function(i){var u=i.dataset.unit;i.nextElementSibling.textContent=fill('{'+i.dataset.k+'}',V)+(u==='BPM'?' BPM':u);if(+i.value!==def[i.dataset.k])same=false;});
+  var txt=fill(at.dataset.askt,V);at.innerHTML='';at.dataset.txt=txt;
+  var ks=[];fill(at.dataset.askt,V,function(k,s){ks.push(k);return s;});fill(at.dataset.askt,V,function(k,s){return '\\u0001'+s+'\\u0001';}).split('\\u0001').forEach(function(seg,i){if(i%2){var m=document.createElement('mark');m.textContent=seg;at.appendChild(m);}else at.appendChild(document.createTextNode(seg));});
+  if(changed!=null){var ix=ks.indexOf(changed),mk=at.querySelectorAll('mark')[ix];if(mk){mk.classList.add('on');setTimeout(function(){mk.classList.remove('on');},400);}}
+  card.querySelector('header .copy').setAttribute('data-copy',txt);box.querySelector('.knreset').hidden=same;
+  var f=card.querySelector('iframe');try{f.contentWindow.postMessage({mok:V},'*');}catch(x){}}
+g.querySelectorAll('.mo-card.has-kn').forEach(function(card){var f=card.querySelector('iframe');f.addEventListener('load',function(){if(card.dataset.touched)knApply(card);});});
+g.addEventListener('input',function(e){var i=e.target.closest('.mo-knobs input');if(!i)return;var card=i.closest('.mo-card');card.dataset.touched='1';knApply(card,i.dataset.k);});
+g.addEventListener('click',function(e){var r=e.target.closest('.knreset');if(!r)return;var card=r.closest('.mo-card'),def=JSON.parse(card.querySelector('.mo-knobs').dataset.def);card.querySelectorAll('.mo-knobs input').forEach(function(i){i.value=def[i.dataset.k];});knApply(card);});
+g.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var o=b.textContent;b.textContent='복사됨';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok');},1100);});})();</script>
 </div>
 `;
 const moDict = full => `# 모션 메뉴판 (motion-menu) · Giting Skills
@@ -1967,7 +2007,8 @@ ${moBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})${it.star ? ' ★' : 
 - 구분: ${it.vs}` : ''}
 ${it.mood ? `- 쓰임: ${it.mood}
 ` : ''}- 만드는 법: ${(it.make || []).map(k => MAKE_LBL[k] || k).join(' · ')}
-- 요청 문장: ${it.ask}
+- 요청 문장: ${it.ask}${it.knobs ? `
+- 손잡이(바꿔 쓰는 값): ${it.knobs.map(k => `${k.label} ${k.min}~${k.max}${k.unit === 'BPM' ? ' BPM' : k.unit}`).join(' · ')} · 문장 틀 「${it.askT}」` : ''}
 - 데모: ${MO_RAW}/${it.id}.html${full ? `
 
 \`\`\`html

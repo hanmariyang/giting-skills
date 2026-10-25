@@ -1,11 +1,52 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>안티시페이션 Anticipation · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
 <style>
-  .an{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
-  .anc{position:absolute;top:50%;margin-top:-24px;left:8%;width:48px;height:48px;border-radius:10px;background:#7a5af0;animation:an 2.6s ease-in-out infinite}
-  @keyframes an{0%{transform:translateX(0)}18%{transform:translateX(-16px)}55%,100%{transform:translateX(230px)}}
-  @media(prefers-reduced-motion:reduce){.anc{animation:none}}
+  .kn{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#141821}
 </style>
-<div class="an"><div class="anc"></div></div>
-<p class="cap">안티시페이션 · 가기 전에 반대로 살짝 뺀다(준비 동작)</p>
+<canvas class="kn" role="img" aria-label="안티시페이션 데모: 요청 문장의 값 그대로 움직인다"></canvas>
+<p class="cap">안티시페이션 · 움직이기 전 반대로 살짝.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var backS = function (t, s) { t = cl(t); return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+// 이즈 아웃 백의 최고값이 target 이 되는 s. 문장에 적힌 배율이 그림에서도 정말 그 배율이 되게 한다
+var peakOf = function (s) { var m = 1; for (var i = 1; i < 200; i++) { var v = backS(i / 200, s); if (v > m) m = v; } return m; };
+var solveS = function (target) { if (target <= 1.0005) return 0; var a = 0, b = 10; for (var i = 0; i < 40; i++) { var m = (a + b) / 2; if (peakOf(m) < target) a = m; else b = m; } return (a + b) / 2; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 700) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var MONO = function (px) { return '700 ' + Math.round(px) + 'px ui-monospace,Menlo,monospace'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
+var fmt = function (v) { return String(Math.round(v * 100) / 100); };
+var F=function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var A = V.wind, go = .45, L = .35 + A + go + .9 + .4, p = t % L, S = 44, x0 = w * .14, x1 = w * .78, x = x0, sq = 0, y = 0, lbl = '';
+    if (p < .35) { x = x0; }
+    else if (p < .35 + A) { var u = io((p - .35) / A); x = x0 - 14 * u; sq = u; lbl = '웅크림'; }
+    else if (p < .35 + A + go) { var u2 = (p - .35 - A) / go; x = x0 - 14 + (x1 - x0 + 14) * eo(u2); sq = Math.max(0, 1 - u2 * 4) * -.6; y = -Math.sin(Math.PI * cl(u2)) * h * .22; lbl = '점프'; }
+    else if (p < .35 + A + go + .9) { x = x1; }
+    else { x = x1 + (x0 - x1) * io((p - .35 - A - go - .9) / .4); c.globalAlpha = .35; }
+    var gy = h * .72;
+    c.fillStyle = 'rgba(244,241,234,.14)'; c.fillRect(0, gy, w, 1);
+    var sw = S * (1 + .22 * sq), sh = S * (1 - .3 * sq);
+    c.fillStyle = k.acc2; rbox(c, x - sw / 2, gy - sh + y, sw, sh, 10); c.fill(); c.globalAlpha = 1;
+    // 시간 띠: 웅크림 구간의 길이가 손잡이 값 그대로
+    var bx = 12, by = 14, bw = w - 24, tot = .35 + A + go;
+    c.fillStyle = 'rgba(244,241,234,.12)'; c.fillRect(bx, by, bw, 6);
+    c.fillStyle = k.acc; c.fillRect(bx + bw * .35 / tot, by, bw * A / tot, 6);
+    c.fillStyle = k.acc2; c.fillRect(bx + bw * (.35 + A) / tot, by, bw * go / tot, 6);
+    say(c, '웅크림 ' + fmt(A) + '초', bx + bw * (.35 + A / 2) / tot, by + 18, FONT(11, 700), k.acc);
+    if (lbl) say(c, lbl, w - 12, h - 14, FONT(12, 700), k.paper, 'right');
+  };
+var V={"wind":0.15},K={"ink":"#141821","paper":"#F4F1EA","sub":"#8b93a1","acc":"#E07A3F","acc2":"#7a5af0","purple":"#7a5af0","card":"#E7D6BC","green":"#38BE86","pink":"#E8506E"},STILL=0.1;
+var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function draw(now){var r=cv.getBoundingClientRect();c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?STILL:Math.max(0,(now-t0)/1000),V,K);c.restore();}
+function frame(now){draw(now);if(!still)requestAnimationFrame(frame);}
+addEventListener('message',function(e){var d=e.data&&e.data.mok;if(!d)return;for(var k in d)if(k in V&&isFinite(+d[k]))V[k]=+d[k];t0=performance.now();if(still)draw(t0);});
+sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(performance.now());});requestAnimationFrame(frame);
+})();</script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>

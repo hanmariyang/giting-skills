@@ -370,7 +370,7 @@
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/count-up.html
 
 ## ⑤ 타이밍 · 질감
-같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다.
+같은 움직임도 속도 곡선에 따라 완전히 달라 보여요. 초보와 프로의 차이가 여기서 납니다. 「손잡이」 표시가 있는 카드는 값을 바꾸면 데모와 요청 문장이 같이 바뀌어요.
 
 ### 이징 (Easing)
 - 별칭: "자연스럽게 움직이게" · "딱딱하지 않게" · "부드럽게 해줘"
@@ -397,6 +397,7 @@
 - 쓰임: 경쾌 · 팝
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 버튼이 커질 때 110%까지 갔다가 100%로 돌아오게 오버슈트 줘.
+- 손잡이(바꿔 쓰는 값): 넘는 정도 102~130% · 문장 틀 「버튼이 커질 때 {peak}%까지 갔다가 100%로 돌아오게 오버슈트 줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/overshoot.html
 
 ### 안티시페이션 (Anticipation)
@@ -406,6 +407,7 @@
 - 쓰임: 예고 · 힘
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 점프 전에 0.15초 살짝 웅크리는 안티시페이션 넣어줘.
+- 손잡이(바꿔 쓰는 값): 웅크림 0.05~0.6초 · 문장 틀 「점프 전에 {wind}초 살짝 웅크리는 안티시페이션 넣어줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/anticipation.html
 
 ### 스태거 (Stagger (Follow-through))
@@ -415,6 +417,7 @@
 - 쓰임: 목록 · 정돈
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 카드 세 장을 0.1초 간격 스태거로 등장시켜줘.
+- 손잡이(바꿔 쓰는 값): 카드 수 2~6장 · 간격 0.02~0.4초 · 문장 틀 「카드 {n:ko} 장을 {gap}초 간격 스태거로 등장시켜줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/stagger.html
 
 ### 모션 블러 (Motion Blur)
@@ -451,6 +454,7 @@
 - 쓰임: 음악 · 리듬
 - 만드는 법: AI 영상 · 모션 그래픽
 - 요청 문장: 120 BPM 비트마다 화면 바뀌고 다운비트에 0.1초 프리즈 줘.
+- 손잡이(바꿔 쓰는 값): 빠르기 60~180 BPM · 프리즈 0.05~0.4초 · 문장 틀 「{bpm} BPM 비트마다 화면 바뀌고 다운비트에 {freeze}초 프리즈 줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/beat-sync.html
 
 ### 호 운동 (Arcs)
@@ -478,6 +482,7 @@
 - 쓰임: 자연스러움 · 마무리
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 캐릭터가 멈출 때 머리카락·망토가 0.2초 늦게 따라 멈추게 팔로 스루 줘.
+- 손잡이(바꿔 쓰는 값): 늦게 멈춤 0.1~1초 · 문장 틀 「캐릭터가 멈출 때 머리카락·망토가 {lag}초 늦게 따라 멈추게 팔로 스루 줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/follow-through.html
 
 ### 오버래핑 액션 (Overlapping Action)
@@ -487,6 +492,7 @@
 - 쓰임: 생동감 · 캐릭터
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 캐릭터가 출발할 때 머리 → 몸 → 꼬리 순서로 0.05초씩 늦게 따라오게 오버래핑 액션 줘.
+- 손잡이(바꿔 쓰는 값): 늦게 출발 0.02~0.3초 · 문장 틀 「캐릭터가 출발할 때 머리 → 몸 → 꼬리 순서로 {off}초씩 늦게 따라오게 오버래핑 액션 줘.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/overlapping-action.html
 
 ### 홀드 (Hold)
@@ -496,6 +502,7 @@
 - 쓰임: 강조 · 여운
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: 착지한 포즈에서 0.3초 홀드한 다음 다음 동작으로 넘어가게.
+- 손잡이(바꿔 쓰는 값): 멈춤 0.1~1.5초 · 문장 틀 「착지한 포즈에서 {hold}초 홀드한 다음 다음 동작으로 넘어가게.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/hold.html
 
 ### 세컨더리 액션 (Secondary Action)
@@ -532,6 +539,7 @@
 - 쓰임: 경쾌 · 등장
 - 만드는 법: 모션 그래픽 · CSS
 - 요청 문장: Pop-in 으로 등장시켜줘. 0에서 0.3초, 오버슈트로 1.1배 찍고 제자리.
+- 손잡이(바꿔 쓰는 값): 시작 크기 0~0.8배 · 시간 0.15~1.2초 · 넘는 정도 1.02~1.3배 · 문장 틀 「Pop-in 으로 등장시켜줘. {from}에서 {dur}초, 오버슈트로 {over}배 찍고 제자리.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pop-in.html
 
 ### 리퀴드 모션 (Liquid Motion)
@@ -541,6 +549,7 @@
 - 쓰임: 부드러움 · 유기적
 - 만드는 법: 모션 그래픽
 - 요청 문장: Liquid Motion 으로 움직여줘. 가는 쪽으로 늘어나고 가장자리가 출렁이게, 좌우 왕복 8초.
+- 손잡이(바꿔 쓰는 값): 왕복 2~12초 · 문장 틀 「Liquid Motion 으로 움직여줘. 가는 쪽으로 늘어나고 가장자리가 출렁이게, 좌우 왕복 {period}초.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/liquid-motion.html
 
 ## ⑥ 효과 · 시간

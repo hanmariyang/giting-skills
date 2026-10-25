@@ -1,14 +1,52 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>팔로 스루 Follow Through · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
 <style>
-  .fl{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
-  .flw{position:absolute;top:50%;margin-top:-22px;animation:flw 3s cubic-bezier(.5,0,.2,1) infinite}
-  .flh{width:44px;height:44px;border-radius:50%;background:#E7D6BC}
-  .flt{position:absolute;right:38px;top:8px;width:46px;height:28px;background:#38BE86;border-radius:14px 2px 2px 14px;transform-origin:right center;animation:flt 3s cubic-bezier(.5,0,.2,1) infinite}
-  @keyframes flw{0%{left:4%}40%,100%{left:58%}}
-  @keyframes flt{0%{transform:rotate(0)}30%{transform:rotate(16deg)}55%{transform:rotate(-10deg)}75%{transform:rotate(4deg)}100%{transform:rotate(0)}}
-  @media(prefers-reduced-motion:reduce){.flw,.flt{animation:none}.flw{left:58%}}
+  .kn{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#141821}
 </style>
-<div class="fl"><div class="flw"><div class="flt"></div><div class="flh"></div></div></div>
-<p class="cap">팔로 스루 · 본체가 멈춰도 딸린 꼬리·천이 관성으로 늦게 따라 멈춘다</p>
+<canvas class="kn" role="img" aria-label="팔로 스루 데모: 요청 문장의 값 그대로 움직인다"></canvas>
+<p class="cap">팔로 스루 · 본체가 멈춰도 딸린 부분(꼬리·천)이 관성으로 더 간다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var backS = function (t, s) { t = cl(t); return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+// 이즈 아웃 백의 최고값이 target 이 되는 s. 문장에 적힌 배율이 그림에서도 정말 그 배율이 되게 한다
+var peakOf = function (s) { var m = 1; for (var i = 1; i < 200; i++) { var v = backS(i / 200, s); if (v > m) m = v; } return m; };
+var solveS = function (target) { if (target <= 1.0005) return 0; var a = 0, b = 10; for (var i = 0; i < 40; i++) { var m = (a + b) / 2; if (peakOf(m) < target) a = m; else b = m; } return (a + b) / 2; };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 700) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var MONO = function (px) { return '700 ' + Math.round(px) + 'px ui-monospace,Menlo,monospace'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
+var fmt = function (v) { return String(Math.round(v * 100) / 100); };
+var F=function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var mv = 1, lag = V.lag, L = mv + lag + .8 + .35 + .3, p = t % L, x0 = w * .14, x1 = w * .64, x, ang;
+    if (p < mv) { var u = p / mv; x = x0 + (x1 - x0) * io(u); var vel = 6 * u * (1 - u); ang = .5 * vel; }
+    else if (p < mv + lag) { x = x1; var q = (p - mv) / lag; ang = -.6 * Math.sin(q * Math.PI * 2) * (1 - q); }
+    else if (p < L - .65) { x = x1; ang = 0; }
+    else { x = x1 + (x0 - x1) * io((p - (L - .65)) / .35); ang = 0; c.globalAlpha = .35; }
+    var y = h * .52;
+    c.save(); c.translate(x - 18, y - 10); c.rotate(ang);
+    c.fillStyle = k.green; rbox(c, -50, -12, 50, 24, 12); c.fill(); c.restore();
+    c.fillStyle = k.card; c.beginPath(); c.arc(x, y, 22, 0, TAU); c.fill(); c.globalAlpha = 1;
+    // 멈춘 순간 두 개: 몸, 그리고 lag 초 뒤 망토
+    var bx = 12, bw = w - 24, by = h - 18, tot = mv + lag + .4;
+    c.fillStyle = 'rgba(244,241,234,.12)'; c.fillRect(bx, by, bw, 4);
+    c.fillStyle = k.card; c.fillRect(bx + bw * mv / tot - 1, by - 6, 3, 16);
+    c.fillStyle = k.green; c.fillRect(bx + bw * (mv + lag) / tot - 1, by - 6, 3, 16);
+    c.fillStyle = 'rgba(56,190,134,.5)'; c.fillRect(bx + bw * mv / tot, by, bw * lag / tot, 4);
+    say(c, '몸 멈춤', bx + bw * mv / tot, by - 14, FONT(10, 600), k.sub, 'right');
+    say(c, '+' + fmt(lag) + '초 망토', bx + bw * (mv + lag) / tot + 4, by - 14, FONT(10, 700), k.green, 'left');
+  };
+var V={"lag":0.2},K={"ink":"#141821","paper":"#F4F1EA","sub":"#8b93a1","acc":"#E07A3F","acc2":"#7a5af0","purple":"#7a5af0","card":"#E7D6BC","green":"#38BE86","pink":"#E8506E"},STILL=1;
+var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function draw(now){var r=cv.getBoundingClientRect();c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?STILL:Math.max(0,(now-t0)/1000),V,K);c.restore();}
+function frame(now){draw(now);if(!still)requestAnimationFrame(frame);}
+addEventListener('message',function(e){var d=e.data&&e.data.mok;if(!d)return;for(var k in d)if(k in V&&isFinite(+d[k]))V[k]=+d[k];t0=performance.now();if(still)draw(t0);});
+sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(performance.now());});requestAnimationFrame(frame);
+})();</script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
 </body></html>

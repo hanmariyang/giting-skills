@@ -27,7 +27,7 @@ export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.s
 const all = Object.values(ORDER).flat(), byId = Object.fromEntries(menu.items.map(i => [i.id, i]));
 const missing = all.filter(id => !BS[id] || !byId[id]);
 if (missing.length) { console.error('engine.js 나 menu.json 에 없는 기본기:', missing.join(', ')); process.exit(1); }
-const items = NEW.map(id => byId[id]);
+const items = NEW.map(id => byId[id]).filter(it => !it.knobs); // 손잡이가 붙은 것은 tools/knobs 가 데모를 낸다
 const groupOf = id => Object.keys(ORDER).find(g => ORDER[g].includes(id));
 
 const frag = it => {

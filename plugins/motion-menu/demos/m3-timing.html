@@ -25,38 +25,6 @@
 <div class="eo"><div class="eoc"></div></div>
 <p class="cap">이즈 아웃 · 빠르게 들어와 천천히 멈춘다. 등장에 제일 많이 쓴다</p>
 
-<!-- @overshoot h=220 full -->
-<style>
-  .ov{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center}
-  .ovc{width:60px;height:60px;border-radius:12px;background:#E07A3F;animation:ov 2.4s cubic-bezier(.34,1.7,.5,1) infinite}
-  @keyframes ov{0%{transform:scale(.4)}60%,100%{transform:scale(1)}}
-  @media(prefers-reduced-motion:reduce){.ovc{animation:none}}
-</style>
-<div class="ov"><div class="ovc"></div></div>
-<p class="cap">오버슈트 · 목표(100%)를 살짝 지나쳐 110%까지 갔다 돌아온다</p>
-
-<!-- @anticipation h=220 full -->
-<style>
-  .an{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
-  .anc{position:absolute;top:50%;margin-top:-24px;left:8%;width:48px;height:48px;border-radius:10px;background:#7a5af0;animation:an 2.6s ease-in-out infinite}
-  @keyframes an{0%{transform:translateX(0)}18%{transform:translateX(-16px)}55%,100%{transform:translateX(230px)}}
-  @media(prefers-reduced-motion:reduce){.anc{animation:none}}
-</style>
-<div class="an"><div class="anc"></div></div>
-<p class="cap">안티시페이션 · 가기 전에 반대로 살짝 뺀다(준비 동작)</p>
-
-<!-- @stagger h=220 full -->
-<style>
-  .sg{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center;justify-content:center;gap:14px}
-  .sgc{width:40px;height:72px;border-radius:10px;background:#E7D6BC;animation:sg 2.8s cubic-bezier(.16,1,.3,1) infinite}
-  .sgc:nth-child(2){animation-delay:.12s}
-  .sgc:nth-child(3){animation-delay:.24s}
-  @keyframes sg{0%{opacity:0;transform:translateY(26px)}35%,100%{opacity:1;transform:translateY(0)}}
-  @media(prefers-reduced-motion:reduce){.sgc{animation:none;opacity:1;transform:none}}
-</style>
-<div class="sg"><div class="sgc"></div><div class="sgc"></div><div class="sgc"></div></div>
-<p class="cap">스태거 · 여러 개를 0.1초씩 시간차로. 하나씩 차례로 뜬다</p>
-
 <!-- @motion-blur h=220 full -->
 <style>
   .mb{position:relative;height:170px;margin:12px;border-radius:12px;overflow:hidden;background:#141821;display:flex;align-items:center}
