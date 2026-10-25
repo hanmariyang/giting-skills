@@ -241,4 +241,4 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 데모 정본 `plugins/motion-menu/tools/numbers/engine.js`(`KN`, 손잡이 엔진과 같은 계약). `tools/knobs/gen.mjs` 가 두 엔진을 읽어 코스별로 `demos/m21-knobs.html`(⑤) · `demos/m22-number-motion.html`(⑱)을 낸다. 코스→파일은 gen 의 `OUT`.
 - 문장 틀 필터에 `{k:c}`(쉼표 금액)를 더했다. 손잡이 옆 숫자도 1,000 이상이면 쉼표.
 - ⭐ **숫자 바로 뒤에 조사를 두지 않는다.** 값이 바뀌면 「2026을」이 「2022을」이 된다. 「값은 {val}.」·「최고 기록({best:c})을」처럼 조사가 숫자에 안 붙게 쓴다.
-- 홍보 영상(render.mjs)은 아직 없다.
+- 홍보 영상 `tools/numbers/render.mjs <폴더> video|sheet|covers` — 묶음 셋(SHOP 4 · GAME 6 · METER 6), 1080×1920 8초 무음. 데모는 400 폭 논리 크기로 그려 칸에 맞춰 늘린다(엔진 글자 크기가 그 기준). 줄마다 「하던 말 → 이름 · 손잡이 처음 값」. 이 맥은 ffmpeg 가 없어 `FFMPEG=insol-partner/오월의개발자/tools/owol-motion/ffmpeg-shim.sh`(AVFoundation 인코딩)로 굽는다. ⚠️ 데모 주기가 8초 배수가 아니라 영상 끝과 처음이 이어지지는 않는다.
