@@ -250,3 +250,11 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 견본 정본 `plugins/carousel-menu/tools/gen.mjs`(장 그림 `S[id]`) → `demos/slides.html`(생성물). 1080×1350 을 360×450 으로 그린다. 색·글꼴은 예시, 장소·숫자는 「예시」 표시.
 - 빌드가 막는 것: 데모 없는 항목 · 마커 중복 · 레시피가 없는 항목을 가리킴 · **레시피에 같은 꼴 연달아**.
 - 견본 24장 넘침 0(헤드리스, 장 밖으로 나간 요소 검사). giting 사이트 페이지 `content/skills/carousel-menu.md` + 썸네일.
+
+## 모션 메뉴판 0.21.0 · ⑲ 도식 모션 24 (2026-10-27)
+
+- 오너가 가져온 남의 「図解アニメ48選」 캐러셀에서 출발했다. 48개 중 차트·숫자 쪽(막대·원·KPI·카운트업 등)은 ⑫·⑱에 이미 있었고, 도식 쪽(흐름·구조·비교·짚기)에서 24개를 골랐다. ⛔ 그쪽 문구·그림·숫자는 쓰지 않는다. 칸 안 글자는 전부 새로 정한 예시다.
+- `group` FLOW · STRUCTURE · COMPARE · CALLOUT, 6개씩. 414항목, 19코스.
+- 정본 `plugins/motion-menu/tools/diagram/engine.js`(`DG`, ⑰ 오프닝과 같은 계약 `(c,w,h,t,k)`, 8초 주기·7.2초부터 사라짐). `gen.mjs` → `demos/m23-diagram.html`. `render.mjs <폴더> video|sheet|covers|grid` 는 ⑰ 렌더러를 그대로 옮겼다.
+- 넣기 전에 겹침을 봤다: 형광펜(⑨)·돋보기(⑩)·말풍선 톡(⑭)·전/후 라벨(⑭)·분해도·확대 인셋·레이어 넘기기(⑮)·크기 비교(⑫)는 이미 있어서 빼고, 가까운 것은 `vs` 로 갈랐다.
+- `ask` 는 [대괄호] 자리에 실제 단계·이름을 넣게 썼다. 예시 값은 문장에 넣지 않는다(초와 개수만).

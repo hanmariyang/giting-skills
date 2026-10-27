@@ -1,0 +1,88 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>요점 셋 Three Points · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .dg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="dg" role="img" aria-label="요점 셋 데모: 도식 모션"></canvas>
+<p class="cap">요점 셋 · 번호 원이 붙은 줄 셋이 왼쪽에서 차례로 들어오고, 줄마다 체크가 그어지며 오른쪽에 짧은 근거가 붙는다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var DFONT = function (px, wt) { return (wt || 800) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var say = function (c, s, x, y, px, col, al, wt) { c.font = DFONT(px, wt); c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var tw = function (c, s, px, wt) { c.font = DFONT(px, wt); return c.measureText(s).width; };
+var fit = function (c, s, px, mw, wt) { var L = tw(c, s, px, wt); return L > mw ? px * mw / L : px; };
+var rr = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, Math.min(r, h / 2, w / 2)); };
+var SUBC = 'rgba(244,241,234,.6)', DIMC = 'rgba(244,241,234,.16)', CARD = '#1F232C';
+// 바탕: 먹색 위에 옅은 점 격자
+var ground = function (c, w, h, k) {
+  c.fillStyle = k.ink; c.fillRect(0, 0, w, h); c.fillStyle = 'rgba(244,241,234,.06)';
+  var g = Math.max(10, h * .07); for (var x = g / 2; x < w; x += g) for (var y = g / 2; y < h; y += g) c.fillRect(x, y, 1.2, 1.2);
+};
+// 가운데 (x,y) 에 이름표 상자. fill·fg·stroke 는 색 또는 null
+var chip = function (c, s, x, y, bw, bh, px, fill, fg, stroke, lw) {
+  rr(c, x - bw / 2, y - bh / 2, bw, bh, bh * .28);
+  if (fill) { c.fillStyle = fill; c.fill(); }
+  if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw || 1.6; c.stroke(); }
+  if (s) say(c, s, x, y + 1, fit(c, s, px, bw * .84), fg);
+};
+// 꺾은선을 길이 비율 p 까지만 긋는다. 끝점을 돌려준다 [x, y, 각도]
+var trim = function (c, pts, p) {
+  var L = 0, i, d = []; for (i = 1; i < pts.length; i++) { d.push(Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); L += d[i - 1]; }
+  var want = L * clamp(p), run = 0, end = [pts[0][0], pts[0][1], 0];
+  c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+  for (i = 1; i < pts.length; i++) {
+    var a = Math.atan2(pts[i][1] - pts[i - 1][1], pts[i][0] - pts[i - 1][0]);
+    if (run + d[i - 1] >= want) { var f = d[i - 1] ? (want - run) / d[i - 1] : 0, x = pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, y = pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f; c.lineTo(x, y); end = [x, y, a]; break; }
+    c.lineTo(pts[i][0], pts[i][1]); run += d[i - 1]; end = [pts[i][0], pts[i][1], a];
+  }
+  c.stroke(); return end;
+};
+var head = function (c, x, y, a, s, col) { c.fillStyle = col; c.beginPath(); c.moveTo(x + Math.cos(a) * s, y + Math.sin(a) * s); c.lineTo(x + Math.cos(a + 2.5) * s, y + Math.sin(a + 2.5) * s); c.lineTo(x + Math.cos(a - 2.5) * s, y + Math.sin(a - 2.5) * s); c.closePath(); c.fill(); };
+// 화살표 한 줄: p 만큼 그려지고 끝에 촉
+var arrow = function (c, x1, y1, x2, y2, p, col, lw, hs) {
+  if (p <= 0) return; c.strokeStyle = col; c.lineWidth = lw; c.lineCap = 'round';
+  var e = trim(c, [[x1, y1], [x2, y2]], p); head(c, e[0], e[1], e[2], hs, col);
+};
+// 크기 s 로 튀어나오며 그리기
+var pop = function (c, x, y, s, fn) { if (s <= 0) return; c.save(); c.translate(x, y); c.scale(s, s); fn(); c.restore(); };
+var check = function (c, x, y, s, p, col, lw) { if (p <= 0) return; c.strokeStyle = col; c.lineWidth = lw; c.lineCap = 'round'; c.lineJoin = 'round'; trim(c, [[x - s * .5, y], [x - s * .15, y + s * .35], [x + s * .55, y - s * .4]], p); };
+var cross = function (c, x, y, s, p, col, lw) {
+  if (p <= 0) return; c.strokeStyle = col; c.lineWidth = lw; c.lineCap = 'round';
+  trim(c, [[x - s * .4, y - s * .4], [x + s * .4, y + s * .4]], p * 2); if (p > .5) trim(c, [[x + s * .4, y - s * .4], [x - s * .4, y + s * .4]], p * 2 - 1);
+};
+var ring = function (c, x, y, r, col, lw) { c.strokeStyle = col; c.lineWidth = lw; c.beginPath(); c.arc(x, y, r, 0, TAU); c.stroke(); };
+var dot = function (c, x, y, r, col) { if (r <= .2) return; c.fillStyle = col; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); };
+// 0.8초마다 맥박(0→1→0)
+var beat = function (t, per) { var p = (P8(t) % (per || 1.2)) / (per || 1.2); return Math.sin(p * Math.PI); };
+var F=function (c, w, h, t, k) {
+  ground(c, w, h, k); c.globalAlpha = outA(t);
+  var px = h * .08, x0 = w * .08, W = w * .84, rh = h * .19, y0 = h * .36, names = ['가볍다', '오프라인', '무료'], subs = ['3MB', '인터넷 없이', '광고 없음'];
+  c.globalAlpha = outA(t) * seg(t, .4, .3); say(c, 'POINT', x0, h * .13, px * .6, k.acc, 'left', 700); say(c, '고른 이유 셋', x0 + h * .3, h * .13, px * .8, SUBC, 'left', 600);
+  for (var i = 0; i < 3; i++) {
+    var y = y0 + i * (rh + h * .04), p = eo(seg(t, .7 + i * .35, .4)), dx = (1 - p) * -w * .06;
+    c.globalAlpha = outA(t) * p; rr(c, x0 + dx, y - rh / 2, W, rh, rh * .3); c.fillStyle = CARD; c.fill();
+    dot(c, x0 + dx + rh * .5, y, rh * .3, k.acc); say(c, String(i + 1), x0 + dx + rh * .5, y + 1, px * .8, k.ink);
+    say(c, names[i], x0 + dx + rh * 1.05, y + 1, px, k.paper, 'left');
+    say(c, subs[i], x0 + dx + W - rh * .4, y + 1, px * .65, SUBC, 'right', 600);
+    check(c, x0 + dx + W * .62, y, rh * .45, seg(t, 2 + i * .35, .3), k.acc, 2.4);
+  }
+  c.globalAlpha = 1;
+};
+var cv=document.querySelector('canvas.dg'),c=cv.getContext('2d'),K={acc:'#F2B33D',deep:'#8e6c2e',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?5:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
