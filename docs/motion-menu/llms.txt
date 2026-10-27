@@ -1,6 +1,6 @@
 # 모션 메뉴판 (motion-menu) · Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 390개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 414개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다. AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임] + [세기]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
@@ -3453,6 +3453,225 @@
 - 요청 문장: 「+12」 블록이 하나씩 쌓일 때마다 합계가 12씩 올라가게 해줘. 블록은 5개.
 - 손잡이(바꿔 쓰는 값): 한 블록 1~500 · 블록 수 2~8개 · 문장 틀 「「+{step}」 블록이 하나씩 쌓일 때마다 합계가 {step}씩 올라가게 해줘. 블록은 {count}개.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/total-stack.html
+
+## ⑲ 도식 모션 24
+발표·설명 영상에서 도식이 그려지는 장면 24가지. 1~6 순서대로 흐르기 · 7~12 짜임 보여 주기 · 13~18 나란히 견주기 · 19~24 한 곳 짚어 말하기. 대괄호 자리에 실제 단계·이름을 넣어 시키세요.
+
+### 로드맵 길 (Roadmap Path)
+- 별칭: "일정을 길처럼 이어지게 그려줘" · "마일스톤이 하나씩 켜지게" · "로드맵이 쭉 그려지게"
+- 정의: 구불구불한 길이 왼쪽부터 그려지고, 길이 닿는 이정표 점마다 이름이 위아래로 번갈아 뜬다.
+- 구분: 길 위에 이정표가 켜지면 로드맵 길, 곧은 축 위에서 지금을 짚으면 시간 축
+- 쓰임: 계획 · 일정
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Roadmap Path 로 [단계 네 개] 보여줘. 구불구불한 길이 2.4초에 왼쪽부터 그려지고, 길이 닿는 이정표마다 점이 튀어나오며 이름이 위아래 번갈아 붙어. 마지막 점에서 링이 퍼지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/roadmap-path.html
+
+### 흐름 화살표 (Arrow Chain)
+- 별칭: "순서대로 화살표로 이어줘" · "상자가 하나씩 나오고 화살표로 연결" · "과정을 흐름도로"
+- 정의: 상자가 왼쪽부터 하나씩 튀어나오고 사이 화살표가 뒤따라 그려진 뒤, 점 하나가 처음부터 끝까지 흘러간다.
+- 구분: 네모 상자를 화살표로 이으면 흐름 화살표, 뾰족한 띠 조각이 맞물리면 화살 띠
+- 쓰임: 과정 · 설명
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Arrow Chain 으로 [단계 네 개] 이어줘. 상자가 0.55초 간격으로 왼쪽부터 튀어나오고, 상자 다음마다 화살표가 0.3초에 그려져. 마지막 상자만 강조색으로 채우고, 다 그려지면 아래 줄로 점 하나가 흘러가게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/arrow-chain.html
+
+### 갈림길 (Branch Flow)
+- 별칭: "예 아니오로 갈라지게" · "조건에 따라 길이 나뉘게" · "분기 차트 그려줘"
+- 정의: 마름모 질문에서 선이 위아래 두 갈래로 갈라지고, 점 하나가 한쪽 길을 따라가 그쪽 상자를 켠다.
+- 구분: 두 갈래 중 하나를 고르면 갈림길, 여러 단계를 한 줄로 이으면 흐름 화살표
+- 쓰임: 판단 · 안내
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Branch Flow 로 [질문 하나와 두 갈래] 보여줘. 마름모가 먼저 튀어나오고 선이 1초에 위(예)·아래(아니오)로 갈라져. 그다음 점 하나가 예 쪽 길을 1.2초에 따라가고, 닿으면 그 상자를 강조색으로 채워.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/branch-flow.html
+
+### 순환 고리 (Cycle Loop)
+- 별칭: "계속 도는 과정으로 보여줘" · "한 바퀴 돌아 처음으로" · "순환 구조 그려줘"
+- 정의: 둥글게 놓인 상자 넷 사이로 화살표 호가 차례로 그려지고, 강조 표시가 상자를 한 칸씩 돌아간다.
+- 구분: 끝이 처음으로 돌아오면 순환 고리, 끝이 따로 있으면 흐름 화살표
+- 쓰임: 반복 · 습관
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Cycle Loop 로 [단계 넷] 둥글게 놓아줘. 상자 넷이 먼저 나오고, 사이를 잇는 화살표 호가 0.45초씩 시계 방향으로 그려져. 다 그려지면 강조색이 0.9초마다 다음 상자로 옮겨 가고, 가운데에 「한 바퀴」.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/cycle-loop.html
+
+### 시간 축 (Timeline Axis)
+- 별칭: "과거 현재 미래로 보여줘" · "지금 여기 표시해줘" · "연표처럼 그려줘"
+- 정의: 왼쪽부터 지금까지는 실선, 지금 점에서 맥박이 뛰고, 그 뒤 미래는 흘러가는 점선과 화살표로 이어진다.
+- 구분: 곧은 축 위에서 지금을 짚으면 시간 축, 길 위에 이정표가 켜지면 로드맵 길
+- 쓰임: 역사 · 전망
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Timeline Axis 로 [지난 때 · 지금 · 앞으로] 보여줘. 지금까지는 실선이 1초에 그려지고, 지금 점은 강조색으로 크게 링이 퍼져. 지금 뒤로는 점선이 흐르듯 그려지고 끝에 화살촉.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/timeline-axis.html
+
+### 화살 띠 (Chevron Steps)
+- 별칭: "화살표 모양 띠로 단계 보여줘" · "뾰족한 조각이 차례로 끼워지게" · "공정 순서 띠"
+- 정의: 끝이 뾰족한 띠 조각이 왼쪽부터 한 칸씩 밀려 들어와 맞물리고, 갈수록 색이 진해지며 아래 진행 막대가 찬다.
+- 구분: 뾰족한 띠 조각이 맞물리면 화살 띠, 네모 상자를 화살표로 이으면 흐름 화살표
+- 쓰임: 공정 · 진행
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Chevron Steps 로 [단계 넷] 보여줘. 뾰족한 띠 조각이 0.45초 간격으로 왼쪽에서 밀려 들어와 앞 조각에 맞물려. 뒤 조각일수록 강조색이 진하고, 다 끼워지면 아래 진행 막대가 3초에 끝까지 차.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/chevron-steps.html
+
+### 피라미드 쌓기 (Pyramid Stack)
+- 별칭: "피라미드로 층층이 쌓아줘" · "아래가 넓고 위가 좁게" · "기초부터 위로 올라가게"
+- 정의: 사다리꼴 층이 아래부터 하나씩 위에서 떨어져 얹히고, 층마다 옆으로 선이 뻗어 이름이 붙는다.
+- 구분: 층이 위로 좁아지면 피라미드 쌓기, 같은 크기 판이 겹치면 레이어 넘기기(⑮)
+- 쓰임: 위계 · 단계
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Pyramid Stack 으로 [아래부터 층 넷] 쌓아줘. 층이 0.4초 간격으로 위에서 떨어져 얹히고, 위층일수록 강조색이 진해. 얹힌 층마다 오른쪽으로 선이 뻗고 끝에 이름.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pyramid-stack.html
+
+### 가지 나누기 (Tree Split)
+- 별칭: "가지처럼 갈라지게" · "카테고리를 나무 모양으로" · "하위 항목이 뻗어 나가게"
+- 정의: 맨 위 상자에서 꺾은 선이 아래로 갈라져 자식 상자가 나오고, 그중 하나가 다시 손자 상자로 갈라진다.
+- 구분: 위에서 아래로 갈라지면 가지 나누기, 가운데서 사방으로 뻗으면 중심 방사
+- 쓰임: 분류 · 구조
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Tree Split 으로 [맨 위 하나, 아래 셋, 그 아래 둘] 나눠줘. 맨 위 상자 다음 꺾은 선이 0.7초에 세 갈래로 내려가며 자식 상자가 차례로 튀어나와. 첫 자식에서 다시 두 갈래가 0.6초에 내려가.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/tree-split.html
+
+### 네 칸 나누기 (Matrix Sort)
+- 별칭: "2×2 로 나눠줘" · "중요하고 급한 것 분류" · "네 칸 표에 넣어줘"
+- 정의: 가로세로 축이 가운데서 뻗고, 가운데 모여 있던 카드들이 하나씩 자기 칸으로 날아가 앉는다.
+- 구분: 카드가 네 칸 중 하나에 앉으면 네 칸 나누기, 점이 축 위 자리를 찾아가면 포지셔닝 지도
+- 쓰임: 우선순위 · 판단
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Matrix Sort 로 [축 두 개와 카드 넷] 보여줘. 가운데서 가로·세로 축이 0.7초에 뻗고 끝에 축 이름. 카드가 0.35초 간격으로 가운데서 자기 칸으로 튕기듯 날아가 앉고, 첫 카드만 강조색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/matrix-sort.html
+
+### 벤 겹치기 (Venn Overlap)
+- 별칭: "두 원이 겹치는 부분 강조" · "공통점 보여줘" · "교집합 그려줘"
+- 정의: 양옆에서 원 두 개가 미끄러져 들어와 겹치고, 겹친 부분만 강조색으로 채워진 뒤 맥박이 뛴다.
+- 구분: 겹친 곳이 답이면 벤 겹치기, 크기 차이를 보이면 크기 비교(⑫)
+- 쓰임: 교집합 · 핵심
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Venn Overlap 으로 [두 가지와 겹치는 것] 보여줘. 원 두 개가 1.2초에 양옆에서 들어와 3분의 1쯤 겹치고, 겹친 부분만 0.6초에 강조색으로 채워져. 가운데 한 단어, 바깥 원에 각 이름.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/venn-overlap.html
+
+### 중심 방사 (Radial Map)
+- 별칭: "가운데서 사방으로 뻗게" · "마인드맵처럼" · "주제 하나에 관련된 것들"
+- 정의: 가운데 원이 먼저 서고, 바큇살처럼 선이 하나씩 뻗어 끝마다 이름표가 튀어나오며 전체가 천천히 돈다.
+- 구분: 가운데서 사방으로 뻗으면 중심 방사, 위에서 아래로 갈라지면 가지 나누기
+- 쓰임: 정리 · 브레인스토밍
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Radial Map 으로 [가운데 주제 하나와 둘레 여섯] 보여줘. 가운데 원이 튀어나온 뒤 선이 0.2초 간격으로 사방에 뻗고 끝마다 이름표가 튀어나와. 전체는 아주 천천히 돌고 가운데 원은 숨 쉬듯.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/radial-map.html
+
+### 포지셔닝 지도 (Position Map)
+- 별칭: "우리 위치 보여줘" · "경쟁사랑 어디 있는지" · "두 축 지도에 점 찍어줘"
+- 정의: 두 축이 그려지고 회색 점들이 자리 잡은 뒤, 강조색 점 하나가 미끄러져 빈 자리를 찾아 앉고 링이 퍼진다.
+- 구분: 점이 자리를 찾아가면 포지셔닝 지도, 카드가 칸에 앉으면 네 칸 나누기
+- 쓰임: 경쟁 · 위치
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Position Map 으로 [축 두 개, 다른 점 셋, 우리 점 하나] 보여줘. 축이 0.7초에 뻗고 네 끝에 축 이름. 회색 점 셋이 튀어나온 뒤 강조색 우리 점이 1초에 빈 자리로 미끄러져 앉고 링이 퍼져.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/position-map.html
+
+### 전후 카드 (Before After Card)
+- 별칭: "전이랑 후 나란히" · "얼마나 좋아졌는지 보여줘" · "바뀌기 전후 비교"
+- 정의: 왼쪽 흐린 BEFORE 카드 다음 화살표가 그려지고, 오른쪽 테두리 AFTER 카드가 튀어나오며 막대가 줄어든다.
+- 구분: 카드 두 장을 화살표로 이으면 전후 카드, 한 화면을 세로선으로 가르면 전/후 라벨(⑭)
+- 쓰임: 개선 · 결과
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Before After Card 로 [전 값과 후 값] 보여줘. 왼쪽 회색 카드가 먼저, 화살표가 0.5초에 그려지고, 오른쪽 카드가 강조 테두리로 튀어나와. 아래 막대가 후 값만큼 1초에 줄어들어.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/before-after-card.html
+
+### 두 안 맞대기 (A/B Checklist)
+- 별칭: "A안 B안 항목별로 비교" · "체크 표시로 견줘줘" · "둘 중 뭐가 나은지"
+- 정의: 두 카드에 같은 항목이 나란히 서고, 줄마다 ✓와 ✗가 차례로 찍힌 뒤 이긴 쪽 테두리가 켜지고 「선택」이 붙는다.
+- 구분: 항목마다 ✓✗를 찍으면 두 안 맞대기, 좋은 것과 아쉬운 것을 두 줄로 세우면 장단 두 줄
+- 쓰임: 선택 · 검토
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: A/B Checklist 로 [두 안과 항목 셋] 견줘줘. 카드 두 장이 나란히 나오고, 줄마다 0.5초 간격으로 ✓(강조색) 또는 ✗(회색)가 그려져. 다 찍히면 이긴 카드 테두리가 켜지고 위에 「선택」 칩.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/ab-checklist.html
+
+### 장단 두 줄 (Pros Cons)
+- 별칭: "장점 단점 나눠서" · "좋은 점 아쉬운 점" · "메리트 디메리트"
+- 정의: 왼쪽 「좋은 점」 칩은 강조 테두리로, 오른쪽 「아쉬운 점」 칩은 흐리게 한 줄씩 양옆에서 들어온다.
+- 구분: 좋은 것과 아쉬운 것을 두 줄로 세우면 장단 두 줄, 두 안을 항목마다 견주면 두 안 맞대기
+- 쓰임: 검토 · 리뷰
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Pros Cons 로 [좋은 점 셋, 아쉬운 점 셋] 나눠줘. 왼쪽 머리는 ＋, 오른쪽은 －. 칩이 0.3초 간격으로 양옆에서 미끄러져 들어오고, 좋은 점은 강조 테두리, 아쉬운 점은 회색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/pros-cons.html
+
+### 좋은 예 나쁜 예 (Good Bad)
+- 별칭: "잘못된 예랑 맞는 예" · "이렇게 말고 이렇게" · "틀린 거 맞는 거 나란히"
+- 정의: 들쭉날쭉한 줄의 왼쪽 카드와 반듯한 줄의 오른쪽 카드가 그려지고, 왼쪽엔 ✗가 그어지며 흐려지고 오른쪽엔 ○와 테두리가 켜진다.
+- 구분: 흠을 고친 모습을 나란히 두면 좋은 예 나쁜 예, 시간 순서로 바뀐 값이면 전후 카드
+- 쓰임: 가이드 · 교육
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Good Bad 로 [고칠 것과 고친 것] 나란히 보여줘. 왼쪽 카드엔 길이가 들쭉날쭉한 줄, 오른쪽엔 반듯한 줄이 차례로 그려져. 2초 뒤 왼쪽은 ✗가 그어지며 흐려지고, 오른쪽은 ○와 강조 테두리.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/good-bad.html
+
+### 셋 중 하나 (Plan Pick)
+- 별칭: "요금제 셋 중 하나 강조" · "가운데가 추천으로 떠오르게" · "선택지 중 하나 고르기"
+- 정의: 카드 셋이 나란히 선 뒤 가운데 카드만 위로 떠오르며 커지고 테두리가 켜지며, 양옆 카드는 어두워진다.
+- 구분: 여럿 중 하나를 띄우면 셋 중 하나, 둘을 항목마다 견주면 두 안 맞대기
+- 쓰임: 요금 · 옵션
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Plan Pick 으로 [선택지 셋] 놓아줘. 카드 셋이 0.2초 간격으로 튀어나오고, 1.8초에 가운데 카드가 살짝 떠오르며 6% 커지고 강조 테두리. 양옆은 어둡게 눌리고 위에 짧은 추천 칩.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/plan-pick.html
+
+### 엉킨 선 풀기 (Tangle to Line)
+- 별칭: "복잡한 게 한 줄로 정리되게" · "문제에서 해결로" · "엉킨 걸 풀어줘"
+- 정의: 「문제」 칩에서 엉킨 선이 그려지다가, 그 선이 스르르 펴져 곧은 강조색 선이 되고 끝에 체크 원이 튀어나온다.
+- 구분: 엉킨 선이 곧게 펴지면 엉킨 선 풀기, 길 위에 이정표가 켜지면 로드맵 길
+- 쓰임: 해결 · 제안
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Tangle to Line 으로 [문제 하나와 해결] 보여줘. 왼쪽 문제 칩에서 엉킨 선이 0.9초에 그려지고, 1.4초에 걸쳐 곧은 선으로 펴지며 강조색이 돼. 끝에 체크 원이 튀어나와.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/problem-solution.html
+
+### 말풍선 짚기 (Callout Bubble)
+- 별칭: "차트 한 곳에 설명 달아줘" · "여기가 포인트라고 말풍선" · "막대 하나 짚어서"
+- 정의: 막대들이 자라고 그중 하나가 강조색으로 바뀐 뒤, 흰 말풍선이 튀어나와 꼬리로 그 막대를 가리킨다.
+- 구분: 도표 속 한 곳에 말을 달면 말풍선 짚기, 대화가 쌓이면 말풍선 톡(⑭)
+- 쓰임: 차트 해설 · 발표
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Callout Bubble 로 [막대 차트와 짚을 막대 하나] 보여줘. 막대가 0.12초 간격으로 자라고, 짚을 막대만 강조색으로 바뀌어. 그다음 흰 말풍선이 튀어나와 꼬리로 그 막대 끝을 가리키고, 막대 끝에 링이 퍼져.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/callout-bubble.html
+
+### 줄 상자 강조 (Row Box)
+- 별칭: "중요한 줄에 네모 쳐줘" · "이 문장만 강조" · "글 중에 한 줄 뽑아"
+- 정의: 흐린 글줄 사이에서 한 줄만 진짜 글자로 떠오르고, 그 줄을 테두리가 한 바퀴 그리며 감싼 뒤 「핵심」 칩이 붙는다.
+- 구분: 줄 전체를 상자로 감싸면 줄 상자 강조, 글자 뒤로 색을 그으면 형광펜(⑨)
+- 쓰임: 문서 · 요약
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Row Box 로 [핵심 문장 한 줄] 짚어줘. 흐린 글줄 다섯이 깔리고 셋째 줄만 실제 문장으로 떠올라. 강조색 테두리가 0.8초에 그 줄을 한 바퀴 그려 감싸고, 오른쪽 위 모서리에 「핵심」 칩.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/row-box.html
+
+### 요점 셋 (Three Points)
+- 별칭: "포인트 세 개로 정리" · "이유 세 가지" · "번호 매겨서 체크"
+- 정의: 번호 원이 붙은 줄 셋이 왼쪽에서 차례로 들어오고, 줄마다 체크가 그어지며 오른쪽에 짧은 근거가 붙는다.
+- 구분: 번호 줄에 체크를 그으면 요점 셋, 단계가 이어지면 흐름 화살표
+- 쓰임: 요약 · 소개
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Three Points 로 [요점 셋과 근거] 정리해줘. 위에 작은 머리말, 번호 원이 붙은 줄이 0.35초 간격으로 왼쪽에서 들어와. 다 들어오면 줄마다 체크가 0.35초 간격으로 그어지고 오른쪽 끝에 회색 근거.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/point-three.html
+
+### 주의 표시 (Caution Card)
+- 별칭: "주의사항 띄워줘" · "이건 하지 말고 이렇게" · "경고 표시"
+- 정의: 경고 삼각형이 선으로 그려지고 느낌표가 찍히며 흔들린 뒤, 옆에 틀린 행동은 ✗와 취소선, 맞는 행동은 ✓로 뜬다.
+- 구분: 경고와 함께 맞는 길을 알려 주면 주의 표시, 두 예를 나란히 두면 좋은 예 나쁜 예
+- 쓰임: 안내 · 주의
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Caution Card 로 [틀린 행동과 맞는 행동] 보여줘. 왼쪽 삼각형이 0.8초에 선으로 그려지고 느낌표가 찍히며 짧게 흔들려. 오른쪽 위 줄은 ✗와 취소선(회색), 아래 줄은 ✓와 강조 테두리.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/caution-card.html
+
+### 지시선 이름표 (Leader Labels)
+- 별칭: "부분마다 이름 달아줘" · "선 그어서 설명" · "각 부위 짚어서 라벨"
+- 정의: 물건이 선으로 그려진 뒤 부위마다 점이 찍히고, 거기서 선이 뻗어 나가 끝에 이름표가 붙는다.
+- 구분: 붙은 채로 부위를 짚으면 지시선 이름표, 켜를 벌려 놓고 짚으면 분해도(⑮)
+- 쓰임: 제품 · 설명서
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Leader Labels 로 [물건 하나와 부위 셋] 짚어줘. 물건 윤곽이 0.9초에 선으로 그려지고, 부위마다 강조색 점이 0.4초 간격으로 찍혀. 점에서 바깥으로 선이 뻗고 끝에 테두리 이름표.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/leader-label.html
+
+### 아이콘 칸 (Icon Tiles)
+- 별칭: "특징을 아이콘이랑 짧게" · "기능 세 개 아이콘으로" · "그림 하나 말 한마디"
+- 정의: 칸 셋이 튀어나오고 칸마다 아이콘이 선으로 그려진 뒤, 아래 두 단어 이름과 짧은 설명이 뜬다.
+- 구분: 그림과 짧은 말을 칸에 담으면 아이콘 칸, 아이콘이 혼자 움직이면 아이콘·로고 몸짓(⑬)
+- 쓰임: 기능 · 특징
+- 만드는 법: 모션 그래픽 · CSS
+- 요청 문장: Icon Tiles 로 [특징 셋] 보여줘. 칸 셋이 0.2초 간격으로 튀어나오고, 칸마다 아이콘이 0.9초에 강조색 선으로 그려져. 그다음 아래에 굵은 이름 한 줄과 회색 설명 한 줄.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/icon-tiles.html
 
 ## 이징은 역할별로 셋만
 움직임마다 곡선을 새로 고르지 말고, 역할마다 하나씩 정해 두고 돌려 써요. 영상 전체의 결이 맞습니다.
