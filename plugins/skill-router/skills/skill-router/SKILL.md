@@ -84,4 +84,5 @@ description: "Front door to the Giting Skills marketplace. Use when the user ask
 |---|---|---|
 | `canvas-motion` | 「배경이 살아 움직였으면」 「라이브러리 없이 애니메이션」 | Canvas 2D 로 만드는 살아 있는 모션 엔진 |
 | `motion-menu` | 「역동적으로 해줘」 「영상 전환 이름이 뭐지」 「움직이는 배경 깔아줘」 | 영상·화면 모션의 이름과 만드는 법 |
+| `caption-sync` | 「자막 싱크가 안 맞아」 「자막이 너무 빨리 지나가」 「자막 파일 정리해줘」 | SRT·VTT 를 공개 기준으로 재고 고친 자막 파일 |
 <!-- /giting:catalog -->

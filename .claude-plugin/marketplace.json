@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.41.0"
+    "version": "0.42.0"
   },
   "plugins": [
     {
@@ -103,6 +103,11 @@
       "name": "hangul-wrap",
       "source": "./plugins/hangul-wrap",
       "description": "한글 줄바꿈 실측·교정. 어절이 두 줄로 쪼개진 자리(간단/한)를 실제 브라우저에서 폭별로 재서 찾고, 제목·본문·좁은 칸·코드 자리별로 다르게 고친 뒤 다시 잰다. 의존성 0 검사기 포함(끝 코드로 배포 앞 검사 가능). keep-all 을 아무 데나 줘서 칸을 뚫는 사고, break-all 로 넘침을 덮는 사고까지 잡는다"
+    },
+    {
+      "name": "caption-sync",
+      "source": "./plugins/caption-sync",
+      "description": "자막 싱크 검사·교정. AI 가 만든 SRT·VTT 를 넷플릭스 공개 기준(한 줄 16자·초당 12자·2프레임 간격·컷 맞춤)으로 재고 기계로 되는 것은 고친 뒤, 못 읽을 만큼 빠른 자막은 뜻을 지키며 줄이고 다시 잰다. 18규칙 의존성 0 도구 + 말로 시킬 때 쓰는 이름 15"
     }
   ]
 }
