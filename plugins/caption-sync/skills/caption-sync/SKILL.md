@@ -1,6 +1,6 @@
 ---
 name: caption-sync
-description: "Check and fix subtitle timing, line breaks and placement in SRT/WebVTT files against public subtitle guidelines (Netflix Korean + timing guide), measured instead of eyeballed. Use when the user has AI-made or auto-generated captions (Whisper, CapCut, Vrew, YouTube auto) and says 자막 싱크가 안 맞아요, 자막이 늦게 떠요, 자막이 너무 빨리 지나가요, 자막이 깜빡여요, 컷 넘어가도 자막이 남아요, 자막이 이름표를 가려요, 줄이 이상하게 나뉘어요, or asks to make/clean an .srt/.vtt. Ships a zero-dependency checker/fixer (scripts/capsync.mjs) that measures 18 rules (offset, in/out points, tail, min/max duration, 2-frame gap, gap closing, shot-change snapping, reading speed, line length, line count, line breaks, end punctuation, ellipsis, two-speaker dashes, on-screen text avoidance) and fixes the mechanical ones; the agent then shortens text that is too fast to read, without changing meaning, and re-measures. Also a 15-term vocabulary for asking editors or video AIs for timing changes in one line."
+description: "Check and fix subtitle timing, line breaks and placement in SRT/WebVTT files against public subtitle guidelines (Netflix Korean + timing guide), measured instead of eyeballed. Use when the user has AI-made or auto-generated captions (Whisper, CapCut, Vrew, YouTube auto) and says 자막 싱크가 안 맞아요, 자막이 늦게 떠요, 자막이 너무 빨리 지나가요, 자막이 깜빡여요, 컷 넘어가도 자막이 남아요, 자막이 이름표를 가려요, 줄이 이상하게 나뉘어요, or asks to make/clean an .srt/.vtt. Also use for caption colors: 자막 색 뭐로 해요, 자막 글자 노랑으로 해도 돼요, 외곽선 넣어야 해요, 강조 단어 색. Ships a zero-dependency checker/fixer (scripts/capsync.mjs) that measures 21 rules (offset, in/out points, tail, min/max duration, 2-frame gap, gap closing, shot-change snapping, reading speed, line length, line count, line breaks, end punctuation, ellipsis, two-speaker dashes, on-screen text avoidance, whole-caption text color, more than one colored point, point/text contrast against the outline) and fixes the mechanical ones; the agent then shortens text that is too fast to read, without changing meaning, and re-measures. Also an 18-term vocabulary for asking editors or video AIs for timing and color changes in one line."
 ---
 
 # caption-sync: 자막을 말과 컷에 맞추기
@@ -23,6 +23,7 @@ description: "Check and fix subtitle timing, line breaks and placement in SRT/We
 | Node 22 이상 | `scripts/capsync.mjs` 실행 | 예 (실측) | 기준표대로 눈으로 짚어 제안만 하고 「실측 안 함」이라고 맨 위에 적는다. 재지 않고 고쳤다고 말하지 않는다 |
 | 자막 파일 `.srt` · `.vtt` | 재는 대상 | 예 | 파일 하나만 묻는다 |
 | 컷 시각 · 말 구간 | 컷 맞춤 · 인 점 · 꼬리 · 전체 밀림 | 아니오 | 그 규칙은 「안 잼」으로 적는다. 통과로 적지 않는다 |
+| 자막 색 `--colors` | 외곽선 대비 | 아니오 | 파일에 적힌 색(글자 전체 색, 포인트 개수)만 잰다. 대비는 「안 잼」으로 적는다 |
 | ffmpeg | 영상에서 컷·말 구간 뽑기 | 아니오 | 편집 프로그램의 컷 목록이나 받아쓰기 도구의 단어 시각을 쓴다 |
 
 **도구 위치.** 위 `scripts/…` 는 사용자 작업 폴더가 아니라 이 플러그인 폴더에 있다. 이 스킬의 기본 폴더 경로 끝에서 `skills/caption-sync` 를 떼고 `scripts/` 를 붙이면 된다. 예: 기본 폴더가 `…/caption-sync/skills/caption-sync` 이면 도구는 `…/caption-sync/scripts/` 안에 있다. 이 절대 경로로 부른다. 그래도 못 찾으면 다른 방법으로 넘어가기 전에 「도구를 못 찾았다」고 결과 맨 위에 적는다.
@@ -45,6 +46,7 @@ AI 가 만든 자막은 글자는 맞는데 **때와 자리**가 틀린다. 받�
 | 컷 시각 `--cuts` | 컷 맞춤을 재지 않는다 (결과 맨 위에 적힌다) | 편집 프로그램 마커·컷 목록, 아래 ffmpeg |
 | 말 구간 `--speech` | 인 점·꼬리·전체 밀림을 재지 않는다 | Whisper 계열 JSON(단어 시각) 그대로, 또는 「시작 끝」 한 줄씩 |
 | 화면 글자 구간 `--avoid` | 가림을 재지 않는다 | 이름표·하단 그래픽이 뜨는 구간 「시작 끝」 |
+| 자막 색 `--colors` | 외곽선 대비를 재지 않는다 | 편집 프로그램의 자막 스타일. `text=#FFFFFF,outline=#111111,point=#FFE14D`. 외곽선 없이 그림자만 쓰면 넣지 않는다 |
 
 시각은 `12.5` · `00:00:12.500` · `00:00:12:15`(타임코드, 마지막은 프레임) 다 받는다.
 
@@ -67,6 +69,7 @@ silencedetect 결과는 「조용함 끝 → 다음 조용함 시작」이 말 �
 node scripts/capsync.mjs 자막.srt --fps 30 --cuts cuts.txt --speech words.json --avoid onscreen.txt
 node scripts/capsync.mjs 자막.srt --profile shorts --fps 30      # 쇼츠·릴스 한 줄 자막
 node scripts/capsync.mjs 자막.vtt --json                          # 전부 JSON 으로
+node scripts/capsync.mjs 자막.srt --colors text=#FFFFFF,outline=#1E1A24,point=#FF4F6D   # 색과 외곽선 대비까지
 ```
 
 - Node 22 이상만 있으면 된다. 설치할 패키지 없음.
@@ -122,6 +125,14 @@ node scripts/capsync.mjs 자막.srt --fps 30 --cuts cuts.txt --speech words.json
 - **줄 나눔 검토**: 도구는 규칙으로 고른다. 뜻으로 읽었을 때 어색한 자리는 고쳐 준다(어절 단위로만).
 - **화자 위치**: 화면 왼쪽 사람 말은 왼쪽 아래로. SRT 는 `{\an1}`(왼쪽 아래)·`{\an3}`(오른쪽 아래),
   VTT 는 `position:20%`. 영상을 볼 수 없으면 묻는다. 추측으로 넣지 않는다.
+- **자막 색**: 도구가 재는 것은 파일에 적힌 색(SRT `<font color>`, SRT 안의 `{\c&H…&}`, VTT `<c.yellow>`, VTT `STYLE` 의 `::cue`)과 `--colors` 로 받은 값뿐이다.
+  편집 프로그램 안에서만 정한 색은 파일에 안 남는다. 그때는 사용자에게 세 값(글자, 외곽선, 포인트)을 묻고 `--colors` 로 잰다.
+  아래는 화면을 봐야 정하는 것이라 도구가 재지 않는다. **전부 우리가 정한 값이다**(2026-10-26, 인스타 025 자막 색 카드 16장을 사진 위에 얹어 보고 정했다).
+  - 글자는 흰색 그대로. 고르는 것은 외곽선, 포인트(강조할 낱말 하나), 박스(말머리 딱지) 세 칸이다.
+  - 외곽선은 밝거나 복잡한 화면, 빨리 지나가는 자막(예능, 게임)에서 쓴다.
+  - 차분한 화면, 오래 보는 자막(브이로그, 리뷰)은 외곽선 없이 그림자만 주고 화면 아래에 옅은 어둠 띠를 깐다.
+  - 노랑, 청록, 초록 글자는 **사람이 여럿일 때 누가 말하는지 가르는 색**으로만 쓴다(BBC 8.3). 그럴 땐 `--speaker-colors` 를 붙여 잰다.
+    한 사람에게 한 색, 끝까지 같은 색이다(BBC 8.4).
 - **단어 싱크(쇼츠 노래방 자막)**: 단어 시각이 있을 때만 만든다. 한 자막 안에서 단어마다 색을 바꾸는 건
   SRT 가 못 하니 ASS 나 편집 프로그램 몫이라고 알려 준다.
 
@@ -155,9 +166,15 @@ node scripts/capsync.mjs 자막.srt --fps 30 --cuts cuts.txt --speech words.json
 | 줄 끝 | 마침표·쉼표 없음 | 같음 | Korean Guide I.13 |
 | 말줄임 | `…` 한 글자 | 같음 | Korean Guide I.4 |
 | 두 사람 | 줄마다 `- ` | 같음 | Korean Guide I.6 |
+| 글자 색 | 흰색 (세 값이 모두 `#E0` 이상이면 흰색으로 본다) | 같음 | BBC Subtitle Guidelines 8.1, 흰색으로 보는 범위는 우리가 정한 값 |
+| 화자 색 | 노랑 `#FFFF00`, 청록 `#00FFFF`, 초록 `#00FF00` (`--speaker-colors` 일 때만) | 같음 | BBC 8.3 |
+| 포인트 색 | 한 자막에 색 칠한 곳 하나 | 같음 | 우리가 정한 값 (BBC 는 색 강조를 「I」 한 경우만 쓴다) |
+| 외곽선 대비 | 글자, 포인트 색과 외곽선이 4.5:1 이상 | 같음 | WCAG 2.x 1.4.3 |
 
 - 읽기 속도의 글자 셈은 넷플릭스가 따로 적지 않아 **한 줄 길이와 같은 셈(라틴·공백 0.5)**으로 했다. 우리 선택이다.
 - 프레임으로 적힌 기준은 `--fps` 로 초로 바꾼다. 넷플릭스도 30fps 에서는 「12프레임 = 반 초」를 15프레임으로 바꾸라고 한다.
+- **넷플릭스 스타일 가이드는 글자 색을 정하지 않는다**(2026-10-29 General Requirements 확인). 색 기준은 BBC 와 WCAG 에서 왔다. 「넷플릭스 기준 색」이라고 말하지 않는다.
+- 색은 고치지 않고 「남은 것」으로만 알린다. 색은 만든 사람이 고른 것이라 바꿀지 묻는다.
 - 다른 기준을 써야 하면(방송사 납품 등) 그 문서의 숫자로 바꾸고, 바꿨다고 적는다.
 
 ## 말로 시킬 때 (편집자·영상 AI 에게)
@@ -182,6 +199,9 @@ node scripts/capsync.mjs 자막.srt --fps 30 --cuts cuts.txt --speech words.json
 | 그래픽 피하기 Avoid | 아래 글자 있으면 위로 | 「이름표 뜨는 동안은 자막을 위로」 |
 | 전체 밀기 Offset | 전부 늦으면 통째로 | 「자막 전체를 0.2초 앞으로 당겨줘」 |
 | 겹친 말 Overlap | 둘이 같이 말하면 두 줄로 | 「동시에 말하면 줄마다 - 붙여 두 줄로」 |
+| 포인트 컬러 Accent word | 중요한 말만 색 다르게 | 「글자는 흰색, 강조할 낱말 하나만 #FFE14D」 |
+| 외곽선 Stroke | 글자 테두리 | 「흰 글자에 #1E1A24 외곽선 4px」 |
+| 그림자와 띠 Shadow, scrim | 테두리 없이 은은하게 | 「외곽선 없이 그림자만, 화면 아래 절반에 옅은 검은 띠」 |
 
 ## 하지 말 것
 
@@ -189,4 +209,5 @@ node scripts/capsync.mjs 자막.srt --fps 30 --cuts cuts.txt --speech words.json
 - **읽기 속도를 맞추려고 자막을 길게 늘려 다음 자막·컷을 밀지 않는다.** 시간은 말이 정한다. 줄일 것은 글이다.
 - **글을 줄이다 뜻을 바꾸지 않는다.** 숫자·이름·부정은 그대로.
 - **한 번에 모든 자막을 다시 쓰지 않는다.** 도구가 남긴 자막만 손댄다. 나머지는 사용자가 받아 적은 그대로다.
+- **자막 글자 전체를 색으로 칠하지 않는다.** 강조가 아니라 읽기만 어려워진다. 색은 낱말 하나에.
 - **기준 숫자를 지어내지 않는다.** 표에 없는 값이 필요하면 출처를 찾거나, 우리가 정한 값이라고 적는다.

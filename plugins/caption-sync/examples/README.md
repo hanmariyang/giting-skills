@@ -5,6 +5,7 @@ AI 가 만든 듯한 자막 한 벌과 재료 셋. 30fps 영상이라고 가정�
 - `speech.txt`: 말 구간 「시작 끝」
 - `onscreen.txt`: 화면 아래 이름표가 떠 있는 구간
 - `fixed.srt`: 아래 명령으로 고친 결과
+- `colors.srt` 와 `colors.vtt`: 색 규칙 시험용. 글자 전체가 노랑인 자막, 포인트가 두 군데인 자막, 검은 외곽선에 묻히는 `#2A2A2A`, VTT `STYLE` 의 `::cue` 색
 
 ```sh
 node ../scripts/capsync.mjs ai.srt --fps 30 --cuts cuts.txt --speech speech.txt --avoid onscreen.txt              # 41건 · 끝 코드 1
