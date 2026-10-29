@@ -304,3 +304,10 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 빌드가 막는 것: 데모 없는 항목 · 마커 중복 · 레시피가 없는 항목을 가리킴 · 레시피에 그리드 종류가 하나도 없음 · `GM_HERO` 가 없는 항목.
 - 실측(Haiku·Sonnet 3번씩): 이름 없이 → 4×6 그리드를 실제로 깐 것 0/6, 레시피 문장 → 6/6. **쌓은 제목 「꽉 차게」는 안 됐다**(Haiku 3/3 작게, Sonnet 2/3 자간 벌림). 문장을 「자간 그대로, 글자 크기를 키워」로 바꾸니 Sonnet 2/3 이 겹쳐서 되돌렸다.
 - 헤드리스: components 24 캔버스 칠해짐·예외 0, 갤러리 iframe 27 전부 그려짐, 움직임 줄이기 판 확인.
+
+## 흐름 메뉴판 0.1.0 (2026-10-30)
+
+- 다른 메뉴판이 `items[]` 라면 이건 `flows[]` 다. 흐름 하나 = 장(`steps`) 여럿 + 장을 넘겨도 지킬 것(`keep`) + 전체 요청 문장(`ask`). 그래서 메뉴판 스토어 내보내기(`menu-index.json`)에는 아직 안 넣었다.
+- 장마다 `parts` 는 **app-menu id**. 이름은 빌드가 app-menu `menu.json` 에서 읽는다. app-menu 에 없는 id, 장마다 넷 이상, 견본 화면(`.phone#<screen>`)에 그 `data-menu` 가 없으면 빌드가 멈춘다.
+- 견본 `demos/<흐름 id>.html` 은 프래그먼트가 아니라 통째 페이지다. `components/` 는 그 사본. 홍보 영상(flowrack)도 이 견본을 찍는다(`insol-partner/giting/영상/flowrack/`).
+- 흐름은 실제 앱 화면에서 확인한 것만 싣는다(유아이볼 `search_ui_patterns` 등, 출처·수집 월을 `seen` 에).
