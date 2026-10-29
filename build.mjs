@@ -1873,6 +1873,163 @@ writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'index.html'), redirect.replac
 writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'llms.txt'), cmDict(false));
 console.log(`built carousel-menu: items ${cmMenu.items.length} · recipes ${cmMenu.recipes.length} · core ${(cmCore.length / 1024).toFixed(0)}KB`);
 
+// ── 썸네일 메뉴판 (thumb-menu) — 10 ─────────────────────────────
+// 유튜브 썸네일·쇼츠 표지 사전. 견본은 tools/gen.mjs 가 demos/thumbs.html 로 낸다(1280×720 을 줄여서).
+// 그림은 assets/*.webp(우리가 만든 것). {{a:이름}} 을 쓰임새마다 바꿔 넣는다:
+//   components/ = data URI(자가완결) · 갤러리 srcdoc = /skills/thumb-menu/a/ · llms = raw GitHub 주소
+const TMP = join(ROOT, 'plugins', 'thumb-menu');
+const tmMenu = JSON.parse(readFileSync(join(TMP, 'menu.json'), 'utf8'));
+const tmBy = id => tmMenu.items.filter(i => i.category === id);
+const tmFrags = {};
+for (const fn of readdirSync(join(TMP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const parts = readFileSync(join(TMP, 'demos', fn), 'utf8').split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    if (tmFrags[parts[i]]) { console.error(`thumb-menu 데모 마커가 두 번 나옴: @${parts[i]}`); process.exit(1); }
+    tmFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 244), body: parts[i + 2].trim() };
+  }
+}
+const tmMiss = tmMenu.items.filter(it => !tmFrags[it.id]).map(it => it.id);
+if (tmMiss.length) { console.error('thumb-menu 데모 없는 항목:', tmMiss.join(', ')); process.exit(1); }
+for (const r of tmMenu.recipes) for (const id of r.order) if (!tmMenu.items.find(i => i.id === id)) { console.error('thumb-menu 레시피가 없는 항목을 가리킴:', r.id, id); process.exit(1); }
+const tmAssets = readdirSync(join(TMP, 'assets')).filter(f => f.endsWith('.webp')).map(f => f.replace(/\.webp$/, ''));
+const TM_RAW_A = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/assets';
+const tmSub = (s, kind) => s.replace(/\{\{a:([a-z0-9-]+)\}\}/g, (_, n) => {
+  if (!tmAssets.includes(n)) { console.error('thumb-menu 없는 그림:', n); process.exit(1); }
+  if (kind === 'data') return `data:image/webp;base64,${readFileSync(join(TMP, 'assets', `${n}.webp`)).toString('base64')}`;
+  if (kind === 'site') return `/skills/thumb-menu/a/${n}.webp`;
+  return `${TM_RAW_A}/${n}.webp`;
+});
+const tmDoc = (it, kind) => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} · 썸네일 메뉴판</title><style>body{margin:0;background:#f6f5f2}</style></head><body>
+${tmSub(tmFrags[it.id].body, kind)}
+</body></html>`;
+const tmCode = {}, tmSite = {};
+rmSync(join(TMP, 'components'), { recursive: true, force: true });
+mkdirSync(join(TMP, 'components'), { recursive: true });
+for (const it of tmMenu.items) { tmCode[it.id] = tmDoc(it, 'data'); tmSite[it.id] = tmDoc(it, 'site'); writeFileSync(join(TMP, 'components', `${it.id}.html`), tmCode[it.id]); }
+const TM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components';
+const tmItem = id => tmMenu.items.find(i => i.id === id);
+const tmAZ = [...tmMenu.items].sort((a, b) => a.name.en.localeCompare(b.name.en, 'en'));
+const TM_CSS = `.tmgal{--ink:#17171b;--ink2:#6b6c74;--line:#e6e4df;--acc:#F05032;--bg:#f6f5f2;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.tmgal .tm-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.tmgal .tm-nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff}
+.tmgal .tm-nav a b{color:var(--acc);margin-right:5px}
+.tmgal .tm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
+.tmgal .tm-rules b{font-size:14px}.tmgal .tm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.tmgal .tm-cat{margin:0 0 30px;scroll-margin-top:80px}
+.tmgal .tm-cat h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.tmgal .tm-cat h2 .no{color:var(--acc)}.tmgal .tm-cat h2 .count{font-size:12px;color:#9a9aa4;font-weight:600}
+.tmgal .tm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tmgal .tm-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;display:flex;flex-direction:column;min-width:0}
+.tmgal .tm-card header{display:flex;align-items:baseline;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.tmgal .tm-card h3{font-size:14.5px;font-weight:800;margin:0}.tmgal .tm-card .en{font-family:ui-monospace,monospace;font-size:11px;color:#9a9aa4;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tmgal .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--ink2)}
+.tmgal .tm-card iframe{display:block;width:100%;border:0;background:#f6f5f2}
+.tmgal .tm-card footer{padding:10px 14px 12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink2);display:grid;gap:4px;margin-top:auto}
+.tmgal .tm-card footer .al{color:var(--acc)}.tmgal .tm-card footer .vs{color:#9a9aa4}.tmgal .tm-card footer .ask{border-top:1px dashed var(--line);padding-top:6px;color:var(--ink)}
+.tmgal .tm-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;counter-reset:s}
+.tmgal .tm-steps li{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--ink2);line-height:1.6;min-width:0}
+.tmgal .tm-steps li b{display:block;font-size:14px;color:var(--ink);margin-bottom:4px}.tmgal .tm-steps li b::before{content:counter(s,decimal-leading-zero) ' ';color:var(--acc)}
+.tmgal .tm-steps li i{display:block;font-style:normal;border-top:1px dashed var(--line);margin-top:6px;padding-top:6px}
+.tmgal .tm-az{columns:3 220px;column-gap:24px;font-size:13px;margin:0;padding:0;list-style:none}
+.tmgal .tm-az li{break-inside:avoid;padding:4px 0;border-bottom:1px solid var(--line)}.tmgal .tm-az a{color:var(--ink);text-decoration:none}.tmgal .tm-az span{color:#9a9aa4;margin-left:6px}
+.tmgal .tm-rcp{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.tmgal .tm-r{border:1px solid var(--line);border-radius:13px;background:#fff;padding:14px 16px;min-width:0}
+.tmgal .tm-r header{display:flex;align-items:center;gap:8px}.tmgal .tm-r h3{font-size:15px;margin:0;flex:1}
+.tmgal .tm-r ol{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.tmgal .tm-r li a{font-size:12.5px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.tmgal .tm-r p{font-size:12px;color:var(--ink2);margin:10px 0 0;line-height:1.6}
+@media(prefers-color-scheme:dark){.tmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.tmgal .tm-card,.tmgal .tm-r,.tmgal .tm-rules,.tmgal .tm-nav a,.tmgal .copy,.tmgal .tm-steps li{background:#1d1d20}}`;
+const tmCard = it => `<article class="tm-card" id="t-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장 복사</button></header>
+  <iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${tmFrags[it.id].h}px" srcdoc="${attr(tmSite[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span>${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="ask">${esc(it.ask)}</span></footer>
+</article>`;
+const TM_HERO = ['thirds', 'versus', 'reaction-closeup'];
+const tmFig = id => { const it = tmItem(id); return `<figure><iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${tmFrags[id].h}px" srcdoc="${attr(tmSite[id])}"></iframe><figcaption>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
+const tmF = tmMenu.formula;
+const tmIntro = ipPanels('thumb-menu', '.tmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `썸네일 메뉴판 · ${tmMenu.items.length}가지 · ${tmMenu.categories.length}갈래`, h: '「눈에 띄게」 말고<br><em>이름으로</em> 시켜요',
+    sub: '썸네일 기법에는 다 이름이 있어요. <b>구도·주인공·글자·장치</b>를 이름으로 하나씩 고르면 한 번에 통해요.',
+    body: `<div class="ip-three">${TM_HERO.map(tmFig).join('')}</div>${ipBub(tmMenu.recipes[0].ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '구도부터 장치까지<br><em>이름 하나씩</em>', sub: esc(tmF.note), body: ipFormula(tmF) },
+  { lay: 'wide', bg: 'pale', chip: '영상 종류별 레시피', h: '내 영상에 맞는<br><em>조합</em>부터 골라요', sub: '누르면 그 레시피의 조합과 요청문으로 가요.',
+    body: `<div class="ip-rows">${tmMenu.recipes.map(r => `<a class="r" href="#tr-${r.id}"><span class="w"><b style="color:var(--ip-ink)">${esc(r.ko)}</b></span><span class="n">${r.order.slice(0, 3).map(id => `<b>${esc(tmItem(id).name.ko)}</b>`).join('')}</span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「썸네일 만들어줘」가<br><em>조합 목록</em>으로 바뀌어요', sub: '스킬로 깔아 두면 구도·주인공·글자·장치를 먼저 고르고, 다 만든 뒤 작게 줄여 확인해요.', body: ipInstall('thumb-menu') },
+]);
+const tmCore = `<div class="tmgal">
+<style>${TM_CSS}</style>
+${tmIntro}
+<nav class="tm-nav"><a href="#tc-process"><b>A–Z</b>처음부터 끝까지 ${tmMenu.process.length}단계</a>${tmMenu.categories.map(c => `<a href="#tc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${tmBy(c.id).length}</a>`).join('')}<a href="#tc-recipes"><b>＋</b>레시피 ${tmMenu.recipes.length}</a><a href="#tc-index"><b>EN</b>영문 이름 A–Z</a></nav>
+<div class="tm-rules"><b>공통 규격</b><ul>${tmMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>
+<section class="tm-cat" id="tc-process">
+  <h2><span class="no">A–Z</span> 처음부터 끝까지 <span class="count">${tmMenu.process.length}단계</span></h2>
+  <ol class="tm-steps">${tmMenu.process.map(p => `<li><b>${esc(p.step)}</b>${esc(p.do)}<i>확인: ${esc(p.check)}</i></li>`).join('')}</ol>
+</section>
+${tmMenu.categories.map(cat => `<section class="tm-cat" id="tc-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${tmBy(cat.id).length}</span></h2>
+  <div class="tm-grid">${tmBy(cat.id).map(tmCard).join('\n')}</div>
+</section>`).join('\n')}
+<section class="tm-cat" id="tc-recipes">
+  <h2><span class="no">＋</span> 영상 종류별 레시피 <span class="count">${tmMenu.recipes.length}</span></h2>
+  <div class="tm-rcp">${tmMenu.recipes.map(r => `<article class="tm-r" id="tr-${r.id}"><header><h3>${esc(r.ko)}</h3><button class="copy" data-copy="${attr(r.ask)}" title="요청문 복사">문장 복사</button></header>
+    <ol>${r.order.map(id => `<li><a href="#t-${id}">${esc(tmItem(id).name.ko)}</a></li>`).join('')}</ol><p>${esc(r.ask)}</p></article>`).join('\n')}</div>
+</section>
+<section class="tm-cat" id="tc-index">
+  <h2><span class="no">EN</span> 영문 이름 A–Z <span class="count">${tmAZ.length}</span></h2>
+  <ul class="tm-az">${tmAZ.map(it => `<li><a href="#t-${it.id}">${esc(it.name.en)}</a><span>${esc(it.name.ko)}</span></li>`).join('')}</ul>
+</section>
+<script>document.querySelectorAll('.tmgal .copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
+</div>
+`;
+const tmDict = full => `# 썸네일 메뉴판 (thumb-menu) · Giting Skills
+
+> ${tmMenu.description}
+> 공식: ${tmF.pattern}  (✕ "${tmF.bad}" → ○ "${tmF.good}")
+> 갤러리: https://giting.kr/skills/thumb-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install thumb-menu@giting
+
+## 공통 규격
+${tmMenu.rules.map(r => `- ${r}`).join('\n')}
+
+## 처음부터 끝까지 (A–Z)
+${tmMenu.process.map((p, i) => `${i + 1}. **${p.step}** ${p.do} (확인: ${p.check})`).join('\n')}
+
+${tmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${tmBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}${it.use ? `
+- 쓰는 곳: ${it.use}` : ''}
+- 요청 문장: ${it.ask}
+- 견본: ${TM_RAW}/${it.id}.html${full ? `
+
+\`\`\`html
+${tmDoc(it, 'raw').trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}
+## 영상 종류별 레시피
+${tmMenu.recipes.map(r => `### ${r.ko}
+- 조합: ${r.order.map(id => tmItem(id).name.ko).join(' + ')}
+- 요청 문장: ${r.ask}`).join('\n\n')}
+
+## 영문 이름 A–Z
+${tmAZ.map(it => `- ${it.name.en} = ${it.name.ko}`).join('\n')}
+`;
+if (SITE_DIR) {
+  const TS = join(SITE_DIR, 'thumb-menu');
+  rmSync(join(TS, 'a'), { recursive: true, force: true });
+  mkdirSync(join(TS, 'a'), { recursive: true });
+  for (const n of tmAssets) writeFileSync(join(TS, 'a', `${n}.webp`), readFileSync(join(TMP, 'assets', `${n}.webp`)));
+  writeFileSync(join(TS, 'gallery-core.html'), tmCore);
+  writeFileSync(join(TS, 'llms.txt'), tmDict(false));
+  writeFileSync(join(TS, 'llms-full.txt'), tmDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'thumb-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/thumb-menu'));
+writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'llms.txt'), tmDict(false));
+console.log(`built thumb-menu: items ${tmMenu.items.length} · steps ${tmMenu.process.length} · recipes ${tmMenu.recipes.length} · core ${(tmCore.length / 1024).toFixed(0)}KB`);
+
 // ── 모션 메뉴판 (motion-menu) — 08 ──────────────────────────────
 // 영상·카메라 모션 사전. 데모는 CSS 로 재현한 움직임(iframe), 원맥락은 AI 영상 생성 프롬프트.
 // 강조·전환 항목엔 ⭐(현장 다빈도) 배지. recipes = 샷 단위 조합. 스코프 .mogal.
@@ -2208,6 +2365,7 @@ if (SITE_DIR) {
     ['type-menu', '타입스크립트 에러 사전', tmenu, TP],
     ['codelazy', '안 만들어도 되는 것 사전', lmenu, LP],
     ['carousel-menu', '캐러셀 메뉴판', cmMenu, CMP],
+    ['thumb-menu', '썸네일 메뉴판', tmMenu, TMP],
   ];
   const OUT = join(SITE_DIR, 'c');
   rmSync(OUT, { recursive: true, force: true });
@@ -2225,7 +2383,7 @@ if (SITE_DIR) {
       const ask = it.ask || (it.family ? `「${it.family}」 글꼴을 ${it.role} 자리에 써줘. ${it.source} 에서 불러오고, 대체 글꼴까지 ${it.css} 로.` : '');
       const demo = have.has(it.id);
       if (demo) {
-        const src = slug === 'ui-menu' && code[it.id] ? demoDoc(it.id, code[it.id]) : readFileSync(join(compDir, `${it.id}.html`), 'utf8');
+        const src = slug === 'ui-menu' && code[it.id] ? demoDoc(it.id, code[it.id]) : slug === 'thumb-menu' ? tmSite[it.id] : readFileSync(join(compDir, `${it.id}.html`), 'utf8');
         writeFileSync(join(OUT, slug, `${it.id}.html`), src);
       }
       const row = { m: slug, id: it.id, c: it.category, g: it.group || '', ko, en, al: (it.aliases || (it.vibe ? [it.vibe] : [])).slice(0, 4),
