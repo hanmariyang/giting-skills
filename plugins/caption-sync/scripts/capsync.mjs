@@ -3,6 +3,7 @@
 //
 //   node capsync.mjs <자막.srt|.vtt> [--fps 24] [--profile netflix-ko|shorts]
 //                    [--cuts 컷.txt] [--speech 말.txt|whisper.json] [--avoid 화면글자.txt]
+//                    [--colors text=#FFFFFF,outline=#111111,point=#FFE14D] [--speaker-colors]
 //                    [-o 고친.srt] [--json]
 //
 // 기준 숫자의 출처는 이 파일 아래 PROFILES 에 하나하나 적었다. 출처 없는 값은 「우리가 정한 값」이라고 적었다.
@@ -16,6 +17,9 @@ import { extname } from 'node:path';
 // NF-KO  = Netflix Korean Timed Text Style Guide (partnerhelp.netflixstudios.com 216001127)
 // NF-GEN = Netflix Timed Text Style Guide: General Requirements (215758617)
 // NF-TIM = Netflix Timed Text Style Guide: Subtitle Timing Guidelines (360051554394)
+// BBC    = BBC Subtitle Guidelines (bbc.co.uk/accessibility/forproducts/guides/subtitles) 8 Colours
+// WCAG   = WCAG 2.x 1.4.3 Contrast (Minimum), 글자 대비 4.5:1
+// ⚠️ 넷플릭스 스타일 가이드는 글자 색을 정하지 않는다(2026-10-29 General Requirements 13절 확인). 색 기준은 BBC 와 WCAG 에서 온다.
 const PROFILES = {
   'netflix-ko': {
     label: '넷플릭스 한국어 (성인)',
@@ -43,6 +47,15 @@ const RULES = {
   SHOT_IN: '컷 맞춤(들어옴)', SHOT_OUT: '컷 맞춤(나감)', GAP: '겹침·빈틈 2프레임 미만', CLOSE: '붙일 틈',
   CPS: '읽기 속도', LINE: '한 줄 길이', LINES: '줄 수', BREAK: '줄 나눔', PUNCT: '줄 끝 마침표·쉼표',
   ELLIPSIS: '말줄임표', DASH: '겹친 말 표기', AVOID: '화면 글자 가림', EMPTY: '빈 자막',
+  COLOR: '글자 색', POINT: '포인트 색', CONTRAST: '외곽선 대비',
+};
+
+// ── 색 기준 ───────────────────────────────────────────
+const COLOR_RULE = {
+  base: '#FFFFFF',           // BBC 8.1 글자는 흰색
+  speaker: ['#FFFF00', '#00FFFF', '#00FF00'],   // BBC 8.3 화자 구분 색(흰색 다음 노랑, 청록, 초록). --speaker-colors 일 때만 허용
+  maxPoints: 1,              // 한 자막에 색 칠한 낱말 묶음 하나. 우리가 정한 값(BBC 는 색 강조를 「I」 한 경우만 허용)
+  minContrast: 4.5,          // WCAG 1.4.3 글자와 외곽선의 대비
 };
 
 // ── 인자 ──────────────────────────────────────────────
@@ -57,6 +70,8 @@ if (!argv.length || argv[0] === '-h' || argv[0] === '--help') {
   --cuts 파일      컷 시각 한 줄에 하나 (12.5 · 00:00:12.500 · 00:00:12:12)
   --speech 파일    말 구간 「시작 끝」 한 줄에 하나, 또는 Whisper JSON(단어 시각)
   --avoid 파일     화면 아래에 글자가 뜨는 구간 「시작 끝」 → 그 자막은 위로 올린다
+  --colors 값      글자, 외곽선, 포인트 색 「text=#FFFFFF,outline=#111111,point=#FFE14D」 → 외곽선 대비를 잰다
+  --speaker-colors 노랑, 청록, 초록 글자를 화자 구분 색으로 보고 허용한다 (BBC 8.3)
   -o 파일          고친 자막을 쓴다. 없으면 재기만 한다
   --json           결과를 JSON 으로
 
@@ -75,6 +90,7 @@ const P = PROFILES[PNAME];
 if (!P) fail(`모르는 프로필: ${PNAME} (netflix-ko · shorts)`);
 const OUT = opt('-o', null);
 const JSON_OUT = argv.includes('--json');
+const SPEAKER_OK = argv.includes('--speaker-colors');
 
 const F = 1 / FPS;                  // 한 프레임(초)
 const GAP = P.gapF * F;
@@ -161,12 +177,64 @@ const textOf = (c) => c.lines.map(stripTags).reduce((s, l) => !s ? l.trim() : /\
 const isDash = (c) => c.lines.length === 2 && c.lines.every((l) => /^\s*-/.test(stripTags(l)));
 const lead = (l) => (l.match(/^(\{\\[^}]*\})+/) || [''])[0];
 
+// ── 색 ────────────────────────────────────────────────
+// SRT <font color="#RRGGBB|이름">, SRT 안의 ASS 꼬리표 {\c&HBBGGRR&} 와 {\1c&H…&}, VTT <c.yellow> 를 읽는다.
+const NAMED = { white: '#FFFFFF', black: '#000000', red: '#FF0000', lime: '#00FF00', green: '#00FF00', blue: '#0000FF',
+  yellow: '#FFFF00', cyan: '#00FFFF', aqua: '#00FFFF', magenta: '#FF00FF', fuchsia: '#FF00FF', orange: '#FFA500', pink: '#FFC0CB', gray: '#808080', grey: '#808080' };
+function toHex(v) {
+  if (!v) return null;
+  v = String(v).trim().replace(/^["']|["']$/g, '').toLowerCase();
+  if (NAMED[v]) return NAMED[v];
+  let m = /^#?([0-9a-f]{6})$/.exec(v); if (m) return '#' + m[1].toUpperCase();
+  m = /^#?([0-9a-f]{3})$/.exec(v); if (m) return '#' + [...m[1]].map((x) => x + x).join('').toUpperCase();
+  m = /^&h(?:[0-9a-f]{2})?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})&?$/.exec(v);   // ASS 는 BBGGRR
+  if (m) return ('#' + m[3] + m[2] + m[1]).toUpperCase();
+  return null;
+}
+const lumOf = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+  .map((c) => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)).reduce((s, c, i) => s + c * [0.2126, 0.7152, 0.0722][i], 0);
+const contrast = (a, b) => { const x = lumOf(a), y = lumOf(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+// 한 자막을 글자마다 색으로 칠해 본다. null 은 꾸밈 없음(플레이어 기본, 흔히 흰색)
+function colorRuns(c) {
+  const out = [];
+  for (const l of c.lines) {
+    const stack = []; let ass = null;
+    const re = /<\s*font\b[^>]*?color\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)[^>]*>|<\s*\/\s*font\s*>|<c((?:\.[\w-]+)+)>|<\/c>|\{\\([^}]*)\}|<[^>]+>|([^<{]+|[<{])/gi;
+    let m;
+    while ((m = re.exec(l))) {
+      if (m[1] != null) stack.push(toHex(m[1]));
+      else if (/^<\s*\/\s*font/i.test(m[0])) stack.pop();
+      else if (m[2] != null) stack.push(m[2].split('.').filter(Boolean).map(toHex).find(Boolean) || null);
+      else if (m[0] === '</c>') stack.pop();
+      else if (m[3] != null) { const k = /\\1?c(&H[0-9a-fA-F]+&?)/.exec('\\' + m[3]); if (k) ass = toHex(k[1]); else if (/\\r(?![a-z])/.test('\\' + m[3])) ass = null; }
+      else if (m[4] != null) { const col = ass || [...stack].reverse().find(Boolean) || null; for (const ch of m[4]) out.push({ ch, col }); }
+    }
+    out.push({ ch: ' ', col: null });
+  }
+  return out;
+}
+// 흰색에 가까운 색(세 값이 모두 #E0 이상)은 흰 글자로 본다. 밝기로 재면 노랑이 흰색으로 잡힌다
+const isBase = (hex) => !hex || hex === COLOR_RULE.base || [1, 3, 5].every((i) => parseInt(hex.slice(i, i + 2), 16) >= 0xE0);
+const okBody = (hex) => isBase(hex) || SPEAKER_OK && COLOR_RULE.speaker.includes(hex);
+// VTT STYLE 블록의 ::cue { color: … } 는 자막 전체 글자 색이다
+const cueStyleColor = (blocks) => { for (const b of blocks) { const m = /::cue\s*\{[^}]*?(?:^|[;{\s])color\s*:\s*([^;}\s]+)/i.exec(b); if (m) return toHex(m[1]); } return null; };
+const PALETTE = (() => {
+  const v = opt('--colors', null); if (!v) return null;
+  const o = {}; for (const kv of v.split(',')) { const [k, x] = kv.split('='); const h = toHex(x); if (!h) fail(`--colors 의 색을 못 읽었다: ${kv}`); o[k.trim()] = h; }
+  if (!o.outline) fail('--colors 에는 outline 이 있어야 대비를 잰다 (외곽선 없이 그림자만 쓰면 대비는 재지 않는다)');
+  return o;
+})();
+
 // ── 재기 ──────────────────────────────────────────────
 function measure(cs) {
   const issues = [];
   const add = (rule, c, msg) => issues.push({ rule, n: c ? c.n : null, at: c ? c.start : null, msg });
   // 전체 밀림
   const o0 = SPEECH ? estimateOffset(cs) : null, OFF = o0 && Math.abs(o0.off) > P.inTolF * F + EPS ? o0 : null;
+  const sc = IS_VTT ? cueStyleColor(VTT_EXTRA) : null;
+  if (sc && !okBody(sc)) add('COLOR', null, `STYLE 의 ::cue 글자 색이 ${sc} → 흰색으로 (BBC 8.1)`);
+  if (PALETTE) for (const [k, col] of Object.entries(PALETTE)) if (k !== 'outline' && contrast(col, PALETTE.outline) < COLOR_RULE.minContrast - 1e-9)
+    add('CONTRAST', null, `--colors ${k} ${col} 와 외곽선 ${PALETTE.outline} 대비 ${contrast(col, PALETTE.outline).toFixed(1)}:1 (최소 ${COLOR_RULE.minContrast}, WCAG 1.4.3)`);
   if (OFF) { const o = OFF; add('OFFSET', null, `자막 전체가 말보다 ${o.off > 0 ? '늦다' : '빠르다'} ${Math.abs(o.off).toFixed(2)}초 (맞춰 볼 수 있던 ${o.k}/${cs.length}개 기준)`); }
   cs.forEach((c, i) => {
     const d = c.end - c.start, txt = textOf(c), next = cs[i + 1];
@@ -189,6 +257,16 @@ function measure(cs) {
     if (plain.some((l) => /\.\.\./.test(l))) add('ELLIPSIS', c, '점 세 개 대신 말줄임표 한 글자(…)');
     if (plain.length === 2 && plain.every((l) => /^\s*-/.test(l)) && plain.some((l) => !/^\s*- \S/.test(l))) add('DASH', c, '두 사람 말은 줄마다 「- 」(하이픈 뒤 한 칸)');
     if (AVOID && overlapsAvoid(c) && !isTop(c)) add('AVOID', c, '화면 아래 글자와 겹친다 → 위로');
+    const runs = colorRuns(c).filter((r) => /\S/.test(r.ch)), painted = runs.filter((r) => !isBase(r.col));
+    if (runs.length && painted.length === runs.length && !runs.every((r) => okBody(r.col)))
+      add('COLOR', c, `글자 전체가 ${[...new Set(painted.map((r) => r.col))].join(', ')} → 글자는 흰색, 색은 강조할 낱말에만 (BBC 8.1)`);
+    else if (painted.length) {
+      let k = 0, prev = false;
+      for (const r of colorRuns(c)) { const on = !isBase(r.col); if (on && !prev) k++; if (/\S/.test(r.ch)) prev = on; }
+      if (k > COLOR_RULE.maxPoints) add('POINT', c, `색 칠한 곳이 ${k}군데 → 한 자막에 ${COLOR_RULE.maxPoints}군데만 (우리가 정한 값)`);
+    }
+    if (PALETTE) for (const col of new Set(painted.map((r) => r.col)))
+      if (contrast(col, PALETTE.outline) < COLOR_RULE.minContrast - 1e-9) add('CONTRAST', c, `${col} 와 외곽선 ${PALETTE.outline} 대비 ${contrast(col, PALETTE.outline).toFixed(1)}:1 (최소 ${COLOR_RULE.minContrast}, WCAG 1.4.3)`);
     if (CUTS) {
       const pre = CUTS.filter((x) => x <= c.start + EPS && c.start - x < P.shotSec - EPS && c.start - x > EPS).pop();
       const prevC = cs[i - 1];
@@ -304,6 +382,8 @@ function fix(cs) {
     const needs = plain.some((l) => weight(l) > P.lineMax) || plain.length > P.maxLines
       || (plain.length > 1 && weight(text) <= P.lineMax) || (plain.length === 2 && badBreak(plain[0], plain[1]));
     if (!needs) { outCues.push(c); continue; }
+    // 색, 굵게 같은 꾸밈 꼬리표가 글 가운데 있으면 다시 나누다 꼬리표를 잃는다. 손대지 않고 남은 것으로 둔다
+    if (c.lines.some((l) => { const b = l.slice(lead(l).length); return stripTags(b) !== b; })) { outCues.push(c); continue; }
     if (weight(text) <= P.lineMax) { c.lines = [tag + text]; note('BREAK', c, '한 줄로'); outCues.push(c); continue; }
     if (P.maxLines >= 2) { const b = bestBreak(text); if (b) { c.lines = [tag + b.a, b.b]; note('BREAK', c, `「${b.a} / ${b.b}」`); outCues.push(c); continue; } }
     // 한 자막에 안 들어간다 → 여러 자막으로. 시간은 글자 수에 비례해 나눈다
@@ -397,7 +477,7 @@ if (OUT) {
 }
 const result = {
   file: SRC, profile: PNAME, fps: FPS, cues: cues.length,
-  inputs: { cuts: !!CUTS, speech: !!SPEECH, avoid: !!AVOID },
+  inputs: { cuts: !!CUTS, speech: !!SPEECH, avoid: !!AVOID, colors: !!PALETTE },
   before: { total: before.length, byRule: count(before), issues: before },
   ...(OUT ? { after: { total: after.length, byRule: count(after), issues: after }, changes: fixed.log, out: OUT, cuesOut: fixed.cs.length } : {}),
 };
@@ -405,8 +485,8 @@ if (JSON_OUT) { console.log(JSON.stringify(result, null, 2)); process.exit((OUT 
 
 const line = (by) => Object.keys(RULES).filter((k) => by[k]).map((k) => `${RULES[k]} ${by[k]}`).join(' · ') || '없음';
 console.log(`자막 싱크 · ${P.label} · ${FPS}fps · 자막 ${cues.length}개`);
-const miss = [!CUTS && '컷(--cuts)', !SPEECH && '말 구간(--speech)'].filter(Boolean);
-if (miss.length) console.log(`  안 잰 것   ${miss.join(' · ')} 이 없어 ${[!CUTS && '컷 맞춤', !SPEECH && '인 점·꼬리·전체 밀림'].filter(Boolean).join(', ')} 은 재지 않았다`);
+const miss = [!CUTS && '컷(--cuts)', !SPEECH && '말 구간(--speech)', !PALETTE && '외곽선 색(--colors)'].filter(Boolean);
+if (miss.length) console.log(`  안 잰 것   ${miss.join(' · ')} 이 없어 ${[!CUTS && '컷 맞춤', !SPEECH && '인 점·꼬리·전체 밀림', !PALETTE && '외곽선 대비'].filter(Boolean).join(', ')} 은 재지 않았다`);
 console.log(`  고치기 전  ${before.length}건 · ${line(count(before))}`);
 if (OUT) {
   console.log(`  고친 뒤    ${after.length}건 · ${line(count(after))}`);
