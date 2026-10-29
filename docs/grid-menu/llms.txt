@@ -1,0 +1,205 @@
+# 그리드 메뉴판 (grid-menu) · Giting Skills
+
+> 포스터·표지 한 장을 '세련되게' 대신 그리드 이름으로 시키게 해 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 그리드 선을 켜고 끌 수 있는 실물 견본. 3갈래(그리드 종류 10 · 놓는 법 8 · 글자 놓기 6) 24항목 + 포스터 종류별 레시피 4.
+> 공식: [포스터에 들어갈 실제 내용] + [판 크기] + [그리드 이름과 칸 수·여백] + [놓는 법 이름] + [글자 놓기 이름] + [그리드 선 켠 판 같이]  (✕ "전시 포스터 세련되게 만들어줘" → ○ "내용은 제목 「[제목]」, 날짜 [날짜], 장소 [장소], 사진 1장. 판은 1080×1350. 모듈 그리드 4×6, 바깥 여백은 판 폭의 6%, 칸 사이 간격은 같은 값. 사진은 칸 묶기로 왼쪽 위 3×4 칸, 제목은 쌓은 제목으로 아래 두 줄 꽉 차게, 날짜·장소는 정보 블록으로 오른쪽 아래 한 칸. 그리드 선을 켠 판과 끈 판 두 장으로 줘.")
+> 갤러리: https://giting.kr/skills/grid-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install grid-menu@giting
+
+## 공통 규격
+- 판 크기를 먼저 정한다. 인쇄면 A 계열(1:√2, A4 210×297mm · A2 420×594mm), 인스타는 1080×1350, 스토리·릴스 표지는 1080×1920.
+- 여백(판 가장자리와 칸 사이)을 먼저 정하고 그다음 칸 수를 정한다. 칸 사이 간격은 한 값으로 통일한다.
+- 모든 글과 그림의 가장자리는 칸 선에 닿게 놓는다. 그리드를 깨는 요소는 한 장에 하나만 둔다.
+- 글자 크기는 3단계 안에서 쓴다(제목 · 부제 · 정보). 본문 글줄은 기준선 간격의 배수로 맞춘다.
+- 날짜·장소·가격·이름은 실제 값만 쓴다. 확인 못 한 값은 그 칸을 비워 두고 알린다. 견본의 글은 전부 예시다.
+- 결과는 그리드 선을 켠 판과 끈 판 두 장으로 받는다. 켠 판으로 칸을 지켰는지 확인한다.
+
+## ① 그리드 종류 (판 나누기)
+
+### 원고 그리드 (Manuscript Grid)
+- 별칭: "가운데 큰 글 상자 하나" · "책 본문처럼 한 덩어리로" · "여백만 두고 꽉 채우기"
+- 정의: 여백 안쪽에 큰 사각 영역 하나만 두는 가장 단순한 그리드. 글이 길고 그림이 적을 때.
+- 구분: 칸이 하나면 원고 그리드, 세로로 몇 단 나뉘면 단 그리드
+- 요청 문장: 원고 그리드로 짜줘. 판 안쪽에 여백 [위·아래 8%, 양옆 10%]을 두고 그 안의 사각 한 칸에 제목과 본문을 위에서부터 채워. 칸 밖에는 쪽 번호만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/manuscript-grid.html
+
+### 단 그리드 (Column Grid)
+- 별칭: "세로로 몇 줄 나눠서" · "신문처럼 단 나누기" · "2단 3단으로"
+- 정의: 판을 세로 단 여러 개로 나누는 그리드. 제목은 여러 단을 걸치고 글은 한 단씩 흐른다.
+- 구분: 세로로만 나누면 단 그리드, 가로로도 나눠 칸이 생기면 모듈 그리드
+- 요청 문장: [3]단 그리드로 짜줘. 단 사이 간격은 [24px]. 제목은 [3]단을 다 걸치고, 본문은 왼쪽 단부터 한 단씩 흐르게. 사진은 [2]단 폭.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/column-grid.html
+
+### 모듈 그리드 (Modular Grid)
+- 별칭: "바둑판 칸" · "칸 나눠서 블록 놓기" · "모눈종이처럼"
+- 정의: 가로세로로 똑같은 칸(모듈)을 만들고, 사진과 글을 칸 단위로 놓는 그리드. 한 그리드로 여러 판을 만들기 좋다.
+- 구분: 칸이 다 같으면 모듈 그리드, 내용 크기에 맞춰 칸이 제각각이면 계층 그리드
+- 요청 문장: 모듈 그리드 [4×6]으로 짜줘. 바깥 여백과 칸 사이 간격은 둘 다 [판 폭의 4%]. 사진·제목·정보를 전부 칸 단위로 놓고, 어느 것도 칸 선 사이에 걸치지 않게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/modular-grid.html
+
+### 계층 그리드 (Hierarchical Grid)
+- 별칭: "중요한 거 크게 나머지 작게" · "칸 크기가 다 다르게" · "잡지 표지처럼"
+- 정의: 칸 크기를 내용의 중요도로 정하는 그리드. 제일 중요한 것이 제일 큰 칸을 가진다.
+- 구분: 칸 크기가 같으면 모듈 그리드, 중요도에 따라 다르면 계층 그리드
+- 요청 문장: 계층 그리드로 짜줘. 중요도 순서는 [사진 > 제목 > 날짜 > 설명]. 사진 칸이 판의 [절반], 제목 칸이 [4분의 1], 나머지 둘이 남은 칸을 나눠 써. 칸 가장자리끼리는 줄을 맞춰.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/hierarchical-grid.html
+
+### 기준선 그리드 (Baseline Grid)
+- 별칭: "글줄 높이 맞추기" · "옆 단이랑 줄이 맞게" · "가로줄 노트처럼"
+- 정의: 같은 간격의 가로선을 깔고 모든 글줄을 그 선 위에 앉히는 그리드. 단이 달라도 글줄 높이가 맞는다.
+- 구분: 글줄 높이를 맞추는 건 기준선 그리드, 판을 나누는 건 단·모듈 그리드(같이 쓴다)
+- 요청 문장: 기준선 그리드 [8px]를 깔고 본문 줄 간격을 [24px](세 칸)으로 맞춰줘. 옆 단 글줄과 높이가 같게, 제목 줄 간격도 [8px]의 배수로.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/baseline-grid.html
+
+### 겹친 그리드 (Compound Grid)
+- 별칭: "두 그리드 섞기" · "2단이랑 3단 같이" · "칸이 섞여 있는데 질서 있게"
+- 정의: 단 수가 다른 그리드 둘을 겹쳐 쓰는 그리드. 2단과 3단을 겹치면 6칸 위에서 둘 다 쓸 수 있다.
+- 구분: 한 가지 단 수면 단 그리드, 단 수 둘을 겹치면 겹친 그리드
+- 요청 문장: 겹친 그리드로 짜줘. [2]단과 [3]단을 겹쳐 바탕은 [6]단으로 깔고, 위쪽은 [2]단 기준, 아래쪽은 [3]단 기준으로 놓아줘. 칸 사이 간격은 하나로.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/compound-grid.html
+
+### 3분할 그리드 (Rule of Thirds Grid)
+- 별칭: "삼등분 선" · "사진 구도 선처럼" · "교차점에 놓기"
+- 정의: 판을 가로세로 셋으로 나눈 선 네 개와 교차점 네 개로 놓는 그리드. 사진이 큰 포스터에서 많이 쓴다.
+- 구분: 선 네 개로 자리만 잡으면 3분할 그리드, 칸을 채워 쓰면 모듈 그리드
+- 요청 문장: 3분할 그리드로 짜줘. 사진의 주인공은 [오른쪽 위] 교차점에, 제목은 [왼쪽 아래] 교차점에서 시작해 아래 3분의 1 안에 들어가게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/thirds-grid.html
+
+### 사선 그리드 (Oblique Grid)
+- 별칭: "삐딱하게 기울여서" · "그리드를 비스듬히" · "대각선으로 흐르게"
+- 정의: 그리드 전체를 한 각도로 기울여 놓는 그리드. 판에 속도와 방향이 생긴다.
+- 구분: 그리드 전체가 기울면 사선 그리드, 제목 하나만 기울면 사선 제목
+- 요청 문장: 사선 그리드로 짜줘. [4]단 그리드를 통째로 [-30°] 기울이고, 제목·정보는 전부 그 사선 단 위에. 판 밖으로 나가는 부분은 잘려도 돼. 각도는 하나만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/oblique-grid.html
+
+### 방사 그리드 (Radial Grid)
+- 별칭: "한 점에서 뻗어 나가게" · "햇살처럼 퍼지는 선" · "가운데서 바깥으로"
+- 정의: 한 점에서 뻗는 선들을 따라 놓는 그리드. 시선이 그 점으로 모인다.
+- 구분: 한 점에서 선이 뻗으면 방사 그리드, 한 점을 둘러싼 원이면 동심원 그리드
+- 요청 문장: 방사 그리드로 짜줘. 중심은 [왼쪽 아래 모서리], 선은 [15°]마다. 제목 글줄을 그 선 위에 하나씩 얹고, 중심 근처는 비워 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/radial-grid.html
+
+### 동심원 그리드 (Concentric Grid)
+- 별칭: "과녁처럼 원 여러 개" · "원 따라 글자 돌리기" · "동그랗게 퍼지는 판"
+- 정의: 한 중심을 둘러싼 원 여러 개를 칸 대신 쓰는 그리드. 글자가 원을 따라 돌고 중심에 하나를 둔다.
+- 구분: 원을 겹겹이 두면 동심원 그리드, 선을 뻗으면 방사 그리드
+- 요청 문장: 동심원 그리드로 짜줘. 중심은 [판 가운데], 원은 [4]개, 반지름 간격은 같게. 제목은 바깥 원을 따라 돌리고, 가운데 원 안에는 [사진 하나]만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/concentric-grid.html
+
+## ② 놓는 법 (칸 위에 앉히기)
+
+### 칸 묶기 (Spanning Modules)
+- 별칭: "여러 칸 합쳐서 크게" · "블록 크기 다르게" · "칸 몇 개 차지하게"
+- 정의: 사진이나 글 하나가 모듈 여러 칸을 묶어 차지하게 놓는 법. 크기가 달라도 칸 선이 지켜진다.
+- 구분: 칸 여러 개를 합치면 칸 묶기, 칸 밖으로 나가면 그리드 깨기
+- 요청 문장: 칸 묶기로 놓아줘. 사진은 [3×4]칸, 제목은 [4×1]칸, 정보는 [1×1]칸. 묶은 영역의 네 변이 전부 칸 선에 닿게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/span-modules.html
+
+### 가장자리 붙이기 (Edge Hugging)
+- 별칭: "모서리에 딱 붙여서" · "끝에 몰아서" · "가운데 말고 구석에"
+- 정의: 요소를 판의 가장자리 여백선에 붙여 놓는 법. 가운데가 비면서 판이 넓어 보인다.
+- 구분: 끝에 붙이면 가장자리 붙이기, 비운 가운데에 하나만 두면 초점 고립
+- 요청 문장: 가장자리 붙이기로 놓아줘. 제목은 [왼쪽 위] 여백선에, 정보는 [오른쪽 아래] 여백선에 붙이고 가운데는 비워 둬. 가운데 정렬은 쓰지 않아.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/edge-hug.html
+
+### 초점 고립 (Focal Point Isolation)
+- 별칭: "하나만 덩그러니" · "빈 데 하나만 강조" · "나머지는 다 작게"
+- 정의: 넓은 빈 공간 한가운데 요소 하나만 두고 나머지는 아주 작게 밀어내는 법. 눈이 그 하나로 간다.
+- 구분: 하나만 남기고 비우면 초점 고립, 둘을 아슬아슬하게 붙이면 긴장 배치
+- 요청 문장: 초점 고립으로 놓아줘. [빨간 원 하나]를 판 면적의 [8%] 크기로 [위에서 40%] 자리에 두고, 제목·정보는 [10px] 작은 글로 아래 여백선에 붙여. 그 밖에는 아무것도 두지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/focal-isolation.html
+
+### 긴장 배치 (Visual Tension)
+- 별칭: "닿을 듯 말 듯" · "아슬아슬하게" · "끝에 걸쳐서"
+- 정의: 요소 둘을 닿기 직전까지 붙이거나 판 끝에 걸쳐 놓는 법. 안정 대신 긴장이 생긴다.
+- 구분: 닿을 듯 붙이면 긴장 배치, 판 밖으로 잘려 나가는 글자면 잘린 큰 글자
+- 요청 문장: 긴장 배치로 놓아줘. 제목 마지막 글자와 [원] 사이를 [4px]만 띄우고, [원]은 판 [오른쪽] 끝에 [3분의 1]이 잘리게 걸쳐.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/visual-tension.html
+
+### 그리드 깨기 (Breaking the Grid)
+- 별칭: "하나만 칸 밖으로" · "튀어나오게" · "틀에서 벗어나게"
+- 정의: 다른 것은 전부 칸을 지키고 딱 하나만 칸 선을 넘게 놓는 법. 넘은 하나가 눈을 끈다.
+- 구분: 칸 안에서 크게 차지하면 칸 묶기, 칸 선을 넘으면 그리드 깨기
+- 요청 문장: 그리드 깨기로 놓아줘. 나머지는 전부 [모듈 그리드] 칸을 지키고, [사진] 하나만 칸 선을 [반 칸] 넘게. 넘는 건 하나만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/break-grid.html
+
+### 크기 대비 (Scale Contrast)
+- 별칭: "엄청 크게랑 엄청 작게" · "큰 거 하나 작은 거 여럿" · "확 차이 나게"
+- 정의: 가장 큰 요소와 가장 작은 요소의 크기 차이를 크게 벌리는 법. 중간 크기를 줄일수록 세다.
+- 구분: 크기 차이로 세게 하면 크기 대비, 위치로 하나만 남기면 초점 고립
+- 요청 문장: 크기 대비로 놓아줘. 제목은 [판 폭의 90%] 크기, 정보 글은 [12px]. 중간 크기 글은 쓰지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/scale-contrast.html
+
+### 여백 남기기 (Active White Space)
+- 별칭: "비워 두기" · "숨 쉴 공간" · "꽉 채우지 말고"
+- 정의: 칸의 일부를 일부러 비워 두는 법. 빈 칸도 그리드의 한 칸으로 센다.
+- 구분: 칸을 비워 두는 건 여백 남기기, 하나만 덩그러니면 초점 고립
+- 요청 문장: 여백 남기기로 놓아줘. [4×6] 칸 중 [절반 이상]을 비우고, 내용은 [위쪽 두 줄과 맨 아래 줄]에만. 빈 칸에 장식은 넣지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/active-whitespace.html
+
+### 축 정렬 (Axis Alignment)
+- 별칭: "선 하나에 다 맞추기" · "왼쪽 선 맞춰서" · "보이지 않는 줄"
+- 정의: 제목·사진·정보의 한쪽 가장자리를 보이지 않는 세로선(또는 가로선) 하나에 맞추는 법.
+- 구분: 선 하나에 맞추면 축 정렬, 가운데에 맞추면 그냥 가운데 정렬
+- 요청 문장: 축 정렬로 놓아줘. 세로 축은 판 왼쪽에서 [3분의 1] 지점. 제목·사진·정보의 왼쪽 가장자리를 전부 그 선에 맞추고, 다른 선에 맞춘 건 두지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/axis-align.html
+
+## ③ 글자 놓기 (제목과 정보)
+
+### 세로 제목 (Vertical Title)
+- 별칭: "제목 세워서" · "옆으로 눕혀서" · "90도 돌려서"
+- 정의: 제목을 90도 돌려 한 단 높이를 따라 세워 놓는 글자 놓기. 가로 공간을 아낀다.
+- 구분: 90도로 세우면 세로 제목, 비스듬하면 사선 제목
+- 요청 문장: 제목은 세로 제목으로. 90도 돌려서 [왼쪽 단] 높이를 꽉 채우게, 읽는 방향은 아래에서 위로. 나머지 글은 가로로 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/vertical-title.html
+
+### 사선 제목 (Angled Title)
+- 별칭: "제목만 비스듬히" · "기울어진 글자" · "대각선 제목"
+- 정의: 제목 한 줄만 비스듬히 기울여 판을 가로지르게 놓는 글자 놓기.
+- 구분: 제목만 기울면 사선 제목, 판 전체가 기울면 사선 그리드
+- 요청 문장: 제목은 사선 제목으로. [-35°] 기울여 판의 [왼쪽 위]에서 [오른쪽 아래]로 가로지르게, 글자는 판 폭에 꽉 차게. 다른 글은 기울이지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/angled-title.html
+
+### 쌓은 제목 (Stacked Title)
+- 별칭: "단어 하나씩 줄 바꿔서" · "제목 꽉 차게 여러 줄" · "블록처럼 쌓은 글자"
+- 정의: 제목을 단어마다 줄을 바꿔 쌓고, 줄마다 같은 폭으로 꽉 채우는 글자 놓기.
+- 구분: 단어마다 줄 바꿔 쌓으면 쌓은 제목, 한 단어를 칸 따라 쪼개면 쪼갠 제목
+- 요청 문장: 제목은 쌓은 제목으로. [단어마다] 줄을 바꾸고 줄마다 [4]단 폭에 꽉 차게, 줄 간격은 글자 크기의 [0.9배]로 촘촘하게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/stacked-title.html
+
+### 쪼갠 제목 (Split Word)
+- 별칭: "단어 중간에서 끊어서" · "글자 나눠서 여러 줄" · "음절 단위로 쪼개기"
+- 정의: 한 단어를 칸 폭에 맞춰 중간에서 끊어 여러 줄로 놓는 글자 놓기. 읽기보다 형태가 먼저 보인다.
+- 구분: 한 단어를 끊으면 쪼갠 제목, 단어마다 줄 바꾸면 쌓은 제목
+- 요청 문장: 제목은 쪼갠 제목으로. [제목 단어]를 한 줄 [3]글자씩 끊어 여러 줄로, 줄마다 왼쪽 단 선에 맞춰. 끊는 자리에 붙임표는 넣지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/split-word.html
+
+### 정보 블록 (Info Block)
+- 별칭: "날짜 장소 작게 모아서" · "구석에 정보 한 덩어리" · "포스터 하단 정보"
+- 정의: 날짜·시간·장소·주최 같은 정보를 작은 글 한 덩어리로 묶어 한 칸에 놓는 글자 놓기.
+- 구분: 작은 정보를 한 칸에 모으면 정보 블록, 큰 글자로 판을 가로지르면 제목
+- 요청 문장: 날짜·시간·장소·주최는 정보 블록으로. [12px] 한 크기, 줄마다 항목 하나, 왼쪽 정렬로 [오른쪽 아래] 한 칸에 묶어.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/info-block.html
+
+### 잘린 큰 글자 (Cropped Type)
+- 별칭: "글자가 판 밖으로 잘리게" · "엄청 크게 해서 넘치게" · "반만 보이는 글자"
+- 정의: 글자를 판보다 크게 키워 일부가 판 밖으로 잘리게 놓는 글자 놓기. 잘려도 읽히는 만큼만 자른다.
+- 구분: 판 밖으로 잘리면 잘린 큰 글자, 판 안에서 꽉 차면 쌓은 제목
+- 요청 문장: 제목은 잘린 큰 글자로. 글자 높이를 판 높이의 [40%]로 키우고 [아래]쪽이 판 밖으로 [3분의 1] 잘리게. 첫 글자는 다 보이게 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components/cropped-type.html
+
+## 포스터 레시피
+### 전시 포스터
+- 조합: 모듈 그리드 + 칸 묶기 + 가장자리 붙이기 + 쌓은 제목 + 정보 블록
+- 요청 문장: 전시 「[제목]」 포스터. 판 [1080×1350]. 모듈 그리드 [4×6], 여백·간격 [판 폭의 4%]. 작품 사진은 칸 묶기로 [위쪽 4×3]칸, 제목은 쌓은 제목으로 아래 [4×2]칸에 꽉 차게, 날짜·장소는 정보 블록으로 오른쪽 아래 여백선에 붙여. 그리드 선 켠 판과 끈 판 두 장.
+
+### 공연·파티 포스터
+- 조합: 사선 그리드 + 사선 제목 + 긴장 배치 + 정보 블록
+- 요청 문장: 공연 「[제목]」 포스터. 판 [1080×1350]. 사선 그리드 [4]단을 [-30°]로, 제목은 사선 제목으로 그 각도 그대로 판을 가로지르게. [원 하나]를 제목 끝에 닿을 듯 긴장 배치. 날짜·장소는 정보 블록으로 가로로 왼쪽 아래. 그리드 선 켠 판과 끈 판 두 장.
+
+### 강연·모임 포스터
+- 조합: 단 그리드 + 기준선 그리드 + 축 정렬 + 세로 제목 + 정보 블록
+- 요청 문장: 강연 「[제목]」 포스터. 판 [A2 420×594mm]. [3]단 그리드에 기준선 [8pt]. 제목은 세로 제목으로 왼쪽 단, 연사 이름·소개는 가운데 단부터 축 정렬, 날짜·장소는 정보 블록으로 오른쪽 단 아래. 그리드 선 켠 판과 끈 판 두 장.
+
+### 공지·오픈 포스터
+- 조합: 원고 그리드 + 초점 고립 + 잘린 큰 글자 + 여백 남기기 + 정보 블록
+- 요청 문장: [가게 이름] 오픈 공지 포스터. 판 [1080×1350]. 원고 그리드에 여백 [8%]. 제목 「[한 단어]」는 잘린 큰 글자로 아래쪽이 잘리게, 위쪽 절반은 여백 남기기로 [로고 하나]만 초점 고립. 날짜는 정보 블록으로 왼쪽 위. 그리드 선 켠 판과 끈 판 두 장.
