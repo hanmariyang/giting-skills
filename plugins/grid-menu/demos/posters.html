@@ -1,0 +1,600 @@
+<!-- 생성물: tools/gen.mjs 가 menu.json 과 tools/engine.js 로 만든다. 여기를 직접 고치지 않는다 -->
+<!-- @manuscript-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="원고 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["manuscript-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @column-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="단 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["column-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @modular-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="모듈 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["modular-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @hierarchical-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="계층 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["hierarchical-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @baseline-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="기준선 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["baseline-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @compound-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="겹친 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["compound-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @thirds-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="3분할 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["thirds-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @oblique-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="사선 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["oblique-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @radial-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="방사 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["radial-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @concentric-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="동심원 그리드 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["concentric-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @span-modules h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="칸 묶기 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["span-modules"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @edge-hug h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="가장자리 붙이기 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["edge-hug"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @focal-isolation h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="초점 고립 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["focal-isolation"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @visual-tension h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="긴장 배치 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["visual-tension"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @break-grid h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="그리드 깨기 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["break-grid"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @scale-contrast h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="크기 대비 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["scale-contrast"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @active-whitespace h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="여백 남기기 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["active-whitespace"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @axis-align h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="축 정렬 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["axis-align"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @vertical-title h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="세로 제목 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["vertical-title"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @angled-title h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="사선 제목 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["angled-title"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @stacked-title h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="쌓은 제목 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["stacked-title"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @split-word h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="쪼갠 제목 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["split-word"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @info-block h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="정보 블록 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["info-block"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+
+<!-- @cropped-type h=490 full -->
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+{{engine}}
+<div class="gm"><canvas role="img" aria-label="잘린 큰 글자 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["cropped-type"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>

@@ -2030,6 +2030,140 @@ writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'index.html'), redirect.replace(/
 writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'llms.txt'), tmDict(false));
 console.log(`built thumb-menu: items ${tmMenu.items.length} · steps ${tmMenu.process.length} · recipes ${tmMenu.recipes.length} · core ${(tmCore.length / 1024).toFixed(0)}KB`);
 
+// ── 그리드 메뉴판 (grid-menu) — 12 ─────────────────────────────
+// 포스터 그리드 사전. 견본은 tools/gen.mjs 가 demos/posters.html 로 낸다(캔버스 4:5, 8초 반복, 그리드 선 켜고 끄기).
+// 그림은 tools/engine.js 의 GP[id] 하나. {{engine}} 을 쓰임새마다 바꿔 넣는다:
+//   components/ = 엔진 통째로(자가완결) · 갤러리 srcdoc·스토어 = /skills/grid-menu/engine.js · llms = jsDelivr 주소
+const GMP = join(ROOT, 'plugins', 'grid-menu');
+const gmMenu = JSON.parse(readFileSync(join(GMP, 'menu.json'), 'utf8'));
+const gmBy = id => gmMenu.items.filter(i => i.category === id);
+const gmEngine = readFileSync(join(GMP, 'tools', 'engine.js'), 'utf8');
+const gmFrags = {};
+for (const fn of readdirSync(join(GMP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const parts = readFileSync(join(GMP, 'demos', fn), 'utf8').split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    if (gmFrags[parts[i]]) { console.error(`grid-menu 데모 마커가 두 번 나옴: @${parts[i]}`); process.exit(1); }
+    gmFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 520), body: parts[i + 2].trim() };
+  }
+}
+const gmMiss = gmMenu.items.filter(it => !gmFrags[it.id]).map(it => it.id);
+if (gmMiss.length) { console.error('grid-menu 데모 없는 항목:', gmMiss.join(', ')); process.exit(1); }
+for (const r of gmMenu.recipes) {
+  for (const id of r.order) if (!gmMenu.items.find(i => i.id === id)) { console.error('grid-menu 레시피가 없는 항목을 가리킴:', r.id, id); process.exit(1); }
+  if (!gmBy('grid').some(g => r.order.includes(g.id))) { console.error('grid-menu 레시피에 그리드 종류가 없음:', r.id); process.exit(1); }
+}
+const GM_CDN = 'https://cdn.jsdelivr.net/gh/hanmariyang/giting-skills@main/plugins/grid-menu/tools/engine.js';
+const gmEng = kind => kind === 'inline' ? `<script>\n${gmEngine.trim()}\n</script>` : `<script src="${kind === 'site' ? '/skills/grid-menu/engine.js' : GM_CDN}"></script>`;
+const gmDoc = (it, kind) => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} · 그리드 메뉴판</title><style>body{margin:0;background:#f3f3f5}</style></head><body>
+${gmFrags[it.id].body.replace('{{engine}}', gmEng(kind))}
+</body></html>`;
+const gmSite = {};
+rmSync(join(GMP, 'components'), { recursive: true, force: true });
+mkdirSync(join(GMP, 'components'), { recursive: true });
+for (const it of gmMenu.items) { writeFileSync(join(GMP, 'components', `${it.id}.html`), gmDoc(it, 'inline')); gmSite[it.id] = gmDoc(it, 'site'); }
+const GM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/grid-menu/components';
+const gmItem = id => gmMenu.items.find(i => i.id === id);
+const GM_CSS = `.gmgal{--ink:#16161a;--ink2:#6b6c74;--line:#e4e4e8;--acc:#E2457A;--bg:#f3f3f5;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.gmgal .gm-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.gmgal .gm-nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff}
+.gmgal .gm-nav a b{color:var(--acc);margin-right:5px}
+.gmgal .gm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
+.gmgal .gm-rules b{font-size:14px}.gmgal .gm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.gmgal .gm-cat{margin:0 0 30px;scroll-margin-top:80px}
+.gmgal .gm-cat h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gmgal .gm-cat h2 .no{color:var(--acc)}.gmgal .gm-cat h2 .count{font-size:12px;color:#9a9aa4;font-weight:600}
+.gmgal .gm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.gmgal .gm-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;display:flex;flex-direction:column;min-width:0}
+.gmgal .gm-card header{display:flex;align-items:baseline;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.gmgal .gm-card h3{font-size:14.5px;font-weight:800;margin:0}.gmgal .gm-card .en{font-family:ui-monospace,monospace;font-size:11px;color:#9a9aa4;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gmgal .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--ink2)}
+.gmgal .gm-card iframe{display:block;width:100%;border:0;background:#f3f3f5}
+.gmgal .gm-card footer{padding:10px 14px 12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink2);display:grid;gap:4px;margin-top:auto}
+.gmgal .gm-card footer .al{color:var(--acc)}.gmgal .gm-card footer .vs{color:#9a9aa4}.gmgal .gm-card footer .ask{border-top:1px dashed var(--line);padding-top:6px;color:var(--ink)}
+.gmgal .gm-rcp{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.gmgal .gm-r{border:1px solid var(--line);border-radius:13px;background:#fff;padding:14px 16px;min-width:0}
+.gmgal .gm-r header{display:flex;align-items:center;gap:8px}.gmgal .gm-r h3{font-size:15px;margin:0;flex:1}
+.gmgal .gm-r ol{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:5px;counter-reset:s}
+.gmgal .gm-r li{counter-increment:s;font-size:13px;display:flex;gap:8px}.gmgal .gm-r li::before{content:counter(s);font-weight:800;color:var(--acc);width:14px}
+.gmgal .gm-r li a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.gmgal .gm-r p{font-size:12px;color:var(--ink2);margin:10px 0 0;line-height:1.6}
+@media(prefers-color-scheme:dark){.gmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.gmgal .gm-card,.gmgal .gm-r,.gmgal .gm-rules,.gmgal .gm-nav a,.gmgal .copy{background:#1d1d20}}`;
+const gmCard = it => `<article class="gm-card" id="g-${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장 복사</button></header>
+  <iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${gmFrags[it.id].h}px" srcdoc="${attr(gmSite[it.id])}"></iframe>
+  <footer><span class="al">"${esc(it.aliases[0])}"</span><span>${esc(it.oneliner)}</span>${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}<span class="ask">${esc(it.ask)}</span></footer>
+</article>`;
+const GM_HERO = ['modular-grid', 'oblique-grid', 'stacked-title'];
+for (const id of GM_HERO) if (!gmItem(id)) { console.error('grid-menu GM_HERO 가 없는 항목:', id); process.exit(1); }
+const gmFig = id => { const it = gmItem(id); return `<figure><iframe title="${esc(it.name.ko)} 견본" loading="lazy" style="height:${gmFrags[id].h}px" srcdoc="${attr(gmSite[id])}"></iframe><figcaption>${esc(it.name.ko)}<span>"${esc(it.aliases[0])}"</span></figcaption></figure>`; };
+const gmF = gmMenu.formula;
+const gmIntro = ipPanels('grid-menu', '.gmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `그리드 메뉴판 · ${gmMenu.items.length}가지 · 레시피 ${gmMenu.recipes.length}`, h: '포스터는 「세련되게」가 아니라<br><em>그리드 이름</em>으로 시켜요',
+    sub: '판을 어떻게 나누고, 칸 위에 무엇을 어떻게 앉히는지에 이름이 있어요. <b>이름과 칸 수로</b> 시키고 그리드 선을 켠 판을 같이 받으면 칸을 지켰는지 바로 보여요.',
+    body: `<div class="ip-three">${GM_HERO.map(gmFig).join('')}</div>${ipBub(gmMenu.recipes[0].ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '그리드 이름과<br><em>칸 수·여백</em>을 먼저 적어요', sub: esc(gmF.note), body: ipFormula(gmF) },
+  { lay: 'wide', bg: 'pale', chip: '포스터 레시피', h: '포스터 종류에 맞는<br><em>조합</em>부터 골라요', sub: '누르면 그 레시피의 조합과 요청문으로 가요.',
+    body: `<div class="ip-rows">${gmMenu.recipes.map(r => `<a class="r" href="#gr-${r.id}"><span class="w"><b style="color:var(--ip-ink)">${esc(r.ko)}</b></span><span class="n">${r.order.slice(0, 3).map(id => `<b>${esc(gmItem(id).name.ko)}</b>`).join('')}</span></a>`).join('')}</div>` },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「포스터 만들어줘」가<br><em>그리드 계획</em>으로 바뀌어요', sub: '스킬로 깔아 두면 그리드·놓는 법·글자 놓기를 먼저 고르고, 그리드 선 켠 판과 끈 판 두 장으로 줘요.', body: ipInstall('grid-menu') },
+]);
+const gmCore = `<div class="gmgal">
+<style>${GM_CSS}</style>
+${gmIntro}
+<nav class="gm-nav">${gmMenu.categories.map(c => `<a href="#gc-${c.id}"><b>${c.no}</b>${esc(c.ko)} ${gmBy(c.id).length}</a>`).join('')}<a href="#gc-recipes"><b>＋</b>포스터 레시피 ${gmMenu.recipes.length}</a></nav>
+<div class="gm-rules"><b>공통 규격</b><ul>${gmMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>
+${gmMenu.categories.map(cat => `<section class="gm-cat" id="gc-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${esc(cat.ko)} <span class="count">${gmBy(cat.id).length}</span></h2>
+  <div class="gm-grid">${gmBy(cat.id).map(gmCard).join('\n')}</div>
+</section>`).join('\n')}
+<section class="gm-cat" id="gc-recipes">
+  <h2><span class="no">＋</span> 포스터 레시피 <span class="count">${gmMenu.recipes.length}</span></h2>
+  <div class="gm-rcp">${gmMenu.recipes.map(r => `<article class="gm-r" id="gr-${r.id}"><header><h3>${esc(r.ko)}</h3><button class="copy" data-copy="${attr(r.ask)}" title="요청문 복사">문장 복사</button></header>
+    <ol>${r.order.map(id => `<li><a href="#g-${id}">${esc(gmItem(id).name.ko)}</a></li>`).join('')}</ol><p>${esc(r.ask)}</p></article>`).join('\n')}</div>
+</section>
+<script>document.querySelectorAll('.gmgal .copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
+</div>
+`;
+const gmDict = full => `# 그리드 메뉴판 (grid-menu) · Giting Skills
+
+> ${gmMenu.description}
+> 공식: ${gmF.pattern}  (✕ "${gmF.bad}" → ○ "${gmF.good}")
+> 갤러리: https://giting.kr/skills/grid-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install grid-menu@giting
+
+## 공통 규격
+${gmMenu.rules.map(r => `- ${r}`).join('\n')}
+
+${gmMenu.categories.map(cat => `## ${cat.no} ${cat.ko}
+
+${gmBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 정의: ${it.oneliner}${it.vs ? `
+- 구분: ${it.vs}` : ''}
+- 요청 문장: ${it.ask}
+- 견본: ${GM_RAW}/${it.id}.html${full ? `
+
+\`\`\`html
+${gmDoc(it, 'cdn').trim()}
+\`\`\`` : ''}
+`).join('\n')}`).join('\n')}
+## 포스터 레시피
+${gmMenu.recipes.map(r => `### ${r.ko}
+- 조합: ${r.order.map(id => gmItem(id).name.ko).join(' + ')}
+- 요청 문장: ${r.ask}`).join('\n\n')}
+`;
+if (SITE_DIR) {
+  const GS = join(SITE_DIR, 'grid-menu');
+  mkdirSync(GS, { recursive: true });
+  writeFileSync(join(GS, 'engine.js'), gmEngine);
+  writeFileSync(join(GS, 'gallery-core.html'), gmCore);
+  writeFileSync(join(GS, 'llms.txt'), gmDict(false));
+  writeFileSync(join(GS, 'llms-full.txt'), gmDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'grid-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'grid-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/grid-menu'));
+writeFileSync(join(ROOT, 'docs', 'grid-menu', 'llms.txt'), gmDict(false));
+console.log(`built grid-menu: items ${gmMenu.items.length} · recipes ${gmMenu.recipes.length} · core ${(gmCore.length / 1024).toFixed(0)}KB`);
+
 // ── 모션 메뉴판 (motion-menu) — 08 ──────────────────────────────
 // 영상·카메라 모션 사전. 데모는 CSS 로 재현한 움직임(iframe), 원맥락은 AI 영상 생성 프롬프트.
 // 강조·전환 항목엔 ⭐(현장 다빈도) 배지. recipes = 샷 단위 조합. 스코프 .mogal.
@@ -2366,6 +2500,7 @@ if (SITE_DIR) {
     ['codelazy', '안 만들어도 되는 것 사전', lmenu, LP],
     ['carousel-menu', '캐러셀 메뉴판', cmMenu, CMP],
     ['thumb-menu', '썸네일 메뉴판', tmMenu, TMP],
+    ['grid-menu', '그리드 메뉴판', gmMenu, GMP],
   ];
   const OUT = join(SITE_DIR, 'c');
   rmSync(OUT, { recursive: true, force: true });
@@ -2383,7 +2518,7 @@ if (SITE_DIR) {
       const ask = it.ask || (it.family ? `「${it.family}」 글꼴을 ${it.role} 자리에 써줘. ${it.source} 에서 불러오고, 대체 글꼴까지 ${it.css} 로.` : '');
       const demo = have.has(it.id);
       if (demo) {
-        const src = slug === 'ui-menu' && code[it.id] ? demoDoc(it.id, code[it.id]) : slug === 'thumb-menu' ? tmSite[it.id] : readFileSync(join(compDir, `${it.id}.html`), 'utf8');
+        const src = slug === 'ui-menu' && code[it.id] ? demoDoc(it.id, code[it.id]) : slug === 'thumb-menu' ? tmSite[it.id] : slug === 'grid-menu' ? gmSite[it.id] : readFileSync(join(compDir, `${it.id}.html`), 'utf8');
         writeFileSync(join(OUT, slug, `${it.id}.html`), src);
       }
       const row = { m: slug, id: it.id, c: it.category, g: it.group || '', ko, en, al: (it.aliases || (it.vibe ? [it.vibe] : [])).slice(0, 4),

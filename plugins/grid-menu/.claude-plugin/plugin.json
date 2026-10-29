@@ -1,0 +1,9 @@
+{
+  "name": "grid-menu",
+  "version": "0.1.0",
+  "description": "그리드 메뉴판 — 포스터·표지 한 장을 '세련되게' 대신 그리드 이름으로 시키게 해 주는 사전. 그리드 종류 10(원고·단·모듈·계층·기준선·겹친·3분할·사선·방사·동심원) · 놓는 법 8(칸 묶기·가장자리 붙이기·초점 고립·긴장 배치·그리드 깨기·크기 대비·여백 남기기·축 정렬) · 글자 놓기 6(세로·사선·쌓은·쪼갠 제목·정보 블록·잘린 큰 글자)의 별칭 → 정식 명칭 → 요청 문장 → 그리드 선을 켜고 끄는 4:5 실물 견본 + 포스터 레시피 넷(전시·공연·강연·공지). 결과는 그리드 선 켠 판과 끈 판 두 장으로 받는다.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["poster", "grid", "layout", "graphic-design", "typography", "korean", "dictionary"]
+}

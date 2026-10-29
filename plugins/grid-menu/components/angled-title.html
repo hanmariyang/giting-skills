@@ -1,0 +1,362 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>사선 제목 Angled Title · 그리드 메뉴판</title><style>body{margin:0;background:#f3f3f5}</style></head><body>
+<style>
+  .gm{width:min(360px,calc(100% - 24px));margin:12px auto 10px;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#16161A}
+  .gm canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;background:#fff;box-shadow:0 1px 0 #E2E2E6,0 14px 30px rgba(22,22,26,.12)}
+  .gm .bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .gm button{font:700 12px/1 inherit;font-family:inherit;border:1.5px solid #16161A;background:#fff;color:#16161A;border-radius:999px;padding:6px 12px;cursor:pointer}
+  .gm button[aria-pressed="true"]{background:#E2457A;border-color:#E2457A;color:#fff}
+  .gm button:focus-visible{outline:2px solid #E2457A;outline-offset:2px}
+  .gm .note{font-size:11px;color:#8A8A92}
+</style>
+<script>
+// 그리드 메뉴판 포스터 견본 엔진 · GP[id](c, w, h, t, opt)
+// 포스터 4:5 를 360×450 단위로 그리고 w×h 로 늘린다. t 는 8초 한 바퀴.
+// 0~1.2초 그리드 선 · 1.2~3.5초 요소가 칸에 앉음 · 6.5~7.5초 그리드가 걷힘.
+// opt.grid: true(늘 켬) · false(늘 끔) · 'auto'(기본, 시간에 따라)
+(function (root) {
+  var INK = '#16161A', GR = '#BDBDC4', PK = '#E2457A', PA = '#F3F3F5', WH = '#FFFFFF';
+  var SUB = 'rgba(22,22,26,.62)';
+  var EN = '"Helvetica Neue",Helvetica,Arial,sans-serif';
+  var KR = '"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  var S = { c: null, t: 0, gk: 1, ga: 1 };
+
+  function cl(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function eo(x) { x = cl(x); return 1 - Math.pow(1 - x, 3); }
+  function el(i) { return eo((S.t - 1.2 - i * 0.3) / 0.8); }
+
+  // 요소 하나가 칸으로 미끄러져 앉는다
+  function put(i, dx, dy, fn) {
+    var k = el(i); if (k <= 0) return;
+    var c = S.c; c.save(); c.globalAlpha *= k; c.translate(dx * (1 - k), dy * (1 - k)); fn(c); c.restore();
+  }
+
+  // ── 그리드 층 ──
+  function gline(x1, y1, x2, y2, wt, a) {
+    if (S.ga <= 0) return;
+    var c = S.c, k = S.gk; c.save(); c.globalAlpha = S.ga * (a == null ? 0.9 : a);
+    c.strokeStyle = PK; c.lineWidth = wt || 0.9; c.beginPath(); c.moveTo(x1, y1);
+    c.lineTo(x1 + (x2 - x1) * k, y1 + (y2 - y1) * k); c.stroke(); c.restore();
+  }
+  function grect(x, y, w, h, wt, a) {
+    gline(x, y, x + w, y, wt, a); gline(x + w, y, x + w, y + h, wt, a);
+    gline(x + w, y + h, x, y + h, wt, a); gline(x, y + h, x, y, wt, a);
+  }
+  function gfill(x, y, w, h, a) {
+    if (S.ga <= 0) return; var c = S.c; c.save(); c.globalAlpha = S.ga * S.gk * (a || 0.12);
+    c.fillStyle = PK; c.fillRect(x, y, w, h); c.restore();
+  }
+  function glabel(s, x, y, al) {
+    if (S.ga <= 0) return; var c = S.c; c.save(); c.globalAlpha = S.ga * S.gk;
+    c.font = '700 11px Menlo,"SF Mono",monospace'; c.fillStyle = PK; c.textAlign = al || 'left'; c.fillText(s, x, y); c.restore();
+  }
+  function gdash(x1, y1, x2, y2) {
+    if (S.ga <= 0) return; var c = S.c; c.save(); c.setLineDash([4, 4]); gline(x1, y1, x2, y2, 0.9, 0.7); c.restore();
+  }
+  function gcircle(cx, cy, r, wt, a) {
+    if (S.ga <= 0) return; var c = S.c; c.save(); c.globalAlpha = S.ga * (a == null ? 0.9 : a);
+    c.strokeStyle = PK; c.lineWidth = wt || 0.9; c.beginPath(); c.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * S.gk); c.stroke(); c.restore();
+  }
+
+  // 모듈 그리드
+  function Mod(cols, rows, m, g) {
+    var W = (360 - 2 * m - (cols - 1) * g) / cols, H = (450 - 2 * m - (rows - 1) * g) / rows;
+    return {
+      W: W, H: H,
+      cell: function (cx, cy, sw, sh) { sw = sw || 1; sh = sh || 1; return { x: m + cx * (W + g), y: m + cy * (H + g), w: sw * W + (sw - 1) * g, h: sh * H + (sh - 1) * g }; },
+      draw: function (skip) { for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) { if (skip && skip(i, j)) continue; var r = this.cell(i, j); grect(r.x, r.y, r.w, r.h); } }
+    };
+  }
+  function Cols(n, m, g) {
+    var W = (360 - 2 * m - (n - 1) * g) / n;
+    return {
+      W: W,
+      x: function (i) { return m + i * (W + g); },
+      span: function (i, s) { return s * W + (s - 1) * g; },
+      draw: function (wt, a) { for (var i = 0; i < n; i++) grect(m + i * (W + g), m, W, 450 - 2 * m, wt, a); }
+    };
+  }
+
+  // ── 요소 ──
+  function photo(x, y, w, h, sun) {
+    var c = S.c; c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip();
+    c.fillStyle = PA; c.fillRect(x, y, w, h);
+    var sx = sun ? sun[0] : x + w * 0.7, sy = sun ? sun[1] : y + h * 0.3, sr = sun ? sun[2] : Math.min(w, h) * 0.12;
+    c.fillStyle = PK; c.beginPath(); c.arc(sx, sy, sr, 0, 7); c.fill();
+    c.fillStyle = GR; c.beginPath(); c.moveTo(x + w * 0.25, y + h); c.lineTo(x + w * 0.66, y + h * 0.42); c.lineTo(x + w * 1.1, y + h); c.fill();
+    c.fillStyle = INK; c.beginPath(); c.moveTo(x - w * 0.1, y + h); c.lineTo(x + w * 0.3, y + h * 0.55); c.lineTo(x + w * 0.72, y + h); c.fill();
+    c.restore();
+  }
+  function txt(s, x, y, size, font, col, al, wt) {
+    var c = S.c; c.font = (wt || 800) + ' ' + size + 'px ' + font; c.fillStyle = col || INK;
+    c.textAlign = al || 'left'; c.textBaseline = 'alphabetic'; c.fillText(s, x, y);
+  }
+  function tw(s, size, font, wt) { var c = S.c; c.font = (wt || 800) + ' ' + size + 'px ' + font; return c.measureText(s).width; }
+  function fit(s, font, maxW, maxSize, wt) { var w100 = tw(s, 100, font, wt); return Math.min(maxSize, 100 * maxW / w100); }
+  function bars(x, y, w, n, gap, col) {
+    var c = S.c; c.fillStyle = col || GR;
+    for (var i = 0; i < n; i++) { var ww = (i === n - 1) ? w * 0.55 : w * (0.86 + 0.14 * ((i * 37) % 5) / 4); c.fillRect(x, y + i * gap, ww, 3); }
+  }
+  function info(x, y, lines, size, al, lh) {
+    lines.forEach(function (s, i) { txt(s, x, y + i * (lh || size * 1.45), size, KR, i === 0 ? INK : SUB, al, i === 0 ? 800 : 600); });
+  }
+  var INFO = ['11.08 - 11.30', '화 - 일  11:00 - 19:00', '예시 갤러리', '주최  예시'];
+
+  var GP = {};
+
+  // ① 그리드 종류
+  GP['manuscript-grid'] = function (c) {
+    var x = 40, y = 44, w = 280, h = 362;
+    put(0, 0, -14, function () { txt('골목 사진전', x, y + 30, 30, KR, INK); });
+    put(1, 0, 10, function () { txt('예시 갤러리 · 11.08 - 11.30', x, y + 52, 11, KR, SUB, 'left', 600); });
+    put(2, 0, 16, function () { bars(x, y + 80, w, 12, 11.5); });
+    put(3, 0, 16, function () { bars(x, y + 230, w, 11, 11.5); });
+    put(4, 0, 10, function () { txt('01', 180, 434, 10, EN, SUB, 'center', 700); });
+    grect(x, y, w, h, 1.2); gdash(0, y, x, y); gdash(x + w, y + h, 360, y + h);
+    glabel('ONE AREA', x + w - 4, y + h - 6, 'right');
+  };
+  GP['column-grid'] = function (c) {
+    var C = Cols(3, 24, 12);
+    put(0, 0, -16, function () { var s = fit('GRID', EN, 312, 140); txt('GRID', 22, 24 + s * 0.73, s, EN, INK, 'left', 900); });
+    put(1, -16, 0, function () { photo(C.x(0), 160, C.span(0, 2), 150); });
+    put(2, 16, 0, function () { bars(C.x(2), 162, C.W, 12, 12); });
+    put(3, 0, 12, function () { bars(C.x(0), 326, C.W, 6, 12); bars(C.x(1), 326, C.W, 6, 12); });
+    put(4, 0, 12, function () { info(C.x(2), 336, ['11.08 - 11.30', '예시 갤러리', '주최 예시'], 10); });
+    C.draw(1.1); glabel('3 COL', 336, 440, 'right');
+  };
+  GP['modular-grid'] = function (c) {
+    var G = Mod(4, 6, 18, 6), r;
+    put(0, -14, 0, function () { r = G.cell(0, 0, 3, 3); photo(r.x, r.y, r.w, r.h); });
+    put(1, 14, 0, function () { r = G.cell(3, 0); c.fillStyle = PK; c.fillRect(r.x, r.y, r.w, r.h); });
+    put(2, 14, 0, function () { r = G.cell(3, 1, 1, 2); bars(r.x, r.y + 4, r.w, 9, 13); });
+    put(3, 0, 14, function () { r = G.cell(0, 4, 4, 1); var s = fit('골목 사진전', KR, r.w, 60); txt('골목 사진전', r.x, r.y + r.h - 8, s, KR, INK); });
+    put(4, 0, 14, function () { r = G.cell(0, 5, 2, 1); bars(r.x, r.y + 6, r.w, 4, 12); r = G.cell(3, 5); info(r.x, r.y + 14, ['11.08', '예시 갤러리'], 10); });
+    G.draw(); glabel('4×6', 342, 444, 'right');
+  };
+  GP['hierarchical-grid'] = function (c) {
+    var A = [24, 24, 312, 228], B = [24, 260, 200, 112], C1 = [232, 260, 104, 52], D = [232, 320, 104, 52], E = [24, 380, 312, 46];
+    put(0, 0, -14, function () { photo(A[0], A[1], A[2], A[3]); });
+    put(1, -14, 0, function () { var s = fit('골목', KR, 196, 96); txt('골목', B[0], B[1] + s * 0.86, s, KR, INK); txt('사진전', B[0] + 2, B[1] + B[3] - 2, 22, KR, INK); });
+    put(2, 14, 0, function () { info(C1[0] + 6, C1[1] + 20, ['11.08 - 11.30', '전시 기간'], 11); });
+    put(3, 14, 0, function () { info(D[0] + 6, D[1] + 20, ['예시 갤러리', '장소'], 11); });
+    put(4, 0, 12, function () { bars(E[0], E[1] + 10, E[2], 3, 12); });
+    [A, B, C1, D, E].forEach(function (r, i) { grect(r[0], r[1], r[2], r[3], i === 0 ? 1.6 : 1); });
+    glabel('1', 30, 38); glabel('2', 30, 274); glabel('3', 238, 274); glabel('4', 238, 334);
+  };
+  GP['baseline-grid'] = function (c) {
+    for (var y = 36; y <= 432; y += 12) gline(24, y, 336, y, 0.7, 0.55);
+    grect(24, 24, 150, 402, 1.1); grect(186, 24, 150, 402, 1.1);
+    put(0, 0, -12, function () { txt('기준선', 24, 84, 40, KR, INK); });
+    put(1, 0, 0, function () { txt('BASELINE  8px · 24px', 24, 108, 10, EN, SUB, 'left', 700); });
+    put(2, -12, 0, function () { c.fillStyle = INK; for (var y = 144; y <= 420; y += 24) c.fillRect(24, y - 4, y === 420 ? 80 : 146, 4); });
+    put(3, 12, 0, function () { c.fillStyle = PK; c.fillRect(186, 72, 150, 60); for (var y = 168; y <= 420; y += 24) { c.fillStyle = INK; c.fillRect(186, y - 4, y === 420 ? 60 : 150, 4); } });
+    put(4, 0, 0, function () { txt('옆 단과 줄이 같다', 186, 156, 12, KR, INK, 'left', 800); });
+  };
+  GP['compound-grid'] = function (c) {
+    var C6 = Cols(6, 24, 8); C6.draw(0.7, 0.35);
+    var half = C6.span(0, 3), third = C6.span(0, 2);
+    grect(24, 24, half, 226, 1.5); grect(24 + half + 8, 24, half, 226, 1.5);
+    for (var i = 0; i < 3; i++) grect(24 + i * (third + 8), 258, third, 168, 1.5);
+    glabel('2', 30, 40); glabel('3', 30, 274); glabel('6', 330, 444, 'right');
+    put(0, -14, 0, function () { photo(24, 24, half, 226); });
+    put(1, 14, 0, function () { var x = 24 + half + 8; txt('겹친', x, 92, 52, KR, INK); txt('그리드', x, 150, 46, KR, INK); bars(x, 176, half, 5, 12); });
+    put(2, 0, 14, function () { bars(24, 270, third, 9, 12); });
+    put(3, 0, 14, function () { bars(24 + third + 8, 270, third, 9, 12); });
+    put(4, 0, 14, function () { info(24 + 2 * (third + 8), 284, ['11.08 - 11.30', '예시 갤러리', '주최 예시'], 10); });
+  };
+  GP['thirds-grid'] = function (c) {
+    put(0, 0, 0, function () { photo(0, 0, 360, 300, [240, 150, 30]); });
+    put(1, -14, 0, function () { var s = fit('골목 사진전', KR, 222, 40); txt('골목 사진전', 120, 300 + s * 1.15, s, KR, INK); });
+    put(2, -14, 0, function () { txt('11.08 - 11.30  ·  예시 갤러리', 120, 384, 11, KR, SUB, 'left', 700); });
+    gline(120, 0, 120, 450, 1.1); gline(240, 0, 240, 450, 1.1); gline(0, 150, 360, 150, 1.1); gline(0, 300, 360, 300, 1.1);
+    [[120, 150], [240, 150], [120, 300], [240, 300]].forEach(function (p) { gcircle(p[0], p[1], 7, 1.6); });
+  };
+  GP['oblique-grid'] = function (c) {
+    c.save(); c.translate(180, 225); c.rotate(-30 * Math.PI / 180); c.translate(-180, -225);
+    var xs = [0, 84, 168, 252], cw = 72;
+    put(0, 0, -20, function () { c.fillStyle = PK; c.fillRect(252, -40, cw, 250); });
+    put(1, -20, 0, function () { var s = fit('OBLIQUE', EN, 2 * cw + 12, 80); txt('OBLIQUE', 84, 236, s, EN, INK, 'left', 900); });
+    put(2, 0, 20, function () { bars(0, 260, cw, 14, 12); });
+    put(3, 0, 20, function () { bars(84, 264, cw, 6, 12); });
+    put(4, 0, 20, function () { info(168, 270, ['11.08 - 11.30', '예시 갤러리'], 11); });
+    xs.forEach(function (x) { grect(x, -200, cw, 850, 1.2); });
+    c.restore(); glabel('-30°', 340, 440, 'right');
+  };
+  GP['radial-grid'] = function (c) {
+    var cx = 24, cy = 426;
+    for (var a = 0; a <= 90; a += 15) { var r = a * Math.PI / 180; gline(cx, cy, cx + Math.cos(-r) * 560, cy + Math.sin(-r) * 560, 1); }
+    gcircle(cx, cy, 180, 0.8, 0.5);
+    var W = ['골목', '사진', '전시', '2026'];
+    W.forEach(function (w, i) {
+      put(i, 0, 0, function () {
+        var r = -(75 - i * 15) * Math.PI / 180; c.save(); c.translate(cx, cy); c.rotate(r);
+        txt(w, 196 + (1 - el(i)) * 30, -4, 40, i === 3 ? EN : KR, i === 2 ? PK : INK, 'left', 900); c.restore();
+      });
+    });
+    put(4, 0, -10, function () { info(336, 40, ['11.08 - 11.30', '예시 갤러리'], 10, 'right'); });
+  };
+  GP['concentric-grid'] = function (c) {
+    var cx = 180, cy = 196;[40, 70, 100, 130].forEach(function (r) { gcircle(cx, cy, r, 1.1); });
+    put(0, 0, 0, function () { c.save(); c.beginPath(); c.arc(cx, cy, 40, 0, 7); c.clip(); photo(cx - 40, cy - 40, 80, 80); c.restore(); });
+    function ring(s, r, size, col, k, font) {
+      c.save(); c.font = '900 ' + size + 'px ' + (font || EN); c.fillStyle = col; c.textAlign = 'center';
+      var n = s.length; for (var i = 0; i < n; i++) { var a = -Math.PI / 2 + (i / n) * Math.PI * 2 + (1 - k) * 0.6; c.save(); c.translate(cx + Math.cos(a) * r, cy + Math.sin(a) * r); c.rotate(a + Math.PI / 2); c.fillText(s[i], 0, 0); c.restore(); }
+      c.restore();
+    }
+    put(1, 0, 0, function () { ring('GRID · GRID · GRID · GRID · ', 118, 22, INK, el(1)); });
+    put(2, 0, 0, function () { ring('골목 사진전 · 골목 사진전 · 골목 사진전 · ', 88, 13, PK, el(2), KR); });
+    put(3, 0, 12, function () { info(180, 372, ['11.08 - 11.30', '예시 갤러리'], 12, 'center'); });
+  };
+
+  // ② 놓는 법
+  GP['span-modules'] = function (c) {
+    var G = Mod(4, 6, 18, 6), r;
+    put(0, -14, -14, function () { r = G.cell(0, 0, 3, 4); photo(r.x, r.y, r.w, r.h); });
+    put(1, 14, 0, function () { r = G.cell(3, 0); c.fillStyle = PK; c.fillRect(r.x, r.y, r.w, r.h); });
+    put(2, 14, 0, function () { r = G.cell(3, 1, 1, 3); bars(r.x, r.y + 4, r.w, 14, 14); });
+    put(3, 0, 14, function () { r = G.cell(0, 4, 4, 1); var s = fit('골목 사진전', KR, r.w, 60); txt('골목 사진전', r.x, r.y + r.h - 8, s, KR, INK); });
+    put(4, 0, 14, function () { r = G.cell(3, 5); info(r.x, r.y + 14, ['11.08', '예시 갤러리'], 10); r = G.cell(0, 5, 3, 1); bars(r.x, r.y + 6, r.w, 4, 12); });
+    G.draw(); r = G.cell(0, 0, 3, 4); gfill(r.x, r.y, r.w, r.h, 0.16); grect(r.x, r.y, r.w, r.h, 2.6);
+    glabel('3×4', r.x + 6, r.y + 16);
+  };
+  GP['edge-hug'] = function (c) {
+    grect(24, 24, 312, 402, 1.3);
+    gdash(24, 225, 336, 225); gdash(180, 24, 180, 426); glabel('EMPTY', 186, 220);
+    put(0, -14, -14, function () { txt('골목', 24, 24 + 44, 52, KR, INK); txt('사진전', 24, 24 + 92, 44, KR, INK); });
+    put(1, 14, -14, function () { c.fillStyle = PK; c.fillRect(296, 24, 40, 10); });
+    put(2, -14, 14, function () { photo(24, 326, 104, 100); });
+    put(3, 14, 14, function () { info(336, 382, ['11.08 - 11.30', '예시 갤러리', '주최 예시'], 11, 'right'); });
+  };
+  GP['focal-isolation'] = function (c) {
+    grect(24, 24, 312, 402, 1); gline(24, 180, 336, 180, 0.8, 0.6); gline(180, 24, 180, 426, 0.8, 0.6);
+    glabel('40%', 30, 176);
+    put(0, 0, 0, function () { var k = el(0); c.fillStyle = PK; c.beginPath(); c.arc(180, 180, 64 * (0.6 + 0.4 * k), 0, 7); c.fill(); });
+    put(1, 0, 8, function () { txt('골목 사진전', 24, 422, 10, KR, INK); });
+    put(2, 0, 8, function () { txt('11.08 - 11.30 · 예시 갤러리', 336, 422, 9, KR, SUB, 'right', 600); });
+  };
+  GP['visual-tension'] = function (c) {
+    var s = fit('TENSION', EN, 238, 90, 900), base = 260, xe = 24 + tw('TENSION', s, EN, 900);
+    var r = (356 - xe) * 3 / 4, cxx = 360 - r / 3, cyy = base - s * 0.36;
+    grect(24, 24, 312, 402, 1); gline(360, 0, 360, 450, 2.4); gline(xe, cyy - r - 10, xe, cyy + r + 10, 1, 0.7);
+    glabel('4px', xe - 2, cyy - r - 14, 'center');
+    put(0, -16, 0, function () { txt('TENSION', 24, base, s, EN, INK, 'left', 900); });
+    put(1, 16, 0, function () { c.fillStyle = PK; c.beginPath(); c.arc(cxx, cyy, r, 0, 7); c.fill(); });
+    put(2, 0, 10, function () { info(24, 380, ['11.08 - 11.30', '예시 갤러리'], 11); });
+    put(3, 0, -10, function () { bars(24, 48, 140, 4, 12); });
+  };
+  GP['break-grid'] = function (c) {
+    var G = Mod(4, 6, 18, 6), r;
+    put(0, 0, -12, function () { r = G.cell(0, 0, 4, 1); var s = fit('골목 사진전', KR, r.w, 54); txt('골목 사진전', r.x, r.y + r.h - 10, s, KR, INK); });
+    put(1, -12, 0, function () { r = G.cell(0, 1, 1, 4); bars(r.x, r.y + 4, r.w, 18, 14); });
+    put(2, 0, 12, function () { r = G.cell(0, 5, 2, 1); info(r.x, r.y + 16, ['11.08 - 11.30', '예시 갤러리'], 10); });
+    put(3, 30, 30, function () { r = G.cell(1, 2, 2, 2); photo(r.x + G.W / 2, r.y + G.H / 2, r.w, r.h); });
+    G.draw(); r = G.cell(1, 2, 2, 2); grect(r.x + G.W / 2, r.y + G.H / 2, r.w, r.h, 2.6); glabel('OUT', r.x + G.W / 2 + r.w - 4, r.y + G.H / 2 + r.h + 14, 'right');
+  };
+  GP['scale-contrast'] = function (c) {
+    grect(24, 24, 312, 402, 1); var s = fit('BIG', EN, 324, 260, 900);
+    gline(18, 300, 342, 300, 1.2); glabel('90%', 336, 316, 'right'); glabel('12px', 24, 356);
+    put(0, 0, -20, function () { txt('BIG', 18, 300, s, EN, INK, 'left', 900); });
+    put(1, 0, 10, function () { txt('작은 글은 아주 작게, 중간 크기는 없다', 24, 372, 8, KR, INK, 'left', 700); txt('11.08 - 11.30 · 예시 갤러리', 24, 384, 8, KR, SUB, 'left', 600); });
+    put(2, 0, 0, function () { c.fillStyle = PK; c.fillRect(326, 412, 10, 10); });
+  };
+  GP['active-whitespace'] = function (c) {
+    var G = Mod(4, 6, 18, 6), r;
+    G.draw(function (i, j) { return j >= 2 && j <= 4; });
+    for (var i = 0; i < 4; i++) for (var j = 2; j <= 4; j++) { r = G.cell(i, j); gfill(r.x, r.y, r.w, r.h, 0.08); c.save(); c.setLineDash([3, 3]); grect(r.x, r.y, r.w, r.h, 0.8, 0.5); c.restore(); }
+    r = G.cell(0, 2, 4, 3); glabel('EMPTY 12/24', r.x + r.w / 2, r.y + r.h / 2, 'center');
+    put(0, 0, -12, function () { r = G.cell(0, 0, 4, 1); var s = fit('골목 사진전', KR, r.w, 56); txt('골목 사진전', r.x, r.y + r.h - 10, s, KR, INK); });
+    put(1, -12, 0, function () { r = G.cell(0, 1, 2, 1); photo(r.x, r.y, r.w, r.h); });
+    put(2, 12, 0, function () { r = G.cell(2, 1, 2, 1); bars(r.x, r.y + 6, r.w, 4, 13); });
+    put(3, 0, 12, function () { r = G.cell(0, 5, 4, 1); info(r.x, r.y + 18, ['11.08 - 11.30  ·  예시 갤러리'], 11); c.fillStyle = PK; c.fillRect(r.x + r.w - 14, r.y + r.h - 14, 14, 14); });
+  };
+  GP['axis-align'] = function (c) {
+    grect(24, 24, 312, 402, 0.8, 0.5); gline(120, 0, 120, 450, 2.4); glabel('1/3', 126, 440);
+    put(0, 20, 0, function () { txt('골목', 120, 74, 44, KR, INK); txt('사진전', 120, 116, 38, KR, INK); });
+    put(1, 20, 0, function () { photo(120, 140, 216, 168); });
+    put(2, 20, 0, function () { bars(120, 326, 216, 3, 12); });
+    put(3, 20, 0, function () { info(120, 386, ['11.08 - 11.30', '예시 갤러리'], 11); });
+  };
+
+  // ③ 글자 놓기
+  GP['vertical-title'] = function (c) {
+    var C = Cols(3, 24, 12); C.draw(1.1);
+    put(0, 0, 20, function () {
+      c.save(); c.translate(C.x(0) + C.W - 8, 426); c.rotate(-Math.PI / 2);
+      var s = Math.min(fit('골목 사진전', KR, 402, 120), 96); txt('골목 사진전', 0, 0, s, KR, INK); c.restore();
+    });
+    put(1, 16, 0, function () { photo(C.x(1), 24, C.span(1, 2), 206); });
+    put(2, 16, 0, function () { bars(C.x(1), 246, C.span(1, 2), 7, 12); });
+    put(3, 0, 12, function () { info(C.x(2), 364, ['11.08 - 11.30', '예시 갤러리', '주최 예시'], 10); });
+    glabel('90°', C.x(1) + 4, 440);
+  };
+  GP['angled-title'] = function (c) {
+    grect(24, 24, 312, 402, 1);
+    var a = 35 * Math.PI / 180; gline(180 - Math.cos(a) * 300, 225 - Math.sin(a) * 300, 180 + Math.cos(a) * 300, 225 + Math.sin(a) * 300, 1.4);
+    glabel('35°', 60, 120);
+    put(0, -30, -20, function () {
+      c.save(); c.translate(180, 225); c.rotate(a); var s = fit('GRID', EN, 470, 170, 900); txt('GRID', 0, s * 0.36, s, EN, INK, 'center', 900); c.restore();
+    });
+    put(1, 12, 0, function () { bars(212, 36, 124, 4, 12); });
+    put(2, 0, 12, function () { info(24, 384, ['11.08 - 11.30', '예시 갤러리'], 11); });
+    put(3, 0, 0, function () { c.fillStyle = PK; c.fillRect(24, 24, 40, 10); });
+  };
+  GP['stacked-title'] = function (c) {
+    var C = Cols(4, 24, 10); C.draw(0.8, 0.6);
+    var L = ['골목의', '오후', '사진전'], y = 24, sz = [];
+    L.forEach(function (w, i) { sz.push(fit(w, KR, 312, 200)); });
+    var tot = sz.reduce(function (a, b) { return a + b; }, 0) * 0.9, k = Math.min(1, 336 / tot);
+    L.forEach(function (w, i) {
+      var s = sz[i] * k; y += s * 0.9;
+      (function (yy, s, i) { put(i, 0, -16, function () { txt(w, 22, yy - s * 0.1, s, KR, i === 1 ? PK : INK, 'left', 900); }); gline(24, yy - s * 0.1, 336, yy - s * 0.1, 1.2); })(y, s, i);
+    });
+    put(3, 0, 12, function () { info(24, 410, ['11.08 - 11.30  ·  예시 갤러리'], 11); });
+  };
+  GP['split-word'] = function (c) {
+    var C = Cols(4, 24, 10); C.draw(0.7, 0.5); gline(24, 0, 24, 450, 2.4);
+    var parts = ['GRA', 'PHI', 'C'], s = fit('PHI', EN, 280, 150, 900), y = 24;
+    parts.forEach(function (p, i) { y += s * 0.86; (function (yy, i) { put(i, -20, 0, function () { txt(p, 20, yy, s, EN, i === 2 ? PK : INK, 'left', 900); }); gline(24, yy, 336, yy, 0.9, 0.6); })(y, i); });
+    put(3, 0, 12, function () { info(336, 400, ['11.08 - 11.30', '예시 갤러리'], 11, 'right'); });
+  };
+  GP['info-block'] = function (c) {
+    var G = Mod(4, 6, 18, 6), r;
+    put(0, 0, -12, function () { r = G.cell(0, 0, 4, 3); photo(r.x, r.y, r.w, r.h); });
+    put(1, 0, 10, function () { r = G.cell(0, 3, 4, 1); var s = fit('골목 사진전', KR, r.w, 56); txt('골목 사진전', r.x, r.y + r.h - 10, s, KR, INK); });
+    put(2, 0, 10, function () { r = G.cell(0, 4, 2, 2); bars(r.x, r.y + 6, r.w, 9, 14); });
+    put(3, 14, 14, function () { r = G.cell(2, 4, 2, 2); info(r.x + 8, r.y + 22, INFO, 12, 'left', 22); });
+    G.draw(); r = G.cell(2, 4, 2, 2); gfill(r.x, r.y, r.w, r.h, 0.14); grect(r.x, r.y, r.w, r.h, 2.6); glabel('INFO', r.x + r.w - 6, r.y + r.h - 6, 'right');
+  };
+  GP['cropped-type'] = function (c) {
+    grect(24, 24, 312, 402, 1); gline(0, 449, 360, 449, 3); glabel('CROP 1/3', 336, 440, 'right');
+    var s = 214;
+    put(0, 0, 40, function () { txt('오픈', 18, 450 + s * 0.24, s, KR, INK, 'left', 900); });
+    put(1, 0, -10, function () { info(24, 48, ['11.08  10:00', '예시 상점'], 12); });
+    put(2, 0, -10, function () { c.fillStyle = PK; c.beginPath(); c.arc(312, 60, 24, 0, 7); c.fill(); });
+    put(3, 0, 0, function () { bars(24, 110, 150, 3, 12); });
+  };
+
+  function wrap(fn) {
+    return function (c, w, h, t, opt) {
+      opt = opt || {}; S.c = c; S.t = ((t % 8) + 8) % 8;
+      var g = opt.grid == null ? 'auto' : opt.grid; S.gk = eo(S.t / 1.2);
+      S.ga = g === true ? 1 : g === false ? 0 : (S.t < 6.5 ? 1 : S.t < 7.5 ? 1 - (S.t - 6.5) : 0);
+      c.save(); c.scale(w / 360, h / 450); c.beginPath(); c.rect(0, 0, 360, 450); c.clip();
+      c.fillStyle = WH; c.fillRect(0, 0, 360, 450); c.fillStyle = INK; fn(c); c.restore();
+    };
+  }
+  var OUT = {}; Object.keys(GP).forEach(function (k) { OUT[k] = wrap(GP[k]); });
+  root.GP = OUT;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<div class="gm"><canvas role="img" aria-label="사선 제목 포스터 견본. 그리드 선이 그려진 뒤 요소가 칸에 앉는다"></canvas><div class="bar"><button type="button" aria-pressed="true">그리드 선 · 자동</button><span class="note"></span></div><script>(function(){
+  var cv=document.currentScript.parentNode.querySelector('canvas'),btn=cv.parentNode.querySelector('button'),note=cv.parentNode.querySelector('.note');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode=still?true:'auto',t0=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  cv.width=360*dpr;cv.height=450*dpr;var c=cv.getContext('2d');
+  function paint(t){c.setTransform(dpr,0,0,dpr,0,0);GP["angled-title"](c,360,450,t,{grid:mode});}
+  function label(){btn.setAttribute('aria-pressed',mode===false?'false':'true');btn.textContent=mode==='auto'?'그리드 선 · 자동':mode?'그리드 선 · 켬':'그리드 선 · 끔';note.textContent=still?'움직임 줄이기: 다 놓인 판':'8초 반복';}
+  btn.addEventListener('click',function(){mode=still?!mode:(mode==='auto'?true:mode===true?false:'auto');label();if(still)paint(4);});
+  label();
+  if(still){paint(4);return;}
+  function loop(now){if(t0===null)t0=now;paint(Math.max(0,(now-t0)/1000));requestAnimationFrame(loop);}
+  requestAnimationFrame(loop);
+})();</script></div>
+</body></html>
