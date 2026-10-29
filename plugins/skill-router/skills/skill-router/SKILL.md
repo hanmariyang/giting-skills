@@ -47,6 +47,7 @@ description: "Front door to the Giting Skills marketplace. Use when the user ask
 | `font-menu` | 「이런 느낌 폰트 뭐 있어」 「폰트를 어떻게 불러와」 | 인상별 웹폰트와 불러오는 코드 |
 | `landing-menu` | 「랜딩 페이지 뭐부터 넣지」 「섹션 순서가 막혔어」 | 랜딩 섹션 사전과 조립 순서 |
 | `carousel-menu` | 「인스타 카드뉴스 몇 장으로 짜지」 「첫 장 뭐로 하지」 | 캐러셀 장마다 꼴 이름과 6장 순서, 1080×1350 견본 |
+| `thumb-menu` | 「유튜브 썸네일 만들어줘」 「썸네일 눈에 띄게」 「쇼츠 표지 뭐로 하지」 | 썸네일 기법 40가지 이름과 1280×720 견본, 처음부터 끝까지 12단계 |
 
 ### 고치기
 

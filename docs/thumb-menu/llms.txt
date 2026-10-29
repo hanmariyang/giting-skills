@@ -1,0 +1,428 @@
+# 썸네일 메뉴판 (thumb-menu) · Giting Skills
+
+> 유튜브 썸네일과 쇼츠 표지를 '예쁘게' 대신 이름으로 시키게 해 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 1280×720 실물 HTML. 6갈래(구도·주인공·글자·장치·색과 바탕·시리즈와 형식) 40항목 + 처음부터 끝까지 12단계 + 영상 종류별 레시피 6. 견본 그림은 전부 우리가 만든 것(기티 클레이 렌더, 사람 없는 장면 사진).
+> 공식: [영상이 주는 것 한 줄] + [구도 이름] + [주인공 처리] + [글자 이름과 실제 문구] + [장치 하나] + [규격 1280×720, 오른쪽 아래 비우기]  (✕ "유튜브 썸네일 눈에 띄게 만들어줘" → ○ "주제는 「혼자 캠핑 첫날」. 1280×720. 3분할 구도로 왼쪽 3분의 2에 캠핑 사진, 오른쪽 3분의 1에 흰 테두리 누끼로 놀란 표정. 큰 타이틀 「혼캠 첫날」 두 줄, 흰 글자에 검은 외곽선. 장치는 빨간 화살표 하나로 텐트를 가리키게. 오른쪽 아래는 영상 길이가 덮으니 비워 둬.")
+> 갤러리: https://giting.kr/skills/thumb-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install thumb-menu@giting
+
+## 공통 규격
+- 규격은 16:9. 견본은 1280×720 으로 그린다. 공식 권장은 3840×2160, 최소 너비 640, JPG 또는 PNG, 모바일 업로드는 2MB 이하(YouTube 도움말).
+- 오른쪽 아래에는 영상 길이 표시가 덮인다. 그 자리에 얼굴과 글자를 두지 않는다.
+- 글은 제목을 되풀이하지 않는다. 제목이 못 하는 말 하나만, 한 줄 8자 안팎 두 줄까지(우리 값).
+- 주인공(얼굴이나 물건)은 하나. 장치(화살표·원·말풍선·스티커)도 한 장에 하나가 기본이다.
+- 강조색은 하나. 글자는 굵은 글꼴에 외곽선이나 그림자로 바탕과 뗀다.
+- 영상에 없는 장면이나 약속을 넣지 않는다(YouTube 썸네일 정책). 남의 사진, 연예인 사진을 쓰지 않는다.
+- 다 만들면 가로 320px 과 160px 로 줄여서 글자가 읽히고 주인공이 보이는지 본다(우리 값).
+
+## 처음부터 끝까지 (A–Z)
+1. **약속 한 줄** 영상이 보는 사람에게 주는 것을 한 줄로 적는다. 썸네일 글은 이 한 줄에서 나오고, 제목과 같은 말을 되풀이하지 않는다. (확인: 제목과 썸네일 글을 나란히 놓았을 때 같은 말이 두 번 나오지 않는가)
+2. **소재 찍기** 썸네일용 장면을 따로 찍는다. 표정은 크게, 빛은 밝게, 배경은 단순하게. 글자 들어갈 자리를 비워 두고 찍는다. (확인: 주인공이 화면의 3분의 1 이상을 차지하는가)
+3. **구도 고르기** ① 구도에서 하나를 고른다. 비교면 반반·VS·전후, 여러 장면이면 콜라주·사각 프레임, 하나를 보여 주면 3분할·제품 한가운데. (확인: 구도 이름 하나로 말할 수 있는가)
+4. **주인공 처리** ② 에서 고른다. 누끼를 따서 바탕과 떼고, 필요하면 흰 테두리나 글로우를 더한다. (확인: 바탕과 주인공의 경계가 작게 봐도 보이는가)
+5. **글자 얹기** ③ 에서 고른다. 굵은 글꼴, 두 줄까지, 외곽선이나 박스로 읽히게. (확인: 한 줄 8자 안팎인가, 오른쪽 아래를 비웠는가)
+6. **장치 하나** ④ 에서 하나만 고른다. 화살표·원은 가리킬 곳이 있을 때만. (확인: 장치가 둘 이상이면 하나를 뺀다)
+7. **색 맞추기** ⑤ 에서 바탕을 정하고 강조색 하나를 고른다. 주인공과 글자가 바탕과 밝기로 갈라지게. (확인: 흑백으로 바꿔도 글자가 읽히는가)
+8. **길이 표시 자리 비우기** 오른쪽 아래 모서리에 무엇이 걸렸는지 본다. (확인: 얼굴·글자·로고가 오른쪽 아래에 없는가)
+9. **내보내기** 16:9 로 저장한다. 1280×720 이상, JPG 또는 PNG, 휴대폰으로 올리면 2MB 이하(YouTube 도움말). (확인: 비율이 16:9 이고 용량이 넘치지 않는가)
+10. **작게 보기** 가로 320px 과 160px 로 줄여 본다(우리 값). 글자가 뭉개지면 글자를 줄이고 크기를 키운다. (확인: 160px 에서도 무엇에 관한 영상인지 보이는가)
+11. **올리고 비교** YouTube Studio 「테스트 및 비교」로 썸네일을 최대 3개까지 걸 수 있다. 승자는 클릭률이 아니라 시청 시간 점유로 정해지고, 쇼츠는 시험할 수 없다(YouTube 도움말). (확인: 비교할 안끼리 구도나 주인공이 충분히 다른가)
+12. **약속 지키기** 썸네일에 넣은 장면과 말이 영상에 실제로 나오는지 확인한다(YouTube 썸네일 정책). (확인: 영상에 없는 것을 약속하지 않았는가)
+
+## ① 구도 (화면 나누기)
+
+### 3분할 구도 (Rule of Thirds)
+- 별칭: "한쪽에 사람 두고 반대쪽에 글씨" · "삼등분" · "가운데 말고 옆에"
+- 정의: 화면을 가로세로 셋으로 나눈 선 위에 주인공을 두고, 남은 쪽에 글자를 둔다.
+- 구분: 한쪽에 치우쳐 글자 자리를 남기면 3분할, 가운데 꽉 채우면 제품 한가운데, 화면을 둘로 가르면 반반 나누기
+- 쓰는 곳: 브이로그, 리뷰, 거의 모든 영상의 기본 틀
+- 요청 문장: 3분할 구도로. 주인공은 오른쪽 세로선 위(오른쪽 3분의 1)에, 큰 타이틀은 왼쪽 3분의 2에 두 줄로. 오른쪽 아래 모서리는 비워 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/thirds.html
+
+### 반반 나누기 (Split Screen)
+- 별칭: "화면 둘로 나눠서" · "왼쪽 오른쪽 따로" · "두 장면 같이"
+- 정의: 화면을 세로선 하나로 둘로 갈라 두 장면을 나란히 놓는다.
+- 구분: 두 장면을 나란히 보여 주면 반반 나누기, 둘이 맞붙으면 VS 대결, 같은 것의 변화면 전후 비교
+- 쓰는 곳: 두 장소, 두 시간대, 두 가지 방법
+- 요청 문장: 반반 나누기로. 가운데 흰 세로선 8px, 왼쪽에 낮 장면, 오른쪽에 밤 장면, 각 위쪽에 짧은 이름표 하나씩.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/split.html
+
+### VS 대결 (Versus)
+- 별칭: "뭐가 나아" · "대결 구도" · "둘 중 하나"
+- 정의: 둘을 양쪽에 세우고 가운데 큰 VS 를 둔다. 양쪽 바탕색을 다르게 한다.
+- 구분: 승부를 붙이면 VS 대결, 그냥 나란히 보여 주면 반반 나누기
+- 쓰는 곳: 제품 비교, 메뉴 비교, 방법 비교
+- 요청 문장: VS 대결로. 왼쪽 빨강, 오른쪽 파랑 바탕을 사선으로 가르고, 양쪽에 물건 누끼 하나씩, 가운데 노란 원 안에 VS. 이름은 각 물건 아래 한 단어.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/versus.html
+
+### 전후 비교 (Before & After)
+- 별칭: "바뀐 거 보여 주기" · "이랬는데 이렇게" · "변신 전후"
+- 정의: 같은 대상의 바뀌기 전과 후를 양쪽에 두고 가운데 화살표로 잇는다. 전은 흐리게, 후는 밝게.
+- 구분: 같은 대상의 변화면 전후 비교, 다른 둘이 맞붙으면 VS 대결
+- 쓰는 곳: 정리, 다이어트, 리모델링, 편집 전후
+- 요청 문장: 전후 비교로. 왼쪽에 정리 전 방 사진을 채도 낮게, 오른쪽에 정리 후 방 사진을 밝게, 가운데 흰 화살표. 위에 BEFORE, AFTER 작은 이름표.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/before-after.html
+
+### 콜라주 (Collage Grid)
+- 별칭: "사진 여러 장 붙여서" · "네 칸으로" · "하루를 한 장에"
+- 정의: 여러 장면을 칸으로 나눠 한 장에 모은다. 칸 사이는 같은 두께로 띄운다.
+- 구분: 같은 크기 칸으로 나누면 콜라주, 크기와 각도가 제각각이면 사각 프레임 겹치기
+- 쓰는 곳: 여행 브이로그, 하루 기록, 모음 영상
+- 요청 문장: 콜라주로. 2×2 네 칸에 오늘 간 네 곳 사진, 칸 사이 흰 틈 8px. 가운데에 둥근 이름표 하나로 「하루 4곳」.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/collage.html
+
+### 사각 프레임 겹치기 (Framed Insets)
+- 별칭: "사진 흩어 놓기" · "폴라로이드처럼" · "사진 여러 장 비뚤게"
+- 정의: 흰 테두리 사진 몇 장을 크기와 각도를 다르게 겹쳐 놓고, 주인공 하나를 제일 크게 둔다.
+- 구분: 제각각 겹치면 사각 프레임 겹치기, 반듯한 칸이면 콜라주
+- 쓰는 곳: 추억 모음, 여행 정리, 한 달 기록
+- 요청 문장: 사각 프레임 겹치기로. 흐린 바탕 위에 흰 테두리 사진 세 장을 -6도, 4도, -3도로 겹치고 그림자를 줘. 주인공 누끼는 맨 앞에 제일 크게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/framed-insets.html
+
+### 돋보기 확대 (Zoom Inset)
+- 별칭: "여기 크게 보여 줘" · "확대해서 동그라미로" · "작은 거 키워서"
+- 정의: 작은 부분을 동그라미로 크게 떼어 옆에 붙이고, 원래 자리와 선으로 잇는다.
+- 구분: 부분을 떼어 키우면 돋보기 확대, 그 자리에 원만 그리면 빨간 원
+- 쓰는 곳: 설정 화면, 작은 부품, 숨은 디테일
+- 요청 문장: 돋보기 확대로. 원래 자리에 빨간 원, 오른쪽에 그 부분을 2.5배로 키운 동그라미(흰 테두리 10px), 둘을 흰 선으로 이어 줘.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/zoom-inset.html
+
+### 화면 + 얼굴 (Screen + Reaction)
+- 별칭: "화면 옆에 내 얼굴" · "튜토리얼 썸네일" · "모니터랑 표정"
+- 정의: 보여 줄 화면을 크게 두고, 한쪽 끝에 반응하는 얼굴(또는 캐릭터) 누끼를 겹친다.
+- 구분: 화면이 주인공이면 화면 + 얼굴, 표정이 주인공이면 표정 클로즈업
+- 쓰는 곳: 튜토리얼, 앱 리뷰, 게임
+- 요청 문장: 화면 + 얼굴로. 왼쪽 60%에 노트북 화면 캡처를 둥근 모서리 틀에, 오른쪽에 생각하는 표정 누끼를 틀에 살짝 겹치게. 글자는 왼쪽 위 한 줄.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/screen-face.html
+
+### 제품 한가운데 (Product Hero)
+- 별칭: "물건 크게 가운데" · "제품 사진 썸네일" · "언박싱 썸네일"
+- 정의: 물건 하나를 가운데 크게, 살짝 기울여 그림자와 함께 둔다. 바탕은 단색이나 빛 번짐.
+- 구분: 물건 하나가 주인공이면 제품 한가운데, 둘을 붙이면 VS 대결
+- 쓰는 곳: 리뷰, 언박싱, 추천
+- 요청 문장: 제품 한가운데로. 운동화 누끼를 가운데 크게 -12도 기울이고 아래 그림자. 바탕은 주황에서 진갈색으로 번지는 원형 그라데이션, 글자는 왼쪽 위 한 줄.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/product-hero.html
+
+### 나란히 줄 세우기 (Lineup)
+- 별칭: "순위 매기기" · "1등부터 3등" · "후보들 쭉"
+- 정의: 후보 여럿을 한 줄로 세우고 번호나 받침대로 순서를 보여 준다.
+- 구분: 여럿을 순서대로 세우면 줄 세우기, 둘만 맞붙이면 VS 대결
+- 쓰는 곳: 순위, 추천 목록, 월드컵
+- 요청 문장: 나란히 줄 세우기로. 세 후보 누끼를 받침대 위에 세우고, 가운데 1, 왼쪽 2, 오른쪽 3. 1등 받침대가 제일 높게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/lineup.html
+
+## ② 주인공 (사람·물건 처리)
+
+### 누끼 (Cutout)
+- 별칭: "배경 지우고 사람만" · "배경 따기" · "인물만 오려서"
+- 정의: 주인공의 배경을 지워 오려 내고 다른 바탕 위에 올린다. 썸네일 대부분이 여기서 시작한다.
+- 구분: 오려 내기만 하면 누끼, 거기에 흰 띠를 두르면 흰 테두리 누끼, 빛을 두르면 외곽 글로우
+- 쓰는 곳: 거의 모든 썸네일
+- 요청 문장: 주인공 누끼를 따서 노란 단색 바탕 왼쪽에 크게 올려. 가장자리는 깔끔하게, 머리카락 끝은 지저분하면 살짝 부드럽게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/cutout.html
+
+### 흰 테두리 누끼 (Sticker Outline)
+- 별칭: "스티커처럼 하얀 테두리" · "누끼에 흰 선" · "오려 붙인 느낌"
+- 정의: 누끼 둘레에 흰 띠를 둘러 스티커처럼 만든다. 복잡한 바탕에서도 주인공이 떨어져 보인다.
+- 구분: 흰 띠면 흰 테두리 누끼, 빛 번짐이면 외곽 글로우
+- 쓰는 곳: 바탕이 복잡한 사진, 캐릭터, 물건
+- 요청 문장: 흰 테두리 누끼로. 흰 띠 8px 는 누끼의 윤곽을 따라 둘러(CSS 로는 filter: drop-shadow 를 위아래 왼쪽 오른쪽 네 번, 마지막에 옅은 그림자). 바탕 사진은 그대로 두고 주인공만 떠 보이게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/sticker-outline.html
+
+### 외곽 글로우 (Rim Glow)
+- 별칭: "사람 뒤에 빛 나게" · "빛 번지는 테두리" · "후광"
+- 정의: 누끼 둘레에 빛을 번지게 둘러 어두운 바탕에서 주인공을 띄운다.
+- 구분: 어두운 바탕에 빛을 두르면 외곽 글로우, 밝은 바탕에 흰 띠면 흰 테두리 누끼
+- 쓰는 곳: 밤 장면, 게임, 극적인 순간
+- 요청 문장: 외곽 글로우로. 바탕은 어둡게 눌러 두고, 주인공 누끼 둘레에 노란빛을 18px 정도 번지게. 빛은 한 겹만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/rim-glow.html
+
+### 표정 클로즈업 (Reaction Close-up)
+- 별칭: "놀란 얼굴 크게" · "리액션 얼굴" · "표정으로 보여 주기"
+- 정의: 과장된 표정을 화면 한쪽에 크게 잘라 넣는다. 작게 봐도 감정이 읽혀야 한다.
+- 구분: 얼굴이 주인공이면 표정 클로즈업, 화면이 주인공이면 화면 + 얼굴
+- 쓰는 곳: 리액션, 도전, 놀라운 결과
+- 요청 문장: 표정 클로즈업으로. 놀란 표정을 가슴 위로 잘라 오른쪽 절반에 크게, 눈이 화면 위쪽 3분의 1 선에 오게. 왼쪽에 짧은 글 두 줄.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/reaction-closeup.html
+
+### 시선 유도 (Gaze Lead)
+- 별칭: "손가락으로 가리키게" · "글씨 쪽을 보게" · "보는 방향으로"
+- 정의: 주인공이 글자나 물건 쪽을 보거나 가리키게 해서 보는 사람의 눈을 그리로 데려간다.
+- 구분: 주인공 몸짓으로 가리키면 시선 유도, 그래픽으로 가리키면 빨간 화살표
+- 쓰는 곳: 추천, 소개, 알려 주는 영상
+- 요청 문장: 시선 유도로. 주인공을 왼쪽에 두고 오른쪽을 가리키게, 가리키는 쪽에 큰 타이틀 두 줄.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/gaze-lead.html
+
+### 누끼 여러 개 겹치기 (Layered Cutouts)
+- 별칭: "여러 명 겹쳐서" · "같은 사람 여러 표정" · "단체 누끼"
+- 정의: 누끼 여러 개를 앞뒤로 겹쳐 한 장에 여러 반응이나 여러 사람을 담는다. 맨 앞이 제일 크다.
+- 구분: 누끼를 앞뒤로 겹치면 누끼 여러 개 겹치기, 사진 틀째 겹치면 사각 프레임 겹치기
+- 쓰는 곳: 멤버 소개, 여러 반응, 모음
+- 요청 문장: 누끼 여러 개 겹치기로. 세 표정 누끼를 뒤에서 앞으로 작게, 중간, 크게 겹치고, 맨 앞 누끼가 가운데 오게. 글자는 아래 한 줄.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/layered-cutouts.html
+
+## ③ 글자
+
+### 큰 타이틀 (Big Title)
+- 별칭: "글씨 크게 박기" · "제목 크게" · "한 단어 크게"
+- 정의: 짧은 말 하나를 화면 3분의 1 이상 크기로, 외곽선과 그림자를 줘서 바탕과 뗀다.
+- 구분: 글자 자체가 크면 큰 타이틀, 글자를 박스에 담으면 자막 박스, 두 겹 테두리 색 글씨면 예능 자막
+- 쓰는 곳: 장소, 주제 한 단어, 시리즈 이름
+- 요청 문장: 큰 타이틀로. 「골목 야경」 두 줄, 굵은 글꼴 200px 안팎, 흰 글자에 검은 외곽선 16px, 아래로 진한 그림자. 왼쪽 위에 두고 오른쪽 아래는 비워 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/big-title.html
+
+### 자막 박스 (Caption Box)
+- 별칭: "흰 네모 안에 글씨" · "말 상자" · "포스트잇처럼 짧은 글"
+- 정의: 짧은 말 몇 개를 흰 상자에 검은 글씨로 담아 사진 여기저기에 붙인다. 상자는 살짝 기울인다.
+- 구분: 흰 상자 여러 개면 자막 박스, 한 줄 띠면 아래 띠, 말꼬리가 있으면 말풍선
+- 쓰는 곳: 일상 브이로그, 친구들과 놀러 간 영상
+- 요청 문장: 자막 박스로. 흰 상자 셋에 검은 굵은 글씨로 짧은 말 하나씩, 검은 테두리 4px, 각도는 -3도에서 3도 사이로 다르게. 사진의 빈 곳에.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/caption-box.html
+
+### 예능 자막 (Variety Caption)
+- 별칭: "예능처럼 알록달록 글씨" · "두 겹 테두리 글씨" · "TV 자막 느낌"
+- 정의: 색 글자에 검은 테두리, 그 바깥에 흰 테두리를 한 겹 더 둘러 두 겹으로 띄운다.
+- 구분: 두 겹 테두리 색 글씨면 예능 자막, 흰 글자 한 겹 외곽선이면 큰 타이틀
+- 쓰는 곳: 요리, 도전, 친구 영상
+- 요청 문장: 예능 자막으로. 「김치찌개 장인?!」을 노란 글자, 검은 테두리 14px, 바깥 흰 테두리 28px, 살짝 -4도 기울여서.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/variety-caption.html
+
+### 숫자 크게 (Big Number)
+- 별칭: "숫자로 후킹" · "N가지" · "몇 개인지 크게"
+- 정의: 약속하는 숫자 하나를 화면에서 제일 크게 쓰고, 옆에 무엇의 숫자인지 짧게 붙인다.
+- 구분: 숫자가 주인공이면 숫자 크게, 질문이 주인공이면 질문 한 줄
+- 쓰는 곳: 목록 영상, 팁 모음, 기록
+- 요청 문장: 숫자 크게로. 왼쪽에 「5」를 화면 높이만 하게 노란색, 오른쪽에 「가지만 바꿔도」 흰 글자 두 줄. 숫자는 영상에 실제로 나오는 개수만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/big-number.html
+
+### 질문 한 줄 (Question Hook)
+- 별칭: "궁금하게 묻기" · "왜 그럴까 썸네일" · "물음표 크게"
+- 정의: 보는 사람이 겪는 순간을 질문 한 줄로 쓴다. 물음표만 강조색으로.
+- 구분: 물어서 멈추게 하면 질문 한 줄, 숫자로 약속하면 숫자 크게
+- 쓰는 곳: 고민 해결, 원인 찾기
+- 요청 문장: 질문 한 줄로. 「왜 맨날 이렇게 될까?」 두 줄, 흰 글자 검은 외곽선, 물음표만 분홍. 주인공은 생각하는 표정.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/question-hook.html
+
+### 한 단어만 색 (Highlight Word)
+- 별칭: "중요한 단어만 노랗게" · "한 글자만 강조" · "핵심만 색칠"
+- 정의: 제목 안의 한 단어만 색 상자나 색 글자로 바꿔 거기로 눈이 가게 한다.
+- 구분: 제목 안 한 단어만 바꾸면 한 단어만 색, 제목 전체를 크게 하면 큰 타이틀
+- 쓰는 곳: 어디에나. 강조가 필요한 단어가 하나일 때
+- 요청 문장: 한 단어만 색으로. 「동네 카페 숨은 맛집」에서 「숨은」만 노란 상자에 검은 글자, 나머지는 흰 글자.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/highlight-word.html
+
+### 손글씨 (Handwritten Note)
+- 별칭: "감성 손글씨" · "브이로그 글씨" · "일기처럼"
+- 정의: 손으로 쓴 듯한 글씨를 작게, 사진 위에 가볍게 얹는다. 꾸밈보다 분위기가 먼저인 영상에.
+- 구분: 분위기를 살리면 손글씨, 멀리서도 읽혀야 하면 큰 타이틀
+- 쓰는 곳: 감성 브이로그, 일상, 카페
+- 요청 문장: 손글씨로. 손글씨 글꼴로 「오늘의 기록 :)」 흰 글자, 옅은 그림자, 사진 왼쪽 아래 3분의 1에 작게. 밑줄 하나 손으로 그은 듯이.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/handwriting.html
+
+### 아래 띠 (Lower Band)
+- 별칭: "아래에 검은 줄" · "하단에 제목 띠" · "뉴스처럼 아래 자막"
+- 정의: 화면 아래를 어두운 띠로 깔고 그 위에 제목을 왼쪽 정렬로 쓴다. 오른쪽 끝은 길이 표시 자리라 비운다.
+- 구분: 아래 띠면 아래 띠, 흰 상자 여러 개면 자막 박스
+- 쓰는 곳: 시리즈, 뉴스형, 정보 영상
+- 요청 문장: 아래 띠로. 아래 160px 를 검은색에서 투명으로 번지는 띠로 깔고, 흰 글자 제목을 왼쪽에. 회차 이름표는 제목 앞에. 오른쪽 끝 300px 는 비워 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/bottom-band.html
+
+## ④ 장치 (가리키고 꾸미기)
+
+### 말풍선 (Speech Bubble)
+- 별칭: "속마음 풍선" · "대사 넣기" · "생각 풍선"
+- 정의: 주인공 옆에 말꼬리 달린 풍선으로 속마음이나 대사를 넣는다. 제목과 따로 논다.
+- 구분: 말꼬리가 있으면 말풍선, 꼬리 없는 상자면 자막 박스
+- 쓰는 곳: 상황극, 일상, 문제 상황
+- 요청 문장: 말풍선으로. 주인공 머리 옆에 흰 타원 말풍선, 꼬리는 입 쪽으로, 안에 「이거 왜 안 돼…」 검은 글자. 제목은 반대쪽에 따로.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/speech-bubble.html
+
+### 빨간 화살표 (Red Arrow)
+- 별칭: "여기 봐 화살표" · "화살표로 가리키기" · "포인트 화살표"
+- 정의: 굵은 빨간 화살표 하나로 봐야 할 곳을 가리킨다. 흰 테두리를 둘러 어떤 바탕에서도 보이게.
+- 구분: 선으로 가리키면 빨간 화살표, 둘러싸면 빨간 원
+- 쓰는 곳: 요리 순서, 설정 위치, 숨은 것
+- 요청 문장: 빨간 화살표 하나로 고기 그릇을 가리켜. 화살표는 굵기 40px, 흰 테두리 6px, 살짝 휜 모양. 화살표는 하나만.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/red-arrow.html
+
+### 빨간 원 (Circle Callout)
+- 별칭: "동그라미 쳐 줘" · "여기 원" · "빨간 동그라미"
+- 정의: 봐야 할 곳을 빨간 원으로 둘러싼다. 손으로 그린 듯 살짝 찌그러진 원이 많이 쓰인다.
+- 구분: 둘러싸면 빨간 원, 떼어 키우면 돋보기 확대
+- 쓰는 곳: 디테일, 차이, 틀린 그림 찾기
+- 요청 문장: 빨간 원으로 컵을 둘러싸. 선 굵기 12px, 손으로 그린 듯 살짝 기운 타원, 흰 그림자 한 겹.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/circle-callout.html
+
+### 스티커 (Sticker Pops)
+- 별칭: "별이랑 하트 붙이기" · "꾸미기 스티커" · "NEW 딱지"
+- 정의: 별, 하트, NEW 딱지 같은 작은 그림을 두세 개 흩어 붙여 가볍고 들뜬 느낌을 준다.
+- 구분: 꾸밈이 목적이면 스티커, 가리키는 게 목적이면 화살표나 원
+- 쓰는 곳: 일상, 언박싱, 가벼운 영상
+- 요청 문장: 스티커로. 주인공 주변에 노란 별 둘, 분홍 하트 하나, 왼쪽 위에 둥근 NEW 딱지. 스티커는 셋까지, 얼굴은 가리지 않게.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/stickers.html
+
+### 흐려서 숨기기 (Blur Reveal)
+- 별칭: "모자이크로 궁금하게" · "가려 놓기" · "결과 숨기기"
+- 정의: 결과나 핵심 부분을 흐리게 가리고 물음표를 얹어 영상을 열어 보게 만든다. 영상에서 꼭 보여 줘야 한다.
+- 구분: 가려서 궁금하게 하면 흐려서 숨기기, 바탕 전체를 흐리면 배경 흐리기
+- 쓰는 곳: 결과 공개, 변신, 정답 맞히기
+- 요청 문장: 흐려서 숨기기로. 사진의 책상 부분만 흐리게 가리고 그 위에 큰 흰 물음표. 가린 결과는 영상 안에서 실제로 보여 줄 것.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/blur-reveal.html
+
+### 가격표 (Price Tag)
+- 별칭: "가격 딱지" · "얼마인지 보이게" · "할인 태그"
+- 정의: 꼬리표 모양 딱지에 가격을 써서 물건 옆에 기울여 붙인다. 가격은 실제 값만.
+- 구분: 값을 보여 주면 가격표, 개수나 기록을 보여 주면 숫자 크게
+- 쓰는 곳: 쇼핑, 가성비 리뷰, 할인
+- 요청 문장: 가격표로. 운동화 오른쪽 위에 꼬리표 모양 노란 딱지를 10도 기울여, 안에 실제 가격 한 줄. 확인 못 한 가격이면 딱지를 빼.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/price-tag.html
+
+### 집중선 (Speed Lines)
+- 별칭: "만화처럼 쫙 퍼지는 선" · "충격 배경" · "효과선"
+- 정의: 주인공 뒤에서 바깥으로 퍼지는 선을 깔아 놀람이나 충격을 만화처럼 키운다.
+- 구분: 선이 퍼지면 집중선, 어둡게 깔고 한 점만 밝히면 어둡게 깔고 빛
+- 쓰는 곳: 놀람, 반전, 리액션
+- 요청 문장: 집중선으로. 주인공 뒤에 가운데서 퍼지는 노랑과 흰 줄무늬 집중선, 주인공은 놀란 표정 누끼, 위에 짧은 한 단어.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/burst-lines.html
+
+## ⑤ 색과 바탕
+
+### 단색 바탕 (Solid Backdrop)
+- 별칭: "배경 한 색으로" · "깔끔하게 바탕 칠하기" · "색 배경에 누끼"
+- 정의: 바탕을 한 색으로 칠하고 누끼와 글자만 올린다. 시리즈마다 같은 색이면 채널 색이 된다.
+- 구분: 한 색이면 단색 바탕, 사진을 흐리게 깔면 배경 흐리기
+- 쓰는 곳: 정보, 리뷰, 시리즈
+- 요청 문장: 단색 바탕으로. 바탕은 파랑 #2D6BFF 한 색, 물건 누끼는 가운데 오른쪽, 흰 글자 두 줄은 왼쪽.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/solid-backdrop.html
+
+### 배경 흐리기 (Background Blur)
+- 별칭: "뒤를 뿌옇게" · "아웃포커스" · "배경 날리기"
+- 정의: 장소를 알 만큼만 남기고 바탕 사진을 흐리게 해 앞의 주인공과 글자를 띄운다.
+- 구분: 장소를 흐리게 남기면 배경 흐리기, 일부만 가리면 흐려서 숨기기
+- 쓰는 곳: 장소가 있는 브이로그, 복잡한 배경
+- 요청 문장: 배경 흐리기로. 골목 사진을 8px 정도 흐리게 깔고, 주인공 누끼와 글자는 선명하게. 장소는 알아볼 만큼만 남겨.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/bg-blur.html
+
+### 배경만 흑백 (Color Pop)
+- 별칭: "주인공만 컬러" · "나머지 흑백" · "한 사람만 색"
+- 정의: 바탕을 흑백으로 바꾸고 주인공만 색을 남겨 한눈에 주인공이 보이게 한다.
+- 구분: 바탕 색을 빼면 배경만 흑백, 바탕을 흐리면 배경 흐리기
+- 쓰는 곳: 주인공이 바탕에 묻힐 때
+- 요청 문장: 배경만 흑백으로. 골목 사진은 흑백, 주인공 누끼만 원래 색, 글자도 주인공 색 하나만 써.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/color-pop.html
+
+### 보색 대비 (Complementary Contrast)
+- 별칭: "파랑에 주황" · "반대색으로" · "색 확 튀게"
+- 정의: 바탕과 주인공(또는 글자)을 색상환 반대편 색으로 맞춰 서로 튀게 한다.
+- 구분: 반대색 둘로 맞추면 보색 대비, 한 색 바탕이 목적이면 단색 바탕
+- 쓰는 곳: 채널 색 정하기, 시리즈
+- 요청 문장: 보색 대비로. 바탕은 파랑 한 색, 글자와 소품은 주황. 두 색 말고 다른 색은 넣지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/complementary.html
+
+### 어둡게 깔고 빛 (Spotlight Vignette)
+- 별칭: "가장자리 어둡게" · "한 군데만 밝게" · "조명 받은 느낌"
+- 정의: 화면 가장자리를 어둡게 누르고 주인공 자리만 밝게 남겨 눈을 가운데로 모은다.
+- 구분: 어둡게 눌러 한 곳을 밝히면 어둡게 깔고 빛, 선을 퍼뜨리면 집중선
+- 쓰는 곳: 요리, 제품, 분위기 있는 장면
+- 요청 문장: 어둡게 깔고 빛으로. 가장자리는 검게 눌러 70% 어둡게, 고기 그릇 자리만 원형으로 밝게. 글자는 어두운 위쪽에 흰 글씨로.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/spotlight.html
+
+## ⑥ 시리즈와 형식
+
+### 회차 배지 (Episode Badge)
+- 별칭: "EP 몇 화 표시" · "시리즈 번호" · "몇 번째인지"
+- 정의: 왼쪽 위 같은 자리에 회차 번호 배지를 두어 시리즈를 한눈에 잇는다.
+- 구분: 번호 하나만 고정하면 회차 배지, 배치 전체를 고정하면 고정 틀
+- 쓰는 곳: 시리즈, 연재, 챌린지 n일차
+- 요청 문장: 회차 배지로. 왼쪽 위 40px 안쪽에 주황 둥근 상자, 흰 글자 「EP.03」. 모든 회차 같은 자리, 같은 크기.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/episode-badge.html
+
+### 고정 틀 (Series Template)
+- 별칭: "매번 같은 디자인" · "시리즈 템플릿" · "틀 정해 두기"
+- 정의: 사진 자리, 글자 자리, 색을 정해 두고 회차마다 사진과 글만 바꾼다. 채널 목록에서 한 묶음으로 보인다.
+- 구분: 배치 전체를 고정하면 고정 틀, 번호만 고정하면 회차 배지
+- 쓰는 곳: 연재, 채널 정체성
+- 요청 문장: 고정 틀로. 왼쪽 60%는 사진, 오른쪽 40%는 노란 판에 검은 글자 두 줄, 왼쪽 위 회차 배지. 이번 회차는 사진과 글만 바꿔.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/series-template.html
+
+### 채널 표시 (Channel Mark)
+- 별칭: "로고 작게" · "채널 마크" · "워터마크 자리"
+- 정의: 채널 로고를 작게, 늘 같은 모서리에 둔다. 오른쪽 아래는 길이 표시가 덮으니 피한다.
+- 구분: 로고를 작게 고정하면 채널 표시, 회차 번호를 고정하면 회차 배지
+- 쓰는 곳: 모든 영상, 퍼 가도 출처가 보이게
+- 요청 문장: 채널 표시로. 지름 64px 둥근 로고를 왼쪽 위 32px 안쪽에. 오른쪽 아래에는 두지 마.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/corner-mark.html
+
+### 쇼츠 표지 (Shorts Cover)
+- 별칭: "쇼츠 썸네일" · "세로 표지" · "릴스 표지처럼"
+- 정의: 9:16 세로 표지. 글자는 위쪽 가운데에 몰고, 아래쪽은 제목과 버튼이 덮으니 비운다. 맞춤 표지는 데스크톱 YouTube Studio 에서 올린다.
+- 구분: 세로 9:16 이면 쇼츠 표지, 가로 16:9 이면 나머지 전부
+- 쓰는 곳: 쇼츠
+- 요청 문장: 쇼츠 표지로. 1080×1920 세로, 큰 글자 두 줄은 위쪽 가운데, 주인공은 가운데, 아래쪽 3분의 1은 비워 둬.
+- 견본: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/thumb-menu/components/shorts-cover.html
+
+## 영상 종류별 레시피
+### 브이로그
+- 조합: 콜라주 + 배경 흐리기 + 손글씨 + 스티커
+- 요청 문장: 브이로그 썸네일. 1280×720. 콜라주 2×2로 오늘 간 곳 네 장, 가운데 손글씨로 「오늘의 기록」, 스티커는 별 둘만. 오른쪽 아래 비워 둬.
+
+### 리뷰
+- 조합: 제품 한가운데 + 단색 바탕 + 큰 타이틀 + 가격표
+- 요청 문장: 리뷰 썸네일. 1280×720. 제품 한가운데로 물건 누끼를 크게, 단색 바탕 한 색, 큰 타이틀은 「3주 써 봄」 두 줄, 가격표는 실제 가격일 때만.
+
+### 비교
+- 조합: VS 대결 + 보색 대비 + 큰 타이틀
+- 요청 문장: 비교 썸네일. 1280×720. VS 대결로 양쪽에 물건 하나씩, 바탕은 보색 대비(빨강과 파랑), 가운데 VS, 이름은 한 단어씩.
+
+### 튜토리얼
+- 조합: 화면 + 얼굴 + 빨간 화살표 + 질문 한 줄
+- 요청 문장: 튜토리얼 썸네일. 1280×720. 화면 + 얼굴로 왼쪽에 화면 캡처, 오른쪽에 생각하는 표정 누끼, 빨간 화살표 하나로 눌러야 할 곳, 글은 질문 한 줄.
+
+### 순위
+- 조합: 나란히 줄 세우기 + 숫자 크게 + 어둡게 깔고 빛
+- 요청 문장: 순위 썸네일. 1280×720. 나란히 줄 세우기로 후보 셋을 받침대 위에, 1등 머리 위에 숫자 크게 「1」, 가장자리는 어둡게 깔고 1등만 밝게.
+
+### 쇼츠
+- 조합: 쇼츠 표지 + 표정 클로즈업 + 예능 자막
+- 요청 문장: 쇼츠 표지. 1080×1920. 위쪽 가운데에 예능 자막 두 줄, 가운데에 표정 클로즈업, 아래쪽 3분의 1은 비워 둬.
+
+## 영문 이름 A–Z
+- Background Blur = 배경 흐리기
+- Before & After = 전후 비교
+- Big Number = 숫자 크게
+- Big Title = 큰 타이틀
+- Blur Reveal = 흐려서 숨기기
+- Caption Box = 자막 박스
+- Channel Mark = 채널 표시
+- Circle Callout = 빨간 원
+- Collage Grid = 콜라주
+- Color Pop = 배경만 흑백
+- Complementary Contrast = 보색 대비
+- Cutout = 누끼
+- Episode Badge = 회차 배지
+- Framed Insets = 사각 프레임 겹치기
+- Gaze Lead = 시선 유도
+- Handwritten Note = 손글씨
+- Highlight Word = 한 단어만 색
+- Layered Cutouts = 누끼 여러 개 겹치기
+- Lineup = 나란히 줄 세우기
+- Lower Band = 아래 띠
+- Price Tag = 가격표
+- Product Hero = 제품 한가운데
+- Question Hook = 질문 한 줄
+- Reaction Close-up = 표정 클로즈업
+- Red Arrow = 빨간 화살표
+- Rim Glow = 외곽 글로우
+- Rule of Thirds = 3분할 구도
+- Screen + Reaction = 화면 + 얼굴
+- Series Template = 고정 틀
+- Shorts Cover = 쇼츠 표지
+- Solid Backdrop = 단색 바탕
+- Speech Bubble = 말풍선
+- Speed Lines = 집중선
+- Split Screen = 반반 나누기
+- Spotlight Vignette = 어둡게 깔고 빛
+- Sticker Outline = 흰 테두리 누끼
+- Sticker Pops = 스티커
+- Variety Caption = 예능 자막
+- Versus = VS 대결
+- Zoom Inset = 돋보기 확대

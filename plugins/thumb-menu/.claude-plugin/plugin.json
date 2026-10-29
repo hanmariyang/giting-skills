@@ -1,0 +1,9 @@
+{
+  "name": "thumb-menu",
+  "version": "0.1.0",
+  "description": "썸네일 메뉴판 — 유튜브 썸네일·쇼츠 표지를 '눈에 띄게' 대신 이름으로 시키게 해 주는 사전. 6갈래 40항목(구도: 3분할·반반·VS·전후·콜라주·사각 프레임·돋보기·화면+얼굴·제품 한가운데·줄 세우기 / 주인공: 누끼·흰 테두리·글로우·표정 클로즈업·시선 유도 / 글자: 큰 타이틀·자막 박스·예능 자막·숫자·질문·한 단어 색·손글씨·아래 띠 / 장치: 말풍선·화살표·원·스티커·흐려서 숨기기·가격표·집중선 / 색과 바탕 / 시리즈와 형식)의 별칭 → 정식 명칭 → 요청 문장 → 1280×720 실물 HTML + 처음부터 끝까지 12단계 + 영상 종류별 레시피 6 + 영문 이름 A–Z.",
+  "author": { "name": "Giting", "url": "https://giting.kr" },
+  "homepage": "https://github.com/hanmariyang/giting-skills",
+  "license": "MIT",
+  "keywords": ["youtube", "thumbnail", "shorts", "design", "korean", "dictionary"]
+}
