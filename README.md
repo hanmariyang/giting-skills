@@ -125,6 +125,7 @@ ui-menu의 **모바일판**. "아래에서 올라오는 판"을 **바텀시트**
 
 - **의존성 0 검사기** `scripts/wrapcheck.mjs`: 글자 위치로 줄을 되살려 쪼개짐 · 넘침 · 외톨이를 잡는다. 문제 있으면 끝 코드 1
 - **자리별 처방**: 제목 keep-all+balance · 본문 keep-all+pretty · 좁은 칸은 keep-all 금지 · 코드·주소는 overflow-wrap: anywhere
+- **글자 키운 상태**(0.2.0): `--text 150,200`(글자만, 폰 글자 크기 설정처럼) · `--zoom 150,200`(브라우저 확대)에서 버튼 글자가 잘리는지 · 실제로 눌리는지까지 잰다. 기준 200% 는 WCAG 1.4.4
 - **실측**: 예시 페이지 쪼개짐 11 → 0 · 넘침 2 → 0. giting.kr 매거진 1호 34 → 0, 2호 52 → 0
 
 라이브: **https://giting.kr/skills/hangul-wrap**
