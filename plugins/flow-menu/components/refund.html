@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>환불 흐름 · flow-menu</title>
+<style>
+/* 환불 흐름 다섯 화면. 각 부품에 data-menu="<app-menu id>" 를 단다.
+   영상(flowrack)과 갤러리는 이 파일의 화면을 그대로 찍고, 이름표 자리는 data-menu 의 실제 위치에서 잰다. */
+:root{--bg:#EDEDF0;--paper:#fff;--ink:#16161A;--sub:#7A7A84;--line:#E4E4E8;--soft:#F5F5F7;--ac:#F05032;--ac-soft:#FDEDE9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px/1.45 "Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink)}
+.rack{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;padding:32px 16px}
+.step{display:flex;flex-direction:column;gap:10px;align-items:center}
+.step h2{margin:0;font-size:15px;font-weight:800}
+.step h2 span{color:var(--ac);margin-right:6px}
+.phone{position:relative;width:390px;height:844px;background:var(--paper);border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px #111,0 18px 40px rgba(0,0,0,.18);flex:none}
+.sb{height:47px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 30px 6px;font-weight:700;font-size:15px}
+.bar{height:52px;display:flex;align-items:center;padding:0 8px;position:relative}
+.bar h1{position:absolute;left:0;right:0;text-align:center;margin:0;font-size:17px;font-weight:700;pointer-events:none}
+.ib{width:44px;height:44px;display:grid;place-items:center;font-size:22px;border:0;background:none;color:var(--ink)}
+.body{position:absolute;top:99px;left:0;right:0;bottom:0;overflow:hidden;padding:0 20px}
+.sec{padding:18px 0 14px;border-bottom:8px solid var(--soft);margin:0 -20px;padding-left:20px;padding-right:20px}
+.sh{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:17px;margin-bottom:12px}
+.sh small{font-weight:600;font-size:13px;color:var(--sub)}
+.row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.lb{width:58px;font-size:13px;color:var(--sub);flex:none}
+.tf{flex:1;height:46px;border:1px solid var(--line);border-radius:10px;padding:0 14px;display:flex;align-items:center;color:var(--ink);background:#fff}
+.tf.ph{color:#A7A7AF}
+.tf.ro{background:var(--soft)}
+.btn2{height:46px;padding:0 14px;border:1px solid #CFCFD5;border-radius:10px;background:#fff;font-weight:700;font-size:14px;white-space:nowrap}
+.sel{height:48px;border:1px solid var(--line);border-radius:10px;display:flex;justify-content:space-between;align-items:center;padding:0 14px}
+.foot{position:absolute;left:0;right:0;bottom:0;background:#fff;padding:10px 16px 30px;border-top:1px solid var(--line)}
+.note{font-size:12px;color:var(--sub);text-align:center;margin-bottom:8px}
+.pri{width:100%;height:54px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:17px;font-weight:800}
+.tog{display:flex;justify-content:space-between;align-items:center;background:var(--ac-soft);border-radius:10px;padding:12px 14px;font-weight:700;font-size:14px;margin-bottom:12px}
+.sw{width:46px;height:28px;border-radius:14px;background:var(--ac);position:relative}
+.sw::after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.item{display:flex;gap:12px;margin-bottom:12px}
+.thumb{width:64px;height:76px;border-radius:8px;background:linear-gradient(160deg,#D8D2C6,#B9B0A0);flex:none}
+.item b{display:block;font-size:14px}
+.item .p{font-weight:800}.item .p em{font-style:normal;color:var(--ac);margin-right:4px}
+.lt{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:14px}
+.lt .m{color:var(--ac);font-weight:800}
+.tb{border:0;background:none;color:var(--ink);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:0 4px;height:44px}
+.rd{display:flex;align-items:center;gap:12px;height:50px;font-size:15px}
+.rd i{width:22px;height:22px;border-radius:50%;border:2px solid #C9C9CF;flex:none}
+.rd.on i{border:7px solid var(--ac)}
+.bd{font-size:11px;font-weight:800;color:#fff;background:#2E7D5B;border-radius:6px;padding:2px 6px}
+.kv{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:var(--sub)}
+.kv b{color:var(--ink)}
+.kv.tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:16px;color:var(--ink);font-weight:800}
+.save{background:var(--ac-soft);color:var(--ac);font-weight:800;font-size:13px;text-align:center;border-radius:8px;padding:8px;margin-top:8px}
+.cb{display:flex;gap:10px;align-items:center;font-weight:700;font-size:15px;padding:10px 0}
+.cb i{width:22px;height:22px;border-radius:6px;background:var(--ac);color:#fff;display:grid;place-items:center;font-style:normal;font-size:14px}
+.terms{font-size:13px;color:var(--sub);padding-left:32px;line-height:1.9}
+.done{text-align:center;padding:26px 0 18px;font-size:22px;font-weight:800}
+.scrim{position:absolute;inset:0;background:rgba(10,10,14,.48)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 20px 34px;text-align:center}
+.grab{width:40px;height:5px;border-radius:3px;background:#D4D4DA;margin:0 auto 18px}
+.sheet .k{color:var(--ac);font-size:13px;font-weight:700}
+.sheet h3{margin:6px 0 14px;font-size:19px}
+.sheet .thumb{margin:0 auto 14px;width:84px;height:100px}
+.sheet .tb{display:block;margin:6px auto 0;text-decoration:none;color:var(--sub)}
+/* 이름표 보기(갤러리용) */
+.show [data-menu]{outline:2px solid var(--ac);outline-offset:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;max-width:390px;justify-content:center}
+.tags code{font:600 12px/1 Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+.srch{height:44px;border-radius:12px;background:var(--soft);display:flex;align-items:center;gap:8px;padding:0 14px;color:#A7A7AF;margin:6px 0 10px}
+/* 환불 흐름 전용 */
+.ord{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+.ord .hd{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}.ord .hd b{color:#2E7D5B}
+.it{display:flex;gap:12px;align-items:center;padding:8px 0}
+.it .thumb{width:56px;height:64px;border-radius:8px;flex:none}
+.it b{display:block;font-size:14px}.it span{font-size:12.5px;color:var(--sub)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.two button{height:42px;border-radius:10px;border:1px solid #CFCFD5;background:#fff;font-weight:700;font-size:14px}
+.stepper{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#A7A7AF;font-weight:700;padding:10px 0 14px;border-bottom:1px solid var(--line);margin:0 -20px 14px;padding-left:20px}
+.stepper i{width:20px;height:20px;border-radius:50%;background:#D4D4DA;color:#fff;font-style:normal;display:inline-grid;place-items:center;font-size:11px;margin-right:4px}
+.stepper .on{color:var(--ink)}.stepper .on i{background:var(--ac)}.stepper .ln{width:14px;height:2px;background:#D4D4DA}
+.big2{font-size:20px;font-weight:800;margin:4px 0 12px}
+.ck{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.ck .box{width:22px;height:22px;border-radius:6px;border:2px solid #C9C9CF;flex:none;display:grid;place-items:center;font-size:13px;color:#fff;font-weight:900}
+.ck.on .box{background:var(--ac);border-color:var(--ac)}
+.ck .thumb{width:48px;height:56px;border-radius:8px;flex:none}
+.ck b{font-size:14px;display:block}.ck span{font-size:12.5px;color:var(--sub)}
+.warn{font-size:12.5px;color:var(--sub);background:var(--soft);border-radius:8px;padding:8px 10px;margin:-4px 0 12px}
+.grp{font-size:12.5px;color:var(--sub);font-weight:700;margin:12px 0 2px}
+.rd2{display:flex;align-items:center;gap:12px;height:46px;font-size:15px}
+.rd2 i{width:22px;height:22px;border-radius:50%;border:2px solid #C9C9CF;flex:none}.rd2.on i{border:7px solid var(--ac)}.rd2.on{font-weight:800}
+.ta{border:1px solid var(--line);border-radius:10px;height:84px;padding:10px 12px;font-size:14px;margin:0 0 4px 34px;position:relative}
+.ta small{position:absolute;right:10px;bottom:8px;font-size:11.5px;color:#A7A7AF}
+.ph{display:flex;gap:8px;margin:8px 0 4px 34px}.ph span{width:56px;height:56px;border-radius:8px;border:1px dashed #C9C9CF;display:grid;place-items:center;color:#A7A7AF;font-size:22px}
+.ph span.img{border:0;background:linear-gradient(150deg,#D8D2C6,#A99F8E)}
+.phn{font-size:11.5px;color:#A7A7AF;margin-left:34px}
+.amt,.kv b.amt{color:var(--ac);font-weight:800}
+.rq{padding:14px 0;border-bottom:1px solid var(--line)}
+.rq .r1{display:flex;justify-content:space-between;font-size:12.5px;color:var(--sub)}
+.rq b{display:block;font-size:15px;margin:4px 0}.rq .stt{font-size:13.5px}.rq .stt em{font-style:normal;color:var(--ac);font-weight:800;margin-right:6px}
+.open{background:var(--soft);border-radius:12px;padding:6px 14px;margin:6px 0 4px}
+</style></head>
+<body>
+<div class="rack" id="rack">
+
+<!-- ① 주문 목록 -->
+<section class="step" data-step="1"><h2><span>①</span>주문 목록</h2>
+<div class="phone" id="s1">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>주문 목록</h1></div>
+ <div class="body">
+  <div class="srch">⌕ 주문한 상품을 검색할 수 있어요</div>
+  <div class="ord" data-menu="card">
+   <div class="hd"><span>2026. 10. 24 주문</span><b>배송 완료 · 10/26 도착</b></div>
+   <div class="it"><div class="thumb" data-menu="thumbnail"></div><div><b>린넨 반팔 셔츠</b><span>아이보리 / M · 1개 · 26,800원</span></div></div>
+   <div class="it"><div class="thumb" style="background:linear-gradient(160deg,#C9CED6,#9AA2AE)"></div><div><b>와이드 면바지</b><span>차콜 / L · 1개 · 39,000원</span></div></div>
+   <div class="it"><div class="thumb" style="background:linear-gradient(160deg,#E7E1D8,#CFC6B7)"></div><div><b>무지 양말 3켤레</b><span>1개 · 8,900원</span></div></div>
+   <div class="two"><button data-menu="secondary">교환, 반품 신청</button><button>배송 조회</button></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- ② 상품 선택 -->
+<section class="step" data-step="2"><h2><span>②</span>상품 선택</h2>
+<div class="phone" id="s2">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>교환, 반품 신청</h1></div>
+ <div class="body">
+  <div class="stepper" data-menu="progress"><span class="on"><i>1</i>상품 선택</span><span class="ln"></span><span><i>2</i>사유</span><span class="ln"></span><span><i>3</i>해결 방법</span></div>
+  <div class="big2">상품을 골라 주세요</div>
+  <div data-menu="checkbox">
+  <div class="ck on"><span class="box">✓</span><div class="thumb"></div><div><b>린넨 반팔 셔츠</b><span>아이보리 / M · 1개</span></div></div>
+  </div>
+  <div class="ck"><span class="box"></span><div class="thumb" style="background:linear-gradient(160deg,#C9CED6,#9AA2AE)"></div><div><b>와이드 면바지</b><span>차콜 / L · 1개</span></div></div>
+  <div class="ck"><span class="box"></span><div class="thumb" style="background:linear-gradient(160deg,#E7E1D8,#CFC6B7)"></div><div><b>무지 양말 3켤레</b><span>1개</span></div></div>
+ </div>
+ <div class="foot" data-menu="footerbar"><button class="pri">다음 단계</button></div>
+</div></section>
+
+<!-- ③ 사유 -->
+<section class="step" data-step="3"><h2><span>③</span>사유</h2>
+<div class="phone" id="s3">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>교환, 반품 신청</h1></div>
+ <div class="body">
+  <div class="stepper"><span class="on"><i>1</i>상품 선택</span><span class="ln"></span><span class="on"><i>2</i>사유</span><span class="ln"></span><span><i>3</i>해결 방법</span></div>
+  <div class="big2">어떤 문제가 있나요?</div>
+  <div class="grp">상품 문제</div>
+  <div class="rd2 on" data-menu="radio"><i></i>파손 · 불량</div>
+  <div class="ta" data-menu="textarea">소매 박음질이 뜯어져 있어요<small>14 / 250</small></div>
+  <div class="ph" data-menu="photoupload"><span class="img"></span><span>+</span><span>+</span></div>
+  <div class="phn">사진이 있으면 확인이 빨라요 (최대 3장)</div>
+  <div class="rd2"><i></i>설명과 달라요</div>
+  <div class="grp">배송 문제</div>
+  <div class="rd2"><i></i>다른 상품이 왔어요</div>
+ </div>
+ <div class="foot"><button class="pri">다음 단계</button></div>
+</div></section>
+
+<!-- ④ 해결 방법 -->
+<section class="step" data-step="4"><h2><span>④</span>해결 방법</h2>
+<div class="phone" id="s4">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>교환, 반품 신청</h1></div>
+ <div class="body">
+  <div class="stepper"><span class="on"><i>1</i>상품 선택</span><span class="ln"></span><span class="on"><i>2</i>사유</span><span class="ln"></span><span class="on"><i>3</i>해결 방법</span></div>
+  <div class="big2">어떻게 해 드릴까요?</div>
+  <div data-menu="radio"><div class="rd2 on"><i></i>환불</div><div class="rd2"><i></i>같은 상품으로 교환</div></div>
+  <div class="sh" data-menu="sectionheader" style="margin-top:18px">환불 정보 <small>파손 · 불량은 배송비 없음</small></div>
+  <div data-menu="listview">
+   <div class="kv"><span>상품 금액</span><b>26,800원</b></div>
+   <div class="kv"><span>반품 배송비</span><b>0원</b></div>
+   <div class="kv tot"><span>환불 예정 금액</span><span class="amt">26,800원</span></div>
+  </div>
+  <div class="kv"><span>환불 수단</span><b>결제한 카드로 3~5일</b></div>
+ </div>
+ <div class="foot"><button class="pri">반품 신청하기</button></div>
+</div></section>
+
+<!-- ⑤ 내역 -->
+<section class="step" data-step="5"><h2><span>⑤</span>내역</h2>
+<div class="phone" id="s5">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>취소 · 교환 · 반품 내역</h1></div>
+ <div class="body">
+  <div class="rq" data-menu="listtile">
+   <div class="r1"><span>반품 · 2026. 10. 30</span><span>⌃</span></div>
+   <b>린넨 반팔 셔츠 1개</b>
+   <div class="stt"><em>회수 예정</em>10/31 (토) 기사님 방문</div>
+   <div class="open" data-menu="listview">
+    <div class="kv"><span>접수 사유</span><b>파손 · 불량</b></div>
+    <div class="kv"><span>회수지</span><b>망원동 412-7, 301호</b></div>
+    <div class="kv"><span>환불 예정 금액</span><b class="amt">26,800원</b></div>
+   </div>
+  </div>
+  <div class="rq"><div class="r1"><span>취소 · 2026. 09. 12</span><span>⌄</span></div><b>니트 가디건 1개</b><div class="stt"><em style="color:#2E7D5B">취소 완료</em>2026. 09. 12</div></div>
+  <div class="rq"><div class="r1"><span>교환 · 2026. 08. 03</span><span>⌄</span></div><b>코튼 셔츠 1개</b><div class="stt"><em style="color:#2E7D5B">교환 완료</em>2026. 08. 08</div></div>
+ </div>
+</div></section>
+
+</div>
+<script>
+// 화면 아래에 이 화면이 쓰는 app-menu 이름을 붙인다(갤러리). ?show 면 부품에 테두리.
+if(location.search.indexOf('show')>-1)document.body.classList.add('show');
+document.querySelectorAll('.step').forEach(function(s){
+ var ids=[];s.querySelectorAll('[data-menu]').forEach(function(e){var m=e.dataset.menu;if(ids.indexOf(m)<0)ids.push(m)});
+ var t=document.createElement('div');t.className='tags';t.innerHTML=ids.map(function(i){return '<code>'+i+'</code>'}).join('');s.appendChild(t);
+});
+// 영상용: 각 화면의 부품 위치(폰 기준 px)
+window.boxes=function(){var out={};document.querySelectorAll('.phone').forEach(function(p){var r=p.getBoundingClientRect();out[p.id]=[];
+ var all=[p].concat([].slice.call(p.querySelectorAll('[data-menu]')));all.forEach(function(e){if(!e.dataset.menu)return;var b=e.getBoundingClientRect();out[p.id].push({id:e.dataset.menu,x:b.left-r.left,y:b.top-r.top,w:b.width,h:b.height})})});return out};
+</script>
+</body></html>
