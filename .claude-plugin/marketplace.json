@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.50.2"
+    "version": "0.51.0"
   },
   "plugins": [
     {
@@ -22,7 +22,7 @@
     {
       "name": "app-menu",
       "source": "./plugins/app-menu",
-      "description": "앱 UI 메뉴판 — 모바일 앱 UI를 말이 아니라 이름으로 시키는 사전. 8코스 73항목, 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 웹은 ui-menu"
+      "description": "앱 UI 메뉴판 — 모바일 앱 UI를 말이 아니라 이름으로 시키는 사전. 8코스 76항목, 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 웹은 ui-menu"
     },
     {
       "name": "flow-menu",
