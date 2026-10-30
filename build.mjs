@@ -2193,6 +2193,7 @@ const flwNo = i => '①②③④⑤⑥⑦⑧⑨⑩'[i];
 const FM_CSS = `.fmgal{--ink:#16161a;--ink2:#6b6c74;--line:#e4e4e8;--acc:#F05032;--bg:#efeeeb;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
 .fmgal .ip-rows{max-width:720px;margin:0 auto;text-align:left}
 @media(max-width:560px){.fmgal .ip-rows a.r{grid-template-columns:1fr}.fmgal .ip-rows .n{justify-content:flex-start}}
+.fmgal .fm-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}.fmgal .fm-nav a{font-size:13px;color:var(--ink2);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:#fff}.fmgal .fm-nav a b{color:var(--acc);margin-right:3px}
 .fmgal .fm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
 .fmgal .fm-rules b{font-size:14px}.fmgal .fm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
 .fmgal .fm-flow{margin:0 0 34px;scroll-margin-top:80px}
@@ -2213,7 +2214,7 @@ const FM_CSS = `.fmgal{--ink:#16161a;--ink2:#6b6c74;--line:#e4e4e8;--acc:#F05032
 .fmgal .fm-ask{border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px 15px;display:flex;gap:10px;align-items:flex-start}
 .fmgal .fm-ask p{margin:0;font-size:13px;line-height:1.65;flex:1;min-width:0}
 .fmgal .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--ink2)}
-@media(prefers-color-scheme:dark){.fmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.fmgal .fm-s,.fmgal .fm-rules,.fmgal .fm-ask,.fmgal .copy{background:#1d1d20}}`;
+@media(prefers-color-scheme:dark){.fmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.fmgal .fm-s,.fmgal .fm-nav a,.fmgal .fm-rules,.fmgal .fm-ask,.fmgal .copy{background:#1d1d20}}`;
 const flwF = flwMenu.formula;
 const flw0 = flwMenu.flows[0];
 const flwIntro = ipPanels('flow-menu', '.fmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
@@ -2228,6 +2229,7 @@ const flwCore = `<div class="fmgal">
 <style>${FM_CSS}</style>
 ${flwIntro}
 <div class="fm-rules"><b>공통 규격</b><ul>${flwMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>
+<nav class="fm-nav">${flwMenu.flows.map(f => `<a href="#fl-${f.id}"><b>${esc(f.ko)}</b> ${f.steps.length}장</a>`).join('')}</nav>
 ${flwMenu.flows.map(f => `<section class="fm-flow" id="fl-${f.id}">
   <h2>${esc(f.ko)} <span class="en">${esc(f.en)}</span> · ${f.steps.length}장</h2>
   <p class="fm-seen">${esc(f.from)} → ${esc(f.to)}. ${esc(f.seen)}</p>
