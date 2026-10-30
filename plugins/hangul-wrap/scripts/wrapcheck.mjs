@@ -288,4 +288,5 @@ if (JSON_OUT) {
   console.log(`\n합계  쪼개짐 ${summary.split} · 외톨이 ${summary.orphan} · 넘침 ${summary.overflow}${modes.length > 1 ? ` · 버튼 글자 잘림 ${summary.clip} · 안 눌림 ${summary.blocked}` : ''}`);
 }
 sweep();
-process.exit(bad ? 1 : 0);
+// 파이프로 받을 때 출력이 64KB 에서 잘리지 않게, 다 써진 뒤에 끝낸다 (process.exit 를 바로 부르면 남은 출력이 버려진다)
+process.stdout.write('', () => process.exit(bad ? 1 : 0));
