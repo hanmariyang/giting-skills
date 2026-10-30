@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>결제 흐름 · flow-menu</title>
+<style>
+/* 결제 흐름 다섯 화면. 각 부품에 data-menu="<app-menu id>" 를 단다.
+   영상(flowrack)과 갤러리는 이 파일의 화면을 그대로 찍고, 이름표 자리는 data-menu 의 실제 위치에서 잰다. */
+:root{--bg:#EDEDF0;--paper:#fff;--ink:#16161A;--sub:#7A7A84;--line:#E4E4E8;--soft:#F5F5F7;--ac:#F05032;--ac-soft:#FDEDE9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px/1.45 "Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink)}
+.rack{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;padding:32px 16px}
+.step{display:flex;flex-direction:column;gap:10px;align-items:center}
+.step h2{margin:0;font-size:15px;font-weight:800}
+.step h2 span{color:var(--ac);margin-right:6px}
+.phone{position:relative;width:390px;height:844px;background:var(--paper);border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px #111,0 18px 40px rgba(0,0,0,.18);flex:none}
+.sb{height:47px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 30px 6px;font-weight:700;font-size:15px}
+.bar{height:52px;display:flex;align-items:center;padding:0 8px;position:relative}
+.bar h1{position:absolute;left:0;right:0;text-align:center;margin:0;font-size:17px;font-weight:700;pointer-events:none}
+.ib{width:44px;height:44px;display:grid;place-items:center;font-size:22px;border:0;background:none;color:var(--ink)}
+.body{position:absolute;top:99px;left:0;right:0;bottom:0;overflow:hidden;padding:0 20px}
+.sec{padding:18px 0 14px;border-bottom:8px solid var(--soft);margin:0 -20px;padding-left:20px;padding-right:20px}
+.sh{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:17px;margin-bottom:12px}
+.sh small{font-weight:600;font-size:13px;color:var(--sub)}
+.row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.lb{width:58px;font-size:13px;color:var(--sub);flex:none}
+.tf{flex:1;height:46px;border:1px solid var(--line);border-radius:10px;padding:0 14px;display:flex;align-items:center;color:var(--ink);background:#fff}
+.tf.ph{color:#A7A7AF}
+.tf.ro{background:var(--soft)}
+.btn2{height:46px;padding:0 14px;border:1px solid #CFCFD5;border-radius:10px;background:#fff;font-weight:700;font-size:14px;white-space:nowrap}
+.sel{height:48px;border:1px solid var(--line);border-radius:10px;display:flex;justify-content:space-between;align-items:center;padding:0 14px}
+.foot{position:absolute;left:0;right:0;bottom:0;background:#fff;padding:10px 16px 30px;border-top:1px solid var(--line)}
+.note{font-size:12px;color:var(--sub);text-align:center;margin-bottom:8px}
+.pri{width:100%;height:54px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:17px;font-weight:800}
+.tog{display:flex;justify-content:space-between;align-items:center;background:var(--ac-soft);border-radius:10px;padding:12px 14px;font-weight:700;font-size:14px;margin-bottom:12px}
+.sw{width:46px;height:28px;border-radius:14px;background:var(--ac);position:relative}
+.sw::after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.item{display:flex;gap:12px;margin-bottom:12px}
+.thumb{width:64px;height:76px;border-radius:8px;background:linear-gradient(160deg,#D8D2C6,#B9B0A0);flex:none}
+.item b{display:block;font-size:14px}
+.item .p{font-weight:800}.item .p em{font-style:normal;color:var(--ac);margin-right:4px}
+.lt{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:14px}
+.lt .m{color:var(--ac);font-weight:800}
+.tb{border:0;background:none;color:var(--ink);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:0 4px;height:44px}
+.rd{display:flex;align-items:center;gap:12px;height:50px;font-size:15px}
+.rd i{width:22px;height:22px;border-radius:50%;border:2px solid #C9C9CF;flex:none}
+.rd.on i{border:7px solid var(--ac)}
+.bd{font-size:11px;font-weight:800;color:#fff;background:#2E7D5B;border-radius:6px;padding:2px 6px}
+.kv{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:var(--sub)}
+.kv b{color:var(--ink)}
+.kv.tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:16px;color:var(--ink);font-weight:800}
+.save{background:var(--ac-soft);color:var(--ac);font-weight:800;font-size:13px;text-align:center;border-radius:8px;padding:8px;margin-top:8px}
+.cb{display:flex;gap:10px;align-items:center;font-weight:700;font-size:15px;padding:10px 0}
+.cb i{width:22px;height:22px;border-radius:6px;background:var(--ac);color:#fff;display:grid;place-items:center;font-style:normal;font-size:14px}
+.terms{font-size:13px;color:var(--sub);padding-left:32px;line-height:1.9}
+.done{text-align:center;padding:26px 0 18px;font-size:22px;font-weight:800}
+.scrim{position:absolute;inset:0;background:rgba(10,10,14,.48)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 20px 34px;text-align:center}
+.grab{width:40px;height:5px;border-radius:3px;background:#D4D4DA;margin:0 auto 18px}
+.sheet .k{color:var(--ac);font-size:13px;font-weight:700}
+.sheet h3{margin:6px 0 14px;font-size:19px}
+.sheet .thumb{margin:0 auto 14px;width:84px;height:100px}
+.sheet .tb{display:block;margin:6px auto 0;text-decoration:none;color:var(--sub)}
+/* 이름표 보기(갤러리용) */
+.show [data-menu]{outline:2px solid var(--ac);outline-offset:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;max-width:390px;justify-content:center}
+.tags code{font:600 12px/1 Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+</style></head>
+<body>
+<div class="rack" id="rack">
+
+<!-- ① 배송지 -->
+<section class="step" data-step="1"><h2><span>①</span>배송지</h2>
+<div class="phone" id="s1">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar" data-menu="appbar"><button class="ib" data-menu="backbtn">←</button><h1>주문하기</h1></div>
+ <div class="body">
+  <div class="sec" style="border:0">
+   <div class="sh">배송 정보</div>
+   <div class="row"><span class="lb">이름</span><div class="tf" data-menu="textfield">김한결</div></div>
+   <div class="row"><span class="lb">휴대폰</span><div class="tf">010-2481-7730</div></div>
+   <div class="row"><span class="lb">우편번호</span><div class="tf ro">04524</div><button class="btn2" data-menu="secondary">주소 찾기</button></div>
+   <div class="row"><span class="lb">주소</span><div class="tf ro">서울 중구 세종대로 110</div></div>
+   <div class="row"><span class="lb">상세주소</span><div class="tf ph">나머지 주소를 입력해 주세요</div></div>
+   <div class="sel" data-menu="selectsheet"><span>부재 시 문 앞에 놓아 주세요</span><span>⌄</span></div>
+  </div>
+ </div>
+ <div class="foot" data-menu="footerbar"><button class="pri" data-menu="primary">29,800원 결제</button></div>
+</div></section>
+
+<!-- ② 할인 -->
+<section class="step" data-step="2"><h2><span>②</span>할인</h2>
+<div class="phone" id="s2">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>주문하기</h1></div>
+ <div class="body">
+  <div class="sec">
+   <div class="sh">주문 정보</div>
+   <div class="tog" data-menu="switch"><span>최대 할인이 적용됐어요</span><span class="sw"></span></div>
+   <div class="item"><div class="thumb" data-menu="thumbnail"></div><div><b>린넨 반팔 셔츠</b><span style="font-size:13px;color:var(--sub)">아이보리 / M · 1개</span><div class="p"><em>10%</em>26,800원</div></div></div>
+  </div>
+  <div class="sec">
+   <div class="sh" data-menu="sectionheader">쿠폰 할인 <small>1장 적용</small></div>
+   <div class="lt" data-menu="listtile"><span>첫 구매 쿠폰</span><span class="m">-3,000원</span></div>
+  </div>
+  <div class="sec" style="border:0">
+   <div class="sh">적립금</div>
+   <div class="row"><div class="tf ph" style="justify-content:flex-end">0원</div><button class="tb" data-menu="textbtn">모두 사용</button></div>
+   <div style="font-size:12px;color:var(--sub)">사용 가능 1,200원</div>
+  </div>
+ </div>
+ <div class="foot"><button class="pri">26,800원 결제</button></div>
+</div></section>
+
+<!-- ③ 결제 수단 -->
+<section class="step" data-step="3"><h2><span>③</span>결제 수단</h2>
+<div class="phone" id="s3">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>주문하기</h1></div>
+ <div class="body">
+  <div class="sec" style="border:0">
+   <div class="sh">결제 수단 <small>혜택 안내</small></div>
+   <div data-menu="radio">
+    <div class="rd on"><i></i>신용·체크카드</div>
+   </div>
+   <div class="sel" style="margin:4px 0 8px 34px" data-menu="selectsheet"><span style="color:#A7A7AF">카드사 선택</span><span>⌄</span></div>
+   <div class="rd"><i></i>카카오페이</div>
+   <div class="rd"><i></i>토스페이</div>
+   <div class="rd"><i></i>네이버페이 <span class="bd" data-menu="badge">2천원 적립</span></div>
+   <div class="rd"><i></i>무통장입금</div>
+  </div>
+ </div>
+ <div class="foot"><button class="pri">26,800원 결제</button></div>
+</div></section>
+
+<!-- ④ 확인·동의 -->
+<section class="step" data-step="4"><h2><span>④</span>확인·동의</h2>
+<div class="phone" id="s4">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>주문하기</h1></div>
+ <div class="body">
+  <div class="sec">
+   <div class="sh">결제 정보</div>
+   <div data-menu="listview">
+    <div class="kv"><span>상품 금액</span><b>29,800원</b></div>
+    <div class="kv"><span>배송비</span><b>무료</b></div>
+    <div class="kv"><span>쿠폰 할인</span><b style="color:var(--ac)">-3,000원</b></div>
+    <div class="kv tot"><span>총 결제 금액</span><span>26,800원</span></div>
+   </div>
+   <div class="save">3,000원 할인받았어요</div>
+  </div>
+  <div class="sec" style="border:0">
+   <div class="cb" data-menu="checkbox"><i>✓</i>주문 내용을 확인했고 모두 동의해요</div>
+   <div class="terms">개인정보 수집·이용 동의 ›<br>개인정보 제3자 제공 동의 ›</div>
+  </div>
+ </div>
+ <div class="foot" data-menu="footerbar"><button class="pri" data-menu="primary">26,800원 결제</button></div>
+</div></section>
+
+<!-- ⑤ 완료 -->
+<section class="step" data-step="5"><h2><span>⑤</span>완료</h2>
+<div class="phone" id="s5" data-menu="modal">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib" data-menu="iconbtn">✕</button><h1>주문 완료</h1></div>
+ <div class="body">
+  <div class="done">주문이 완료됐어요</div>
+  <div class="kv"><span>받는 분</span><b>김한결</b></div>
+  <div class="kv"><span>배송지</span><b>서울 중구 세종대로 110</b></div>
+  <div class="kv tot"><span>총 결제 금액</span><span>26,800원</span></div>
+ </div>
+ <div class="scrim" data-menu="scrim"></div>
+ <div class="sheet" data-menu="bottomsheet">
+  <div class="grab"></div>
+  <div class="k">방금 구매한 상품의 브랜드</div>
+  <h3>좋아하는 브랜드에 추가할까요?</h3>
+  <div class="thumb"></div>
+  <button class="pri" data-menu="primary">네, 좋아요</button>
+  <button class="tb" data-menu="textbtn">괜찮아요</button>
+ </div>
+</div></section>
+
+</div>
+<script>
+// 화면 아래에 이 화면이 쓰는 app-menu 이름을 붙인다(갤러리). ?show 면 부품에 테두리.
+if(location.search.indexOf('show')>-1)document.body.classList.add('show');
+document.querySelectorAll('.step').forEach(function(s){
+ var ids=[];s.querySelectorAll('[data-menu]').forEach(function(e){var m=e.dataset.menu;if(ids.indexOf(m)<0)ids.push(m)});
+ var t=document.createElement('div');t.className='tags';t.innerHTML=ids.map(function(i){return '<code>'+i+'</code>'}).join('');s.appendChild(t);
+});
+// 영상용: 각 화면의 부품 위치(폰 기준 px)
+window.boxes=function(){var out={};document.querySelectorAll('.phone').forEach(function(p){var r=p.getBoundingClientRect();out[p.id]=[];
+ var all=[p].concat([].slice.call(p.querySelectorAll('[data-menu]')));all.forEach(function(e){if(!e.dataset.menu)return;var b=e.getBoundingClientRect();out[p.id].push({id:e.dataset.menu,x:b.left-r.left,y:b.top-r.top,w:b.width,h:b.height})})});return out};
+</script>
+</body></html>

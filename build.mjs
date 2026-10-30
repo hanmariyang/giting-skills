@@ -2,7 +2,7 @@
 // Giting Skills — ui-menu 빌더 (의존성 0)
 // demos/*.html 프래그먼트(<!-- @id h=NNN [full] --> 구분) + menu.json →
 //   components/<id>.html (스킬용 자가완결 파일) + docs/ (갤러리·llms.txt)
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -2163,6 +2163,120 @@ mkdirSync(join(ROOT, 'docs', 'grid-menu'), { recursive: true });
 writeFileSync(join(ROOT, 'docs', 'grid-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/grid-menu'));
 writeFileSync(join(ROOT, 'docs', 'grid-menu', 'llms.txt'), gmDict(false));
 console.log(`built grid-menu: items ${gmMenu.items.length} · recipes ${gmMenu.recipes.length} · core ${(gmCore.length / 1024).toFixed(0)}KB`);
+
+// ── 흐름 메뉴판 (flow-menu) — 13 ─────────────────────────────
+// 고객이 한 가지 일을 끝내기까지 넘기는 화면을 장 단위로. 장마다 부품은 app-menu id 로 적고 이름은 app-menu 에서 읽는다.
+// 견본 = demos/<흐름 id>.html (자가완결, 부품마다 data-menu). components/ 는 그 사본.
+const FLWP = join(ROOT, 'plugins', 'flow-menu');
+const flwMenu = JSON.parse(readFileSync(join(FLWP, 'menu.json'), 'utf8'));
+const flwApp = JSON.parse(readFileSync(join(ROOT, 'plugins', 'app-menu', 'menu.json'), 'utf8'));
+const flwPart = id => { const it = flwApp.items.find(i => i.id === id); if (!it) { console.error('flow-menu 부품이 app-menu 에 없음:', id); process.exit(1); } return it; };
+const flwDemo = {};
+for (const f of flwMenu.flows) {
+  const p = join(FLWP, 'demos', `${f.id}.html`);
+  if (!existsSync(p)) { console.error('flow-menu 견본 없음:', f.id); process.exit(1); }
+  flwDemo[f.id] = readFileSync(p, 'utf8');
+  for (const s of f.steps) {
+    if (s.parts.length > 3) { console.error('flow-menu 장마다 부품은 셋까지:', f.id, s.ko); process.exit(1); }
+    for (const id of s.parts) {
+      flwPart(id);
+      const scr = flwDemo[f.id].split(/<div class="phone[^"]*" id="/).find(x => x.startsWith(`${s.screen}"`));
+      if (!scr || !scr.includes(`data-menu="${id}"`)) { console.error('flow-menu 견본 화면에 그 부품이 없음:', f.id, s.screen, id); process.exit(1); }
+    }
+  }
+}
+rmSync(join(FLWP, 'components'), { recursive: true, force: true });
+mkdirSync(join(FLWP, 'components'), { recursive: true });
+for (const f of flwMenu.flows) writeFileSync(join(FLWP, 'components', `${f.id}.html`), flwDemo[f.id]);
+const FM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/flow-menu/components';
+const flwNo = i => '①②③④⑤⑥⑦⑧⑨⑩'[i];
+const FM_CSS = `.fmgal{--ink:#16161a;--ink2:#6b6c74;--line:#e4e4e8;--acc:#F05032;--bg:#efeeeb;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.fmgal .fm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
+.fmgal .fm-rules b{font-size:14px}.fmgal .fm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
+.fmgal .fm-flow{margin:0 0 34px;scroll-margin-top:80px}
+.fmgal .fm-flow>h2{font-size:18px;font-weight:800;display:flex;align-items:baseline;gap:9px;margin:0 0 6px;flex-wrap:wrap}
+.fmgal .fm-flow>h2 .en{font-family:ui-monospace,monospace;font-size:12px;color:#9a9aa4;font-weight:600}
+.fmgal .fm-seen{font-size:12.5px;color:var(--ink2);margin:0 0 12px}
+.fmgal .fm-rack{overflow-x:auto;border:1px solid var(--line);border-radius:13px;background:#ededf0;margin:0 0 14px}
+.fmgal .fm-rack iframe{display:block;width:2200px;height:1060px;border:0;zoom:.6}
+.fmgal .fm-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:0 0 14px}
+.fmgal .fm-s{border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px 15px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.fmgal .fm-s h3{margin:0;font-size:15.5px;font-weight:800}.fmgal .fm-s h3 b{color:var(--acc);margin-right:6px}
+.fmgal .fm-s .pt{font-size:13px;line-height:1.55}
+.fmgal .fm-s ol{margin:0;padding:0;list-style:none;display:grid;gap:3px;font-size:12.5px}
+.fmgal .fm-s ol li span{font-family:ui-monospace,monospace;font-size:10.5px;color:#9a9aa4;margin-left:6px}
+.fmgal .fm-s .ask{border-top:1px dashed var(--line);padding-top:7px;font-size:12px;color:var(--ink2);line-height:1.55;margin-top:auto}
+.fmgal .fm-keep{background:#16161a;color:#fff;border-radius:13px;padding:14px 18px;margin:0 0 14px}
+.fmgal .fm-keep b{font-size:13px;color:#ff9a84}.fmgal .fm-keep ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7}
+.fmgal .fm-ask{border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px 15px;display:flex;gap:10px;align-items:flex-start}
+.fmgal .fm-ask p{margin:0;font-size:13px;line-height:1.65;flex:1;min-width:0}
+.fmgal .copy{flex:none;font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;color:var(--ink2)}
+@media(prefers-color-scheme:dark){.fmgal{--ink:#ececea;--ink2:#a9aab0;--line:#2a2a2e;--bg:#1a1a1d}.fmgal .fm-s,.fmgal .fm-rules,.fmgal .fm-ask,.fmgal .copy{background:#1d1d20}}`;
+const flwF = flwMenu.formula;
+const flw0 = flwMenu.flows[0];
+const flwIntro = ipPanels('flow-menu', '.fmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
+  { lay: 'center', bg: 'pale', chip: `흐름 메뉴판 · 흐름 ${flwMenu.flows.length} · 부품 이름은 앱 메뉴판 그대로`, h: `「결제 화면」은 한 장이 아니라<br><em>${flw0.steps.length}장</em>이에요`,
+    sub: `${esc(flw0.from)}부터 ${esc(flw0.to)}까지, 고객이 넘기는 화면을 장으로 나누고 <b>장마다 쓰는 부품을 이름으로</b> 적었어요.`,
+    body: `<div class="ip-rows">${flw0.steps.map((s, i) => `<span class="r"><span class="w"><b style="color:var(--ip-ink)">${flwNo(i)} ${esc(s.ko)}</b></span><span class="n">${s.parts.map(id => `<b>${esc(flwPart(id).name.ko)}</b>`).join('')}</span></span>`).join('')}</div>` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '장 수와 장 이름을<br><em>먼저</em> 적어요', sub: esc(flwF.note), body: ipFormula(flwF) },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「결제 화면 만들어줘」가<br><em>장 계획</em>으로 바뀌어요', sub: '스킬로 깔아 두면 장 수·장 이름·장마다 부품을 먼저 보여 주고, 장을 넘겨도 지킬 규칙을 장마다 대조해요.', body: ipInstall('flow-menu') },
+]);
+const flwSite = f => flwDemo[f.id];
+const flwCore = `<div class="fmgal">
+<style>${FM_CSS}</style>
+${flwIntro}
+<div class="fm-rules"><b>공통 규격</b><ul>${flwMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul></div>
+${flwMenu.flows.map(f => `<section class="fm-flow" id="fl-${f.id}">
+  <h2>${esc(f.ko)} <span class="en">${esc(f.en)}</span> · ${f.steps.length}장</h2>
+  <p class="fm-seen">${esc(f.from)} → ${esc(f.to)}. ${esc(f.seen)}</p>
+  <div class="fm-rack"><iframe title="${esc(f.ko)} 흐름 견본" loading="lazy" srcdoc="${attr(flwSite(f))}"></iframe></div>
+  <div class="fm-steps">${f.steps.map((s, i) => `<article class="fm-s"><h3><b>${flwNo(i)}</b>${esc(s.ko)}</h3><div class="pt">${esc(s.point)}</div>
+    <ol>${s.parts.map(id => { const p = flwPart(id); return `<li>${esc(p.name.ko)}<span>${esc(p.name.en)}</span></li>`; }).join('')}</ol><div class="ask">${esc(s.ask)}</div></article>`).join('')}</div>
+  <div class="fm-keep"><b>장을 넘겨도 지킬 것</b><ul>${f.keep.map(k => `<li>${esc(k)}</li>`).join('')}</ul></div>
+  <div class="fm-ask"><p>${esc(f.ask)}</p><button class="copy" data-copy="${attr(f.ask)}" title="요청문 복사">문장 복사</button></div>
+</section>`).join('\n')}
+<script>document.querySelectorAll('.fmgal .copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.getAttribute('data-copy'));}catch(x){}var t=b.textContent;b.textContent='복사됨';setTimeout(function(){b.textContent=t},1200);});});</script>
+</div>
+`;
+const flwDict = () => `# 흐름 메뉴판 (flow-menu) · Giting Skills
+
+> ${flwMenu.description}
+> 공식: ${flwF.pattern}  (✕ "${flwF.bad}" → ○ "${flwF.good}")
+> 갤러리: https://giting.kr/skills/flow-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin marketplace add hanmariyang/giting-skills → /plugin install flow-menu@giting
+> 부품 이름은 앱 UI 메뉴판(app-menu) 그대로: https://giting.kr/skills/app-menu
+
+## 공통 규격
+${flwMenu.rules.map(r => `- ${r}`).join('\n')}
+
+${flwMenu.flows.map(f => `## ${f.ko} (${f.en}) · ${f.steps.length}장
+- 별칭: ${f.aliases.map(a => `"${a}"`).join(' · ')}
+- 범위: ${f.from} → ${f.to}
+- 확인한 곳: ${f.seen}
+- 견본: ${FM_RAW}/${f.id}.html
+
+${f.steps.map((s, i) => `### ${flwNo(i)} ${s.ko}
+- 요점: ${s.point}
+- 부품: ${s.parts.map(id => `${flwPart(id).name.ko} (${id})`).join(' · ')}
+- 요청 문장: ${s.ask}`).join('\n\n')}
+
+### 장을 넘겨도 지킬 것
+${f.keep.map(k => `- ${k}`).join('\n')}
+
+### 흐름 전체 요청 문장
+${f.ask}
+`).join('\n')}`;
+if (SITE_DIR) {
+  const FS2 = join(SITE_DIR, 'flow-menu');
+  mkdirSync(FS2, { recursive: true });
+  writeFileSync(join(FS2, 'gallery-core.html'), flwCore);
+  writeFileSync(join(FS2, 'llms.txt'), flwDict());
+  writeFileSync(join(FS2, 'llms-full.txt'), flwDict());
+}
+mkdirSync(join(ROOT, 'docs', 'flow-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'flow-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/flow-menu'));
+writeFileSync(join(ROOT, 'docs', 'flow-menu', 'llms.txt'), flwDict());
+console.log(`built flow-menu: flows ${flwMenu.flows.length} · steps ${flwMenu.flows.reduce((n, f) => n + f.steps.length, 0)} · core ${(flwCore.length / 1024).toFixed(0)}KB`);
 
 // ── 모션 메뉴판 (motion-menu) — 08 ──────────────────────────────
 // 영상·카메라 모션 사전. 데모는 CSS 로 재현한 움직임(iframe), 원맥락은 AI 영상 생성 프롬프트.
