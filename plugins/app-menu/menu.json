@@ -1,6 +1,6 @@
 {
   "name": "앱 UI 메뉴판",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "모바일 앱 UI를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브 프레임워크명(SwiftUI·Flutter·React Native) 매핑. 웹의 ui-menu, 앱의 app-menu.",
   "formula": {
     "pattern": "[어느 화면] + [컴포넌트 이름] + [개수·상태] + [플랫폼 관례]",
@@ -45,6 +45,8 @@
     { "id": "infinite", "category": "list", "name": { "ko": "무한 스크롤", "en": "Infinite Scroll · Pagination" }, "aliases": ["끝까지 내리면 더 나옴", "자동 다음 페이지"], "oneliner": "끝에 가까워지면 다음 묶음을 자동으로 불러오는 목록.", "ask": "피드를 무한 스크롤로. 바닥 근처에서 다음 페이지 불러오고, 로딩 중엔 하단에 스피너.", "vs": "자동으로 계속 나오면 무한 스크롤, 버튼 눌러야 나오면 더 보기" },
     { "id": "pulltorefresh", "category": "list", "name": { "ko": "당겨서 새로고침", "en": "Pull to Refresh" }, "aliases": ["위에서 당기면 새로고침", "잡아당겨 갱신"], "oneliner": "목록 맨 위에서 아래로 당기면 새로 불러오는 동작.", "ask": "피드에 당겨서 새로고침을 넣어줘. 당기는 동안 스피너, 끝나면 부드럽게 사라지게.", "native": "SwiftUI: .refreshable · Flutter: RefreshIndicator · RN: RefreshControl" },
     { "id": "card", "category": "list", "name": { "ko": "카드", "en": "Card" }, "aliases": ["네모 상자로 묶은 것", "박스"], "oneliner": "이미지·제목·설명을 하나의 네모 상자로 묶은 덩어리.", "ask": "상품을 카드로. 위에 이미지, 아래 제목·가격, 그림자와 둥근 모서리로.", "native": "SwiftUI: RoundedRectangle 배경 · Flutter: Card · RN: View + shadow" },
+    { "id": "foryou", "category": "list", "name": { "ko": "추천 카드", "en": "For You Card" }, "aliases": ["이번 주 추천", "나한테 맞춘 목록"], "oneliner": "그 사람 기록으로 고른 묶음을 정해진 때마다 새로 채워 주는 카드. 언제 새로 바뀌는지 같이 적는다.", "ask": "홈 맨 위에 '이번 주 추천' 카드를 넣고, 제목 아래에 '매주 월요일 새로 채워져요'를 적어줘. 카드를 누르면 추천 목록 화면으로 가게 해줘." },
+    { "id": "memory", "category": "list", "name": { "ko": "추억 카드", "en": "Memory Card" }, "aliases": ["1년 전 오늘", "예전 사진 다시 보기"], "oneliner": "예전에 남긴 사진이나 기록을 그날 날짜와 함께 다시 꺼내 보여 주는 카드.", "ask": "홈에 '1년 전 오늘' 카드를 넣어 그날 사진 한 장과 날짜를 크게 보여 주고, 누르면 그날 사진을 넘겨 볼 수 있게 해줘. 그날 기록이 없으면 카드를 숨겨줘." },
 
     { "id": "textfield", "category": "input", "name": { "ko": "텍스트 필드", "en": "Text Field" }, "aliases": ["한 줄 입력칸", "글자 넣는 칸"], "oneliner": "한 줄 글자를 넣는 입력칸. 키보드가 올라온다.", "ask": "이메일 텍스트 필드를 만들어줘. 키보드는 이메일 타입, 자동 대문자 끄고, 지우기 ✕ 버튼까지.", "native": "SwiftUI: TextField · Flutter: TextField · RN: TextInput" },
     { "id": "placeholder", "category": "input", "name": { "ko": "플레이스홀더", "en": "Placeholder" }, "aliases": ["흐리게 미리 쓰인 예시", "회색 안내 글자"], "oneliner": "입력 전 흐리게 보이는 예시 글자. 입력하면 사라진다.", "ask": "이메일 칸에 플레이스홀더로 'you@example.com'을 흐리게 넣어줘.", "vs": "칸 안 흐린 예시면 플레이스홀더, 칸 위 이름표면 라벨" },
@@ -94,6 +96,7 @@
     { "id": "progress", "category": "state", "name": { "ko": "프로그레스 바", "en": "Progress Bar" }, "aliases": ["차오르는 막대", "몇 퍼센트 표시"], "oneliner": "진행률을 채워지는 막대로 보여 주는 것. 끝을 아는 작업에 쓴다.", "ask": "업로드 진행을 프로그레스 바로. 퍼센트 숫자도 옆에 같이.", "vs": "얼마 남았는지 알면 프로그레스 바, 모르면 스피너" },
     { "id": "skeleton", "category": "state", "name": { "ko": "스켈레톤", "en": "Skeleton" }, "aliases": ["회색 네모 반짝", "내용 자리 미리보기"], "oneliner": "내용이 올 자리를 회색 네모로 미리 반짝이게 보여 주는 것. 스피너보다 세련됐다.", "ask": "목록 로딩 중에 실제 카드 모양의 스켈레톤을 반짝이게 보여주고, 오면 교체해줘." },
     { "id": "badge", "category": "state", "name": { "ko": "배지", "en": "Badge" }, "aliases": ["안 읽은 개수", "빨간 숫자 점"], "oneliner": "아이콘 모서리에 붙는 작은 숫자나 점. 안 읽은 개수 알림에 쓴다.", "ask": "탭바 알림 아이콘에 안 읽은 개수 배지를, 99 넘으면 99+ 로 표시해줘.", "native": "SwiftUI: .badge · Flutter: Badge · RN: 커스텀" },
+    { "id": "streak", "category": "state", "name": { "ko": "스트릭", "en": "Streak" }, "aliases": ["연속 기록", "며칠째 이어 한 날"], "oneliner": "며칠 연속으로 했는지 큰 숫자와 이번 주 요일 칸으로 보여 주는 표시. 끊기기 전에 다시 들어오게 만든다.", "ask": "홈 위쪽에 연속 일수를 큰 숫자로, 그 아래 일~토 칸을 두고 한 날은 체크로 채운 스트릭을 넣어줘. 오늘 아직 안 했으면 오늘 칸만 비워 둬.", "native": "공식 컴포넌트 없음 · 직접 그린다 (iOS 는 WidgetKit 으로 홈 화면 위젯까지)" },
     { "id": "emptystate", "category": "state", "name": { "ko": "엠프티 스테이트", "en": "Empty State" }, "aliases": ["내용 없을 때 화면", "텅 빈 화면"], "oneliner": "목록이 비었을 때 보여 주는 화면. 그림·안내 한 줄·행동 버튼으로 다음을 유도한다.", "ask": "장바구니가 비면 엠프티 스테이트로 그림·'담은 게 없어요'·'구경하러 가기' 버튼을 보여줘.", "vs": "이걸 안 만들면 빈 목록이 그냥 흰 화면으로 보여 버그처럼 느껴진다" },
     { "id": "offline", "category": "state", "name": { "ko": "오프라인 배너", "en": "Offline Banner" }, "aliases": ["인터넷 끊김 안내", "연결 안 됨 띠"], "oneliner": "인터넷이 끊겼을 때 위나 아래에 뜨는 안내 띠. 복구되면 사라진다.", "ask": "네트워크가 끊기면 상단에 오프라인 배너를, 다시 연결되면 자동으로 내려가게 해줘." },
     { "id": "avatar", "category": "state", "name": { "ko": "아바타", "en": "Avatar" }, "aliases": ["동그란 프로필", "프사"], "oneliner": "동그란 프로필 이미지. 없으면 이니셜이나 기본 아이콘으로 대체한다.", "ask": "프로필 아바타를 동그랗게. 이미지 없으면 이름 첫 글자를 배경색과 함께 보여줘." },
