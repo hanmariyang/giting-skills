@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>예약 흐름 · flow-menu</title>
+<style>
+/* 예약 흐름 다섯 화면. 각 부품에 data-menu="<app-menu id>" 를 단다.
+   영상(flowrack)과 갤러리는 이 파일의 화면을 그대로 찍고, 이름표 자리는 data-menu 의 실제 위치에서 잰다. */
+:root{--bg:#EDEDF0;--paper:#fff;--ink:#16161A;--sub:#7A7A84;--line:#E4E4E8;--soft:#F5F5F7;--ac:#F05032;--ac-soft:#FDEDE9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px/1.45 "Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink)}
+.rack{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;padding:32px 16px}
+.step{display:flex;flex-direction:column;gap:10px;align-items:center}
+.step h2{margin:0;font-size:15px;font-weight:800}
+.step h2 span{color:var(--ac);margin-right:6px}
+.phone{position:relative;width:390px;height:844px;background:var(--paper);border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px #111,0 18px 40px rgba(0,0,0,.18);flex:none}
+.sb{height:47px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 30px 6px;font-weight:700;font-size:15px}
+.bar{height:52px;display:flex;align-items:center;padding:0 8px;position:relative}
+.bar h1{position:absolute;left:0;right:0;text-align:center;margin:0;font-size:17px;font-weight:700;pointer-events:none}
+.ib{width:44px;height:44px;display:grid;place-items:center;font-size:22px;border:0;background:none;color:var(--ink)}
+.body{position:absolute;top:99px;left:0;right:0;bottom:0;overflow:hidden;padding:0 20px}
+.sec{padding:18px 0 14px;border-bottom:8px solid var(--soft);margin:0 -20px;padding-left:20px;padding-right:20px}
+.sh{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:17px;margin-bottom:12px}
+.sh small{font-weight:600;font-size:13px;color:var(--sub)}
+.row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.lb{width:58px;font-size:13px;color:var(--sub);flex:none}
+.tf{flex:1;height:46px;border:1px solid var(--line);border-radius:10px;padding:0 14px;display:flex;align-items:center;color:var(--ink);background:#fff}
+.tf.ph{color:#A7A7AF}
+.tf.ro{background:var(--soft)}
+.btn2{height:46px;padding:0 14px;border:1px solid #CFCFD5;border-radius:10px;background:#fff;font-weight:700;font-size:14px;white-space:nowrap}
+.sel{height:48px;border:1px solid var(--line);border-radius:10px;display:flex;justify-content:space-between;align-items:center;padding:0 14px}
+.foot{position:absolute;left:0;right:0;bottom:0;background:#fff;padding:10px 16px 30px;border-top:1px solid var(--line)}
+.note{font-size:12px;color:var(--sub);text-align:center;margin-bottom:8px}
+.pri{width:100%;height:54px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:17px;font-weight:800}
+.tog{display:flex;justify-content:space-between;align-items:center;background:var(--ac-soft);border-radius:10px;padding:12px 14px;font-weight:700;font-size:14px;margin-bottom:12px}
+.sw{width:46px;height:28px;border-radius:14px;background:var(--ac);position:relative}
+.sw::after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.item{display:flex;gap:12px;margin-bottom:12px}
+.thumb{width:64px;height:76px;border-radius:8px;background:linear-gradient(160deg,#D8D2C6,#B9B0A0);flex:none}
+.item b{display:block;font-size:14px}
+.item .p{font-weight:800}.item .p em{font-style:normal;color:var(--ac);margin-right:4px}
+.lt{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:14px}
+.lt .m{color:var(--ac);font-weight:800}
+.tb{border:0;background:none;color:var(--ink);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:0 4px;height:44px}
+.rd{display:flex;align-items:center;gap:12px;height:50px;font-size:15px}
+.rd i{width:22px;height:22px;border-radius:50%;border:2px solid #C9C9CF;flex:none}
+.rd.on i{border:7px solid var(--ac)}
+.bd{font-size:11px;font-weight:800;color:#fff;background:#2E7D5B;border-radius:6px;padding:2px 6px}
+.kv{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:var(--sub)}
+.kv b{color:var(--ink)}
+.kv.tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:16px;color:var(--ink);font-weight:800}
+.save{background:var(--ac-soft);color:var(--ac);font-weight:800;font-size:13px;text-align:center;border-radius:8px;padding:8px;margin-top:8px}
+.cb{display:flex;gap:10px;align-items:center;font-weight:700;font-size:15px;padding:10px 0}
+.cb i{width:22px;height:22px;border-radius:6px;background:var(--ac);color:#fff;display:grid;place-items:center;font-style:normal;font-size:14px}
+.terms{font-size:13px;color:var(--sub);padding-left:32px;line-height:1.9}
+.done{text-align:center;padding:26px 0 18px;font-size:22px;font-weight:800}
+.scrim{position:absolute;inset:0;background:rgba(10,10,14,.48)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 20px 34px;text-align:center}
+.grab{width:40px;height:5px;border-radius:3px;background:#D4D4DA;margin:0 auto 18px}
+.sheet .k{color:var(--ac);font-size:13px;font-weight:700}
+.sheet h3{margin:6px 0 14px;font-size:19px}
+.sheet .thumb{margin:0 auto 14px;width:84px;height:100px}
+.sheet .tb{display:block;margin:6px auto 0;text-decoration:none;color:var(--sub)}
+/* 이름표 보기(갤러리용) */
+.show [data-menu]{outline:2px solid var(--ac);outline-offset:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;max-width:390px;justify-content:center}
+.tags code{font:600 12px/1 Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+.srch{height:44px;border-radius:12px;background:var(--soft);display:flex;align-items:center;gap:8px;padding:0 14px;color:#A7A7AF;margin:6px 0 10px}
+/* 예약 흐름 전용 */
+.map{position:absolute;inset:0;background:#E9EEF0;background-image:linear-gradient(90deg,transparent 47%,#fff 47%,#fff 53%,transparent 53%),linear-gradient(0deg,transparent 30%,#fff 30%,#fff 34%,transparent 34%),linear-gradient(0deg,transparent 64%,#fff 64%,#fff 67%,transparent 67%),linear-gradient(90deg,transparent 18%,#fff 18%,#fff 21%,transparent 21%),linear-gradient(90deg,transparent 78%,#fff 78%,#fff 80%,transparent 80%)}
+.map .blk{position:absolute;background:#DCE3E6;border-radius:6px}
+.pin{position:absolute;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--ac);box-shadow:0 4px 10px rgba(0,0,0,.2)}
+.pin::after{content:"";position:absolute;inset:12px;border-radius:50%;background:#fff}
+.bsheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 20px 0;box-shadow:0 -6px 24px rgba(0,0,0,.08)}
+.bsheet .grab{margin-bottom:14px}
+.tt{font-size:24px;font-weight:800;margin:4px 0 4px}.tsub{font-size:13px;color:var(--sub);margin-bottom:12px}
+.trow{display:flex;justify-content:space-between;align-items:center;height:56px;border-top:1px solid var(--line);font-size:14px;color:var(--sub)}
+.trow b{color:var(--ink);font-size:16px}.trow.open b{color:var(--ac)}
+.wheel{display:grid;grid-template-columns:1.6fr 1fr 1fr;text-align:center;padding:6px 0 10px;position:relative}
+.wheel::before{content:"";position:absolute;left:0;right:0;top:50%;height:42px;margin-top:-21px;background:var(--soft);border-radius:10px;z-index:0}
+.wheel div{position:relative;z-index:1;display:grid;gap:4px}.wheel span{height:38px;line-height:38px;color:#B4B4BB;font-size:16px}.wheel span.on{color:var(--ink);font-weight:800;font-size:18px}
+.quick{display:flex;gap:8px;justify-content:flex-end;margin:4px 0 10px}
+.qc{height:32px;padding:0 12px;border-radius:16px;border:1px solid #D4D4DA;font-size:13px;font-weight:700;display:flex;align-items:center}
+.seg{display:inline-flex;background:var(--soft);border-radius:10px;padding:3px}.seg span{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;color:var(--sub)}.seg span.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.place{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.place b{font-size:15px}.place small{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+.tag{font-size:11px;font-weight:800;color:var(--ac);background:var(--ac-soft);border-radius:5px;padding:2px 6px;margin-right:6px}
+.timechip{display:flex;justify-content:space-between;align-items:center;background:var(--soft);border-radius:10px;padding:11px 14px;font-size:13.5px;font-weight:700;margin:2px 0 12px}
+.car{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.car .thumb{width:92px;height:62px;border-radius:10px;background:linear-gradient(160deg,#E4E7EB,#C9CED6)}
+.car b{display:block;font-size:15px}.car .pr{font-size:18px;font-weight:800;margin-top:4px}.car .pr s{font-size:12px;color:#A7A7AF;font-weight:600;margin-left:6px}
+.note2{background:var(--ac-soft);border-radius:10px;padding:10px 12px;font-size:12.5px;font-weight:700;color:var(--ac);margin:4px 0 12px}
+.opt{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.opt.on{border:2px solid var(--ink)}
+.opt i{width:22px;height:22px;border-radius:50%;border:2px solid #C9C9CF;flex:none;margin-top:1px}.opt.on i{border:7px solid var(--ink)}
+.opt div{flex:1}.opt b{font-size:15px}.opt .p{float:right;font-weight:800;font-size:14px}.opt small{display:block;font-size:12.5px;color:var(--sub);margin-top:4px;line-height:1.5}
+.tip{position:absolute;left:50%;transform:translateX(-50%);bottom:104px;background:#26262B;color:#fff;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:10px;white-space:nowrap}
+.tip::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#26262B}
+</style></head>
+<body>
+<div class="rack" id="rack">
+
+<!-- ① 시간 -->
+<section class="step" data-step="1"><h2><span>①</span>시간</h2>
+<div class="phone" id="s1">
+ <div class="map"><div class="blk" style="left:30px;top:120px;width:120px;height:90px"></div><div class="blk" style="left:230px;top:80px;width:90px;height:120px"></div></div>
+ <div class="sb" style="position:relative"><span>9:41</span><span>●●●</span></div>
+ <div class="bsheet" data-menu="bottomsheet" style="top:120px">
+  <div class="grab"></div>
+  <div class="tt">총 4시간 30분 이용</div><div class="tsub">11. 7 (금) 13:00 ~ 17:30</div>
+  <div class="trow"><span>대여 시각</span><b>11. 7 (금) 13:00</b></div>
+  <div class="trow open"><span>반납 시각</span><b>11. 7 (금) 17:30</b></div>
+  <div class="quick" data-menu="chip"><span class="qc">+1일</span><span class="qc">+1시간</span><span class="qc">+30분</span></div>
+  <div class="wheel" data-menu="wheelpicker"><div><span>11. 6 (목)</span><span class="on">11. 7 (금)</span><span>11. 8 (토)</span></div><div><span>16</span><span class="on">17</span><span>18</span></div><div><span>00</span><span class="on">30</span><span>00</span></div></div>
+ </div>
+ <div class="foot"><button class="pri">확인</button></div>
+</div></section>
+
+<!-- ② 장소 -->
+<section class="step" data-step="2"><h2><span>②</span>장소</h2>
+<div class="phone" id="s2">
+ <div class="map"><div class="blk" style="left:40px;top:140px;width:110px;height:80px"></div><div class="blk" style="left:240px;top:110px;width:100px;height:110px"></div><div class="pin" style="left:170px;top:210px"></div><div class="pin" style="left:90px;top:300px;background:#8C8C94"></div><div class="pin" style="left:290px;top:280px;background:#8C8C94"></div></div>
+ <div class="sb" style="position:relative"><span>9:41</span><span>●●●</span></div>
+ <div class="bsheet" style="top:440px">
+  <div class="grab"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b style="font-size:17px">가지러 가기</b><div class="seg" data-menu="segmented"><span class="on">왕복</span><span>편도</span></div></div>
+  <div class="srch" data-menu="searchbar" style="margin:0 0 8px">⌕ 대여 장소 검색</div>
+  <div class="timechip"><span>11. 7 (금) 13:00 ~ 17:30</span><span>›</span></div>
+  <div class="place" data-menu="listtile"><div><span class="tag">대여·반납</span><b>역삼역 2번 출구 주차장</b><small>걸어서 4분 · 지하 2층</small></div><span>›</span></div>
+ </div>
+</div></section>
+
+<!-- ③ 차 고르기 -->
+<section class="step" data-step="3"><h2><span>③</span>고르기</h2>
+<div class="phone" id="s3">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>역삼역 2번 출구 주차장</h1></div>
+ <div class="body">
+  <div class="timechip"><span>11. 7 (금) 13:00 ~ 17:30</span><span>›</span></div>
+  <div class="note2">보이는 금액이 총 결제 요금이에요 · 기본 보험 포함</div>
+  <div class="car" data-menu="card"><div class="thumb" data-menu="thumbnail"></div><div><b>소형 전기 SUV</b><span class="bd" data-menu="badge">총 결제 요금</span><div class="pr">34,800원<s>69,600원</s></div></div></div>
+  <div class="car"><div class="thumb"></div><div><b>준중형 세단</b><span class="bd">총 결제 요금</span><div class="pr">29,400원<s>52,000원</s></div></div></div>
+  <div class="car"><div class="thumb"></div><div><b>경차</b><span class="bd">총 결제 요금</span><div class="pr">21,600원<s>38,000원</s></div></div></div>
+  <div class="car"><div class="thumb"></div><div><b>대형 SUV</b><span class="bd">총 결제 요금</span><div class="pr">58,200원<s>96,000원</s></div></div></div>
+ </div>
+</div></section>
+
+<!-- ④ 보험 -->
+<section class="step" data-step="4"><h2><span>④</span>옵션</h2>
+<div class="phone" id="s4">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>예약 및 결제</h1></div>
+ <div class="body">
+  <div class="sh" data-menu="sectionheader" style="margin-top:16px">보험 및 보장 <small>기본 보험 포함</small></div>
+  <div data-menu="radio">
+  <div class="opt"><i></i><div><b>완전 보장</b><span class="p">+19,700원</span><small>사고 시 내는 돈 0원 · 긴급 견인 포함</small></div></div>
+  <div class="opt on"><i></i><div><b>표준 보장</b> <span class="bd" data-menu="badge">가성비 추천</span><span class="p">+6,000원</span><small>사고 시 최대 30만 원 부담</small></div></div>
+  <div class="opt"><i></i><div><b>기본 보장</b><span class="p">무료</span><small>사고 시 최대 70만 원 부담</small></div></div>
+  </div>
+ </div>
+ <div class="foot"><button class="pri">총 40,800원 결제하기</button></div>
+</div></section>
+
+<!-- ⑤ 확인·결제 -->
+<section class="step" data-step="5"><h2><span>⑤</span>확인·결제</h2>
+<div class="phone" id="s5">
+ <div class="sb"><span>9:41</span><span>●●●</span></div>
+ <div class="bar"><button class="ib">←</button><h1>예약 및 결제</h1></div>
+ <div class="body">
+  <div class="sec">
+   <div class="sh">예약 내용</div>
+   <div data-menu="listview">
+    <div class="kv"><span>차</span><b>소형 전기 SUV</b></div>
+    <div class="kv"><span>장소</span><b>역삼역 2번 출구 주차장</b></div>
+    <div class="kv"><span>이용 시간</span><b>11. 7 (금) 13:00 ~ 17:30</b></div>
+    <div class="kv"><span>보험</span><b>표준 보장</b></div>
+    <div class="kv tot"><span>총 결제 금액</span><span>40,800원</span></div>
+   </div>
+  </div>
+  <div class="sec" style="border:0">
+   <div class="sh">결제 수단</div>
+   <div class="sel"><span>현대카드 2514 · 개인</span><span>⌄</span></div>
+  </div>
+ </div>
+ <div class="tip" data-menu="tooltip">첫 이용 쿠폰 적용 · 주행요금 30km까지 무료</div>
+ <div class="foot" data-menu="footerbar"><button class="pri">총 40,800원 결제하기</button></div>
+</div></section>
+
+</div>
+<script>
+// 화면 아래에 이 화면이 쓰는 app-menu 이름을 붙인다(갤러리). ?show 면 부품에 테두리.
+if(location.search.indexOf('show')>-1)document.body.classList.add('show');
+document.querySelectorAll('.step').forEach(function(s){
+ var ids=[];s.querySelectorAll('[data-menu]').forEach(function(e){var m=e.dataset.menu;if(ids.indexOf(m)<0)ids.push(m)});
+ var t=document.createElement('div');t.className='tags';t.innerHTML=ids.map(function(i){return '<code>'+i+'</code>'}).join('');s.appendChild(t);
+});
+// 영상용: 각 화면의 부품 위치(폰 기준 px)
+window.boxes=function(){var out={};document.querySelectorAll('.phone').forEach(function(p){var r=p.getBoundingClientRect();out[p.id]=[];
+ var all=[p].concat([].slice.call(p.querySelectorAll('[data-menu]')));all.forEach(function(e){if(!e.dataset.menu)return;var b=e.getBoundingClientRect();out[p.id].push({id:e.dataset.menu,x:b.left-r.left,y:b.top-r.top,w:b.width,h:b.height})})});return out};
+</script>
+</body></html>
