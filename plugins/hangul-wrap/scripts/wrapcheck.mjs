@@ -117,8 +117,12 @@ function taps(scopeSel) {
     // 눌림: 화면 가운데로 끌어온 뒤 버튼 한가운데를 누르면 그 버튼(이나 그 안의 것)이 맞는지
     el.scrollIntoView({ block: 'center', inline: 'center' });
     const r = el.getBoundingClientRect();
-    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-    if (r.width > 0 && r.height > 0 && (!hit || (hit !== el && !el.contains(hit)))) {
+    // 두 줄로 꺾인 링크는 상자 한가운데가 두 조각 사이 빈 곳이라, 줄 조각마다 가운데를 눌러 보고 하나라도 맞으면 눌리는 것으로 친다
+    const pieces = [...el.getClientRects()].filter((q) => q.width > 0 && q.height > 0);
+    const hits = (pieces.length ? pieces : [r]).map((q) => document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2));
+    const ok = hits.some((h) => h && (h === el || el.contains(h)));
+    const hit = hits[0];
+    if (r.width > 0 && r.height > 0 && !ok) {
       const by = hit ? hit.tagName.toLowerCase() + (typeof hit.className === 'string' && hit.className.trim() ? '.' + hit.className.trim().split(/\s+/)[0] : '') : '화면 밖';
       found.push({ kind: 'blocked', by });
     }
