@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Giting Skills — 오픈소스를 실측으로 읽는 Giting 이 만들고 검수한 Claude Code 스킬 모음. 실측 검수를 통과한 것만 올라온다.",
-    "version": "0.47.0"
+    "version": "0.48.0"
   },
   "plugins": [
     {
@@ -27,7 +27,7 @@
     {
       "name": "flow-menu",
       "source": "./plugins/flow-menu",
-      "description": "흐름 메뉴판 — 「결제 화면 만들어줘」를 장 단위 계획으로. 장마다 부품을 app-menu 이름 그대로, 장을 넘겨도 지킬 규칙을 따로. 흐름은 결제 5장 · 가입 5장 · 예약 5장, 실제 앱 화면에서 확인"
+      "description": "흐름 메뉴판 — 「결제 화면 만들어줘」를 장 단위 계획으로. 장마다 부품을 app-menu 이름 그대로, 장을 넘겨도 지킬 규칙을 따로. 흐름은 결제 · 가입 · 예약 · 배달 추적 5장씩, 실제 앱 화면에서 확인"
     },
     {
       "name": "css-menu",
