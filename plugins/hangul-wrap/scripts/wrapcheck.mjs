@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // 한글 줄바꿈 실측. 어절이 두 줄로 쪼개진 자리 · 한 글자만 넘어간 줄 · 상자를 뚫은 글자를 찾는다.
+// 글자를 키운 상태(--text · --zoom)에서는 버튼 글자가 잘리는지 · 버튼이 실제로 눌리는지도 본다.
 //
-//   node wrapcheck.mjs <url|파일> [폭들] [--scope 셀렉터] [--json]
+//   node wrapcheck.mjs <url|파일> [폭들] [--scope 셀렉터] [--text 150,200] [--zoom 150,200] [--json]
 //
 // 눈으로 훑으면 안 보인다. 쪼개짐은 특정 폭에서만 생기기 때문이다. 그래서 폭 여럿에서 실제로 띄워 잰다.
 // 의존성 없음. Node 22 이상(내장 WebSocket)과 크롬 계열 브라우저 하나만 있으면 된다.
 //
-// 끝 코드: 0 = 문제 없음 · 1 = 쪼개짐이나 넘침이 있음 · 2 = 실행 못 함
+// 끝 코드: 0 = 문제 없음 · 1 = 쪼개짐 · 넘침 · 버튼 잘림 · 눌리지 않음이 있음 · 2 = 실행 못 함
 import { spawn } from 'node:child_process';
 import { existsSync, mkdtempSync, realpathSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -18,14 +19,20 @@ const argv = process.argv.slice(2);
 if (!argv.length || argv[0] === '-h' || argv[0] === '--help') {
   console.log(`한글 줄바꿈 실측
 
-  node wrapcheck.mjs <url|파일> [폭들] [--scope 셀렉터] [--json]
+  node wrapcheck.mjs <url|파일> [폭들] [--scope 셀렉터] [--text 150,200] [--zoom 150,200] [--json]
 
   폭들     쉼표로 여럿. 기본 390,768,1280
   --scope  이 안만 본다 (기본 body)
+  --text   글자만 키운다(%). 폰의 글자 크기 설정처럼 배치 폭은 그대로. 예) 150,200
+  --zoom   브라우저 확대(%). 화면 전체가 커져 실제 배치 폭이 줄어든다. 예) 150,200
   --json   결과를 JSON 으로
 
+  --text · --zoom 을 주면 기본 크기(100%)와 함께 잰다.
+  키운 상태에서는 버튼 글자가 잘리는지 · 다른 것에 덮여 안 눌리는지도 센다.
+
   예) node wrapcheck.mjs index.html
-      node wrapcheck.mjs http://localhost:3000 360,390 --scope main`);
+      node wrapcheck.mjs http://localhost:3000 360,390 --scope main
+      node wrapcheck.mjs index.html 390 --text 150,200 --zoom 200`);
   process.exit(0);
 }
 const opt = (n, d) => { const i = argv.indexOf('--' + n); return i >= 0 && argv[i + 1] ? argv[i + 1] : d; };
@@ -38,6 +45,9 @@ if (!/^(https?|file):/.test(target)) {
 }
 const widths = (argv[1] && !argv[1].startsWith('--') ? argv[1] : '390,768,1280')
   .split(',').map(Number).filter((n) => n > 0);
+const pcts = (n) => (opt(n, '') || '').split(',').map(Number).filter((x) => x > 100 && x <= 400);
+// 잴 조건: 기본 크기 하나 + 글자만 키운 것 + 확대한 것
+const modes = [{ kind: 'base', pct: 100 }, ...pcts('text').map((pct) => ({ kind: 'text', pct })), ...pcts('zoom').map((pct) => ({ kind: 'zoom', pct }))];
 
 // ── 브라우저 찾기 ─────────────────────────────────────
 const CANDIDATES = [
@@ -80,6 +90,46 @@ const send = (method, params = {}) => new Promise((r) => { const id = ++seq; wai
 await send('Page.enable'); await send('Runtime.enable');
 
 // ── 페이지 안에서 도는 셈 ─────────────────────────────
+// 글자만 키우기: 모든 요소의 지금 글자 크기(와 px 로 정한 줄 높이)에 배율을 곱한다. 배치 폭은 그대로 둔다.
+// 폰의 글자 크기 설정처럼 상자 크기는 그대로인데 글자만 커지는 상태를 흉내 낸다.
+function scaleText(f) {
+  const els = [document.body, ...document.body.querySelectorAll('*')];
+  const was = els.map((e) => { const cs = getComputedStyle(e); return [e, parseFloat(cs.fontSize), cs.lineHeight]; });
+  for (const [e, fs, lh] of was) {
+    if (fs) e.style.setProperty('font-size', fs * f + 'px', 'important');
+    if (lh.endsWith('px')) e.style.setProperty('line-height', parseFloat(lh) * f + 'px', 'important');
+  }
+  return els.length;
+}
+// 버튼 · 링크: 글자가 상자 밖으로 잘리는지, 가운데를 눌렀을 때 그 버튼이 눌리는지
+function taps(scopeSel) {
+  const scope = document.querySelector(scopeSel) || document.body;
+  const out = [];
+  for (const el of scope.querySelectorAll('button,a[href],[role=button],input[type=submit],input[type=button],summary')) {
+    const cs = getComputedStyle(el);
+    if (cs.visibility === 'hidden' || cs.display === 'none' || !el.getClientRects().length) continue;
+    const label = (el.innerText || el.value || el.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim();
+    if (!label) continue;
+    const found = [];
+    // 잘림: 상자보다 글자가 크다(가로 또는 세로). 말줄임(…)은 일부러 그런 것이라 뺀다
+    const cw = el.scrollWidth - el.clientWidth, ch = el.scrollHeight - el.clientHeight;
+    if (el.clientWidth > 0 && cs.textOverflow !== 'ellipsis' && (cw > 1 || ch > 1)) found.push({ kind: 'clip', px: Math.max(cw, ch) });
+    // 눌림: 화면 가운데로 끌어온 뒤 버튼 한가운데를 누르면 그 버튼(이나 그 안의 것)이 맞는지
+    el.scrollIntoView({ block: 'center', inline: 'center' });
+    const r = el.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    if (r.width > 0 && r.height > 0 && (!hit || (hit !== el && !el.contains(hit)))) {
+      const by = hit ? hit.tagName.toLowerCase() + (typeof hit.className === 'string' && hit.className.trim() ? '.' + hit.className.trim().split(/\s+/)[0] : '') : '화면 밖';
+      found.push({ kind: 'blocked', by });
+    }
+    if (!found.length) continue;
+    const cls = typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '';
+    out.push({ el: el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + cls, role: 'tap', wordBreak: '', textWrap: '', lines: [label.slice(0, 40)], found });
+  }
+  window.scrollTo(0, 0);
+  return out;
+}
+
 // 글자 하나하나의 실제 위치(Range rect)로 줄을 되살린다. CSS 를 읽어 추측하지 않는다.
 function measure(scopeSel) {
   const WORD = /[\uAC00-\uD7A3\u3131-\u318E0-9A-Za-z]/;
@@ -190,38 +240,52 @@ function measure(scopeSel) {
 }
 
 const report = [];
-for (const W of widths) {
-  await send('Emulation.setDeviceMetricsOverride', { width: W, height: 900, deviceScaleFactor: 1, mobile: W < 700 });
+for (const W of widths) for (const M of modes) {
+  // 확대는 화면 전체가 커지는 것이라 실제 배치 폭(CSS px)이 W / 배율 로 줄어든다
+  const cssW = M.kind === 'zoom' ? Math.round(W * 100 / M.pct) : W;
+  await send('Emulation.setDeviceMetricsOverride', { width: cssW, height: M.kind === 'zoom' ? Math.round(900 * 100 / M.pct) : 900, deviceScaleFactor: 1, mobile: W < 700 });
   await send('Page.navigate', { url: target });
   await sleep(1200);
   await send('Runtime.evaluate', { expression: 'document.fonts ? document.fonts.ready.then(()=>1) : 1', awaitPromise: true });
+  if (M.kind === 'text') await send('Runtime.evaluate', { expression: `(${scaleText})(${M.pct / 100})` });
   await sleep(300);
   const r = await send('Runtime.evaluate', { expression: `(${measure})(${JSON.stringify(SCOPE)})`, returnByValue: true });
   if (r.result.exceptionDetails) { console.error('페이지에서 셈이 실패했다:', r.result.exceptionDetails.text); process.exit(2); }
-  report.push({ width: W, blocks: r.result.result.value });
+  const blocks = r.result.result.value;
+  if (modes.length > 1) {
+    const t = await send('Runtime.evaluate', { expression: `(${taps})(${JSON.stringify(SCOPE)})`, returnByValue: true });
+    if (t.result.exceptionDetails) { console.error('버튼 셈이 실패했다:', t.result.exceptionDetails.text); process.exit(2); }
+    const tapList = t.result.result.value;
+    // 같은 버튼이 「넘침」과 「버튼 글자 잘림」으로 두 번 잡히면 버튼 쪽 하나만 남긴다
+    const clipped = new Set(tapList.filter((x) => x.found.some((f) => f.kind === 'clip')).map((x) => x.el + '|' + x.lines[0]));
+    for (const b of blocks) if (clipped.has(b.el + '|' + (b.lines.join(' ').replace(/\s+/g, ' ').trim().slice(0, 40)))) b.found = b.found.filter((f) => f.kind !== 'overflow');
+    blocks.splice(0, blocks.length, ...blocks.filter((b) => b.found.length), ...tapList);
+  }
+  report.push({ width: W, mode: M.kind, pct: M.pct, cssWidth: cssW, blocks });
 }
 ws.close();
 
 const count = (k) => report.reduce((s, w) => s + w.blocks.reduce((t, b) => t + b.found.filter((f) => f.kind === k).length, 0), 0);
-const summary = { split: count('split'), orphan: count('orphan'), overflow: count('overflow') };
-const bad = summary.split + summary.overflow > 0;
+const summary = { split: count('split'), orphan: count('orphan'), overflow: count('overflow'), clip: count('clip'), blocked: count('blocked') };
+const bad = summary.split + summary.overflow + summary.clip + summary.blocked > 0;
 
 if (JSON_OUT) {
-  console.log(JSON.stringify({ target, widths, summary, report }, null, 2));
+  console.log(JSON.stringify({ target, widths, modes, summary, report }, null, 2));
 } else {
-  const ROLE = { heading: '제목', body: '본문', narrow: '좁은 칸', code: '코드·주소' };
-  const MARK = { split: '✂ 쪼개짐', orphan: '· 외톨이', overflow: '⛔ 넘침' };
+  const ROLE = { heading: '제목', body: '본문', narrow: '좁은 칸', code: '코드·주소', tap: '버튼' };
+  const MARK = { split: '✂ 쪼개짐', orphan: '· 외톨이', overflow: '⛔ 넘침', clip: '✂ 버튼 글자 잘림', blocked: '⛔ 안 눌림' };
+  const MODE = (w) => w.mode === 'text' ? ` · 글자만 ${w.pct}%` : w.mode === 'zoom' ? ` · 확대 ${w.pct}% (배치 폭 ${w.cssWidth}px)` : '';
   for (const w of report) {
-    console.log(`\n── ${w.width}px ${w.blocks.length ? '' : '  문제 없음'}`);
+    console.log(`\n── ${w.width}px${MODE(w)} ${w.blocks.length ? '' : '  문제 없음'}`);
     for (const b of w.blocks) {
-      const what = b.found.map((f) => f.kind === 'overflow' ? `${MARK.overflow} ${f.px}px${f.page ? ' (페이지가 옆으로 밀림)' : ''}` : `${MARK[f.kind]} 「${f.word}」`).join('  ');
+      const what = b.found.map((f) => f.kind === 'overflow' ? `${MARK.overflow} ${f.px}px${f.page ? ' (페이지가 옆으로 밀림)' : ''}` : f.kind === 'clip' ? `${MARK.clip} ${f.px}px` : f.kind === 'blocked' ? `${MARK.blocked} (가운데를 누르면 ${f.by})` : `${MARK[f.kind]} 「${f.word}」`).join('  ');
       console.log(`  ${ROLE[b.role]}  ${b.el}  (word-break:${b.wordBreak}${b.textWrap ? ' · text-wrap:' + b.textWrap : ''})`);
       console.log(`    ${what}`);
       b.lines.slice(0, 4).forEach((l, i) => console.log(`    ${String(i + 1).padStart(2)}│ ${l}`));
       if (b.lines.length > 4) console.log(`      … ${b.lines.length - 4}줄 더`);
     }
   }
-  console.log(`\n합계  쪼개짐 ${summary.split} · 외톨이 ${summary.orphan} · 넘침 ${summary.overflow}`);
+  console.log(`\n합계  쪼개짐 ${summary.split} · 외톨이 ${summary.orphan} · 넘침 ${summary.overflow}${modes.length > 1 ? ` · 버튼 글자 잘림 ${summary.clip} · 안 눌림 ${summary.blocked}` : ''}`);
 }
 sweep();
 process.exit(bad ? 1 : 0);
