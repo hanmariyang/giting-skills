@@ -2191,6 +2191,8 @@ for (const f of flwMenu.flows) writeFileSync(join(FLWP, 'components', `${f.id}.h
 const FM_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/flow-menu/components';
 const flwNo = i => '①②③④⑤⑥⑦⑧⑨⑩'[i];
 const FM_CSS = `.fmgal{--ink:#16161a;--ink2:#6b6c74;--line:#e4e4e8;--acc:#F05032;--bg:#efeeeb;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink)}
+.fmgal .ip-rows{max-width:720px;margin:0 auto;text-align:left}
+@media(max-width:560px){.fmgal .ip-rows a.r{grid-template-columns:1fr}.fmgal .ip-rows .n{justify-content:flex-start}}
 .fmgal .fm-rules{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0 0 22px}
 .fmgal .fm-rules b{font-size:14px}.fmgal .fm-rules ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink2);line-height:1.7}
 .fmgal .fm-flow{margin:0 0 34px;scroll-margin-top:80px}
@@ -2217,7 +2219,7 @@ const flw0 = flwMenu.flows[0];
 const flwIntro = ipPanels('flow-menu', '.fmgal', '--ip-acc:var(--acc);--ip-ink:var(--ink);--ip-ink2:var(--ink2);--ip-ink3:var(--ink2);--ip-paper:#fff;--ip-line:var(--line);--ip-wash:var(--bg)', [
   { lay: 'center', bg: 'pale', chip: `흐름 메뉴판 · 흐름 ${flwMenu.flows.length} · 부품 이름은 앱 메뉴판 그대로`, h: `「결제 화면」은 한 장이 아니라<br><em>${flw0.steps.length}장</em>이에요`,
     sub: `${esc(flw0.from)}부터 ${esc(flw0.to)}까지, 고객이 넘기는 화면을 장으로 나누고 <b>장마다 쓰는 부품을 이름으로</b> 적었어요.`,
-    body: `<div class="ip-rows">${flw0.steps.map((s, i) => `<span class="r"><span class="w"><b style="color:var(--ip-ink)">${flwNo(i)} ${esc(s.ko)}</b></span><span class="n">${s.parts.map(id => `<b>${esc(flwPart(id).name.ko)}</b>`).join('')}</span></span>`).join('')}</div>` },
+    body: `<div class="ip-rows">${flw0.steps.map((s, i) => `<a class="r" href="#fl-${flw0.id}"><span class="w"><b style="color:var(--ip-ink)">${flwNo(i)} ${esc(s.ko)}</b></span><span class="n">${s.parts.map(id => `<b>${esc(flwPart(id).name.ko)}</b>`).join('')}</span></a>`).join('')}</div>` },
   { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '장 수와 장 이름을<br><em>먼저</em> 적어요', sub: esc(flwF.note), body: ipFormula(flwF) },
   { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: '「결제 화면 만들어줘」가<br><em>장 계획</em>으로 바뀌어요', sub: '스킬로 깔아 두면 장 수·장 이름·장마다 부품을 먼저 보여 주고, 장을 넘겨도 지킬 규칙을 장마다 대조해요.', body: ipInstall('flow-menu') },
 ]);
