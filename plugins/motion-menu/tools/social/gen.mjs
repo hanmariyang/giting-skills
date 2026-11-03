@@ -16,6 +16,7 @@ export const PALETTE = {
   CHAT: { acc: '#2B7FE0', label: '대화가 오가요' },
   ALERT: { acc: '#E8506E', label: '알림을 띄워요' },
   FRAME: { acc: '#E8930C', label: '화면 위에 짚어 줘요' },
+  STORY: { acc: '#1E9E6A', label: '정보와 이야기를 얹어요' },
 };
 export const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * t + parseInt(b.slice(i, i + 2), 16) * (1 - t)).toString(16).padStart(2, '0')).join('');
 const items = menu.items.filter(i => i.category === 'social-overlay');

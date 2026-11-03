@@ -31,6 +31,7 @@ var chip = function (c, s, cx, cy, px, bg, fg, padX) { var w = sayW(c, s, px) + 
 var avatar = function (c, x, y, r, col) { c.fillStyle = col; disc(c, x, y, r); c.fillStyle = 'rgba(255,255,255,.85)'; disc(c, x, y - r * .2, r * .35); c.beginPath(); c.ellipse(x, y + r * .55, r * .55, r * .35, 0, Math.PI, TAU); c.fill(); };
 var bgc0 = function (c, w, h) { c.fillStyle = '#1B1E25'; c.fillRect(0, 0, w, h); };
 var bubble = function (c, x, y, bw, bh, col, tail) { rrect(c, x, y, bw, bh, bh * .45); c.fillStyle = col; c.fill(); c.beginPath(); if (tail === 'l') { c.moveTo(x + bh * .3, y + bh * .7); c.lineTo(x - bh * .05, y + bh * 1.02); c.lineTo(x + bh * .7, y + bh * .9); } else { c.moveTo(x + bw - bh * .3, y + bh * .7); c.lineTo(x + bw + bh * .05, y + bh * 1.02); c.lineTo(x + bw - bh * .7, y + bh * .9); } c.closePath(); c.fill(); };
+var pinAt = function (c, x, y, s, col) { c.fillStyle = col; c.beginPath(); c.arc(x, y - s * 1.8, s, Math.PI * .85, Math.PI * .15); c.lineTo(x, y); c.closePath(); c.fill(); c.fillStyle = '#FFFFFF'; disc(c, x, y - s * 1.8, s * .42); };
 var F=function (c, w, h, t, k) {
   scene(c, w, h, k); c.globalAlpha = outA(t);
   var cx = w / 2, top = lerp(-h * .5, h * .18, back(seg(t, .4, .6))), bw = h * .26, bh = h * .38, f = io(seg(t, 1.2, .5));
