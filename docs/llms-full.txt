@@ -1,6 +1,6 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 132개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -1013,6 +1013,94 @@ document.addEventListener('click', function (e) {
   const idx = () => Math.round(tr.scrollLeft / tr.clientWidth);
   function go(d) { tr.scrollTo({ left: Math.min(2, Math.max(0, idx() + d)) * tr.clientWidth, behavior: 'smooth' }); }
   tr.addEventListener('scroll', () => dt.forEach((el, i) => el.classList.toggle('on', i === idx())));
+</script>
+<script>
+// 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href="#"]');
+  if (a) e.preventDefault();
+});
+</script>
+</body>
+</html>
+```
+
+### 커버플로 (Cover Flow)
+- 별칭: "가운데만 정면이고 옆은 비스듬히 넘어가는 거" · "3D로 겹쳐 넘기는 앨범" · "아이튠즈 앨범 넘기기"
+- 정의: 가운데 한 장은 정면을 보고, 양옆은 원근으로 비스듬히 돌아 겹쳐 쌓이는 3D 캐러셀.
+- 구분: 평면으로 한 장씩 밀리면 캐러셀, 옆 카드가 비스듬히 돌아 겹쳐 보이면 커버플로
+- 요청 문장: 앨범 표지 7장을 커버플로로 만들어줘. 가운데 한 장은 정면, 양옆은 50도 돌려 바깥으로 갈수록 촘촘히 겹치기. 넘김은 0.5초 ease-out. 화살표 단추 · 방향키 · 끌기 · 옆 카드 누르기 네 길로 넘기고, 움직임 줄이기 설정이면 회전 애니메이션 없이 바로 바뀌게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/coverflow.html
+
+```html
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커버플로 Cover Flow · UI 메뉴판</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #17171b; font-size: 13.5px; background: #fff; }
+  .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .cap { color: #9a9aa4; font-size: 11px; text-align: center; margin: 10px 0 0; }
+  .bar { background: #ececf1; border-radius: 4px; height: 10px; }
+  .mut { color: #9a9aa4; font-size: 12px; }
+</style>
+</head>
+<body>
+<style>
+  .cf { position: relative; height: 150px; margin-top: 18px; perspective: 600px; touch-action: pan-y; cursor: grab; outline: none; }
+  .cf:active { cursor: grabbing; }
+  .cf:focus-visible { box-shadow: inset 0 0 0 2px #17171b; border-radius: 8px; }
+  .cv { position: absolute; left: 50%; top: 0; width: 104px; height: 104px; margin-left: -52px; border: 0; border-radius: 4px; padding: 0 0 8px 9px; display: flex; align-items: flex-end; font: 700 11px/1.2 system-ui, sans-serif; color: #fff; text-align: left; cursor: pointer; transform-style: preserve-3d; box-shadow: inset 0 -46px 40px -20px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.08); transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s, filter .5s, color .3s; -webkit-box-reflect: below 3px linear-gradient(transparent 62%, rgba(0,0,0,.22)); }
+  .cv[aria-current="false"] { color: transparent; }
+  .cv[aria-current="true"] { cursor: default; }
+  .cfnav { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .cfnav button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 13px; }
+  .cfnav span { font: 600 11px system-ui, sans-serif; color: #6b6b75; min-width: 92px; text-align: center; }
+  @media (prefers-reduced-motion: reduce) { .cv { transition: none; } }
+</style>
+<div class="cf" id="cf" tabindex="0" role="group" aria-roledescription="커버플로" aria-label="앨범 7장, 방향키로 넘기기"></div>
+<div class="cfnav"><button aria-label="이전" onclick="cfGo(cfI-1)">&#8249;</button><span id="cfT" aria-live="polite"></span><button aria-label="다음" onclick="cfGo(cfI+1)">&#8250;</button></div>
+<script>
+  const CF = [['새벽 세 시','#2F3A56'],['여름 끝','#C2643B'],['느린 산책','#5E7A55'],['도시 소음','#3B3B44'],['물결','#2F6E86'],['오래된 사진','#8A6A4A'],['첫눈','#7B86A3']];
+  const cf = document.getElementById('cf'), cfT = document.getElementById('cfT');
+  let cfI = 3;
+  const cvs = CF.map(([t, c], i) => {
+    const b = document.createElement('button');
+    b.className = 'cv'; b.textContent = t; b.dataset.i = i; b.tabIndex = -1;
+    b.style.background = c;
+    b.setAttribute('aria-label', (i + 1) + ' / ' + CF.length + ' ' + t);
+    b.onclick = () => { if (!cfMoved) cfGo(i); };
+    cf.appendChild(b); return b;
+  });
+  function cfGo(n) {
+    cfI = Math.max(0, Math.min(CF.length - 1, n));
+    cvs.forEach((b, i) => {
+      const o = i - cfI, a = Math.abs(o), s = Math.sign(o);
+      const x = o === 0 ? 0 : s * (58 + (a - 1) * 24);
+      b.style.transform = 'translateX(' + x + 'px) translateZ(' + (o === 0 ? 30 : -70) + 'px) rotateY(' + (-s * 50) + 'deg)';
+      b.style.zIndex = 20 - a;
+      b.style.opacity = a > 3 ? 0 : 1;
+      b.style.filter = o === 0 ? 'none' : 'brightness(' + (1 - a * .12) + ')';
+      b.setAttribute('aria-current', o === 0 ? 'true' : 'false');
+    });
+    cfT.textContent = (cfI + 1) + ' / ' + CF.length + ' · ' + CF[cfI][0];
+  }
+  cf.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { cfGo(cfI - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { cfGo(cfI + 1); e.preventDefault(); }
+  });
+  let cfX = null, cfMoved = false;
+  cf.addEventListener('pointerdown', e => { cfX = e.clientX; cfMoved = false; });
+  addEventListener('pointermove', e => {
+    if (cfX === null) return;
+    const d = e.clientX - cfX;
+    if (Math.abs(d) > 40) { cfGo(cfI - Math.sign(d)); cfX = e.clientX; cfMoved = true; }
+  });
+  addEventListener('pointerup', () => { cfX = null; setTimeout(() => cfMoved = false); });
+  cfGo(cfI);
 </script>
 <script>
 // 데모용 빈 링크(href="#") 이동 차단 — 인앱 브라우저(스레드 등)에서 iframe 이 엉뚱한 곳으로 튀는 제보 대응 (2026-09-12)

@@ -1,6 +1,6 @@
 # UI 메뉴판 (ui-menu) · Giting Skills
 
-> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 131개 항목.
+> 말로 설명하던 UI에 이름을 붙여 주는 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭 → 바로 쓰는 요청 문장 → 실물 HTML. 11개 코스 132개 항목.
 > AI한테 시키는 공식: [어디에] + [컴포넌트 이름] + [개수] + [세부 조건]
 >   ✕ "FAQ 만들어줘" → ○ "푸터 위 섹션에 아코디언 5개. 처음엔 다 접혀 있고, 하나 열면 나머지 닫히게"
 > 갤러리: https://giting.kr/skills/ · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -163,6 +163,13 @@
 - shadcn: Carousel
 - 요청 문장: 후기 3개를 좌우 화살표와 점 표시가 있는 캐러셀로 만들어줘.
 - 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/carousel.html
+
+### 커버플로 (Cover Flow)
+- 별칭: "가운데만 정면이고 옆은 비스듬히 넘어가는 거" · "3D로 겹쳐 넘기는 앨범" · "아이튠즈 앨범 넘기기"
+- 정의: 가운데 한 장은 정면을 보고, 양옆은 원근으로 비스듬히 돌아 겹쳐 쌓이는 3D 캐러셀.
+- 구분: 평면으로 한 장씩 밀리면 캐러셀, 옆 카드가 비스듬히 돌아 겹쳐 보이면 커버플로
+- 요청 문장: 앨범 표지 7장을 커버플로로 만들어줘. 가운데 한 장은 정면, 양옆은 50도 돌려 바깥으로 갈수록 촘촘히 겹치기. 넘김은 0.5초 ease-out. 화살표 단추 · 방향키 · 끌기 · 옆 카드 누르기 네 길로 넘기고, 움직임 줄이기 설정이면 회전 애니메이션 없이 바로 바뀌게.
+- 레퍼런스: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/ui-menu/components/coverflow.html
 
 ### 드롭다운 메뉴 (Dropdown)
 - 별칭: "누르면 아래로 목록 나오는 거" · "펼침 메뉴" · "호버하면 나오는 메뉴"

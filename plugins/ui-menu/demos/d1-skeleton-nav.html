@@ -258,6 +258,61 @@
   tr.addEventListener('scroll', () => dt.forEach((el, i) => el.classList.toggle('on', i === idx())));
 </script>
 
+<!-- @coverflow h=250 full -->
+<style>
+  .cf { position: relative; height: 150px; margin-top: 18px; perspective: 600px; touch-action: pan-y; cursor: grab; outline: none; }
+  .cf:active { cursor: grabbing; }
+  .cf:focus-visible { box-shadow: inset 0 0 0 2px #17171b; border-radius: 8px; }
+  .cv { position: absolute; left: 50%; top: 0; width: 104px; height: 104px; margin-left: -52px; border: 0; border-radius: 4px; padding: 0 0 8px 9px; display: flex; align-items: flex-end; font: 700 11px/1.2 system-ui, sans-serif; color: #fff; text-align: left; cursor: pointer; transform-style: preserve-3d; box-shadow: inset 0 -46px 40px -20px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.08); transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s, filter .5s, color .3s; -webkit-box-reflect: below 3px linear-gradient(transparent 62%, rgba(0,0,0,.22)); }
+  .cv[aria-current="false"] { color: transparent; }
+  .cv[aria-current="true"] { cursor: default; }
+  .cfnav { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .cfnav button { border: 1px solid #e0e0e8; background: #fff; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 13px; }
+  .cfnav span { font: 600 11px system-ui, sans-serif; color: #6b6b75; min-width: 92px; text-align: center; }
+  @media (prefers-reduced-motion: reduce) { .cv { transition: none; } }
+</style>
+<div class="cf" id="cf" tabindex="0" role="group" aria-roledescription="커버플로" aria-label="앨범 7장, 방향키로 넘기기"></div>
+<div class="cfnav"><button aria-label="이전" onclick="cfGo(cfI-1)">&#8249;</button><span id="cfT" aria-live="polite"></span><button aria-label="다음" onclick="cfGo(cfI+1)">&#8250;</button></div>
+<script>
+  const CF = [['새벽 세 시','#2F3A56'],['여름 끝','#C2643B'],['느린 산책','#5E7A55'],['도시 소음','#3B3B44'],['물결','#2F6E86'],['오래된 사진','#8A6A4A'],['첫눈','#7B86A3']];
+  const cf = document.getElementById('cf'), cfT = document.getElementById('cfT');
+  let cfI = 3;
+  const cvs = CF.map(([t, c], i) => {
+    const b = document.createElement('button');
+    b.className = 'cv'; b.textContent = t; b.dataset.i = i; b.tabIndex = -1;
+    b.style.background = c;
+    b.setAttribute('aria-label', (i + 1) + ' / ' + CF.length + ' ' + t);
+    b.onclick = () => { if (!cfMoved) cfGo(i); };
+    cf.appendChild(b); return b;
+  });
+  function cfGo(n) {
+    cfI = Math.max(0, Math.min(CF.length - 1, n));
+    cvs.forEach((b, i) => {
+      const o = i - cfI, a = Math.abs(o), s = Math.sign(o);
+      const x = o === 0 ? 0 : s * (58 + (a - 1) * 24);
+      b.style.transform = 'translateX(' + x + 'px) translateZ(' + (o === 0 ? 30 : -70) + 'px) rotateY(' + (-s * 50) + 'deg)';
+      b.style.zIndex = 20 - a;
+      b.style.opacity = a > 3 ? 0 : 1;
+      b.style.filter = o === 0 ? 'none' : 'brightness(' + (1 - a * .12) + ')';
+      b.setAttribute('aria-current', o === 0 ? 'true' : 'false');
+    });
+    cfT.textContent = (cfI + 1) + ' / ' + CF.length + ' · ' + CF[cfI][0];
+  }
+  cf.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { cfGo(cfI - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { cfGo(cfI + 1); e.preventDefault(); }
+  });
+  let cfX = null, cfMoved = false;
+  cf.addEventListener('pointerdown', e => { cfX = e.clientX; cfMoved = false; });
+  addEventListener('pointermove', e => {
+    if (cfX === null) return;
+    const d = e.clientX - cfX;
+    if (Math.abs(d) > 40) { cfGo(cfI - Math.sign(d)); cfX = e.clientX; cfMoved = true; }
+  });
+  addEventListener('pointerup', () => { cfX = null; setTimeout(() => cfMoved = false); });
+  cfGo(cfI);
+</script>
+
 <!-- @dropdown h=200 -->
 <style>
   .dd { position: relative; display: inline-block; }
