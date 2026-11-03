@@ -6,6 +6,7 @@
   "infinite-scroll": [["wait",500],["scroll","#sc",160],["wait",900],["scroll","#sc",220],["wait",1200]],
   "load-more": [["wait",500],["tap","button"],["wait",900],["tap","button"],["wait",1100]],
   "carousel": [["wait",500],["tap","[aria-label=다음]"],["wait",1000],["tap","[aria-label=다음]"],["wait",1000],["tap","[aria-label=이전]"],["wait",900]],
+  "coverflow": [["wait",500],["tap","[aria-label=다음]"],["wait",900],["tap","[aria-label=다음]"],["wait",900],["tap","[data-i=\"2\"]"],["wait",1100],["tap","[aria-label=다음]"],["wait",900]],
   "dropdown": [["wait",500],["tap","[aria-haspopup=menu]"],["wait",700],["hover","[role=menuitem]:nth-child(2)",900],["tap","[aria-haspopup=menu]"],["wait",800]],
   "hamburger": [["wait",500],["press","[aria-label='메뉴 열기']",600],["wait",900]],
   "drawer": [["wait",500],["tap",".op"],["wait",1200],["hover","dialog a:nth-child(2)",900],["wait",400]],
