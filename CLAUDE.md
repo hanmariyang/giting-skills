@@ -317,4 +317,4 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - ⑭에 `group` STORY(정보와 이야기 얹기) 10개를 더했다: 정보 칩 · 순서 번호 · 날씨 위젯 · 캠코더 프레임 · 손그림 동그라미 · 챕터 머리 · 장단점 카드 · 테이프 메모 · 경로선 · 체크리스트 카드. 424항목, 19코스.
 - 여행·리뷰 숏폼 위 장식 판을 보고 우리에게 없던 자리만 골랐다. 그쪽 문구·그림은 쓰지 않았고 장소·숫자는 지어낸 예시다.
 - 정본은 그대로 `tools/social/engine.js` → `gen.mjs`. 색은 STORY `#1E9E6A`(기존 넷과 색상 겹치지 않게).
-- ⚠️ `tools/social/render.mjs` 는 아직 시스템 크롬 경로다(이번에 안 돌렸다). 홍보 영상을 다시 구울 땐 Chrome for Testing 경로로 바꾸고, 꼬리 문구 「24개 전부」도 고친다.
+- `tools/social/render.mjs` 는 Chrome for Testing 경로로 바꿨고 꼬리 문구는 항목 수를 센다(2026-11-03).
