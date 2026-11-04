@@ -311,3 +311,10 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 장마다 `parts` 는 **app-menu id**. 이름은 빌드가 app-menu `menu.json` 에서 읽는다. app-menu 에 없는 id, 장마다 넷 이상, 견본 화면(`.phone#<screen>`)에 그 `data-menu` 가 없으면 빌드가 멈춘다.
 - 견본 `demos/<흐름 id>.html` 은 프래그먼트가 아니라 통째 페이지다. `components/` 는 그 사본. 홍보 영상(flowrack)도 이 견본을 찍는다(`insol-partner/giting/영상/flowrack/`).
 - 흐름은 실제 앱 화면에서 확인한 것만 싣는다(유아이볼 `search_ui_patterns` 등, 출처·수집 월을 `seen` 에).
+
+## 모션 메뉴판 0.22.0 · ⑭ 소셜 오버레이 35 (2026-11-03)
+
+- ⑭에 `group` STORY(정보와 이야기 얹기) 10개를 더했다: 정보 칩 · 순서 번호 · 날씨 위젯 · 캠코더 프레임 · 손그림 동그라미 · 챕터 머리 · 장단점 카드 · 테이프 메모 · 경로선 · 체크리스트 카드. 424항목, 19코스.
+- 여행·리뷰 숏폼 위 장식 판을 보고 우리에게 없던 자리만 골랐다. 그쪽 문구·그림은 쓰지 않았고 장소·숫자는 지어낸 예시다.
+- 정본은 그대로 `tools/social/engine.js` → `gen.mjs`. 색은 STORY `#1E9E6A`(기존 넷과 색상 겹치지 않게).
+- `tools/social/render.mjs` 는 Chrome for Testing 경로로 바꿨고 꼬리 문구는 항목 수를 센다(2026-11-03).

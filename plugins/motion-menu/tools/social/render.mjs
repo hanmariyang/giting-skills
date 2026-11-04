@@ -67,7 +67,7 @@ window.draw=function(g,t){
   });
   c.fillStyle=INK;c.fillRect(56,1660,968,3);
   txt('GITING',56,1712,'800 26px '+MONO,INK);
-  txt('24개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
+  txt(items.length+'개 전부 · giting.kr/skills/motion-menu',1024,1712,'500 24px '+SANS,SUB,'right');
 };
 window.sheet=function(){
   cv.width=1080;cv.height=24*120+40;c.fillStyle='#111318';c.fillRect(0,0,cv.width,cv.height);
@@ -78,7 +78,7 @@ window.sheet=function(){
 </script>`;
 const PAGE = join(OUT, 'render-page.html'); writeFileSync(PAGE, page);
 
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', PORT = 9600 + (process.pid % 200), PROFILE = join(OUT, '.chrome');
+const CHROME = process.env.HOME + '/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing', PORT = 9600 + (process.pid % 200), PROFILE = join(OUT, '.chrome');
 const proc = spawn(CHROME, ['--headless', '--no-sandbox', `--remote-debugging-port=${PORT}`, `--user-data-dir=${PROFILE}`, 'about:blank'], { stdio: 'ignore' });
 const done = () => { try { proc.kill('SIGKILL'); } catch {} };
 process.on('exit', done);

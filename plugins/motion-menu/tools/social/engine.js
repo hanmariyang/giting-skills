@@ -1,4 +1,4 @@
-// 소셜 오버레이 24 — 캔버스 그리기 함수 묶음 (의존성 0)
+// 소셜 오버레이 35: 캔버스 그리기 함수 묶음 (의존성 0)
 // 갤러리 데모(demos/m17-social-overlay.html)와 홍보 영상(render.mjs)이 같은 함수를 쓴다.
 // 정본은 이 파일 하나. 데모를 고치려면 여기를 고치고 `node tools/social/gen.mjs` → `node build.mjs`.
 //
@@ -35,6 +35,7 @@ var chip = function (c, s, cx, cy, px, bg, fg, padX) { var w = sayW(c, s, px) + 
 var avatar = function (c, x, y, r, col) { c.fillStyle = col; disc(c, x, y, r); c.fillStyle = 'rgba(255,255,255,.85)'; disc(c, x, y - r * .2, r * .35); c.beginPath(); c.ellipse(x, y + r * .55, r * .55, r * .35, 0, Math.PI, TAU); c.fill(); };
 var bgc0 = function (c, w, h) { c.fillStyle = '#1B1E25'; c.fillRect(0, 0, w, h); };
 var bubble = function (c, x, y, bw, bh, col, tail) { rrect(c, x, y, bw, bh, bh * .45); c.fillStyle = col; c.fill(); c.beginPath(); if (tail === 'l') { c.moveTo(x + bh * .3, y + bh * .7); c.lineTo(x - bh * .05, y + bh * 1.02); c.lineTo(x + bh * .7, y + bh * .9); } else { c.moveTo(x + bw - bh * .3, y + bh * .7); c.lineTo(x + bw + bh * .05, y + bh * 1.02); c.lineTo(x + bw - bh * .7, y + bh * .9); } c.closePath(); c.fill(); };
+var pinAt = function (c, x, y, s, col) { c.fillStyle = col; c.beginPath(); c.arc(x, y - s * 1.8, s, Math.PI * .85, Math.PI * .15); c.lineTo(x, y); c.closePath(); c.fill(); c.fillStyle = '#FFFFFF'; disc(c, x, y - s * 1.8, s * .42); };
 /*@end*/
 
 var SO = {};
@@ -319,6 +320,139 @@ SO['island-alert'] = function (c, w, h, t, k) {
     c.fillStyle = '#30D158'; disc(c, x + bw - h * .09, y + bh / 2, h * .03);
   }
   c.globalAlpha = 1;
+};
+
+// ── STORY · 정보와 이야기 (2026-11-03) ─────────────────────────
+// 여행·리뷰 숏폼에서 장면 위에 정보를 얹는 열 가지. 이름·숫자는 지어낸 예시다.
+SO['info-chips'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var rows = [['12,000원', k.acc, '#FFFFFF'], ['★ 4.8', 'rgba(255,255,255,.95)', '#16181D'], ['걸어서 9분', 'rgba(20,22,27,.75)', '#FFFFFF']], px = h * .075, x0 = w * .08;
+  rows.forEach(function (r, i) {
+    var b = back(seg(t, .4 + i * .15, .35)); if (b <= 0) return;
+    var cw = sayW(c, r[0], px) + h * .16, ch = px * 2.1, cy = h * (.25 + i * .25);
+    c.save(); c.translate(x0, cy); c.scale(b, b); rrect(c, 0, -ch / 2, cw, ch, ch / 2); c.fillStyle = r[1]; c.fill(); say(c, r[0], cw / 2, px * .04, px, r[2]); c.restore();
+  });
+  c.globalAlpha = 1;
+};
+SO['step-marker'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var cx = w * .08 + h * .17, cy = h * .5, r = h * .17, b = back(seg(t, .4, .4));
+  if (b > 0) { c.save(); c.translate(cx, cy); c.scale(b, b); c.fillStyle = k.acc; disc(c, 0, 0, r); say(c, '01', 0, h * .005, h * .14, '#FFFFFF', 'center', 800); c.restore(); }
+  var x1 = cx + r + h * .08, x2 = w * .92, e = io(seg(t, .8, .5));
+  if (e > 0) { c.fillStyle = 'rgba(255,255,255,.85)'; c.fillRect(x1, cy - h * .006, (x2 - x1) * e, h * .012); }
+  var a = eo(seg(t, 1.2, .4)); if (a > 0) { c.globalAlpha = outA(t) * a; say(c, '재료 손질하기', x1, cy - h * .13 + (1 - a) * h * .05, h * .1, '#FFFFFF', 'left', 800); }
+  var a2 = eo(seg(t, 1.45, .4)); if (a2 > 0) { c.globalAlpha = outA(t) * a2; say(c, '첫 번째 단계 · 5분', x1, cy + h * .13, h * .065, 'rgba(255,255,255,.7)', 'left', 500); }
+  c.globalAlpha = 1;
+};
+SO['info-widget'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var e = eo(seg(t, .4, .5)); if (e <= 0) { c.globalAlpha = 1; return; }
+  var cw = Math.min(w * .62, h * 1.35), ch = h * .7, x = w * .08, y = lerp(-ch, h * .15, e);
+  rrect(c, x, y, cw, ch, h * .07); c.fillStyle = 'rgba(20,22,27,.6)'; c.fill(); c.strokeStyle = 'rgba(255,255,255,.18)'; c.lineWidth = 1; c.stroke();
+  say(c, '서울', x + h * .07, y + h * .11, h * .06, 'rgba(255,255,255,.7)', 'left', 700);
+  var n = Math.round(18 * eo(seg(t, .8, .8)));
+  say(c, n + '°', x + h * .07, y + h * .34, h * .22, '#FFFFFF', 'left', 800);
+  say(c, '맑음 · 체감 16°', x + h * .07, y + h * .58, h * .055, 'rgba(255,255,255,.7)', 'left', 500);
+  var sx = x + cw - h * .2, sy = y + h * .3, sb = back(seg(t, 1.0, .4));
+  if (sb > 0) { c.save(); c.translate(sx, sy); c.scale(sb, sb); c.rotate(P8(t) * .4); c.strokeStyle = '#FFC93C'; c.lineWidth = h * .018; c.lineCap = 'round'; for (var i = 0; i < 8; i++) { var a = i * TAU / 8; c.beginPath(); c.moveTo(Math.cos(a) * h * .1, Math.sin(a) * h * .1); c.lineTo(Math.cos(a) * h * .14, Math.sin(a) * h * .14); c.stroke(); } c.fillStyle = '#FFC93C'; disc(c, 0, 0, h * .07); c.restore(); }
+  c.globalAlpha = 1;
+};
+SO['rec-frame'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var m = lerp(-h * .12, h * .08, eo(seg(t, .4, .6))), L = h * .16;
+  c.strokeStyle = '#FFFFFF'; c.lineWidth = h * .014; c.lineCap = 'square';
+  [[m, m, 1, 1], [w - m, m, -1, 1], [m, h - m, 1, -1], [w - m, h - m, -1, -1]].forEach(function (q) { c.beginPath(); c.moveTo(q[0], q[1] + L * q[3]); c.lineTo(q[0], q[1]); c.lineTo(q[0] + L * q[2], q[1]); c.stroke(); });
+  var a = eo(seg(t, 1.0, .4)); if (a > 0) {
+    c.globalAlpha = outA(t) * a;
+    var MONO = '"SF Mono",Menlo,monospace', px = h * .07;
+    c.font = '600 ' + px + 'px ' + MONO; c.fillStyle = '#FFFFFF'; c.textBaseline = 'middle'; c.textAlign = 'left'; c.fillText('2026.11.03', h * .2, h * .22);
+    c.textAlign = 'right'; c.fillText('REC', w - h * .2, h * .22);
+    if (P8(t) % 1 < .55) { c.fillStyle = '#FF3B30'; disc(c, w - h * .2 - c.measureText('REC').width - h * .06, h * .22, h * .028); }
+    var s = Math.floor(Math.max(0, P8(t) - 1)); c.fillStyle = '#FFFFFF'; c.textAlign = 'left'; c.fillText('00:00:0' + s, h * .2, h - h * .22);
+  }
+  c.globalAlpha = 1;
+};
+SO['scribble-circle'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var cx = w / 2, cy = h / 2;
+  rrect(c, cx - h * .13, cy - h * .2, h * .26, h * .4, h * .05); c.fillStyle = 'rgba(255,255,255,.28)'; c.fill();
+  rrect(c, cx - h * .06, cy - h * .3, h * .12, h * .12, h * .02); c.fillStyle = 'rgba(255,255,255,.4)'; c.fill();
+  var e = io(seg(t, .6, 1.1)), N = 90, tot = Math.PI * 4.3, last = Math.floor(N * e);
+  if (last > 1) {
+    c.strokeStyle = '#FFD43B'; c.lineWidth = h * .022; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath();
+    for (var i = 0; i <= last; i++) { var u = i / N, a = -1.9 + u * tot, wob = 1 + .06 * Math.sin(u * 13) + u * .07; var x = cx + Math.cos(a) * h * .42 * wob, y = cy + Math.sin(a) * h * .34 * wob; if (i) c.lineTo(x, y); else c.moveTo(x, y); }
+    c.stroke();
+  }
+  var l = back(seg(t, 1.8, .35)); if (l > 0) { c.save(); c.translate(Math.min(cx + h * .55, w - sayW(c, '이거 진짜 좋음', h * .07, 800) - h * .1), cy - h * .32); c.scale(l, l); say(c, '이거 진짜 좋음', 0, 0, h * .07, '#FFD43B', 'left', 800); c.restore(); }
+  c.globalAlpha = 1;
+};
+SO['chapter-header'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var x = w * .08, a0 = eo(seg(t, .4, .35));
+  if (a0 > 0) { c.globalAlpha = outA(t) * a0; say(c, 'DAY', x, h * .14, h * .06, k.acc, 'left', 800); c.globalAlpha = outA(t); }
+  var e = eo(seg(t, .5, .45)); c.save(); c.beginPath(); c.rect(0, h * .24, w, h * .38); c.clip(); say(c, '02', x, h * .43 + (1 - e) * h * .4, h * .34, '#FFFFFF', 'left', 800); c.restore();
+  var l = io(seg(t, .9, .5)); if (l > 0) { c.fillStyle = 'rgba(255,255,255,.8)'; c.fillRect(x, h * .67, w * .6 * l, h * .008); }
+  var s = eo(seg(t, 1.25, .45)); if (s > 0) { c.globalAlpha = outA(t) * s; say(c, '연남동 골목 산책', x + (1 - s) * h * .1, h * .81, h * .085, '#FFFFFF', 'left', 'italic 500'); }
+  c.globalAlpha = 1;
+};
+SO['pros-cons-card'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var gap = h * .06, cw = (w * .86 - gap) / 2, ch = h * .74, y = h * .13, px = h * .068;
+  var cards = [['좋은 점', '#2BB673', '+', ['조용함', '전망 좋음']], ['아쉬운 점', '#E5484D', '−', ['로비 좁음', '헬스장 없음']]];
+  cards.forEach(function (cd, j) {
+    var e = eo(seg(t, .4 + j * .15, .5)); if (e <= 0) return;
+    var x0 = w * .07 + j * (cw + gap), x = j ? lerp(w, x0, e) : lerp(-cw, x0, e);
+    rrect(c, x, y, cw, ch, h * .06); c.fillStyle = 'rgba(20,22,27,.62)'; c.fill();
+    c.fillStyle = cd[1]; disc(c, x + h * .1, y + h * .12, h * .055); say(c, cd[2], x + h * .1, y + h * .118, h * .08, '#FFFFFF', 'center', 900);
+    say(c, cd[0], x + h * .19, y + h * .12, px, '#FFFFFF', 'left', 800);
+    cd[3].forEach(function (s, i) { var a = eo(seg(t, 1.1 + j * .2 + i * .3, .3)); if (a <= 0) return; c.globalAlpha = outA(t) * a; say(c, s, x + h * .1 + (1 - a) * h * .06, y + h * (.34 + i * .2), px, 'rgba(255,255,255,.9)', 'left', 600); c.globalAlpha = outA(t); });
+  });
+  c.globalAlpha = 1;
+};
+SO['taped-note'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var d = seg(t, .4, .4); if (d <= 0) { c.globalAlpha = 1; return; }
+  var nw = Math.min(w * .6, h * 1.3), nh = h * .6, cx = w / 2, cy = h * .55, y = lerp(-h * .6, cy, d * d), sc = d < 1 ? 1.08 : 1 - .03 * Math.sin(seg(t, .8, .25) * Math.PI);
+  c.save(); c.translate(cx, y); c.rotate(-.06); c.scale(sc, sc);
+  c.fillStyle = 'rgba(0,0,0,.25)'; rrect(c, -nw / 2 + h * .02, -nh / 2 + h * .03, nw, nh, h * .015); c.fill();
+  c.fillStyle = '#FBF3D5'; rrect(c, -nw / 2, -nh / 2, nw, nh, h * .015); c.fill();
+  say(c, 'NOTE', -nw / 2 + h * .08, -nh / 2 + h * .12, h * .045, k.acc, 'left', 800);
+  var r = io(seg(t, 1.1, .7)); c.save(); c.beginPath(); c.rect(-nw / 2, -nh / 2, nw * r, nh); c.clip();
+  say(c, '아침 9시 전에 가면', -nw / 2 + h * .08, -h * .02, h * .075, '#2A2620', 'left', 'italic 700'); say(c, '줄 없음!', -nw / 2 + h * .08, h * .13, h * .075, '#2A2620', 'left', 'italic 700'); c.restore();
+  var tp = eo(seg(t, .85, .3)); if (tp > 0) { c.rotate(.08); c.fillStyle = 'rgba(255,214,90,.85)'; c.fillRect(-h * .16 * tp, -nh / 2 - h * .05, h * .32 * tp, h * .1); }
+  c.restore(); c.globalAlpha = 1;
+};
+SO['route-line'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var A = [w * .14, h * .82], B = [w * .8, h * .42], C = [w * .42, h * .05], s = h * .06;
+  var q = function (u) { return [(1 - u) * (1 - u) * A[0] + 2 * (1 - u) * u * C[0] + u * u * B[0], (1 - u) * (1 - u) * A[1] + 2 * (1 - u) * u * C[1] + u * u * B[1]]; };
+  var a = back(seg(t, .4, .35)); if (a > 0) { c.save(); c.translate(A[0], A[1]); c.scale(a, a); pinAt(c, 0, 0, s, 'rgba(255,255,255,.95)'); c.restore(); }
+  var e = io(seg(t, .8, 1.0)); if (e > 0) {
+    c.strokeStyle = k.acc; c.lineWidth = h * .02; c.lineCap = 'round'; c.setLineDash([h * .04, h * .035]); c.beginPath();
+    var n = 60; for (var i = 0; i <= n; i++) { var p = q(e * i / n); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke(); c.setLineDash([]);
+  }
+  var d = seg(t, 1.8, .3); if (d > 0) { var by = lerp(B[1] - h * .5, B[1], d * d); pinAt(c, B[0], by, s * 1.15, k.acc); }
+  var m = seg(t, 2.3, 2.2); if (m > 0 && m < 1) { var p2 = q(io(m)); c.fillStyle = '#FFFFFF'; disc(c, p2[0], p2[1], h * .025); }
+  var l = back(seg(t, 2.1, .35)); if (l > 0) { c.save(); c.translate(w * .66, h * .74); c.scale(l, l); chip(c, '호텔까지 12분', 0, 0, h * .065, 'rgba(255,255,255,.95)', '#16181D', h * .07); c.restore(); }
+  c.globalAlpha = 1;
+};
+SO['checklist-pop'] = function (c, w, h, t, k) {
+  scene(c, w, h, k); c.globalAlpha = outA(t);
+  var e = back(seg(t, .4, .4)); if (e <= 0) { c.globalAlpha = 1; return; }
+  var cw = Math.min(w * .7, h * 1.5), ch = h * .78, x = w * .08, y = h * .11;
+  c.save(); c.translate(x, y); c.scale(e, e);
+  rrect(c, 0, 0, cw, ch, h * .06); c.fillStyle = 'rgba(20,22,27,.68)'; c.fill();
+  say(c, '좋았던 점', h * .08, h * .11, h * .05, k.acc, 'left', 800);
+  ['무료 취소', '조식 포함', '지하철 5분'].forEach(function (s, i) {
+    var yy = h * (.3 + i * .19), bx = h * .11, p = seg(t, 1.0 + i * .4, .3);
+    c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = h * .01; c.beginPath(); c.arc(bx, yy, h * .045, 0, TAU); c.stroke();
+    if (p > 0) {
+      c.fillStyle = k.acc; disc(c, bx, yy, h * .045 * eo(clamp(p * 2)));
+      var cp = clamp(p * 1.6 - .4); if (cp > 0) { c.strokeStyle = '#FFFFFF'; c.lineWidth = h * .012; c.lineCap = 'round'; c.lineJoin = 'round'; var p1 = [bx - h * .022, yy], p2 = [bx - h * .005, yy + h * .018], p3 = [bx + h * .025, yy - h * .016]; c.beginPath(); c.moveTo(p1[0], p1[1]); var u = clamp(cp * 2); c.lineTo(lerp(p1[0], p2[0], u), lerp(p1[1], p2[1], u)); if (cp > .5) { var v = clamp(cp * 2 - 1); c.lineTo(lerp(p2[0], p3[0], v), lerp(p2[1], p3[1], v)); } c.stroke(); }
+    }
+    say(c, s, bx + h * .1, yy, h * .068, p > 0 ? '#FFFFFF' : 'rgba(255,255,255,.6)', 'left', 600);
+  });
+  c.restore(); c.globalAlpha = 1;
 };
 
 if (typeof module !== 'undefined') module.exports = { SO: SO };
