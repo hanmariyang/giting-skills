@@ -318,3 +318,9 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 여행·리뷰 숏폼 위 장식 판을 보고 우리에게 없던 자리만 골랐다. 그쪽 문구·그림은 쓰지 않았고 장소·숫자는 지어낸 예시다.
 - 정본은 그대로 `tools/social/engine.js` → `gen.mjs`. 색은 STORY `#1E9E6A`(기존 넷과 색상 겹치지 않게).
 - `tools/social/render.mjs` 는 Chrome for Testing 경로로 바꿨고 꼬리 문구는 항목 수를 센다(2026-11-03).
+
+## 모션 메뉴판 0.24.0 · ⑭ 소셜 오버레이 47 (2026-11-05)
+
+- ⑭에 `group` FOCUS(짚고 가리고 꾸미기, `#7B5CE0`) 12개: 뷰파인더 귀퉁이 · 스포트라이트 원 · 회전 인증 도장 · 반짝 터짐 · 나중에 저장 칩 · AI 프롬프트 타자 · 기울어진 띠 문구 · 가격표 달랑 · 광고 표시 라벨 · 모자이크 가리기 · 탭 표시 · 돋보기 확대. 436항목.
+- 숏폼 위 장식 판 레퍼런스에서 우리에게 없던 자리만 골랐다. 카운트다운 링은 카운트다운 칩이 이미 있어 뺐다. 문구·그림은 우리 것.
+- ⚠️ `mosaic-cover` · `loupe-zoom` 은 **이미 칠한 캔버스를 다시 읽는다**(`getImageData` · `drawImage(c.canvas)`). 좌표는 `c.getTransform()` 으로 기기 픽셀로 바꾼다. 그래서 scene 을 먼저 칠한 뒤에만 의미가 있고, 사진을 깐 영상(`k.photo`)에서 제일 잘 보인다.
