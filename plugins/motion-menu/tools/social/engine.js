@@ -546,7 +546,7 @@ SO['tilt-band'] = function (c, w, h, t, k) {
 SO['price-tag'] = function (c, w, h, t, k) {
   scene(c, w, h, k); c.globalAlpha = outA(t);
   var d = back(seg(t, .4, .5)); if (d <= 0) { c.globalAlpha = 1; return; }
-  var px0 = w * .5 + h * .35, py0 = h * .06, p = Math.max(0, P8(t) - .9), ang = .45 * Math.exp(-p * 1.3) * Math.cos(p * 6.5), sl = h * .16 * d, tw = h * .56, th = h * .4;
+  var tw = h * .56, th = h * .4, px0 = Math.min(w * .5 + h * .3, w - tw * .62), py0 = h * .06, p = Math.max(0, P8(t) - .9), ang = .45 * Math.exp(-p * 1.3) * Math.cos(p * 6.5), sl = h * .16 * d;
   c.fillStyle = 'rgba(255,255,255,.9)'; disc(c, px0, py0, h * .015);
   c.save(); c.translate(px0, py0); c.rotate(ang);
   c.strokeStyle = 'rgba(255,255,255,.85)'; c.lineWidth = h * .006; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, sl); c.stroke();
