@@ -1,0 +1,62 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>체크리스트 세기 Checklist Count · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .kn{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#141821}
+</style>
+<canvas class="kn" role="img" aria-label="체크리스트 세기 데모: 요청 문장의 값 그대로 움직인다"></canvas>
+<p class="cap">체크리스트 세기 · 줄마다 체크가 그어질 때마다 머리의 「n / 전체」가 하나씩 오르고, 다 하면 초록으로 바뀐다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = cl(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var seg = function (t, a, d) { return cl((t - a) / d); };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var NFONT = function (px, wt) { return (wt || 800) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var MFONT = function (px, wt) { return (wt || 700) + ' ' + Math.round(px) + 'px "SF Mono",Menlo,monospace'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var sw = function (c, s, font) { c.font = font; return c.measureText(s).width; };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, Math.max(0, Math.min(r, w / 2, h / 2))); };
+var comma = function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+var PANEL = '#1F2431', DIM = '#3A4152';
+var chip = function (c, s, x, y, font, bg, fg, sc) { var tw = sw(c, s, font), hh = parseInt(font.split(' ')[1]) * 1.55, ww = tw + hh * .8; c.save(); c.translate(x, y); c.scale(sc, sc); c.fillStyle = bg; rbox(c, -ww / 2, -hh / 2, ww, hh, hh / 2); c.fill(); say(c, s, 0, 1, font, fg); c.restore(); return ww; };
+var F=function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var n = Math.round(V.total), d = Math.min(Math.round(V.done), n), L = .5 + d * .38 + 1.8, p = t % L; c.globalAlpha = 1 - seg(p, L - .4, .35);
+    var IT = ['목표 정하기', '자료 모으기', '결과 비교', '보고서 공유', '회고 남기기', '다음 할 일'];
+    var px = w * .08, pw = w * .84, rh = h * .84 / (n + 1), fs = Math.min(rh * .42, h * .085), y0 = h * .08;
+    var cnt = 0; for (var q = 0; q < d; q++) if (p > .5 + q * .38 + .2) cnt++;
+    say(c, 'CHECK', px, y0 + rh / 2, MFONT(fs * .8, 800), k.sub, 'left');
+    var bump = 1 + .15 * Math.sin(Math.PI * cl(((p - .5) % .38) / .2)) * (cnt > 0 && cnt < d + 1 && p < .5 + d * .38 + .2 ? 1 : 0);
+    c.save(); c.translate(px + pw, y0 + rh / 2); c.scale(bump, bump); say(c, cnt + ' / ' + n, 0, 0, MFONT(fs, 800), cnt === n ? k.green : '#B7A6FF', 'right'); c.restore();
+    for (var i = 0; i < n; i++) {
+      var y = y0 + rh * (i + 1), u = eo(seg(p, .1 + i * .06, .3)); if (u <= 0) continue;
+      c.fillStyle = PANEL; rbox(c, px, y + rh * .1, pw, rh * .8, 6); c.fill();
+      var ck = i < d ? seg(p, .5 + i * .38, .3) : 0, done = ck > 0;
+      say(c, String(i + 1).padStart(2, '0'), px + rh * .45, y + rh / 2, MFONT(fs * .8), k.sub);
+      say(c, IT[i], px + rh * 1.05, y + rh / 2, NFONT(fs, 700), done ? k.paper : k.sub, 'left');
+      var bs = rh * .46, bx = px + pw - rh * .35 - bs, by = y + rh / 2 - bs / 2;
+      c.fillStyle = done ? k.green : k.ink; rbox(c, bx, by, bs, bs, 4); c.fill();
+      if (!done) { c.strokeStyle = DIM; c.lineWidth = 1.5; c.stroke(); }
+      if (done) {
+        c.strokeStyle = k.ink; c.lineWidth = 2.5; c.lineCap = 'round'; c.lineJoin = 'round';
+        var P = [[.22, .52], [.42, .72], [.78, .3]], e = eo(ck) * 2;
+        c.beginPath(); c.moveTo(bx + bs * P[0][0], by + bs * P[0][1]);
+        var m1 = Math.min(1, e); c.lineTo(bx + bs * (P[0][0] + (P[1][0] - P[0][0]) * m1), by + bs * (P[0][1] + (P[1][1] - P[0][1]) * m1));
+        if (e > 1) { var m2 = e - 1; c.lineTo(bx + bs * (P[1][0] + (P[2][0] - P[1][0]) * m2), by + bs * (P[1][1] + (P[2][1] - P[1][1]) * m2)); }
+        c.stroke();
+      }
+    }
+    c.globalAlpha = 1;
+  };
+var V={"total":4,"done":3},K={"ink":"#141821","paper":"#F4F1EA","sub":"#8b93a1","acc":"#E07A3F","acc2":"#7a5af0","purple":"#7a5af0","card":"#E7D6BC","green":"#38BE86","pink":"#E8506E"},STILL=2.8;
+var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function draw(now){var r=cv.getBoundingClientRect();c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?STILL:Math.max(0,(now-t0)/1000),V,K);c.restore();}
+function frame(now){draw(now);if(!still)requestAnimationFrame(frame);}
+addEventListener('message',function(e){var d=e.data&&e.data.mok;if(!d)return;for(var k in d)if(k in V&&isFinite(+d[k]))V[k]=+d[k];t0=performance.now();if(still)draw(t0);});
+sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(performance.now());});requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>

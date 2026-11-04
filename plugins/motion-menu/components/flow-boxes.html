@@ -1,0 +1,54 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>공정 흐름 Process Flow · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .kn{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#141821}
+</style>
+<canvas class="kn" role="img" aria-label="공정 흐름 데모: 요청 문장의 값 그대로 움직인다"></canvas>
+<p class="cap">공정 흐름 · 이름 붙은 번호 상자가 화살표로 이어지고, 불이 1번 상자부터 지금 공정까지 옮겨 가 지금 상자 위에 점이 깜빡인다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var cl = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = cl(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = cl(t); return 1 - Math.pow(1 - t, 3); };
+var back = function (t) { t = cl(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var seg = function (t, a, d) { return cl((t - a) / d); };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var NFONT = function (px, wt) { return (wt || 800) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var MFONT = function (px, wt) { return (wt || 700) + ' ' + Math.round(px) + 'px "SF Mono",Menlo,monospace'; };
+var say = function (c, s, x, y, font, col, al) { c.font = font; c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var sw = function (c, s, font) { c.font = font; return c.measureText(s).width; };
+var rbox = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, Math.max(0, Math.min(r, w / 2, h / 2))); };
+var comma = function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+var PANEL = '#1F2431', DIM = '#3A4152';
+var chip = function (c, s, x, y, font, bg, fg, sc) { var tw = sw(c, s, font), hh = parseInt(font.split(' ')[1]) * 1.55, ww = tw + hh * .8; c.save(); c.translate(x, y); c.scale(sc, sc); c.fillStyle = bg; rbox(c, -ww / 2, -hh / 2, ww, hh, hh / 2); c.fill(); say(c, s, 0, 1, font, fg); c.restore(); return ww; };
+var F=function (c, w, h, t, V, k) {
+    bgc(c, w, h, k.ink);
+    var n = Math.round(V.boxes), now = Math.min(Math.round(V.now), n), L = 1 + now * .4 + 1.8, p = t % L; c.globalAlpha = 1 - seg(p, L - .4, .35);
+    var NM = ['기획', '제작', '확인', '공개', '회고'], span = w * .86, bw = span / (n + .42 * (n - 1)), gap = bw * .42, bh = Math.min(bw, h * .4), y = h * .42, x0 = (w - span) / 2;
+    for (var i = 0; i < n; i++) {
+      var x = x0 + i * (bw + gap), u = back(seg(p, .1 + i * .12, .35)); if (u <= 0) continue;
+      var lit = i < now && p > .9 + i * .4, cur = lit && i === now - 1;
+      c.save(); c.translate(x + bw / 2, y); c.scale(u, u);
+      c.fillStyle = lit ? (cur ? k.purple : '#4B3F87') : PANEL; rbox(c, -bw / 2, -bh / 2, bw, bh, bw * .16); c.fill();
+      say(c, String(i + 1), 0, 2, NFONT(bh * .46, 900), lit ? k.paper : k.sub);
+      c.restore();
+      say(c, NM[i], x + bw / 2, y + bh / 2 + h * .12, NFONT(Math.min(h * .085, bw * .3), 700), lit ? k.paper : k.sub);
+      if (cur) { var bl = .5 + .5 * Math.sin(p * 6); c.fillStyle = 'rgba(224,122,63,' + (.4 + .6 * bl) + ')'; c.beginPath(); c.arc(x + bw / 2, y - bh / 2 - h * .08, h * .035, 0, TAU); c.fill(); }
+      if (i < n - 1) {
+        var ax = x + bw + gap * .32, aw = gap * .36, alit = i < now - 1 && p > .9 + (i + 1) * .4;
+        c.strokeStyle = alit ? k.paper : DIM; c.lineWidth = 2.5; c.lineCap = 'round'; c.lineJoin = 'round';
+        c.beginPath(); c.moveTo(ax, y); c.lineTo(ax + aw, y); c.moveTo(ax + aw * .55, y - aw * .45); c.lineTo(ax + aw, y); c.lineTo(ax + aw * .55, y + aw * .45); c.stroke();
+      }
+    }
+    c.globalAlpha = 1;
+  };
+var V={"boxes":4,"now":3},K={"ink":"#141821","paper":"#F4F1EA","sub":"#8b93a1","acc":"#E07A3F","acc2":"#7a5af0","purple":"#7a5af0","card":"#E7D6BC","green":"#38BE86","pink":"#E8506E"},STILL=2.8;
+var cv=document.querySelector('canvas.kn'),c=cv.getContext('2d');
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function draw(now){var r=cv.getBoundingClientRect();c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?STILL:Math.max(0,(now-t0)/1000),V,K);c.restore();}
+function frame(now){draw(now);if(!still)requestAnimationFrame(frame);}
+addEventListener('message',function(e){var d=e.data&&e.data.mok;if(!d)return;for(var k in d)if(k in V&&isFinite(+d[k]))V[k]=+d[k];t0=performance.now();if(still)draw(t0);});
+sizeCanvas();addEventListener('resize',function(){sizeCanvas();if(still)draw(performance.now());});requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
