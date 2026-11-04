@@ -9,8 +9,8 @@ import { createRequire } from 'node:module';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const MM = join(HERE, '..', '..');
-// 엔진 둘: knobs/engine.js(⑤ 타이밍 손잡이) · numbers/engine.js(⑱ 숫자 연출). 항목은 자기 함수가 있는 엔진의 helpers 를 싣는다.
-const ENGINES = [join(HERE, 'engine.js'), join(HERE, '..', 'numbers', 'engine.js')].map(f => {
+// 엔진 셋: knobs/engine.js(⑤ 타이밍 손잡이) · numbers/engine.js(⑱ 숫자 연출) · ranks/engine.js(⑳ 순위·비교·요점). 항목은 자기 함수가 있는 엔진의 helpers 를 싣는다.
+const ENGINES = [join(HERE, 'engine.js'), join(HERE, '..', 'numbers', 'engine.js'), join(HERE, '..', 'ranks', 'engine.js')].map(f => {
   const src = readFileSync(f, 'utf8');
   return { helpers: src.split('/*@helpers*/')[1].split('/*@end*/')[0].trim(), KN: createRequire(import.meta.url)(f).KN };
 });
@@ -21,7 +21,7 @@ const allKN = ENGINES.flatMap(e => Object.keys(e.KN));
 const miss = items.filter(i => !engineOf(i.id)).map(i => i.id), extra = allKN.filter(id => !items.some(i => i.id === id));
 if (miss.length || extra.length) { console.error('손잡이 항목과 엔진이 어긋남:', '엔진에 없음', miss, '/ menu.json 에 knobs 없음', extra); process.exit(1); }
 // 코스별 출력 파일. 여기 없는 코스의 손잡이 항목은 m21-knobs.html 로 간다
-const OUT = { 'number-motion': 'm22-number-motion.html' };
+const OUT = { 'number-motion': 'm22-number-motion.html', 'rank-compare': 'm24-rank-compare.html' };
 const COLORS = { ink: '#141821', paper: '#F4F1EA', sub: '#8b93a1', acc: '#E07A3F', acc2: '#7a5af0', purple: '#7a5af0', card: '#E7D6BC', green: '#38BE86', pink: '#E8506E' };
 
 const frag = it => {
