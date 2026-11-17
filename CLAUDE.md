@@ -335,3 +335,9 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - ⚠️ `WORDS[(i + side) % n]` 처럼 음수가 나오는 색인은 `undefined` 를 `txt3` 에 넘겨 영상 전체가 멈춘다(실제로 밟음). 색인엔 +n 을 더한다. `back()` 오버슈트 값으로 `ellipse` 반지름을 만들면 음수가 나와 멈춘다 → `Math.max(0, …)`.
 - ⚠️ 이 맥의 giting-skills 체크아웃이 10/26 커밋에 detached 로 멈춰 있었다. 맥북이 #72~#93 을 올린 뒤라 PR 이 충돌했고, origin/main 위에 다시 얹었다. **작업 전 `git fetch` + `origin/main` 확인.**
 
+## 앱 UI 메뉴판 0.4.0 · ⑨ 라이브 액티비티 16 (2026-11-18)
+
+- 오너가 가져온 라이브 액티비티 모음 이미지(알약 · 카드 수십 장, 영어)에서 출발했다. 우리 사전엔 앱 밖(잠금화면 · 다이내믹 아일랜드)에 남는 UI 가 없었다. 알약(축소형) 8 · 카드(확장형) 8. 92항목, 9코스. id 는 `la-` 접두어. ⛔ 그쪽 그림·문구는 쓰지 않는다.
+- `native` 는 ActivityKit(DynamicIsland compactLeading · compactTrailing · minimal · expanded) · expo-live-activity · live_activities. 요청 문장에 「축소형/확장형」과 「언제 종료」를 넣는다.
+- app-menu 는 데모가 없는 사전이라 실물은 Giting 글의 카드(`insol-partner/giting/스레드/2026-11-18-라이브-액티비티-16/`)로 만들었다.
+
