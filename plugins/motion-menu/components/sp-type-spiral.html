@@ -1,0 +1,154 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>문자 나선 Type Spiral · 모션 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .bg{display:block;width:calc(100% - 24px);height:170px;margin:12px;border-radius:12px;background:#14161B}
+</style>
+<canvas class="bg" role="img" aria-label="문자 나선 데모: 3D 공간 장면"></canvas>
+<p class="cap">문자 나선 · 낱말이 나선 계단처럼 감겨 올라가고 카메라가 따라 돈다.</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+var io = function (t) { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+var eo = function (t) { t = clamp(t); return 1 - Math.pow(1 - t, 3); };
+var ei = function (t) { t = clamp(t); return t * t * t; };
+var back = function (t) { t = clamp(t); var s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+var frac = function (v) { return v - Math.floor(v); };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var P8 = function (t) { var p = t % 8; return p < 0 ? p + 8 : p; };
+var seg = function (t, a, d) { return clamp((P8(t) - a) / d); };
+var outA = function (t) { return 1 - clamp((P8(t) - 7.2) / .8); };
+var bgc = function (c, w, h, col) { c.fillStyle = col; c.fillRect(0, 0, w, h); };
+var FONT = function (px, wt) { return (wt || 900) + ' ' + Math.round(px) + 'px -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif'; };
+var say = function (c, s, x, y, px, col, al, wt) { c.font = FONT(px, wt); c.fillStyle = col; c.textAlign = al || 'center'; c.textBaseline = 'middle'; c.fillText(s, x, y); };
+var tw = function (c, s, px, wt) { c.font = FONT(px, wt); return c.measureText(s).width; };
+var rgba = function (hex, a) { return 'rgba(' + parseInt(hex.slice(1, 3), 16) + ',' + parseInt(hex.slice(3, 5), 16) + ',' + parseInt(hex.slice(5, 7), 16) + ',' + a + ')'; };
+// ── 벡터 ──
+var add3 = function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; };
+var mul3 = function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; };
+var rotY = function (p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0] * c + p[2] * s, p[1], -p[0] * s + p[2] * c]; };
+var rotX = function (p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0], p[1] * c - p[2] * s, p[1] * s + p[2] * c]; };
+var rotZ = function (p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0] * c - p[1] * s, p[0] * s + p[1] * c, p[2]]; };
+// ── 카메라 · 투영 ──  cam(w,h,{pos,yaw,pitch,roll,f})  proj → [sx, sy, 배율, 깊이] 또는 null(뒤)
+var cam = function (w, h, o) { o = o || {}; return { w: w, h: h, pos: o.pos || [0, 0, 0], yaw: o.yaw || 0, pitch: o.pitch || 0, roll: o.roll || 0, f: o.f || h * 1.1, near: 6 }; };
+var proj = function (C, p) {
+  var q = [p[0] - C.pos[0], p[1] - C.pos[1], p[2] - C.pos[2]];
+  if (C.yaw) q = rotY(q, -C.yaw); if (C.pitch) q = rotX(q, C.pitch); if (C.roll) q = rotZ(q, -C.roll);
+  if (q[2] < C.near) return null; var s = C.f / q[2];
+  return [C.w / 2 + q[0] * s, C.h / 2 + q[1] * s, s, q[2]];
+};
+var depth = function (C, p) { var q = [p[0] - C.pos[0], p[1] - C.pos[1], p[2] - C.pos[2]]; if (C.yaw) q = rotY(q, -C.yaw); if (C.pitch) q = rotX(q, C.pitch); return q[2]; };
+// 그릴 것을 모았다가 먼 것부터 그린다(화가 알고리즘)
+var Q = [];
+var put = function (d, fn) { Q.push([d, fn]); };
+var flush = function () { Q.sort(function (a, b) { return b[0] - a[0]; }); for (var i = 0; i < Q.length; i++) Q[i][1](); Q.length = 0; };
+// 네모(세계 좌표 네 점) 채우기 · 선
+var quad = function (c, C, P, col, stroke, lw) {
+  var s = [], i; for (i = 0; i < P.length; i++) { var p = proj(C, P[i]); if (!p) return false; s.push(p); }
+  c.beginPath(); c.moveTo(s[0][0], s[0][1]); for (i = 1; i < s.length; i++) c.lineTo(s[i][0], s[i][1]); c.closePath();
+  if (col) { c.fillStyle = col; c.fill(); } if (stroke) { c.strokeStyle = stroke; c.lineWidth = lw || 1; c.stroke(); } return true;
+};
+var line3 = function (c, C, a, b, col, lw, n) {
+  n = n || 1; c.strokeStyle = col; c.lineWidth = lw || 1; c.beginPath(); var on = false;
+  for (var i = 0; i <= n; i++) { var p = proj(C, add3(a, mul3(add3(b, mul3(a, -1)), i / n))); if (!p) { on = false; continue; } if (on) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); on = true; }
+  c.stroke();
+};
+// 바닥 격자: y 높이, 간격 st, 범위 rg(카메라 z 기준 앞으로), 선 색
+var floorGrid = function (c, C, y, st, rg, col, lw) {
+  var z0 = Math.floor((C.pos[2]) / st) * st, i;
+  c.strokeStyle = col; c.lineWidth = lw || 1;
+  for (i = -rg; i <= rg; i += st) line3(c, C, [i, y, z0 - st], [i, y, z0 + rg * 2], col, lw, 24);
+  for (i = 0; i <= rg * 2; i += st) line3(c, C, [-rg, y, z0 + i], [rg, y, z0 + i], col, lw, 1);
+};
+// 글자를 면 위에 붙여 그린다. o 글자 가운데(세계) · r 오른쪽 단위벡터 · u 아래 단위벡터 (1 = 1px)
+// 글자마다 세 꼭짓점을 투영해 아핀 변환으로 그리므로 작은 글자는 원근이 거의 맞는다
+var txt3 = function (c, C, s, o, r, u, px, col, wt, al, both) {
+  c.font = FONT(px, wt); var ws = [], L = 0, i; for (i = 0; i < s.length; i++) { ws.push(c.measureText(s[i]).width); L += ws[i]; }
+  var x = al === 'left' ? 0 : al === 'right' ? -L : -L / 2, h2 = px * .55;
+  c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle';
+  for (i = 0; i < s.length; i++) {
+    var cw = ws[i], cx = x + cw / 2;
+    var p0 = proj(C, add3(add3(o, mul3(r, cx - cw / 2)), mul3(u, -h2))), p1 = proj(C, add3(add3(o, mul3(r, cx + cw / 2)), mul3(u, -h2))), p2 = proj(C, add3(add3(o, mul3(r, cx - cw / 2)), mul3(u, h2)));
+    x += cw; if (!p0 || !p1 || !p2) continue;
+    var ax = (p1[0] - p0[0]) / cw, ay = (p1[1] - p0[1]) / cw, bx = (p2[0] - p0[0]) / (h2 * 2), by = (p2[1] - p0[1]) / (h2 * 2);
+    if (ax * by - ay * bx <= 0) { // 뒷면: both 면 거울상으로 흐리게 그린다(고리 안쪽에서 비치는 글자)
+      if (!both) continue; c.save(); c.globalAlpha *= .35; c.transform(-ax, -ay, bx, by, p1[0], p1[1]); c.font = FONT(px, wt); c.fillText(s[i], cw / 2, h2); c.restore(); continue; }
+    c.save(); c.transform(ax, ay, bx, by, p0[0], p0[1]); c.font = FONT(px, wt); c.fillText(s[i], cw / 2, h2); c.restore();
+  }
+};
+// 글자 판: 바탕 네모 + 글자 (세계 좌표 가운데 o, 오른쪽 r, 아래 u, 판 여백 pad)
+var plate = function (c, C, s, o, r, u, px, bg, fg, wt) {
+  var L = tw(c, s, px, wt) + px * .5, H = px * 1.3, P = [
+    add3(add3(o, mul3(r, -L / 2)), mul3(u, -H / 2)), add3(add3(o, mul3(r, L / 2)), mul3(u, -H / 2)),
+    add3(add3(o, mul3(r, L / 2)), mul3(u, H / 2)), add3(add3(o, mul3(r, -L / 2)), mul3(u, H / 2))];
+  if (quad(c, C, P, bg)) txt3(c, C, s, o, r, u, px, fg, wt);
+};
+var WORDS = ['깊이', '공간', '3D', '속도', '카메라', '문자', '회전', '궤도', 'DEPTH', 'SPACE', 'MOTION', 'TYPE', '빛', '층', '거리', 'FLY'];
+var X = [1, 0, 0], Y = [0, 1, 0], Z = [0, 0, 1], NZ = [0, 0, -1];
+var disc = function (c, x, y, r) { if (r > .2) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } };
+// 기둥 숲 + 바닥 격자 + 낱말 상자 하나를 피사체로 두고 카메라만 바꾼다
+var pillars = function (c, C, h, k, n) {
+  var i; for (i = 0; i < (n || 14); i++) { var x = (hash(i) - .5) * h * 3.2, z = hash(i + 20) * h * 3 - h * .4, ph = h * .5 + hash(i + 40) * h * .6, hw = h * .05;
+    if (Math.abs(x) < h * .25 && z < h * .3) continue;
+    (function (x, z, ph) { put(depth(C, [x, 0, z]), function () {
+      quad(c, C, [[x - hw, h * .3, z - hw], [x + hw, h * .3, z - hw], [x + hw, h * .3 - ph, z - hw], [x - hw, h * .3 - ph, z - hw]], rgba(k.paper, .08), rgba(k.acc, .5), 1);
+      quad(c, C, [[x + hw, h * .3, z - hw], [x + hw, h * .3, z + hw], [x + hw, h * .3 - ph, z + hw], [x + hw, h * .3 - ph, z - hw]], rgba(k.paper, .04), rgba(k.acc, .3), 1); }); })(x, z, ph); }
+};
+var wordBox = function (c, C, h, k, s, o, sz, rot) {
+  var r = rotY(X, rot || 0), d = rotY(Z, rot || 0), hw = sz, hd = sz * .55;
+  var fr = add3(o, mul3(d, -hd)), bk = add3(o, mul3(d, hd));
+  put(depth(C, bk), function () { plate(c, C, s, bk, mul3(r, -1), Y, sz * .5, k.deep, k.paper); });
+  put(depth(C, add3(o, mul3(r, hw))), function () { quad(c, C, [add3(add3(fr, mul3(r, hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, hw)), mul3(Y, hw * .5)), add3(add3(fr, mul3(r, hw)), mul3(Y, hw * .5))], k.acc); });
+  put(depth(C, add3(o, mul3(r, -hw))), function () { quad(c, C, [add3(add3(fr, mul3(r, -hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, -hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, -hw)), mul3(Y, hw * .5)), add3(add3(fr, mul3(r, -hw)), mul3(Y, hw * .5))], k.acc); });
+  put(depth(C, add3(o, mul3(Y, -hw * .5))), function () { quad(c, C, [add3(add3(fr, mul3(r, -hw)), mul3(Y, -hw * .5)), add3(add3(fr, mul3(r, hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, hw)), mul3(Y, -hw * .5)), add3(add3(bk, mul3(r, -hw)), mul3(Y, -hw * .5))], rgba(k.paper, .9)); });
+  put(depth(C, fr), function () { plate(c, C, s, fr, r, Y, sz * .5, k.paper, k.ink); });
+};
+var sceneFloor = function (c, C, w, h, k) { bgc(c, w, h, k.ink); floorGrid(c, C, h * .3, h * .3, h * 4, rgba(k.paper, .1)); };
+// 점 하나(깊이에 따라 크기)
+var dot3 = function (c, C, p, r, col) { var q = proj(C, p); if (!q) return; c.fillStyle = col; var rr = r * q[2]; if (rr > .3) { c.beginPath(); c.arc(q[0], q[1], rr, 0, TAU); c.fill(); } };
+// 글자 모양을 점 집합으로(가루·블록용). 한 번 재고 기억한다. 결과는 [x,y] (가운데 0)
+var GD = {};
+var glyphDots = function (s, px, step, wt) {
+  var key = s + '|' + Math.round(px) + '|' + step; if (GD[key]) return GD[key];
+  var o = document.createElement('canvas'), x = o.getContext('2d'); x.font = FONT(px, wt);
+  var W = Math.ceil(x.measureText(s).width + px * .4), H = Math.ceil(px * 1.4); o.width = W; o.height = H;
+  x.font = FONT(px, wt); x.fillStyle = '#000'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(s, W / 2, H / 2);
+  var d = x.getImageData(0, 0, W, H).data, out = [];
+  for (var y = 0; y < H; y += step) for (var X0 = 0; X0 < W; X0 += step) if (d[(y * W + X0) * 4 + 3] > 120) out.push([X0 - W / 2, y - H / 2]);
+  return (GD[key] = out);
+};
+// 정육면체: 가운데 o, 반변 a, 회전(yaw, pitch), 면 색 배열 6(앞 뒤 오른 왼 위 아래) · 면마다 글자(선택)
+var cube = function (c, C, o, a, yaw, pit, cols, labels, px) {
+  var R = function (p) { return add3(o, rotY(rotX(p, pit), yaw)); }, faces = [
+    [[-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1], [0, 0, -1]], [[1, -1, 1], [-1, -1, 1], [-1, 1, 1], [1, 1, 1], [0, 0, 1]],
+    [[1, -1, -1], [1, -1, 1], [1, 1, 1], [1, 1, -1], [1, 0, 0]], [[-1, -1, 1], [-1, -1, -1], [-1, 1, -1], [-1, 1, 1], [-1, 0, 0]],
+    [[-1, -1, 1], [1, -1, 1], [1, -1, -1], [-1, -1, -1], [0, -1, 0]], [[-1, 1, -1], [1, 1, -1], [1, 1, 1], [-1, 1, 1], [0, 1, 0]]], i;
+  for (i = 0; i < 6; i++) (function (f, i) {
+    var P = [R(mul3(f[0], a)), R(mul3(f[1], a)), R(mul3(f[2], a)), R(mul3(f[3], a))], ctr = R(mul3(f[4], a));
+    put(depth(C, ctr), function () {
+      var s0 = proj(C, P[0]), s1 = proj(C, P[1]), s3 = proj(C, P[3]); if (!s0 || !s1 || !s3) return;
+      if ((s1[0] - s0[0]) * (s3[1] - s0[1]) - (s1[1] - s0[1]) * (s3[0] - s0[0]) <= 0) return; // 뒷면
+      quad(c, C, P, cols[i % cols.length]);
+      if (labels && labels[i]) { var r = mul3(add3(P[1], mul3(P[0], -1)), 1 / (2 * a)), u = mul3(add3(P[3], mul3(P[0], -1)), 1 / (2 * a)); txt3(c, C, labels[i], ctr, r, u, px || a * .9, i % 2 ? '#F4F1EA' : '#14161B'); }
+    });
+  })(faces[i], i);
+};
+var F=function (c, w, h, t, k) {
+  bgc(c, w, h, k.ink); var a = t / 8 * TAU, C = cam(w, h, { pos: [Math.sin(a) * h * 1.2, -h * .1 - t * h * .06 % (h * .5), -Math.cos(a) * h * 1.2], yaw: -a, pitch: -.15 }), i;
+  var ws = ['위로', 'RISE', '한 칸', '돌아', 'UP', '나선', 'TURN', '올라'];
+  for (i = 0; i < 32; i++) {
+    var th = i * .62, y = h * .85 - i * h * .08, rr = h * .5, o = [Math.cos(th) * rr, y, Math.sin(th) * rr], r = [-Math.sin(th), 0, Math.cos(th)];
+    (function (o, r, i) { put(depth(C, o), function () { var d = depth(C, o); c.globalAlpha = clamp((d + h) / (h * 2)); plate(c, C, ws[i % ws.length], o, r, Y, h * .11, i % 5 === 0 ? k.acc : k.paper, k.ink); c.globalAlpha = 1; }); })(o, r, i);
+  }
+  flush();
+};
+var cv=document.querySelector('canvas.bg'),c=cv.getContext('2d'),K={acc:'#2BA8E0',deep:'#216687',paper:'#F4F1EA',ink:'#14161B'};
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,t0=performance.now();
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);}
+function frame(now){
+  var r=cv.getBoundingClientRect();
+  c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();F(c,r.width,r.height,still?3:Math.max(0,(now-t0)/1000),K);c.restore();
+  if(!still)requestAnimationFrame(frame);
+}
+sizeCanvas();addEventListener('resize',sizeCanvas);requestAnimationFrame(frame);
+})();</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]');if(a)e.preventDefault();});</script>
+</body></html>
