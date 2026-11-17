@@ -2605,6 +2605,131 @@ console.log(`built motion-menu: items ${moMenu.items.length} · recipes ${moMenu
 
 // ── 메뉴판 스토어용 내보내기 (giting.kr/menu) ─────────────────────────────
 // 여덟 사전의 항목을 한 모양으로 모아 menu-index.json 하나로, 실물 데모가 있는 항목은
+// ── 차트 메뉴판 (chart-menu) — 질문 → 표 모양 → 이름 → 치는 문장 → 실물 ──────────────────────────────
+// 데모는 tools/engine.js 의 정지 캔버스(2D, 의존성 0). demos/charts.html 은 gen.mjs 생성물, components/ 는 자가완결 사본.
+const CHP = join(ROOT, 'plugins', 'chart-menu');
+const chMenu = JSON.parse(readFileSync(join(CHP, 'menu.json'), 'utf8'));
+const chBy = id => chMenu.items.filter(i => i.category === id);
+const chFrags = {};
+for (const fn of readdirSync(join(CHP, 'demos')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(CHP, 'demos', fn), 'utf8');
+  const parts = src.split(/<!--\s*@([a-z0-9-]+)([^>]*?)-->/);
+  for (let i = 1; i < parts.length; i += 3) {
+    if (chFrags[parts[i]]) { console.error(`chart-menu 데모 마커가 두 번 나옴: @${parts[i]} (${fn})`); process.exit(1); }
+    chFrags[parts[i]] = { h: Number((parts[i + 1].match(/h=(\d+)/) || [])[1] || 236), body: parts[i + 2].trim() };
+  }
+}
+const chMiss = chMenu.items.filter(it => !chFrags[it.id]).map(it => it.id);
+if (chMiss.length) { console.error('chart-menu 데모 없는 항목:', chMiss.join(', ')); process.exit(1); }
+const chStandalone = it => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(it.name.ko)} ${esc(it.name.en)} · 차트 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+${chFrags[it.id].body}
+</body></html>`;
+const chCode = {};
+rmSync(join(CHP, 'components'), { recursive: true, force: true });
+mkdirSync(join(CHP, 'components'), { recursive: true });
+for (const it of chMenu.items) { chCode[it.id] = chStandalone(it); writeFileSync(join(CHP, 'components', `${it.id}.html`), chCode[it.id]); }
+const chCard = it => `<article class="item${/비추/.test(it.oneliner) ? ' nope' : ''}" id="${it.id}">
+  <header><h3>${esc(it.name.ko)}</h3><span class="en">${esc(it.name.en)}</span><button class="copy" data-copy="${attr(it.ask)}" title="요청 문장 복사">문장</button></header>
+  <div class="q">${esc(it.q)}</div>
+  <iframe title="${esc(it.name.ko)} 예시" loading="lazy" style="height:${chFrags[it.id].h}px" srcdoc="${attr(chCode[it.id])}"></iframe>
+  <footer>
+    <span class="shape"><b>표 모양</b> ${esc(it.shape)} <i>· ${esc(it.rows)}</i></span>
+    <span class="al">"${esc(it.aliases[0])}"${it.aliases[1] ? ` · "${esc(it.aliases[1])}"` : ''}</span>
+    <span class="one">${esc(it.oneliner)}</span>
+    <span class="read"><b>읽는 법</b> ${esc(it.read)}</span>
+    <span class="avoid"><b>쓰지 말 때</b> ${esc(it.avoid)}</span>
+    ${it.vs ? `<span class="vs">↔ ${esc(it.vs)}</span>` : ''}
+  </footer>
+</article>`;
+const chTable = cat => `
+<div class="tblwrap"><table>
+<thead><tr><th>질문</th><th>표 모양</th><th>이름</th><th>AI에게 이렇게</th></tr></thead>
+<tbody>
+${chBy(cat.id).map(it => `<tr>
+  <td><a href="#${it.id}">${esc(it.q)}</a></td>
+  <td class="mono">${esc(it.shape)}</td>
+  <td>${esc(it.name.ko)} <span class="mono">${esc(it.name.en)}</span></td>
+  <td class="askcell"><span>${esc(it.ask)}</span><button class="copy tiny" data-copy="${attr(it.ask)}">복사</button></td>
+</tr>`).join('\n')}
+</tbody></table></div>`;
+const chF = chMenu.formula;
+const CHGAL_CSS = CORE_CSS.replace(/\.uigal/g, '.chgal') + `
+.chgal .ggrid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 860px) { .chgal .ggrid { grid-template-columns: minmax(0, 1fr); } }
+.chgal .item .q { padding: 8px 13px 0; font-size: 14px; font-weight: 700; color: var(--ink); }
+.chgal .item .q::before { content: '"'; color: var(--ink-3); } .chgal .item .q::after { content: '"'; color: var(--ink-3); }
+.chgal .item iframe { display: block; width: 100%; border: 0; background: #fff; }
+.chgal .item footer { display: grid; gap: 4px; }
+.chgal .item .shape { font-size: 12.5px; color: var(--ink); } .chgal .item .shape b { font-size: 10.5px; font-weight: 800; color: var(--accent-deep); border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent); border-radius: 5px; padding: 1px 6px; margin-right: 4px; } .chgal .item .shape i { font-style: normal; color: var(--ink-3); }
+.chgal .item .al { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+.chgal .item .one { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.chgal .item .read, .chgal .item .avoid { font-size: 12px; color: var(--ink-2); } .chgal .item .read b, .chgal .item .avoid b { color: var(--ink-3); font-weight: 700; margin-right: 4px; }
+.chgal .item .vs { font-size: 11.5px; color: var(--ink-3); }
+.chgal .item.nope h3::after { content: '비추'; font-size: 10px; font-weight: 800; color: #8A6A1F; background: color-mix(in srgb, #C79A3A 14%, transparent); border-radius: 5px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+.chgal .ch-rules { margin: 0 0 18px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); font-size: 13px; color: var(--ink-2); line-height: 1.6; } .chgal .ch-rules b { color: var(--ink); }
+.chgal .ch-rules ol { margin: 6px 0 0; padding-left: 20px; }`;
+const chHero = chMenu.categories.slice(0, 3).map(c => chBy(c.id)[0]).filter(Boolean);
+const chFig = it => `<figure><iframe title="${esc(it.name.ko)} 예시" loading="lazy" style="height:${chFrags[it.id].h}px" srcdoc="${attr(chCode[it.id])}"></iframe><figcaption><b>${esc((chMenu.categories.find(c => c.id === it.category) || {}).no || '')}</b>${esc(it.name.ko)}<span>"${esc(it.q)}"</span></figcaption></figure>`;
+const chX = chMenu.items.find(i => i.id === 'donut');
+const chIntro = ipPanels('chart-menu', '.chgal', IP_VARS_THEME, [
+  { lay: 'center', bg: 'pale', chip: `차트 메뉴판 · ${chMenu.items.length}가지`, h: '차트는 모양이 아니라<br><em>질문</em>으로 골라요', sub: '「어느 게 제일 많아?」가 먼저 오고, 그 질문에 답하려면 <b>표가 어떤 열을 가져야 하는지</b>가 그다음이에요. 이름과 치는 문장은 그 뒤.',
+    body: `<div class="ip-three">${chHero.map(chFig).join('')}</div>${ipBub(chHero[0].ask)}` },
+  { lay: 'stack', bg: 'white', chip: 'AI한테 시키는 공식', h: '표 모양까지<br><em>한 문장</em>에 넣어요', sub: esc(chF.note), body: ipFormula(chF) },
+  { lay: 'wide', bg: 'pale', chip: '질문 찾기', h: '이런 질문엔<br><em>이런 차트</em>를 써요', sub: '여섯 질문마다 여덟 가지. 오른쪽이 표 모양이에요.',
+    body: `<div class="ip-rows">${chMenu.categories.map(c => chBy(c.id)[0]).filter(Boolean).map(it => `<a class="r" href="#${it.id}"><span class="w">"${esc(it.q)}"</span><span class="n"><b>${esc(it.name.ko)}</b> · ${esc(it.shape)}</span></a>`).join('')}</div>` },
+  chX && { lay: 'split', bg: 'white', chip: '비추 항목', h: '<em>파이 · 도넛</em>은<br>막대가 더 정확해요', sub: `↔ ${esc(chX.vs)}`, body: ipBub(chMenu.items.find(i => i.id === 'segmented-bar').ask), aside: chFig(chX) },
+  { lay: 'band', bg: 'dark', chip: 'Claude Code 스킬', h: 'AI가 질문부터<br><em>되물어요</em>', sub: '스킬로 깔아 두면 「예쁜 그래프」 대신 많은 걸 볼지 변한 걸 볼지부터 묻고, 값은 내 표 그대로 둬요.', body: ipInstall('chart-menu') },
+]);
+const chCore = `<div class="chgal">
+<style>${CHGAL_CSS}</style>
+${chIntro}
+<nav class="gnav" aria-label="질문">
+  ${chMenu.categories.map(c => `<a href="#c-${c.id}"><b>${c.no}</b>${c.ko} ${chBy(c.id).length}</a>`).join('\n  ')}
+</nav>
+<div class="ch-rules"><b>만들 때 지키는 것 여덟</b><ol>${chMenu.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ol></div>
+${chMenu.categories.map(cat => `
+<section class="cat" id="c-${cat.id}">
+  <h2><span class="no">${cat.no}</span> ${cat.ko} <span class="count">${chBy(cat.id).length}</span></h2>
+  <p class="note">${esc(cat.sub)}</p>
+  <div class="ggrid">${chBy(cat.id).map(chCard).join('\n')}</div>
+  ${chTable(cat)}
+</section>`).join('\n')}
+<script>${CORE_JS.replace(/\.uigal/g, '.chgal')}</script>
+</div>
+`;
+const CH_RAW = 'https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/chart-menu/components';
+const chDict = full => `# 차트 메뉴판 (chart-menu) · Giting Skills
+
+> 차트를 모양이 아니라 질문으로 고르는 사전. 질문 → 표 모양(열 구성) → 이름(한 · 영) → 그대로 치는 요청 문장 → 읽는 법 · 쓰지 말 때 · 헷갈리는 쌍 → 실물 데모. ${chMenu.categories.length}개 질문 코스 ${chMenu.items.length}개 항목.
+> 공식: ${chF.pattern}
+> 규칙: ${chMenu.rules.join(' / ')}
+> 갤러리: https://giting.kr/skills/chart-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
+> Claude Code: /plugin install chart-menu@giting
+
+${chMenu.categories.map(cat => `## ${cat.no} ${cat.ko} (${cat.sub})
+
+${chBy(cat.id).map(it => `### ${it.name.ko} (${it.name.en})
+- 질문: ${it.q}
+- 표 모양: ${it.shape} · 행 ${it.rows}
+- 별칭: ${it.aliases.map(a => `"${a}"`).join(' · ')}
+- 뜻: ${it.oneliner}
+- 요청 문장: ${it.ask}
+- 읽는 법: ${it.read}
+- 쓰지 말 때: ${it.avoid}
+${it.vs ? `- 구분: ${it.vs}\n` : ''}- 실물: ${CH_RAW}/${it.id}.html
+`).join('\n')}`).join('\n')}`;
+if (SITE_DIR) {
+  const CS = join(SITE_DIR, 'chart-menu');
+  mkdirSync(CS, { recursive: true });
+  writeFileSync(join(CS, 'gallery-core.html'), chCore);
+  writeFileSync(join(CS, 'llms.txt'), chDict(false));
+  writeFileSync(join(CS, 'llms-full.txt'), chDict(true));
+}
+mkdirSync(join(ROOT, 'docs', 'chart-menu'), { recursive: true });
+writeFileSync(join(ROOT, 'docs', 'chart-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/chart-menu'));
+writeFileSync(join(ROOT, 'docs', 'chart-menu', 'llms.txt'), chDict(false));
+console.log(`built chart-menu: items ${chMenu.items.length} · core ${(chCore.length / 1024).toFixed(0)}KB`);
+
 // skills/c/<사전>/<id>.html 로 낸다. giting 사이트 빌드가 이걸 읽어 스토어 · 상세 · 영상 묶음 페이지를 만든다.
 // ui-menu 데모에는 자동 시연기를 붙여 낸다(상세 페이지가 play 를 보낸다).
 if (SITE_DIR) {
@@ -2620,6 +2745,7 @@ if (SITE_DIR) {
     ['carousel-menu', '캐러셀 메뉴판', cmMenu, CMP],
     ['thumb-menu', '썸네일 메뉴판', tmMenu, TMP],
     ['grid-menu', '그리드 메뉴판', gmMenu, GMP],
+    ['chart-menu', '차트 메뉴판', chMenu, CHP],
   ];
   const OUT = join(SITE_DIR, 'c');
   rmSync(OUT, { recursive: true, force: true });

@@ -1,0 +1,50 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>막대 Bar chart · 차트 메뉴판</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#17171b;font-size:13.5px;background:#fff}.cap{color:#8b93a1;font-size:11.5px;text-align:center;margin:8px 12px 12px;line-height:1.5}</style></head><body>
+<style>
+  .ch{display:block;width:calc(100% - 24px);height:186px;margin:12px;border-radius:12px;background:#fcfcfb;border:1px solid #e1e0d9}
+</style>
+<canvas class="ch" role="img" aria-label="막대 예시: 어느 게 제일 많아?"></canvas>
+<p class="cap">범주 1열 · 값 1열 · 예시 값</p>
+<script>(function(){
+var TAU = Math.PI * 2;
+var SANS = '-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif';
+var F = function (px, wt) { return (wt || 500) + ' ' + Math.round(px) + 'px ' + SANS; };
+var txt = function (c, s, x, y, px, col, al, wt, bl) { c.font = F(px, wt); c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = bl || 'middle'; c.fillText(s, x, y); };
+var tw = function (c, s, px, wt) { c.font = F(px, wt); return c.measureText(s).width; };
+var fmt = function (v) { return v >= 10000 ? (v / 10000).toFixed(v % 10000 ? 1 : 0) + '만' : String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+var rr = function (c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); };
+// 칸: 제목 줄 + 그림 영역. 돌려주는 것은 그림 영역 { x, y, w, h }
+var frame = function (c, w, h, k, title, sub) {
+  c.fillStyle = k.surface; c.fillRect(0, 0, w, h);
+  var pad = h * .07, top = pad;
+  if (title) { txt(c, title, pad, pad + h * .04, h * .075, k.ink, 'left', 700); top = pad + h * .11; }
+  if (sub) { txt(c, sub, w - pad, pad + h * .04, h * .055, k.muted, 'right', 500); }
+  return { x: h * .17, y: top, w: w - h * .17 - pad, h: h - top - pad * 1.3 };
+};
+// 세로 막대: 바닥 직각 · 위 4px 둥글게. 두께는 24px 이하
+var vbar = function (c, x, yTop, w, yBase, col) { var bw = Math.min(w, 24), x0 = x + (w - bw) / 2, hh = yBase - yTop; if (hh <= 0) return; c.fillStyle = col; rr(c, x0, yTop, bw, hh, [4, 4, 0, 0]); c.fill(); };
+var hbar = function (c, xBase, y, h, xEnd, col) { var bh = Math.min(h, 24), y0 = y + (h - bh) / 2, ww = xEnd - xBase; if (ww <= 0) return; c.fillStyle = col; rr(c, xBase, y0, ww, bh, [0, 4, 4, 0]); c.fill(); };
+var dot = function (c, x, y, col, k, r) { r = r || 4; c.fillStyle = k.surface; c.beginPath(); c.arc(x, y, r + 2, 0, TAU); c.fill(); c.fillStyle = col; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); };
+var pline = function (c, pts, col, lw) { c.strokeStyle = col; c.lineWidth = lw || 2; c.lineJoin = 'round'; c.lineCap = 'round'; c.beginPath(); for (var i = 0; i < pts.length; i++) { if (i) c.lineTo(pts[i][0], pts[i][1]); else c.moveTo(pts[i][0], pts[i][1]); } c.stroke(); };
+var hline = function (c, x0, x1, y, col) { c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x0, y + .5); c.lineTo(x1, y + .5); c.stroke(); };
+var vline = function (c, x, y0, y1, col) { c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x + .5, y0); c.lineTo(x + .5, y1); c.stroke(); };
+// 가로 격자 + 왼쪽 눈금 (ticks 는 값 배열). 돌려주는 것: 값→y 함수
+var gridY = function (c, R, k, max, ticks, fs) {
+  var y = function (v) { return R.y + R.h - v / max * R.h; };
+  for (var i = 0; i < ticks.length; i++) { hline(c, R.x, R.x + R.w, y(ticks[i]), i === 0 ? k.base : k.grid); txt(c, fmt(ticks[i]), R.x - 4, y(ticks[i]), fs, k.muted, 'right'); }
+  return y;
+};
+var legend = function (c, x, y, items, k, fs) { var cx = x; for (var i = 0; i < items.length; i++) { c.fillStyle = items[i][1]; rr(c, cx, y - fs * .35, fs * .7, fs * .7, 2); c.fill(); txt(c, items[i][0], cx + fs, y, fs, k.ink2); cx += fs + tw(c, items[i][0], fs) + fs * .9; } };
+var alpha = function (hex, a) { return 'rgba(' + parseInt(hex.slice(1, 3), 16) + ',' + parseInt(hex.slice(3, 5), 16) + ',' + parseInt(hex.slice(5, 7), 16) + ',' + a + ')'; };
+var hash = function (i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+var ramp = function (k, t) { var r = k.ramp; return r[Math.max(0, Math.min(r.length - 1, Math.round(t * (r.length - 1))))]; };
+var chip = function (c, s, x, y, fs, k) { var w = tw(c, s, fs, 600) + fs; c.fillStyle = k.grid; rr(c, x, y - fs * .7, w, fs * 1.4, fs * .7); c.fill(); txt(c, s, x + fs / 2, y, fs, k.ink2, 'left', 600); return w; };
+var DRAW=function (c, w, h, k) {
+  var R = frame(c, w, h, k, '이번 달 많이 빌린 책', '권'), fs = h * .055, d = [['소설', 142], ['에세이', 96], ['과학', 71], ['역사', 58], ['만화', 44], ['요리', 23]];
+  var y = gridY(c, R, k, 160, [0, 50, 100, 150], fs), bw = R.w / d.length;
+  for (var i = 0; i < d.length; i++) { var x = R.x + i * bw; vbar(c, x + bw * .2, y(d[i][1]), bw * .6, y(0), i === 0 ? k.s1 : k.s1); txt(c, d[i][0], x + bw / 2, R.y + R.h + fs * .9, fs, k.ink2, 'center'); if (i === 0) txt(c, fmt(d[i][1]), x + bw / 2, y(d[i][1]) - fs * .7, fs, k.ink, 'center', 700); }
+};
+var cv=document.querySelector('canvas.ch'),c=cv.getContext('2d'),K={"surface":"#fcfcfb","ink":"#0b0b0b","ink2":"#52514e","muted":"#898781","grid":"#e1e0d9","base":"#c3c2b7","s1":"#2a78d6","s2":"#eb6834","s3":"#1baf7a","gray":"#c3c2b7","ramp":["#cde2fb","#9ec5f4","#6da7ec","#3987e5","#2a78d6","#1c5cab","#104281","#0d366b"],"neg":"#e34948","pos":"#2a78d6","mid":"#f0efec","good":"#0ca30c","goodText":"#006300","warn":"#fab219"};
+function sizeCanvas(){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);c.setTransform(d,0,0,d,0,0);c.save();c.beginPath();c.rect(0,0,r.width,r.height);c.clip();DRAW(c,r.width,r.height,K);c.restore();}
+sizeCanvas();addEventListener('resize',sizeCanvas);
+})();</script>
+</body></html>
