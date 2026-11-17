@@ -1,6 +1,6 @@
 # 앱 UI 메뉴판 (app-menu) · Giting Skills
 
-> 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 76항목.
+> 모바일 앱 UI 를 말이 아니라 이름으로 시키게 해 주는 사전. 별칭 → 정식 명칭 → 요청 문장 → 네이티브(SwiftUI·Flutter·React Native) 매핑. 8개 코스 92항목.
 > 웹 UI 는 ui-menu. 같은 단어라도 관례가 다르다(모달=앱은 풀스크린, 셀렉트=앱은 시트).
 > 공식: [어느 화면] + [컴포넌트 이름] + [개수·상태] + [플랫폼 관례]
 > 갤러리: https://giting.kr/skills/app-menu · repo: https://github.com/hanmariyang/giting-skills (MIT)
@@ -457,3 +457,106 @@
 - 별칭: 초록 점 빨간 점 · 접속 표시
 - 정의: 살아 있는지·읽었는지를 알려 주는 작은 색 점.
 - 요청: 아바타 오른쪽 아래에 온라인이면 초록 상태 점을 겹쳐 보여줘.
+
+## ⑨ 라이브 액티비티
+
+### 타이머 알약 · Timer Pill
+- 별칭: 아일랜드에 남은 시간만 떠 있게 · 앱 닫아도 타이머가 위에 보이게
+- 정의: 다이내믹 아일랜드 축소형. 왼쪽에 둥근 진행 고리, 오른쪽에 남은 시간.
+- 요청: 라이브 액티비티 축소형으로 타이머. 왼쪽 진행 고리, 오른쪽 남은 시간 mm:ss, 끝나면 사라지게. 잠금화면엔 같은 값을 배너로.
+- 구분: 앱 안 화면에 있으면 그냥 타이머, 앱을 나가도 아일랜드·잠금화면에 남으면 라이브 액티비티
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 배터리 알약 · Battery Pill
+- 별칭: 충전 % 가 아일랜드에 보이게 · 남은 % 작게 띄워
+- 정의: 축소형. 번개 아이콘과 퍼센트 하나.
+- 요청: 라이브 액티비티 축소형으로 충전 %. 왼쪽 번개 아이콘, 오른쪽 퍼센트, 100% 되면 종료.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 비행 알약 · Flight Pill
+- 별칭: 도착까지 몇 시간 남았는지 위에 · 비행기 아이콘이랑 남은 시간
+- 정의: 축소형. 비행기 아이콘과 남은 비행 시간.
+- 요청: 라이브 액티비티 축소형으로 남은 비행 시간. 왼쪽 비행기, 오른쪽 2h 42m 처럼 시·분, 착륙하면 종료.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 공기질 알약 · Air Quality Pill
+- 별칭: 미세먼지 수치가 위에 떠 있게 · 공기질 숫자 하나만
+- 정의: 축소형. 잎 아이콘과 공기질 지수.
+- 요청: 라이브 액티비티 축소형으로 공기질. 왼쪽 잎 아이콘, 오른쪽 지수와 단위 AQI, 값에 따라 색만 바뀌게.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 심박 알약 · Heart Rate Pill
+- 별칭: 운동 중 심박수만 위에 · 하트랑 숫자
+- 정의: 축소형. 하트 아이콘과 분당 심박.
+- 요청: 라이브 액티비티 축소형으로 심박. 왼쪽 하트, 오른쪽 bpm 숫자, 운동 끝나면 종료.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 속도 알약 · Speed Pill
+- 별칭: 지금 속도가 위에 보이게 · mph 숫자만
+- 정의: 축소형. 속도 아이콘과 현재 속도.
+- 요청: 라이브 액티비티 축소형으로 현재 속도. 왼쪽 바람 아이콘, 오른쪽 숫자와 단위(km/h), 주행 끝나면 종료.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 도착 알약 · ETA Pill
+- 별칭: 배달 몇 분 남았는지만 위에 · 차 아이콘이랑 분
+- 정의: 축소형. 차 아이콘과 도착까지 남은 분.
+- 요청: 라이브 액티비티 축소형으로 도착 예정. 왼쪽 차 아이콘, 오른쪽 남은 분, 도착하면 종료.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 녹음 알약 · Recording Pill
+- 별칭: 녹음 중 빨간 점이랑 시간 · 녹음 돌아가는 거 위에 보이게
+- 정의: 축소형. 빨간 점과 경과 시간.
+- 요청: 라이브 액티비티 축소형으로 녹음 중. 왼쪽 빨간 점, 오른쪽 경과 시간, 멈추면 종료.
+- 구분: 지금 값 하나만 보이면 알약(축소형), 눌러 펼치거나 잠금화면에서 조작이 있으면 카드(확장형)
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(compactLeading·compactTrailing·minimal) · Expo: expo-live-activity · Flutter: live_activities
+
+### 타이머 카드 · Timer Card
+- 별칭: 잠금화면에서 타이머 멈추고 1분 더하게 · 펼치면 일시정지 버튼 나오게
+- 정의: 확장형. 남은 시간 크게, 아래에 일시정지와 1분 추가 버튼.
+- 요청: 라이브 액티비티 확장형으로 타이머. 위에 이름과 남은 시간 mm:ss 크게, 아래 버튼 둘(일시정지 · +1분). 버튼은 앱 안 열고 바로 동작하게.
+- 구분: 보기만 하면 타이머 알약, 잠금화면에서 누르는 버튼이 있으면 타이머 카드
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 라이브 스코어 · Live Score Card
+- 별칭: 경기 점수가 잠금화면에 실시간으로 · 두 팀 점수랑 경기 시간
+- 정의: 확장형. 두 팀 마크와 점수, 경기 시간, 아래에 팀 색 막대.
+- 요청: 라이브 액티비티 확장형으로 경기 점수. 왼쪽 홈팀 마크·이름, 가운데 점수 2 대 1 크게, 오른쪽 원정팀, 위에 LIVE 와 경기 시간, 아래 팀 색 막대 둘. 점수 바뀔 때만 갱신.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 비행 진행 카드 · Flight Progress Card
+- 별칭: 출발 도착 사이에 비행기가 움직이게 · 어디쯤 날고 있는지
+- 정의: 확장형. 출발·도착 코드 사이 호 위에 비행기, 게이트와 착륙까지 남은 시간.
+- 요청: 라이브 액티비티 확장형으로 비행 진행. 위에 편명과 게이트, 가운데 출발·도착 공항 코드 사이 곡선 위를 비행기가 진행률만큼 가게, 아래 출발 시각과 착륙까지 남은 시간.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 통화 카드 · Call Card
+- 별칭: 통화 중일 때 위에 상대 이름이랑 시간 · 끊기 버튼 있는 작은 바
+- 정의: 확장형. 상대 아바타·이름·통화 시간, 음성 파형, 빨간 끊기.
+- 요청: 라이브 액티비티 확장형으로 통화 중. 왼쪽 아바타와 이름, 아래 통화 시간, 가운데 파형, 오른쪽 빨간 끊기 버튼.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 재생 중 카드 · Now Playing Card
+- 별칭: 지금 듣는 노래가 잠금화면에 · 앨범 표지랑 재생 버튼
+- 정의: 확장형. 앨범 표지, 곡·가수, 파형 또는 진행 바, 이전·일시정지·다음.
+- 요청: 라이브 액티비티 확장형으로 재생 중. 왼쪽 앨범 표지, 곡명과 가수, 오른쪽 파형, 아래 진행 바와 이전·일시정지·다음 버튼.
+- 구분: 앱이 제공하는 기본 미디어 컨트롤이면 Now Playing(시스템), 앱이 직접 그리는 라이브 액티비티면 재생 중 카드
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 배송 단계 카드 · Delivery Steps Card
+- 별칭: 배달이 몇 정거장 남았는지 점으로 · 주문 접수 조리 배달 단계가 선으로
+- 정의: 확장형. 단계 점을 선으로 잇고 현재 단계까지 색을 채운다. 도착 예정 시각.
+- 요청: 라이브 액티비티 확장형으로 배송 단계. 위에 주문 번호와 도착 예정, 가운데 단계 점 넷(접수·조리·배달·도착)을 선으로 잇고 지금 단계까지 색 채우기, 현재 단계 이름을 크게.
+- 구분: 단계가 점으로 나뉘면 배송 단계 카드, 시간만 흐르면 도착 알약
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 비 예보 카드 · Rain Forecast Card
+- 별칭: 몇 분 뒤에 비 오는지 막대 그래프로 · 앞으로 45분 비 세기
+- 정의: 확장형. 몇 분 뒤 비인지 제목, 45분 막대, 확률.
+- 요청: 라이브 액티비티 확장형으로 비 예보. 위에 「12분 뒤 비」와 확률, 아래 지금부터 45분을 막대 그래프로(15분마다 눈금). 10분마다 갱신.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
+
+### 운동 기록 카드 · Workout Card
+- 별칭: 달리는 동안 거리 시간 심박이 잠금화면에 · 운동 중 숫자 셋이랑 그래프
+- 정의: 확장형. 운동 종류·경과 시간, 거리 크게, 심박·페이스, 아래 강도 막대.
+- 요청: 라이브 액티비티 확장형으로 운동 중. 왼쪽 운동 아이콘과 경과 시간, 오른쪽 거리 km 크게, 아래 심박 bpm 과 페이스, 맨 아래 강도 막대 그래프. 1초마다 시간만 갱신.
+- 네이티브: SwiftUI: ActivityKit Live Activity · DynamicIsland(expanded) + 잠금화면 뷰 · Expo: expo-live-activity · Flutter: live_activities
