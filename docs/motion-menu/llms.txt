@@ -1,6 +1,6 @@
 # 모션 메뉴판 (motion-menu) · Giting Skills
 
-> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 390개 항목.
+> '역동적으로 해줘' 대신 이름으로 시키는 영상·카메라 모션 사전. 별칭(사람이 실제로 하는 말) → 정식 명칭(한글·영어) → 바로 쓰는 요청 문장 → 움직이는 실물 데모. 5개 코스 438개 항목.
 > 각 항목엔 '만드는 법'이 붙습니다. AI 영상(Runway·Kling·Sora 등 프롬프트) · 모션 그래픽(HyperFrames·After Effects 등 코드/키프레임) · CSS(웹에서 직접). 데모는 그 움직임을 브라우저에서 CSS 로 재현한 참고용.
 > 애칭 표시 = 표준 용어가 아닌 통용 이름. 정식명은 각 항목 영어·구분을 따르세요.
 > 공식: [무엇에] + [모션/효과 이름] + [방향·시간 또는 프레임] + [세기]  (✕ "역동적으로 해줘" → ○ "첫 화면에서 둘째 화면으로 픽셀 디졸브로 넘겨줘. 0.8초.")
@@ -3453,6 +3453,431 @@
 - 요청 문장: 「+12」 블록이 하나씩 쌓일 때마다 합계가 12씩 올라가게 해줘. 블록은 5개.
 - 손잡이(바꿔 쓰는 값): 한 블록 1~500 · 블록 수 2~8개 · 문장 틀 「「+{step}」 블록이 하나씩 쌓일 때마다 합계가 {step}씩 올라가게 해줘. 블록은 {count}개.」
 - 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/total-stack.html
+
+## ⑲ 3D 공간 48
+
+### 문자 터널 (Type Tunnel)
+- 별칭: "글자 사이를 뚫고 지나가게" · "낱말 판들 사이로 카메라가 날아가게" · "글자 터널 통과하는 느낌"
+- 정의: 낱말 판이 앞뒤로 흩어져 있고 카메라가 그 사이를 뚫고 나간다.
+- 구분: 글자 쪽으로 들어가면 텍스트 줌 스루(⑨), 글자들 사이 공간을 지나가면 문자 터널
+- 쓰임: 오프닝 · 속도
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Tunnel 로 「깊이 · 공간 · 속도」 낱말 판 20여 개를 앞뒤 깊이에 흩어 두고, 카메라가 8초에 한 바퀴 돌아 처음과 이어지게 앞으로 날아가게 해줘. 판 셋 중 하나는 포인트색 바탕, 나머지는 흰 바탕에 검은 글자.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-tunnel.html
+
+### 일어서는 제목 (Rising Title)
+- 별칭: "누워 있던 글자가 일어나게" · "바닥에서 제목이 벌떡 서게" · "글자가 눕혀졌다가 세워지게"
+- 정의: 바닥에 누워 있던 제목이 뒤꿈치를 축으로 일어선다.
+- 구분: 평면에서 아래에서 위로 올라오면 슬라이드 업, 바닥에 누운 판이 축을 두고 서면 일어서는 제목
+- 쓰임: 오프닝 · 제목
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Rising Title 로 「일어선다」 를 바닥에 눕혀 두고 0.5초 뒤부터 1.6초 동안 뒷변을 축으로 90도 일으켜 세워줘. 끝에서 살짝 넘쳤다 돌아오게(오버슈트 약), 바닥엔 옅은 격자.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-rise.html
+
+### 바닥 글자 저공비행 (Floor Type Flyover)
+- 별칭: "바닥에 깔린 글자 위를 낮게 날게" · "도로 위 글씨처럼 큰 글자 위로 지나가게" · "글자 활주로"
+- 정의: 바닥에 깔린 큰 낱말 위를 카메라가 낮게 스쳐 지나간다.
+- 쓰임: 속도 · 인트로
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Floor Type Flyover 로 바닥에 「저공 · 비행 · 바닥」 같은 낱말을 300px 간격으로 깔고, 카메라를 눈높이 아래로 낮춰 8초에 2,400px 앞으로 밀어줘. 끝이 처음과 이어지게 낱말은 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-floor.html
+
+### 문자 회랑 (Type Corridor)
+- 별칭: "양쪽 벽에 글자가 흐르는 복도" · "글자 벽 사이로 지나가게" · "좌우 벽이 전부 낱말"
+- 정의: 양쪽 벽에 낱말이 흐르는 복도를 지나간다.
+- 구분: 글자 판이 사방에 흩어져 있으면 문자 터널, 좌우 벽 두 면에만 붙어 있으면 문자 회랑
+- 쓰임: 오프닝 · 속도
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Corridor 로 좌우 벽에 낱말을 세 줄씩 붙이고 카메라가 복도를 8초에 2,000px 지나가게 해줘. 벽 글자는 안쪽을 보게, 넷 중 하나는 포인트색, 위아래 모서리에 포인트색 선.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-corridor.html
+
+### 링 문자 (Type Ring)
+- 별칭: "글자가 고리처럼 빙빙 돌게" · "글자 띠가 반지 모양으로" · "글자 고리 여러 겹"
+- 정의: 글자 띠가 고리가 되어 여러 겹 돈다.
+- 구분: 글자가 원통 겉면에 세로로 붙어 돌면 텍스트 실린더(⑨), 한 글자 높이의 띠가 고리로 돌면 링 문자
+- 쓰임: 로고 · 루프
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Ring 으로 「공간 · 깊이 · 회전」 띠를 반지름 다른 고리 셋에 둘러 서로 다른 기울기로 돌려줘. 가운데 고리는 포인트색, 바깥은 흰색, 8초에 한 바퀴.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-ring.html
+
+### 깊이 레이어 (Depth Layers)
+- 별칭: "같은 글자가 뒤로 여러 겹 겹치게" · "글자가 앞뒤로 겹겹이" · "글자 그림자가 깊이로 쌓이게"
+- 정의: 같은 낱말이 뒤로 몇 겹 겹치고 카메라가 숨 쉬듯 다가갔다 물러난다.
+- 구분: 평면에서 그림자를 여러 겹 어긋나게 두면 롱 섀도, 깊이 방향으로 실제 간격을 두고 겹치면 깊이 레이어
+- 쓰임: 제목 · 강조
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Depth Layers 로 「DEPTH」 를 깊이 방향으로 아홉 겹 겹쳐줘. 뒤로 갈수록 투명하게, 맨 앞만 포인트색. 카메라는 8초에 한 번 다가갔다 물러나게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-layers.html
+
+### 떠다니는 낱말 구름 (Floating Word Cloud)
+- 별칭: "낱말이 공중에 떠 있고 그 둘레를 돌게" · "단어들이 둥둥 떠 있는 걸 360도로" · "낱말 구름 한 바퀴"
+- 정의: 공처럼 흩어진 낱말들 둘레를 카메라가 한 바퀴 돈다.
+- 구분: 낱말이 한 면에 크기 다르게 모이면 워드 클라우드(평면), 공간에 흩어져 그 둘레를 돌면 떠다니는 낱말 구름
+- 쓰임: 소개 · 키워드
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Floating Word Cloud 로 낱말 20여 개를 공 모양으로 흩어 두고, 판은 늘 카메라를 보게(빌보드) 한 채 카메라가 8초에 360도 돌게 해줘. 가까운 판은 또렷하게, 먼 판은 흐리게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-cloud.html
+
+### 문자 나선 (Type Spiral)
+- 별칭: "글자가 나선으로 올라가게" · "낱말이 빙글빙글 계단처럼" · "나선 계단 글자"
+- 정의: 낱말이 나선 계단처럼 감겨 올라가고 카메라가 따라 돈다.
+- 쓰임: 성장 · 단계
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Spiral 로 「위로 · 한 칸 · 돌아」 낱말 판 40개를 나선 계단으로 감아 올리고, 카메라가 8초에 한 바퀴 돌며 조금씩 올라가게 해줘. 다섯 개마다 하나는 포인트색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-type-spiral.html
+
+### 오빗 (Orbit)
+- 별칭: "피사체 둘레를 빙 돌게" · "제품을 한 바퀴 돌면서 보여주게" · "카메라가 주위를 돌게"
+- 정의: 피사체 둘레를 카메라가 한 바퀴 돈다.
+- 구분: 카메라가 제자리에서 고개만 돌리면 팬(①), 피사체를 가운데 두고 둘레를 걸으면 오빗
+- 쓰임: 제품 · 소개
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Orbit 으로 가운데 「ORBIT」 상자를 두고 카메라가 8초에 한 바퀴 돌게 해줘. 높이는 피사체보다 살짝 위, 바닥엔 격자와 기둥 열몇 개.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-orbit.html
+
+### 달리 인 (Dolly In)
+- 별칭: "멀리 있는 글자로 확 들어가게" · "카메라가 앞으로 쭉 밀고 들어가게" · "한 번에 다가가게"
+- 정의: 멀리 있는 글자로 카메라가 단숨에 들어간다.
+- 구분: 렌즈만 당겨 커지면 줌 인(①), 카메라가 실제로 앞으로 가서 기둥이 옆으로 지나가면 달리 인
+- 쓰임: 강조 · 전환
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Dolly In 으로 멀리 있는 「寄」 글자에 0.6초 뒤부터 1.8초 동안 카메라를 밀어 넣어줘. 끝에서 천천히 멈추게(ease-out), 지나치는 기둥으로 속도가 느껴지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-dolly.html
+
+### 크레인 업 (Crane Up)
+- 별칭: "발밑에서 위로 떠오르면서 내려다보게" · "카메라가 올라가면서 부감으로" · "바닥에서 하늘로"
+- 정의: 발밑에서 떠올라 바로 위에서 내려다본다.
+- 구분: 제자리에서 고개를 위아래로 돌리면 틸트(①), 카메라 몸이 위로 올라가면 크레인 업
+- 쓰임: 엔딩 · 전경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Crane Up 으로 눈높이에서 시작해 3초 동안 위로 올라가며 바닥을 내려다보게 해줘. 바닥엔 「真上」 글자, 올라갈수록 피치가 아래로 90도까지.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-crane.html
+
+### 달리 줌 (Dolly Zoom)
+- 별칭: "배경만 쭉 늘어나게" · "주인공은 그대로인데 뒤가 멀어지게" · "현기증 나는 그 샷"
+- 정의: 피사체 크기는 그대로, 뒤 배경만 다가왔다 멀어진다.
+- 구분: 달리와 줌을 반대로 동시에 해서 피사체 크기가 안 변하면 달리 줌, 둘 중 하나만 하면 달리 인이나 줌 인
+- 쓰임: 긴장 · 반전
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Dolly Zoom 으로 「VERTIGO」 판 크기는 그대로 두고 3초 동안 카메라를 뒤로 빼며 화각을 좁혀줘. 뒤 기둥만 쭉 늘어났다가 2.5초에 돌아오게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-dollyzoom.html
+
+### 플라이스루 (Fly-through)
+- 별칭: "문을 하나씩 통과하게" · "액자 여러 개를 뚫고 지나가게" · "게이트 통과"
+- 정의: 문을 잇달아 통과한다.
+- 구분: 문 없이 글자 사이를 지나가면 문자 터널, 네모 문틀을 잇달아 통과하면 플라이스루
+- 쓰임: 속도 · 인트로
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Fly-through 로 240px 간격 사각 문 열 개를 두고 카메라가 8초에 통과하게 해줘. 살짝 좌우로 흔들리고 롤도 조금, 셋 중 하나는 포인트색, 문 위에 GATE 글자.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-flythrough.html
+
+### 휩 팬 (Whip Pan)
+- 별칭: "홱 돌아서 다음 글자 보게" · "순간적으로 휙 돌리게" · "빠르게 휘두르는 팬"
+- 정의: 한순간에 홱 돌아 다음 글자를 본다.
+- 구분: 천천히 돌면 팬(①), 잔상이 남을 만큼 빠르게 휘두르면 휩 팬
+- 쓰임: 전환 · 리듬
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Whip Pan 으로 사방에 둔 낱말 넷을 2초마다 홱 돌아 보게 해줘. 도는 0.5초만 잔상이 번지게 여러 장을 겹치고, 멈추면 또렷하게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-whip.html
+
+### 롤 전진 (Roll Forward)
+- 별칭: "빙글 돌면서 앞으로 가게" · "화면이 돌면서 터널로 들어가게" · "회전하면서 전진"
+- 정의: 겹겹의 네모를 뚫고 가며 카메라가 빙글 돈다.
+- 구분: 화면 평면이 돌면 스핀(②), 카메라가 앞으로 가며 광축을 중심으로 돌면 롤 전진
+- 쓰임: 인트로 · 속도
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Roll Forward 로 125px 간격 네모 틀 16개를 뚫고 가며 8초에 두 바퀴 롤하게 해줘. 넷 중 하나는 포인트색 굵은 선, 틀마다 ROLL 글자.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-roll.html
+
+### 부감에서 지상으로 (Top-down to Ground)
+- 별칭: "위에서 내려다보다가 눈높이로 내려오게" · "지도 보듯 보다가 현장으로" · "부감에서 지상으로 착지"
+- 정의: 바로 위에서 보던 눈이 사람 눈높이로 내려온다.
+- 구분: 올라가면서 내려다보면 크레인 업, 내려다보던 눈이 내려와 정면을 보면 부감에서 지상으로
+- 쓰임: 오프닝 · 착지
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Top-down to Ground 로 바로 위 90도 부감에서 시작해 3.2초 동안 눈높이로 내려오게 해줘. 바닥엔 「俯瞰」, 눈높이에 「GROUND」 상자가 서 있게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-cam-topdown.html
+
+### 글자에서 구로 (Type to Sphere)
+- 별칭: "글자가 점으로 흩어져 공이 되게" · "글자 가루가 구로 모이게" · "글자를 구슬처럼 뭉치게"
+- 정의: 글자를 이루던 점들이 공으로 모였다가 다시 글자로 돌아온다.
+- 구분: 점이 흩어져 사라지면 가루 소멸(⑩), 흩어진 점이 다른 모양(공)으로 다시 모이면 글자에서 구로
+- 쓰임: 변신 · 로고
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type to Sphere 로 「구」 글자를 점 수백 개로 만들고, 1.5초부터 1.6초 동안 점들이 공 모양으로 모여 천천히 돌다가 5.5초에 다시 글자로 돌아오게 해줘. 공일 때는 포인트색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-sphere.html
+
+### 조립되는 정육면체 (Assembling Cube)
+- 별칭: "면 여섯 개가 날아와 상자가 되게" · "조각이 모여서 큐브 되게" · "큐브가 조립되게"
+- 정의: 여섯 면이 사방에서 날아와 상자가 되고 돈다.
+- 구분: 화면이 상자 면처럼 돌아 넘어가면 큐브 회전(⑪), 면이 모여 상자가 생기면 조립되는 정육면체
+- 쓰임: 로고 · 조립
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Assembling Cube 로 면 여섯 장을 사방에서 날려 0.4초부터 1.6초 동안 상자로 맞추고(오버슈트 약), 그다음 천천히 돌게 해줘. 면마다 A~F 글자, 흰 면과 포인트색 면을 번갈아.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-cube.html
+
+### 흩어져 다른 말로 (Scatter to Word)
+- 별칭: "글자가 흩어졌다가 다른 글자로 모이게" · "점으로 부서져서 다른 단어 되게" · "가루가 다른 말로 바뀌게"
+- 정의: 점으로 된 글자가 흩어졌다가 다른 글자로 모인다.
+- 구분: 평면에서 글자 모양만 바뀌면 워드 모프(④), 점이 공간으로 흩어졌다 모이면 흩어져 다른 말로
+- 쓰임: 전환 · 변신
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Scatter to Word 로 「만든다」 를 점으로 만들고 2초부터 1.4초 동안 사방으로 흩어졌다가 「MAKE」 로 모이게 해줘. 흩어진 동안은 포인트색, 5.6초에 다시 처음 글자로.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-scatter.html
+
+### 판에서 탑으로 (Slab Tower)
+- 별칭: "판이 쌓여서 탑이 되게" · "바닥 판이 올라가며 비틀리게" · "층층이 쌓이는 탑"
+- 정의: 바닥 판이 한 장씩 쌓이며 비틀린 탑이 된다.
+- 쓰임: 건축 · 성장
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Slab Tower 로 네모 판 22장을 0.15초 간격으로 위에서 떨어뜨려 쌓고, 한 장마다 7도씩 돌려 비틀린 탑이 되게 해줘. 넷마다 한 장은 포인트색, 옆은 어두운 색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-tower.html
+
+### 블록 글자 (Block Type)
+- 별칭: "작은 상자들이 모여서 큰 글자 되게" · "레고처럼 글자 쌓이게" · "픽셀 블록으로 글자"
+- 정의: 작은 상자들이 모여 큰 글자가 된다.
+- 구분: 평면 픽셀이 모여 글자가 되면 픽셀 리졸브(⑰), 두께 있는 상자가 쌓여 글자가 되면 블록 글자
+- 쓰임: 제목 · 게임
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Block Type 으로 「3D」 모양 자리에 작은 정육면체를 위에서 떨어뜨려 2.2초 안에 채워줘. 앞면은 포인트색, 옆면은 어두운 색, 윗면은 흰색. 카메라는 비스듬히 위에서.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-blocks.html
+
+### 비틀린 띠 (Twisted Band)
+- 별칭: "글자 띠가 꼬이면서 돌게" · "뫼비우스처럼 비틀린 글자 띠" · "띠가 한 바퀴 꼬이게"
+- 정의: 글자 띠가 고리가 되어 한 바퀴 돌며 비틀린다.
+- 구분: 띠가 평평한 고리로 돌면 링 문자, 돌면서 앞뒤가 뒤집히게 꼬이면 비틀린 띠
+- 쓰임: 로고 · 루프
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Twisted Band 로 「비틀린다 · TWIST · 돌아간다」 띠를 고리로 감고, 한 바퀴에 반 바퀴 비틀리게 해줘. 앞면은 포인트색에 검은 글자, 뒷면은 어두운 색, 8초에 한 바퀴.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-twist.html
+
+### 입자 입체 변화 (Particle Solid Morph)
+- 별칭: "점 구름이 공에서 도넛으로 바뀌게" · "입자가 모양을 바꾸게" · "구 도넛 상자로 변하게"
+- 정의: 점 구름이 공에서 도넛으로, 상자로 바뀐다.
+- 구분: 모양이 평면 도형 사이에서 바뀌면 셰이프 모프(기본기), 점 구름이 입체 사이에서 바뀌면 입자 입체 변화
+- 쓰임: 변신 · 배경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Particle Solid Morph 로 점 500개를 공으로 두고 2초에 도넛, 4.8초에 상자로 바꿔줘. 바뀌는 데 1초씩, 전체는 천천히 돌게, 넷 중 하나는 포인트색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-morph.html
+
+### 전개도 상자 (Unfolding Box)
+- 별칭: "상자가 펼쳐져서 전개도 되게" · "전개도가 접혀서 상자 되게" · "상자 뚜껑 열리듯 펼쳐지게"
+- 정의: 펼쳐진 전개도가 접혀 상자가 되고, 다시 펼쳐진다.
+- 쓰임: 포장 · 설명
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Unfolding Box 로 바닥에 펼쳐진 전개도(바닥 1 · 옆 4 · 뚜껑 1)를 1초부터 1.8초 동안 접어 상자로 만들고 5초에 다시 펼쳐줘. 면은 흰색과 포인트색 번갈아, 카메라는 위에서 비스듬히.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-solid-unfold.html
+
+### 도미노 (Domino)
+- 별칭: "도미노처럼 차례로 넘어지게" · "글자 판이 줄줄이 쓰러지게" · "하나 밀면 다 넘어지게"
+- 정의: 글자 판이 한 장씩 차례로 넘어진다.
+- 구분: 글자가 하나씩 차례로 나타나면 스태거(⑤), 세워 둔 판이 차례로 쓰러지면 도미노
+- 쓰임: 연쇄 · 순서
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Domino 로 글자 판 12장을 0.14h 간격으로 세워 두고 0.6초부터 0.32초 간격으로 차례로 넘어지게 해줘. 셋마다 한 장은 포인트색, 카메라는 옆에서 비스듬히.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-domino.html
+
+### 튀는 글자 블록 (Bouncing Letter Blocks)
+- 별칭: "글자 상자가 떨어져서 통통 튀게" · "글자가 떨어지고 튕기게" · "블록이 바닥에 튀게"
+- 정의: 글자 상자가 떨어져 통통 튀고 선다.
+- 구분: 평면 글자가 아래로 떨어져 튀면 바운스(⑤), 두께 있는 상자가 떨어져 튀면 튀는 글자 블록
+- 쓰임: 제목 · 재미
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Bouncing Letter Blocks 로 「BOUNCE」 여섯 상자를 0.18초 간격으로 떨어뜨려 바닥에서 세 번 튀고 서게 해줘. 앞면은 흰색과 포인트색 번갈아, 윗면 밝게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-bounce.html
+
+### 공 사태 (Ball Avalanche)
+- 별칭: "공이 와르르 굴러 내려오게" · "구슬이 비탈로 쏟아지게" · "공이 쌓이게"
+- 정의: 많은 공이 비탈을 굴러 내려와 쌓인다.
+- 쓰임: 재미 · 양
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Ball Avalanche 로 공 70개를 왼쪽 비탈에서 2.6초 동안 굴려 바닥에 쌓이게 해줘. 크기는 조금씩 다르게, 세 색(포인트색 · 흰색 · 어두운 색) 섞어서.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-balls.html
+
+### 날아다니는 띠 (Flying Ribbons)
+- 별칭: "글자 띠가 휘어 날아다니게" · "리본이 공간을 가로지르게" · "테이프가 휙휙 지나가게"
+- 정의: 글자 띠가 활처럼 휘어 공간을 가로지른다.
+- 구분: 띠가 한 자리에서 고리로 돌면 링 문자, 활처럼 휘어 공간을 지나가면 날아다니는 띠
+- 쓰임: 역동 · 배경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Flying Ribbons 로 글자 띠 네 가닥을 활처럼 휘게 해서 공간을 계속 가로지르게 해줘. 앞면은 포인트색이나 흰색에 검은 글자, 뒷면은 어둡게, 8초에 한 바퀴.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-tape.html
+
+### 충돌로 부서짐 (Impact Shatter)
+- 별칭: "글자 판이 벽에 부딪혀 산산조각 나게" · "부딪치면서 깨지게" · "날아와서 부서지게"
+- 정의: 날아온 글자 판이 벽에 부딪혀 조각으로 흩어진다.
+- 구분: 화면이 유리처럼 깨지며 넘어가면 글라스 셰터(⑪), 공간 속 물건이 부딪혀 조각나면 충돌로 부서짐
+- 쓰임: 강조 · 충격
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Impact Shatter 로 「부딪친다」 판을 왼쪽에서 날려 2.2초에 벽에 부딪히고, 24조각으로 흩어져 바닥에 떨어지게 해줘. 조각은 돌면서 떨어지게, 포인트색과 흰색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-shatter.html
+
+### 진자 파동 (Pendulum Wave)
+- 별칭: "진자가 여러 개 흔들리며 물결 만들게" · "추가 줄줄이 흔들리게" · "진자 파동"
+- 정의: 길이가 다른 진자들이 어긋나며 물결을 만든다.
+- 구분: 하나가 흔들리면 진자(⑩), 여럿이 길이 차이로 물결을 만들면 진자 파동
+- 쓰임: 과학 · 리듬
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Pendulum Wave 로 길이가 조금씩 다른 진자 15개를 한 줄로 걸고 8초 동안 흔들어 물결이 생겼다 흩어졌다 하게 해줘. 추는 포인트색과 흰색 번갈아.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-pendulum.html
+
+### 색종이 (Confetti)
+- 별칭: "색종이가 팔랑이며 떨어지게" · "종잇조각이 흩날리게" · "축하 색종이"
+- 정의: 종잇조각이 팔랑이며 내려온다.
+- 구분: 점이 터져 퍼지면 버스트(기본기), 납작한 조각이 돌며 내려오면 색종이
+- 쓰임: 축하 · 엔딩
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Confetti 로 종잇조각 90개를 위에서 팔랑이며 떨어지게 해줘. 조각마다 돌아가는 속도 다르게, 세 색, 가운데에 「祝」. 8초 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-confetti.html
+
+### 중력 소용돌이 (Gravity Vortex)
+- 별칭: "점들이 가운데로 빨려 들어가게" · "소용돌이치며 모이게" · "블랙홀처럼 빨아들이게"
+- 정의: 흩어진 점이 가운데로 소용돌이치며 빨려 든다.
+- 구분: 점이 가운데서 바깥으로 퍼지면 버스트, 바깥에서 가운데로 돌며 모이면 중력 소용돌이
+- 쓰임: 전환 · 배경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Gravity Vortex 로 점 400개가 바깥에서 가운데로 소용돌이치며 빨려 들게 해줘. 가까워질수록 밝고 포인트색, 가운데 검은 원에 포인트색 테두리. 8초 반복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-phys-vortex.html
+
+### 전구 줄 (Bulb Rows)
+- 별칭: "전구가 줄줄이 켜지면서 흐르게" · "전구 테두리가 겹겹이 멀어지게" · "전구가 차례로 반짝이게"
+- 정의: 네모 전구 줄이 겹겹이 멀어지고 차례로 켜지며 흐른다.
+- 구분: 점이 테두리를 따라 한 방향으로 돌면 마키 라이트(⑧), 겹겹의 테두리에서 점등이 흐르면 전구 줄
+- 쓰임: 무대 · 오프닝
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Bulb Rows 로 네모 전구 테두리 아홉 겹을 깊이 방향으로 겹치고, 전구 셋 중 하나가 초당 6번 차례로 켜져 빛이 흐르는 것처럼 보이게 해줘. 켜진 전구는 포인트색에 번짐.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-bulbs.html
+
+### 스포트라이트 (Spotlight)
+- 별칭: "빛기둥이 글자를 하나씩 비추게" · "조명이 글자 위로 떨어지게" · "무대 조명처럼"
+- 정의: 빛기둥이 글자 하나씩을 비춘다.
+- 구분: 빛이 지나가며 글자가 드러나면 스포트라이트 리빌(⑰), 빛기둥이 글자 사이를 옮겨 다니면 스포트라이트
+- 쓰임: 강조 · 무대
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Spotlight 로 「SPOT」 네 글자 위에 빛기둥을 세우고 1.2초마다 다음 글자로 옮겨 비추게 해줘. 비추는 글자만 흰색, 나머지는 어둡게, 바닥에 빛 웅덩이. 6초부턴 전부 켜지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-spot.html
+
+### 초점 이동 (Rack Focus)
+- 별칭: "앞 글자가 흐려지고 뒤 글자가 또렷해지게" · "초점이 앞뒤로 옮겨 가게" · "핀이 앞에서 뒤로"
+- 정의: 앞 글자와 뒤 글자 사이에서 초점이 오간다.
+- 구분: 하나가 흐릿하다 또렷해지면 흐림에서 선명하게(⑩), 앞뒤 둘 사이에서 초점이 옮겨 가면 초점 이동
+- 쓰임: 전환 · 영화
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Rack Focus 로 「앞」 「초점」 「뒤」 를 깊이 다르게 세우고 4초마다 초점을 앞에서 뒤로 옮겨줘. 초점 맞은 글자만 포인트색으로 또렷하게, 나머지는 흐리게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-focus.html
+
+### 안개 속 글자 (Words in Fog)
+- 별칭: "안개 속에서 글자가 떠오르게" · "흐릿한 저편에서 낱말이 다가오게" · "안개 뚫고 나오게"
+- 정의: 안개 저편에서 낱말이 떠오른다.
+- 구분: 낱말 판 사이를 또렷하게 지나가면 문자 터널, 멀수록 안개에 묻히면 안개 속 글자
+- 쓰임: 신비 · 인트로
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Words in Fog 로 낱말 판 18개를 깊이에 흩어 두고 카메라가 8초에 통과하며, 멀수록 안개에 묻혀 흐리고 가까워질수록 또렷해지게 해줘. 화면 가운데 옅은 안개 빛.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-fog.html
+
+### 네온 점등 (Neon Flicker On)
+- 별칭: "네온 간판이 깜박이다 켜지게" · "네온처럼 빛나는 글자" · "지지직 하다 켜지게"
+- 정의: 네온 글자가 깜박이다 켜진다.
+- 구분: 글자가 깜박이기만 하면 플리커(⑥), 깜박이다 네온 빛으로 켜져 머물면 네온 점등
+- 쓰임: 간판 · 밤
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Neon Flicker On 으로 「OPEN」 을 네온관처럼 두고 2초 동안 불규칙하게 깜박이다 켜지게 해줘. 켜지면 포인트색 번짐, 아래에 「영업중」 작게, 뒤에 흐린 글자 벽.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-neon.html
+
+### 빛 알갱이 (Bokeh Lights)
+- 별칭: "흐릿한 빛 방울이 떠다니게" · "보케 빛망울" · "빛이 몽글몽글 떠 있게"
+- 정의: 흐릿한 빛 방울이 깊이 사이를 떠다닌다.
+- 구분: 점이 선명하게 떠다니면 점 바다(⑧), 흐릿한 빛 원이 깊이에 따라 크기가 다르면 빛 알갱이
+- 쓰임: 감성 · 배경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Bokeh Lights 로 흐릿한 빛 방울 60개를 깊이 다르게 띄우고 천천히 흔들리게 해줘. 가운데 깊이의 방울은 또렷하고 밝게, 넷 중 하나는 포인트색, 가운데 「光」 글자.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-bokeh.html
+
+### 역광 실루엣 (Backlit Silhouette)
+- 별칭: "뒤에서 빛이 쏟아져 글자가 그림자 되게" · "역광으로 글자 실루엣" · "빛줄기 뒤에 글자"
+- 정의: 뒤에서 센 빛이 비쳐 글자가 그림자가 된다.
+- 구분: 빛이 글자 앞을 쓸고 지나가면 라이트 스윕(기본기), 빛이 글자 뒤에 있어 글자가 어두우면 역광 실루엣
+- 쓰임: 강조 · 영화
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Backlit Silhouette 로 글자 뒤에 센 빛을 두고 빛줄기 18가닥이 천천히 돌게 해줘. 「逆光」 글자는 검은 실루엣으로, 숨 쉬듯 4% 커졌다 작아지게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-backlight.html
+
+### 레이저 격자 (Laser Grid)
+- 별칭: "레이저가 공간을 훑게" · "빛줄기가 바닥을 쓸게" · "레이저 쇼"
+- 정의: 빛줄기가 공간을 훑는다.
+- 쓰임: 무대 · 속도
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Laser Grid 로 한 점에서 뻗은 빛줄기 12개가 바닥 격자를 좌우로 훑게 해줘. 셋 중 하나는 흰색 굵게, 나머지는 포인트색, 8초에 두 번 왕복.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-light-laser.html
+
+### 글자 빌딩 거리 (Type Tower Street)
+- 별칭: "글자로 된 빌딩 사이를 날게" · "글자 건물 거리" · "낱말 빌딩 숲"
+- 정의: 글자로만 된 건물들 사이 길을 날아간다.
+- 구분: 벽 두 면에 글자가 흐르면 문자 회랑, 높이가 제각각인 건물이 늘어서면 글자 빌딩 거리
+- 쓰임: 도시 · 인트로
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Tower Street 로 길 양쪽에 글자 벽 건물 20채를 세우고 카메라가 8초에 2,400px 날아가게 해줘. 건물마다 낱말 다섯 줄, 다섯 중 하나는 포인트색, 길 가운데 흰 차선.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-towers.html
+
+### 간판 골목 (Signboard Alley)
+- 별칭: "세로 간판이 늘어선 골목으로 들어가게" · "간판이 빼곡한 골목" · "네온 골목 걷기"
+- 정의: 세로 간판이 늘어선 골목을 걸어 들어간다.
+- 쓰임: 도시 · 밤
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Signboard Alley 로 좌우 벽에 세로 간판 22개를 높이 다르게 달고 카메라가 8초에 골목을 지나가게 해줘. 셋 중 하나는 포인트색, 간판마다 글자 네 자 세로쓰기.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-signs.html
+
+### 글자 방 (Type Room)
+- 별칭: "벽 바닥 천장이 전부 글자인 방" · "글자 방 안에서 둘러보게" · "사방이 낱말"
+- 정의: 벽도 바닥도 천장도 글자인 방 안에서 둘러본다.
+- 구분: 밖에서 상자를 보면 조립되는 정육면체, 상자 안에서 둘러보면 글자 방
+- 쓰임: 몰입 · 배경
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Room 으로 여섯 면이 전부 글자인 방 안에 카메라를 두고 8초에 한 바퀴 둘러보게 해줘. 면은 포인트색과 어두운 색 번갈아, 면마다 낱말 아홉 개.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-room.html
+
+### 무한 기둥 회랑 (Endless Colonnade)
+- 별칭: "글자 기둥이 끝없이 이어지게" · "기둥 사이를 지나가게" · "기둥 회랑"
+- 정의: 글자가 새겨진 기둥이 끝없이 이어진다.
+- 쓰임: 격식 · 인트로
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Endless Colonnade 로 좌우에 200px 간격 기둥을 세우고 안쪽 면에 글자 네 자씩 새겨, 카메라가 8초에 1,600px 지나가며 끝이 처음과 이어지게 해줘. 넷 중 한 글자는 포인트색.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-colonnade.html
+
+### 말의 계단 (Word Stairs)
+- 별칭: "글자 계단을 올라가게" · "한 칸마다 말이 적힌 계단" · "계단 오르듯 글이 이어지게"
+- 정의: 한 칸마다 말이 적힌 계단을 올라간다.
+- 구분: 낱말이 나선으로 감겨 올라가면 문자 나선, 네모 칸이 계단으로 이어지면 말의 계단
+- 쓰임: 성장 · 단계
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Word Stairs 로 계단 14칸에 「한 걸음 · STEP · 위로」 같은 말을 한 칸씩 적고 카메라가 8초에 네 칸 올라가게 해줘. 넷 중 한 칸은 포인트색, 칸 옆면은 어둡게.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-stairs.html
+
+### 머리 위 표지판 (Overhead Signs)
+- 별칭: "고속도로 표지판이 머리 위로 지나가게" · "도로 표지판 날아가게" · "표지판 아래를 달리게"
+- 정의: 고속도로 표지판이 머리 위로 지나간다.
+- 쓰임: 속도 · 안내
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Overhead Signs 로 도로 위 500px 간격에 표지판 네 개를 걸고 카메라가 8초에 2,000px 달려 머리 위로 지나가게 해줘. 표지판은 포인트색과 어두운 색 번갈아, 바닥엔 흰 점선 차선.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-signage.html
+
+### 글자 교차로 (Type Crossroads)
+- 별칭: "사방으로 뻗은 글자 길을 위에서 보게" · "교차로를 빙 돌면서" · "네 갈래 글자 길"
+- 정의: 사방으로 뻗은 글자 길을 위에서 돌며 본다.
+- 구분: 길 하나를 따라 날면 바닥 글자 저공비행, 사방 네 길을 위에서 돌며 보면 글자 교차로
+- 쓰임: 지도 · 안내
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Type Crossroads 로 가운데 포인트색 광장에서 사방으로 뻗은 길 네 가닥에 「동 · 서 · 남 · 북」 같은 글자를 깔고, 카메라가 위에서 8초에 한 바퀴 돌게 해줘.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-crossing.html
+
+### 부감 블록 (Block Field)
+- 별칭: "글자 블록이 물결치게" · "위에서 본 블록 밭" · "블록이 올라왔다 내려가게"
+- 정의: 글자 블록이 물결치듯 올라왔다 내려간다.
+- 구분: 같은 칸이 평면에서 뒤집히면 그리드 플립(기본기), 두께 있는 블록이 높이로 물결치면 부감 블록
+- 쓰임: 배경 · 리듬
+- 만드는 법: 모션 그래픽 · AI 영상
+- 요청 문장: Block Field 로 글자 블록 7×7 을 깔고 높이가 물결처럼 8초에 두 번 오르내리게 해줘. 윗면은 흰색, 셋 중 하나는 포인트색, 카메라는 위에서 비스듬히.
+- 데모: https://raw.githubusercontent.com/hanmariyang/giting-skills/main/plugins/motion-menu/components/sp-city-blocks.html
 
 ## 이징은 역할별로 셋만
 움직임마다 곡선을 새로 고르지 말고, 역할마다 하나씩 정해 두고 돌려 써요. 영상 전체의 결이 맞습니다.

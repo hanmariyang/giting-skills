@@ -250,3 +250,13 @@ node plugins/motion-menu/tools/backgrounds/render.mjs <폴더> sheet            
 - 견본 정본 `plugins/carousel-menu/tools/gen.mjs`(장 그림 `S[id]`) → `demos/slides.html`(생성물). 1080×1350 을 360×450 으로 그린다. 색·글꼴은 예시, 장소·숫자는 「예시」 표시.
 - 빌드가 막는 것: 데모 없는 항목 · 마커 중복 · 레시피가 없는 항목을 가리킴 · **레시피에 같은 꼴 연달아**.
 - 견본 24장 넘침 0(헤드리스, 장 밖으로 나간 요소 검사). giting 사이트 페이지 `content/skills/carousel-menu.md` + 썸네일.
+
+## 모션 메뉴판 0.21.0 · ⑲ 3D 공간 48 (2026-11-18)
+
+- 일본 쪽 「3D 모션 48」 캐러셀(6묶음 × 8)에서 출발했다. 우리 메뉴판은 전부 평면이라 공간·카메라·입체·물리·빛·거리 쪽이 통째로 비어 있었다. 이름·묶음은 우리가 다시 정했고 ⛔ 그쪽 문구·그림·낱말은 쓰지 않는다. 데모 낱말은 전부 `WORDS` 와 장면 안에서 새로 정했다.
+- `group` TYPE · CAMERA · SOLID · PHYSICS · LIGHT · CITY, 8개씩. 438항목, 19코스. id 는 `sp-` 접두어.
+- 정본 `plugins/motion-menu/tools/space/engine.js`(`SP[id](c,w,h,t,k)`, 8초 주기). **WebGL 없이 2D 캔버스 위 작은 원근 투영기**: `cam(w,h,{pos,yaw,pitch,roll,f})` · `proj` · `quad` · `line3` · `floorGrid` · `txt3`(글자마다 세 꼭짓점을 투영해 아핀으로 붙임) · `plate` · `cube` · `dot3` · `glyphDots` · 화가 알고리즘 `put/flush`. 좌표계는 x 오른쪽 · y 아래 · z 앞, **pitch 양수 = 아래를 본다**, 둘레를 도는 카메라는 `yaw: -a`(처음에 부호를 반대로 두어 여덟 장면이 비어 있었다).
+- `gen.mjs` → `demos/m23-space-3d.html`. gen 이 **helpers 밖 보조 함수를 장면이 쓰는지** 검사한다(갤러리는 helpers + 장면 함수만 싣는다). `render.mjs <폴더> video|sheet|covers|still <id> <초>` — 브라우저는 **Chrome for Testing**(시스템 크롬 금지, 워크스페이스 §9.11), 페이지가 뜰 때까지 `draw`·`SP` 를 기다린다(안 기다리면 첫 호출이 빈 페이지에 들어간다). 영상은 6편(1080×1920 · 8초 · 2열×4줄 여덟 칸), 인코딩은 이 맥에 ffmpeg 가 없어 `FFMPEG=insol-partner/오월의개발자/tools/owol-motion/ffmpeg-shim.sh`.
+- ⚠️ `txt3` 는 뒷면(아핀 행렬식 ≤ 0)을 그리지 않는다. 수평 고리를 정면(카메라 높이)에서 보면 글자가 전부 사라진다 → 고리는 위에서 내려다보게 카메라를 올린다. 글자가 180도 뒤집혀 보이면 카메라 뒤(z < near)에 걸친 낱말이다 → 코앞은 건너뛴다.
+- ⚠️ `WORDS[(i + side) % n]` 처럼 음수가 나오는 색인은 `undefined` 를 `txt3` 에 넘겨 영상 전체가 멈춘다(실제로 밟음). 색인엔 +n 을 더한다.
+
