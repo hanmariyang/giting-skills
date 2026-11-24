@@ -528,6 +528,12 @@ const redirect = `<!doctype html>
 <script>location.replace('https://giting.kr/skills/' + location.hash);</script>
 </head><body style="font-family:sans-serif;padding:40px">갤러리가 <a href="https://giting.kr/skills/">giting.kr/skills</a> 로 이사했습니다.</body></html>
 `;
+// 다른 사전의 docs/<slug>/index.html — 주소와 <title> 둘 다 그 사전 것으로 (전에는 전부 「UI 메뉴판」이었다)
+const redirectTo = (slug) => {
+  const desc = JSON.parse(readFileSync(join(ROOT, 'plugins', slug, '.claude-plugin', 'plugin.json'), 'utf8')).description || '';
+  const title = (desc.match(/^(.+?)(?: — |\. |$)/) || [, slug])[1].trim();
+  return redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/' + slug).replace('<title>UI 메뉴판 · ', `<title>${title} · `);
+};
 
 // ── 갤러리 코어 (giting.kr 스킬 상세의 "실물 본문"으로 이식되는 조각) ──
 // giting 사이트 페이지 안에 그대로 삽입되므로: ① 셸(헤더·히어로·푸터) 없음 ② CSS 전부 .uigal 스코프
@@ -985,7 +991,7 @@ if (SITE_DIR) {
   writeFileSync(join(CS, 'llms-full.txt'), cdict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'css-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'css-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/css-menu'));
+writeFileSync(join(ROOT, 'docs', 'css-menu', 'index.html'), redirectTo('css-menu'));
 writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms.txt'), cdict(false));
 writeFileSync(join(ROOT, 'docs', 'css-menu', 'llms-full.txt'), cdict(true));
 console.log(`built css-menu: components ${cmenu.items.length} · core ${(cssCore.length / 1024).toFixed(0)}KB`);
@@ -1115,7 +1121,7 @@ if (SITE_DIR) {
   writeFileSync(join(LS, 'llms-full.txt'), ldict());
 }
 mkdirSync(join(ROOT, 'docs', 'codelazy'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'codelazy', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/codelazy'));
+writeFileSync(join(ROOT, 'docs', 'codelazy', 'index.html'), redirectTo('codelazy'));
 writeFileSync(join(ROOT, 'docs', 'codelazy', 'llms.txt'), ldict());
 console.log(`built codelazy: items ${lmenu.items.length} · core ${(lzCore.length / 1024).toFixed(0)}KB`);
 
@@ -1248,7 +1254,7 @@ if (SITE_DIR) {
   writeFileSync(join(TS, 'llms-full.txt'), tdict());
 }
 mkdirSync(join(ROOT, 'docs', 'type-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'type-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/type-menu'));
+writeFileSync(join(ROOT, 'docs', 'type-menu', 'index.html'), redirectTo('type-menu'));
 writeFileSync(join(ROOT, 'docs', 'type-menu', 'llms.txt'), tdict());
 console.log(`built type-menu: items ${tmenu.items.length} · core ${(tpCore.length / 1024).toFixed(0)}KB`);
 
@@ -1459,7 +1465,7 @@ if (SITE_DIR) {
   writeFileSync(join(FS, 'llms-full.txt'), fdict());
 }
 mkdirSync(join(ROOT, 'docs', 'font-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'font-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/font-menu'));
+writeFileSync(join(ROOT, 'docs', 'font-menu', 'index.html'), redirectTo('font-menu'));
 writeFileSync(join(ROOT, 'docs', 'font-menu', 'llms.txt'), fdict());
 console.log(`built font-menu: items ${fmenu.items.length} · core ${(fpCore.length / 1024).toFixed(0)}KB`);
 
@@ -1565,7 +1571,7 @@ if (SITE_DIR) {
   writeFileSync(join(AS, 'llms-full.txt'), adict());
 }
 mkdirSync(join(ROOT, 'docs', 'app-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'app-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/app-menu'));
+writeFileSync(join(ROOT, 'docs', 'app-menu', 'index.html'), redirectTo('app-menu'));
 writeFileSync(join(ROOT, 'docs', 'app-menu', 'llms.txt'), adict());
 console.log(`built app-menu: items ${amenu.items.length} · core ${(apCore.length / 1024).toFixed(0)}KB`);
 
@@ -1743,7 +1749,7 @@ if (SITE_DIR) {
   writeFileSync(join(LS, 'llms-full.txt'), lmDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'landing-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'landing-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/landing-menu'));
+writeFileSync(join(ROOT, 'docs', 'landing-menu', 'index.html'), redirectTo('landing-menu'));
 writeFileSync(join(ROOT, 'docs', 'landing-menu', 'llms.txt'), lmDict(false));
 console.log(`built landing-menu: items ${lmMenu.items.length} · core ${(lmCore.length / 1024).toFixed(0)}KB`);
 
@@ -1870,7 +1876,7 @@ if (SITE_DIR) {
   writeFileSync(join(CS, 'llms-full.txt'), cmDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'carousel-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/carousel-menu'));
+writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'index.html'), redirectTo('carousel-menu'));
 writeFileSync(join(ROOT, 'docs', 'carousel-menu', 'llms.txt'), cmDict(false));
 console.log(`built carousel-menu: items ${cmMenu.items.length} · recipes ${cmMenu.recipes.length} · core ${(cmCore.length / 1024).toFixed(0)}KB`);
 
@@ -2027,7 +2033,7 @@ if (SITE_DIR) {
   writeFileSync(join(TS, 'llms-full.txt'), tmDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'thumb-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/thumb-menu'));
+writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'index.html'), redirectTo('thumb-menu'));
 writeFileSync(join(ROOT, 'docs', 'thumb-menu', 'llms.txt'), tmDict(false));
 console.log(`built thumb-menu: items ${tmMenu.items.length} · steps ${tmMenu.process.length} · recipes ${tmMenu.recipes.length} · core ${(tmCore.length / 1024).toFixed(0)}KB`);
 
@@ -2161,7 +2167,7 @@ if (SITE_DIR) {
   writeFileSync(join(GS, 'llms-full.txt'), gmDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'grid-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'grid-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/grid-menu'));
+writeFileSync(join(ROOT, 'docs', 'grid-menu', 'index.html'), redirectTo('grid-menu'));
 writeFileSync(join(ROOT, 'docs', 'grid-menu', 'llms.txt'), gmDict(false));
 console.log(`built grid-menu: items ${gmMenu.items.length} · recipes ${gmMenu.recipes.length} · core ${(gmCore.length / 1024).toFixed(0)}KB`);
 
@@ -2279,7 +2285,7 @@ if (SITE_DIR) {
   writeFileSync(join(FS2, 'llms-full.txt'), flwDict());
 }
 mkdirSync(join(ROOT, 'docs', 'flow-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'flow-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/flow-menu'));
+writeFileSync(join(ROOT, 'docs', 'flow-menu', 'index.html'), redirectTo('flow-menu'));
 writeFileSync(join(ROOT, 'docs', 'flow-menu', 'llms.txt'), flwDict());
 console.log(`built flow-menu: flows ${flwMenu.flows.length} · steps ${flwMenu.flows.reduce((n, f) => n + f.steps.length, 0)} · core ${(flwCore.length / 1024).toFixed(0)}KB`);
 
@@ -2599,7 +2605,7 @@ if (SITE_DIR) {
   writeFileSync(join(MS, 'llms-full.txt'), moDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'motion-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'motion-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/motion-menu'));
+writeFileSync(join(ROOT, 'docs', 'motion-menu', 'index.html'), redirectTo('motion-menu'));
 writeFileSync(join(ROOT, 'docs', 'motion-menu', 'llms.txt'), moDict(false));
 console.log(`built motion-menu: items ${moMenu.items.length} · recipes ${moMenu.recipes.length} · core ${(moCore.length / 1024).toFixed(0)}KB`);
 
@@ -2726,7 +2732,7 @@ if (SITE_DIR) {
   writeFileSync(join(CS, 'llms-full.txt'), chDict(true));
 }
 mkdirSync(join(ROOT, 'docs', 'chart-menu'), { recursive: true });
-writeFileSync(join(ROOT, 'docs', 'chart-menu', 'index.html'), redirect.replace(/giting\.kr\/skills\//g, 'giting.kr/skills/chart-menu'));
+writeFileSync(join(ROOT, 'docs', 'chart-menu', 'index.html'), redirectTo('chart-menu'));
 writeFileSync(join(ROOT, 'docs', 'chart-menu', 'llms.txt'), chDict(false));
 console.log(`built chart-menu: items ${chMenu.items.length} · core ${(chCore.length / 1024).toFixed(0)}KB`);
 
