@@ -97,8 +97,8 @@ AI 가 부풀리기 쉬운 지점을 증상으로 짚고 표준 한 줄로 되�
 
 ui-menu의 **모바일판**. "아래에서 올라오는 판"을 **바텀시트**, "앱 켜면 뜨는 로고 화면"을 **스플래시**라 부르게 해 주고, 그 이름을 SwiftUI·Flutter·React Native의 실제 컴포넌트명까지 연결하는 사전.
 
-- **8개 코스 76개 항목**: ①화면 뼈대 ②화면 이동 ③목록 ④입력받는 것 ⑤골라 넣는 것 ⑥누르는 것 ⑦위에 띄우는 것 ⑧상태·표시
-- **네이티브 매핑 38항목**: 정식 명칭 → SwiftUI · Flutter · React Native 실제 컴포넌트명(탭바 → TabView·BottomNavigationBar·Tab.Navigator)
+- **9개 코스 92개 항목**: ①화면 뼈대 ②화면 이동 ③목록 ④입력받는 것 ⑤골라 넣는 것 ⑥누르는 것 ⑦위에 띄우는 것 ⑧상태·표시 ⑨라이브 액티비티(알약 8 · 카드 8)
+- **네이티브 매핑**: 정식 명칭 → SwiftUI · Flutter · React Native 실제 컴포넌트명(탭바 → TabView·BottomNavigationBar·Tab.Navigator)
 - **웹/앱 경계**: 같은 단어라도 관례가 다른 것을 짚음(모달 = 앱은 풀스크린, 셀렉트 = 앱은 시트로) + 모바일이 자주 빠뜨리는 것(세이프에어리어·탭 타깃 44pt·엠프티 스테이트)을 체크리스트로
 - **웹 UI는 ui-menu**: 이 사전은 iOS·안드로이드 앱 전용
 
@@ -110,9 +110,9 @@ ui-menu의 **모바일판**. "아래에서 올라오는 판"을 **바텀시트**
 
 랜딩 페이지를 **"무슨 섹션을, 어떤 순서로"**로 짓게 해 주는 사전. 랜딩은 컴포넌트가 아니라 **섹션의 순서**다.
 
-- **6개 코스 26개 섹션**: ①히어로 5 ②신뢰 5 ③기능 5 ④작동 3 ⑤전환 4 ⑥뼈대 4
+- **7개 코스 31개 섹션**: ①히어로 5 ②신뢰 5 ③기능 5 ④작동 3 ⑤전환 4 ⑥뼈대 4 ⑦상세페이지 5
 - **핵심 차별 — 제너릭 회피**: ⛔ 다크+가운데+그라데이션 AI 기본 룩 금지. **룩(색·폰트)은 제품 `design-brief`에서 오고, 이 사전은 구조·순서만** 준다. 제품샷은 실제 스크린샷을 디바이스 프레임에.
-- **v0.2**: 6개 코스 26개 섹션 전부 출하 — 전 항목 실물 HTML·반응형·headless 검수. 갤러리 **https://giting.kr/skills/landing-menu**
+- **전 항목 실물 HTML**·반응형·headless 검수(v0.2 에서 6코스 26섹션, 그 뒤 상세페이지 코스 5 추가). 갤러리 **https://giting.kr/skills/landing-menu**
 - **웹 컴포넌트는 ui-menu, 디자인 시스템은 design-brief**와 짝을 이룸(중복 아님).
 
 ```
@@ -211,6 +211,22 @@ AI 가 만든 자막(SRT·VTT)을 **넷플릭스 공개 자막 기준**(한 줄 
 /plugin install chart-menu@giting
 ```
 
+
+### 15 · 그 밖의 스킬 9종
+
+위 목록에 아직 상세 절이 없는 스킬. 설명은 각 플러그인의 `plugin.json` 첫 문장, 전부 같은 마켓에서 설치한다.
+
+| 스킬 | 하는 일 | 설치 |
+|---|---|---|
+| `motion-menu` | 모션 메뉴판 — '역동적으로 해줘' 대신 이름으로 시키는 영상·화면 모션 사전 | `/plugin install motion-menu@giting` |
+| `design-brief` | AI 코딩 에이전트가 밋밋한 기본 룩 대신 일관되고 특정한 UI를 짓게 하는 프로젝트 DESIGN.md를 만든다 | `/plugin install design-brief@giting` |
+| `canvas-motion` | 창발 캔버스 모션 엔진 + 레시피 — GSAP·Lottie 없이 Canvas 2D + requestAnimationFrame 으로 살아 있는 모션 | `/plugin install canvas-motion@giting` |
+| `edit-doc` | 브라우저에서 바로 고치고 저장하는 문서를 만든다 | `/plugin install edit-doc@giting` |
+| `pixel-run` | 캐릭터 참조 이미지 하나로 픽셀아트 달리기 사이클을 만든다 | `/plugin install pixel-run@giting` |
+| `product-shot` | AI로 상업용 제품 사진을 만든다 — 제형(텍스처) 컷, 로고·패키지를 원본 그대로 지키는 제품 이미지, 미니멀 광고컷 | `/plugin install product-shot@giting` |
+| `sheet-io` | 스프레드시트(로컬 CSV·공개 Google Sheet)를 안전하고 싸게 읽고 쓴다 | `/plugin install sheet-io@giting` |
+| `slide-pick` | PPT·발표자료를 만들기 전에 '무엇을 그릴지' 고르는 선택 사전 | `/plugin install slide-pick@giting` |
+| `session-mention` | Claude Code 세션끼리 @메시지(cross-session messaging) 진단·해결 가이드 | `/plugin install session-mention@giting` |
 
 ## 등재 기준
 
